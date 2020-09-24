@@ -225,7 +225,6 @@ export const getAgentParams = ({ params }, location) => {
   const qs = parseURLQueryParams(location.search);
   const filters = {};
   filters['filter[status]'] = 1;
-  filters['filter[region]'] = params.region;
   if (qs.latitude && qs.longitude) {
     filters['filter[geo]'] = `${qs.latitude},${qs.longitude},20`;
   } else if (params.city) {
@@ -236,7 +235,10 @@ export const getAgentParams = ({ params }, location) => {
       const city = cityParts.join('-');
       filters['filter[address]'] = `${city},${state}`;
     }
+  } else {
+    filters['filter[region]'] = params.region;
   }
+
   return filters;
 };
 
