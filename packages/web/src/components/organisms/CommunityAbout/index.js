@@ -44,12 +44,12 @@ LegacyContent.defaultProps = {
 };
 
 const CommunityAbout = ({
-  id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, licensingInfo,
-                            ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult
+  id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription,
+  ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult,
 }) => {
   let phone = '8558664515';
   let isClaimed = false;
-  if ( communityUser && communityUser.email && !communityUser.email.match(/@seniorly.com/) ) {
+  if ( communityUser && communityUser.email && !communityUser.email.match(/@seniorly.com/)) {
     isClaimed = true;
   }
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
@@ -110,15 +110,6 @@ const CommunityAbout = ({
           </Paragraph>
         </StyledArticle>
       }
-      {licensingInfo && (
-        <StyledArticle>
-          <StyledHeading level="subtitle" size="subtitle">
-            Licensing for {communityName}
-          </StyledHeading>
-           {communityName} is licensed by the state of {state}. Visit the
-          <Link> state licensing website</Link> for more information.
-        </StyledArticle>
-      )}
       { !isActiveAdult &&
         <StyledArticle>
           <StyledHeading level="subtitle" size="subtitle">
@@ -189,8 +180,7 @@ CommunityAbout.propTypes = {
   state: PropTypes.string,
   twilioNumber: PropTypes.object,
   communityUser: PropTypes.object,
-  licensingInfo: PropTypes.string,
-  isActiveAdult: PropTypes.bool
+  isActiveAdult: PropTypes.bool,
 };
 
 export default CommunityAbout;

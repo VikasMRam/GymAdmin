@@ -1,21 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Paragraph, Block } from 'sly/common/components/atoms';
+import { upTo } from 'sly/common/components/helpers';
+import { Paragraph, Block, Link, Grid } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
-const Wrapper = styled(CollapsibleBlock)`
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row-gap: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: 50% 50%;
-    grid-column-gap: ${size('layout.gutter')};
-  }
+const Wrapper = styled(Grid)`
+  ${upTo('laptop', css`
+    grid-template-columns: 100%;
+    grid-row-gap: ${size('spacing.large')};
+  `)}
 `;
 
 const groupKeys = [
@@ -35,7 +32,7 @@ const groupTitles = {
 };
 
 const groupItemIcons = {
-  'Recently removated': 'community-size-large',
+  'Recently renovated': 'community-size-large',
   'Family-owned and operated': 'family',
   'Medication management': 'care',
   'Meal preparation and service': 'food',
@@ -64,56 +61,58 @@ const groupItemIcons = {
 };
 
 const CommunityDetails = ({ community }) => {
-  const { propInfo } = community;
-  const {
-    communityHighlights,
-    personalSpace,
-    communitySpace,
-    nonCareServices,
-    languages,
-  } = propInfo;
-  let amenities = [];
-  if (communityHighlights) {
-    amenities = amenities.concat(communityHighlights)
-  }
-  if (personalSpace) {
-    amenities = amenities.concat(personalSpace)
-  }
-  if (communitySpace) {
-    amenities = amenities.concat(communitySpace)
-  }
-  if (nonCareServices) {
-    amenities = amenities.concat(nonCareServices)
-  }
-  if (languages) {
-    amenities = amenities.concat(languages)
-  }
-  let amenitiesComponents;
-  if (amenities.length > 0 ) {
-    amenitiesComponents = amenities.map(amenity => (
-      <IconItem
-        key={amenity}
-        icon="check"
-        iconPalette="primary"
-        iconVariation="base"
-        borderless={false}
-      >
-        {amenity}
-      </IconItem>
-    ));
-  }
+  const { propInfo, name, address: { state } } = community;
+  const { licenseUrl } = propInfo;
+
+  const groupComponents = groupKeys.map((k) => {
+    if (propInfo[k]) {
+      const keys = propInfo[k];
+      return (
+        <Block>
+          <Block weight="medium" pad="medium">{groupTitles[k]}</Block>
+          <Wrapper gap="medium" dimensions={['50%', '50%']}>
+            {keys.map(k => (
+              <IconItem
+                key={k}
+                icon={groupItemIcons[k] || 'check'}
+                iconPalette="slate"
+                iconVariation="base"
+              >
+                {k}
+              </IconItem>
+            ))}
+          </Wrapper>
+        </Block>
+      );
+    }
+
+    return null;
+  })
+    .filter(g => g);
 
   return (
     <Block as="section">
-      {amenities.length === 0 &&
+      {groupComponents.length === 0 &&
         <Paragraph>
           No information about amenities currently available
         </Paragraph>
       }
-      {amenities.length > 0 &&
-        <Wrapper minHeight="regular">
-          {amenitiesComponents}
-        </Wrapper>
+      {(groupComponents.length > 0 || licenseUrl) &&
+        <CollapsibleBlock minHeight="regular">
+          {groupComponents.length > 0 &&
+            <Grid flow="row" gap="xxLarge" pad={licenseUrl ? 'xxLarge' : null}>
+              {groupComponents}
+            </Grid>
+          }
+          {licenseUrl && (
+            <Block>
+              <Block weight="medium" pad="medium">Licensing</Block>
+              <Block>
+                {name} is licensed by the state of {state}. Visit the <Link href={licenseUrl}>state licensing website</Link> for more information.
+              </Block>
+            </Block>
+          )}
+        </CollapsibleBlock>
       }
     </Block>
   );

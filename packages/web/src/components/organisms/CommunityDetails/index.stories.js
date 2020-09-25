@@ -9,6 +9,13 @@ const noInfoCommunity = {
   propInfo: {},
 };
 
+const noInfoLicenseCommunity = {
+  ...RhodaGoldmanPlaza,
+  propInfo: {
+    licenseUrl: 'https://www.seniorly.com',
+  },
+};
+
 storiesOf('Organisms|CommunityDetails', module)
   .add('default', () => (
     <CommunityDetails
@@ -18,5 +25,10 @@ storiesOf('Organisms|CommunityDetails', module)
   .add('no data', () => (
     <CommunityDetails
       community={noInfoCommunity}
+    />
+  ))
+  .add('no data and license info', () => (
+    <CommunityDetails
+      community={noInfoLicenseCommunity}
     />
   ));
