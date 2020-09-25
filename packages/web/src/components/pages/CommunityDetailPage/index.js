@@ -399,7 +399,7 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <StyledHeadingBoxSection heading={`Community Details at ${name} at ${address.city}`}>
+                <StyledHeadingBoxSection heading="Amenities and Services">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
 
