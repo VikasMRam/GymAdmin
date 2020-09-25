@@ -36,7 +36,31 @@ const groupTitles = {
 
 const groupItemIcons = {
   'Recently removated': 'community-size-large',
-  'Family-owned and operated': '',
+  'Family-owned and operated': 'family',
+  'Medication management': 'care',
+  'Meal preparation and service': 'food',
+  'Transportation arrangement': 'transportation',
+  '24-hour supervision': 'security',
+  '24-hour call system': 'phone',
+  'Coordination with health care providers': 'care',
+  'Housekeeping and linen services': 'laundry',
+  'Fitness programs': 'fitness',
+  'Community-sponsored activities': 'family',
+  'Move-in coordination': 'luggage',
+  'Planned day trips': 'transportation',
+  'Transportation arrangement(non-medical)': 'transportation',
+  Cable: 'tv',
+  Wifi: 'wifi',
+  Internet: 'wifi',
+  Telephone: 'phone',
+  'Air-conditioning': 'ac',
+  Kitchenettes: 'kitchen',
+  'Dining room': 'food',
+  'Restaurant-style dining': 'food',
+  'Outdoor patio': 'outdoor',
+  Garden: 'flower',
+  'Beauty salon': 'favourite-light',
+  'Located close to shopping centers': 'shopping',
 };
 
 const CommunityDetails = ({ community }) => {
