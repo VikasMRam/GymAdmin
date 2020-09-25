@@ -72,7 +72,6 @@ const getSDForCommunity = ({
   }
 
   // https://schema.org/amenityFeature
-  // Copied from sly/web/components/organisms/CommunityAmenities
   let amenities = [];
   if (communityHighlights) {
     amenities = amenities.concat(communityHighlights)

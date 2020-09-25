@@ -33,18 +33,18 @@ import {
 } from 'sly/web/components/templates/CommunityDetailPageTemplate';
 // import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import Section from 'sly/web/components/molecules/Section';
-import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
+import CommunityAbout from 'sly/web/components/organisms/CommunityAbout';
 import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
-import CommunityAmenities from 'sly/web/components/organisms/CommunityAmenities';
+import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -71,6 +71,7 @@ const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimila
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
+const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
 // const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
@@ -199,7 +200,6 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices,
       covidInfoDescription,
       covidInfoTitle,
       communityInsights,
@@ -292,7 +292,7 @@ export default class CommunityDetailPage extends Component {
                       COVID-19 Policy at {name}
                     </Heading>
                     {covidInfoTitle &&
-                      <Block weight="bold" pad="regular">
+                      <Block weight="medium" pad="regular">
                         {covidInfoTitle}
                       </Block>
                     }
@@ -368,8 +368,8 @@ export default class CommunityDetailPage extends Component {
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||
                   staffDescription || residentDescription || ownerExperience) && (
-                  <StyledHeadingBoxSection heading={`Details on ${name}`}>
-                    <CommunityDetails
+                  <StyledHeadingBoxSection heading={`About ${name}`}>
+                    <CommunityAbout
                       id={community.id}
                       communityName={name}
                       communityDescription={communityDescription}
@@ -382,11 +382,23 @@ export default class CommunityDetailPage extends Component {
                       twilioNumber={twilioNumber}
                       guideUrl={guideUrl}
                       communityUser={community.user}
-                      licensingInfo={rgsAux.stateLicensingWebsite}
                       isActiveAdult={isActiveAdult}
+                      pad="large"
+                    />
+                    <AskAgentQuestionButtonContainer
+                      ghost
+                      width="100%"
+                      community={community}
+                      type="services"
+                      ctaText="Ask a Question"
                     />
                   </StyledHeadingBoxSection>
                 )}
+
+                <StyledHeadingBoxSection heading={`Community Details at ${name} at ${address.city}`}>
+                  <CommunityDetails community={community} />
+                </StyledHeadingBoxSection>
+
                 {!isActiveAdult &&
                   <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
@@ -423,15 +435,6 @@ export default class CommunityDetailPage extends Component {
                     ))}
                   </StyledHeadingBoxSection>
                 )}
-                {careServices &&
-                  careServices.length > 0 && (
-                    <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
-                      <CommunityCareService careServices={careServices} />
-                    </StyledHeadingBoxSection>
-                  )}
-                <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
-                  <CommunityAmenities community={community} />
-                </StyledHeadingBoxSection>
 
                 <StyledHeadingBoxSection
                   heading={`Reviews at ${name}`}
