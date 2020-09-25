@@ -14,6 +14,7 @@ const Wrapper = styled(Grid)`
     grid-row-gap: ${size('spacing.large')};
   `)}
 `;
+Wrapper.displayName = 'Wrapper';
 
 const groupKeys = [
   'communityHighlights',
@@ -68,7 +69,7 @@ const CommunityDetails = ({ community }) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
       return (
-        <Block>
+        <Block key={k}>
           <Block weight="medium" pad="medium">{groupTitles[k]}</Block>
           <Wrapper gap="medium" dimensions={['50%', '50%']}>
             {keys.map(k => (
@@ -94,7 +95,7 @@ const CommunityDetails = ({ community }) => {
     <Block as="section">
       {groupComponents.length === 0 &&
         <Paragraph>
-          No information about amenities currently available
+          No information about details currently available
         </Paragraph>
       }
       {(groupComponents.length > 0 || licenseUrl) &&
