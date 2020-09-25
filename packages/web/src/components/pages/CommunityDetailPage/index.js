@@ -385,6 +385,10 @@ export default class CommunityDetailPage extends Component {
                       isActiveAdult={isActiveAdult}
                       pad="large"
                     />
+                    <Hr />
+                    <Heading pad="large" level="subtitle" size="subtitle">
+                      Have a question about this community?
+                    </Heading>
                     <AskAgentQuestionButtonContainer
                       ghost
                       width="100%"
