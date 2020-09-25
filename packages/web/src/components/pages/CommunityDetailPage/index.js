@@ -44,6 +44,7 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -70,6 +71,7 @@ const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimila
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
+const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
 // const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
@@ -381,6 +383,14 @@ export default class CommunityDetailPage extends Component {
                       guideUrl={guideUrl}
                       communityUser={community.user}
                       isActiveAdult={isActiveAdult}
+                      pad="large"
+                    />
+                    <AskAgentQuestionButtonContainer
+                      ghost
+                      width="100%"
+                      community={community}
+                      type="services"
+                      ctaText="Ask a Question"
                     />
                   </StyledHeadingBoxSection>
                 )}

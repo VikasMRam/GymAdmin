@@ -103,10 +103,10 @@ export default class CollapsibleBlock extends Component {
 
     const getContent = measureRef => (
       <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
-        <div ref={measureRef} {...props}>
-          { children }
+        <Block {...props} ref={measureRef} >
+          {children}
           <OnePix />
-        </div>
+        </Block>
       </BlockCap>
     );
     const ReadMoreComponent = expandTo === 'top' ? ReadMore : PaddedReadMore;

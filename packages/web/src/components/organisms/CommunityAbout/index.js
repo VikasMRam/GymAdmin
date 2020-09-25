@@ -45,7 +45,7 @@ LegacyContent.defaultProps = {
 
 const CommunityAbout = ({
   id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription,
-  ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult,
+  ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult, ...props
 }) => {
   let phone = '8558664515';
   let isClaimed = false;
@@ -57,7 +57,7 @@ const CommunityAbout = ({
   }
 
   return (
-    <CollapsibleBlock collapsedDefault={false}>
+    <CollapsibleBlock {...props} collapsedDefault={false}>
       {communityDescription && (
         <StyledArticle>
           {communityDescription.split('\n\n')
