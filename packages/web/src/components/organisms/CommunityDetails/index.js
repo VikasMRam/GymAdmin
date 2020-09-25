@@ -34,6 +34,11 @@ const groupTitles = {
   nonCareServices: 'Non-Care Services',
 };
 
+const groupItemIcons = {
+  'Recently removated': 'community-size-large',
+  'Family-owned and operated': '',
+};
+
 const CommunityDetails = ({ community }) => {
   const { propInfo } = community;
   const {
