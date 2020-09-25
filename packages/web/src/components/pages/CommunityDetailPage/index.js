@@ -386,7 +386,7 @@ export default class CommunityDetailPage extends Component {
                       pad="large"
                     />
                     <Hr />
-                    <Heading pad="large" level="subtitle" size="subtitle">
+                    <Heading pad="large" level="subtitle" size="body">
                       Have a question about this community?
                     </Heading>
                     <AskAgentQuestionButtonContainer
