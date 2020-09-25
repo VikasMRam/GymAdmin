@@ -1,0 +1,15 @@
+<svg viewBox="0 0 24 24">
+    <defs>
+        <path d="M17,6 L15,6 L15,3 C15,2.45 14.55,2 14,2 L10,2 C9.45,2 9,2.45 9,3 L9,6 L7,6 C5.9,6 5,6.9 5,8 L5,19 C5,20.1 5.9,21 7,21 C7,21.55 7.45,22 8,22 C8.55,22 9,21.55 9,21 L15,21 C15,21.55 15.45,22 16,22 C16.55,22 17,21.55 17,21 C18.1,21 19,20.1 19,19 L19,8 C19,6.9 18.1,6 17,6 Z M8.75,18 L8.75,18 C8.34,18 8,17.66 8,17.25 L8,9.75 C8,9.34 8.34,9 8.75,9 L8.75,9 C9.16,9 9.5,9.34 9.5,9.75 L9.5,17.25 C9.5,17.66 9.16,18 8.75,18 Z M12,18 L12,18 C11.59,18 11.25,17.66 11.25,17.25 L11.25,9.75 C11.25,9.34 11.59,9 12,9 L12,9 C12.41,9 12.75,9.34 12.75,9.75 L12.75,17.25 C12.75,17.66 12.41,18 12,18 Z M13.5,6 L10.5,6 L10.5,3.5 L13.5,3.5 L13.5,6 Z M15.25,18 L15.25,18 C14.84,18 14.5,17.66 14.5,17.25 L14.5,9.75 C14.5,9.34 14.84,9 15.25,9 L15.25,9 C15.66,9 16,9.34 16,9.75 L16,17.25 C16,17.66 15.66,18 15.25,18 Z" id="path-1-luggage"></path>
+    </defs>
+    <g id="icon-/-luggage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+        <mask id="mask-2-luggage" fill="white">
+            <use xlink:href="#path-1-luggage"></use>
+        </mask>
+        <use id="Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-1-luggage"></use>
+        <g id="color-/-slate-/-base" mask="url(#mask-2-luggage)" fill="currentColor" fill-rule="nonzero">
+            <rect id="color" x="0" y="0" width="24" height="24"></rect>
+        </g>
+    </g>
+</svg>
