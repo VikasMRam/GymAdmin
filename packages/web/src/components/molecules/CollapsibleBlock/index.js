@@ -37,7 +37,7 @@ export const ReadMore = styled(({ chevronOnLeft, moreLabelOn, ...rest }) => <Lin
 
 const PaddedReadMore = pad(ReadMore, 'large');
 
-const BlockCap = styled.div`
+const BlockCap = styled(Block)`
   height: ${blockCapHeight};
   overflow: hidden;
   transition: height ${key('transitions.default')};
@@ -102,11 +102,11 @@ export default class CollapsibleBlock extends Component {
     const collapsibleMinHeight = height ? remToPx(height) : minHeight;
 
     const getContent = measureRef => (
-      <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
-        <Block {...props} ref={measureRef} >
+      <BlockCap {...props} maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
+        <div ref={measureRef} >
           {children}
           <OnePix />
-        </Block>
+        </div>
       </BlockCap>
     );
     const ReadMoreComponent = expandTo === 'top' ? ReadMore : PaddedReadMore;
