@@ -62,7 +62,7 @@ const CommunityAbout = ({
     )}
     {ownerExperience && (
       <StyledArticle>
-        <StyledHeading level="subtitle" size="subtitle">
+        <StyledHeading level="subtitle" size="body">
           Owners Story
         </StyledHeading>
         {ownerExperience.split('\n\n')
@@ -72,7 +72,7 @@ const CommunityAbout = ({
     )}
     {staffDescription && (
       <StyledArticle>
-        <StyledHeading level="subtitle" size="subtitle">
+        <StyledHeading level="subtitle" size="body">
           About the Staff at {communityName}
         </StyledHeading>
         {staffDescription.split('\n\n')
@@ -82,7 +82,7 @@ const CommunityAbout = ({
     )}
     {residentDescription && (
       <StyledArticle>
-        <StyledHeading level="subtitle" size="subtitle">
+        <StyledHeading level="subtitle" size="body">
           About the Residents at {communityName}
         </StyledHeading>
         {residentDescription.split('\n\n')
@@ -102,7 +102,7 @@ const CommunityAbout = ({
     }
     { isActiveAdult &&
       <StyledArticle>
-        <StyledHeading level="subtitle" size="subtitle">
+        <StyledHeading level="subtitle" size="body">
           What are Active Adult Communities in {city}, {state}?
         </StyledHeading>
         <Paragraph>
