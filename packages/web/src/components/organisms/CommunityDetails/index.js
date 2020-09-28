@@ -68,20 +68,28 @@ const CommunityDetails = ({ community }) => {
   const groupComponents = groupKeys.map((k) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
+
+      const icons = keys.map(k => groupItemIcons[k] ? (
+        <IconItem
+          key={k}
+          icon={groupItemIcons[k] || 'check'}
+          iconPalette="slate"
+          iconVariation="base"
+        >
+          {k}
+        </IconItem>
+      ) : null)
+        .filter(i => i);
+
+      if (!icons.length) {
+        return null;
+      }
+
       return (
         <Block key={k}>
           <Block weight="medium" pad="medium">{groupTitles[k]}</Block>
           <Wrapper gap="medium" dimensions={['50%', '50%']}>
-            {keys.map(k => (
-              <IconItem
-                key={k}
-                icon={groupItemIcons[k] || 'check'}
-                iconPalette="slate"
-                iconVariation="base"
-              >
-                {k}
-              </IconItem>
-            ))}
+            {icons}
           </Wrapper>
         </Block>
       );
