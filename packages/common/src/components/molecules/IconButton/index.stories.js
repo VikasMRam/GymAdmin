@@ -84,6 +84,15 @@ storiesOf('Common|Molecules/IconButton', module)
     </IconButton>
   ))
   .add('without text', () => <IconButton icon="share" />)
+  .add('without text, borderRadius, padding, borderPalette and ghost', () => (
+    <IconButton
+      icon="chevron-left"
+      padding="medium"
+      borderPalette="grey.lighter-60"
+      borderRadius="50%"
+      ghost
+    />
+  ))
   .add('collapsed', () => (
     <IconButton icon="share" collapsed>
       Hello

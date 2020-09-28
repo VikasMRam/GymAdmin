@@ -1,1 +1,15 @@
-<svg viewBox="0 0 24 24"><defs><path id="share-regular-a" d="M10 5v2h6.59L5 18.59 6.41 20 18 8.41V15h2V5z"/></defs><g fill="none" fill-rule="evenodd"><mask id="share-regular-b" fill="#fff"><use xlink:href="#share-regular-a"/></mask><use fill="#000" xlink:href="#share-regular-a"/><g fill="currentColor" fill-rule="nonzero" mask="url(#share-regular-b)"><path d="M0 0h24v24H0z"/></g></g></svg>
+<svg viewBox="0 0 24 24">
+  <defs>
+      <path d="M18,10 L18,18 L6,18 L6,10 C6,9.45 5.55,9 5,9 C4.45,9 4,9.45 4,10 L4,19 C4,19.55 4.45,20 5,20 L19,20 C19.55,20 20,19.55 20,19 L20,10 C20,9.45 19.55,9 19,9 C18.45,9 18,9.45 18,10 Z M11,7 L11,14 C11,14.55 11.45,15 12,15 C12.55,15 13,14.55 13,14 L13,7 L14.79,7 C15.24,7 15.46,6.46 15.14,6.15 L12.35,3.36 C12.15,3.16 11.84,3.16 11.64,3.36 L8.85,6.15 C8.54,6.46 8.76,7 9.21,7 L11,7 Z" id="path-1-share"></path>
+  </defs>
+  <g id="icon-/-share" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <rect id="bounding-box" x="0" y="0" width="24" height="24"></rect>
+      <mask id="mask-2-share" fill="white">
+          <use xlink:href="#path-1-share"></use>
+      </mask>
+      <use id="Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-1-share"></use>
+      <g id="color-/-slate-/-base" mask="url(#mask-2-share)" fill="currentColor" fill-rule="nonzero">
+          <rect id="color" x="0" y="0" width="24" height="24"></rect>
+      </g>
+  </g>
+</svg>
