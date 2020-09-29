@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
-import { hideChatbox, assetsUrl, publicPath } from 'sly/web/config';
+import { hideChatbox } from 'sly/web/config';
 import theme from 'sly/common/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
@@ -376,7 +376,7 @@ export default class App extends Component {
           */}
           <meta
             httpEquiv="Content-Security-Policy"
-            content={`script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src ${publicPath} ${assetsUrl} https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src ${publicPath} ${assetsUrl} data: https://optimize.google.com; font-src ${publicPath} ${assetsUrl} https://fonts.gstatic.com; frame-src ${publicPath} https://optimize.google.com`}
+            content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com; font-src * https://fonts.gstatic.com; frame-src https://optimize.google.com"
           />
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
