@@ -371,6 +371,12 @@ export default class App extends Component {
           <meta content="https://www.seniorly.com" property="twitter:site" />
           <meta content="@seniorly" property="twitter:creator" />
 
+          {/*
+            Google Optimize
+
+          */}
+          <meta http-equiv="Content-Security-Policy" content="script-src https://optimize.google.com 'unsafe-inline'; style-src https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src https://optimize.google.com; font-src https://fonts.gstatic.com; frame-src https://optimize.google.com" />
+
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
           <style type="text/css">{GlobalStyles}</style>
         </Helmet>
