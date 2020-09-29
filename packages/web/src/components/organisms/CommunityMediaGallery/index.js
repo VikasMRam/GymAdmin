@@ -14,11 +14,6 @@ const BottomRightWrapper = styled.span`
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
 
-const StyledIconButton = styled(IconButton)`
-  margin-left:${size('spacing.regular')};
-  display: inline-block!important;
-`;
-
 export default class CommunityMediaGallery extends Component {
   static propTypes = {
     communityName: string.isRequired,
@@ -90,7 +85,7 @@ export default class CommunityMediaGallery extends Component {
     const galleryItems = galleryVideos.concat(galleryImages);
 
     const topLeftSection = () => (
-      <Button secondary ghost transparent={false} onClick={() => onToggleFullscreenMode(false, true)}>View Photos</Button>
+      <Button secondary ghost onClick={() => onToggleFullscreenMode(false, true)}>View Photos</Button>
     );
 
     const topRightSection = () => {
@@ -98,12 +93,33 @@ export default class CommunityMediaGallery extends Component {
       const favIcon = isFavorited ? 'favourite-dark' : 'favourite-empty';
       return (
         <div>
-          <StyledIconButton icon="share" hideTextInMobile palette="grey" secondary ghost transparent onClick={onShareClick}>Share</StyledIconButton>
-          <StyledIconButton icon={favIcon} hideTextInMobile palette="grey" secondary ghost transparent onClick={onFavouriteClick}>Favorite</StyledIconButton>
+          <IconButton
+            icon="share"
+            marginLeft="regular"
+            palette="slate"
+            display="inline-block"
+            onClick={onShareClick}
+            hideTextInMobile
+            secondary
+            ghost
+          >
+            Share
+          </IconButton>
+          <IconButton
+            icon={favIcon}
+            marginLeft="regular"
+            palette="slate"
+            display="inline-block"
+            onClick={onFavouriteClick}
+            hideTextInMobile
+            secondary
+            ghost
+          >
+            Favorite
+          </IconButton>
         </div>
       );
-    }
-
+    };
 
     // if (websiteUrl && !websiteUrl.includes('//')) {
     //   websiteUrl = `//${websiteUrl}`;

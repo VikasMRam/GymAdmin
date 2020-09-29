@@ -5,8 +5,8 @@ import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import { Icon } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
 import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
 
@@ -43,7 +43,7 @@ const StyledVideo = styled.video`
   object-fit: fill;
   height: inherit;
 `;
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(IconButton)`
   position: absolute;
   z-index: 1;
   top: 50%;
@@ -299,11 +299,13 @@ export default class MediaGallery extends Component {
           {this.allMedia.length > 1 &&
             <PrevSlide
               className="media-carousel-control-prev"
-              icon="chevron"
-              rotate={1}
-              size="superHero"
-              palette="white"
+              icon="chevron-left"
+              padding="medium"
+              borderPalette="grey.lighter-60"
+              borderRadius="50%"
+              palette="slate"
               onClick={this.prevSlide}
+              ghost
             />
           }
           {topLeftSection &&
@@ -329,11 +331,14 @@ export default class MediaGallery extends Component {
           {this.allMedia.length > 1 &&
             <NextSlide
               className="media-carousel-control-next"
-              icon="chevron"
-              rotate={-1}
-              size="superHero"
-              palette="white"
+              icon="chevron-left"
+              rotate={2}
+              palette="slate"
               onClick={this.nextSlide}
+              padding="medium"
+              borderPalette="grey.lighter-60"
+              borderRadius="50%"
+              ghost
             />
           }
           {bottomLeftSection &&

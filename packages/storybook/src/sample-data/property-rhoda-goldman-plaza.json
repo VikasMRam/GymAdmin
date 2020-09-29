@@ -12,6 +12,7 @@
     "secondLineValue": "Suite, Studio, One Bedroom"
   },
   "propInfo": {
+    "licenseUrl": "https://secure.dss.ca.gov/CareFacilitySearch/Search/Detailview/385600125/1#detailview",
     "ownerImage": [
       {
         "name": "len and tablet.jpg",
@@ -30,41 +31,39 @@
     "ownerEmail": "rhoda@example.com",
     "languages": ["English"],
     "languagesOther": "Mandarin",
-    "communitySpace": ["Dining Room", "Restaurant Style Dining"],
+    "communitySpace": [
+      "Dining room",
+      "Restaurant-style dining",
+      "Outdoor patio",
+      "Garden",
+      "Beauty salon",
+      "Located close to shopping centers"
+    ],
     "communitySpaceOther": "Café",
     "personalSpace": [
-      "2-Bedroom Apartments",
-      "1-Bedroom Apartments",
-      "Kitchenettes",
-      "Private Bathrooms",
-      "Internet",
       "Cable",
-      "Wifi"
+      "Wifi",
+      "Internet",
+      "Telephone",
+      "Air-conditioning",
+      "Kitchenettes"
     ],
     "typeCare": ["Assisted Living", "Memory Care"],
     "careServices": [
-      "Activities of Daily Living Assistance",
-      "Meal Preparation and Service",
-      "Coordination with Health Care Providers",
-      "Medication Management",
-      "Transportation to Doctors Appointments",
-      "Transportation Arrangement",
-      "24-Hour Call System",
-      "Respite Program",
-      "Diabetes Diet",
-      "Diabetes Care",
-      "Parkinsons Care",
-      "Mild Cognitive Impairment",
-      "Hospice Waiver",
-      "Dementia Waiver"
+      "Medication management",
+      "Meal preparation and service",
+      "Transportation arrangement",
+      "24-hour supervision",
+      "24-hour call system",
+      "Coordination with health care providers"
     ],
     "nonCareServices": [
-      "Housekeeping & Linen Services",
-      "Scheduled Transportation (non-medical related)",
-      "Fitness Programs",
-      "Continuing Learning Programs",
-      "Resident-Run Activities",
-      "Community-Sponsored Activities"
+      "Housekeeping and linen services",
+      "Fitness programs",
+      "Community-sponsored activities",
+      "Move-in coordination",
+      "Planned day trips",
+      "Transportation arrangement(non-medical)"
     ],
     "staffDescription":
       "Our Department of Health Services is headed by a Registered Nurse. Our care staff is made up of LVN's, Med Tech's and CNA's and is located in offices on each residential floor. We have a dedicated Memory Care Floor called the Terrace, where all needed levels of care are included. In assisted living we offer Medication Management, Dressing and Bathing, Escort/Transfer service and Toileting or Incontinence Care. We also have a Hospice Care Waiver.",
@@ -100,9 +99,8 @@
       "Community operated transportation"
     ],
     "communityHighlights": [
-      "Cultural",
-      "Alzheimer’s / Dementia",
-      "Outdoor space"
+      "Recently renovated",
+      "Family-owned and operated"
     ],
     "admin": ["Visited By Seniorly"],
     "respiteAllowed": {

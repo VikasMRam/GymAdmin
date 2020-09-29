@@ -6,7 +6,7 @@ import { prop } from 'styled-tools';
 import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import pad from 'sly/web/components/helpers/pad';
-import Block from 'sly/web/components/atoms/Block';
+import { Block } from 'sly/common/components/atoms';
 
 const Wrapper = styled.div`
   background-color: ${palette('filler')};
@@ -27,12 +27,12 @@ PaddedBlock.displayName = 'PaddedBlock';
 const getBarWidth = (current, limit) => (current / limit) * 100;
 
 const ProgressBar = ({ label, palette, totalSteps, currentStep, className }) => (
-  <div className={className}>
+  <Block className={className}>
     {label && <PaddedBlock size="tiny" weight="bold" palette="grey">{currentStep} OF {totalSteps}</PaddedBlock>}
     <Wrapper palette={palette}>
       <Bar palette={palette} width={getBarWidth(currentStep, totalSteps)} />
     </Wrapper>
-  </div>
+  </Block>
 );
 
 ProgressBar.propTypes = {

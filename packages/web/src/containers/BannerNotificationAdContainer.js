@@ -1,15 +1,13 @@
 import React, { PureComponent } from 'react';
 import { oneOf, func, string, bool, object } from 'prop-types';
-import styled from 'styled-components';
 
 import { isBrowser } from 'sly/web/config';
-import { key } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { Link } from 'sly/common/components/atoms';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
-import { ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
+import { ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_BANNER_DISMISSED } from 'sly/web/constants/wizards/assessment';
 import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import pad from 'sly/web/components/helpers/pad';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -17,7 +15,6 @@ import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAge
 import ImportantCovid19UpdatesStepContainer from 'sly/web/containers/ImportantCovid19UpdatesStepContainer';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import { textDecoration } from 'sly/web/components/helpers/text';
-
 
 const PaddedBannerNotification = pad(BannerNotification, 'large');
 
@@ -153,6 +150,13 @@ export default class BannerNotificationAdContainer extends PureComponent {
   };
 
   handleCloseBanner = () => {
+    const { type } = this.props;
+
+    SlyEvent.getInstance().sendEvent({
+      action: 'dismiss-banner',
+      category: `BannerNotificationAd-${type}`,
+    });
+    localStorage.setItem(ASSESSMENT_WIZARD_BANNER_DISMISSED, ASSESSMENT_WIZARD_BANNER_DISMISSED);
     this.setState({
       showBanner: false,
     });
@@ -168,7 +172,10 @@ export default class BannerNotificationAdContainer extends PureComponent {
       modalMessagePlaceholder,
       showBanner,
     } = this.state;
-    const completedAssessment = isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED);
+    // hide banner in SSR and let client side show or hide depending on localStorage
+    const completedAssessment = isBrowser ?
+      !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED) || !!localStorage.getItem(ASSESSMENT_WIZARD_BANNER_DISMISSED) :
+      true;
     const BannerComponent = noMarginBottom ? BannerNotification : PaddedBannerNotification;
 
     return (

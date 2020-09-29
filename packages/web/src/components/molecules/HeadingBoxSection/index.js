@@ -27,7 +27,7 @@ const StyledSection = filterProps(styled(Block)`
 const HeadingBlock = filterProps(styled(Heading)`
   padding-left: ${ifProp('hasNoBodyPadding', size('spacing.xLarge'), 0)};
   padding-right: ${ifProp('hasNoBodyPadding', size('spacing.xLarge'), 0)};
-  padding-bottom: ${ifProp('hasNoHr', size('spacing.xLarge'), 0)};
+  padding-bottom: ${size('spacing.xLarge')};
 `);
 HeadingBlock.displayName = 'HeadingBlock';
 

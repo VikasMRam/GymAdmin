@@ -4,34 +4,31 @@ import { storiesOf } from '@storybook/react';
 import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
+const noInfoCommunity = {
+  ...RhodaGoldmanPlaza,
+  propInfo: {},
+};
 
-const {
-  name, propInfo,
-} = RhodaGoldmanPlaza;
-const {
-  communityDescription, staffDescription, residentDescription,
-} = propInfo;
+const noInfoLicenseCommunity = {
+  ...RhodaGoldmanPlaza,
+  propInfo: {
+    licenseUrl: 'https://www.seniorly.com',
+  },
+};
 
 storiesOf('Organisms|CommunityDetails', module)
-  .add('onlyNameCommunityDescription', () => (
+  .add('default', () => (
     <CommunityDetails
-      communityName={name}
-      communityDescription={communityDescription}
+      community={RhodaGoldmanPlaza}
     />
   ))
-  .add('onlyName,CommunityDescriptionAndStaffDescription', () => (
+  .add('no data', () => (
     <CommunityDetails
-      communityName={name}
-      communityDescription={communityDescription}
-      staffDescription={staffDescription}
+      community={noInfoCommunity}
     />
   ))
-  .add('allProperties', () => (
+  .add('no data and license info', () => (
     <CommunityDetails
-      communityName={name}
-      communityDescription={communityDescription}
-      staffDescription={staffDescription}
-      residentDescription={residentDescription}
+      community={noInfoLicenseCommunity}
     />
-  ))
-  .add('onlyName', () => <CommunityDetails communityName={name} />);
+  ));

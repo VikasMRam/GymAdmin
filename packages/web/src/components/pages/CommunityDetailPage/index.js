@@ -33,18 +33,15 @@ import {
 } from 'sly/web/components/templates/CommunityDetailPageTemplate';
 // import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import Section from 'sly/web/components/molecules/Section';
-import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
+import CommunityAbout from 'sly/web/components/organisms/CommunityAbout';
 import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
-import CommunityAmenities from 'sly/web/components/organisms/CommunityAmenities';
+import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
-import CommunityCareService from 'sly/web/components/organisms/CommunityCareService';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
-import UnhydratedGetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
@@ -53,10 +50,8 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
 import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
-import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
 import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
-import UnhydratedCommunityAddReviewButtonContainer from 'sly/web/containers/CommunityAddReviewButtonContainer';
 import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
 import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
 import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
@@ -72,15 +67,11 @@ const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer,
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
-const OfferNotification = withHydration(UnhydratedOfferNotification);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
-const GetCurrentAvailabilityContainer = withHydration(UnhydratedGetCurrentAvailabilityContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
-const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
-const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
-const CommunityAddReviewButtonContainer = withHydration(UnhydratedCommunityAddReviewButtonContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
+const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
 // const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
@@ -113,10 +104,6 @@ const IconItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const StyledOfferNotification = styled(OfferNotification)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
   margin-bottom: ${ifProp('extraBottomMargin', size('spacing.xxxLarge'), size('spacing.xLarge'))};
 `;
@@ -126,10 +113,6 @@ const StyledSection = styled(Section)`
 `;
 
 const StyledButton = styled(Button)`
-  width: 100%;
-  margin-top: ${size('spacing.xLarge')};
-`;
-const StyledLeaveReviewButton = styled(CommunityAddReviewButtonContainer)`
   width: 100%;
   margin-top: ${size('spacing.xLarge')};
 `;
@@ -143,11 +126,6 @@ const EventsWrapper = styled(CollapsibleBlock)`
     grid-template-columns: 50% 50%;
     grid-column-gap: ${size('layout.gutter')};
   }
-`;
-
-const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
-  width: 100%;
-  margin-top: ${size('spacing.xLarge')};
 `;
 
 const StickToTop = styled.div`
@@ -222,9 +200,6 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices,
-      promoDescription,
-      promoTitle,
       covidInfoDescription,
       covidInfoTitle,
       communityInsights,
@@ -311,23 +286,13 @@ export default class CommunityDetailPage extends Component {
                   <CommunityMediaGalleryContainer />
                 </Gallery>
                 <StyledCommunitySummary isAdmin={user && user.admin} />
-                {(promoDescription || promoTitle) && (
-                  <StyledOfferNotification
-                    palette="warning"
-                    title={promoTitle}
-                    description={promoDescription}
-                    hasLearnMore
-                    community={community}
-                    hasAlreadyRequested={isAlreadyPricingRequested}
-                  />
-                )}
                 {(covidInfoDescription || covidInfoTitle) && (
                   <Box pad="xLarge">
                     <Heading size="subtitle" level="subtitle" pad="xLarge">
                       COVID-19 Policy at {name}
                     </Heading>
                     {covidInfoTitle &&
-                      <Block weight="bold" pad="regular">
+                      <Block weight="medium" pad="regular">
                         {covidInfoTitle}
                       </Block>
                     }
@@ -399,20 +364,12 @@ export default class CommunityDetailPage extends Component {
                 {/* <AdWrapper> */}
                 {/* <CommunityProfileAdTileContainer type="getOffer" community={community} /> */}
                 {/* </AdWrapper> */}
-                {!isActiveAdult &&
-                  <StyledHeadingBoxSection
-                    heading={`Get Availability at ${name}`}
-                    id="availability"
-                  >
-                    <GetCurrentAvailabilityContainer hasAlreadyRequestedPricing={isAlreadyPricingRequested} />
-                  </StyledHeadingBoxSection>
-                }
 
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||
                   staffDescription || residentDescription || ownerExperience) && (
-                  <StyledHeadingBoxSection heading={`Details on ${name}`}>
-                    <CommunityDetails
+                  <StyledHeadingBoxSection heading={`About ${name}`}>
+                    <CommunityAbout
                       id={community.id}
                       communityName={name}
                       communityDescription={communityDescription}
@@ -425,23 +382,33 @@ export default class CommunityDetailPage extends Component {
                       twilioNumber={twilioNumber}
                       guideUrl={guideUrl}
                       communityUser={community.user}
-                      licensingInfo={rgsAux.stateLicensingWebsite}
                       isActiveAdult={isActiveAdult}
+                      pad="large"
+                    />
+                    <Hr />
+                    <Heading pad="large" level="subtitle" size="body">
+                      Have a question about this community?
+                    </Heading>
+                    <AskAgentQuestionButtonContainer
+                      ghost
+                      width="100%"
+                      community={community}
+                      type="services"
+                      ctaText="Ask a Question"
                     />
                   </StyledHeadingBoxSection>
                 )}
+
+                <StyledHeadingBoxSection heading="Amenities and Services">
+                  <CommunityDetails community={community} />
+                </StyledHeadingBoxSection>
+
                 {!isActiveAdult &&
                   <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </StyledHeadingBoxSection>
                 }
 
-                {partnerAgent && !isActiveAdult && (
-                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert for ${name}`}>
-                    <CommunityAgentSectionContainer agent={partnerAgent} />
-                    <StyledAskAgentButton community={community} type="services" ctaText="Ask a Question" />
-                  </StyledHeadingBoxSection>
-                )}
                 {!isActiveAdult &&
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
@@ -472,35 +439,12 @@ export default class CommunityDetailPage extends Component {
                     ))}
                   </StyledHeadingBoxSection>
                 )}
-                {careServices &&
-                  careServices.length > 0 && (
-                    <StyledHeadingBoxSection heading={`Care Services at ${name}`}>
-                      <CommunityCareService careServices={careServices} />
-                      {!isActiveAdult && <StyledAskAgentButton
-                        community={community}
-                        type="services"
-                        ctaText={'Ask' +
-                      ' About Care Services'}
-                      />}
-                    </StyledHeadingBoxSection>
-                  )}
-                <StyledHeadingBoxSection heading={`Amenities at ${name}`}>
-                  <CommunityAmenities community={community} />
-                  {!isActiveAdult && <StyledAskAgentButton
-                    community={community}
-                    type="amenities"
-                    ctaText={'Ask' +
-                  ' About Amenities'}
-                  />}
-
-                </StyledHeadingBoxSection>
 
                 <StyledHeadingBoxSection
                   heading={`Reviews at ${name}`}
                   id="reviews"
                 >
                   <CommunityReviewsContainer />
-                  <StyledLeaveReviewButton>Write a Review</StyledLeaveReviewButton>
                 </StyledHeadingBoxSection>
 
                 <CommunityQuestionAnswersContainer />

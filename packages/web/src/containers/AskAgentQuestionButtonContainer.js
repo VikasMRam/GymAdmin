@@ -35,7 +35,7 @@ export default class AskAgentQuestionButtonContainer extends Component {
     return (
       <AskAgentQuestionContainer type={type} entityId={community.id}>
         {askAgent => (
-          <Button {...this.props} onClick={askAgent} ghost={requestSent} disabled={requestSent}>
+          <Button {...this.props} onClick={askAgent} disabled={requestSent}>
             {ctaText || children}
           </Button>
         )}

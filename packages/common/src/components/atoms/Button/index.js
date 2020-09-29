@@ -123,7 +123,7 @@ export default class Button extends Component {
     }
     if (ghost) {
       if (secondary) {
-        props.palette = 'grey';
+        props.palette = 'slate';
         props.variation = disabled ? 'filler' : 'base';
       } else if (disabled) {
         props.palette = 'primary';

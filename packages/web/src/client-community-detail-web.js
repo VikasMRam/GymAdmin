@@ -6,7 +6,6 @@ import ModalContainer from 'sly/web/containers/ModalContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import CommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
 import CommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
-import OfferNotification from 'sly/web/components/molecules/OfferNotification';
 import GetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 import TrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
 import GetCurrentAvailabilityContainer from 'sly/web/containers/GetCurrentAvailabilityContainer';
@@ -47,7 +46,6 @@ partiallyHydrateClient(
     PageEventsContainer,
     CommunityMediaGalleryContainer,
     CommunitySummaryContainer,
-    OfferNotification,
     GetCustomPricingButtonContainer,
     TrackedSimilarCommunitiesContainer,
     GetCurrentAvailabilityContainer,
