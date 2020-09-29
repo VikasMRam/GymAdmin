@@ -1,3 +1,4 @@
+export Location from './Location';
 export Intro from './Intro';
 export Who from './Who';
 export Feeling from './Feeling';
@@ -17,4 +18,3 @@ export Products from './Products';
 export Services from './Services';
 export WorkingWith from './WorkingWith';
 /* End v1.1 steps */
-
