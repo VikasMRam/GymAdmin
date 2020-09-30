@@ -173,6 +173,7 @@ export default class DashboardCommunityDetailsPage extends Component {
 
     const clientsSectionFilters = {
       'filter[community]': community.id,
+      client_type: match.params.clientType,
     };
 
     const notifications =  [];
