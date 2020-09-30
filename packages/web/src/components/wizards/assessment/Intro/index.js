@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -25,7 +25,7 @@ const StyledField = styled(Field)`
 `;
 
 const Intro = ({
-  handleSubmit, showSkipOption,
+  handleSubmit, showSkipOption, skipOptionText,
 }) => (
   <Wrapper>
     <Box>
@@ -50,7 +50,7 @@ const Intro = ({
             inputValue="no-thanks"
             ghost
           >
-            No thanks, I just want pricing
+            {skipOptionText}
           </StyledField>
         }
       </StyledForm>
@@ -61,6 +61,7 @@ const Intro = ({
 Intro.propTypes = {
   handleSubmit: func.isRequired,
   showSkipOption: bool,
+  skipOptionText: string,
 };
 
 export default Intro;
