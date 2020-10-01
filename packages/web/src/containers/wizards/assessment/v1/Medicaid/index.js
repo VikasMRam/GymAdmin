@@ -20,7 +20,6 @@ const ReduxForm = reduxForm({
 
 @withRouter
 @query('createAction', 'createUuidAction')
-@query('updateUuidAux', 'updateUuidAux')
 
 export default class MedicaidFormContainer extends Component {
   static propTypes = {

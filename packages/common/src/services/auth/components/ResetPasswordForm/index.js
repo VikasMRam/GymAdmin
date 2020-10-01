@@ -28,7 +28,7 @@ const ResetPasswordForm = ({
     </Button>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <Hr />
-    <Block align="center" direction="row" size="caption">
+    <Block display="flex" align="center" direction="row" size="caption">
       Remember your password?&nbsp;&nbsp;
       <ButtonLink palette="primary" size="caption" onClick={onLoginClick}>Sign in</ButtonLink>
     </Block>

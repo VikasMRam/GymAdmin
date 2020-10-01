@@ -20,7 +20,9 @@ const CreatePasswordForm = ({
     />
     <Button type="submit" pad="large" width="100%" disabled={submitting || invalid}>Save Password</Button>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
-    <ButtonLink onClick={onDoThisLaterClick} align="center" palette="primary" size="caption">Skip for now</ButtonLink>
+    <ButtonLink onClick={onDoThisLaterClick} display="flex" align="center" palette="primary" size="caption">
+      Skip for now
+    </ButtonLink>
   </Form>
 );
 

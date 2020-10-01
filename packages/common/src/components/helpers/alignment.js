@@ -6,7 +6,7 @@ import { isString } from 'sly/common/services/helpers/utils';
 
 export const withAlign = ({
   children, direction, align, verticalAlign, position,
-  top, bottom, left, right, display,
+  top, bottom, left, right, display, alignItems,
 }) => {
   // when only align is given without display flex
   // treat children like block elements, like normal divs
@@ -16,6 +16,7 @@ export const withAlign = ({
   let textStyles = {};
   let styles = {
     flexDirection: direction,
+    alignItems,
   };
 
   if (isString(children) && align) {

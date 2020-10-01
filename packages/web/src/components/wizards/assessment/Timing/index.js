@@ -1,38 +1,20 @@
 import React from 'react';
 import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
 import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box, Block } from 'sly/web/components/atoms';
-import ProgressBar from 'sly/web/components/molecules/ProgressBar';
+import { Heading, Box } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-
-const PaddedProgressBar = pad(ProgressBar);
-
-const PaddedHeading = pad(Heading, 'large');
-PaddedHeading.displayName = 'PaddedHeading';
-
-const PaddedBlock = pad(Block);
-PaddedBlock.displayName = 'PaddedBlock';
-
-const StyledTipBox = styled(TipBox)`
-  height: fit-content;
-`;
 
 const Timing = ({
   handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
 }) => (
   <div>
-    <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={1} />
-    </Wrapper>
     <Wrapper hasSecondColumn={hasTip}>
       <Box>
-        <PaddedHeading level="subtitle" weight="medium">Where are you in your senior living search?</PaddedHeading>
+        <Heading level="subtitle" weight="medium" padding="large">Where are you in your senior living search?</Heading>
         <form onSubmit={handleSubmit}>
           <Field
             singleChoice
@@ -46,9 +28,9 @@ const Timing = ({
         </form>
       </Box>
       {hasTip &&
-        <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+        <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
           This will help us understand and support you wherever you are in your search.
-        </StyledTipBox>
+        </TipBox>
       }
     </Wrapper>
   </div>

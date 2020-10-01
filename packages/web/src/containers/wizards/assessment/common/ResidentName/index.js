@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { Budget } from 'sly/web/components/wizards/assessment';
-import { createValidator, required } from 'sly/web/services/validation';
-
-const validate = createValidator({
-  budget: [required],
-});
+import { ResidentName } from 'sly/web/components/wizards/assessment';
 
 const ReduxForm = reduxForm({
-  form: 'BudgetForm',
+  form: 'ResidentNameForm',
   destroyOnUnmount: false,
-  validate,
-})(Budget);
+})(ResidentName);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class BudgetFormContainer extends Component {
+export default class ResidentNameFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
+    whatToDoNext: string,
+    onSkipClick: func.isRequired,
+    stepName: string.isRequired,
   };
 
+  static defaultProps = {
+    stepName: 'step-12:ResidentName',
+  };
+
+  componentDidMount() {
+    const { whatToDoNext, onSkipClick } = this.props;
+
+    if (whatToDoNext === 'no-thanks') {
+      onSkipClick();
+    }
+  }
+
   handleSubmit = (data) => {
-    const { createAction, location: { pathname }, onSubmit } = this.props;
+    const { createAction, location: { pathname }, onSubmit, stepName } = this.props;
 
     return createAction({
       type: 'UUIDAction',
@@ -37,7 +46,7 @@ export default class BudgetFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-9:Budget',
+          stepName,
           wizardName: 'assessmentWizard',
           data,
         },

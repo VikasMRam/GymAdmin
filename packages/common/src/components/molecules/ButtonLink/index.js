@@ -5,7 +5,7 @@ import { Block, Icon } from 'sly/common/components/atoms';
 
 const ButtonLink = ({ icon, palette, size, children, ...props }) => (
   <Block {...props}>
-    {icon && <Icon testID="Icon" icon={icon} palette={palette} size={size} />}
+    {icon && <Icon icon={icon} palette={palette} size={size} />}
     <Block display="inline" palette={palette} size={size}>{children}</Block>
   </Block>
 );

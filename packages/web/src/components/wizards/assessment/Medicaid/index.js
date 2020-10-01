@@ -1,27 +1,13 @@
 import React from 'react';
 import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
 import { MEDICAID_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-
-const PaddedProgressBar = pad(ProgressBar);
-
-const PaddedHeading = pad(Heading);
-PaddedHeading.displayName = 'PaddedHeading';
-
-const PaddedIconItem = pad(IconItem, 'large');
-
-const StyledTipBox = styled(TipBox)`
-  height: fit-content;
-`;
 
 const generateHeading = (whoNeedsHelp) => {
   switch (whoNeedsHelp) {
@@ -45,32 +31,29 @@ const generateHeading = (whoNeedsHelp) => {
 const Medicaid = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip,
 }) => (
-  <div>
-    <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={8} />
-    </Wrapper>
-    <Wrapper hasSecondColumn={hasTip}>
-      <Box>
-        <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp)}</PaddedHeading>
-        <form onSubmit={handleSubmit}>
-          <Field
-            options={MEDICAID_OPTIONS}
-            name="medicaid"
-            type="boxChoice"
-            align="left"
-            component={ReduxField}
-          />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
-      {hasTip &&
-        <StyledTipBox heading="YOU TYPICALLY QUALIFY IF:">
-          <PaddedIconItem icon="warning" iconPalette="slate" iconVariation="base">Asset limit in most states is $1,600 to $15,750.</PaddedIconItem>
-          <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
-        </StyledTipBox>
-      }
-    </Wrapper>
-  </div>
+  <Wrapper hasSecondColumn={hasTip}>
+    <Box>
+      <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
+      <form onSubmit={handleSubmit}>
+        <Field
+          options={MEDICAID_OPTIONS}
+          name="medicaid"
+          type="boxChoice"
+          align="left"
+          component={ReduxField}
+        />
+        <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+      </form>
+    </Box>
+    {hasTip &&
+      <TipBox heading="YOU TYPICALLY QUALIFY IF:" height="fit-content">
+        <IconItem icon="warning" iconPalette="slate" iconVariation="base" pad="large">
+          Asset limit in most states is $1,600 to $15,750.
+        </IconItem>
+        <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
+      </TipBox>
+    }
+  </Wrapper>
 );
 
 Medicaid.propTypes = {

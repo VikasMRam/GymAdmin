@@ -4,9 +4,9 @@ import { node, string } from 'prop-types';
 import { Box, Block } from 'sly/web/components/atoms';
 
 const TipBox = ({
-  heading, children, className,
+  heading, children, ...props
 }) => (
-  <Box palette="grey" background="slate.lighter-90" className={className}>
+  <Box {...props}>
     <Block pad="large" weight="bold" size="tiny" palette="primary" variation="base">{heading}</Block>
     {children}
   </Box>
@@ -15,7 +15,11 @@ const TipBox = ({
 TipBox.propTypes = {
   heading: string.isRequired,
   children: node,
-  className: string,
+};
+
+TipBox.defaultProps = {
+  palette: 'grey',
+  background: 'slate.lighter-90',
 };
 
 export default TipBox;

@@ -1,65 +1,48 @@
 import React from 'react';
 import { func, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
-import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
+import { Heading, Box, Grid } from 'sly/common/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-
-const PaddedHeading = pad(Heading);
-PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledTipBox = styled(TipBox)`
-  height: fit-content;
-`;
-
-const FieldsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: ${size('spacing.regular')}
-`;
-
-const PaddedField = pad(Field);
-PaddedField.displayName = 'PaddedField';
 
 const ResidentName = ({
   handleSubmit, onSkipClick, numberOfPeople, invalid, submitting, hasTip,
 }) => (
   <Wrapper hasSecondColumn={hasTip}>
     <Box>
-      <PaddedHeading level="subtitle" weight="medium">
+      <Heading level="subtitle" weight="medium" pad="xLarge">
         {numberOfPeople > 1 ?
           'What are the residents\' names?' :
           'What is the resident\'s name?'}
-      </PaddedHeading>
+      </Heading>
       <form onSubmit={handleSubmit}>
         {Array(numberOfPeople).fill().map((_, i) => (
-          <FieldsWrapper key={Symbol(i).toString()}>
-            <PaddedField
+          <Grid gap="regular" key={Symbol(i).toString()}>
+            <Field
               name={`firstName${numberOfPeople > 1 ? i + 1 : ''}`}
               type="text"
               label="First Name"
               component={ReduxField}
+              pad="xLarge"
             />
-            <PaddedField
+            <Field
               name={`lastName${numberOfPeople > 1 ? i + 1 : ''}`}
               type="text"
               label="Last Name"
               component={ReduxField}
+              pad="xLarge"
             />
-          </FieldsWrapper>
+          </Grid>
         ))}
         <Footer onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
     </Box>
     {hasTip &&
-      <StyledTipBox heading="WHY THIS IS IMPORTANT:">
+      <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
         We help every family as if they are our own.
-      </StyledTipBox>
+      </TipBox>
     }
   </Wrapper>
 );

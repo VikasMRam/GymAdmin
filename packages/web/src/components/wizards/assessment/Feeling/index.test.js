@@ -18,9 +18,9 @@ describe('Wizards|assessment - Steps|Feeling', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading')).toHaveLength(1);
+    expect(wrapper.find('Heading')).toHaveLength(1);
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+    expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
   it('renders without tip', () => {
@@ -28,9 +28,9 @@ describe('Wizards|assessment - Steps|Feeling', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading')).toHaveLength(1);
+    expect(wrapper.find('Heading')).toHaveLength(1);
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+    expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
   it('handles submit', () => {

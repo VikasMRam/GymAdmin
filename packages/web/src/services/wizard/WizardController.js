@@ -225,6 +225,7 @@ export default class WizardController extends Component {
       init,
       currentStep,
       currentStepIndex,
+      steps,
       next,
       previous,
       goto,

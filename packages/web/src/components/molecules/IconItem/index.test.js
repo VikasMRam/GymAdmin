@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import IconItem from 'sly/web/components/molecules/IconItem/index';
+import IconItem from '.';
 
 const defaultProps = {
   icon: 'favourite-light',
@@ -14,7 +14,7 @@ const wrap = (props = {}) =>
 describe('IconItem', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(true);
+    expect(wrapper.contains('test')).toBeTruthy();
   });
 
   it('renders IconItem', () => {

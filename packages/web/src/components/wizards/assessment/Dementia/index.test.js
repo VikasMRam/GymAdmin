@@ -20,9 +20,9 @@ describe('Wizards|assessment - Steps|Dementia', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Are your parents forgetful?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Are your parents forgetful?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+    expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
   it('renders without tip', () => {
@@ -30,9 +30,9 @@ describe('Wizards|assessment - Steps|Dementia', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Are your parents forgetful?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Are your parents forgetful?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+    expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
   it('renders correct heading for myself-and-spouse', () => {
@@ -40,7 +40,7 @@ describe('Wizards|assessment - Steps|Dementia', () => {
       whoNeedsHelp: 'myself-and-spouse',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Are you and your spouse forgetful?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Are you and your spouse forgetful?')).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -48,7 +48,7 @@ describe('Wizards|assessment - Steps|Dementia', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Are you forgetful?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Are you forgetful?')).toBeTruthy();
   });
 
   it('renders correct heading for other options', () => {
@@ -56,7 +56,7 @@ describe('Wizards|assessment - Steps|Dementia', () => {
       whoNeedsHelp: 'friend',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Is your friend(s) forgetful?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Is your friend(s) forgetful?')).toBeTruthy();
   });
 
   it('handles submit', () => {

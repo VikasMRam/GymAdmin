@@ -70,7 +70,7 @@ describe('Header', () => {
       onMenuIconClick,
     };
     const wrapper = wrap(props);
-    const iconMenu = wrapper.find('[testId="MenuIcon"]');
+    const iconMenu = wrapper.find('[data-testid="MenuIcon"]');
 
     iconMenu.simulate('click');
     expect(onMenuIconClick).toHaveBeenCalled();

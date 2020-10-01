@@ -74,6 +74,7 @@ const Field = ({
   showCharacterCount,
   options,
   required,
+  pad,
   ...props
 }) => {
   const inputProps = {
@@ -133,7 +134,7 @@ const Field = ({
 
   return (
     <Wrapper
-      pad="large"
+      pad={pad}
       display="flex"
       position="relative"
       direction={renderInputFirst ? 'row' : 'column'}
@@ -269,11 +270,13 @@ Field.propTypes = {
   widthSpacing: string,
   hideValue: bool,
   options: arrayOf(object),
+  pad: string.isRequired,
 };
 
 Field.defaultProps = {
   type: 'text',
   widthSpacing: 'tabletLayout.col3',
+  pad: 'large',
 };
 
 export default Field;

@@ -20,7 +20,7 @@ describe('Wizards|assessment - Steps|Location', () => {
 
     expect(wrapper.find('Heading').contains('Where are you looking for care?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'locationSearch' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+    expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
   it('renders without tip', () => {
@@ -30,7 +30,7 @@ describe('Wizards|assessment - Steps|Location', () => {
 
     expect(wrapper.find('Heading').contains('Where are you looking for care?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'locationSearch' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+    expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
   it('handles submit', () => {

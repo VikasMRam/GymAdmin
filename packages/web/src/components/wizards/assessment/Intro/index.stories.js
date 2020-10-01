@@ -12,4 +12,5 @@ const IntroContainer = reduxForm({
 })(Intro);
 
 storiesOf('Wizards|assessment/Steps/Intro', module)
-  .add('default', () => <IntroContainer handleSubmit={withPreventDefault(action('form submitted'))} />);
+  .add('default', () => <IntroContainer handleSubmit={withPreventDefault(action('form submitted'))} />)
+  .add('showSkipOption', () => <IntroContainer handleSubmit={withPreventDefault(action('form submitted'))} showSkipOption />);

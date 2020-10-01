@@ -30,9 +30,9 @@ describe('Wizards|assessment - Steps|Budget', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+    expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
   it('renders without tip', () => {
@@ -40,9 +40,9 @@ describe('Wizards|assessment - Steps|Budget', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+    expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
   it('renders correct heading for parents', () => {
@@ -50,7 +50,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       whoNeedsHelp: 'parents',
     });
 
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`)).toBeTruthy();
   });
 
   it('renders correct heading for myself-and-spouse', () => {
@@ -58,7 +58,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       whoNeedsHelp: 'myself-and-spouse',
     });
 
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do you and your spouse have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do you and your spouse have access to any of these benefits?`)).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -66,7 +66,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('PaddedHeading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do you have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do you have access to any of these benefits?`)).toBeTruthy();
   });
 
   it('handles submit', () => {

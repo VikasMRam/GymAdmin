@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ProgressBar from 'sly/web/components/molecules/ProgressBar';
+import ProgressBar from '.';
 
 const totalSteps = 5;
 const defaultProps = {
@@ -18,7 +18,7 @@ describe('ProgressBar', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Bar')).toHaveLength(1);
+    expect(wrapper.find('Block[data-testid="Bar"]')).toHaveLength(1);
   });
 
   it('renders with label', () => {
@@ -26,8 +26,7 @@ describe('ProgressBar', () => {
       label: true,
     });
 
-    expect(wrapper.find('Bar')).toHaveLength(1);
-    expect(wrapper.find('PaddedBlock')).toHaveLength(1);
-    expect(wrapper.find('PaddedBlock').text()).toBe(`1 OF ${totalSteps}`);
+    expect(wrapper.find('Block[data-testid="Bar"]')).toHaveLength(1);
+    expect(wrapper.find('Block[data-testid="Label"]').text()).toBe(`1 OF ${totalSteps}`);
   });
 });

@@ -50,7 +50,7 @@ const AgentSignupForm = ({
       By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.
     </Block>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
-    <Block size="caption" align="center" direction="row">
+    <Block display="flex" size="caption" align="center" direction="row">
       Already have an account?&nbsp;&nbsp;
       <ButtonLink palette="primary" size="caption" onClick={onLoginClicked}>Log in</ButtonLink>
     </Block>

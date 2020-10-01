@@ -1,59 +1,47 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
-import pad from 'sly/web/components/helpers/pad';
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box, Icon } from 'sly/common/components/atoms';
+import { Heading, Box, Icon, Form, Block } from 'sly/common/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { textAlign } from 'sly/web/components/helpers/text';
-
-const StyledForm = textAlign(styled.form``);
-StyledForm.displayName = 'StyledForm';
-
-const PaddedHeading = pad(Heading);
-PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledIcon = textAlign(pad(Icon));
-StyledIcon.displayName = 'StyledIcon';
-
-const StyledField = styled(Field)`
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
 
 const Intro = ({
   handleSubmit, showSkipOption, skipOptionText,
 }) => (
   <Wrapper>
     <Box>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledIcon icon="logo" palette="primary" size="superHero" />
-        <PaddedHeading level="subtitle" weight="medium">Complete this 3-minute assessment tool to get personalized senior living and care options.</PaddedHeading>
-        <StyledField
+      <Form onSubmit={handleSubmit}>
+        <Block align="center" display="flex" direction="column">
+          <Icon icon="logo" palette="primary" size="superHero" pad="xLarge" />
+          <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
+            Complete this 3-minute assessment tool to get personalized senior living and care options.
+          </Heading>
+        </Block>
+        <Field
           name="whatToDoNext"
           type="button"
           buttonType="submit"
           component={ReduxField}
           inputValue="start"
+          pad={showSkipOption ? undefined : '0'}
         >
           Start
-        </StyledField>
+        </Field>
         {showSkipOption &&
-          <StyledField
+          <Field
             name="whatToDoNext"
             type="button"
             buttonType="submit"
             component={ReduxField}
             inputValue="no-thanks"
+            pad="0"
             ghost
           >
             {skipOptionText}
-          </StyledField>
+          </Field>
         }
-      </StyledForm>
+      </Form>
     </Box>
   </Wrapper>
 );
@@ -61,7 +49,11 @@ const Intro = ({
 Intro.propTypes = {
   handleSubmit: func.isRequired,
   showSkipOption: bool,
-  skipOptionText: string,
+  skipOptionText: string.isRequired,
+};
+
+Intro.defaultProps = {
+  skipOptionText: 'Skip',
 };
 
 export default Intro;

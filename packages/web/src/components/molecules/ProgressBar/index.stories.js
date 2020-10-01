@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ProgressBar from 'sly/web/components/molecules/ProgressBar';
+import ProgressBar from '.';
 
 storiesOf('Molecules|ProgressBar', module)
   .add('default', () => <ProgressBar totalSteps={5} />)

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import IconItem from 'sly/web/components/molecules/IconItem';
+import IconItem from '.';
 
 storiesOf('Molecules|IconItem', module)
   .add('default', () => <IconItem icon="favourite-light">100% free. They do not charge you.</IconItem>)

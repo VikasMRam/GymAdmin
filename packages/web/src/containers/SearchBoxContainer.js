@@ -219,7 +219,7 @@ export default class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { onCurrentLocation, address, ...props } = this.props;
+    const { onCurrentLocation, address, onTextChange, ...props } = this.props;
     const { isTextboxInFocus, suggestions } = this.state;
 
     if (this.getCurrentValue()) {

@@ -13,25 +13,32 @@ import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,
   ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
+  ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS,
 } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 /* Wizard Step Imports */
+import {
+  ADL,
+  Auth,
+  Budget,
+  End,
+  ResidentName,
+  Timing,
+  Who,
+  Location,
+} from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
-import Timing from 'sly/web/containers/wizards/assessment/v1_1/Timing';
 import WorkingWith from 'sly/web/containers/wizards/assessment/v1_1/WorkingWith';
-import Who from 'sly/web/containers/wizards/assessment/v1_1/Who';
 import Age from 'sly/web/containers/wizards/assessment/v1_1/Age';
 import Products from 'sly/web/containers/wizards/assessment/v1_1/Products';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
 import LocalSearch from 'sly/web/containers/wizards/assessment/v1_1/LocalSearch';
-import ADL from 'sly/web/containers/wizards/assessment/v1_1/ADL';
-import Budget from 'sly/web/containers/wizards/assessment/v1_1/Budget';
 import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
-import Auth from 'sly/web/containers/wizards/assessment/v1_1/Auth';
 import LocalExpert from 'sly/web/containers/wizards/assessment/v1_1/LocalExpert';
-import ResidentName from 'sly/web/containers/wizards/assessment/v1_1/ResidentName';
-import End from 'sly/web/containers/wizards/assessment/v1_1/End';
+/* Wizard Step Imports - End */
+import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
+import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 
 @withWS
 @withRedirectTo
@@ -178,146 +185,160 @@ export default class AssessmentWizardV11 extends Component {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       skipOptionText = 'No thanks, I just want pricing.';
     }
+    const hadNoLocation = !city || !state;
 
-    if (!city || !state) {
-      throw Error('community or state and city is required');
-    }
-    const adTile = getWizardEndAd({ community, toc, city });
     return (
-      <section className={className}>
-        <WizardController
-          formName="assessmentWizard"
-          onComplete={this.handleComplete}
-          onStepChange={this.handleStepChange}
-          onPrevious={this.handlePrevious}
-          onNext={this.handleNext}
-        >
-          {({
-            data, next, previous, ...props
-          }) => (
-            <WizardSteps {...props}>
-              <WizardStep
-                component={Intro}
-                name="Intro"
-                showSkipOption={showSkipOption}
-                skipOptionText={skipOptionText}
-              />
-              <WizardStep
-                component={Timing}
-                name="Timing"
-                hasTip={hasTip}
-              />
-              <WizardStep
-                component={WorkingWith}
-                name="WorkingWith"
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Who}
-                name="Who"
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Age}
-                name="Age"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={LocalSearch}
-                name="LocalSearch"
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={ADL}
-                name="ADL"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Budget}
-                name="Budget"
-                whoNeedsHelp={data.lookingFor}
-                city={city}
-                state={state}
-                amount={amount}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Medicaid}
-                name="Medicaid"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Auth}
-                name="Auth"
-                signUpHeading={data.whatToDoNext === 'start' ?
-                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                onAuthSuccess={next}
-                community={community}
-              />
-              <WizardStep
-                component={ResidentName}
-                name="ResidentName"
-                numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
-                hasTip={hasTip}
-                onSkipClick={next}
-                whatToDoNext={data.whatToDoNext}
-              />
-              <WizardStep
-                component={LocalExpert}
-                name="LocalExpert"
-                agent={agent}
-                hasNoAgent={hasNoAgent}
-                community={community}
-                onSkipClick={next}
-                city={city}
-              />
-              <WizardStep
-                component={Services}
-                name="Services"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={Products}
-                name="Products"
-                whoNeedsHelp={data.lookingFor}
-                hasTip={hasTip}
-                onSkipClick={next}
-                onBackClick={previous}
-              />
-              <WizardStep
-                component={End}
-                name="End"
-                agent={agent}
-                hasNoAgent={hasNoAgent}
-                community={community}
-                city={city}
-                adTile={adTile}
-              />
-            </WizardSteps>
-          )}
-        </WizardController>
-      </section>
+      <WizardController
+        formName="assessmentWizard"
+        onComplete={this.handleComplete}
+        onStepChange={this.handleStepChange}
+        onPrevious={this.handlePrevious}
+        onNext={this.handleNext}
+      >
+        {({
+          data, next, previous, currentStep, ...props
+        }) => {
+          if (data.location) {
+            [city, state] = data.location.displayText.split(', ');
+          }
+          return (
+            <section className={className}>
+              {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
+                <Wrapper>
+                  <ProgressBar label pad="xLarge" totalSteps={hadNoLocation ? 9 : 8} currentStep={props.currentStepIndex} />
+                </Wrapper>
+              }
+              <WizardSteps {...props}>
+                <WizardStep
+                  component={Intro}
+                  name="Intro"
+                  showSkipOption={showSkipOption}
+                  skipOptionText={skipOptionText}
+                />
+                {hadNoLocation &&
+                  <WizardStep
+                    component={Location}
+                    name="Location"
+                    hasTip={hasTip}
+                  />
+                }
+                <WizardStep
+                  component={Timing}
+                  name="Timing"
+                  hasTip={hasTip}
+                />
+                <WizardStep
+                  component={WorkingWith}
+                  name="WorkingWith"
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Who}
+                  name="Who"
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Age}
+                  name="Age"
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={LocalSearch}
+                  name="LocalSearch"
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={ADL}
+                  name="ADL"
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Budget}
+                  name="Budget"
+                  whoNeedsHelp={data.lookingFor}
+                  city={city}
+                  state={state}
+                  amount={amount}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Medicaid}
+                  name="Medicaid"
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Auth}
+                  name="Auth"
+                  signUpHeading={data.whatToDoNext === 'start' ?
+                    'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                    : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                  onAuthSuccess={next}
+                  community={community}
+                />
+                <WizardStep
+                  component={ResidentName}
+                  name="ResidentName"
+                  numberOfPeople={data.lookingFor === 'parents' || data.lookingFor === 'myself-and-spouse' ? 2 : 1}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  whatToDoNext={data.whatToDoNext}
+                />
+                <WizardStep
+                  component={LocalExpert}
+                  name="LocalExpert"
+                  agent={agent}
+                  hasNoAgent={hasNoAgent}
+                  community={community}
+                  onSkipClick={next}
+                  city={city}
+                />
+                <WizardStep
+                  component={Services}
+                  name="Services"
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Products}
+                  name="Products"
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={End}
+                  name="End"
+                  agent={agent}
+                  hasNoAgent={hasNoAgent}
+                  community={community}
+                  city={city}
+                  adTile={getWizardEndAd({ community, toc, city })}
+                />
+              </WizardSteps>
+            </section>
+          );
+        }}
+      </WizardController>
     );
   }
 }

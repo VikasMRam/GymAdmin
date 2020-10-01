@@ -8,7 +8,7 @@ import { community as communityProptype } from 'sly/common/propTypes/community';
 import agentPropType from 'sly/common/propTypes/agent';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading } from 'sly/web/components/atoms';
+import { Heading } from 'sly/common/components/atoms';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
@@ -49,7 +49,7 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent, adTile }) => (
           onSubmit={handleSubmit}
           heading={community ?
             `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for ${community.name}.` :
-            `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with your search in ${city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ')}.`
+            `You're all set! One of our Local Senior Living Experts will reach out shortly to assist you with your search${city ? ` in ${city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ')}` : ''}.`
           }
         />
       }

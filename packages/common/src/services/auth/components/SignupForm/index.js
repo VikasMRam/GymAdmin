@@ -61,17 +61,17 @@ const SignupForm = ({
       {submitButtonText}
     </Button>
     {/* TODO: this should reuse Tos and privacy molecule after Link is migrated for mobile */}
-    <Block pad="large" size="tiny" palette="slate" variation="filler">
+    <Block align="center" pad="large" size="tiny" palette="slate" variation="filler">
       By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.
     </Block>
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <Grid flow="row" gap="large" verticalAlign="middle">
-      <Block align="center" direction="row" size="caption">
+      <Block display="flex" align="center" direction="row" size="caption">
         Already have an account?&nbsp;&nbsp;
         <ButtonLink palette="primary" size="caption" onClick={onLoginClicked}>Log in</ButtonLink>
       </Block>
       {hasProviderSignup &&
-        <Block align="center" direction="row" size="caption">
+        <Block display="flex" align="center" direction="row" size="caption">
           Are you a community manager?&nbsp;&nbsp;
           <ButtonLink palette="primary" size="caption" onClick={onProviderClicked}>Click here</ButtonLink>
         </Block>

@@ -1,35 +1,40 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { CurrentLiving } from 'sly/web/components/wizards/assessment';
+import { Budget } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  currentLiving: [required],
+  budget: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'CurrentLivingForm',
+  form: 'BudgetForm',
   destroyOnUnmount: false,
   validate,
-})(CurrentLiving);
+})(Budget);
 
 @withRouter
 @query('createAction', 'createUuidAction')
 
-export default class CurrentLivingFormContainer extends Component {
+export default class BudgetFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
+    stepName: string.isRequired,
+  };
+
+  static defaultProps = {
+    stepName: 'step-9:Budget',
   };
 
   handleSubmit = (data) => {
-    const { createAction, location: { pathname }, onSubmit } = this.props;
+    const { createAction, location: { pathname }, onSubmit, stepName } = this.props;
 
     return createAction({
       type: 'UUIDAction',
@@ -37,7 +42,7 @@ export default class CurrentLivingFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'currentLiving',
+          stepName,
           wizardName: 'assessmentWizard',
           data,
         },

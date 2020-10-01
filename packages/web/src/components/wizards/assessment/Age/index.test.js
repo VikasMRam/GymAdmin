@@ -19,24 +19,24 @@ describe('Wizards|assessment - Steps|Age', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old is your parent(s)?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+    expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
   it('renders without tip', () => {
     const wrapper = wrap({
       hasTip: false,
     });
-    expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old is your parent(s)?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+    expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
   it('renders correct heading for parents', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('How old is your parent(s)?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old is your parent(s)?')).toBeTruthy();
   });
 
   it('renders correct heading for myself-and-spouse', () => {
@@ -44,7 +44,7 @@ describe('Wizards|assessment - Steps|Age', () => {
       whoNeedsHelp: 'myself-and-spouse',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('How old are you and your spouse?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old are you and your spouse?')).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -52,7 +52,7 @@ describe('Wizards|assessment - Steps|Age', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('How old are you?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old are you?')).toBeTruthy();
   });
 
   it('renders correct heading for friend', () => {
@@ -60,7 +60,7 @@ describe('Wizards|assessment - Steps|Age', () => {
       whoNeedsHelp: 'friend',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('How old is your friend?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old is your friend?')).toBeTruthy();
   });
 
   it('renders correct heading for other options', () => {
@@ -68,7 +68,7 @@ describe('Wizards|assessment - Steps|Age', () => {
       whoNeedsHelp: 'mom',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('How old is the person(s) you are searching for?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('How old is the person(s) you are searching for?')).toBeTruthy();
   });
 
   it('handles submit', () => {

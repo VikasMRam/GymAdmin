@@ -14,9 +14,10 @@ const StyledBlock = styled(Block)`
 const HrWithText = ({
   children, badgeText, palette, variation, badgeTextpalette, ...props
 }) => (
-  <Block {...props} direction="column" position="relative" paddingTop="xLarge" height={getKey('sizes.spacing.xxxLarge')}>
+  <Block {...props} height={getKey('sizes.spacing.xxxLarge')}>
     <Hr palette={palette} variation={variation} margin="0" />
     <StyledBlock
+      display="flex"
       direction="row"
       align="center"
       verticalAlign="middle"
@@ -25,6 +26,7 @@ const HrWithText = ({
     >
       {children && (
         <Block
+          display="flex"
           align="center"
           verticalAlign="middle"
           flex={1}
@@ -61,6 +63,13 @@ HrWithText.propTypes = {
   children: string,
   badgeText: string,
   hrRef: object,
+};
+
+HrWithText.defaultProps = {
+  display: 'flex',
+  direction: 'column',
+  position: 'relative',
+  paddingTop: 'xLarge',
 };
 
 export default HrWithText;

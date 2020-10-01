@@ -28,7 +28,9 @@ const ProviderFindCommunity = ({
       Continue
     </Button>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
-    <ButtonLink align="center" size="caption" palette="primary" onClick={onNotFound}>Can&apos;t find my community?</ButtonLink>
+    <ButtonLink display="flex" align="center" size="caption" palette="primary" onClick={onNotFound}>
+      Can&apos;t find my community?
+    </ButtonLink>
   </Form>
 );
 

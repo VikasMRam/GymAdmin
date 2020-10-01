@@ -5,8 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { query, withUser } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST, WIZARD_STEP_COMPLETED }
-  from 'sly/web/services/api/constants';
+import { CONSULTATION_REQUESTED, PROFILE_CONTACTED, PRICING_REQUEST, WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import userPropType from 'sly/common/propTypes/user';
 
@@ -22,6 +21,11 @@ export default class Auth extends Component {
     signUpHeading: string,
     onAuthSuccess: func,
     location: object.isRequired,
+    stepName: string.isRequired,
+  };
+
+  static defaultProps = {
+    stepName: 'step-11:Auth',
   };
 
   componentDidMount() {
@@ -33,11 +37,16 @@ export default class Auth extends Component {
   }
 
   handleAuthSuccess = () => {
-    const { createAction, location: { pathname }, community, user, onAuthSuccess } = this.props;
+    const { createAction, location: { pathname }, community, user, onAuthSuccess, stepName } = this.props;
     const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
       action: actionType,
+    });
+    SlyEvent.getInstance().sendEvent({
+      category: 'assessmentWizard',
+      action: 'stepCompleted',
+      label: stepName,
     });
     let actionInfo = {};
     if (community) {
@@ -67,7 +76,7 @@ export default class Auth extends Component {
           actionType: WIZARD_STEP_COMPLETED,
           actionPage: pathname,
           actionInfo: {
-            stepName: 'auth',
+            stepName,
             wizardName: 'assessmentWizard',
             data: actionInfo,
           },

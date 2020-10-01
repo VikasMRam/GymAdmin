@@ -20,9 +20,9 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('PaddedHeading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(1);
+    expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
   it('renders without tip', () => {
@@ -30,9 +30,9 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
-    expect(wrapper.find('StyledTipBox')).toHaveLength(0);
+    expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
   it('renders correct heading for myself-and-spouse', () => {
@@ -40,7 +40,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       whoNeedsHelp: 'myself-and-spouse',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Do you or your spouse qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Do you or your spouse qualify for Medicaid?')).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -48,7 +48,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Do you qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Do you qualify for Medicaid?')).toBeTruthy();
   });
 
   it('renders correct heading for other options', () => {
@@ -56,7 +56,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       whoNeedsHelp: 'friend',
     });
 
-    expect(wrapper.find('PaddedHeading').contains('Does your friend(s) qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Does your friend(s) qualify for Medicaid?')).toBeTruthy();
   });
 
   it('handles submit', () => {

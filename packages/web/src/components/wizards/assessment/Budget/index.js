@@ -1,32 +1,15 @@
 import React from 'react';
 import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
 
 import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
-import pad from 'sly/web/components/helpers/pad';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-
-const PaddedProgressBar = pad(ProgressBar);
-
-const PaddedHeading = pad(Heading, 'large');
-PaddedHeading.displayName = 'PaddedHeading';
-
-const PaddedIconItem = pad(IconItem, 'large');
-
-const PaddedBlock = pad(Block);
-PaddedBlock.displayName = 'PaddedBlock';
-
-const StyledTipBox = styled(TipBox)`
-  height: fit-content;
-`;
 
 const generateHeading = (whoNeedsHelp, amount, city, state) => {
   city = city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ');
@@ -52,34 +35,31 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 const Budget = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
 }) => (
-  <div>
-    <Wrapper>
-      <PaddedProgressBar label totalSteps={10} currentStep={7} />
-    </Wrapper>
-    <Wrapper hasSecondColumn={hasTip}>
-      <Box>
-        <PaddedHeading level="subtitle" weight="medium">{generateHeading(whoNeedsHelp, amount, city, state)}</PaddedHeading>
-        <PaddedBlock>Please select all that apply.</PaddedBlock>
-        <form onSubmit={handleSubmit}>
-          <Field
-            multiChoice
-            options={BUDGET_OPTIONS}
-            name="budget"
-            type="boxChoice"
-            align="left"
-            component={ReduxField}
-          />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
-      {hasTip &&
-        <StyledTipBox heading="DID YOU KNOW?">
-          <PaddedIconItem icon="favourite-light" iconPalette="slate" iconVariation="base">Senior living communities typically include an apartment or room, care and/or supervision, and 3-meals per day.</PaddedIconItem>
-          <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
-        </StyledTipBox>
-      }
-    </Wrapper>
-  </div>
+  <Wrapper hasSecondColumn={hasTip}>
+    <Box>
+      <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp, amount, city, state)}</Heading>
+      <Block pad="xLarge">Please select all that apply.</Block>
+      <form onSubmit={handleSubmit}>
+        <Field
+          multiChoice
+          options={BUDGET_OPTIONS}
+          name="budget"
+          type="boxChoice"
+          align="left"
+          component={ReduxField}
+        />
+        <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+      </form>
+    </Box>
+    {hasTip &&
+      <TipBox heading="DID YOU KNOW?" height="fit-content">
+        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base" pad="large">
+          Senior living communities typically include an apartment or room, care and/or supervision, and 3-meals per day.
+        </IconItem>
+        <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
+      </TipBox>
+    }
+  </Wrapper>
 );
 
 Budget.propTypes = {

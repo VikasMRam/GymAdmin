@@ -33,46 +33,50 @@ const groupTitles = {
 };
 
 const groupItemIcons = {
-  'Recently renovated': 'community-size-large',
-  'Family-owned and operated': 'family',
-  'Medication management': 'care',
-  'Meal preparation and service': 'food',
-  'Transportation arrangement': 'transportation',
+  'recently renovated': 'community-size-large',
+  'family-owned and operated': 'family',
+  'medication management': 'care',
+  'meal preparation and service': 'food',
+  'transportation arrangement': 'transportation',
   '24-hour supervision': 'security',
   '24-hour call system': 'phone',
-  'Coordination with health care providers': 'care',
-  'Housekeeping and linen services': 'laundry',
-  'Fitness programs': 'fitness',
-  'Community-sponsored activities': 'family',
-  'Move-in coordination': 'luggage',
-  'Planned day trips': 'transportation',
-  'Transportation arrangement(non-medical)': 'transportation',
-  Cable: 'tv',
-  Wifi: 'wifi',
-  Internet: 'wifi',
-  Telephone: 'phone',
-  'Air-conditioning': 'ac',
-  Kitchenettes: 'kitchen',
-  'Dining room': 'food',
-  'Restaurant-style dining': 'food',
-  'Outdoor patio': 'outdoor',
-  Garden: 'flower',
-  'Beauty salon': 'favourite-light',
-  'Located close to shopping centers': 'shopping',
+  'coordination with health care providers': 'care',
+  'housekeeping and linen services': 'laundry',
+  'fitness programs': 'fitness',
+  'community-sponsored activities': 'family',
+  'move-in coordination': 'luggage',
+  'planned day trips': 'transportation',
+  'transportation arrangement(non-medical)': 'transportation',
+  cable: 'tv',
+  wifi: 'wifi',
+  internet: 'wifi',
+  telephone: 'phone',
+  'air-conditioning': 'ac',
+  kitchenettes: 'kitchen',
+  'dining room': 'food',
+  'restaurant-style dining': 'food',
+  'outdoor patio': 'outdoor',
+  garden: 'flower',
+  'beauty salon': 'favourite-light',
+  'located close to shopping centers': 'shopping',
 };
 
 const CommunityDetails = ({ community }) => {
-  const { propInfo, name, address: { state } } = community;
-  const { licenseUrl } = propInfo;
+  const { propInfo, name, address: { state }, rgsAux } = community;
+  let { licenseUrl } = propInfo;
+
+  if (rgsAux.stateLicensingWebsite) {
+    licenseUrl = rgsAux.stateLicensingWebsite;
+  }
 
   const groupComponents = groupKeys.map((k) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
 
-      const icons = keys.map(k => groupItemIcons[k] ? (
+      const icons = keys.map(k => groupItemIcons[k.toLowerCase()] ? (
         <IconItem
           key={k}
-          icon={groupItemIcons[k] || 'check'}
+          icon={groupItemIcons[k.toLowerCase()] || 'check'}
           iconPalette="slate"
           iconVariation="base"
         >

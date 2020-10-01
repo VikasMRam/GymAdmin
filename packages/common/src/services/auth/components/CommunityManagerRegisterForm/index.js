@@ -63,7 +63,7 @@ const CommunityManagerRegisterForm = ({
     </IconButton>
     {socialLoginError && <Block pad="large" palette="danger" size="caption">{socialLoginError}</Block>}
     {/* <TosAndPrivacy pad="xxLarge" align="center" /> */}
-    <ButtonLink onClick={onEmailPassLoginClick} align="center" palette="primary" size="caption" weight="medium">
+    <ButtonLink onClick={onEmailPassLoginClick} display="flex" align="center" palette="primary" size="caption" weight="medium">
       Log in instead
     </ButtonLink>
   </Form>

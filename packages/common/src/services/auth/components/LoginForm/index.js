@@ -34,10 +34,10 @@ const LoginForm = ({
       Log in
     </Button>
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
-    <ButtonLink pad="large" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
+    <ButtonLink pad="large" display="flex" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
     </ButtonLink>
-    <Block align="center" verticalAlign="middle" direction="row">
+    <Block display="flex" align="center" verticalAlign="middle" direction="row">
       {role !== AGENT_ND_ROLE &&
         <Block size="caption" marginRight="small">Don&apos;t have an account?</Block>}
       <ButtonLink palette="primary" size="caption" onClick={onRegisterClick}>

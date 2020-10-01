@@ -240,3 +240,6 @@ export const ASSESSMENT_WIZARD_MATCHED_AGENT = 'assesmentWizardMatchedAgent';
 export const ASSESSMENT_WIZARD_COMPLETED = 'assesmentWizardCompleted';
 export const ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES = 'assesmentWizardCompletedCommunities';
 export const ASSESSMENT_WIZARD_BANNER_DISMISSED = 'assesmentWizardBannerDismissed';
+
+export const ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS =
+  ['Intro', 'ResidentName', 'Auth', 'LocalExpert', 'Services', 'Products', 'End'];
