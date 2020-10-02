@@ -381,7 +381,7 @@ export default class App extends Component {
           */}
           <meta
             httpEquiv="Content-Security-Policy"
-            content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com"
+            content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com"
           />
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
