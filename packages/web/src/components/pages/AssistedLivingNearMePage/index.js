@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
@@ -106,201 +106,201 @@ const NearMePage = ({
   const state = geo && geo.state;
   const tocLabel = getTocSeoLabel('assisted-living');
 
-  const alRef = React.createRef();
-  const staffRef = React.createRef();
-  const licenseRef = React.createRef();
-  const socialRef = React.createRef();
-  const costRef = React.createRef();
-  const alvsnhRef = React.createRef();
-  const alvsilRef = React.createRef();
-  const faqRef = React.createRef();
-  const nextRef = React.createRef();
+  const alRef = useRef(null);
+  const staffRef = useRef(null);
+  const licenseRef = useRef(null);
+  const socialRef = useRef(null);
+  const costRef = useRef(null);
+  const alvsnhRef = useRef(null);
+  const alvsilRef = useRef(null);
+  const faqRef = useRef(null);
+  const nextRef = useRef(null);
 
   const tocList = [
     {
-      title: "What is Assisted Living?",
-      id: "what-is-assisted-living",
-      ref: alRef
+      title: 'What is Assisted Living?',
+      id: 'what-is-assisted-living',
+      ref: alRef,
     },
     {
-      title: "What Does Assisted Living Cost Near You?",
-      id: "cost",
-      ref: costRef
+      title: 'What Does Assisted Living Cost Near You?',
+      id: 'cost',
+      ref: costRef,
     },
     {
-      title: "What Type of Medical Staff is Present?",
-      id: "medical-staff",
-      ref: staffRef
+      title: 'What Type of Medical Staff is Present?',
+      id: 'medical-staff',
+      ref: staffRef,
     },
     {
-      title: "Licensing and Inspection",
-      id: "license",
-      ref: licenseRef
+      title: 'Licensing and Inspection',
+      id: 'license',
+      ref: licenseRef,
     },
     {
-      title: "The Social and Community Aspects",
-      id: "social",
-      ref: socialRef
+      title: 'The Social and Community Aspects',
+      id: 'social',
+      ref: socialRef,
     },
     {
-      title: "Assisted Living vs. Skilled Nursing",
-      id: "al-vs-nh",
-      ref: alvsnhRef
+      title: 'Assisted Living vs. Skilled Nursing',
+      id: 'al-vs-nh',
+      ref: alvsnhRef,
     },
     {
-      title: "Assisted Living vs. Independent Living",
-      id: "al-vs-il",
-      ref: alvsilRef
+      title: 'Assisted Living vs. Independent Living',
+      id: 'al-vs-il',
+      ref: alvsilRef,
     },
     {
-      title: "Assisted Living FAQs",
-      id: "frequently-asked-question",
-      ref: faqRef
+      title: 'Assisted Living FAQs',
+      id: 'frequently-asked-question',
+      ref: faqRef,
 
     },
     {
-      title: "Next Steps",
-      id: "next",
-      ref: nextRef
+      title: 'Next Steps',
+      id: 'next',
+      ref: nextRef,
 
     },
 
   ];
 
-  const mapHtml = "<iframe src=\"https://createaclickablemap.com/map.php?&id=88362&maplocation=false&online=true\" width=\"680\" height=\"525\" style=\"border: none;\"></iframe>\n" +
-    "<script>if (window.addEventListener){ window.addEventListener(\"message\", function(event) { if(event.data.length >= 22) { if( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } else if (window.attachEvent){ window.attachEvent(\"message\", function(event) { if( event.data.length >= 22) { if ( event.data.substr(0, 22) == \"__MM-LOCATION.REDIRECT\") location = event.data.substr(22); } }, false); } </script>\n"
+  const mapHtml = '<iframe src="https://createaclickablemap.com/map.php?&id=88362&maplocation=false&online=true" width="680" height="525" style="border: none;"></iframe>\n' +
+    '<script>if (window.addEventListener){ window.addEventListener("message", function(event) { if(event.data.length >= 22) { if( event.data.substr(0, 22) == "__MM-LOCATION.REDIRECT") location = event.data.substr(22); } }, false); } else if (window.attachEvent){ window.attachEvent("message", function(event) { if( event.data.length >= 22) { if ( event.data.substr(0, 22) == "__MM-LOCATION.REDIRECT") location = event.data.substr(22); } }, false); } </script>\n';
   const alTable = [
-    {title: "Alabama", to: "https://aspe.hhs.gov/system/files/pdf/110396/15alcom-AL.pdf"},
-    {title: "Alaska", to: "https://aspe.hhs.gov/system/files/pdf/110401/15alcom-AK.pdf"},
-    {title: "Arizona", to: "https://aspe.hhs.gov/system/files/pdf/110406/15alcom-AZ.pdf"},
-    {title: "Arkansas", to: "https://aspe.hhs.gov/system/files/pdf/110531/15alcom-AR.pdf"},
-    {title: "California", to: "https://aspe.hhs.gov/system/files/pdf/110416/15alcom-CA.pdf"},
-    {title: "Colorado", to: "https://aspe.hhs.gov/system/files/pdf/110421/15alcom-CO.pdf"},
-    {title: "Connecticut", to: "https://aspe.hhs.gov/system/files/pdf/110426/15alcom-CT.pdf"},
-    {title: "Delaware", to: "https://aspe.hhs.gov/system/files/pdf/110431/15alcom-DE.pdf"},
-    {title: "District of Columbia", to: "https://aspe.hhs.gov/system/files/pdf/110436/15alcom-DC.pdf"},
-    {title: "Florida", to: "https://aspe.hhs.gov/system/files/pdf/110441/15alcom-FL.pdf"},
-    {title: "Georgia", to: "https://aspe.hhs.gov/system/files/pdf/110446/15alcom-GA.pdf"},
-    {title: "Hawaii", to: "https://aspe.hhs.gov/system/files/pdf/110451/15alcom-HI.pdf"},
-    {title: "Idaho", to: "https://aspe.hhs.gov/system/files/pdf/110456/15alcom-ID.pdf"},
-    {title: "Illinois", to: "https://aspe.hhs.gov/system/files/pdf/110461/15alcom-IL.pdf"},
-    {title: "Indiana", to: "https://aspe.hhs.gov/system/files/pdf/110466/15alcom-IN.pdf"},
-    {title: "Iowa", to: "https://aspe.hhs.gov/system/files/pdf/110471/15alcom-IA.pdf"},
-    {title: "Kansas", to: "https://aspe.hhs.gov/system/files/pdf/110476/15alcom-KS.pdf"},
-    {title: "Kentucky", to: "https://aspe.hhs.gov/system/files/pdf/110481/15alcom-KY.pdf"},
-    {title: "Louisiana", to: "https://aspe.hhs.gov/system/files/pdf/110486/15alcom-LA.pdf"},
-    {title: "Maine", to: "https://aspe.hhs.gov/system/files/pdf/110491/15alcom-ME.pdf"},
-    {title: "Massachusetts", to: "https://aspe.hhs.gov/system/files/pdf/110501/15alcom-MA.pdf"},
-    {title: "Michigan", to: "https://aspe.hhs.gov/system/files/pdf/110506/15alcom-MI.pdf"},
-    {title: "Minnesota", to: "https://aspe.hhs.gov/system/files/pdf/110511/15alcom-MN.pdf"},
-    {title: "Mississippi", to: "https://aspe.hhs.gov/system/files/pdf/110516/15alcom-MS.pdf"},
-    {title: "Missouri", to: "https://aspe.hhs.gov/system/files/pdf/110521/15alcom-MO.pdf"},
-    {title: "Montana", to: "https://aspe.hhs.gov/system/files/pdf/110526/15alcom-MT.pdf"},
-    {title: "Nebraska", to: "https://aspe.hhs.gov/system/files/pdf/110536/15alcom-NE.pdf"},
-    {title: "Nevada", to: "https://aspe.hhs.gov/system/files/pdf/110541/15alcom-NV.pdf"},
-    {title: "New Hampshire", to: "https://aspe.hhs.gov/system/files/pdf/110546/15alcom-NH.pdf"},
-    {title: "New Jersey", to: "https://aspe.hhs.gov/system/files/pdf/110551/15alcom-NJ.pdf"},
-    {title: "New Mexico", to: "https://aspe.hhs.gov/system/files/pdf/110556/15alcom-NM.pdf"},
-    {title: "New York", to: "https://aspe.hhs.gov/system/files/pdf/110561/15alcom-NY.pdf"},
-    {title: "North Carolina", to: "https://aspe.hhs.gov/system/files/pdf/110566/15alcom-NC.pdf"},
-    {title: "North Dakota", to: "https://aspe.hhs.gov/system/files/pdf/110571/15alcom-ND.pdf"},
-    {title: "Ohio", to: "https://aspe.hhs.gov/system/files/pdf/110576/15alcom-OH.pdf"},
-    {title: "Oklahoma", to: "https://aspe.hhs.gov/system/files/pdf/110581/15alcom-OK.pdf"},
-    {title: "Oregon", to: "https://aspe.hhs.gov/system/files/pdf/110586/15alcom-OR.pdf"},
-    {title: "Oregon", to: "https://aspe.hhs.gov/system/files/pdf/110586/15alcom-OR.pdf"},
-    {title: "Pennsylvania", to: "https://aspe.hhs.gov/system/files/pdf/110591/15alcom-PA.pdf"},
-    {title: "Rhode Island", to: "https://aspe.hhs.gov/system/files/pdf/110596/15alcom-RI.pdf"},
-    {title: "South Carolina", to: "https://aspe.hhs.gov/system/files/pdf/110601/15alcom-SC.pdf"},
-    {title: "South Dakota", to: "https://aspe.hhs.gov/system/files/pdf/110606/15alcom-SD.pdf"},
-    {title: "Tennessee", to: "https://aspe.hhs.gov/system/files/pdf/110611/15alcom-TN.pdf"},
-    {title: "Texas", to: "https://aspe.hhs.gov/system/files/pdf/110616/15alcom-TX.pdf"},
-    {title: "Utah", to: "https://aspe.hhs.gov/system/files/pdf/110621/15alcom-UT.pdf"},
-    {title: "Vermont", to: "https://aspe.hhs.gov/system/files/pdf/110626/15alcom-VT.pdf"},
-    {title: "Virginia", to: "https://aspe.hhs.gov/system/files/pdf/110631/15alcom-VA.pdf"},
-    {title: "Washington", to: "https://aspe.hhs.gov/system/files/pdf/110636/15alcom-WA.pdf"},
-    {title: "West Virginia", to: "https://aspe.hhs.gov/system/files/pdf/110641/15alcom-WV.pdf"},
-    {title: "Wisconsin", to: "https://aspe.hhs.gov/system/files/pdf/110646/15alcom-WI.pdf"},
-    {title: "Wyoming", to: "https://aspe.hhs.gov/system/files/pdf/110651/15alcom-WY.pdf"}
+    { title: 'Alabama', to: 'https://aspe.hhs.gov/system/files/pdf/110396/15alcom-AL.pdf' },
+    { title: 'Alaska', to: 'https://aspe.hhs.gov/system/files/pdf/110401/15alcom-AK.pdf' },
+    { title: 'Arizona', to: 'https://aspe.hhs.gov/system/files/pdf/110406/15alcom-AZ.pdf' },
+    { title: 'Arkansas', to: 'https://aspe.hhs.gov/system/files/pdf/110531/15alcom-AR.pdf' },
+    { title: 'California', to: 'https://aspe.hhs.gov/system/files/pdf/110416/15alcom-CA.pdf' },
+    { title: 'Colorado', to: 'https://aspe.hhs.gov/system/files/pdf/110421/15alcom-CO.pdf' },
+    { title: 'Connecticut', to: 'https://aspe.hhs.gov/system/files/pdf/110426/15alcom-CT.pdf' },
+    { title: 'Delaware', to: 'https://aspe.hhs.gov/system/files/pdf/110431/15alcom-DE.pdf' },
+    { title: 'District of Columbia', to: 'https://aspe.hhs.gov/system/files/pdf/110436/15alcom-DC.pdf' },
+    { title: 'Florida', to: 'https://aspe.hhs.gov/system/files/pdf/110441/15alcom-FL.pdf' },
+    { title: 'Georgia', to: 'https://aspe.hhs.gov/system/files/pdf/110446/15alcom-GA.pdf' },
+    { title: 'Hawaii', to: 'https://aspe.hhs.gov/system/files/pdf/110451/15alcom-HI.pdf' },
+    { title: 'Idaho', to: 'https://aspe.hhs.gov/system/files/pdf/110456/15alcom-ID.pdf' },
+    { title: 'Illinois', to: 'https://aspe.hhs.gov/system/files/pdf/110461/15alcom-IL.pdf' },
+    { title: 'Indiana', to: 'https://aspe.hhs.gov/system/files/pdf/110466/15alcom-IN.pdf' },
+    { title: 'Iowa', to: 'https://aspe.hhs.gov/system/files/pdf/110471/15alcom-IA.pdf' },
+    { title: 'Kansas', to: 'https://aspe.hhs.gov/system/files/pdf/110476/15alcom-KS.pdf' },
+    { title: 'Kentucky', to: 'https://aspe.hhs.gov/system/files/pdf/110481/15alcom-KY.pdf' },
+    { title: 'Louisiana', to: 'https://aspe.hhs.gov/system/files/pdf/110486/15alcom-LA.pdf' },
+    { title: 'Maine', to: 'https://aspe.hhs.gov/system/files/pdf/110491/15alcom-ME.pdf' },
+    { title: 'Massachusetts', to: 'https://aspe.hhs.gov/system/files/pdf/110501/15alcom-MA.pdf' },
+    { title: 'Michigan', to: 'https://aspe.hhs.gov/system/files/pdf/110506/15alcom-MI.pdf' },
+    { title: 'Minnesota', to: 'https://aspe.hhs.gov/system/files/pdf/110511/15alcom-MN.pdf' },
+    { title: 'Mississippi', to: 'https://aspe.hhs.gov/system/files/pdf/110516/15alcom-MS.pdf' },
+    { title: 'Missouri', to: 'https://aspe.hhs.gov/system/files/pdf/110521/15alcom-MO.pdf' },
+    { title: 'Montana', to: 'https://aspe.hhs.gov/system/files/pdf/110526/15alcom-MT.pdf' },
+    { title: 'Nebraska', to: 'https://aspe.hhs.gov/system/files/pdf/110536/15alcom-NE.pdf' },
+    { title: 'Nevada', to: 'https://aspe.hhs.gov/system/files/pdf/110541/15alcom-NV.pdf' },
+    { title: 'New Hampshire', to: 'https://aspe.hhs.gov/system/files/pdf/110546/15alcom-NH.pdf' },
+    { title: 'New Jersey', to: 'https://aspe.hhs.gov/system/files/pdf/110551/15alcom-NJ.pdf' },
+    { title: 'New Mexico', to: 'https://aspe.hhs.gov/system/files/pdf/110556/15alcom-NM.pdf' },
+    { title: 'New York', to: 'https://aspe.hhs.gov/system/files/pdf/110561/15alcom-NY.pdf' },
+    { title: 'North Carolina', to: 'https://aspe.hhs.gov/system/files/pdf/110566/15alcom-NC.pdf' },
+    { title: 'North Dakota', to: 'https://aspe.hhs.gov/system/files/pdf/110571/15alcom-ND.pdf' },
+    { title: 'Ohio', to: 'https://aspe.hhs.gov/system/files/pdf/110576/15alcom-OH.pdf' },
+    { title: 'Oklahoma', to: 'https://aspe.hhs.gov/system/files/pdf/110581/15alcom-OK.pdf' },
+    { title: 'Oregon', to: 'https://aspe.hhs.gov/system/files/pdf/110586/15alcom-OR.pdf' },
+    { title: 'Oregon', to: 'https://aspe.hhs.gov/system/files/pdf/110586/15alcom-OR.pdf' },
+    { title: 'Pennsylvania', to: 'https://aspe.hhs.gov/system/files/pdf/110591/15alcom-PA.pdf' },
+    { title: 'Rhode Island', to: 'https://aspe.hhs.gov/system/files/pdf/110596/15alcom-RI.pdf' },
+    { title: 'South Carolina', to: 'https://aspe.hhs.gov/system/files/pdf/110601/15alcom-SC.pdf' },
+    { title: 'South Dakota', to: 'https://aspe.hhs.gov/system/files/pdf/110606/15alcom-SD.pdf' },
+    { title: 'Tennessee', to: 'https://aspe.hhs.gov/system/files/pdf/110611/15alcom-TN.pdf' },
+    { title: 'Texas', to: 'https://aspe.hhs.gov/system/files/pdf/110616/15alcom-TX.pdf' },
+    { title: 'Utah', to: 'https://aspe.hhs.gov/system/files/pdf/110621/15alcom-UT.pdf' },
+    { title: 'Vermont', to: 'https://aspe.hhs.gov/system/files/pdf/110626/15alcom-VT.pdf' },
+    { title: 'Virginia', to: 'https://aspe.hhs.gov/system/files/pdf/110631/15alcom-VA.pdf' },
+    { title: 'Washington', to: 'https://aspe.hhs.gov/system/files/pdf/110636/15alcom-WA.pdf' },
+    { title: 'West Virginia', to: 'https://aspe.hhs.gov/system/files/pdf/110641/15alcom-WV.pdf' },
+    { title: 'Wisconsin', to: 'https://aspe.hhs.gov/system/files/pdf/110646/15alcom-WI.pdf' },
+    { title: 'Wyoming', to: 'https://aspe.hhs.gov/system/files/pdf/110651/15alcom-WY.pdf' },
   ];
 
   const ALNextSteps = [
-    {title: "Evaluating Assisted Living Communities", to:"https://www.seniorly.com/assisted-living/articles/evaluating-assisted-living-communities"},
-    {title: "Understanding the Cost of Assisted Living", to:"https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living"},
-    {title: "Frequently Asked Questions About Assisted Living", to:"https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs"},
+    { title: 'Evaluating Assisted Living Communities', to: 'https://www.seniorly.com/assisted-living/articles/evaluating-assisted-living-communities' },
+    { title: 'Understanding the Cost of Assisted Living', to: 'https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living' },
+    { title: 'Frequently Asked Questions About Assisted Living', to: 'https://www.seniorly.com/assisted-living/articles/seniorly-assisted-living-faqs' },
   ];
 
   const agents = [
     {
-      title: "Sarah Odover - Los Angeles, CA",
-      to: "https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-",
-      asset: "images/hub/agents/Sarah.png",
-      caption: "Sarah Ordover has over 4 years of experience helping families find independent living, \n" +
-        "assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.",
-      first: "Sarah"
+      title: 'Sarah Odover - Los Angeles, CA',
+      to: 'https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-',
+      asset: 'images/hub/agents/Sarah.png',
+      caption: 'Sarah Ordover has over 4 years of experience helping families find independent living, \n' +
+        'assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.',
+      first: 'Sarah',
     },
     {
-      title: "Heather Cartright - Sarasota, FL",
-      to: "https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-",
-      asset: "images/hub/agents/Heather.png",
-      caption: "Heather Cartright has over a year of experience helping families find independent living, \n" +
-      "assisted living, and memory care options. As a former assisted living facility administrator, \n" +
-      "she brings a unique skillset for senior living placement.",
-      first: "Heather"
+      title: 'Heather Cartright - Sarasota, FL',
+      to: 'https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-',
+      asset: 'images/hub/agents/Heather.png',
+      caption: 'Heather Cartright has over a year of experience helping families find independent living, \n' +
+      'assisted living, and memory care options. As a former assisted living facility administrator, \n' +
+      'she brings a unique skillset for senior living placement.',
+      first: 'Heather',
     },
     {
-      title: "Carol Katz - New Jersey",
-      to: "https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-",
-      asset: "images/hub/agents/Carol-Katz.png",
-      caption: "Carol Katz has over 10 years of experience helping families find independent living, \n" +
-      "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
-      "a special skillset for senior living placement.",
-      first: "Carol"
+      title: 'Carol Katz - New Jersey',
+      to: 'https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-',
+      asset: 'images/hub/agents/Carol-Katz.png',
+      caption: 'Carol Katz has over 10 years of experience helping families find independent living, \n' +
+      'assisted living, and memory care options. With her unique volunteer experience, she brings \n' +
+      'a special skillset for senior living placement.',
+      first: 'Carol',
     },
   ];
 
   const faqs = [
     {
-      question: "How much does assisted living cost?",
-      answer: "On average in the U.S., in 2019 assisted living cost $4,051 per month, though this price can vary greatly depending on location, amenities, daily activities, on-site medical care and more. The average number can reach as high as $6,960 in New York state., and as low as $2,881 in Missouri."
+      question: 'How much does assisted living cost?',
+      answer: 'On average in the U.S., in 2019 assisted living cost $4,051 per month, though this price can vary greatly depending on location, amenities, daily activities, on-site medical care and more. The average number can reach as high as $6,960 in New York state., and as low as $2,881 in Missouri.',
     },
     {
-      question: "How to pay for assisted living?",
-      answer: "Most communities are private pay. They will accept long-term care insurance, but you must check with your insurance policy first.  Also, many financial aid options exist, including Medicare, Medicaid, VA benefits, payment plans, low income services, etc.\n" +
-      "Talk to the community as they often have additional options to help your loved one afford to live in the community of their dreams."
+      question: 'How to pay for assisted living?',
+      answer: 'Most communities are private pay. They will accept long-term care insurance, but you must check with your insurance policy first.  Also, many financial aid options exist, including Medicare, Medicaid, VA benefits, payment plans, low income services, etc.\n' +
+      'Talk to the community as they often have additional options to help your loved one afford to live in the community of their dreams.',
     },
     {
-      question: "What is the difference between assisted living and a nursing home?",
-      answer: "Also called skilled nursing, a nursing home is a better option for seniors who need considerable, 24/7 daily care, or memory issues. Assisted living communities are best for those who are largely self-sufficient, active, and are looking to simplify their lifestyle, with a little extra help."
+      question: 'What is the difference between assisted living and a nursing home?',
+      answer: 'Also called skilled nursing, a nursing home is a better option for seniors who need considerable, 24/7 daily care, or memory issues. Assisted living communities are best for those who are largely self-sufficient, active, and are looking to simplify their lifestyle, with a little extra help.',
     },
     {
-      question: "What services are offered in assisted living?",
-      answer: "Though every community is different, services that are commonly offered at assisted living include transportation services, basic medical care, medication monitoring, day trips, structure exercise classes, religious services, and more."
+      question: 'What services are offered in assisted living?',
+      answer: 'Though every community is different, services that are commonly offered at assisted living include transportation services, basic medical care, medication monitoring, day trips, structure exercise classes, religious services, and more.',
     },
     {
-      question: "Are pets allowed in assisted living facilities?",
-      answer: "In many assisted living communities, residents are welcome to bring their pet with them. Check with each community to discuss their particular pet policies."
+      question: 'Are pets allowed in assisted living facilities?',
+      answer: 'In many assisted living communities, residents are welcome to bring their pet with them. Check with each community to discuss their particular pet policies.',
     },
   ];
 
   const TableOfContents = () => {
     return (
       <>
-      <Heading level="subtitle" size="subtitle">
-        Table of Contents
-      </Heading>
-      <Paragraph>
-        {tocList.map(p => (
-          <StyledLink
-            href={`#${p.id}`}
-            onClick={e => handleAnchor(e, p.ref)}
-          >
-            {p.title}
-          </StyledLink>
+        <Heading level="subtitle" size="subtitle">
+          Table of Contents
+        </Heading>
+        <Paragraph>
+          {tocList.map(p => (
+            <StyledLink
+              href={`#${p.id}`}
+              onClick={e => handleAnchor(e, p.ref)}
+            >
+              {p.title}
+            </StyledLink>
         ))}
 
-      </Paragraph>
+        </Paragraph>
       </>
-    )
+    );
   };
 
   const SEOContentAL = () => {
@@ -526,7 +526,7 @@ const NearMePage = ({
           <Heading level="title" size="title" >
             What Is A Local Senior Living Expert?
           </Heading>
-          <WhatIsPartnerAgent toc="assisted living" agents={agents}/>
+          <WhatIsPartnerAgent toc="assisted living" agents={agents} />
         </StyledArticle>
 
         <StyledArticle>
@@ -820,12 +820,12 @@ const NearMePage = ({
           </Paragraph>
           {faqs.map(p => (
             <>
-            <Heading level="subtitle" size="subtitle">
-              {p.question}
-            </Heading>
-            <Paragraph>
-              {p.answer}
-            </Paragraph>
+              <Heading level="subtitle" size="subtitle">
+                {p.question}
+              </Heading>
+              <Paragraph>
+                {p.answer}
+              </Paragraph>
             </>
 
           ))}
@@ -833,20 +833,31 @@ const NearMePage = ({
 
 
         <StyledArticle>
-          <NextSteps nextRef={nextRef}
-                     toc="assisted living"
-                     label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
-                     links={ALNextSteps} />
+          <NextSteps
+            nextRef={nextRef}
+            toc="assisted living"
+            label="Think Assisted Living might be right for your loved one? Explore one of the three topics below to help narrow down your search:"
+            links={ALNextSteps}
+          />
           <Heading level="subtitle" size="subtitle" >
             How Seniorly Works
           </Heading>
           <Paragraph>
-            <HowSlyWorksVideoContainer eventLabel='assisted-living' />
+            <HowSlyWorksVideoContainer eventLabel="assisted-living" />
           </Paragraph>
           <Heading level="subtitle" size="subtitle" >
             Top 5 Social Benefits of Assisted Living
           </Heading>
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/Um8D9IaiR5g" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <iframe
+            id="how-sly-works"
+            title="How seniorly works"
+            width="100%"
+            height="315"
+            src="https://www.youtube.com/embed/Um8D9IaiR5g"
+            frameBorder="0"
+            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
           <Paragraph>
             Seniorly proudly presents our very own, Marlena Del Hierro! She shares the top 5 social benefits of assisted living
           </Paragraph>
@@ -871,16 +882,18 @@ const NearMePage = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         {faqPage(faqs)}
-        {tocSiteNavigationLD("https://www.seniorly.com/assisted-living", tocList)}
-        {guideLD(title, description, "https://www.seniorly.com/assisted-living")}
+        {tocSiteNavigationLD('https://www.seniorly.com/assisted-living', tocList)}
+        {guideLD(title, description, 'https://www.seniorly.com/assisted-living')}
 
       </Helmet>
-      <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
-         toc="assisted living"
-         heading="What is Assisted Living Near You?"
-         label="Use our free search to find assisted living nearby"
-         onCurrentLocation={onCurrentLocation}
-         onLocationSearch={onLocationSearch} />
+      <HubHeader
+        imagePath="react-assets/hub/assisted-living-cover.jpg"
+        toc="assisted living"
+        heading="What is Assisted Living Near You?"
+        label="Use our free search to find assisted living nearby"
+        onCurrentLocation={onCurrentLocation}
+        onLocationSearch={onLocationSearch}
+      />
       <HubPageTemplate>
         <Wrapper>
           <TwoColumn>
@@ -909,7 +922,7 @@ const NearMePage = ({
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
-      <PhoneCTAFooter/>
+      <PhoneCTAFooter />
       <FullWidthDiv>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by City" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>

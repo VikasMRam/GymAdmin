@@ -19,9 +19,9 @@ import { query, normalizeResponse } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
 const handleClick = (e, sectionRef) => {
+  e.preventDefault();
   // Link triggers router navigation so need to preventDefault.
   // TODO: find better way to do it with any other component without much styling code
-  e.preventDefault();
   if (sectionRef.current) {
     sectionRef.current.scrollIntoView({ behavior: 'smooth' });
   }
@@ -37,15 +37,15 @@ const handleClick = (e, sectionRef) => {
   sp.toc = hub;
 
   if (hub === 'senior-living') {
-    sp.toc = 'nursing-homes'
+    sp.toc = 'nursing-homes';
   }
 
   if (hub === 'respite-care') {
-    sp.toc = 'assisted-living'
+    sp.toc = 'assisted-living';
   }
 
   if (qs && qs['page-number']) {
-    sp['page-number'] = qs['page-number']
+    sp['page-number'] = qs['page-number'];
   }
 
   return {
@@ -68,7 +68,7 @@ export default class NearMePageContainer extends Component {
   state = {
     communityList: [],
     isFetchingResults: true,
-    requestMeta: {}
+    requestMeta: {},
 
   };
 
@@ -82,9 +82,7 @@ export default class NearMePageContainer extends Component {
       // todo: use correct method for surfacing errors
       // eslint-disable-next-line no-console
       this.setState({ isFetchingResults: false });
-
     });
-
   }
 
   handleOnLocationSearch = (result) => {
@@ -126,7 +124,6 @@ export default class NearMePageContainer extends Component {
       requestMeta,
     } = this.state;
 
-    console.log(this.state);
     const { params } = match;
     const { hub } = params;
 

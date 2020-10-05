@@ -116,7 +116,7 @@ export default class AgentRegionPage extends Component {
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {
-                if (this.findLocalAgentRef.current.scrollIntoView) {
+                if (this.findLocalAgentRef.current) {
                   this.findLocalAgentRef.current.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
@@ -148,7 +148,7 @@ export default class AgentRegionPage extends Component {
             />
           </FormSection>
           <Hr size="huge" fullWidth />
-          <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>
+          <FindLocalAgentWrapper ref={this.findLocalAgentRef}>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </FindLocalAgentWrapper>
           <StyledSection centerTitle title="Search senior living agents by region">
