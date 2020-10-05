@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { prefetch, withUser } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import DashboardAgentsIndexSection from 'sly/web/components/organisms/DashboardAgentsIndexSection';

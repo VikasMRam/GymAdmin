@@ -1,8 +1,8 @@
 import React from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import { withRouter } from 'react-router-dom';
 import { parse } from 'query-string';
+import { withRouter } from 'react-router';
 
 import Datatable from 'sly/web/services/datatable/components/Datatable';
 

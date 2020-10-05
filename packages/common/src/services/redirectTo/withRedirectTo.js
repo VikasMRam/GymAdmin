@@ -15,7 +15,7 @@ function getDisplayName(WrappedComponent) {
 
 export default function withRedirectTo(InnerComponent) {
   @withRouter
-  class Wrapper extends React.Component {
+  class Wrapper extends React.PureComponent {
     static displayName = `withRedirectTo(${getDisplayName(InnerComponent)})`;
     static WrappedComponent = InnerComponent;
     static contextTypes = {

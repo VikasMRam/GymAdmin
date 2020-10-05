@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { func, object, string } from 'prop-types';
 import styled from 'styled-components';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { size } from 'sly/common/components/themes';
 import { prefetch } from 'sly/web/services/api';
 import { Heading } from 'sly/web/components/atoms';

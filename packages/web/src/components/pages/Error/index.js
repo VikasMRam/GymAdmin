@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { number, object } from 'prop-types';
 import styled from 'styled-components';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';

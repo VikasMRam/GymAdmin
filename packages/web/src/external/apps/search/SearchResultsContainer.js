@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object, string } from 'prop-types';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { size } from 'sly/common/components/themes';
 import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/web/external/constants/search';

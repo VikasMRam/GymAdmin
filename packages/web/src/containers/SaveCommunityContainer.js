@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { SubmissionError, clearSubmitErrors } from 'redux-form';
-import { withRouter } from 'react-router';
 import styled from 'styled-components';
 
+import { withRouter } from 'react-router';
 import { size } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';

@@ -92,27 +92,27 @@ export const twoSetsAreEqual = (a, b) => {
 // state, apiCall, args
 export function createMemoizedRequestInfoSelector() {
   let lastRequestInfo = null;
-  let lastResult = null;
+  let lastRequest;
 
-  return function (state, params = {}) {
+  return function getRequestInfo(state, params = {}) {
     const { call } = params;
     const args = JSON.stringify(params.args);
     const request = state.api.requests?.[call]?.[args];
-    const result = getRequestResult(state.api.entities, request);
 
-    if (result === null || result !== lastResult) { // || !twoSetsAreEqual(result, lastResult)
+    if (typeof lastRequest === 'undefined' || request !== lastRequest) {
       const error = request && request.error ? request.error : false;
       const hasStarted = hasRequestStarted(request);
       const isLoading = isRequestLoading(request);
 
-      lastResult = result;
+      lastRequest = request;
+
       lastRequestInfo = {
         hasStarted,
         isLoading,
         isInvalid: request?.invalid,
         hasFinished: hasStarted && !isLoading,
         hasFailed: !!error,
-        result,
+        result: getRequestResult(state.api.entities, request),
         normalized: getRequestResult(state.api.entities, request, true),
         headers: getRequestHeaders(request),
         meta: getRequestMeta(request),

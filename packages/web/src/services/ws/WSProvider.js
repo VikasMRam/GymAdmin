@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { node } from 'prop-types';
+import debounce from 'lodash/debounce';
 
 import WSContext from 'sly/web/services/ws/WSContext';
 import Pubsub from 'sly/web/services/ws/Pubsub';

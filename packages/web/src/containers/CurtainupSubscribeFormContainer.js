@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { reset, reduxForm, clearSubmitErrors, SubmissionError } from 'redux-form';
 import { func, arrayOf, object } from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { query, prefetch } from 'sly/web/services/api';
 import { CURTIANUP_SUBSCRIBE } from 'sly/web/services/api/constants';

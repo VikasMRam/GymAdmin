@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
-import { withRouter } from 'react-router';
 
 import emailPropType from 'sly/common/propTypes/email';
+import { withRouter } from 'react-router';
 import { prefetch } from 'sly/web/services/api';
 import EmailViewPage from 'sly/web/components/pages/EmailViewPage';
 

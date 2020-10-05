@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object, string } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { query } from 'sly/web/services/api';
 
 @query('createAction', 'createUuidAction')

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import loadable from '@loadable/component';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
 import { AA_CONSULTATION_REQUESTED } from 'sly/web/services/api/constants';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
@@ -11,10 +11,6 @@ import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import { prefetch } from 'sly/web/services/api';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
-
-const CommunityAskQuestionAgentFormContainer = loadable(() =>
-  import(/* webpackChunkName: "chunkCommunityAskQuestionAgentFormContainer" */ 'sly/web/containers/CommunityAskQuestionAgentFormContainer'),
-);
 
 const AskQuestionToAgentFormContainer = loadable(() =>
   import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */ 'sly/web/containers/AskQuestionToAgentFormContainer'),

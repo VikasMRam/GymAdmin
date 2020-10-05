@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { string, func, object, shape } from 'prop-types';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import isMatch from 'lodash/isMatch';
+import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import {

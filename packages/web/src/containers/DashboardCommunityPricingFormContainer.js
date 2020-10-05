@@ -3,8 +3,8 @@ import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import clientPropType from 'sly/common/propTypes/client';
 import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';

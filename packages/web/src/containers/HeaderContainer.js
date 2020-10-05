@@ -117,6 +117,7 @@ const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuIte
 @query('getCommunity', 'getCommunity')
 @withProps(({ location }) => ({
   queryParams: parseURLQueryParams(location.search),
+  pathname: location.pathname,
 }))
 
 export default class HeaderContainer extends PureComponent {

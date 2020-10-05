@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, string, object } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { query, withUser } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';

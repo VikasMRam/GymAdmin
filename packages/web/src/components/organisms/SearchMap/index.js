@@ -3,8 +3,8 @@ import { string, number, shape, arrayOf, func, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 import debounce from 'lodash/debounce';
-import { withRouter } from 'react-router-dom';
 
+import { withRouter } from 'react-router';
 import { isServer } from 'sly/web/config';
 import { size, palette } from 'sly/common/components/themes';
 import Checkbox from 'sly/web/components/molecules/Checkbox';

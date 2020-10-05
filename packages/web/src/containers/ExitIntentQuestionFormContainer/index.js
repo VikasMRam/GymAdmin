@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import { func, object } from 'prop-types';
 import { clearSubmitErrors, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { createValidator, email, required } from 'sly/web/services/validation';
 import userPropType from 'sly/common/propTypes/user';
 import { EXIT_INTENT_ASK_QUESTIONS } from 'sly/web/services/api/constants';

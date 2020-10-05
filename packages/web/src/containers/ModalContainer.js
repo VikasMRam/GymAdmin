@@ -1,6 +1,6 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import ModalController from 'sly/web/controllers/ModalController';
 import Modal from 'sly/web/components/molecules/Modal';

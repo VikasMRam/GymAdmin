@@ -15,6 +15,7 @@ import App from 'sly/web/components/App';
 import configureStore from 'sly/web/store/configure';
 import WSProvider from 'sly/web/services/ws/WSProvider';
 import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
+import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
@@ -27,6 +28,7 @@ const renderApp = () => (
     <WSProvider>
       <NotificationSubscriptions>
         <BrowserRouter>
+          <PageEventsContainer />
           <>
             <RetentionPopup />
             <App />
