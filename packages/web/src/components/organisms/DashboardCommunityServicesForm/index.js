@@ -19,7 +19,7 @@ const nonCareServicesOptions = [
   { value: 'Community-sponsored activities', label: 'Community-sponsored activities' },
   { value: 'Move-in coordination', label: 'Move-in coordination' },
   { value: 'Planned day trips', label: 'Planned day trips' },
-  { value: 'Transportation arrangement (non-medical', label: 'Transportation arrangement (non-medical' },
+  { value: 'Transportation arrangement (non-medical)', label: 'Transportation arrangement (non-medical)' },
 ];
 
 const familyOvernightOptions = [
