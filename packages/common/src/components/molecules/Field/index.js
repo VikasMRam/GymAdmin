@@ -25,6 +25,10 @@ const Wrapper = styled(Block)`
   ${wrapperWebStyles}
 
   ${startingWith('tablet', css`
+    ${ifProp('leftMargin', css`
+      margin-left: ${getKey('sizes.tabletLayout.col3')};
+    `)}
+
     flex-direction: ${ifProp('wideWidth', 'row')};
     ${ifProp({ type: 'checkbox' }, ifProp('options', css`
       align-items: flex-start;
@@ -34,9 +38,6 @@ const Wrapper = styled(Block)`
 
 const LabelWrapper = styled(Block)`
   ${upTo('tablet', 'flex-basis: auto;')}
-  ${startingWith('tablet', ifProp('wideWidth', css`
-    margin-right: ${size('spacing.xLarge')};
-  `))}
 `;
 
 const InputBlock = styled(Block)`
@@ -75,6 +76,7 @@ const Field = ({
   options,
   required,
   pad,
+  leftMargin,
   ...props
 }) => {
   const inputProps = {
@@ -116,7 +118,7 @@ const Field = ({
           pad={type === 'checkbox' && !!options === true ? 'regular' : undefined}
           flexGrow={0}
           flexShrink={0}
-          flexBasis={wideWidth ? getKey('sizes.tabletLayout.col2') : undefined}
+          flexBasis={wideWidth ? getKey('sizes.tabletLayout.col3') : undefined}
         >
           {label &&
             <Label htmlFor={inputProps.id}>
@@ -142,6 +144,7 @@ const Field = ({
       wideWidth={wideWidth}
       type={type}
       options={options}
+      leftMargin={leftMargin}
     >
       {!renderInputFirst && labelSection}
       <InputBlock
@@ -149,21 +152,18 @@ const Field = ({
         pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : undefined}
         wideWidth={wideWidth}
         display="flex"
-        flexGrow={0}
-        flexShrink={0}
-        flexBasis={wideWidth ? getKey('sizes', widthSpacing) : undefined}
-        flex={!wideWidth && type !== 'radio' ? 1 : undefined}
+        flex={1}
       >
         <Block
           display="flex"
           flexWrap="wrap"
           width="100%"
           align={showCharacterCount ? 'right' : undefined}
-          direction={type === 'boxChoice' || showCharacterCount ? 'column' : 'row'}
+          direction="column"
         >
           <InputComponent
             {...inputProps}
-            margin={type === 'checkbox' && !!options === true ? [0, 'large'] : undefined}
+            marginRight={type === 'checkbox' && !!options === true ? 'large' : undefined}
             pad={type === 'boxChoice' ? 'large' : undefined}
             lastChildProps={{ pad: 0 }}
             flex={1}
@@ -229,6 +229,7 @@ Field.propTypes = {
   success: bool,
   message: string,
   hideErrors: bool,
+  leftMargin: bool,
   label: node,
   required: bool,
   showCharacterCount: bool,

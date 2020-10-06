@@ -12,14 +12,18 @@ import {
 import communityPropType from 'sly/common/propTypes/community';
 
 const nonCareServicesOptions = [
-  { value: 'Community Operated Transportation', label: 'Community operated transportation' },
-  { value: 'Scheduled Daily Activities', label: 'Scheduled daily activities' },
   { value: 'Housekeeping and linen services', label: 'Housekeeping and linen services' },
+  { value: 'Transportation arrangement (non-medical)', label: 'Transportation arrangement (non-medical)' },
+  { value: 'Community Operated Transportation', label: 'Community operated transportation' },
   { value: 'Fitness programs', label: 'Fitness programs' },
+  { value: 'Concierge services', label: 'Concierge services' },
+  { value: 'Scheduled Daily Activities', label: 'Scheduled daily activities' },
   { value: 'Community-sponsored activities', label: 'Community-sponsored activities' },
-  { value: 'Move-in coordination', label: 'Move-in coordination' },
+  { value: 'Resident-run activities', label: 'Resident-run activities' },
   { value: 'Planned day trips', label: 'Planned day trips' },
-  { value: 'Transportation arrangement (non-medical', label: 'Transportation arrangement (non-medical' },
+  { value: 'Move-in coordination', label: 'Move-in coordination' },
+  { value: 'Continuing learning programs', label: 'Continuing learning programs' },
+  { value: 'Family education and support services', label: 'Family education and support services' },
 ];
 
 const familyOvernightOptions = [
@@ -89,26 +93,8 @@ export default class DashboardCommunityServicesForm extends Component {
     return (
       <Section as="form" onSubmit={handleSubmit}>
         <SectionHeader>
-          Services
+          Services and Amenities
         </SectionHeader>
-
-        <SectionForm heading="Community Services">
-          <EditField
-            name="propInfo.nonCareServices"
-            label="Non Care Services"
-            type="checkbox"
-            options={nonCareServicesOptions}
-            readOnly={!canEdit}
-          />
-
-          <EditField
-            name="propInfo.nonCareServicesOther"
-            label="Other"
-            type="textarea"
-            placeholder="More useful information about the community services"
-            readOnly={!canEdit}
-          />
-        </SectionForm>
 
         <SectionForm heading="Care Services">
           {typeCare.indexOf('Assisted Living') !== -1 &&
@@ -138,6 +124,26 @@ export default class DashboardCommunityServicesForm extends Component {
             options={otherCareServicesOptions}
             readOnly={!canEdit}
             wideWidth
+          />
+        </SectionForm>
+
+        <SectionForm>
+          <EditField
+            name="propInfo.nonCareServices"
+            label="Non-Care Services"
+            type="checkbox"
+            options={nonCareServicesOptions}
+            readOnly={!canEdit}
+          />
+
+          <EditField
+            name="propInfo.nonCareServicesOther"
+            label="Other"
+            type="textarea"
+            placeholder="More useful information about the community services"
+            readOnly={!canEdit}
+            wideWidth={false}
+            leftMargin
           />
         </SectionForm>
 
