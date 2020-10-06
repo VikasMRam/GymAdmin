@@ -21,6 +21,7 @@ const nonCareServicesOptions = [
   { value: 'Community-sponsored activities', label: 'Community-sponsored activities' },
   { value: 'Resident-run activities', label: 'Resident-run activities' },
   { value: 'Planned day trips', label: 'Planned day trips' },
+  { value: 'Transportation arrangement (non-medical)', label: 'Transportation arrangement (non-medical)' },
   { value: 'Move-in coordination', label: 'Move-in coordination' },
   { value: 'Continuing learning programs', label: 'Continuing learning programs' },
   { value: 'Family education and support services', label: 'Family education and support services' },
