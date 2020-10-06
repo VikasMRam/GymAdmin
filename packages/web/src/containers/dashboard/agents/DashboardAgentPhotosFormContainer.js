@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
+import { withRouter } from 'react-router';
 import userPropType from 'sly/common/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm'; // Currently
 // its the same form for agents and communities
 import { purgeFromRelationships, invalidateRequests } from 'sly/web/services/api/actions';

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, string, object } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import api from 'sly/web/services/api/apiInstance';
 import { query } from 'sly/web/services/api';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';

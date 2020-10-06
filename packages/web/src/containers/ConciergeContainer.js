@@ -1,7 +1,7 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import Concierge from 'sly/web/components/organisms/Concierge';
 import ConciergeController from 'sly/web/controllers/ConciergeController';
 import { prefetch } from 'sly/web/services/api';

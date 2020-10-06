@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { reduxForm, formValueSelector } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
+import { withRouter } from 'react-router';
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';

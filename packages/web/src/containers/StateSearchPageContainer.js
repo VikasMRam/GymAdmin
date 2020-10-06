@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, number, array, func } from 'prop-types';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { stateNames, urlize, replaceLastSegment } from  'sly/web/services/helpers/url';
 import ErrorPage from 'sly/web/components/pages/Error';
@@ -10,6 +10,7 @@ import { withProps } from 'sly/web/services/helpers/hocs';
 import { prefetch } from 'sly/web/services/api';
 import { getSearchParams } from 'sly/web/services/helpers/search';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
+import { withRouter } from 'react-router';
 
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),

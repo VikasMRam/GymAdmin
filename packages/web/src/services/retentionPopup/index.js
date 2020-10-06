@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, object, string, bool } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
+import { withRouter } from 'react-router';
 import { host, isServer, isBrowser } from 'sly/web/config';
 import { withUser } from 'sly/web/services/api';
 import { CUSTOMER_ROLE } from 'sly/common/constants/roles';

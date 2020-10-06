@@ -1,9 +1,9 @@
 import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import { object } from 'prop-types';
 
+import { withRouter } from 'react-router';
 import { filterLinkPath } from 'sly/web/services/helpers/search';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 

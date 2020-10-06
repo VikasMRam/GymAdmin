@@ -74,7 +74,7 @@ export default class DashboardCommunityDetailsPage extends Component {
       Profile: PROFILE,
       Photos: PHOTOS,
       Pricing: PRICING,
-      Services: SERVICES,
+      'Services And Amenities': SERVICES,
       Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
       Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
       Clients: CLIENTS,

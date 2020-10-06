@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { func, object } from 'prop-types';
-import { withRouter } from 'react-router';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
+import { withRouter } from 'react-router';
 import emailPropType from 'sly/common/propTypes/email';
 import { prefetch, query } from 'sly/web/services/api';
 import EmailSharePageForm from 'sly/web/components/pages/EmailSharePageForm';

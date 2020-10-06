@@ -33,8 +33,8 @@ const config = {
     facebookAppId: process.env.FB_CLIENT_ID,
     googleAppId: process.env.GOOGLE_CLIENT_ID,
     olarkSiteId: '9319-500-10-7635',
-    muteReduxLogger: true,
-    hideChatbox: false,
+    muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
+    hideChatbox: process.env.HIDE_CHATBOX,
     loadAutoComplete: !process.env.OFFLINE_MODE,
     disableExperiments: process.env.DISABLE_EXPERIMENTS,
     enableExperimentsDebugger: process.env.ENABLE_EXPERIMENT_DEBUGGER,
@@ -58,8 +58,6 @@ const config = {
   },
 
   development: {
-    muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
-    hideChatbox: process.env.HIDE_CHATBOX,
     loadAutoComplete: !process.env.OFFLINE_MODE,
   },
 

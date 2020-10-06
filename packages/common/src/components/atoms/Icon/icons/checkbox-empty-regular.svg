@@ -1,3 +1,15 @@
 <svg viewBox="0 0 24 24">
-  <path fill="currentColor" d="M19,5 L19,19 L5,19 L5,5 L19,5 L19,5 Z M19,3 L5,3 C3.9,3 3,3.9 3,5 L3,19 C3,20.1 3.9,21 5,21 L19,21 C20.1,21 21,20.1 21,19 L21,5 C21,3.9 20.1,3 19,3 Z"/>
+    <defs>
+        <path d="M19.2727273,2 L4.72727273,2 C3.22104159,2 2,3.22104159 2,4.72727273 L2,19.2727273 C2,20.7789584 3.22104159,22 4.72727273,22 L19.2727273,22 C20.7789584,22 22,20.7789584 22,19.2727273 L22,4.72727273 C22,3.22104159 20.7789584,2 19.2727273,2 Z M19.2727273,2.90909091 C20.2768814,2.90909091 21.0909091,3.72311864 21.0909091,4.72727273 L21.0909091,19.2727273 C21.0909091,20.2768814 20.2768814,21.0909091 19.2727273,21.0909091 L4.72727273,21.0909091 C3.72311864,21.0909091 2.90909091,20.2768814 2.90909091,19.2727273 L2.90909091,4.72727273 C2.90909091,3.72311864 3.72311864,2.90909091 4.72727273,2.90909091 L19.2727273,2.90909091 Z" id="path-1-checkbox-empty"></path>
+    </defs>
+    <g id="icon-/-checkbox-unselected" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="bounding-box" x="0" y="0" width="24" height="24"></rect>
+        <mask id="mask-2-checkbox-empty" fill="white">
+            <use xlink:href="#path-1-checkbox-empty"></use>
+        </mask>
+        <g id="Rectangle" fill-rule="nonzero"></g>
+        <g id="color-/-slate-/-base" mask="url(#mask-2-checkbox-empty)" fill="currentColor" fill-rule="nonzero">
+            <rect id="color" x="0" y="0" width="24" height="24"></rect>
+        </g>
+    </g>
 </svg>

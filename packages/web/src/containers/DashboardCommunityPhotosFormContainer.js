@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { set } from 'object-path-immutable';
 
+import { withRouter } from 'react-router';
 import userPropType from 'sly/common/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
 import { query, prefetch, getRelationship } from 'sly/web/services/api';

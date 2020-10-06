@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { prefetch, withUser, query } from 'sly/web/services/api';
 import contactPropType from 'sly/common/propTypes/contact';
 import DashboardAgentContactsSection from 'sly/web/components/organisms/DashboardAgentContactsSection';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import MorePictures from 'sly/web/components/organisms/MorePictures';
 import SlyEvent from 'sly/web/services/helpers/events';
 import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';

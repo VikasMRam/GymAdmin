@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { func, object, string, shape, bool } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { prefetch } from 'sly/web/services/api';
 import datatableColumnsProptype from 'sly/common/propTypes/datatableColumns';
 import {

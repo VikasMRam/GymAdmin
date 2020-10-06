@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { size } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';

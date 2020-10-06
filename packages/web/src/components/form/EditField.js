@@ -53,8 +53,8 @@ export default function EditField(props) {
     <>
       <Bubble {...props} />
       <Field
-        {...props}
         wideWidth
+        {...props}
         component={ReduxField}
       />
     </>

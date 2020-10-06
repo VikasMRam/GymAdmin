@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { object, bool, func } from 'prop-types';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import communityPropType from 'sly/common/propTypes/community';
 import { isBrowser } from 'sly/web/config';
-import { Button } from 'sly/web/components/atoms';
-import { isCtaRecorded } from 'sly/web/services/helpers/localStorage';
-import { getIsActiveAdult, getIsSellerAgentCTA } from 'sly/web/services/helpers/community';
+import { getIsSellerAgentCTA } from 'sly/web/services/helpers/community';
 import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
 import GetSellerAgentInfo from 'sly/web/components/organisms/GetSellerAgentInfo';

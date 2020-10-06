@@ -1,6 +1,8 @@
 import { logWarn } from 'sly/web/services/helpers/logging';
 import { API_CALL } from 'sly/web/services/api/constants';
 
+const pendingPromises = {};
+
 export default () => next => (action) => {
   const { type, payload } = action;
 
@@ -15,6 +17,12 @@ export default () => next => (action) => {
     return Promise.reject();
   }
 
+  const actionKey = `${actionName}:${JSON.stringify(placeholders)}`;
+
+  if (typeof pendingPromises[actionKey] !== 'undefined') {
+    return pendingPromises[actionKey];
+  }
+
   const meta = {
     api: true,
     name: actionName,
@@ -26,7 +34,7 @@ export default () => next => (action) => {
     meta: { ...meta, type: 'request' },
   });
 
-  return call(path, placeholders, options)
+  const promise = call(path, placeholders, options)
     .then((result) => {
       next({
         type: `api/${actionName}/response`,
@@ -42,5 +50,12 @@ export default () => next => (action) => {
         meta: { ...meta, type: 'error' },
       });
       return Promise.reject(result);
+    })
+    .finally(() => {
+      delete pendingPromises[actionKey];
     });
+
+  pendingPromises[actionKey] = promise;
+
+  return promise;
 };

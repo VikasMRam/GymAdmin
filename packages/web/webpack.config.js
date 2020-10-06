@@ -28,6 +28,20 @@ const {
   // optimization,
 } = require('webpack-blocks');
 
+const tryJson = (value) => {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return value;
+  }
+};
+
+const envPick = (name, otherwise) => {
+  return process.env[name]
+    ? tryJson(process.env[name])
+    : otherwise;
+};
+
 // defaults to dev env, otherwise specify with env vars
 const { STORYBOOK_GIT_BRANCH } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -46,10 +60,10 @@ const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE';
 const GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
-const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
+const HIDE_CHATBOX = envPick('HIDE_CHATBOX', false);
 const ENABLE_EXPERIMENT_DEBUGGER = process.env.ENABLE_EXPERIMENT_DEBUGGER || false;
 const DISABLE_EXPERIMENTS = process.env.DISABLE_EXPERIMENTS || false;
-const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
+const MUTE_REDUX_LOGGER = envPick('MUTE_REDUX_LOGGER', true);
 
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';

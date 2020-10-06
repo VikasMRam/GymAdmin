@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { withRouter } from 'react-router';
 
-import { host } from 'sly/web/config';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { extractEventFromQuery } from 'sly/web/services/helpers/queryParamEvents';
 
@@ -44,9 +43,6 @@ export default class PageEventsContainer extends Component {
   }
 
   render() {
-    return (
-      <>
-      </>
-    )
+    return null;
   }
 }

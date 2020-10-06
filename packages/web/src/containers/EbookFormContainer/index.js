@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { SubmissionError, clearSubmitErrors, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { func, string, object } from 'prop-types';
 
+import { withRouter } from 'react-router';
 import { createValidator, email, required } from 'sly/web/services/validation';
 import { query } from 'sly/web/services/api';
 import EbookForm from 'sly/web/components/organisms/EbookForm';

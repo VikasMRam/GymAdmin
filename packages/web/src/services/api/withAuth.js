@@ -38,6 +38,7 @@ const userApiMethods = [
   return acc;
 }, {});
 
+
 const mapDispatchToProps = {
   ensureAuthenticated,
   ...userApiMethods,
@@ -47,7 +48,7 @@ export default function withAuth(InnerComponent) {
   @withUser
   @connect(mapStateToProps, mapDispatchToProps)
 
-  class Wrapper extends PureComponent {
+  class WithAuth extends React.Component {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
 
     static propTypes = {
@@ -131,17 +132,17 @@ export default function withAuth(InnerComponent) {
           }
           return Promise.reject(e);
         })
-        .then(status.user.refetch);
+        .then(status.user.invalidate);
     };
 
     loginUser = (data) => {
       const { loginUser, status } = this.props;
-      return loginUser(data).then(status.user.refetch);
+      return loginUser(data).then(status.user.invalidate);
     };
 
     logoutUser = (data) => {
       const { logoutUser, status } = this.props;
-      return logoutUser(data).then(status.user.refetch);
+      return logoutUser(data).then(status.user.invalidate);
     };
 
     recoverPassword = (data) => {
@@ -156,7 +157,7 @@ export default function withAuth(InnerComponent) {
 
     setPassword = (data) => {
       const { setPassword, status } = this.props;
-      return setPassword(data).then(status.user.refetch);
+      return setPassword(data).then(status.user.invalidate);
     };
 
     ensureAuthenticated = (...args) => {
@@ -166,12 +167,12 @@ export default function withAuth(InnerComponent) {
 
     updatePassword = (data) => {
       const { updatePassword, status } = this.props;
-      return updatePassword(data).then(status.user.refetch);
+      return updatePassword(data).then(status.user.invalidate);
     };
 
     thirdPartyLogin = (data) => {
       const { thirdPartyLogin, status } = this.props;
-      return thirdPartyLogin(data).then(status.user.refetch);
+      return thirdPartyLogin(data).then(status.user.invalidate);
     };
 
     resendOtpCode = (data) => {
@@ -181,7 +182,7 @@ export default function withAuth(InnerComponent) {
 
     otpLoginUser = (data) => {
       const { otpLoginUser, status } = this.props;
-      return otpLoginUser(data).then(status.user.refetch);
+      return otpLoginUser(data).then(status.user.invalidate);
     };
 
     sendOtpCode = (data) => {
@@ -210,7 +211,7 @@ export default function withAuth(InnerComponent) {
     );
   }
 
-  hoistNonReactStatic(Wrapper, InnerComponent);
+  hoistNonReactStatic(WithAuth, InnerComponent);
 
-  return Wrapper;
+  return WithAuth;
 }

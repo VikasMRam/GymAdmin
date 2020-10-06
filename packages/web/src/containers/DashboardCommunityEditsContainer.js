@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
-import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
+import { withRouter } from 'react-router';
 import clientPropType from 'sly/common/propTypes/client';
 import userProptype from 'sly/common/propTypes/user';
 import { query } from 'sly/web/services/api';

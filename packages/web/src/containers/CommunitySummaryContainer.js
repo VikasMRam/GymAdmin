@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { bool, object } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
+import { withRouter } from 'react-router';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
 import { prefetch } from 'sly/web/services/api';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
-import {
-  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
-  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
-} from 'sly/web/constants/notifications';
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
 
 @withRouter

@@ -14,13 +14,13 @@ const H2 = styled.h2``;
 const H3 = styled.h3``;
 const H4 = styled.h4``;
 
-const Root = styled((props) => {
+const HeadingRoot = styled(({ innerRef, ...props }) => {
   switch (props.level || props.size) { /* eslint-disable jsx-a11y/heading-has-content */
-    case 'hero': return <H1 {...props} />;
-    case 'title': return <H2 {...props} />;
-    case 'subtitle': return <H3 {...props} />;
-    case 'body': return <H4 {...props} />;
-    default: return <H1 {...props} />;
+    case 'hero': return <H1 ref={innerRef} {...props} />;
+    case 'title': return <H2 ref={innerRef} {...props} />;
+    case 'subtitle': return <H3 ref={innerRef} {...props} />;
+    case 'body': return <H4 ref={innerRef} {...props} />;
+    default: return <H1 ref={innerRef} {...props} />;
   }
 })`
   ${withSpacing}
@@ -29,8 +29,10 @@ const Root = styled((props) => {
   ${withAlign}
 `;
 
-Root.propTypes = {
+HeadingRoot.propTypes = {
   size: string,
 };
+
+const Root = React.forwardRef((props, ref) => <HeadingRoot innerRef={ref} {...props} />);
 
 export default Root;

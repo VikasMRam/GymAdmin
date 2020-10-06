@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { object, string, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
+import debounce from 'lodash/debounce';
 
 import { size, palette } from 'sly/common/components/themes';
 import { Input, Block } from 'sly/web/components/atoms';
@@ -95,6 +96,8 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
   );
 };
 
+const debouncedDatatableSearch = debounce((datatable, modelConfig, value) => datatable.doSearch(modelConfig.defaultSearchField, 'cs', value), 150);
+
 const TableHeaderButtons = ({
   onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value, modelConfig,
 }) => (
@@ -106,8 +109,9 @@ const TableHeaderButtons = ({
           type="search"
           size="button"
           placeholder={`Type to filter by ${modelConfig.defaultSearchField}`}
-          value={(datatable.getFilter(modelConfig.defaultSearchField, 'cs') || {}).value || ''}
-          onChange={({ target }) => datatable.doSearch(modelConfig.defaultSearchField, 'cs', target.value)} // FIXME: Read default operator from dsf type
+          defaultValue={datatable.getFilter(modelConfig.defaultSearchField, 'cs')?.value}
+          // FIXME: Read default operator from dsf type
+          onChange={({ target }) => debouncedDatatableSearch(datatable, modelConfig, target.value)}
         />
       )
       : <SearchTextInput type="search" placeholder="Type to filter by name" value={value} onChange={onSearchTextKeyUp} />

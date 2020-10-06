@@ -16,8 +16,10 @@
     "lint": "lerna run --stream lint",
     "test": "lerna run --stream test",
     "format": "prettier-eslint --print-width 120 --ignore **/node_modules/** \"$PWD/packages/*/src/**/*.js\"",
-    "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "production": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
+    "build:web:prod": "npm --prefix=packages/web run build:prod",
+    "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
+    "start:web:prod": "npm --prefix=packages/web run start:prod",
     "start:mobile": "npm --prefix=packages/mobile run ${PLATFORM:-ios}",
     "start:storybook": "npm --prefix=packages/storybook start",
     "start:storybook:mobile": "npm --prefix=packages/storybook run start:mobile:${PLATFORM:-ios}"

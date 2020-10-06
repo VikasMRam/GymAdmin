@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { parse } from 'query-string';
 import { func, object } from 'prop-types';
-import { generatePath, withRouter } from 'react-router';
+import { withRouter, generatePath } from 'react-router';
 
 import DashboardAgentIndexPage from 'sly/web/components/pages/DashboardAgentIndexPage';
 import AddAgentFormContainer from 'sly/web/containers/dashboard/agents/AddAgentFormContainer'
@@ -32,7 +32,6 @@ export default class DashboardAgentsIndexPageContainer extends Component {
     const { id } = resp;
     const path = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id: id, tab: AGENT_DETAILS });
     history.push(path);
-
   };
 
   handleAddAgent = () => {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Lazy } from 'react-lazy';
 import loadable from '@loadable/component';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { prefetch } from 'sly/web/services/api';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 

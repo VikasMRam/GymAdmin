@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 import loadable from '@loadable/component';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
 import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
 import { community as communityPropType } from 'sly/common/propTypes/community';

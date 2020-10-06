@@ -148,7 +148,7 @@ const mapItem = (item, i, arr, menuOpen) => item.isButton ? (
   </HeaderItem>
 );
 
-const Header = ({
+const Header = React.memo(({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
   onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen,
 }) => {
@@ -263,7 +263,7 @@ const Header = ({
       }
     </Wrapper>
   );
-};
+});
 
 Header.propTypes = {
   menuOpen: bool,

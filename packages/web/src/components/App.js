@@ -37,7 +37,6 @@ import {
 } from 'sly/web/constants/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
-import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/web/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/web/components/pages/OurHistoryPage'));
@@ -329,12 +328,7 @@ const routeComponents = routes.map(({ component: Component, ...route }) => (
   <Route
     key={route.path}
     {...route}
-    component={props => (
-      <>
-        <PageEventsContainer />
-        <Component {...props} />
-      </>
-    )}
+    component={Component}
   />
 ));
 

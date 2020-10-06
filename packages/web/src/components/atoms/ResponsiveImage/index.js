@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, array, oneOf, any, func } from 'prop-types';
+import { string, array, oneOf, any, func, number } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -55,7 +55,7 @@ export default class ResponsiveImage extends React.Component {
     src: string,
     placeholder: string,
     // use height to force a height for all sources like in a hero banner
-    height: string,
+    height: number,
     alt: string,
     sizes: string,
     sources: array,

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { func, object, node, array } from 'prop-types';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
+import { withRouter } from 'react-router';
 
 import {
   parseURLQueryParams,

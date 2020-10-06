@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import { generatePath, withRouter } from 'react-router';
+import { generatePath } from 'react-router';
 import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
@@ -46,6 +46,7 @@ import BackLink from 'sly/web/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContainer';
 import { getConversationName } from 'sly/web/services/helpers/conversation';
 import { textAlign } from 'sly/web/components/helpers/text';
+import { withRouter } from 'react-router';
 
 const categoryName = 'conversation-messages';
 

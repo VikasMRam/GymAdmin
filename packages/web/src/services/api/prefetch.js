@@ -9,6 +9,7 @@ import { createMemoizedRequestInfoSelector } from 'sly/web/services/api/selector
 import withPrefetchWait from 'sly/web/services/api/withPrefetchWait';
 import withReduxContext from 'sly/web/services/api/withReduxContext';
 import withApiContext, { apiContextPropType } from 'sly/web/services/api/context';
+import { invalidateRequests } from 'sly/web/services/api/actions';
 
 const defaultDispatcher = call => call();
 
@@ -31,21 +32,18 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       if (props[`${propName}RequestInfo`]) {
         return {
           requestInfo: props[`${propName}RequestInfo`],
-          getRequestInfo: () => props[`${propName}RequestInfo`],
         };
       }
 
       const args = dispatcher(argumentsAbsorber, props);
       const { placeholders = {} } = api[apiCall].method(...args);
-
-      const getRequestInfo = () => getMemoizedRequestInfo(
+      const requestInfo = getMemoizedRequestInfo(
         getState(),
         { call: apiCall, args: placeholders },
       );
 
       return {
-        requestInfo: getRequestInfo(),
-        getRequestInfo,
+        requestInfo,
       };
     };
 
@@ -54,10 +52,15 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       props,
     );
 
+    const invalidate = props => dispatcher(
+      placeholders => invalidateRequests(apiCall, placeholders),
+      props,
+    );
+
     @withApiContext
     @withReduxContext
     @withPrefetchWait
-    @connect(mapStateToProps, { fetch })
+    @connect(mapStateToProps, { fetch, invalidate })
 
     class Wrapper extends React.PureComponent {
       static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
@@ -67,7 +70,6 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       static propTypes = {
         api: object,
         requestInfo: object,
-        getRequestInfo: func,
         fetch: func,
         prefetchWait: func,
         status: object,
@@ -83,8 +85,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       }
 
       mayBeFetch = () => {
-        const { getRequestInfo, apiContext } = this.props;
-        const { hasStarted, isLoading, isInvalid } = getRequestInfo();
+        const { requestInfo, apiContext } = this.props;
+        const { hasStarted, isLoading, isInvalid } = requestInfo;
         const shouldSkip = isServer && (apiContext.skipApiCalls || api[apiCall].ssrIgnore);
         if (isInvalid || (!shouldSkip && !isLoading && !hasStarted)) {
           return this.fetch();
@@ -102,9 +104,13 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         return fetch(this.props);
       };
 
+      invalidate = () => {
+        const { invalidate } = this.props;
+        return invalidate(this.props);
+      }
+
       render() {
-        const { getRequestInfo, status, ...props } = this.props;
-        const request = getRequestInfo();
+        const { requestInfo: request, status, ...props } = this.props;
 
         const innerProps = {
           ...props,
@@ -114,6 +120,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
             [propName]: {
               ...request,
               refetch: this.fetch,
+              invalidate: this.invalidate,
             },
           },
         };

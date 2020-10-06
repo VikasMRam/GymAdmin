@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
-import dayjs from 'dayjs';
-import qs from 'query-string';
-import debounce from 'lodash/debounce';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import { prefetch, withUser } from 'sly/web/services/api';
 import clientPropType from 'sly/common/propTypes/client';
 import taskPropType from 'sly/common/propTypes/task';
-import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/web/constants/tasks';
-import { getSearchParams } from 'sly/web/services/helpers/search';
-import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
 import DashboardAgentTasksSection from 'sly/web/components/organisms/DashboardAgentTasksSection';
 import ModalController from 'sly/web/controllers/ModalController';
 import NotificationController from 'sly/web/controllers/NotificationController';
@@ -46,37 +40,9 @@ const getPaginationData = ({ result, meta }) => {
     completedCount,
   });
 };
-/*
-const getPageParams = ({ match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  const type = match.params.taskType
-  const taskName = searchParams.title;
-  let date;
-  let status = `in:${TASK_STATUS_NOT_STARTED_CODE},${TASK_STATUS_IN_PROGRESS_CODE}`;
-  if (type === 'DueToday') {
-    date = dayjs().format('YYYY-MM-DD');
-  } else if (type === 'Overdue') {
-    date = `lt:${dayjs().format('YYYY-MM-DD')}`;
-  } else if (type === 'Upcoming') {
-    date = `gt:${dayjs().format('YYYY-MM-DD')}`;
-  }
-  if (type === 'Completed') {
-    status = '20';
-  }
 
-  return {
-    status,
-    date,
-    type,
-    taskName,
-    pageNumber: searchParams['page-number'],
-  };
-};
-*/
 @withRouter
-
 @withUser
-
 @prefetch('tasks', 'getTasks', (req, { datatable, client }) => {
   if (client) {
     const qs = datatable.query;
