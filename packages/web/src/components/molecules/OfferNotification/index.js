@@ -41,13 +41,13 @@ const BigScreenLearnMore = styled(Link)`
 `;
 
 const OfferNotification = ({
-                             palette: paletteProp,
-                             title,
-                             description,
-                             hasLearnMore,
-                             className,
-                             hasAlreadyRequestedPricing,
-                           }) => (
+  palette: paletteProp,
+  title,
+  description,
+  hasLearnMore,
+  className,
+  hasAlreadyRequestedPricing,
+}) => (
   <Wrapper palette={paletteProp} className={className}>
     <LoyaltyIcon
       icon="baseline-loyalty"
@@ -69,12 +69,12 @@ const OfferNotification = ({
         <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack="offer">
           {getPricing => (
             <>
-            <BigScreenLearnMore onClick={getPricing}>
-              Click here to learn more.
-            </BigScreenLearnMore>
-            <SmallScreenLearnMore onClick={getPricing}>
-              Learn more.
-            </SmallScreenLearnMore>
+              <BigScreenLearnMore onClick={getPricing}>
+                Click here to learn more.
+              </BigScreenLearnMore>
+              <SmallScreenLearnMore onClick={getPricing}>
+                Learn more.
+              </SmallScreenLearnMore>
             </>
           )}
         </GetCustomPricingContainer>
