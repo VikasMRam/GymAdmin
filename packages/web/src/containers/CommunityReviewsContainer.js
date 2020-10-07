@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
 import { withRouter } from 'react-router';
+
 import EntityReviews from 'sly/web/components/organisms/EntityReviews';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { community as communityPropType } from 'sly/common/propTypes/community';
