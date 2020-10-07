@@ -97,11 +97,11 @@ export default class DashboardCommunityServicesForm extends Component {
           Services and Amenities
         </SectionHeader>
 
-        <SectionForm heading="Care Services">
+        <SectionForm>
           {typeCare.indexOf('Assisted Living') !== -1 &&
             <EditField
               name="propInfo.careServices"
-              label="Assisted Living"
+              label="Care Services"
               type="checkbox"
               options={assistedLivingCareServicesOptions}
               readOnly={!canEdit}
@@ -111,7 +111,7 @@ export default class DashboardCommunityServicesForm extends Component {
           {typeCare.indexOf('Memory Care') !== -1 &&
             <EditField
               name="propInfo.careServices"
-              label="Memory Care"
+              label="Care Services"
               type="checkbox"
               options={memoryCareCareServicesOptions}
               readOnly={!canEdit}
@@ -120,11 +120,21 @@ export default class DashboardCommunityServicesForm extends Component {
           }
           <EditField
             name="propInfo.careServices"
-            label="Other"
+            label="Care Services"
             type="checkbox"
             options={otherCareServicesOptions}
             readOnly={!canEdit}
             wideWidth
+          />
+
+          <EditField
+            name="propInfo.careServicesOther"
+            label="Other"
+            type="textarea"
+            placeholder="More useful information about the care services"
+            readOnly={!canEdit}
+            wideWidth={false}
+            leftMargin
           />
         </SectionForm>
 
