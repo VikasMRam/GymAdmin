@@ -36,17 +36,33 @@ const amenitiesOptions = [
   { value: 'Wifi', label: 'Wifi' },
   { value: 'Internet', label: 'Internet' },
   { value: 'Telephone', label: 'Telephone' },
+  { value: 'Private bathrooms', label: 'Private bathrooms' },
   { value: 'Air-conditioning', label: 'Air-conditioning' },
   { value: 'Kitchenettes', label: 'Kitchenettes' },
+  { value: 'Fully furnished', label: 'Fully furnished' },
 ];
 const communitySpaceOptions = [
-  { value: 'Pet Friendly', label: 'Pet Friendly' },
-  { value: 'Small Library', label: 'Library' },
-  { value: 'Garden', label: 'Garden' },
-  { value: 'Outdoor patio', label: 'Outdoor patio' },
   { value: 'Dining room', label: 'Dining room' },
   { value: 'Restaurant-style dining', label: 'Restaurant-style dining' },
+  { value: 'Family private dining rooms', label: 'Family private dining rooms' },
+  { value: 'Cafe', label: 'Cafe' },
+  { value: 'Organic food and ingredients', label: 'Organic food and ingredients' },
+  { value: 'On-site market', label: 'On-site market' },
+  { value: 'Outdoor space', label: 'Outdoor space' },
+  { value: 'Outdoor patio', label: 'Outdoor patio' },
+  { value: 'Garden', label: 'Garden' },
+  { value: 'Small Library', label: 'Library' },
+  { value: 'Gaming room', label: 'Gaming room' },
+  { value: 'Computer center', label: 'Computer center' },
+  { value: 'Fitness room', label: 'Fitness room' },
+  { value: 'Swimming pool', label: 'Swimming pool' },
+  { value: 'Spa', label: 'Spa' },
+  { value: 'Beauty salon', label: 'Beauty salon' },
+  { value: 'Wellness center', label: 'Wellness center' },
+  { value: 'Religious/meditation center', label: 'Religious/meditation center' },
   { value: 'Located close to shopping centers', label: 'Located close to shopping centers' },
+  { value: 'Located close to restaurants', label: 'Located close to restaurants' },
+  { value: 'Pet Friendly', label: 'Pet Friendly' },
 ];
 
 const assistedLivingCareServices = [
@@ -158,7 +174,7 @@ export default class DashboardCommunityServicesForm extends Component {
           />
         </SectionForm>
 
-        <SectionForm heading="Amenities">
+        <SectionForm>
           <EditField
             name="propInfo.communityDescription"
             label="Community Description"
@@ -191,9 +207,9 @@ export default class DashboardCommunityServicesForm extends Component {
           )}
           <EditField
             name="propInfo.communitySpaceOther"
-            label="Other Amenities"
+            label="Other room mmenities"
             type="textarea"
-            placeholder="More useful information about the community amenities"
+            placeholder="More useful information about the room amenities"
             readOnly={!canEdit}
           />
         </SectionForm>
