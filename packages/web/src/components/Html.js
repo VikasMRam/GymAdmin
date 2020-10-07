@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl } from 'sly/web/config';
+import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl, gMapsApiKey } from 'sly/web/config';
 
 const Html = ({
   linkElements, styleElements, scriptElements, state, content,
@@ -63,6 +63,7 @@ const Html = ({
         {/* End Google Platform Library Code */}
         {/* eslint-enable */}
 
+        <script src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`}></script>
         {helmet.style.toComponent()}
       </body>
     </html>

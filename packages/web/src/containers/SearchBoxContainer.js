@@ -42,6 +42,11 @@ export default class SearchBoxContainer extends Component {
     selectedSuggestion: undefined,
   };
 
+  componentDidMount() {
+    this.autocompleteService = new window.google.maps.places.AutocompleteService();
+  }
+
+
   handleTextboxBlur = () => {
     this.setState({
       isTextboxInFocus: false,
@@ -157,6 +162,16 @@ export default class SearchBoxContainer extends Component {
     }
   };
 
+  getGoogleAutocomplete = input => new Promise((resolve, reject) => {
+    this.autocompleteService.getPlacePredictions(
+      {
+        types: ['(regions)'],
+        input,
+      },
+      resolve,
+    );
+  })
+
   handleKeyDown = (e) => {
     if (!e || !e.target) {
       return null;
@@ -169,19 +184,26 @@ export default class SearchBoxContainer extends Component {
     }
 
     const { getSearch, include } = this.props;
+
     const query = {
       'filter[query]': e.target.value,
       include,
     };
 
-    return getSearch(query)
-      .then((resp) => {
-        const matches = normJsonApi(resp);
+    return Promise.all([
+      this.getGoogleAutocomplete(e.target.value)
+        .then((...args) => {
+          console.log(...args);
+        }),
+      getSearch(query)
+        .then((resp) => {
+          const matches = normJsonApi(resp);
 
-        this.setState({
-          suggestions: matches,
-        });
-      });
+          this.setState({
+            suggestions: matches,
+          });
+        })
+    ]);
   };
 
   handleKeyDownThrottled = (e) => {
