@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { upTo } from 'sly/common/components/helpers';
+import { capitalize } from  'sly/web/services/helpers/utils';
 import { Paragraph, Block, Link, Grid } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
@@ -25,11 +26,11 @@ const groupKeys = [
 ];
 
 const groupTitles = {
-  communityHighlights: 'Community Highlights',
-  careServices: 'Care Services',
-  personalSpace: 'Amenities',
-  communitySpace: 'Community Space',
-  nonCareServices: 'Non-Care Services',
+  communityHighlights: 'Community highlights',
+  careServices: 'Care services',
+  personalSpace: 'Room amenities',
+  communitySpace: 'Community amenities',
+  nonCareServices: 'Non-care services',
 };
 
 const groupItemIcons = {
@@ -73,16 +74,16 @@ const CommunityDetails = ({ community }) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
 
-      const icons = keys.map(k => groupItemIcons[k.toLowerCase()] ? (
+      const icons = keys.map(k => (
         <IconItem
           key={k}
-          icon={groupItemIcons[k.toLowerCase()] || 'check'}
+          icon={groupItemIcons[k.toLowerCase()] || 'care'}
           iconPalette="slate"
           iconVariation="base"
         >
-          {k}
+          {capitalize(k.toLowerCase())}
         </IconItem>
-      ) : null)
+      ))
         .filter(i => i);
 
       if (!icons.length) {

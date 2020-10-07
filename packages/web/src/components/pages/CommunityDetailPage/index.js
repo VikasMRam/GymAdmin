@@ -400,7 +400,7 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <StyledHeadingBoxSection heading="Amenities and Services">
+                <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
 
