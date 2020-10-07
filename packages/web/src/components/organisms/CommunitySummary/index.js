@@ -146,9 +146,7 @@ const CommunitySummary = ({
         {formattedAddress}
       </Heading>
 
-      <Block
-        display="flex"
-      >
+      <Block>
         {careTypes.map(careType => (
           <Tag
             key={careType.path}
