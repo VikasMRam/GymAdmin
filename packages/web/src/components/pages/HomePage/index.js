@@ -354,7 +354,7 @@ const HomePage = ({
             onCurrentLocation={onCurrentLocation}
             layout="homeHero"
             onLocationSearch={onLocationSearch}
-            include="city,zip,community"
+            include="community"
             placeholder="Search by city, zip, community name"
           />
         </SearchBoxWrapper>

@@ -37,6 +37,7 @@ const groupSuggestions = suggestions => suggestions.reduce((acc, curr) => {
 const GROUP_LABELS = {
   City: 'Locations',
   Zipcode: 'Locations',
+  GoogleCity: 'Locations',
   Community: 'Communities',
   PartnerAgent: 'Agents',
 };
@@ -44,6 +45,7 @@ const GROUP_LABELS = {
 const GROUP_ICONS = {
   City: 'map',
   Zipcode: 'map',
+  GoogleCity: 'map',
   Community: 'community-size-large',
   PartnerAgent: 'user',
 };
@@ -51,6 +53,7 @@ const GROUP_ICONS = {
 const GROUP_LIMITS = {
   City: 5,
   Zipcode: 5,
+  GoogleCity: 5,
   Community: 3,
   PartnerAgent: 3,
 };
