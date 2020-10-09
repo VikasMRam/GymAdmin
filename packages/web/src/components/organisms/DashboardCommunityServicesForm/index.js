@@ -21,7 +21,6 @@ const nonCareServicesOptions = [
   { value: 'Community-sponsored activities', label: 'Community-sponsored activities' },
   { value: 'Resident-run activities', label: 'Resident-run activities' },
   { value: 'Planned day trips', label: 'Planned day trips' },
-  { value: 'Transportation arrangement (non-medical)', label: 'Transportation arrangement (non-medical)' },
   { value: 'Move-in coordination', label: 'Move-in coordination' },
   { value: 'Continuing learning programs', label: 'Continuing learning programs' },
   { value: 'Family education and support services', label: 'Family education and support services' },
@@ -65,30 +64,39 @@ const communitySpaceOptions = [
   { value: 'Pet Friendly', label: 'Pet Friendly' },
 ];
 
-const assistedLivingCareServices = [
-  'Medication management',
-  'Meal preparation and service',
-  'Transportation arrangement',
-  '24-hour supervision',
-  '24-hour call system',
-  'Coordination with health care providers',
-  'Activities of Daily Living Assistance',
-  'Assistance with Transfers',
-  'Special Dietary Restrictions',
+const careServicesOptions = [
+  { value: 'Activities of daily living assistance', label: 'Activities of daily living assistance' },
+  { value: 'Assistance with bathing', label: 'Assistance with bathing' },
+  { value: 'Assistance with dressing', label: 'Assistance with dressing' },
+  { value: 'Assistance with transfers', label: 'Assistance with transfers' },
+  { value: 'Medication management', label: 'Medication management' },
+  { value: 'Meal preparation and service', label: 'Meal preparation and service' },
+  { value: 'Transportation arrangement (medical)', label: 'Transportation arrangement (medical)' },
+  { value: 'Transportation arrangement', label: 'Transportation arrangement' },
+  { value: 'Transportation to doctors appointments', label: 'Transportation to doctors appointments' },
+  { value: 'Coordination with health care providers', label: 'Coordination with health care providers' },
+  { value: '24-hour call system', label: '24-hour call system' },
+  { value: '24-hour supervision', label: '24-hour supervision' },
+  { value: 'Physical therapy', label: 'Physical therapy' },
+  { value: 'Special dietary restrictions', label: 'Special dietary restrictions' },
+  { value: 'Diabetes diet', label: 'Diabetes diet' },
+  { value: 'Diabetes care', label: 'Diabetes care' },
+  { value: 'Administer insulin injections', label: 'Administer insulin injections' },
+  { value: '24-hour nursing', label: '24-hour nursing' },
+  { value: '12-16 hour nursing', label: '12-16 hour nursing' },
+  { value: "Parkinson's care", label: "Parkinson's care" },
+  { value: 'Care with behavioral issues', label: 'Care with behavioral issues' },
+  { value: 'Rehabilitation program', label: 'Rehabilitation program' },
+  { value: 'Mental wellness program', label: 'Mental wellness program' },
+  { value: 'Mild cognitive impairment', label: 'Mild cognitive impairment' },
+  { value: 'Dementia waiver', label: 'Dementia waiver' },
+  { value: 'Specialized memory care programming', label: 'Specialized memory care programming' },
+  { value: 'Respite program', label: 'Respite program' },
+  { value: 'Hospice waiver', label: 'Hospice waiver' },
+  { value: 'Accept incoming residents on hospice', label: 'Accept incoming residents on hospice' },
+  { value: 'Same day assessments', label: 'Same day assessments' },
+  { value: 'Preventative health screenings', label: 'Preventative health screenings' },
 ];
-
-const memoryCareCareServices = [
-  'Dementia Waiver',
-  'Specialized Memory Care Programming',
-];
-
-const otherCareServices = [
-  'Hospice Waiver',
-];
-
-const assistedLivingCareServicesOptions = assistedLivingCareServices.map(i => ({ value: i, label: i }));
-const memoryCareCareServicesOptions = memoryCareCareServices.map(i => ({ value: i, label: i }));
-const otherCareServicesOptions = otherCareServices.map(i => ({ value: i, label: i }));
 
 export default class DashboardCommunityServicesForm extends Component {
   static propTypes = {
@@ -102,7 +110,7 @@ export default class DashboardCommunityServicesForm extends Component {
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit, typeCare, community,
+      handleSubmit, invalid, submitting, canEdit, community,
     } = this.props;
 
     const isCommunityLarge = parseInt(community.propInfo.capacity || '0', 10) > 50;
@@ -114,31 +122,11 @@ export default class DashboardCommunityServicesForm extends Component {
         </SectionHeader>
 
         <SectionForm>
-          {typeCare.indexOf('Assisted Living') !== -1 &&
-            <EditField
-              name="propInfo.careServices"
-              label="Care Services"
-              type="checkbox"
-              options={assistedLivingCareServicesOptions}
-              readOnly={!canEdit}
-              wideWidth
-            />
-          }
-          {typeCare.indexOf('Memory Care') !== -1 &&
-            <EditField
-              name="propInfo.careServices"
-              label="Care Services"
-              type="checkbox"
-              options={memoryCareCareServicesOptions}
-              readOnly={!canEdit}
-              wideWidth
-            />
-          }
           <EditField
             name="propInfo.careServices"
-            label="Care Services"
+            label="Care services"
             type="checkbox"
-            options={otherCareServicesOptions}
+            options={careServicesOptions}
             readOnly={!canEdit}
             wideWidth
           />
@@ -157,7 +145,7 @@ export default class DashboardCommunityServicesForm extends Component {
         <SectionForm>
           <EditField
             name="propInfo.nonCareServices"
-            label="Non-Care Services"
+            label="Non-care services"
             type="checkbox"
             options={nonCareServicesOptions}
             readOnly={!canEdit}
@@ -177,7 +165,7 @@ export default class DashboardCommunityServicesForm extends Component {
         <SectionForm>
           <EditField
             name="propInfo.communityDescription"
-            label="Community Description"
+            label="Community description"
             type="textarea"
             placeholder="Enter an exciting description of your senior living community. I.e. Welcome to Manor Home. Our quaint home is located in the Cow Hollow"
             readOnly={!canEdit}
@@ -185,29 +173,20 @@ export default class DashboardCommunityServicesForm extends Component {
           <EditField
             name="propInfo.personalSpace"
             type="checkbox"
-            label="Room Amenities"
+            label="Room amenities"
             options={amenitiesOptions}
             readOnly={!canEdit}
           />
           <EditField
             name="propInfo.communitySpace"
             type="checkbox"
-            label="Community Amenities"
-            options={communitySpaceOptions}
+            label="Community amenities"
+            options={isCommunityLarge ? [...communitySpaceOptions, ...familyOvernightOptions] : communitySpaceOptions}
             readOnly={!canEdit}
           />
-          {isCommunityLarge && (
-            <EditField
-              name="propInfo.communitySpace"
-              type="checkbox"
-              label="Community Amenities"
-              options={familyOvernightOptions}
-              readOnly={!canEdit}
-            />
-          )}
           <EditField
             name="propInfo.communitySpaceOther"
-            label="Other room mmenities"
+            label="Other room amenities"
             type="textarea"
             placeholder="More useful information about the room amenities"
             readOnly={!canEdit}
