@@ -26,8 +26,6 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
-      const { getState } = props.store;
-
       // to be able to pass requestInfo for tests
       if (props[`${propName}RequestInfo`]) {
         return {
@@ -38,7 +36,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       const args = dispatcher(argumentsAbsorber, props);
       const { placeholders = {} } = api[apiCall].method(...args);
       const requestInfo = getMemoizedRequestInfo(
-        getState(),
+        state,
         { call: apiCall, args: placeholders },
       );
 
@@ -70,6 +68,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       static propTypes = {
         api: object,
         requestInfo: object,
+        invalidate: func,
         fetch: func,
         prefetchWait: func,
         status: object,
