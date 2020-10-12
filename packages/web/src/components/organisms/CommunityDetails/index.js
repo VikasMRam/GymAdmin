@@ -4,11 +4,10 @@ import styled, { css } from 'styled-components';
 import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { upTo } from 'sly/common/components/helpers';
-import { capitalize } from  'sly/web/services/helpers/utils';
+import { capitalize } from 'sly/web/services/helpers/utils';
 import { Paragraph, Block, Link, Grid } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
-import { slice } from 'lodash';
 
 const Wrapper = styled(Grid)`
   ${upTo('laptop', css`
