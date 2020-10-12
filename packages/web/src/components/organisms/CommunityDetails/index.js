@@ -191,6 +191,9 @@ const groupItemOrders = [
   'located close to restaurants',
 ];
 
+export const orderItems = keys => keys.slice()
+  .sort((a, b) => keys.indexOf(a) - groupItemOrders.indexOf(b));
+
 const CommunityDetails = ({ community }) => {
   const { propInfo, name, address: { state }, rgsAux } = community;
   let { licenseUrl } = propInfo;
@@ -202,8 +205,7 @@ const CommunityDetails = ({ community }) => {
   const groupComponents = groupKeys.map((k) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
-      const sortedKeys = keys.slice()
-        .sort((a, b) => keys.indexOf(a) - groupItemOrders.indexOf(b));
+      const sortedKeys = orderItems(keys);
 
       const icons = sortedKeys.map(k => (
         <IconItem
