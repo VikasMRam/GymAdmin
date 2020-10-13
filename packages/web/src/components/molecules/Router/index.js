@@ -48,7 +48,6 @@ export default class Router extends Component {
       location,
       history,
       ensureAuthenticated,
-      status,
     } = this.props;
 
     const { pathname, search, hash } = location;
@@ -56,7 +55,6 @@ export default class Router extends Component {
     const { loginRedirect } = parseURLQueryParams(search);
     if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
-        .then(status.user.refetch)
         .then(() => {
           history.replace(decodeURIComponent(loginRedirect));
         })

@@ -132,17 +132,17 @@ export default function withAuth(InnerComponent) {
           }
           return Promise.reject(e);
         })
-        .then(status.user.invalidate);
+        .then(status.user.refetch);
     };
 
     loginUser = (data) => {
       const { loginUser, status } = this.props;
-      return loginUser(data).then(status.user.invalidate);
+      return loginUser(data).then(status.user.refetch);
     };
 
     logoutUser = (data) => {
       const { logoutUser, status } = this.props;
-      return logoutUser(data).then(status.user.invalidate);
+      return logoutUser(data).then(status.user.refetch);
     };
 
     recoverPassword = (data) => {
@@ -157,7 +157,7 @@ export default function withAuth(InnerComponent) {
 
     setPassword = (data) => {
       const { setPassword, status } = this.props;
-      return setPassword(data).then(status.user.invalidate);
+      return setPassword(data).then(status.user.refetch);
     };
 
     ensureAuthenticated = (...args) => {
@@ -167,12 +167,12 @@ export default function withAuth(InnerComponent) {
 
     updatePassword = (data) => {
       const { updatePassword, status } = this.props;
-      return updatePassword(data).then(status.user.invalidate);
+      return updatePassword(data).then(status.user.refetch);
     };
 
     thirdPartyLogin = (data) => {
       const { thirdPartyLogin, status } = this.props;
-      return thirdPartyLogin(data).then(status.user.invalidate);
+      return thirdPartyLogin(data).then(status.user.refetch);
     };
 
     resendOtpCode = (data) => {
@@ -182,7 +182,7 @@ export default function withAuth(InnerComponent) {
 
     otpLoginUser = (data) => {
       const { otpLoginUser, status } = this.props;
-      return otpLoginUser(data).then(status.user.invalidate);
+      return otpLoginUser(data).then(status.user.refetch);
     };
 
     sendOtpCode = (data) => {
