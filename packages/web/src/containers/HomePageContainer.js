@@ -73,7 +73,7 @@ class HomePageContainer extends Component {
 
     if (result.action === 'redirect') {
       redirectTo(activeDiscoverHome ?
-        `${result.url}?${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
+        `${result.url}&${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
     }
   };
 

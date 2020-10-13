@@ -242,7 +242,7 @@ const Header = React.memo(({
             width="100%"
             padding={['regular', 0]}
             visibility={menuOpen ? 'hidden' : 'visible'}
-            include="city,zip,community"
+            include="community"
             placeholder="Search by city, zip, community name"
           />
         )}

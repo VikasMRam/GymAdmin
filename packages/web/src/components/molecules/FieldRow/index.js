@@ -2,8 +2,9 @@ import React from 'react';
 import { any, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import Block from 'sly/common/components/atoms/Block';
+import { getKey } from 'sly/common/components/themes';
 import { startingWith } from 'sly/common/components/helpers';
+import { Block } from 'sly/common/components/atoms';
 
 const Wrapper = styled(Block)`
   ${startingWith('laptop', css`
@@ -23,8 +24,7 @@ export default function FieldRow({ label, children, ...props }) {
       <Block
         as="label"
         size="caption"
-        width="162px"
-        marginRight="xLarge"
+        width={getKey('sizes.tabletLayout.col3')}
       >
         {label}
       </Block>

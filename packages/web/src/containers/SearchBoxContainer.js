@@ -5,6 +5,10 @@ import { debounce } from 'lodash';
 import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/web/constants/location';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { query } from 'sly/web/services/api';
+import {
+  filterLinkPath,
+  getSearchParamFromPlacesResponse,
+} from 'sly/web/services/helpers/search';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SearchBox from 'sly/web/components/molecules/SearchBox';
@@ -42,6 +46,21 @@ export default class SearchBoxContainer extends Component {
     selectedSuggestion: undefined,
   };
 
+  componentDidMount() {
+    const googleScript = document.getElementById('google-map-script');
+
+    if (window.google) {
+      this.onGoogleServiceReady();
+    } else {
+      googleScript.addEventListener('load', this.onGoogleServiceReady);
+    }
+  }
+
+  onGoogleServiceReady = () => {
+    this.autocompleteService = new window.google.maps.places.AutocompleteService();
+    this.geocodeService = new window.google.maps.Geocoder();
+  };
+
   handleTextboxBlur = () => {
     this.setState({
       isTextboxInFocus: false,
@@ -66,7 +85,23 @@ export default class SearchBoxContainer extends Component {
       selectedSuggestion: suggestion,
     });
 
-    if (onLocationSearch) {
+    if (suggestion.resourceType === 'GoogleCity') {
+      this.geocodeService.geocode({
+        placeId: suggestion.place_id,
+      },
+      (responses = [], status) => {
+        if (status === 'OK' && responses.length) {
+          const searchParams = getSearchParamFromPlacesResponse(responses[0]);
+          const { path } = filterLinkPath(searchParams);
+          suggestion.url = path;
+          if (onLocationSearch) {
+            onLocationSearch(suggestion);
+          } else {
+            redirectTo(path);
+          }
+        }
+      });
+    } else if (onLocationSearch) {
       onLocationSearch(suggestion);
     } else if (suggestion.action === 'redirect') {
       redirectTo(suggestion.url);
@@ -157,6 +192,34 @@ export default class SearchBoxContainer extends Component {
     }
   };
 
+  getGoogleAutocomplete = input => new Promise((resolve) => {
+    this.autocompleteService.getPlacePredictions(
+      {
+        types: ['(regions)'],
+        input,
+      },
+      resolve,
+    );
+  });
+
+  getAutocomplete = (query) => {
+    const { getSearch } = this.props;
+
+    if (query) {
+      return getSearch(query)
+        .then((resp) => {
+          const matches = normJsonApi(resp);
+          const { suggestions } = this.state;
+
+          this.setState({
+            suggestions: [...suggestions, ...matches],
+          });
+        });
+    }
+
+    return Promise.resolve();
+  };
+
   handleKeyDown = (e) => {
     if (!e || !e.target) {
       return null;
@@ -168,20 +231,35 @@ export default class SearchBoxContainer extends Component {
       });
     }
 
-    const { getSearch, include } = this.props;
-    const query = {
-      'filter[query]': e.target.value,
-      include,
-    };
+    const { include } = this.props;
+    let query;
 
-    return getSearch(query)
-      .then((resp) => {
-        const matches = normJsonApi(resp);
+    if (include !== this.constructor.defaultProps.include) {
+      query = {
+        'filter[query]': e.target.value,
+        include,
+      };
+    }
 
-        this.setState({
-          suggestions: matches,
-        });
-      });
+    return Promise.all([
+      this.getGoogleAutocomplete(e.target.value)
+        .then((args) => {
+          const googleSuggestions = args.map(s => ({
+            ...s,
+            id: s.place_id,
+            name: s.description,
+            displayText: s.description,
+            resourceType: 'GoogleCity',
+            action: 'redirect',
+          }));
+          const { suggestions } = this.state;
+
+          this.setState({
+            suggestions: [...suggestions, ...googleSuggestions],
+          });
+        }),
+      this.getAutocomplete(query),
+    ]);
   };
 
   handleKeyDownThrottled = (e) => {

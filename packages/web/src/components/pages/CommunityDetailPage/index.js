@@ -203,6 +203,7 @@ export default class CommunityDetailPage extends Component {
       twilioNumber,
       guideUrl,
       user: communityUser,
+      reviews,
     } = community;
 
     const {
@@ -399,7 +400,7 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <StyledHeadingBoxSection heading="Amenities and Services">
+                <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
 
@@ -440,12 +441,14 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                <StyledHeadingBoxSection
-                  heading={`Reviews at ${name}`}
-                  id="reviews"
-                >
-                  <CommunityReviewsContainer />
-                </StyledHeadingBoxSection>
+                {reviews && reviews.length > 0 &&
+                  <StyledHeadingBoxSection
+                    heading={`Reviews at ${name}`}
+                    id="reviews"
+                  >
+                    <CommunityReviewsContainer />
+                  </StyledHeadingBoxSection>
+                }
 
                 <CommunityQuestionAnswersContainer />
 
