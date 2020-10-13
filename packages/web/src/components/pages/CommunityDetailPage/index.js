@@ -39,6 +39,7 @@ import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
@@ -67,6 +68,7 @@ const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer,
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
 const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
+const OfferNotification = withHydration(UnhydratedOfferNotification);
 const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
 const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
@@ -102,6 +104,10 @@ const StyledCommunitySummary = styled(CommunitySummaryContainer)`
 
 const IconItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
+`;
+
+const StyledOfferNotification = styled(OfferNotification)`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
@@ -201,8 +207,8 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      covidInfoDescription,
-      covidInfoTitle,
+      promoDescription,
+      promoTitle,
       communityInsights,
       plusCommunity,
       menuLink,
@@ -287,20 +293,14 @@ export default class CommunityDetailPage extends Component {
                   <CommunityMediaGalleryContainer />
                 </Gallery>
                 <StyledCommunitySummary isAdmin={user && user.admin} />
-                {(covidInfoDescription || covidInfoTitle) && (
-                  <Box pad="xLarge">
-                    <Heading size="subtitle" level="subtitle" pad="xLarge">
-                      COVID-19 Policy at {name}
-                    </Heading>
-                    {covidInfoTitle &&
-                      <Block weight="medium" pad="regular">
-                        {covidInfoTitle}
-                      </Block>
-                    }
-                    <Block>
-                      {covidInfoDescription}
-                    </Block>
-                  </Box>
+                {(promoDescription || promoTitle) && (
+                  <StyledOfferNotification
+                    palette="warning"
+                    title={promoTitle}
+                    description={promoDescription}
+                    community={community}
+                    hasAlreadyRequested={isAlreadyPricingRequested}
+                  />
                 )}
                 {communityInsights &&
                   communityInsights.length > 0 && (
