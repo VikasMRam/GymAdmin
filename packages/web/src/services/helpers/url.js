@@ -155,7 +155,7 @@ export const stateNames = {
   WY: 'Wyoming',
 };
 
-const stateAbbr = {
+export const stateAbbr = {
   Alabama: 'AL',
   Alaska: 'AK',
   Arizona: 'AZ',

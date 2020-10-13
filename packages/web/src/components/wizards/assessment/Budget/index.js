@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
+import { stateAbbr } from  'sly/web/services/helpers/url';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
@@ -13,7 +14,7 @@ import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const generateHeading = (whoNeedsHelp, amount, city, state) => {
   city = city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ');
-  state = capitalize(state);
+  state = stateAbbr[capitalize(state)];
   switch (whoNeedsHelp) {
     case 'parents':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`;

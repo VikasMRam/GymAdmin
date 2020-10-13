@@ -75,7 +75,7 @@ export const FEELING_OPTIONS = [
 ];
 
 export const ADL_OPTIONS = [
-  { label: 'Memory Care', value: 'memory-care' },
+  { label: 'Memory care', value: 'memory-care' },
   { label: 'Bathing', value: 'bathing' },
   { label: 'Dressing', value: 'dressing' },
   { label: 'Transferring', value: 'transferring' },
@@ -88,12 +88,13 @@ export const ADL_OPTIONS = [
 ];
 
 export const COEXISTING_ADL_OPTIONS = {
-  bathing: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
-  dressing: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
-  transferring: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
-  toileting: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
-  eating: ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
-  'medication-management': ['bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management'],
+  'memory-care': ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  bathing: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  dressing: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  transferring: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  toileting: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  eating: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  'medication-management': ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
   none: ['none'],
   'im-not-sure': ['im-not-sure'],
 };
