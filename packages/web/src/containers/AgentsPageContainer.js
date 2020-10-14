@@ -4,6 +4,7 @@ import { object, func } from 'prop-types';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withNotification from 'sly/web/controllers/withNotification';
 import AgentsPage from 'sly/web/components/pages/AgentsPage';
+import { urlize } from 'sly/web/services/helpers/url';
 
 @withNotification
 
@@ -19,8 +20,8 @@ export default class AgentsPageContainer extends Component {
       action: 'submit', category: 'agentsSearch', label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
-
-    history.push(result.url);
+    const [city, state] = result.name.split(', ');
+    history.push(`/agents/region/${urlize(city)}-${state}/`);
   };
 
   handleConsultationRequested = () => {
