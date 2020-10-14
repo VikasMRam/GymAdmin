@@ -1,4 +1,14 @@
 // Helpers for some front end validation of client forms
+export const isReferralSent = (client) => {
+  const { children } = client;
+  if (Array.isArray(children) && children.length > 0) {
+    const validClients = children.filter(e => e.provider && (e.provider.entityType === 'Property' || e.provider.entityType === 'PartnerAgent'));
+    return validClients.length > 0;
+  }
+  return false;
+};
+
+
 export const validateAM = (client, additionalMetadata,  { phone, email }) => {
   const a = new Set();
   if (Array.isArray(additionalMetadata)) {
@@ -6,7 +16,6 @@ export const validateAM = (client, additionalMetadata,  { phone, email }) => {
     if ((additionalMetadata.indexOf('WarmTransfer') > -1 || additionalMetadata.indexOf('WarmTransferVM') > -1)) {
       a.add('PhoneConnect');
     }
-
   }
   if (isReferralSent(client)) {
     a.add('ReferralSent');
@@ -22,10 +31,3 @@ export const validateAM = (client, additionalMetadata,  { phone, email }) => {
   return [...a];
 };
 
-export const isReferralSent = (client) => {
-  const { children } = client;
-  if (Array.isArray(children) && children.length > 0) {
-    return true;
-  }
-  return false;
-};

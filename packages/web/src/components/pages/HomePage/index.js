@@ -334,7 +334,7 @@ const HomePage = ({
   const HeaderContent = (
     <>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="covid-19" noMarginBottom />
+      <BannerNotificationAdContainer type="wizardHome" noMarginBottom />
       <ContentOverImage
         image="react-assets/home/cover4.jpg"
         imageAlt="A Home To Love"
@@ -354,7 +354,7 @@ const HomePage = ({
             onCurrentLocation={onCurrentLocation}
             layout="homeHero"
             onLocationSearch={onLocationSearch}
-            include="city,zip,community"
+            include="community"
             placeholder="Search by city, zip, community name"
           />
         </SearchBoxWrapper>

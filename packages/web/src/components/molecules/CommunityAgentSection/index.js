@@ -1,128 +1,56 @@
 import React from 'react';
-import styled from 'styled-components';
-import { func } from 'prop-types';
+import styled, { css } from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
+import { size, getKey } from 'sly/common/components/themes';
 import agentPropType from 'sly/common/propTypes/agent';
-import { getAgentUrl } from 'sly/web/services/helpers/url';
-import { Icon, Block, Link } from 'sly/common/components/atoms';
-import { Image } from 'sly/web/components/atoms';
-import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { upTo } from 'sly/common/components/helpers';
+import { Block, Heading, Grid } from 'sly/common/components/atoms';
+import Avatar from 'sly/web/components/molecules/Avatar';
+import IconItem from 'sly/web/components/molecules/IconItem';
 
-const SubHeadingSection = styled.div`
-  display: flex;
-  margin-bottom: ${size('spacing.xLarge')};
-  cursor: pointer;
-`;
-
-const AdvisorHelpBlock = styled(Block)`
-  margin-right: ${size('spacing.small')};
-`;
-
-const AgentInfoSection = styled.div`
-  text-align: center;
-`;
-
-const AgentImageWrapper = styled.div`
-  width: ${size('mobileLayout.col2')};
-  img {
-    border-radius: 50%;
-  }
-  display: block;
-  margin: 0 auto;
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const AgentName = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const PhoneLink = styled(Link)`
-  display: block;
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const AgentReviewSection = styled.div`
-  margin: 0 auto;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('tabletLayout.col6')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col6')};
-  }
-`;
-
-const ReviewSection = styled.div`
-  text-align: center;
-  margin-top: -${size('spacing.xLarge')};
-  margin-left: ${size('spacing.large')};
-`;
-
-const ReviewBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-left: -${size('spacing.xLarge')};
+const Description = styled(Grid)`
+  ${upTo('tablet', css`
+    grid-template-columns: none;
+    grid-gap: ${size('spacing.regular')};
+  `)}
 `;
 
 const CommunityAgentSection = ({
-  agent, onPhoneClick, onAdvisorHelpClick,
+  agent, ...props
 }) => {
   const {
-    displayName, profileImageUrl, slyPhone, chosenReview,
+    profileImageUrl, recentFamiliesHelped, experience, displayName,
   } = agent.info;
-  const reviewedBy = 'Resident\'s family member';
-  const { id, address } = agent;
-  let agentImageComponent = (
-    <>
-      <AgentImageWrapper>
-        <Image src={profileImageUrl} aspectRatio="1:1" />
-      </AgentImageWrapper>
-      <AgentName weight="medium" palette="slate">{displayName}</AgentName>
-    </>
-  );
-  if (id && address) {
-    agentImageComponent = (
-      <Link href={getAgentUrl(agent)}>
-        {agentImageComponent}
-      </Link>
-    );
-  }
+
   return (
-    <>
-      <SubHeadingSection onClick={onAdvisorHelpClick}>
-        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my Local Senior Living Expert help me with?</AdvisorHelpBlock>
-        <Icon icon="help" palette="primary" />
-      </SubHeadingSection>
-      <AgentInfoSection>
-        {agentImageComponent}
-        {
-          slyPhone &&
-          (
-            <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
-              {phoneFormatter(slyPhone, true)}
-            </PhoneLink>
-          )
-        }
-      </AgentInfoSection>
-      {chosenReview &&
-        <AgentReviewSection>
-          <StyledIcon icon="quote" size="superHero" variation="filler" />
-          <ReviewSection>
-            <ReviewBlock>{chosenReview}</ReviewBlock>
-            <Block size="caption" palette="grey">- {reviewedBy}</Block>
-          </ReviewSection>
-        </AgentReviewSection>
-      }
-    </>
+    <Block {...props}>
+      <Grid
+        dimensions={[getKey('sizes.element.xxxLarge'), '100%']}
+        gap="large"
+        align="center"
+        pad="regular"
+      >
+        <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: profileImageUrl } }} />
+        <Block textAlign="left">
+          <Block weight="medium" palette="slate">{displayName}</Block>
+          <Block palette="grey">Local Senior Living Expert</Block>
+        </Block>
+      </Grid>
+      <Description pad="xLarge" dimensions={['max-content', 'max-content']} gap="xxLarge">
+        <IconItem icon="verified" iconPalette="slate">Trusted Partner</IconItem>
+        <IconItem icon="favourite-light" iconPalette="slate">{recentFamiliesHelped} families helped</IconItem>
+        {experience && <IconItem icon="favourite-light" iconPalette="slate">{experience} years of experience</IconItem>}
+      </Description>
+      <Heading size="body">What is a Local Senior Living Expert?</Heading>
+      <Block>
+        Our Local Senior Living Experts specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
+      </Block>
+    </Block>
   );
 };
 
 CommunityAgentSection.propTypes = {
   agent: agentPropType.isRequired,
-  onPhoneClick: func,
-  onAdvisorHelpClick: func,
 };
 
 export default CommunityAgentSection;

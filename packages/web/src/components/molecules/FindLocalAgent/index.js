@@ -32,13 +32,13 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   margin: auto;
 `;
 
-const FindLocalAgent = ({ onLocationSearch }) => (
+const FindLocalAgent = ({ onLocationSearch, ...props }) => (
   <Wrapper>
     <ContentWrapper>
       <TitleHeading level="hero" size="hero">Find your local senior living agent</TitleHeading>
       <StyledBlock>Our local experts can help you find the perfect living arrangement. Work with one of our senior living agents to find the perfect home for mom or dad</StyledBlock>
     </ContentWrapper>
-    <StyledSearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
+    <StyledSearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} {...props} />
   </Wrapper>
 );
 

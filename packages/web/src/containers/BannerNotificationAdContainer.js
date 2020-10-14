@@ -26,7 +26,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
   static typeHydrationId = 'BannerNotificationAdContainer';
 
   static propTypes = {
-    type: oneOf(['askAgent', 'getOffer', 'homeCare', 'covid-19', 'covid-19-community', 'wizardCommunity', 'wizardSearch']).isRequired,
+    type: oneOf(['askAgent', 'getOffer', 'homeCare', 'covid-19', 'covid-19-community', 'wizardCommunity', 'wizardHome', 'wizardSearch']).isRequired,
     notifyInfo: func.isRequired,
     profileId: string,
     noMarginBottom: bool,
@@ -179,7 +179,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
     const BannerComponent = noMarginBottom ? BannerNotification : PaddedBannerNotification;
 
     return (
-      <>
+      <div>
         {type === 'getOffer' &&
           <BannerComponent palette="warning" childrenPalette="slate">
             <Link onClick={this.handleGetInstantOfferClick}>
@@ -214,6 +214,14 @@ export default class BannerNotificationAdContainer extends PureComponent {
         <BannerComponent palette="warning" childrenPalette="slate" onCloseClick={this.handleCloseBanner} >
           Does your loved one need care urgently?&nbsp;
           <DecoratedLink onClick={this.handleWizardCommunityClick} to={`/wizards/assessment/location/${state}/${city}`} target="_blank">
+            Click here to get help from a local expert.
+          </DecoratedLink>
+        </BannerComponent>
+        }
+        {type.includes('wizardHome') && showBanner && !completedAssessment &&
+        <BannerComponent palette="warning" childrenPalette="slate" onCloseClick={this.handleCloseBanner} >
+          Does your loved one need care urgently?&nbsp;
+          <DecoratedLink onClick={this.handleWizardCommunityClick} to="/wizards/assessment" target="_blank">
             Click here to get help from a local expert.
           </DecoratedLink>
         </BannerComponent>
@@ -278,7 +286,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
             </PaddedHeaderWithCloseBody>
           </Modal>
         }
-      </>
+      </div>
     );
   }
 }

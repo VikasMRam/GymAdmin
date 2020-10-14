@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityDetails from '.';
+import CommunityDetails, { orderItems } from '.';
 
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
@@ -33,12 +33,13 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(0).children();
+    const orderedCommunityHighlights = orderItems(communityHighlights);
 
-    elements.slice(0, communityHighlights.length)
+    elements.slice(0, orderedCommunityHighlights.length)
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(communityHighlights[i]);
+          .text()).toContain(orderedCommunityHighlights[i]);
       });
   });
 
@@ -49,12 +50,13 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(1).children();
+    const orderedCareServices = orderItems(careServices);
 
-    elements.slice(0, careServices.length)
+    elements.slice(0, orderedCareServices.length)
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(careServices[i]);
+          .text()).toContain(orderedCareServices[i]);
       });
   });
 
@@ -65,12 +67,13 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(2).children();
+    const orderedNonCareServices = orderItems(nonCareServices);
 
-    elements.slice(0, nonCareServices.length)
+    elements.slice(0, orderedNonCareServices.length)
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(nonCareServices[i]);
+          .text()).toContain(orderedNonCareServices[i]);
       });
   });
 
@@ -81,12 +84,13 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(3).children();
+    const orderedPersonalSpace = orderItems(personalSpace);
 
-    elements.slice(0, personalSpace.length)
+    elements.slice(0, orderedPersonalSpace.length)
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(personalSpace[i]);
+          .text()).toContain(orderedPersonalSpace[i]);
       });
   });
 
@@ -97,12 +101,13 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(4).children();
+    const orderedCommunitySpace = orderItems(communitySpace);
 
-    elements.slice(0, communitySpace.length)
+    elements.slice(0, orderedCommunitySpace.length)
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(communitySpace[i]);
+          .text()).toContain(orderedCommunitySpace[i]);
       });
   });
 });
