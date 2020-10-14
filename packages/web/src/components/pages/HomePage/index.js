@@ -334,7 +334,7 @@ const HomePage = ({
   const HeaderContent = (
     <>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="covid-19" noMarginBottom />
+      <BannerNotificationAdContainer type="wizardSearch" noMarginBottom />
       <ContentOverImage
         image="react-assets/home/cover4.jpg"
         imageAlt="A Home To Love"
