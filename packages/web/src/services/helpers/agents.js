@@ -72,7 +72,7 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
     question = `Hi, I would like more information about ${name}'s amenities.`;
   } else if (type === 'expert') {
     heading = 'Get help from an Expert';
-    question = `Hi, I would like more information about ${name}'s amenities.`;
+    question = `Hi, I would like more information about ${name}`;
   } else if (type === 'covid-banner') {
     heading = `We are excited to provide you a virtual tour of ${name}`;
     description = "Please tell us when you are available to take your virtual tour?";
