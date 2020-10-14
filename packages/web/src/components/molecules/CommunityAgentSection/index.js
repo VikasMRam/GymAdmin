@@ -18,9 +18,8 @@ const Description = styled(Grid)`
 const CommunityAgentSection = ({
   agent, ...props
 }) => {
-  const { name } = agent;
   const {
-    profileImageUrl, recentFamiliesHelped, experience,
+    profileImageUrl, recentFamiliesHelped, experience, displayName,
   } = agent.info;
 
   return (
@@ -31,9 +30,9 @@ const CommunityAgentSection = ({
         align="center"
         pad="regular"
       >
-        <Avatar size="xxxLarge" user={{ name, picture: { src: profileImageUrl } }} />
+        <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: profileImageUrl } }} />
         <Block textAlign="left">
-          <Block weight="medium" palette="slate">{name}</Block>
+          <Block weight="medium" palette="slate">{displayName}</Block>
           <Block palette="grey">Local Senior Living Expert</Block>
         </Block>
       </Grid>
