@@ -15,7 +15,8 @@ const generateItemDimensions = ({ children, gap, dimensions = [] }) => {
     const gapMinus = gp ? `${(children.length - 1) / children.length}*${gp}` : 0;
     dimensions = Array(children.length).fill(gapMinus ? `calc(${ew}% - ${gapMinus})` : `${ew}%`);
   } else {
-    dimensions = dimensions.map(d => gp ? `calc(${d} - ${gp})` : d);
+    // TODO: remove in future if not required in all usecases
+    // dimensions = dimensions.map(d => gp ? `calc(${d} - ${gp})` : d);
   }
 
   return dimensions.join(' ');

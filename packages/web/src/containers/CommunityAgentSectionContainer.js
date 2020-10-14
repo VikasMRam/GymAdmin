@@ -18,13 +18,14 @@ export default class CommunityAgentSectionContainer extends Component {
   };
 
   render() {
-    const { agent, showModal, hideModal } = this.props;
+    const { agent, showModal, hideModal, ...props } = this.props;
     return (
       <CommunityAgentSection
         agent={agent}
         onAdvisorHelpClick={() =>
           showModal(<AdvisorHelpPopup onButtonClick={hideModal} />)
         }
+        {...props}
       />
     );
   }
