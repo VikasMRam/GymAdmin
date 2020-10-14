@@ -63,7 +63,9 @@ import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContaine
 import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 // import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
+import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 
+const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
 const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
@@ -403,6 +405,18 @@ export default class CommunityDetailPage extends Component {
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
+
+                {partnerAgent && (
+                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
+                    <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
+                    <AskAgentQuestionButtonContainer
+                      width="100%"
+                      community={community}
+                      type="expert"
+                      ctaText="Get help from an Expert"
+                    />
+                  </StyledHeadingBoxSection>
+                )}
 
                 {!isActiveAdult &&
                   <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>

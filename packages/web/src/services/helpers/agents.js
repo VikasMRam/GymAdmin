@@ -70,6 +70,9 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
   } else if (type === 'services') {
     heading = `Ask your Local Senior Living Expert about services provided at ${name}`;
     question = `Hi, I would like more information about ${name}'s amenities.`;
+  } else if (type === 'expert') {
+    heading = 'Get help from an Expert';
+    question = `Hi, I would like more information about ${name}'s amenities.`;
   } else if (type === 'covid-banner') {
     heading = `We are excited to provide you a virtual tour of ${name}`;
     description = "Please tell us when you are available to take your virtual tour?";
