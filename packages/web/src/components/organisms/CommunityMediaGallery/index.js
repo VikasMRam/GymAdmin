@@ -90,7 +90,7 @@ export default class CommunityMediaGallery extends Component {
 
     const topRightSection = () => {
       const { onFavouriteClick, isFavorited, onShareClick } = this.props;
-      const favIcon = isFavorited ? 'favourite-dark' : 'favourite-empty';
+      const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
       return (
         <div>
           <IconButton
@@ -109,6 +109,7 @@ export default class CommunityMediaGallery extends Component {
             icon={favIcon}
             marginLeft="regular"
             palette="slate"
+            iconPalette={isFavorited ? 'primary' : 'slate'}
             display="inline-block"
             onClick={onFavouriteClick}
             hideTextInMobile
