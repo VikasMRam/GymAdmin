@@ -3,7 +3,7 @@ import { arrayOf, object, func } from 'prop-types';
 
 import agentPropType from 'sly/common/propTypes/agent';
 import { titleize } from 'sly/web/services/helpers/strings';
-import { getAgentUrl } from 'sly/web/services/helpers/url';
+import { getAgentUrl, urlize } from 'sly/web/services/helpers/url';
 import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { getAgentParams } from 'sly/web/services/helpers/search';
@@ -27,8 +27,8 @@ export default class AgentRegionPageContainer extends Component {
       action: 'submit', category: 'agentsSearch', label: result.displayText,
     };
     SlyEvent.getInstance().sendEvent(event);
-
-    history.push(result.url);
+    const [city, state] = result.name.split(', ');
+    history.push(`/agents/region/${urlize(city)}-${state}/`);
   };
 
   handleConsultationRequested = () => {
