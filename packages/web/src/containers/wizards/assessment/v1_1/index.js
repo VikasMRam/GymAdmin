@@ -185,7 +185,7 @@ export default class AssessmentWizardV11 extends Component {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       skipOptionText = 'No thanks, I just want pricing.';
     }
-    const hadNoLocation = !city || !state;
+    const hadNoLocation = !city || !state || city === 'undefined' || state === 'undefined';
 
     return (
       <WizardController
