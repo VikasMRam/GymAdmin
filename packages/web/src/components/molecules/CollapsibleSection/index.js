@@ -8,6 +8,7 @@ import { size, key, palette } from 'sly/common/components/themes';
 import { Icon, Heading } from 'sly/common/components/atoms';
 import { ClampedText } from 'sly/web/components/atoms';
 import { weight as weightPropType } from 'sly/common/propTypes/weight';
+import Block from 'sly/common/components/atoms/Block';
 
 const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};
@@ -121,6 +122,7 @@ export default class CollapsibleSection extends Component {
       clampTitle,
       headingWeight,
       borderless,
+      showIf,
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
@@ -128,10 +130,12 @@ export default class CollapsibleSection extends Component {
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
           <Section
+            as={Block}
             collapsed={collapsed}
             borderless={borderless}
             size={size}
             ref={innerRef}
+            showIf={showIf}
             className={className}
           >
             <Header onClick={this.toggle} borderless={borderless}>

@@ -9,14 +9,14 @@ export const withMedia = ({ upTo: upToDevice, startingWith: startingWithDevice }
   ${ifProp('upTo', css`
     display: none;
     ${upTo(upToDevice, css`
-      display: block;
+      display: inherit;
     `)}
   `)}
 
   ${ifProp('startingWith', css`
     display: none;
     ${startingWith(startingWithDevice, css`
-      display: block;
+      display: inherit;
     `)}
   `)}
 `;

@@ -19,6 +19,8 @@ import {
   withWidth,
   withHeight,
   withShadow,
+  withCss,
+  withMedia,
 } from 'sly/common/components/helpers';
 
 const Block = styled(({ showIf, ...props }) => {
@@ -42,6 +44,8 @@ const Block = styled(({ showIf, ...props }) => {
   ${withWidth}
   ${withHeight}
   ${withDisplay}
+  ${withCss}
+  ${withMedia}
 `;
 
 Block.propTypes = {

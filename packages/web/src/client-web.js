@@ -16,6 +16,7 @@ import configureStore from 'sly/web/store/configure';
 import WSProvider from 'sly/web/services/ws/WSProvider';
 import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
+import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
@@ -25,17 +26,19 @@ const store = configureStore(initialState);
 
 const renderApp = () => (
   <Provider store={store}>
-    <WSProvider>
-      <NotificationSubscriptions>
-        <BrowserRouter>
-          <PageEventsContainer />
-          <>
-            <RetentionPopup />
-            <App />
-          </>
-        </BrowserRouter>
-      </NotificationSubscriptions>
-    </WSProvider>
+    <BreakpointProvider>
+      <WSProvider>
+        <NotificationSubscriptions>
+          <BrowserRouter>
+            <PageEventsContainer />
+            <>
+              <RetentionPopup />
+              <App />
+            </>
+          </BrowserRouter>
+        </NotificationSubscriptions>
+      </WSProvider>
+    </BreakpointProvider>
   </Provider>
 );
 

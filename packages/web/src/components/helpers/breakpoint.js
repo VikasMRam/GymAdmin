@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useEffect, useState } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isBrowser } from 'sly/web/config';
 import theme from 'sly/common/components/themes/default';
+import { node } from 'prop-types';
 
 export const MOBILE = 'mobile';
 export const TABLET = 'tablet';
@@ -16,8 +17,8 @@ const sizes = Object.keys(breakpoints).reduce((acc, key) => {
 }, {});
 
 class Breakpoint {
-  constructor() {
-    this.currentWidth = window.innerWidth;
+  constructor(currentWidth) {
+    this.currentWidth = currentWidth;
   }
 
   atLeast(breakpoint) {
@@ -58,6 +59,34 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+const BreakpointContext = React.createContext(null);
+
+export const BreakpointProvider = ({ children }) => {
+  const [breakpoint, setBreakpoint] = useState(new Breakpoint(window.innerWidth));
+
+  useEffect(() => {
+    const newBreakpoint = () => {
+      setBreakpoint(new Breakpoint(window.innerWidth));
+    };
+    window.addEventListener('resize', newBreakpoint);
+    return () => window.removeEventListener('resize', newBreakpoint);
+  }, []);
+
+  return (
+    <BreakpointContext.Provider value={breakpoint}>
+      {children}
+    </BreakpointContext.Provider>
+  );
+};
+
+BreakpointProvider.propTypes = {
+  children: node,
+};
+
+export const useBreakpoint = () => {
+  return  useContext(BreakpointContext);
+};
+
 // WARNING: use with care, only in the browser.
 // e.g. ALWAYS check if breakpoint is not null before usage:
 // if(breakpoint && breakpoint.atLeastLaptop())... etc
@@ -66,32 +95,10 @@ export default function withBreakpoint(ChildComponent) {
     static displayName = `withBreakpoint(${getDisplayName(ChildComponent)})`;
     static WrappedComponent = ChildComponent;
 
-    state = { breakpoint: null };
-
-    componentDidMount() {
-      if (isBrowser) {
-        window.addEventListener('resize', this.setBreakpoint);
-        this.setBreakpoint();
-      }
-    }
-
-    componentWillUnmount() {
-      if (isBrowser) {
-        window.removeEventListener('resize', this.setBreakpoint);
-      }
-    }
-
-    setBreakpoint = () => {
-      this.setState({
-        breakpoint: new Breakpoint(),
-      });
-    };
-
     render = () => (
-      <ChildComponent
-        breakpoint={this.state.breakpoint}
-        {...this.props}
-      />
+      <BreakpointContext.Consumer>
+        {breakpoint => <ChildComponent breakpoint={breakpoint} {...this.props} />}
+      </BreakpointContext.Consumer>
     );
   }
 
