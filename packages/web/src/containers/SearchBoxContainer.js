@@ -94,6 +94,7 @@ export default class SearchBoxContainer extends Component {
           const searchParams = getSearchParamFromPlacesResponse(responses[0]);
           const { path } = filterLinkPath(searchParams);
           suggestion.url = path;
+          suggestion.searchParams = searchParams;
           if (onLocationSearch) {
             onLocationSearch(suggestion);
           } else {

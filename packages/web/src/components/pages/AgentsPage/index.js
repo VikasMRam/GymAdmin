@@ -98,7 +98,7 @@ class AgentsPage extends Component {
         <HeroWrapper ref={this.heroRef}>
           <HeroBackgroundImage path="react-assets/agents/agent-hero.png" height={480} alt="A Home To Love" />
           <HeroTextWrapper>
-            <FindLocalAgent onLocationSearch={onLocationSearch} />
+            <FindLocalAgent onLocationSearch={onLocationSearch} placeholder="Search by city" />
           </HeroTextWrapper>
         </HeroWrapper>
       </>

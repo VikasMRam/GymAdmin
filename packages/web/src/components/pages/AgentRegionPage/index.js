@@ -149,7 +149,7 @@ export default class AgentRegionPage extends Component {
           </FormSection>
           <Hr size="huge" fullWidth />
           <FindLocalAgentWrapper ref={this.findLocalAgentRef}>
-            <FindLocalAgent onLocationSearch={onLocationSearch} />
+            <FindLocalAgent onLocationSearch={onLocationSearch} placeholder="Search by city" />
           </FindLocalAgentWrapper>
           <StyledSection centerTitle title="Search senior living agents by region">
             <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
