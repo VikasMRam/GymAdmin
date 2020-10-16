@@ -62,7 +62,7 @@ const AgentTile = ({
     aggregateRating: rating,
     url,
     address,
-    gallery
+    gallery,
   } = agent;
 
   let imageUrl = null;

@@ -115,7 +115,6 @@ const AgentSummary = ({
     imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
   }
   const hasNoImage = !imageUrl || imageUrl === '';
-  const defaultImageUrl = '';
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
     const { numRatings, ratingValue } = aggregateRating;

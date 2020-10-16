@@ -21,7 +21,7 @@ const CommunityAgentSection = ({
 }) => {
   const {
     gallery,
-    info
+    info,
   } = agent;
   const {
     recentFamiliesHelped, experience, displayName,

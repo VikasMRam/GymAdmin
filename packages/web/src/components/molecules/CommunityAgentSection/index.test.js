@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import CommunityAgentSection from '.';
 
-import { getImagePath } from 'sly/web/services/images';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const wrap = (props = {}) =>

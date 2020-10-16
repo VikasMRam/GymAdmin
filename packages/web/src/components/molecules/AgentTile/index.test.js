@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import AgentTile from 'sly/web/components/molecules/AgentTile';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
-import { getImagePath } from 'sly/web/services/images';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const agentNoFams = {
