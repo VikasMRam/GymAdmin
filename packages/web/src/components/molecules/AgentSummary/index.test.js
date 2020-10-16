@@ -20,7 +20,6 @@ describe('AgentSummary', () => {
 
   it('renders AgentSummary', () => {
     const wrapper = wrap();
-    expect(wrapper.find(Image)).toHaveLength(1);
     expect(wrapper.contains(defaultProp.agent.info.displayName)).toBeTruthy();
     expect(wrapper.contains(`${LindaIwamota.info.displayName.split(' ')[0]}'s Cities: `)).toBeTruthy();
     expect(wrapper.contains(LindaIwamota.info.citiesServed.join(', '))).toBeTruthy();
