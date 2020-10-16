@@ -50,7 +50,7 @@ const communitySpaceOptions = [
   { value: 'Outdoor space', label: 'Outdoor space' },
   { value: 'Outdoor patio', label: 'Outdoor patio' },
   { value: 'Garden', label: 'Garden' },
-  { value: 'Small Library', label: 'Library' },
+  { value: 'Small Library', label: 'Small Library' },
   { value: 'Gaming room', label: 'Gaming room' },
   { value: 'Computer center', label: 'Computer center' },
   { value: 'Fitness room', label: 'Fitness room' },
