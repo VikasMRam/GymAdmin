@@ -1,7 +1,6 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { upTo } from 'sly/common/components/helpers';
 import { capitalize } from 'sly/web/services/helpers/utils';
@@ -10,10 +9,7 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
 const Wrapper = styled(Grid)`
-  ${upTo('laptop', css`
-    grid-template-columns: 100%;
-    grid-row-gap: ${size('spacing.large')};
-  `)}
+  ${upTo('laptop', 'grid-template-columns: 100%;')}
 `;
 Wrapper.displayName = 'Wrapper';
 
@@ -116,82 +112,107 @@ const groupItemIcons = {
   'family overnight stay rooms': 'bed',
 };
 
-const groupItemOrders = [
-  'activities of daily living assistance',
-  'assistance with dressing',
-  'medication management',
-  'transportation arrangement (medical)',
-  'coordination with health care providers',
-  '24-hour supervision',
-  'special dietary restrictions',
-  'diabetes care',
-  '24-hour nursing',
-  "parkinson's care",
-  'rehabilitation program',
-  'mild cognitive impairment',
-  'specialized memory care programming',
-  'hospice waiver',
-  'same day assessments',
-  'assistance with bathing',
-  'assistance with transfers',
-  'meal preparation and service',
-  'transportation to doctors appointment',
-  '24-hour call system',
-  'physical therapy',
-  'diabetes diet',
-  'administer insulin injections',
-  '12-16 hour nursing',
-  'care with behavioral issues',
-  'mental wellness program',
-  'dementia waiver',
-  'respite program',
-  'accept incoming residents on hospice',
-  'preventative health screenings',
-  'housekeeping and linen services',
-  'community operated transportation',
-  'concierge services',
-  'community-sponsored activities',
-  'planned day trips',
-  'continuing learning programs',
-  'transportation arrangement (non-medical)',
-  'fitness programs',
-  'scheduled daily activities',
-  'resident-run activities',
-  'move-in coordination',
-  'family education and support services',
-  'cable',
-  'internet',
-  'private bathrooms',
-  'kitchenettes',
-  'wifi',
-  'telephone',
-  'air conditioning',
-  'fully furnished',
-  'dining room',
-  'family private dining rooms',
-  'organic food and ingredients',
-  'outdoor space',
-  'garden',
-  'gaming room',
-  'fitness room',
-  'spa',
-  'wellness center',
-  'located close to shopping centers',
-  'pet friendly',
-  'restaurant-style dining',
-  'cafe',
-  'on-site market',
-  'outdoor patio',
-  'small library',
-  'computer center',
-  'swimming pool',
-  'beauty salon',
-  'religious/meditation center',
-  'located close to restaurants',
-];
+const groupItemOrders = {
+  careServices: [
+    'medication management',
+    'assistance with bathing',
+    'assistance with transfers',
+    'transportation arrangement (medical)',
+    'coordination with health care providers',
+    '24-hour supervision',
+    'special dietary restrictions',
+    'diabetes care',
+    '24-hour nursing',
+    "parkinson's care",
+    'rehabilitation program',
+    'mild cognitive impairment',
+    'specialized memory care programming',
+    'hospice waiver',
+    'same day assessments',
+    'activities of daily living assistance',
+    'assistance with dressing',
+    'meal preparation and service',
+    'transportation to doctors appointment',
+    '24-hour call system',
+    'physical therapy',
+    'diabetes diet',
+    'administer insulin injections',
+    '12-16 hour nursing',
+    'care with behavioral issues',
+    'mental wellness program',
+    'dementia waiver',
+    'respite program',
+    'accept incoming residents on hospice',
+    'preventative health screenings',
+  ],
+  personalSpace: [
+    'cable',
+    'internet',
+    'private bathrooms',
+    'kitchenettes',
+    'wifi',
+    'telephone',
+    'air-conditioning',
+    'air conditioning',
+    'fully furnished',
+  ],
+  communitySpace: [
+    'dining room',
+    'family private dining rooms',
+    'organic food and ingredients',
+    'outdoor space',
+    'garden',
+    'gaming room',
+    'fitness room',
+    'spa',
+    'wellness center',
+    'located close to shopping centers',
+    'pet friendly',
+    'restaurant-style dining',
+    'cafe',
+    'on-site market',
+    'outdoor patio',
+    'small library',
+    'computer center',
+    'swimming pool',
+    'beauty salon',
+    'religious/meditation center',
+    'located close to restaurants',
+  ],
+  nonCareServices: [
+    'housekeeping and linen services',
+    'community operated transportation',
+    'concierge services',
+    'community-sponsored activities',
+    'planned day trips',
+    'continuing learning programs',
+    'transportation arrangement (non-medical)',
+    'fitness programs',
+    'scheduled daily activities',
+    'resident-run activities',
+    'move-in coordination',
+    'family education and support services',
+  ],
+};
 
-export const orderItems = keys => keys.slice()
-  .sort((a, b) => keys.indexOf(a) - groupItemOrders.indexOf(b));
+const shuffle = (input) => {
+  const leftsize = Math.ceil(input.length / 2);
+  const output = [];
+  for (let i = 0; i < leftsize; i++) {
+    output.push(input[i]);
+    if (input[leftsize + i]) output.push(input[leftsize + i]);
+  }
+  return output;
+};
+
+export const orderItems = (keys, groupName) => shuffle(keys.slice()
+  .sort((a, b) => {
+    if (groupItemOrders[groupName]) {
+      return groupItemOrders[groupName].indexOf(a.toLowerCase()) - groupItemOrders[groupName].indexOf(b.toLowerCase());
+    }
+    return 0;
+  })
+  .filter(i => i));
 
 const CommunityDetails = ({ community }) => {
   const { propInfo, name, address: { state }, rgsAux } = community;
@@ -204,19 +225,19 @@ const CommunityDetails = ({ community }) => {
   const groupComponents = groupKeys.map((k) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
-      const sortedKeys = orderItems(keys);
+      const sortedKeys = orderItems(keys, k);
 
-      const icons = sortedKeys.map(k => (
-        <IconItem
-          key={k}
-          icon={groupItemIcons[k.toLowerCase()] || 'care'}
-          iconPalette="slate"
-          iconVariation="base"
-        >
-          {capitalize(k.toLowerCase())}
-        </IconItem>
-      ))
-        .filter(i => i);
+      const icons = sortedKeys
+        .map(k => (
+          <IconItem
+            key={k}
+            icon={groupItemIcons[k.toLowerCase()] || 'care'}
+            iconPalette="slate"
+            iconVariation="base"
+          >
+            {capitalize(k.toLowerCase())}
+          </IconItem>
+        ));
 
       if (!icons.length) {
         return null;
