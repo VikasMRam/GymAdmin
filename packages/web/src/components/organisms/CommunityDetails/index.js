@@ -1,17 +1,15 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { startingWith } from 'sly/common/components/helpers';
+import { upTo } from 'sly/common/components/helpers';
 import { capitalize } from 'sly/web/services/helpers/utils';
 import { Paragraph, Block, Link, Grid } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
-const Wrapper = styled(Block)`
-  ${startingWith('laptop', css`
-    column-count: 2;
-  `)}
+const Wrapper = styled(Grid)`
+  ${upTo('laptop', 'grid-template-columns: 100%;')}
 `;
 Wrapper.displayName = 'Wrapper';
 
@@ -116,9 +114,9 @@ const groupItemIcons = {
 
 const groupItemOrders = {
   careServices: [
-    'activities of daily living assistance',
-    'assistance with dressing',
     'medication management',
+    'assistance with bathing',
+    'assistance with transfers',
     'transportation arrangement (medical)',
     'coordination with health care providers',
     '24-hour supervision',
@@ -131,8 +129,8 @@ const groupItemOrders = {
     'specialized memory care programming',
     'hospice waiver',
     'same day assessments',
-    'assistance with bathing',
-    'assistance with transfers',
+    'activities of daily living assistance',
+    'assistance with dressing',
     'meal preparation and service',
     'transportation to doctors appointment',
     '24-hour call system',
@@ -154,6 +152,7 @@ const groupItemOrders = {
     'kitchenettes',
     'wifi',
     'telephone',
+    'air-conditioning',
     'air conditioning',
     'fully furnished',
   ],
@@ -196,13 +195,24 @@ const groupItemOrders = {
   ],
 };
 
-export const orderItems = (keys, groupName) => keys.slice()
+const shuffle = (input) => {
+  const leftsize = Math.ceil(input.length / 2);
+  const output = [];
+  for (let i = 0; i < leftsize; i++) {
+    output.push(input[i]);
+    if (input[leftsize + i]) output.push(input[leftsize + i]);
+  }
+  return output;
+};
+
+export const orderItems = (keys, groupName) => shuffle(keys.slice()
   .sort((a, b) => {
     if (groupItemOrders[groupName]) {
       return groupItemOrders[groupName].indexOf(a.toLowerCase()) - groupItemOrders[groupName].indexOf(b.toLowerCase());
     }
     return 0;
-  });
+  })
+  .filter(i => i));
 
 const CommunityDetails = ({ community }) => {
   const { propInfo, name, address: { state }, rgsAux } = community;
@@ -215,16 +225,15 @@ const CommunityDetails = ({ community }) => {
   const groupComponents = groupKeys.map((k) => {
     if (propInfo[k]) {
       const keys = propInfo[k];
-      const sortedKeys = orderItems(keys, k).filter(i => i);
+      const sortedKeys = orderItems(keys, k);
 
       const icons = sortedKeys
-        .map((k, i) => (
+        .map(k => (
           <IconItem
             key={k}
             icon={groupItemIcons[k.toLowerCase()] || 'care'}
             iconPalette="slate"
             iconVariation="base"
-            marginBottom={i !== sortedKeys.length - 1 ? 'medium' : undefined}
           >
             {capitalize(k.toLowerCase())}
           </IconItem>
@@ -237,7 +246,7 @@ const CommunityDetails = ({ community }) => {
       return (
         <Block key={k}>
           <Block weight="medium" pad="medium">{groupTitles[k]}</Block>
-          <Wrapper>
+          <Wrapper gap="medium" dimensions={['50%', '50%']}>
             {icons}
           </Wrapper>
         </Block>
