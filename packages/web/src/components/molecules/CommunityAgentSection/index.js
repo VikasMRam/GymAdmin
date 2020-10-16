@@ -29,7 +29,7 @@ const CommunityAgentSection = ({
 
 
   let imageUrl = null;
-  if (gallery.images && gallery.images.length > 0) {
+  if (gallery && gallery.images && gallery.images.length > 0) {
     imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
   }
 
