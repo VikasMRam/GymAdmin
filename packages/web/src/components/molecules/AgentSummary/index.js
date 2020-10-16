@@ -12,6 +12,7 @@ import { Image, Span } from 'sly/web/components/atoms';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import pad from 'sly/web/components/helpers/pad';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { getImagePath } from 'sly/web/services/images';
 
 const Wrapper = styled.div`
   display: flex;
@@ -105,11 +106,15 @@ const AskQuestionPhoneSection = styled.div`
 const AgentSummary = ({
   agent, onButtonClick, onPhoneClick, buttonHref, showAskQuestionButton,
 }) => {
-  const { info, aggregateRating, address } = agent;
+  const { info, aggregateRating, address, gallery } = agent;
   const {
-    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany, imageCaption,
+    displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany, imageCaption,
   } = info;
-  const hasNoImage = !profileImageUrl || profileImageUrl === '';
+  let imageUrl = null;
+  if (gallery && gallery.images && gallery.images.length > 0) {
+    imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
+  }
+  const hasNoImage = !imageUrl || imageUrl === '';
   const defaultImageUrl = '';
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
@@ -128,7 +133,7 @@ const AgentSummary = ({
     <Wrapper>
       <AgentImageWrapper>
         {hasNoImage && <Icon icon="logo" size="superHero" />}
-        {!hasNoImage && <Image src={hasNoImage ? defaultImageUrl : profileImageUrl} aspectRatio="1:1" />}
+        {!hasNoImage && <Image src={imageUrl} aspectRatio="1:1" />}
         <Block size="caption">
           {imageCaption}
         </Block>

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import AgentTile from 'sly/web/components/molecules/AgentTile';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { getImagePath } from 'sly/web/services/images';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const agentNoFams = {
@@ -28,7 +29,6 @@ const wrap = (props = {}) => shallow(<AgentTile agent={LindaIwamota} {...props} 
 describe('AgentTile', () => {
   it('renders full', () => {
     const wrapper = wrap();
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
 
     const name = wrapper.find('Name');
