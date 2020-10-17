@@ -33,7 +33,7 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(0).children();
-    const orderedCommunityHighlights = orderItems(communityHighlights);
+    const orderedCommunityHighlights = orderItems(communityHighlights, 'communityHighlights');
 
     elements.slice(0, orderedCommunityHighlights.length)
       .forEach((hl, i) => {
@@ -50,7 +50,7 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(1).children();
-    const orderedCareServices = orderItems(careServices);
+    const orderedCareServices = orderItems(careServices, 'careServices');
 
     elements.slice(0, orderedCareServices.length)
       .forEach((hl, i) => {
@@ -67,7 +67,7 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(2).children();
-    const orderedNonCareServices = orderItems(nonCareServices);
+    const orderedNonCareServices = orderItems(nonCareServices, 'nonCareServices');
 
     elements.slice(0, orderedNonCareServices.length)
       .forEach((hl, i) => {
@@ -84,7 +84,7 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(3).children();
-    const orderedPersonalSpace = orderItems(personalSpace);
+    const orderedPersonalSpace = orderItems(personalSpace, 'personalSpace');
 
     elements.slice(0, orderedPersonalSpace.length)
       .forEach((hl, i) => {
@@ -101,7 +101,7 @@ describe('CommunityDetails', () => {
     } = propInfo;
     const wrapper = wrap();
     const elements = wrapper.find('Grid').find('Wrapper').at(4).children();
-    const orderedCommunitySpace = orderItems(communitySpace);
+    const orderedCommunitySpace = orderItems(communitySpace, 'communitySpace');
 
     elements.slice(0, orderedCommunitySpace.length)
       .forEach((hl, i) => {
