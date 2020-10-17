@@ -75,11 +75,11 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
     question = `Hi, I would like more information about ${name}`;
   } else if (type === 'covid-banner') {
     heading = `We are excited to provide you a virtual tour of ${name}`;
-    description = "Please tell us when you are available to take your virtual tour?";
-    placeholder = "Write your preferred day and time here."
+    description = 'Please tell us when you are available to take your virtual tour?';
+    placeholder = 'Write your preferred day and time here.';
   } else if (type === 'profile-content-question') {
     heading = `Ask us anything about living at ${name}`;
-    question = "Hi, I am interested in knowing more about...";
+    question = 'Hi, I am interested in knowing more about...';
   }
 
   return {
@@ -91,14 +91,13 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
 };
 
 export const isOnVacation = (agent) => {
-  const { name: businessName, info={}, status } = agent;
+  const { name: businessName, info = {}, status } = agent;
   const { vacationStart, vacationEnd } = info;
   try {
     const now = new Date();
     const eDate = Date.parse(vacationEnd);
     return eDate > now;
-  }catch (e){
-    return false
+  } catch (e) {
+    return false;
   }
-
 };
