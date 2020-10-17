@@ -313,7 +313,7 @@ describe('Community survey', () => {
         cy.get('h3').contains('Complete this 3-minute assessment tool to get personalized senior living and care options.').should('exist');
         cy.get('a').contains('Start').click();
       });
-      waitForHydration(cy.get('button').contains('Start')).click();
+      // waitForHydration(cy.get('button').contains('Start')).click();
     });
 
     for (let i = 0; i < wizardSteps; i++) {
