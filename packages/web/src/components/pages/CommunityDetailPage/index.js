@@ -244,7 +244,7 @@ export default class CommunityDetailPage extends Component {
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     // filtering out status 1 partnerAgents
-    const livePartnerAgents = partnerAgents && partnerAgents.filter( e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
+    const livePartnerAgents = partnerAgents && partnerAgents.filter(e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
     const partnerAgent = livePartnerAgents && livePartnerAgents.length > 0 ? livePartnerAgents[0] : null;
 
     const { nearbyCities } = rgsAux;
@@ -396,7 +396,7 @@ export default class CommunityDetailPage extends Component {
                       ghost
                       width="100%"
                       community={community}
-                      type="services"
+                      type="profile-content-question"
                       ctaText="Ask a Question"
                     />
                   </StyledHeadingBoxSection>
