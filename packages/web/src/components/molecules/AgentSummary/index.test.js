@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AgentSummary from 'sly/web/components/molecules/AgentSummary';
-import Image from 'sly/web/components/atoms/Image';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const defaultProp = {
@@ -20,8 +19,6 @@ describe('AgentSummary', () => {
 
   it('renders AgentSummary', () => {
     const wrapper = wrap();
-    expect(wrapper.find(Image)).toHaveLength(1);
-    expect(wrapper.find(Image).prop('src')).toEqual(defaultProp.agent.info.profileImageUrl);
     expect(wrapper.contains(defaultProp.agent.info.displayName)).toBeTruthy();
     expect(wrapper.contains(`${LindaIwamota.info.displayName.split(' ')[0]}'s Cities: `)).toBeTruthy();
     expect(wrapper.contains(LindaIwamota.info.citiesServed.join(', '))).toBeTruthy();

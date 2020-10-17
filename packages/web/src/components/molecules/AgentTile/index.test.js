@@ -28,7 +28,6 @@ const wrap = (props = {}) => shallow(<AgentTile agent={LindaIwamota} {...props} 
 describe('AgentTile', () => {
   it('renders full', () => {
     const wrapper = wrap();
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
 
     const name = wrapper.find('Name');
@@ -54,7 +53,6 @@ describe('AgentTile', () => {
 
   it('no families', () => {
     const wrapper = wrap({ agent: agentNoFams });
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('Badge').length).toEqual(0);
 
     const name = wrapper.find('Name');
@@ -81,7 +79,6 @@ describe('AgentTile', () => {
 
   it('no ratings', () => {
     const wrapper = wrap({ agent: agentNoRatings });
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(LindaIwamota.info.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
 
     const name = wrapper.find('Name');

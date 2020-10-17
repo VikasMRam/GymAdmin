@@ -7,6 +7,7 @@ import { Box, Block, Link } from 'sly/common/components/atoms';
 import { Image } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
+import { getImagePath } from 'sly/web/services/images';
 
 const Wrapper = 'div';
 
@@ -61,13 +62,19 @@ const AgentTile = ({
     aggregateRating: rating,
     url,
     address,
+    gallery,
   } = agent;
+
+  let imageUrl = null;
+  if (gallery && gallery.images && gallery.images.length > 0) {
+    imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
+  }
 
   const phoneNumber = phoneFormatter(info.slyPhone);
 
   return (
     <Wrapper>
-      <ProfileImage src={info.profileImageUrl} aspectRatio="3:2">
+      <ProfileImage src={imageUrl} aspectRatio="3:2">
         {info.recentFamiliesHelped &&
           <Badge size="caption" palette="white">
             <b>{info.recentFamiliesHelped}</b> families helped

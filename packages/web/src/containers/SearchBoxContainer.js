@@ -256,7 +256,7 @@ export default class SearchBoxContainer extends Component {
           const { suggestions } = this.state;
 
           this.setState({
-            suggestions: [...suggestions, ...googleSuggestions],
+            suggestions: [...googleSuggestions, ...suggestions],
           });
         }),
       this.getAutocomplete(query),
