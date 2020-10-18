@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { func, string, oneOf, object } from 'prop-types';
 import * as immutable from 'object-path-immutable';
-
 import { withRouter } from 'react-router';
+
 import { prefetch, query, withAuth, withUser } from 'sly/web/services/api';
 import { AA_CONSULTATION_REQUESTED, PROFILE_ASK_QUESTION, AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import { capitalize } from  'sly/web/services/helpers/utils';
@@ -49,6 +49,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
     postSubmit: func,
     match: matchPropType.isRequired,
     createAction: func.isRequired,
+    createQuestion: func,
     category: oneOf(['agent', 'community']),
     type: string,
     actionType: oneOf([PROFILE_ASK_QUESTION, AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED]),
@@ -116,7 +117,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
         email,
       };
       actionInfo.questionText = message; // API expects key
-      createQuestion(payload) // FIXME: Dont care about failure?
+      createQuestion(payload); // FIXME: Dont care about failure?
     }
 
     return Promise.all([
@@ -145,15 +146,14 @@ export default class AskQuestionToAgentFormContainer extends Component {
           postSubmit();
         }
       });
-
   };
 
   render() {
     // change user.name to first name and last name
     const { user } = this.props;
-    let firstName,lastName = "";
+    let firstName; let lastName = '';
     if (user && user.name) {
-      [firstName,lastName] = user.name ? user.name.split(" ") : ["",""]
+      [firstName, lastName] = user.name ? user.name.split(' ') : ['', ''];
     }
     return (
       <ReduxForm
