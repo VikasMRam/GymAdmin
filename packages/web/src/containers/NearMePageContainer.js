@@ -93,8 +93,13 @@ export default class NearMePageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
 
     const { history } = this.props;
+    let joiner = '?';
 
-    history.push(`${result.url}?toc=${searchParams.toc}`);
+    if (result.url.includes('?')) {
+      joiner = '&';
+    }
+
+    history.push(`${result.url}${joiner}toc=${searchParams.toc}`);
   };
 
   handleCurrentLocation = (addresses, { latitude, longitude }) => {

@@ -205,14 +205,17 @@ const shuffle = (input) => {
   return output;
 };
 
-export const orderItems = (keys, groupName) => shuffle(keys.slice()
-  .sort((a, b) => {
-    if (groupItemOrders[groupName]) {
-      return groupItemOrders[groupName].indexOf(a.toLowerCase()) - groupItemOrders[groupName].indexOf(b.toLowerCase());
-    }
-    return 0;
-  })
-  .filter(i => i));
+export const orderItems = (keys, groupName) => {
+  keys = keys.map(k => k.toLowerCase());
+
+  return shuffle(
+    groupItemOrders[groupName] ?
+      groupItemOrders[groupName]
+        .slice()
+        .filter(item => keys.includes(item) ? item : null)
+        .filter(i => i) : keys,
+  );
+};
 
 const CommunityDetails = ({ community }) => {
   const { propInfo, name, address: { state }, rgsAux } = community;
