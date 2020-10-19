@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import CommunityDetails, { orderItems } from '.';
 
+import { capitalize } from 'sly/web/services/helpers/utils';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityDetails community={RhodaGoldmanPlaza} {...props} />);
@@ -35,11 +36,11 @@ describe('CommunityDetails', () => {
     const elements = wrapper.find('Grid').find('Wrapper').at(0).children();
     const orderedCommunityHighlights = orderItems(communityHighlights, 'communityHighlights');
 
-    elements.slice(0, orderedCommunityHighlights.length)
+    elements
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(orderedCommunityHighlights[i]);
+          .text()).toContain(capitalize(orderedCommunityHighlights[i]));
       });
   });
 
@@ -52,11 +53,11 @@ describe('CommunityDetails', () => {
     const elements = wrapper.find('Grid').find('Wrapper').at(1).children();
     const orderedCareServices = orderItems(careServices, 'careServices');
 
-    elements.slice(0, orderedCareServices.length)
+    elements
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(orderedCareServices[i]);
+          .text()).toContain(capitalize(orderedCareServices[i]));
       });
   });
 
@@ -69,11 +70,11 @@ describe('CommunityDetails', () => {
     const elements = wrapper.find('Grid').find('Wrapper').at(2).children();
     const orderedNonCareServices = orderItems(nonCareServices, 'nonCareServices');
 
-    elements.slice(0, orderedNonCareServices.length)
+    elements
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(orderedNonCareServices[i]);
+          .text()).toContain(capitalize(orderedNonCareServices[i]));
       });
   });
 
@@ -86,11 +87,11 @@ describe('CommunityDetails', () => {
     const elements = wrapper.find('Grid').find('Wrapper').at(3).children();
     const orderedPersonalSpace = orderItems(personalSpace, 'personalSpace');
 
-    elements.slice(0, orderedPersonalSpace.length)
+    elements
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(orderedPersonalSpace[i]);
+          .text()).toContain(capitalize(orderedPersonalSpace[i]));
       });
   });
 
@@ -103,11 +104,11 @@ describe('CommunityDetails', () => {
     const elements = wrapper.find('Grid').find('Wrapper').at(4).children();
     const orderedCommunitySpace = orderItems(communitySpace, 'communitySpace');
 
-    elements.slice(0, orderedCommunitySpace.length)
+    elements
       .forEach((hl, i) => {
         expect(hl.find('IconItem').dive().dive().find('Block')
           .render()
-          .text()).toContain(orderedCommunitySpace[i]);
+          .text()).toContain(capitalize(orderedCommunitySpace[i]));
       });
   });
 });

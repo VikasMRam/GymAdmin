@@ -174,7 +174,7 @@ export default class AssessmentWizardV11 extends Component {
   };
 
   render() {
-    const { community, hasTip, className, toc } = this.props;
+    const { community, hasTip, className, toc, skipIntro } = this.props;
     let { city, state } = this.props;
     let amount = 4000;
     let skipOptionText = 'No thanks, connect me to an expert now.';
@@ -209,12 +209,12 @@ export default class AssessmentWizardV11 extends Component {
                 </Wrapper>
               }
               <WizardSteps {...props}>
-                <WizardStep
+                {!skipIntro && <WizardStep
                   component={Intro}
                   name="Intro"
                   showSkipOption={showSkipOption}
                   skipOptionText={skipOptionText}
-                />
+                />}
                 {hadNoLocation &&
                   <WizardStep
                     component={Location}

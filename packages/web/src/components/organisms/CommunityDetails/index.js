@@ -114,9 +114,9 @@ const groupItemIcons = {
 
 const groupItemOrders = {
   careServices: [
+    'activities of daily living assistance',
+    'assistance with dressing',
     'medication management',
-    'assistance with bathing',
-    'assistance with transfers',
     'transportation arrangement (medical)',
     'coordination with health care providers',
     '24-hour supervision',
@@ -129,8 +129,8 @@ const groupItemOrders = {
     'specialized memory care programming',
     'hospice waiver',
     'same day assessments',
-    'activities of daily living assistance',
-    'assistance with dressing',
+    'assistance with bathing',
+    'assistance with transfers',
     'meal preparation and service',
     'transportation to doctors appointment',
     '24-hour call system',
@@ -205,14 +205,17 @@ const shuffle = (input) => {
   return output;
 };
 
-export const orderItems = (keys, groupName) => shuffle(keys.slice()
-  .sort((a, b) => {
-    if (groupItemOrders[groupName]) {
-      return groupItemOrders[groupName].indexOf(a.toLowerCase()) - groupItemOrders[groupName].indexOf(b.toLowerCase());
-    }
-    return 0;
-  })
-  .filter(i => i));
+export const orderItems = (keys, groupName) => {
+  keys = keys.map(k => k.toLowerCase());
+
+  return shuffle(
+    groupItemOrders[groupName] ?
+      groupItemOrders[groupName]
+        .slice()
+        .filter(item => keys.includes(item) ? item : null)
+        .filter(i => i) : keys,
+  );
+};
 
 const CommunityDetails = ({ community }) => {
   const { propInfo, name, address: { state }, rgsAux } = community;
