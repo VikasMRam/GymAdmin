@@ -73,7 +73,7 @@ export default class Image extends React.Component {
   };
 
   static generateAlt(src) {
-    if ( src ) {
+    if (src) {
       const srcParts = src.split('/');
       return decodeURIComponent(srcParts.pop());
     }
