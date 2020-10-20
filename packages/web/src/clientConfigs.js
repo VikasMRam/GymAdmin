@@ -76,7 +76,7 @@ export function clientDevMiddleware() {
     try {
       context.ready = true;
       if (context.callbacks.length) {
-        info('Responding delayed requests');
+        info(`Responding to [${context.callbacks.length}] delayed requests`);
         let callback;
         // eslint-disable-next-line no-cond-assign
         while (callback = context.callbacks.shift()) {
