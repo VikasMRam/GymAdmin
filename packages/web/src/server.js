@@ -18,10 +18,8 @@ import { port, host, publicPath, isDev } from 'sly/web/config';
 import { configure as configureStore } from 'sly/web/store';
 import Html from 'sly/web/components/Html';
 import Error from 'sly/web/components/Error';
-import clientConfigsMiddleware from 'sly/web/clientConfigs';
-
-const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
-const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
+import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConfigs';
+import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 
 const getErrorContent = (err) => {
   if (isDev) {
@@ -34,9 +32,9 @@ const getErrorContent = (err) => {
 const renderHtml = ({
   initialState, content, sheet, extractor,
 }) => {
-  const linkElements = extractor && extractor.getLinkElements();
-  const styleElements = sheet && sheet.getStyleElement();
-  const scriptElements = extractor && extractor.getScriptElements();
+  const linkElements = (extractor && extractor.getLinkElements()) || [];
+  const styleElements = (sheet && sheet.getStyleElement()) || [];
+  const scriptElements = (extractor && extractor.getScriptElements()) || [];
 
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
@@ -57,11 +55,14 @@ const app = express();
 
 app.disable('x-powered-by');
 
-if (!isDev) {
-  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
+if (isDev) {
+  app.use(clientDevMiddleware());
+} else {
+  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/web')));
 }
 
-app.use(clientConfigsMiddleware({ statsNode, statsWeb }));
+app.use(clientConfigsMiddleware());
+app.use(publicPath, express.static(path.resolve(process.cwd(), 'public')));
 
 // non ssr apps
 app.use((req, res, next) => {
@@ -79,29 +80,28 @@ app.use((req, res, next) => {
 // render
 app.use(async (req, res, next) => {
   const store = configureStore({ experiments: {} });
+
   const {
-    renderToString,
     extractor,
     ClientApp,
   } = req.clientConfig;
 
-  // hack to reset chunk count in the extractor
-  extractor.chunks = [];
-
   try {
     const sheet = new ServerStyleSheet();
     const context = {};
+    const apiContext = {};
+
     const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ClientApp />
+            <ClientApp apiContext={apiContext} />
           </StaticRouter>
         </Provider>
       </CacheProvider>
     )));
 
-    const result = await renderToString(app);
+    const result = await renderAndPrefetch(app, apiContext);
     const content = renderStylesToString(result);
 
     if (context.status) {
