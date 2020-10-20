@@ -21,7 +21,7 @@ export default class AgentsPageContainer extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
     const [city, state] = result.name.split(', ');
-    history.push(`/agents/region/${urlize(city)}-${state}/`);
+    history.push(`/agents/region/${urlize(city)}-${state}`);
   };
 
   handleConsultationRequested = () => {
