@@ -148,7 +148,7 @@ export function clientDevMiddleware() {
 
 export function clientConfigsMiddleware() {
   if (!isDev) {
-    context.web = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/web/loadable-stats.json')));
+    context.public = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/public/loadable-stats.json')));
     context.node = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/node/loadable-stats.json')));
   }
 
@@ -162,7 +162,7 @@ export function clientConfigsMiddleware() {
 
       if (path.match(config.path)) {
         const extractor = new ChunkExtractor({
-          stats: context.web,
+          stats: context.public,
           entrypoints: [config.bundle],
         });
 

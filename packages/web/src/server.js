@@ -56,13 +56,13 @@ const app = express();
 app.disable('x-powered-by');
 
 if (isDev) {
+  app.use(publicPath, express.static(path.resolve(process.cwd(), 'public')));
   app.use(clientDevMiddleware());
 } else {
-  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/web')));
+  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
 app.use(clientConfigsMiddleware());
-app.use(publicPath, express.static(path.resolve(process.cwd(), 'public')));
 
 // non ssr apps
 app.use((req, res, next) => {

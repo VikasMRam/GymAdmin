@@ -255,7 +255,7 @@ const externalWidget = group([
 ]);
 
 const client = (target, entries) => {
-  const isWeb = target === 'web';
+  const isWeb = target === 'public';
   return createConfig([
     name(target),
 
@@ -307,7 +307,7 @@ const client = (target, entries) => {
 };
 
 const webpackConfig = [
-  client('web', {
+  client('public', {
     'community-details': clientCommunityDetailWebEntryPath,
     main: clientWebEntryPath,
     external: externalEntryPath,
