@@ -62,7 +62,6 @@ export default class CommunityInfo extends Component {
     community: communityPropType,
     inverted: bool,
     showFloorPlan: bool,
-    showDescription: bool,
     palette: palettePropType,
     className: string,
     headerIsLink: bool,
@@ -74,7 +73,7 @@ export default class CommunityInfo extends Component {
   };
 
   render() {
-    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink, event } = this.props;
+    const { community, inverted, showFloorPlan, palette, className, headerIsLink, event } = this.props;
     const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
 
     const address = getAddress(community);
@@ -161,11 +160,6 @@ export default class CommunityInfo extends Component {
         )}
         {livingTypeComponent}
         {floorPlanComponent}
-        {showDescription &&
-          <Block palette={inverted ? 'white' : 'grey'} size="caption">
-            {community.description || propInfo.communityDescription}
-          </Block>
-        }
       </Wrapper>
     );
   }
