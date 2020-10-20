@@ -1,5 +1,6 @@
 packages/mobile
 packages/storybook
+packages/e2e
 .git
 node_modules
 .circleci

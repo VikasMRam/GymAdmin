@@ -1,6 +1,5 @@
 import isMobilePhone from 'validator/lib/isMobilePhone';
-
-// const { addresses } = require('rrad/addresses-us-all.min.json');
+import { addresses } from 'rrad/addresses-us-all.min.json';
 
 const randChars = (characters, length = 1) => {
   let result = '';
@@ -15,19 +14,14 @@ const fromZero = length => randChars('0123456789', length);
 
 const randHash = () => Math.random().toString(36).substring(7);
 const randPhone = () => `${fromTwo()}${fromZero(2)}${fromTwo()}${fromZero(6)}`;
-// const randomAddress = addresses[Math.floor(Math.random() * addresses.length)];
+const randomAddress = addresses[Math.floor(Math.random() * addresses.length)];
 
 export default function randomCommunity() {
   const name = `Test Community ${randHash()}`;
-  // const address = randomAddress.address1;
-  // const zip = randomAddress.postalCode;
-  // const { city } = randomAddress;
-  // const { state } = randomAddress;
-
-  const address = '101 Main st';
-  const zip = '94105';
-  const city = 'San Francisco';
-  const state = 'CA';
+  const address = randomAddress.address1;
+  const zip = randomAddress.postalCode;
+  const { city } = randomAddress;
+  const { state } = randomAddress;
 
   let phone = null;
   do {

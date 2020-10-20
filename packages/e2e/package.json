@@ -1,10 +1,11 @@
 {
-  "name": "@sly-react/web-e2e",
+  "name": "@sly-react/e2e",
   "version": "1.0.0",
   "private": true,
-  "main": "index.js",
   "scripts": {
-    "test": "cypress run"
+    "preinstall": "../../scripts/check-install-allowed.sh",
+    "lint": "../../node_modules/.bin/eslint .",
+    "start": "cypress run"
   },
   "devDependencies": {
     "cypress": "^3.7.0"
@@ -13,6 +14,7 @@
     "@cypress/webpack-preprocessor": "^4.1.1",
     "cypress-multi-reporters": "^1.2.3",
     "mocha": "^6.2.2",
-    "mocha-junit-reporters": "^1.23.6"
+    "mocha-junit-reporters": "^1.23.6",
+    "rrad": "^1.1.0"
   }
 }
