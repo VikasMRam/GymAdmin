@@ -1,8 +1,9 @@
-
-import { LOCAL_EXPERT_OPTIONS, LIVE_SEARCH_STATE, PRODUCTS_OPTIONS, SERVICES_OPTIONS, AGE_OPTIONS, WORKING_WITH_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from '../../../../src/constants/wizards/assessment';
 import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
+
+import { LOCAL_EXPERT_OPTIONS, LIVE_SEARCH_STATE, PRODUCTS_OPTIONS, SERVICES_OPTIONS, AGE_OPTIONS, WORKING_WITH_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS }
+  from 'sly/web/constants/wizards/assessment';
 
 Cypress.on('uncaught:exception', () => {
   return false;
@@ -309,7 +310,7 @@ describe('Community survey', () => {
         cy.get('h3').contains('Complete this 3-minute assessment tool to get personalized senior living and care options.').should('exist');
         cy.get('a').contains('Start').click();
       });
-      waitForHydration(cy.get('button').contains('Start')).click();
+      // waitForHydration(cy.get('button').contains('Start')).click();
     });
 
     for (let i = 0; i < wizardSteps; i++) {

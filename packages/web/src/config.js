@@ -1,43 +1,64 @@
 const merge = require('lodash/merge');
 
+const {
+  NODE_ENV,
+  SLY_ENV,
+  GA_ENV,
+  ASSETS_URL,
+  PUBLIC_PATH,
+  HOST,
+  PORT,
+  API_URL,
+  DOMAIN,
+  GOOGLE_MAPS_API_KEY,
+  FB_CLIENT_ID,
+  GOOGLE_CLIENT_ID,
+  MUTE_REDUX_LOGGER,
+  HIDE_CHATBOX,
+  ENABLE_EXPERIMENT_DEBUGGER,
+  DISABLE_EXPERIMENTS,
+} = require('../env');
+
+const { VERSION } = process.env;
+
 // TODO: find a more elegant solution to
 // storybook serve it's own assets, so to avoid trouble:
 const isStorybook = !!global.STORYBOOK_ENV;
 const publicPath = isStorybook
   ? ''
-  : process.env.PUBLIC_PATH;
+  : PUBLIC_PATH;
 
 const config = {
   all: {
-    env: process.env.NODE_ENV,
-    slyEnv: process.env.SLY_ENV,
-    gaEnv: process.env.GA_ENV,
-    isDev: process.env.NODE_ENV,
+    env: NODE_ENV,
+    slyEnv: SLY_ENV,
+    gaEnv: GA_ENV,
+    isDev: NODE_ENV,
     isTest: false,
     isProd: false,
-    host: process.env.HOST,
-    port: process.env.PORT,
+    host: HOST,
+    port: PORT,
     isBrowser: typeof window !== 'undefined',
     isServer: typeof window === 'undefined',
-    apiUrl: process.env.API_URL,
-    gMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+    apiUrl: API_URL,
+    gMapsApiKey: GOOGLE_MAPS_API_KEY,
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'http://localhost:8888/events/new',
-    domain: process.env.DOMAIN,
+    domain: DOMAIN,
     publicPath,
-    assetsUrl: process.env.ASSETS_URL,
+    assetsUrl: ASSETS_URL,
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     rokoApiKey: 'OgRs7tffvTdiKOKqsDSwwLgyJF6wHYVxFAK+qQO4paU=',
-    version: process.env.VERSION,
-    facebookAppId: process.env.FB_CLIENT_ID,
-    googleAppId: process.env.GOOGLE_CLIENT_ID,
+    version: VERSION,
+    facebookAppId: FB_CLIENT_ID,
+    googleAppId: GOOGLE_CLIENT_ID,
     olarkSiteId: '9319-500-10-7635',
-    muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
-    hideChatbox: process.env.HIDE_CHATBOX,
-    loadAutoComplete: !process.env.OFFLINE_MODE,
-    disableExperiments: process.env.DISABLE_EXPERIMENTS,
-    enableExperimentsDebugger: process.env.ENABLE_EXPERIMENT_DEBUGGER,
+    muteReduxLogger: true,
+    hideChatbox: false,
+    // loadAutoComplete: !OFFLINE_MODE,
+    disableExperiments: DISABLE_EXPERIMENTS,
+    enableExperimentsDebugger: ENABLE_EXPERIMENT_DEBUGGER,
     tinyMCEApiKey: 'zalf4x4cr6354ko1klhtu90vmtbee1qw9r4j1qy1dpm3xabb',
     gadsClient: 'ca-pub-7265665320394778',
     gadSlots: {
@@ -58,7 +79,9 @@ const config = {
   },
 
   development: {
-    loadAutoComplete: !process.env.OFFLINE_MODE,
+    muteReduxLogger: MUTE_REDUX_LOGGER,
+    hideChatbox: HIDE_CHATBOX,
+    // loadAutoComplete: !OFFLINE_MODE,
   },
 
   staging: {

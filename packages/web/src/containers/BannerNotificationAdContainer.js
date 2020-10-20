@@ -55,6 +55,13 @@ export default class BannerNotificationAdContainer extends PureComponent {
       label: profileId,
       nonInteraction: true,
     });
+    // hide banner in SSR and let client side show or hide depending on localStorage
+    if (isBrowser) {
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({
+        completedAssessment: !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED) || !!localStorage.getItem(ASSESSMENT_WIZARD_BANNER_DISMISSED)
+      });
+    }
   }
 
   handleGetInstantOfferClick = () => {
@@ -164,6 +171,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
 
   render() {
     const { type, noMarginBottom, community, state, city } = this.props;
+
     const {
       isModalOpen,
       modalHeading,
@@ -171,13 +179,10 @@ export default class BannerNotificationAdContainer extends PureComponent {
       modalAction,
       modalMessagePlaceholder,
       showBanner,
+      completedAssessment,
     } = this.state;
-    // hide banner in SSR and let client side show or hide depending on localStorage
-    const completedAssessment = isBrowser ?
-      !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED) || !!localStorage.getItem(ASSESSMENT_WIZARD_BANNER_DISMISSED) :
-      true;
-    const BannerComponent = noMarginBottom ? BannerNotification : PaddedBannerNotification;
 
+    const BannerComponent = noMarginBottom ? BannerNotification : PaddedBannerNotification;
     return (
       <div>
         {type === 'getOffer' &&

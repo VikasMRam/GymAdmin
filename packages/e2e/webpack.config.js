@@ -1,13 +1,12 @@
 const path = require('path');
 
-const SOURCE = 'src';
+const { alias } = require('../../private/generatePackagesPaths');
 
 module.exports = {
   resolve: {
     alias: {
+      ...alias,
       e2e: path.resolve(__dirname, 'cypress'),
-      'sly/common': path.join(path.resolve(__dirname, '..', '..', 'common'), SOURCE),
-      'sly/web': path.join(path.resolve(__dirname, '..'), SOURCE),
     },
   },
   module: {
