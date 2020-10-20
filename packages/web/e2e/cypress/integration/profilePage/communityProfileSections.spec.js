@@ -36,7 +36,6 @@ describe('Community Profile Sections', () => {
 
     cy.getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
-      console.log(community);
     });
   });
 

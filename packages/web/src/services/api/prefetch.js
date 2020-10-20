@@ -19,7 +19,7 @@ function getDisplayName(WrappedComponent) {
       || 'Component';
 }
 
-export default function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
+function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
 
@@ -133,3 +133,5 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     return Wrapper;
   };
 }
+
+export default prefetch;
