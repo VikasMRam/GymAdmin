@@ -1,4 +1,9 @@
-import React, { Component, useContext, useEffect, useState } from 'react';
+import React, {
+  Component,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isBrowser } from 'sly/web/config';
@@ -64,7 +69,7 @@ const BreakpointContext = React.createContext(null);
 export const BreakpointProvider = ({ children }) => {
   const [breakpoint, setBreakpoint] = useState(new Breakpoint(window.innerWidth));
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const newBreakpoint = () => {
       setBreakpoint(new Breakpoint(window.innerWidth));
     };

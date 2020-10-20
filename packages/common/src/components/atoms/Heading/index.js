@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { any, oneOf } from 'prop-types';
-import styled from 'styled-components';
 
 import Root from './Root';
 
@@ -13,9 +12,9 @@ const getPad = (size) => {
   }
 };
 
-const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
+const Heading = forwardRef(({ size, level, ...props }, ref) => (
   <Root
-    ref={innerRef}
+    ref={ref}
     size={size || level}
     // used only to force different h{level} than default
     level={level}
@@ -23,21 +22,19 @@ const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
     marginBottom="xxLarge"
     {...props}
   />
-))``;
+));
 
-StyledHeading.propTypes = {
+Heading.propTypes = {
   size: oneOf(['hero', 'title', 'subtitle', 'body']).isRequired,
   level: any, // should be deprecated
 };
 
-StyledHeading.defaultProps = {
+Heading.defaultProps = {
   size: 'title',
   palette: 'slate',
   variation: 'base',
   weight: 'medium',
 };
-
-const Heading = React.forwardRef((props, ref) => <StyledHeading innerRef={ref} {...props} />);
 
 Heading.displayName = 'Heading';
 

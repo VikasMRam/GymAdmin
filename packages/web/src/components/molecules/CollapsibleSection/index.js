@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import Measure from 'react-measure';
+import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
+import useDimensions from 'react-use-dimensions';
 
 import { size, key, palette } from 'sly/common/components/themes';
 import { Icon, Heading } from 'sly/common/components/atoms';
-import { ClampedText } from 'sly/web/components/atoms';
 import { weight as weightPropType } from 'sly/common/propTypes/weight';
 import Block from 'sly/common/components/atoms/Block';
+import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
+
+const noop = () => {};
 
 const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};
@@ -16,17 +18,6 @@ const Section = styled.section`
 
   border: ${p => p.borderless ? 'none' : size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${p => p.borderless ? 'none' : size('spacing.small')};
-`;
-
-export const Header = styled.div`
-  display: grid;
-  justify-content: space-between;
-  grid-template-columns: auto auto;
-  padding: ${size('spacing.xLarge')} ${p => p.borderless ? 0 : ''};
-
-  :hover {
-    cursor: pointer;
-  }
 `;
 
 const contentHeight = ({ collapsed, maxHeight }) => (!collapsed ? `${maxHeight}px` : 0);
@@ -43,6 +34,8 @@ const Content = styled.div`
     from { overflow: hidden; }
   }
 `;
+
+Content.displayName = 'Content';
 
 const getHeadingSize = (size) => {
   switch (size) {
@@ -64,103 +57,94 @@ export const MainSection = styled.div`
   `)};
 `;
 
-export const BottomSection = styled.div`
-  background-color: ${palette('grey', 'background')};
-  padding: ${size('spacing.xLarge')};
-  border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-`;
+const CollapsibleSection = ({
+  children,
+  title,
+  collapsedDefault,
+  size,
+  innerRef,
+  className,
+  headingWeight,
+  borderless,
+  showIf,
+  forMobileOnly,
+  ...props
+}) => {
+  const breakpoint = useBreakpoint();
+  const [collapsed, setCollapsed] = useState(collapsedDefault);
+  const [measureRef, { height: maxHeight }] = useDimensions();
 
-const StyledHeading = styled(Heading)`
-  margin: 0;
-  display: inherit;
-`;
+  const toggle = useCallback(() => {
+    setCollapsed(!collapsed);
+  }, [collapsed]);
 
-export default class CollapsibleSection extends Component {
-  static propTypes = {
-    children: node,
-    title: string.isRequired,
-    collapsedDefault: bool.isRequired,
-    size: oneOf(['small', 'regular', 'large']),
-    innerRef: object,
-    className: string,
-    clampTitle: bool,
-    headingWeight: weightPropType,
-    borderless: bool,
-    id: string,
-  };
+  const showResizeControls = !forMobileOnly
+    || (forMobileOnly && breakpoint.isMobile());
 
-  static defaultProps = {
-    collapsedDefault: false,
-    size: 'regular',
-    headingWeight: 'medium',
-    borderless: false,
-  };
+  const onPointerDown = showResizeControls
+    ? toggle
+    : noop;
 
-  state = {
-    collapsed: this.props.collapsedDefault,
-  };
-
-  onResize = ({ entry = {} }) => {
-    this.setState({
-      maxHeight: entry.height,
-    });
-  };
-
-  toggle = () =>
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-
-  render() {
-    const {
-      children,
-      title,
-      collapsedDefault,
-      size,
-      innerRef,
-      className,
-      clampTitle,
-      headingWeight,
-      borderless,
-      showIf,
-      ...props
-    } = this.props;
-    const { collapsed, maxHeight } = this.state;
-    return (
-      <Measure onResize={this.onResize}>
-        {({ measureRef }) => (
-          <Section
-            as={Block}
-            collapsed={collapsed}
-            borderless={borderless}
-            size={size}
-            ref={innerRef}
-            showIf={showIf}
-            className={className}
-          >
-            <Header onClick={this.toggle} borderless={borderless}>
-              {clampTitle &&
-                <StyledHeading weight={headingWeight} level="title" size={getHeadingSize(size)}>
-                  <ClampedText weight={headingWeight} level="title" size={getHeadingSize(size)}>
-                    {title}
-                  </ClampedText>
-                </StyledHeading>
-              }
-              {!clampTitle &&
-                <StyledHeading weight={headingWeight} level="title" size={getHeadingSize(size)}>
-                  {title}
-                </StyledHeading>
-              }
-              <Icon icon="chevron" palette="slate" flip={!collapsed} />
-            </Header>
-            <Content maxHeight={maxHeight} collapsed={collapsed}>
-              <div ref={measureRef} {...props}>
-                {children}
-              </div>
-            </Content>
-          </Section>
+  return (
+    <Section
+      as={Block}
+      collapsed={collapsed}
+      borderless={borderless}
+      ref={innerRef}
+      showIf={showIf}
+      className={className}
+    >
+      <Block
+        onClick={onPointerDown}
+        display="grid"
+        justifyContent="space-between"
+        gridTemplateColumns="auto auto"
+        padding={`xLarge ${borderless ? 0 : ''}`}
+        css={css({
+          ':hover': {
+            cursor: 'pointer',
+          },
+        })}
+      >
+        <Heading
+          weight={headingWeight}
+          level="title"
+          size={getHeadingSize(size)}
+          pad={0}
+          clamped
+        >
+          {title}
+        </Heading>
+        {showResizeControls && (
+          <Icon icon="chevron" palette="slate" flip={!collapsed} />
         )}
-      </Measure>
-    );
-  }
-}
+      </Block>
+      <Content ref={measureRef} maxHeight={maxHeight} collapsed={collapsed} {...props}>
+        {children}
+      </Content>
+    </Section>
+  );
+};
+
+CollapsibleSection.propTypes = {
+  children: node,
+  title: string.isRequired,
+  collapsedDefault: bool.isRequired,
+  size: oneOf(['small', 'regular', 'large']),
+  innerRef: object,
+  className: string,
+  headingWeight: weightPropType,
+  borderless: bool,
+  id: string,
+  showIf: bool,
+  forMobileOnly: bool,
+};
+
+CollapsibleSection.defaultProps = {
+  collapsedDefault: false,
+  size: 'regular',
+  headingWeight: 'medium',
+  borderless: false,
+};
+
+export default CollapsibleSection;

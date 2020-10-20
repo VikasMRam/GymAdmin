@@ -32,33 +32,14 @@ describe('CollapsibleSection', () => {
     expect(wrapper.state()).toEqual({ collapsed: false });
   });
 
-  it('renders default not collapsed, calls toggle', () => {
+  it.only('renders default not collapsed, calls toggle', () => {
     const wrapper = wrap();
-    const heading = wrapper.find(Header);
-
-    expect(heading.find(ClampedText)).toHaveLength(0);
-    expect(wrapper.state()).toEqual({ collapsed: false });
+    const heading = wrapper.find('Heading');
+    expect(wrapper.find('Content').prop('maxHeight')).toBe(undefined);
+    expect(wrapper.find('Content').prop('collapsed')).toBe(false);
     heading.simulate('click');
-    expect(wrapper.state()).toEqual({ collapsed: true });
-  });
-
-  it('receives onResize event', () => {
-    const wrapper = wrap();
-    const onResize = wrapper.find(Measure).prop('onResize');
-    expect(wrapper.state('maxHeight')).toEqual(undefined);
-
-    onResize({});
-    expect(wrapper.state('maxHeight')).toEqual(undefined);
-
-    onResize({ entry: { height: 600 } });
-    expect(wrapper.state('maxHeight')).toEqual(600);
-  });
-
-  it('renders with clampTitle', () => {
-    const wrapper = wrap({ clampTitle: true });
-    const heading = wrapper.find(Header);
-
-    expect(heading.find(ClampedText)).toHaveLength(1);
+    expect(wrapper.find('Content').prop('maxHeight')).toBe.a.Number();
+    expect(wrapper.find('Content').prop('collapsed')).toBe(true);
   });
 });
 
