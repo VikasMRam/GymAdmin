@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import CommunityInfo from '.';
+
 import { formatRating } from 'sly/web/services/helpers/rating';
-import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza} {...props} />);

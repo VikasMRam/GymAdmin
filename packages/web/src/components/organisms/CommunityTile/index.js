@@ -7,13 +7,9 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { upTo } from 'sly/common/components/helpers';
-import pad from 'sly/web/components/helpers/pad';
-import fullWidth from 'sly/web/components/helpers/fullWidth';
-import cursor from 'sly/web/components/helpers/cursor';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid } from 'sly/common/components/atoms';
-import { Span } from 'sly/web/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
@@ -28,27 +24,6 @@ const communityDefaultImages = {
 };
 
 const getImageSize = ({ imageSize }) => imageSize ? getKey(`sizes.tile.${imageSize}`).width : COLUMN_LAYOUT_IMAGE_WIDTH;
-
-const FullWidthButton = fullWidth(Button);
-FullWidthButton.displayName = 'FullWidthButton';
-const CursorSpan = cursor(Span);
-CursorSpan.displayName = 'CursorSpan';
-
-const PaddedCommunityInfo = pad(CommunityInfo);
-PaddedCommunityInfo.displayName = 'PaddedCommunityInfo';
-
-const AddNote = styled(CursorSpan)`
-  display: block;
-  text-align: center;
-`;
-AddNote.displayName = 'AddNote';
-
-const StyledMediaGallery = styled(MediaGallery)`
-  background: none;
-  img {
-    border-radius: ${size('spacing.small')};
-  }
-`;
 
 const StyledImage = styled(borderRadius(ResponsiveImage))`
   img {
@@ -84,9 +59,9 @@ const Wrapper = styled(Grid)`
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
-  <FullWidthButton onClick={onClick} ghost={ghost} key={text}>
+  <Button width="100%" onClick={onClick} ghost={ghost} key={text}>
     {text}
-  </FullWidthButton>
+  </Button>
 ));
 
 const CommunityTile = ({
@@ -120,7 +95,6 @@ const CommunityTile = ({
     ? () => <IconButton transparent icon={icon} iconSize="body" palette={iconPalette} onClick={onIconClick} />
     : null;
 
-  const CommunityInfoComponent = actionButtons.length ? PaddedCommunityInfo : CommunityInfo;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
 
@@ -135,21 +109,21 @@ const CommunityTile = ({
       <Wrapper
         layout={layout}
         borderRadius="regular"
-        padding="regular"
         border="regular"
         borderPalette="grey.stroke"
         gap="large"
         dimensions={[getImageSize({ imageSize }), 'auto']}
       >
         {!noGallery &&
-          <StyledMediaGallery
-            communityName={name}
+          <MediaGallery
             images={galleryImages}
             sizes={mediaSizes}
             topRightSection={topRightSection}
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
-            layout={layout}
+            borderRadius="regular"
+            snap={layout === 'row' ? 'bottom' : undefined}
+            transparent
           />
         }
         {noGallery &&
@@ -161,6 +135,7 @@ const CommunityTile = ({
               placeholder={placeholder}
               sizes={mediaSizes}
               aspectRatio={layout === 'column' ? '4:3' : '16:9'}
+              snap={layout === 'row' ? 'bottom' : undefined}
               loading={loading}
             >
               {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
@@ -172,18 +147,42 @@ const CommunityTile = ({
             )}
           </div>
         }
-        <Block>
-          <CommunityInfoComponent
+        <Block padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : 'large'}>
+          <CommunityInfo
             palette={palette}
             community={community}
             showFloorPlan={showFloorPlan}
             event={event}
+            priceTextSize={layout === 'row' ? 'body' : undefined}
+            pad={actionButtons.length ? 'large' : undefined}
+            swapRatingPrice={layout === 'row'}
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
-          {note && <Span size="caption">{note}</Span>}
-          {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
-          {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
+          {note &&
+            <>
+              <Block display="inline" size="caption" marginRight="tiny">{note}</Block>
+              <Button
+                transparent
+                padding="0"
+                palette="primary"
+                size="caption"
+                onClick={onEditNoteClick}
+              >
+                Edit note
+              </Button>
+            </>
+          }
+          {!note && addNote &&
+            <Block
+              textAlign="center"
+              palette="primary"
+              size="caption"
+              onClick={onAddNoteClick}
+            >
+              Add a note
+            </Block>
+          }
         </Block>
       </Wrapper>
     </Block>
