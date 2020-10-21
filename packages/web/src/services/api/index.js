@@ -29,7 +29,7 @@ export middleware from './middleware';
 export withUser from './withUser';
 export withAuth from './withAuth';
 
-export renderToString from './renderToString';
+export renderToString from './renderAndPrefetch';
 export withPrefetchWait from './withPrefetchWait';
 export { useResourceBuffer, withResourceBuffer } from './resourceBuffer';
 export makeApiCallAction from './makeApiCallAction';

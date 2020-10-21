@@ -1,4 +1,4 @@
-const { alias } = require('../../../private/generatePackagesPaths');
+const { alias } = require('../../private/generatePackagesPaths');
 
 module.exports = {
   globals: {

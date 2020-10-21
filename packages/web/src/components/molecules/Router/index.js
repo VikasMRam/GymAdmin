@@ -106,6 +106,9 @@ export default class Router extends Component {
         }
         return <Redirect to={url} />;
       } else if (isServer) {
+        // we do this because we don't want to prefetch in the server
+        // all of dashboard (or any other section that requires auth)
+        // all the api queries as they are not seo pages.
         apiContext.skipApiCalls = true;
       }
     }

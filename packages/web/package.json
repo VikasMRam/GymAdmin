@@ -10,7 +10,7 @@
     "start:prod": "npm run env:prod -- node .",
     "start:staging": "npm run env:staging -- node .",
     "predev": "npm run prebuild",
-    "dev": "npm run env:dev -- webpack-dev-server",
+    "dev": "npm run build:clean && babel-node -i ../../**/node_modules --config-file ../../babel.config.js src/server.js",
     "dev:https": "HOST=https://www.lvh.me API_URL=https://www.lvh.me/v0 NODE_TLS_REJECT_UNAUTHORIZED=0 npm run dev -- --https",
     "prestaging": "npm run prebuild",
     "preprod": "npm run prebuild",
@@ -29,9 +29,10 @@
     "test": "../../node_modules/.bin/jest --passWithNoTests",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/components/pages/wizards src/containers/wizards src/components/common src/components/helpers src/components/atoms src/components/molecules src/components/wizards src/constants private webpack.config.js e2e"
+    "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/components/pages/wizards src/containers/wizards src/components/common src/components/helpers src/components/atoms src/components/molecules src/components/wizards src/constants private webpack.config.js"
   },
   "devDependencies": {
+    "@babel/node": "^7.12.1",
     "@loadable/babel-plugin": "5.12.0",
     "@loadable/webpack-plugin": "5.12.0",
     "babel-loader": "8.1.0",
