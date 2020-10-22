@@ -156,21 +156,21 @@ export default class ReferralSearchContainer extends Component {
       filters['filter[name]'] = nameOrZip;
     }
     return filters;
-  }
+  };
 
   getGeoFromLocationValue = (value) => {
-    if (value && value.geo) {
-      return [value.geo.Latitude, value.geo.Longitude, 10].join(',');
+    if (value && value.searchParams) {
+      return [value.searchParams.latitude, value.searchParams.longitude, 10].join(',');
     }
     return null;
-  }
+  };
 
   doCommunitySearch = ({ name, geo }) => {
     const { getCommunities } = this.props;
     // const filters = this.getSearchFilters(nameOrZip);
     const filters = {};
     if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo.info);
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
     if (name) {
       filters['filter[name]'] = name;
@@ -187,7 +187,7 @@ export default class ReferralSearchContainer extends Component {
     const { getAgents } = this.props;
     const filters = {};
     if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo.info);
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
     if (name) {
       filters['filter[name]'] = name;
