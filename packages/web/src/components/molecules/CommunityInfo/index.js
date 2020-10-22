@@ -109,7 +109,7 @@ export default class CommunityInfo extends Component {
               icon="location"
               iconPalette={inverted ? 'white' : null}
               iconSize="body"
-              title={livingTypes.join(',')}
+              title={address}
               palette={inverted ? 'white' : null}
               size="caption"
               pad="small"
@@ -136,6 +136,7 @@ export default class CommunityInfo extends Component {
             <Block
               palette={palette || (inverted ? 'white' : 'primary')}
               size="caption"
+              testID="Rate"
             >
               <Block
                 display="inline"
