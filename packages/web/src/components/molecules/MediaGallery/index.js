@@ -4,8 +4,9 @@ import { string, bool, arrayOf, shape, number, func } from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/common/components/themes';
+import { size } from 'sly/common/components/themes';
 import { ResponsiveImage } from 'sly/web/components/atoms';
+import { Block } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
 import VideoThumbnail from 'sly/web/components/molecules/VideoThumbnail';
@@ -15,18 +16,6 @@ const videoMimeTypes = {
   webm: 'video/webm',
 };
 
-const CarouselWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  background: ${ifProp('transparent', 'transparent', palette('grey', 'base'))};
-  text-align: center;
-
-  ${props =>
-    props.showThumbnails &&
-    css`
-      margin-bottom: ${size('spacing.large')};
-    `};
-`;
 const imageStyles = css`
   width: 100%;
   object-fit: cover;
@@ -142,6 +131,9 @@ export default class MediaGallery extends Component {
     showThumbnails: false,
     currentSlide: 0,
     aspectRatio: '3:2',
+    position: 'relative',
+    width: '100%',
+    textAlign: 'center',
   };
 
   setLoadedImages(index) {
@@ -259,7 +251,7 @@ export default class MediaGallery extends Component {
     const {
       currentSlide, videos, images, topLeftSection, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails,
     } = this.props;
-    const { onSlideChange, onSlideClick, ...rest } = this.props;
+    const { onSlideChange, onSlideClick, transparent, ...rest } = this.props;
     const thumbnails = [];
     // const formattedVideos = videos.map((video) => {
     //   thumbnails.push({
@@ -295,7 +287,11 @@ export default class MediaGallery extends Component {
 
     return (
       <>
-        <CarouselWrapper {...rest}>
+        <Block
+          background={!transparent ? 'grey' : undefined}
+          pad={showThumbnails ? 'large' : undefined}
+          {...rest}
+        >
           {this.allMedia.length > 1 &&
             <PrevSlide
               className="media-carousel-control-prev"
@@ -351,7 +347,7 @@ export default class MediaGallery extends Component {
               {bottomRightSection(this.allMedia[currentSlide])}
             </BottomRightWrapper>
           }
-        </CarouselWrapper>
+        </Block>
         {showThumbnails &&
           <ThumbnailScroller
             palette="white"

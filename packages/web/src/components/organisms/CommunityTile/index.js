@@ -1,13 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { upTo } from 'sly/common/components/helpers';
-import borderRadius from 'sly/web/components/helpers/borderRadius';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
@@ -25,20 +23,6 @@ const communityDefaultImages = {
 
 const getImageSize = ({ imageSize }) => imageSize ? getKey(`sizes.tile.${imageSize}`).width : COLUMN_LAYOUT_IMAGE_WIDTH;
 
-const StyledImage = styled(borderRadius(ResponsiveImage))`
-  img {
-    border-radius: ${size('spacing.small')};
-  }
-
-  Button {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
 const TopRightWrapper = styled.span`
   right: ${size('spacing.large')};
   top: ${size('spacing.large')};
@@ -50,16 +34,25 @@ const Wrapper = styled(Grid)`
   // no column layout support below tablet
   ${upTo('tablet', 'grid-template-columns: auto;')}
   ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
+`;
 
-  &:hover {
-    Button {
-      display: initial;
-    }
-  }
+const CommunityInfoBlock = styled(Block)`
+  ${upTo('tablet', css`
+    padding: ${size('spacing.large')};
+    padding-top: 0;
+  `)}
+`;
+
+const StyledResponsiveImage = styled(ResponsiveImage)`
+  ${upTo('tablet', css`
+    border-radius: ${size('spacing.regular')};
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  `)}
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
-  <Button width="100%" onClick={onClick} ghost={ghost} key={text}>
+  <Button testID="ActionButton" width="100%" onClick={onClick} ghost={ghost} key={text}>
     {text}
   </Button>
 ));
@@ -67,7 +60,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, palette, imageSize, showSeeMoreButtonOnHover,
+  layout, showFloorPlan, imageSize,
   canFavourite, lazyLoadImage, event,
 }) => {
   const {
@@ -122,24 +115,23 @@ const CommunityTile = ({
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
             borderRadius="regular"
-            snap={layout === 'row' ? 'bottom' : undefined}
+            snap={layout === 'row' ? 'bottom' : 'right'}
             transparent
           />
         }
         {noGallery &&
           <div>
-            <StyledImage
+            <StyledResponsiveImage
               layout={layout}
               path={imagePath}
               src={imageSrc}
               placeholder={placeholder}
               sizes={mediaSizes}
               aspectRatio={layout === 'column' ? '4:3' : '16:9'}
-              snap={layout === 'row' ? 'bottom' : undefined}
+              borderRadius="regular"
+              snap={layout === 'row' ? 'bottom' : 'right'}
               loading={loading}
-            >
-              {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-            </StyledImage>
+            />
             {topRightSection && (
               <TopRightWrapper>
                 {topRightSection()}
@@ -147,9 +139,10 @@ const CommunityTile = ({
             )}
           </div>
         }
-        <Block padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : 'large'}>
+        <CommunityInfoBlock
+          padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : ['large', 'large', 'large', '0']}
+        >
           <CommunityInfo
-            palette={palette}
             community={community}
             showFloorPlan={showFloorPlan}
             event={event}
@@ -161,12 +154,20 @@ const CommunityTile = ({
           {(note || addNote) && <Hr />}
           {note &&
             <>
-              <Block display="inline" size="caption" marginRight="tiny">{note}</Block>
+              <Block
+                display="inline"
+                size="caption"
+                marginRight="tiny"
+                testID="Note"
+              >
+                {note}
+              </Block>
               <Button
                 transparent
                 padding="0"
                 palette="primary"
                 size="caption"
+                testID="EditNote"
                 onClick={onEditNoteClick}
               >
                 Edit note
@@ -178,12 +179,13 @@ const CommunityTile = ({
               textAlign="center"
               palette="primary"
               size="caption"
+              testID="AddNote"
               onClick={onAddNoteClick}
             >
               Add a note
             </Block>
           }
-        </Block>
+        </CommunityInfoBlock>
       </Wrapper>
     </Block>
   );
@@ -210,8 +212,6 @@ CommunityTile.propTypes = {
   noGallery: bool,
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']),
-  palette: palettePropType,
-  showSeeMoreButtonOnHover: bool,
   imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
   lazyLoadImage: bool.isRequired,
   event: object,

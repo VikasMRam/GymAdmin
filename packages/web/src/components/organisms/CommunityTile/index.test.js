@@ -14,30 +14,31 @@ const wrap = (props = {}) => shallow(<CommunityTile community={RhodaGoldmanPlaza
 describe('CommunityTile', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('StyledMediaGallery')).toHaveLength(1);
+    expect(wrapper.find('MediaGallery')).toHaveLength(1);
     expect(wrapper.find('CommunityInfo')).toHaveLength(1);
-    expect(wrapper.find('FullWidthButton')).toHaveLength(0);
-    expect(wrapper.find('Span')).toHaveLength(0);
-    expect(wrapper.find('CursorSpan')).toHaveLength(0);
-    expect(wrapper.find('AddNote')).toHaveLength(0);
+    expect(wrapper.find('Button')).toHaveLength(0);
+    expect(wrapper.find('[testID="EditNote"]')).toHaveLength(0);
+    expect(wrapper.find('[testID="AddNote"]')).toHaveLength(0);
   });
 
   it('renders note', () => {
     const wrapper = wrap({ note });
-    expect(wrapper.find('Span').dive().render().text()).toContain(note);
+    expect(wrapper.find('[testID="Note"]').text()).toContain(note);
   });
 
   it('onEditNoteClick gets called', () => {
     const onEditNoteClick = jest.fn();
     const wrapper = wrap({ note, onEditNoteClick });
-    wrapper.find('CursorSpan').simulate('click');
+
+    wrapper.find('[testID="EditNote"]').simulate('click');
     expect(onEditNoteClick).toHaveBeenCalled();
   });
 
   it('onAddNoteClick gets called', () => {
     const onAddNoteClick = jest.fn();
     const wrapper = wrap({ onAddNoteClick, addNote: true });
-    wrapper.find('AddNote').simulate('click');
+
+    wrapper.find('[testID="AddNote"]').simulate('click');
     expect(onAddNoteClick).toHaveBeenCalled();
   });
 
@@ -55,13 +56,11 @@ describe('CommunityTile', () => {
     ];
     const wrapper = wrap({ actionButtons });
 
-    expect(wrapper.find('PaddedCommunityInfo')).toHaveLength(1);
+    expect(wrapper.find('CommunityInfo')).toHaveLength(1);
     actionButtons.forEach((actionButton, i) => {
-      expect(wrapper.find('FullWidthButton').at(i).dive().dive()
-        .dive()
-        .render()
+      expect(wrapper.find('Button[testID="ActionButton"]').at(i).dive()
         .text()).toBe(actionButton.text);
-      wrapper.find('FullWidthButton').at(i).simulate('click');
+      wrapper.find('Button[testID="ActionButton"]').at(i).simulate('click');
       expect(actionButton.onClick).toHaveBeenCalled();
     });
   });

@@ -34,7 +34,6 @@ export default class CommunityInfo extends Component {
 
   static defaultProps = {
     showFloorPlan: true,
-    overflow: 'hidden',
     display: 'flex',
     height: '100%',
     justifyContent: 'space-between',
@@ -67,8 +66,8 @@ export default class CommunityInfo extends Component {
         <IconItem
           icon="hospital"
           iconSize="body"
-          iconPalette={inverted ? 'white' : null}
-          palette={inverted ? 'white' : null}
+          iconPalette={inverted ? 'white' : 'slate'}
+          palette={inverted ? 'white' : 'slate'}
           size="caption"
           pad="regular"
           title={livingTypes.join(',')}
@@ -107,10 +106,10 @@ export default class CommunityInfo extends Component {
           {address && (
             <IconItem
               icon="location"
-              iconPalette={inverted ? 'white' : null}
+              iconPalette={inverted ? 'white' : 'slate'}
               iconSize="body"
               title={address}
-              palette={inverted ? 'white' : null}
+              palette={inverted ? 'white' : 'slate'}
               size="caption"
               pad="small"
               clamped
