@@ -1,11 +1,10 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { upTo } from 'sly/common/components/helpers';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
@@ -23,16 +22,7 @@ const communityDefaultImages = {
 
 const getImageSize = ({ imageSize }) => imageSize ? getKey(`sizes.tile.${imageSize}`).width : COLUMN_LAYOUT_IMAGE_WIDTH;
 
-const TopRightWrapper = styled.span`
-  right: ${size('spacing.large')};
-  top: ${size('spacing.large')};
-  position: absolute;
-  z-index: 1;
-`;
-
 const Wrapper = styled(Grid)`
-  // no column layout support below tablet
-  ${upTo('tablet', 'grid-template-columns: auto;')}
   ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
 `;
 
@@ -86,11 +76,15 @@ const CommunityTile = ({
       {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
       <Wrapper
         layout={layout}
-        borderRadius="regular"
+        borderRadius="small"
         border="regular"
         borderPalette="grey.stroke"
         gap="large"
         dimensions={[getImageSize({ imageSize }), 'auto']}
+        // no column layout support below tablet
+        upToTablet={{
+          gridTemplateColumns: 'auto',
+        }}
       >
         {!noGallery &&
           <MediaGallery
@@ -99,7 +93,7 @@ const CommunityTile = ({
             topRightSection={topRightSection}
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
-            borderRadius="regular"
+            borderRadius="small"
             snap={layout === 'row' ? 'bottom' : 'right'}
             transparent
           />
@@ -113,20 +107,21 @@ const CommunityTile = ({
               placeholder={placeholder}
               sizes={mediaSizes}
               aspectRatio={layout === 'column' ? '4:3' : '16:9'}
-              borderRadius="regular"
+              borderRadius="small"
               snap={layout === 'row' ? 'bottom' : 'right'}
               loading={loading}
               upToTablet={{
-                borderRadius: size('spacing.regular'),
+                borderRadius: size('spacing.small'),
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
               }}
-            />
-            {topRightSection && (
-              <TopRightWrapper>
-                {topRightSection()}
-              </TopRightWrapper>
-            )}
+            >
+              {topRightSection &&
+                <Block position="absolute" top="regular" right="regular" zIndex={1}>
+                  {topRightSection()}
+                </Block>
+              }
+            </ResponsiveImage>
           </div>
         }
         <Block
