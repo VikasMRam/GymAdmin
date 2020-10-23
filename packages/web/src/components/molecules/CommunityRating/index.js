@@ -10,29 +10,24 @@ import { formatRating } from 'sly/web/services/helpers/rating';
 import { Block, Link } from 'sly/common/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
 
-const RatingValue = styled(Block)`
-  margin-right: ${size('spacing.small')};
-`;
-
 const StyledRating = styled(Rating)`
   margin-right: ${size('spacing.small')};
 `;
 
-const TwoColumn = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const CommunityRating = ({ rating, numReviews, description, size, palette, variation, goToReviews, ...props }) => {
+  if (rating < 1) {
+    return <div />;
+  }
+
   const linkProps = goToReviews
     ? { href: '#reviews', onClick: goToReviews, as: Link }
     : {};
 
   return (
-    <TwoColumn {...linkProps} {...props}>
-      <RatingValue palette={palette} variation={variation} weight="medium">
+    <Block {...linkProps} {...props}>
+      <Block testID="RatingValue" marginRight="small" palette={palette} variation={variation} weight="medium">
         {rating > 0 ? formatRating(rating) : 'Not yet rated'}
-      </RatingValue>
+      </Block>
       {rating > 0 &&
         <StyledRating
           value={rating}
@@ -46,7 +41,7 @@ const CommunityRating = ({ rating, numReviews, description, size, palette, varia
           ({numReviews})
         </Block>
       }
-    </TwoColumn>
+    </Block>
   );
 };
 
@@ -64,6 +59,8 @@ CommunityRating.propTypes = {
 CommunityRating.defaultProps = {
   size: 'body',
   palette: 'primary',
+  display: 'flex',
+  alignItems: 'center',
 };
 
 export default CommunityRating;
