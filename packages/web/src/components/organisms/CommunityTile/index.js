@@ -140,6 +140,7 @@ const CommunityTile = ({
           </div>
         }
         <CommunityInfoBlock
+          overflow="hidden"
           padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : ['large', 'large', 'large', '0']}
         >
           <CommunityInfo
