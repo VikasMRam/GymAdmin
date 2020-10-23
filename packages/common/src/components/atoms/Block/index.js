@@ -19,6 +19,7 @@ import {
   withWidth,
   withHeight,
   withShadow,
+  withMedia,
 } from 'sly/common/components/helpers';
 
 const Block = styled(({ showIf, ...props }) => {
@@ -38,10 +39,12 @@ const Block = styled(({ showIf, ...props }) => {
   ${withCursor}
   ${withOverflow}
   ${withShadow}
-  // put withDisplay before flex to make sure that this display styles are always first priority
   ${withWidth}
   ${withHeight}
+  // put withDisplay after other styles for applied display styles to have more priority
   ${withDisplay}
+  // put withMedia first for media query styles to have first priority
+  ${withMedia}
 `;
 
 Block.propTypes = {

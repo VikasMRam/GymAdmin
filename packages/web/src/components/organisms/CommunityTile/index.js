@@ -36,21 +36,6 @@ const Wrapper = styled(Grid)`
   ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
 `;
 
-const CommunityInfoBlock = styled(Block)`
-  ${upTo('tablet', css`
-    padding: ${size('spacing.large')};
-    padding-top: 0;
-  `)}
-`;
-
-const StyledResponsiveImage = styled(ResponsiveImage)`
-  ${upTo('tablet', css`
-    border-radius: ${size('spacing.regular')};
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  `)}
-`;
-
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <Button testID="ActionButton" width="100%" onClick={onClick} ghost={ghost} key={text}>
     {text}
@@ -121,7 +106,7 @@ const CommunityTile = ({
         }
         {noGallery &&
           <div>
-            <StyledResponsiveImage
+            <ResponsiveImage
               layout={layout}
               path={imagePath}
               src={imageSrc}
@@ -131,6 +116,11 @@ const CommunityTile = ({
               borderRadius="regular"
               snap={layout === 'row' ? 'bottom' : 'right'}
               loading={loading}
+              upToTablet={{
+                borderRadius: size('spacing.regular'),
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
             />
             {topRightSection && (
               <TopRightWrapper>
@@ -139,9 +129,13 @@ const CommunityTile = ({
             )}
           </div>
         }
-        <CommunityInfoBlock
+        <Block
           overflow="hidden"
           padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : ['large', 'large', 'large', '0']}
+          upToTablet={{
+            padding: size('spacing.large'),
+            paddingTop: 0,
+          }}
         >
           <CommunityInfo
             community={community}
@@ -186,7 +180,7 @@ const CommunityTile = ({
               Add a note
             </Block>
           }
-        </CommunityInfoBlock>
+        </Block>
       </Wrapper>
     </Block>
   );

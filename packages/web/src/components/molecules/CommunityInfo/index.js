@@ -1,18 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import { bool, string, object } from 'prop-types';
-import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { upTo } from 'sly/common/components/helpers';
 import { Block, Heading, Link } from 'sly/common/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-
-const StyledBlock = styled(Block)`
-  ${upTo('tablet', 'flex-direction: row-reverse;')}
-`;
 
 const getAddress = ({ address, addressString }) => {
   if (address) {
@@ -125,10 +119,13 @@ export default class CommunityInfo extends Component {
           )}
           {livingTypeComponent}
         </div>
-        <StyledBlock
+        <Block
           display="flex"
           alignItems="center"
           justifyContent="space-between"
+          upToTablet={{
+            flexDirection: 'row-reverse',
+          }}
           direction={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
@@ -152,7 +149,7 @@ export default class CommunityInfo extends Component {
               </Block>&nbsp;/&nbsp;month
             </Block>
           ) : null }
-        </StyledBlock>
+        </Block>
       </Block>
     );
   }
