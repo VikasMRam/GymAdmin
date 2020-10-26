@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import CommunityInfo from '.';
+
 import { formatRating } from 'sly/web/services/helpers/rating';
-import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza} {...props} />);
@@ -14,34 +15,22 @@ describe('CommunityInfo', () => {
     const wrapper = wrap();
     expect(
       wrapper
-        .find('IconTextWrapper')
+        .find('IconItem')
         .at(0)
-        .find('Info')
         .render()
         .text(),
     ).toContain(expectedAddress);
     RhodaGoldmanPlaza.webViewInfo.firstLineValue.split(',').forEach((livingType) => {
       expect(
         wrapper
-          .find('IconTextWrapper')
+          .find('IconItem')
           .at(1)
-          .find('Info')
           .render()
           .text(),
       ).toContain(livingType);
     });
-    RhodaGoldmanPlaza.webViewInfo.secondLineValue.split(',').forEach((roomType) => {
-      expect(
-        wrapper
-          .find('IconTextWrapper')
-          .at(2)
-          .find('Info')
-          .render()
-          .text(),
-      ).toContain(roomType);
-    });
-    expect(wrapper.find('Rate').text()).toBe('$6,027/month');
-    expect(wrapper.find('TopWrapper').html()).toContain(formatRating(RhodaGoldmanPlaza.propRatings.reviewsValue));
+    expect(wrapper.find('Block').find('[testID="Rate"]').text()).toContain('$6,027');
+    expect(wrapper.find('CommunityRating').html()).toContain(formatRating(RhodaGoldmanPlaza.propRatings.reviewsValue));
   });
 
   it('renders with inverted', () => {
@@ -52,22 +41,15 @@ describe('CommunityInfo', () => {
   it('renders with estimated price', () => {
     const wrapper = wrap({ community: { ...RhodaGoldmanPlaza, estimated: true } });
 
-    expect(wrapper.find('Rate').text()).toBe('Estimated $6,027/month');
+    expect(wrapper.find('Block').find('[testID="Rate"]').text()).toContain('$6,027');
   });
 
-  it('renders without reviews', () => {
+  it('renders without LivingTypes', () => {
     const newRhodaGoldmanPlaza = { ...RhodaGoldmanPlaza };
-    newRhodaGoldmanPlaza.propRatings.reviewsValue = 0;
-    const wrapper = wrap({ community: newRhodaGoldmanPlaza });
-
-    expect(wrapper.find('TopWrapper').html()).toContain('Not yet rated');
-  });
-
-  it('renders without FloorPlans & LivingTypes', () => {
-    const newRhodaGoldmanPlaza = { ...RhodaGoldmanPlaza };
+    newRhodaGoldmanPlaza.propInfo = undefined;
     newRhodaGoldmanPlaza.webViewInfo = undefined;
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
 
-    expect(wrapper.find('IconTextWrapper')).toHaveLength(2);
+    expect(wrapper.find('IconItem')).toHaveLength(1);
   });
 });

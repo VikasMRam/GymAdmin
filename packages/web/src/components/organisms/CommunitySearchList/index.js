@@ -165,8 +165,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               layout="column"
               imageSize="regular"
               noGallery
-              showDescription
-              showSeeMoreButtonOnHover
               lazyLoadImage={index !== 0}
               event={{
                 category: 'SearchPage',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityRating from 'sly/web/components/molecules/CommunityRating';
+import CommunityRating from '.';
 
 const defaultProps = {
   rating: 3.6234,
@@ -21,7 +21,7 @@ describe('CommunityRating', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('RatingValue').contains('3.6')).toBeTruthy();
+    expect(wrapper.find('[testID="RatingValue"]').contains('3.6')).toBeTruthy();
     expect(wrapper.contains(defaultProps.numReviews)).toBeTruthy();
   });
 });

@@ -6,10 +6,11 @@ import { ifProp } from 'styled-tools';
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { getSrcset } from 'sly/web/services/images';
+import { Block } from 'sly/common/components/atoms';
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
-const ResponsiveWrapper = styled.div`
+const ResponsiveWrapper = styled(Block)`
   display: inline-block;
 
   ${ifProp('aspectRatio', css`
@@ -32,6 +33,10 @@ const ResponsiveWrapper = styled.div`
     user-select: none;
     border: none;
     object-fit: cover;
+  }
+
+  * {
+    border-radius: inherit;
   }
 `;
 
@@ -184,7 +189,11 @@ export default class ResponsiveImage extends React.Component {
     }
 
     return (
-      <ResponsiveWrapper aspectRatio={aspectRatio} className={classNameProp}>
+      <ResponsiveWrapper
+        aspectRatio={aspectRatio}
+        className={classNameProp}
+        {...props}
+      >
         {picture}
         {children}
       </ResponsiveWrapper>
