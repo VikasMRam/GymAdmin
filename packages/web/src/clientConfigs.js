@@ -76,7 +76,7 @@ export function clientDevMiddleware() {
     try {
       context.ready = true;
       if (context.callbacks.length) {
-        info('Responding delayed requests');
+        info(`Responding to [${context.callbacks.length}] delayed requests`);
         let callback;
         // eslint-disable-next-line no-cond-assign
         while (callback = context.callbacks.shift()) {
@@ -148,7 +148,7 @@ export function clientDevMiddleware() {
 
 export function clientConfigsMiddleware() {
   if (!isDev) {
-    context.web = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/web/loadable-stats.json')));
+    context.public = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/public/loadable-stats.json')));
     context.node = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/node/loadable-stats.json')));
   }
 
@@ -162,7 +162,7 @@ export function clientConfigsMiddleware() {
 
       if (path.match(config.path)) {
         const extractor = new ChunkExtractor({
-          stats: context.web,
+          stats: context.public,
           entrypoints: [config.bundle],
         });
 

@@ -73,11 +73,11 @@ export default class Image extends React.Component {
   };
 
   static generateAlt(src) {
-    if (typeof src === 'undefined') {
-      return 'Seniorly Image';
+    if (src) {
+      const srcParts = src.split('/');
+      return decodeURIComponent(srcParts.pop());
     }
-    const srcParts = src.split('/');
-    return decodeURIComponent(srcParts.pop());
+    return 'Seniorly Image';
   }
 
   state = {

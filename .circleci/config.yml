@@ -355,7 +355,7 @@ jobs:
 
       - run:
           name: Waiting for Local Go to be up and running
-          command: npx wait-on http-get://localhost:8080/v0/ping
+          command: npx wait-on -i 2000 http-get://localhost:8080/v0/ping
 
       - run:
           name: Waiting for Local React to be up and running
