@@ -37,6 +37,7 @@ import {
 } from 'sly/web/constants/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
+import SearchContainer from 'sly/web/components/search/SearchContainer';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/web/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/web/components/pages/OurHistoryPage'));
@@ -316,6 +317,10 @@ const routes = [
     path: '/wizards/assessment',
     component: AssessmentWizardPageContainer,
     exact: true,
+  },
+  {
+    path: '/nusearch',
+    component: SearchContainer,
   },
   {
     path: '/',

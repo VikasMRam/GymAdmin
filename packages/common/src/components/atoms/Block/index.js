@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
+import { bool, oneOfType } from 'prop-types';
 
 import Root from './Root';
 
@@ -49,13 +49,104 @@ const Block = styled(({ showIf, ...props }) => {
   ${withMedia}
 `;
 
-Block.propTypes = {
-  showIf: bool,
-};
+Block.propTypesList = [
+  // spacing
+  'padding',
+  'paddingTop',
+  'paddingRight',
+  'paddingBottom',
+  'paddingLeft',
+  'margin',
+  'marginTop',
+  'marginRight',
+  'marginBottom',
+  'marginLeft',
+  'pad',
+  'horizontalGutter',
+  'verticalGutter',
+  // text
+  'size',
+  'weight',
+  'lineHeight',
+  'textDecoration',
+  'textTransform',
+  // element
+  'elementSize',
+  // color
+  'palette',
+  'variation',
+  'background',
+  'backgroundVariation',
+  'border',
+  'borderPalette',
+  'borderVariation',
+  // border
+  'border',
+  'borderTop',
+  'borderRight',
+  'borderBottom',
+  'borderLeft',
+  'borderPalette',
+  'borderVariation',
+  'borderRadius',
+  // snap
+  'snap',
+  // skipping align because it will dissapear in favour of display
+  // misc
+  'clamped',
+  'cursor',
+  'overflow',
+  'width',
+  'height',
+  // shadow
+  'shadowHOffset',
+  'shadowVOffset',
+  'shadowBlur',
+  'shadowSpread',
+  'shadowPalette',
+  'css',
+  // display
+  'display',
+  'block',
+  'flex',
+  'justifyContent',
+  'alignItems',
+  'flexDirection',
+  'flexGrow',
+  'flexShrink',
+  'flexBasis',
+  'flexWrap',
+  'order',
+  'visibility',
+  // media
+  'upTo',
+  'upToMobile',
+  'upToTablet',
+  'upToLapTop',
+  'startingWith',
+  'startingWithMobile',
+  'startingWithTablet',
+  'startingWithLapTop',
+];
 
 Block.defaultProps = {
   showIf: true,
   display: 'block',
+};
+
+Block.filterBlockProps = (props) => {
+  const filtered = {};
+  const rest = {};
+  const propNames = Object.keys(props);
+  for (let i = 0; i <= Block.propTypesList.length; i++) {
+    const propName = Block.propTypesList[i];
+    if (propNames.includes(propName)) {
+      filtered[propName] = props[propName];
+    } else {
+      rest[propName] = props[propName];
+    }
+  }
+  return [filtered, rest];
 };
 
 export default Block;
