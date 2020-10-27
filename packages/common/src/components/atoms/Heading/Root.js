@@ -1,21 +1,38 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { string } from 'prop-types';
+import styled from 'styled-components';
 
-import Block from 'sly/common/components/atoms/Block';
+import {
+  withAlign,
+  withColor,
+  withSpacing,
+  withText,
+} from 'sly/common/components/helpers';
 
-const Root = forwardRef((props, ref) => {
-  switch (props.level || props.size) {
-    case 'hero': return <Block as="h1" ref={ref} {...props} />;
-    case 'title': return <Block as="h2" ref={ref} {...props} />;
-    case 'subtitle': return <Block as="h3" ref={ref} {...props} />;
-    case 'body': return <Block as="h4" ref={ref} {...props} />;
-    default: return <Block as="h1" ref={ref} {...props} />;
+const H1 = styled.h1``;
+const H2 = styled.h2``;
+const H3 = styled.h3``;
+const H4 = styled.h4``;
+
+const HeadingRoot = styled(({ innerRef, ...props }) => {
+  switch (props.level || props.size) { /* eslint-disable jsx-a11y/heading-has-content */
+    case 'hero': return <H1 ref={innerRef} {...props} />;
+    case 'title': return <H2 ref={innerRef} {...props} />;
+    case 'subtitle': return <H3 ref={innerRef} {...props} />;
+    case 'body': return <H4 ref={innerRef} {...props} />;
+    default: return <H1 ref={innerRef} {...props} />;
   }
-});
+})`
+  ${withSpacing}
+  ${withText}
+  ${withColor}
+  ${withAlign}
+`;
 
-Root.propTypes = {
-  level: string,
+HeadingRoot.propTypes = {
   size: string,
 };
+
+const Root = React.forwardRef((props, ref) => <HeadingRoot innerRef={ref} {...props} />);
 
 export default Root;

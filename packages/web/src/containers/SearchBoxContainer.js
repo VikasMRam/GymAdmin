@@ -52,7 +52,7 @@ export default class SearchBoxContainer extends Component {
     if (window.google) {
       this.onGoogleServiceReady();
     } else {
-      googleScript.addEventListener('load', this.onGoogleServiceReady);
+      // googleScript.addEventListener('load', this.onGoogleServiceReady);
     }
   }
 

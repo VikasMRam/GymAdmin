@@ -32,7 +32,7 @@
     "lint": "../../node_modules/.bin/eslint src/*.js src/external src/controllers src/components/pages/wizards src/containers/wizards src/components/common src/components/helpers src/components/atoms src/components/molecules src/components/wizards src/constants private webpack.config.js"
   },
   "devDependencies": {
-    "@babel/node": "^7.12.1",
+    "@babel/node": "7.12.1",
     "@loadable/babel-plugin": "5.12.0",
     "@loadable/webpack-plugin": "5.12.0",
     "babel-loader": "8.1.0",
@@ -67,7 +67,7 @@
     "emotion": "10.0.27",
     "emotion-server": "10.0.27",
     "express": "4.17.1",
-    "google-map-react": "^2.1.8",
+    "google-map-react": "2.1.8",
     "ifvisible.js": "1.0.6",
     "intersection-observer": "0.7.0",
     "isomorphic-fetch": "2.2.1",
@@ -101,7 +101,7 @@
     "serialize-javascript": "3.1.0",
     "smoothscroll-polyfill": "0.4.4",
     "universal-cookie": "4.0.3",
-    "use-resize-observer": "^6.1.0",
+    "use-resize-observer": "6.1.0",
     "uuid": "7.0.2",
     "validator": "13.0.0",
     "yall-js": "3.1.7"

@@ -319,7 +319,7 @@ const routes = [
     exact: true,
   },
   {
-    path: '/nusearch',
+    path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
     component: SearchContainer,
   },
   {

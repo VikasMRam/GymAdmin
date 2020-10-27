@@ -135,18 +135,18 @@ Block.defaultProps = {
 };
 
 Block.filterBlockProps = (props) => {
-  const filtered = {};
+  const blockProps = {};
   const rest = {};
   const propNames = Object.keys(props);
   for (let i = 0; i <= Block.propTypesList.length; i++) {
     const propName = Block.propTypesList[i];
     if (propNames.includes(propName)) {
-      filtered[propName] = props[propName];
+      blockProps[propName] = props[propName];
     } else {
       rest[propName] = props[propName];
     }
   }
-  return [filtered, rest];
+  return [blockProps, rest];
 };
 
 export default Block;

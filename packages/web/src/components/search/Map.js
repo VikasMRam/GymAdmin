@@ -56,11 +56,11 @@ const Map = ({
         zoom={zoom}
         {...mapProps}
       >
-        {markers.map(({ location: { coordinates: [lng, lat] }, id }) => (
+        {markers.map(({ latitude, longitude, id }) => (
           <Marker
             key={id}
-            lat={lat}
-            lng={lng}
+            lat={latitude}
+            lng={longitude}
             place="place"
             show
           />
@@ -70,6 +70,10 @@ const Map = ({
   );
 
   // }
+};
+
+Map.defaultProps = {
+  markers: [],
 };
 
 Map.propTypes = {

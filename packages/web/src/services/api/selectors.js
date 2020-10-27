@@ -89,36 +89,38 @@ export const twoSetsAreEqual = (a, b) => {
   return a === b;
 };
 
+export function getRequestInfo(state, request) {
+  const error = request && request.error ? request.error : false;
+  const hasStarted = hasRequestStarted(request);
+  const isLoading = isRequestLoading(request);
+
+  return {
+    hasStarted,
+    isLoading,
+    isInvalid: request?.invalid,
+    hasFinished: hasStarted && !isLoading,
+    hasFailed: !!error,
+    result: getRequestResult(state.api.entities, request),
+    normalized: getRequestResult(state.api.entities, request, true),
+    headers: getRequestHeaders(request),
+    meta: getRequestMeta(request),
+    status: request?.status,
+    error,
+  };
+}
 // state, apiCall, args
 export function createMemoizedRequestInfoSelector() {
   let lastRequestInfo = null;
   let lastRequest;
 
-  return function getRequestInfo(state, params = {}) {
+  return function getMemoizedRequestInfo(state, params = {}) {
     const { call } = params;
     const args = JSON.stringify(params.args);
     const request = state.api.requests?.[call]?.[args];
 
     if (typeof lastRequest === 'undefined' || request !== lastRequest) {
-      const error = request && request.error ? request.error : false;
-      const hasStarted = hasRequestStarted(request);
-      const isLoading = isRequestLoading(request);
-
       lastRequest = request;
-
-      lastRequestInfo = {
-        hasStarted,
-        isLoading,
-        isInvalid: request?.invalid,
-        hasFinished: hasStarted && !isLoading,
-        hasFailed: !!error,
-        result: getRequestResult(state.api.entities, request),
-        normalized: getRequestResult(state.api.entities, request, true),
-        headers: getRequestHeaders(request),
-        meta: getRequestMeta(request),
-        status: request?.status,
-        error,
-      };
+      lastRequestInfo = getRequestInfo(state, request);
     }
 
     return lastRequestInfo;

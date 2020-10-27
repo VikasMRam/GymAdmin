@@ -1,19 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
+
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import Search from 'sly/web/components/search/Search';
 import Map from 'sly/web/components/search/Map';
+import { getSearchParams } from 'sly/web/services/helpers/search';
 
 const LIST = 'list';
 const MAP = 'map';
 
-export default function SearchContainer () {
+export default function SearchContainer ({ location, match }) {
   // const [kitchens, setKitchens] = useState([]);
   const { ref: mapRef, width, height } = useResizeObserver();
   const breakpoint = useBreakpoint();
 
+  const searchParams = getSearchParams(match, location);
+  const { requestInfo } = usePrefetch('communityList', 'getSearchResources', request => request(searchParams))
+
   const [show, setShow] = useState(LIST);
 
+  // console.log({location, match})
   const onMapChange = useCallback(() => {
     console.log('map changed');
   }, []);
@@ -22,10 +29,7 @@ export default function SearchContainer () {
     lng: 0,
     lat: 0,
   };
-
   const defaultCenter = center;
-
-  const markers = [];
 
   const zoom = 3;
   // check if we just have the placeId from the url but
@@ -34,10 +38,11 @@ export default function SearchContainer () {
   return (
     <Search
       mapRef={mapRef}
+      searchParams={searchParams}
       onMapChange={onMapChange}
       defaultCenter={defaultCenter}
       center={center}
-      markers={markers}
+      markers={requestInfo.normalized || []}
       zoom={zoom}
     />
   );
