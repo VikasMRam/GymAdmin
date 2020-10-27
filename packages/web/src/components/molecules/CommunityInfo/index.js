@@ -1,50 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import { bool, string, object } from 'prop-types';
-import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { size } from 'sly/common/components/themes';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Block, Icon, Heading, Link } from 'sly/common/components/atoms';
-import { ClampedText } from 'sly/web/components/atoms';
+import { Block, Heading, Link } from 'sly/common/components/atoms';
+import IconItem from 'sly/web/components/molecules/IconItem';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-
-const Wrapper = styled.div`
-  overflow: hidden;
-`;
-
-const IconTextWrapper = styled.div`
-  display: flex;
-  margin-bottom: ${size('spacing.small')};
-  align-items: center;
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
-
-const Rate = styled(Block)`
-  margin-right: ${size('spacing.large')};
-  margin-bottom: 0;
-  line-height: ${size('lineHeight.micro')};
-`;
-
-const TopWrapper = styled(Block)`
-  display: flex;
-  align-items: center;
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const CommunityHeading = styled(Heading)`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const Info = styled(ClampedText)`
-  line-height: ${size('text.subtitle')};
-`;
 
 const getAddress = ({ address, addressString }) => {
   if (address) {
@@ -62,33 +24,36 @@ export default class CommunityInfo extends Component {
     community: communityPropType,
     inverted: bool,
     showFloorPlan: bool,
-    showDescription: bool,
     palette: palettePropType,
     className: string,
     headerIsLink: bool,
     event: object,
+    priceTextSize: string.isRequired,
+    swapRatingPrice: bool,
   };
 
   static defaultProps = {
     showFloorPlan: true,
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'space-between',
+    direction: 'column',
+    priceTextSize: 'subtitle',
   };
 
   render() {
-    const { community, inverted, showFloorPlan, showDescription, palette, className, headerIsLink, event } = this.props;
-    const { webViewInfo, floorPlanString, propInfo = {}, propRatings, mainService } = community;
+    const {
+      community, inverted, showFloorPlan, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
+    } = this.props;
+    const { webViewInfo, propInfo = {}, propRatings, mainService } = community;
 
     const address = getAddress(community);
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
 
-    let floorPlanComponent = null;
     let livingTypeComponent = null;
-    let floorPlan = floorPlanString;
     let livingTypes = typeCare;
     if (webViewInfo) {
-      ({
-        secondLineValue: floorPlan,
-      } = webViewInfo);
       const { firstLineValue } = webViewInfo;
       livingTypes = firstLineValue.split(',');
     }
@@ -96,34 +61,35 @@ export default class CommunityInfo extends Component {
       livingTypes = mainService.split(',');
     }
 
-    if (floorPlan && showFloorPlan) {
-      const roomTypes = floorPlan.split(',');
-      floorPlanComponent = (
-        <IconTextWrapper>
-          <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="body" />
-          <Info title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-            {roomTypes.map((roomType, i) =>
-              <Fragment key={roomType}>{!!i && <>, </>}{roomType}</Fragment>)}
-          </Info>
-        </IconTextWrapper>
-      );
-    }
     if (livingTypes && livingTypes.length) {
       livingTypeComponent = (
-        <IconTextWrapper>
-          <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="body" />
-          <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-            {livingTypes.map((livingType, i) =>
-              <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
-          </Info>
-        </IconTextWrapper>
+        <IconItem
+          icon="hospital"
+          iconSize="body"
+          iconPalette={inverted ? 'white' : 'slate'}
+          palette={inverted ? 'white' : 'slate'}
+          size="caption"
+          pad="regular"
+          title={livingTypes.join(',')}
+          clamped
+        >
+          {livingTypes.map((livingType, i) =>
+            <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
+        </IconItem>
       );
     }
 
     const headerContent  = (
-      <CommunityHeading level="subtitle" size="subtitle" title={community.name} palette={inverted ? 'white' : 'slate'}>
+      <Heading
+        level="subtitle"
+        size="subtitle"
+        pad="regular"
+        title={community.name}
+        palette={inverted ? 'white' : 'slate'}
+        clamped
+      >
         {community.name}
-      </CommunityHeading>
+      </Heading>
     );
 
     const header = headerIsLink
@@ -133,40 +99,58 @@ export default class CommunityInfo extends Component {
         </Link>
       ) : headerContent;
 
-    const communityStartingRate = formatMoney(community.startingRate);
-
     return (
-      <Wrapper className={className}>
-        {header}
-        <TopWrapper>
-          {community.startingRate ? (
-            <Rate palette={palette || (inverted ? 'white' : 'primary')} variation="base" weight="medium">
-              {`${community.estimated ? 'Estimated ' : ''}${communityStartingRate}/month`}
-            </Rate>
-          ) : null }
+      <Block {...props}>
+        <div>
+          {header}
+          {address && (
+            <IconItem
+              icon="location"
+              iconPalette={inverted ? 'white' : 'slate'}
+              iconSize="body"
+              title={address}
+              palette={inverted ? 'white' : 'slate'}
+              size="caption"
+              pad="small"
+              clamped
+            >
+              {address}
+            </IconItem>
+          )}
+          {livingTypeComponent}
+        </div>
+        <Block
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          upToTablet={{
+            flexDirection: 'row-reverse',
+          }}
+          direction={swapRatingPrice ? 'row-reverse' : undefined}
+        >
           <CommunityRating
             rating={reviewsValue}
             numReviews={numReviews}
             palette={inverted ? 'white' : 'primary'}
-            size={reviewsValue > 0 ? 'caption' : 'tiny'}
+            size="caption"
           />
-        </TopWrapper>
-        {address && (
-          <IconTextWrapper>
-            <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="body" />
-            <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-              {address}
-            </Info>
-          </IconTextWrapper>
-        )}
-        {livingTypeComponent}
-        {floorPlanComponent}
-        {showDescription &&
-          <Block palette={inverted ? 'white' : 'grey'} size="caption">
-            {community.description || propInfo.communityDescription}
-          </Block>
-        }
-      </Wrapper>
+          {community.startingRate ? (
+            <Block
+              palette={palette || (inverted ? 'white' : 'primary')}
+              size="caption"
+              testID="Rate"
+            >
+              <Block
+                display="inline"
+                weight="medium"
+                size={priceTextSize}
+              >
+                {formatMoney(community.startingRate)}
+              </Block>&nbsp;/&nbsp;month
+            </Block>
+          ) : null }
+        </Block>
+      </Block>
     );
   }
 }

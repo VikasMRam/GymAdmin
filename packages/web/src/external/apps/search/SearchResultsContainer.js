@@ -118,8 +118,8 @@ export default class SearchResultsContainer extends Component {
 
     const communityTiles = searchResources.map((sr, i) => {
       const ct = i === searchResources.length - 1 && total < 2 ?
-        <StyledCommunityTile palette={palette} layout="column" showFloorPlan={false} noGallery community={sr} /> :
-        <PaddedStyledCommunityTile palette={palette} layout="column" showFloorPlan={false} noGallery community={sr} />;
+        <StyledCommunityTile layout="column" showFloorPlan={false} noGallery community={sr} /> :
+        <PaddedStyledCommunityTile layout="column" showFloorPlan={false} noGallery community={sr} />;
       return <Link key={sr.id} href={sr.url} target="_blank" rel="nofollow">{ct}</Link>;
     });
 

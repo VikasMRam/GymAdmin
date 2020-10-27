@@ -163,10 +163,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             <CommunityTile
               community={similarProperty}
               layout="column"
-              imageSize="regular"
               noGallery
-              showDescription
-              showSeeMoreButtonOnHover
               lazyLoadImage={index !== 0}
               event={{
                 category: 'SearchPage',
