@@ -2,11 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { arrayOf, object, func, number } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
-import Block from 'sly/common/components/atoms/Block';
+// import Block from 'sly/common/components/atoms/Block';
+
+const Block = styled.div``;
 
 const Marker = () => (
   <Block
@@ -20,11 +22,11 @@ const Marker = () => (
 
 const Map = ({
   defaultCenter,
-  markers,
+  communities,
   center,
   zoom,
   onChange,
-  ...restProps
+  ...props
 }) => {
   const onDrag = useCallback(debounce((map) => {
     onChange(map);
@@ -34,7 +36,7 @@ const Map = ({
     onChange(map);
   }, []);
 
-  const [blockProps, mapProps] = Block.filterBlockProps(restProps);
+  console.log('props', props);
 
   const onChildClickCallback = (key) => {
     console.log('marker clicked', key);
@@ -42,7 +44,7 @@ const Map = ({
 
   return (
     <Block
-      {...blockProps}
+      {...props}
     >
       <GoogleMap
         bootstrapURLKeys={{ key: gMapsApiKey }}
@@ -54,9 +56,8 @@ const Map = ({
         onDrag={onDrag}
         onZoomAnimationEnd={onZoom}
         zoom={zoom}
-        {...mapProps}
       >
-        {markers.map(({ latitude, longitude, id }) => (
+        {communities.map(({ latitude, longitude, id }) => (
           <Marker
             key={id}
             lat={latitude}
@@ -73,13 +74,13 @@ const Map = ({
 };
 
 Map.defaultProps = {
-  markers: [],
+  communities: [],
 };
 
 Map.propTypes = {
   center: coordPropType,
   defaultCenter: coordPropType,
-  markers: arrayOf(object),
+  communities: arrayOf(object),
   onChange: func,
   zoom: number,
 };

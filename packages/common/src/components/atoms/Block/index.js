@@ -19,7 +19,6 @@ import {
   withWidth,
   withHeight,
   withShadow,
-  withCss,
   withMedia,
 } from 'sly/common/components/helpers';
 
@@ -44,7 +43,6 @@ const Block = styled(({ showIf, ...props }) => {
   ${withHeight}
   // put withDisplay after other styles for applied display styles to have more priority
   ${withDisplay}
-  ${withCss}
   // put withMedia first for media query styles to have first priority
   ${withMedia}
 `;
@@ -92,12 +90,6 @@ Block.propTypesList = [
   // snap
   'snap',
   // skipping align because it will dissapear in favour of display
-  // misc
-  'clamped',
-  'cursor',
-  'overflow',
-  'width',
-  'height',
   // shadow
   'shadowHOffset',
   'shadowVOffset',
@@ -127,6 +119,14 @@ Block.propTypesList = [
   'startingWithMobile',
   'startingWithTablet',
   'startingWithLapTop',
+  // misc
+  '_css',
+  'className',
+  'clamped',
+  'cursor',
+  'overflow',
+  'width',
+  'height',
 ];
 
 Block.defaultProps = {
@@ -138,9 +138,13 @@ Block.filterBlockProps = (props) => {
   const blockProps = {};
   const rest = {};
   const propNames = Object.keys(props);
-  for (let i = 0; i <= Block.propTypesList.length; i++) {
-    const propName = Block.propTypesList[i];
-    if (propNames.includes(propName)) {
+  for (let i = 0; i <= propNames.length; i++) {
+    const propName = propNames[i];
+    if (!propName) {
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+    if (Block.propTypesList.includes(propName)) {
       blockProps[propName] = props[propName];
     } else {
       rest[propName] = props[propName];

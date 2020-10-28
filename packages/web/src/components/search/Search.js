@@ -1,47 +1,45 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { arrayOf, number, func, oneOf } from 'prop-types';
 
-import { withDisplay } from 'sly/common/components/helpers';
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import CommunitySearchPageTemplate
   from 'sly/web/components/templates/CommunitySearchPageTemplate';
-
-const MiniBlock = styled.div`
-  ${withDisplay}
-`;
+import Block from 'sly/common/components/atoms/Block';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 
 const Search = ({
   center,
   defaultCenter,
   searchParams,
   onMapChange,
-  markers,
+  communities,
   zoom,
 }) => {
   return (
     <CommunitySearchPageTemplate
       searchParams={searchParams}
-      column={(null)}
+      column={null}
     >
-      <MiniBlock
-        display="flex"
-        css={css({
+      <Block>
+        {communities.map(community => (
+          <CommunityTile
+            community={community}
+          />
+        ))}
+      </Block>
+      <Map
+        defaultCenter={defaultCenter}
+        center={center}
+        communities={communities}
+        zoom={zoom}
+        onChange={onMapChange}
+        css={{
           background: 'pink',
           width: '100%',
           height: '100%',
-        })}
-      >
-
-        <Map
-          defaultCenter={defaultCenter}
-          center={center}
-          markers={markers}
-          zoom={zoom}
-          onChange={onMapChange}
-        />
-      </MiniBlock>
+        }}
+      />
     </CommunitySearchPageTemplate>
   );
 };
@@ -50,7 +48,7 @@ Search.propTypes = {
   center: coordPropType,
   defaultCenter: coordPropType,
   onSearchSubmit: func,
-  markers: arrayOf(coordPropType),
+  communities: arrayOf(coordPropType),
   zoom: number,
   onMapChange: func,
 };

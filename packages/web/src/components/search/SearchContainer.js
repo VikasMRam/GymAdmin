@@ -16,7 +16,7 @@ export default function SearchContainer ({ location, match }) {
   const breakpoint = useBreakpoint();
 
   const searchParams = getSearchParams(match, location);
-  const { requestInfo } = usePrefetch('communityList', 'getSearchResources', request => request(searchParams))
+  const { requestInfo } = usePrefetch('communityList', 'getSearchResources', request => request(searchParams));
 
   const [show, setShow] = useState(LIST);
 
@@ -42,7 +42,7 @@ export default function SearchContainer ({ location, match }) {
       onMapChange={onMapChange}
       defaultCenter={defaultCenter}
       center={center}
-      markers={requestInfo.normalized || []}
+      communities={requestInfo.normalized || []}
       zoom={zoom}
     />
   );
