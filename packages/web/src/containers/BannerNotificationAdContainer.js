@@ -37,6 +37,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
 
   static defaultProps = {
     type: 'homeCare',
+    noMarginBottom: true,
   };
 
   state = {

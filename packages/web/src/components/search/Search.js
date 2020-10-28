@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, number, func, oneOf } from 'prop-types';
+import { arrayOf, number, func, oneOf, string } from 'prop-types';
 
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
@@ -8,6 +8,8 @@ import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
 
 const Search = ({
+  show,
+  toggleShow,
   center,
   defaultCenter,
   onMapChange,
@@ -17,15 +19,19 @@ const Search = ({
   return (
     <Block
       display="flex"
+      padding="xLarge"
       flexDirection="column"
     >
       <Filters
         gridArea="topBar"
         pad="xLarge"
+        show={show}
+        toggleShow={toggleShow}
       />
       <Block>
         {communities.map(community => (
           <CommunityTile
+            key={community.id}
             noGallery
             community={community}
           />
@@ -48,6 +54,8 @@ const Search = ({
 };
 
 Search.propTypes = {
+  show: string,
+  toggleShow: func,
   center: coordPropType,
   defaultCenter: coordPropType,
   onSearchSubmit: func,

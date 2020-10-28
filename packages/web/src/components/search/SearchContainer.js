@@ -4,34 +4,42 @@ import useResizeObserver from 'use-resize-observer';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import Search from 'sly/web/components/search/Search';
-import Map from 'sly/web/components/search/Map';
 import { getSearchParams } from 'sly/web/services/helpers/search';
 import {
-  TemplateContent,
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import BannerNotificationAdContainer
   from 'sly/web/containers/BannerNotificationAdContainer';
 import Footer from 'sly/web/components/organisms/Footer';
+import { LIST, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 
-const LIST = 'list';
-const MAP = 'map';
-
-export default function SearchContainer ({ location, match }) {
+export default function SearchContainer({ location, match }) {
   // const [kitchens, setKitchens] = useState([]);
   const { ref: mapRef, width, height } = useResizeObserver();
   const breakpoint = useBreakpoint();
 
   const searchParams = getSearchParams(match, location);
-  const { requestInfo } = usePrefetch('communityList', 'getSearchResources', request => request(searchParams));
+  const { requestInfo } = usePrefetch(
+    'communityList',
+    'getSearchResources',
+    request => request(searchParams),
+  );
 
   const [show, setShow] = useState(LIST);
+
+  const toggleShow = useCallback(() => {
+    const showOptions = Object.keys(SHOW_OPTIONS);
+    const current = showOptions.indexOf(show);
+    const next = Number(!current);
+    setShow(next);
+  }, [show]);
 
   // console.log({location, match})
   const onMapChange = useCallback(() => {
     console.log('map changed');
   }, []);
+
 
   const center = {
     lng: 0,
@@ -45,13 +53,17 @@ export default function SearchContainer ({ location, match }) {
 
   return (
     <>
-      <TemplateHeader>
+      <TemplateHeader noBottomMargin>
         <HeaderContainer />
-        <BannerNotificationAdContainer type="wizardSearch" {...searchParams} />
+        <BannerNotificationAdContainer
+          type="wizardSearch"
+          {...searchParams}
+        />
       </TemplateHeader>
       <Search
+        show={show}
+        toggleShow={toggleShow}
         mapRef={mapRef}
-        searchParams={searchParams}
         onMapChange={onMapChange}
         defaultCenter={defaultCenter}
         center={center}

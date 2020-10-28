@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { bool } from 'prop-types';
-import { css } from 'styled-components';
+import { bool, func, string } from 'prop-types';
+import styled, { css } from 'styled-components';
 
 import Button from './FilterButton';
 
@@ -10,8 +10,10 @@ import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import CollapsibleSection
   from 'sly/web/components/molecules/CollapsibleSection';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
+import Icon from 'sly/common/components/atoms/Icon';
+import { COMMUNITY_TYPE, MORE_FILTERS, PRICE, SIZE, LIST, MAP } from 'sly/web/components/search/constants';
 
-const buttonsCss = css`
+const Buttons = styled(Block)`
   > * {
     margin-right: ${size('spacing.medium')};
 
@@ -25,12 +27,12 @@ const buttonsCss = css`
   }
 `;
 
-const COMMUNITY_TYPE = 'communityType';
-const PRICE = 'price';
-const SIZE = 'size';
-const MORE_FILTERS = 'moreFilters';
-
-const Filters = ({ isOpen: defaultIsOpen, ...props }) => {
+const Filters = ({
+  isOpen: defaultIsOpen,
+  show,
+  toggleShow,
+  ...props
+}) => {
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
   const closeModal = useCallback(() => setIsOpen(false), []);
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
@@ -88,10 +90,9 @@ const Filters = ({ isOpen: defaultIsOpen, ...props }) => {
           </CollapsibleSection>
         </Block>
       </Modal>
-      <Block
+      <Buttons
         display="flex"
         flexGap="regular"
-        css={buttonsCss}
         {...props}
       >
         <Button
@@ -124,13 +125,22 @@ const Filters = ({ isOpen: defaultIsOpen, ...props }) => {
         >
           More filters
         </Button>
-      </Block>
+        <Button
+          upTo="laptop"
+          marginLeft="auto"
+          onClick={toggleShow}
+        >
+          <Icon icon="map" />&nbsp;Map
+        </Button>
+      </Buttons>
     </>
   );
 };
 
 Filters.propTypes = {
   isOpen: bool,
+  show: string,
+  toggleShow: func,
 };
 
 export default Filters;
