@@ -8,17 +8,6 @@ Cypress.on('uncaught:exception', () => {
 
 let community;
 
-function logintoadminAccount() {
-  cy.get('button').then(($a) => {
-    if ($a.text().includes('Log In')) {
-      waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
-      waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
-      waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-      waitForHydration(cy.get('button').contains('Log in')).click({ force: true });
-    }
-  });
-}
-
 function addtestCommunity() {
   const { name, phone, address, city, state, zip } = randomCommunity();
   community = {
@@ -67,10 +56,27 @@ describe('Sending Referral to Community', () => {
   responsive(() => {
     beforeEach(() => {
       cy.visit('/');
+      cy.clearCookie('sly_sid');
+      cy.clearCookie('sly_uuid');
+      cy.clearCookie('sly-session');
+      cy.reload();
+      // cy.getCookie('sly_sid').should('not.exist');
+      // cy.getCookie('sly_uuid').should('not.exist');
+      // cy.getCookie('sly-session').should('not.exist');
+      Cypress.Commands.add('login', () => {
+        cy.get('button').then(($a) => {
+          if ($a.text().includes('Log In')) {
+            waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
+            waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
+            waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
+            waitForHydration(cy.get('button').contains('Log in')).click({ force: true });
+          }
+        });
+      });
     });
 
     it('Add Test community', () => {
-      logintoadminAccount();
+      cy.login();
       cy.visit('/dashboard/communities');
       waitForHydration(cy.get('div [class*=DashboardWithSummaryTemplate__Section]').contains('Add Community')).click();
       addtestCommunity();
@@ -79,7 +85,7 @@ describe('Sending Referral to Community', () => {
     });
 
     it('Add multiple contacts to Test community', () => {
-      logintoadminAccount();
+      cy.login();
       cy.visit('/dashboard/communities');
       waitForHydration(cy.get('input[class*=SearchTextInput]')).type(community.name).should('have.value', community.name);
       cy.wait(1000);
@@ -93,7 +99,7 @@ describe('Sending Referral to Community', () => {
     });
 
     it('Create lead', () => {
-      logintoadminAccount();
+      cy.login();
       cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('div [class*=DashboardAgentFamilyOverviewSection__TwoColumn]').contains('Add family')).click('right');
       addfamilyContact();
@@ -102,7 +108,7 @@ describe('Sending Referral to Community', () => {
     });
 
     it('Send referral to community', () => {
-      logintoadminAccount();
+      cy.login();
       cy.visit('/dashboard/agent/my-families/new');
 
       waitForHydration(cy.get('table').find('tbody').find('tr a[class*=ClientRowCard__StyledNameCell]').first()).click();

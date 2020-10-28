@@ -31,18 +31,31 @@ describe('Community Profile Sections', () => {
   let community;
 
   beforeEach(() => {
+    cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
     cy.getCommunity(TEST_COMMUNITY).then((response) => {
       community = response;
     });
+
+    Cypress.Commands.add('login', () => {
+      cy.get('button').then(($a) => {
+        if ($a.text().includes('Log In')) {
+          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
+          const rand = randHash();
+          cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
+          waitForHydration(cy.get('form input[name="email"]')).type(`fonz+e2e+${rand}@seniorly.com`).should('have.value', `fonz+e2e+${rand}@seniorly.com`);
+          waitForHydration(cy.get('form input[name="password"]')).type('nopassword').should('have.value', 'nopassword');
+          waitForHydration(cy.get('button').contains('Log in')).click();
+        }
+      });
+    });
   });
 
   responsive(() => {
     it('Should see community details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-
       cy.wait('@postUuidActions').then((xhr) => {
         expect(xhr.requestBody).to.deep.equal({
           data: {
@@ -79,7 +92,6 @@ describe('Community Profile Sections', () => {
     it('should show pricing section', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
-
       const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
 
       pricingContent.should('contain', formatMoney(community.startingRate));
@@ -123,7 +135,6 @@ describe('Community Profile Sections', () => {
 
     it('should be able to share', () => {
       cy.route('POST', '**/user-shares').as('postUserShares');
-
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
@@ -131,7 +142,7 @@ describe('Community Profile Sections', () => {
 
       cy.get('form input[name="to"]').type('inchara@seniorly.com');
       cy.get('form input[name="from"]').type('inchara@botverse.com');
-      cy.get('form textarea[name="message"]').type('check out this property');
+      cy.get('form textarea[name="message"]').type('check out this property').should('have.value', 'check out this property');
 
       cy.get('form button').contains('Send').click();
 
@@ -157,16 +168,10 @@ describe('Community Profile Sections', () => {
 
       cy.route('POST', '**/user-saves').as('postUserSaves');
       cy.route('PATCH', '**/user-saves/*').as('patchUserSaves');
-
-      const rand = randHash();
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
-
+      cy.wait('@postUuidActions');
+      cy.login();
       waitForHydration(cy.get('button').contains('Favorite')).click({ force: true });
-      cy.get('form input[label*=Email]').last().type(`fonz+e2e+${rand}@seniorly.com`);
-      cy.get('form input[id*=password]').last().type('nopassword');
-      cy.get('form button[type*=submit]').contains('Log in').click();
-
 
       cy.wait('@postUserSaves').then(async (xhr) => {
         expect(xhr.status).to.equal(200);
