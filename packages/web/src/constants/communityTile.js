@@ -1,1 +1,1 @@
-export const COLUMN_LAYOUT_IMAGE_WIDTH = '210px';
+export const COLUMN_LAYOUT_IMAGE_WIDTH = '180px';

@@ -71,7 +71,7 @@ describe('Community Profile Sections', () => {
       });
 
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', formatMoney(community.startingRate));
-      select('.CommunityRating__RatingValue').contains(rating);
+      select('.CommunityRating__StyledRating').parent().contains(rating);
       cy.get('a[class*=GetCommunityPricingAndAvailability').contains('Get Pricing and Availability').click({ force: true });
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });

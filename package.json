@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=12.16.0"
+    "node": ">=12.14.1"
   },
   "workspaces": [
     "packages/*"
@@ -55,10 +55,10 @@
     "jest-junit": "11.0.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
-    "enzyme-to-json": "3.5.0",
-    "lerna": "3.22.1"
+    "enzyme-to-json": "3.5.0"
   },
   "dependencies": {
+    "lerna": "3.22.1",
     "cross-env": "7.0.2",
     "hoist-non-react-statics": "3.3.2",
     "npm-run-all": "4.1.5",

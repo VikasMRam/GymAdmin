@@ -20,8 +20,6 @@ const communityDefaultImages = {
   '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
 };
 
-const getImageSize = ({ imageSize }) => imageSize ? getKey(`sizes.tile.${imageSize}`).width : COLUMN_LAYOUT_IMAGE_WIDTH;
-
 const Wrapper = styled(Grid)`
   ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
 `;
@@ -35,8 +33,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, imageSize,
-  canFavourite, lazyLoadImage, event,
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event,
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -80,7 +77,7 @@ const CommunityTile = ({
         border="regular"
         borderPalette="grey.stroke"
         gap="large"
-        dimensions={[getImageSize({ imageSize }), 'auto']}
+        dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{
           gridTemplateColumns: 'auto',
@@ -94,39 +91,39 @@ const CommunityTile = ({
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
             borderRadius="small"
-            snap={layout === 'row' ? 'bottom' : 'right'}
+            snap={layout === 'row' ? 'bottom' : null}
             transparent
           />
         }
         {noGallery &&
-          <div>
-            <ResponsiveImage
-              layout={layout}
-              path={imagePath}
-              src={imageSrc}
-              placeholder={placeholder}
-              sizes={mediaSizes}
-              aspectRatio={layout === 'column' ? '4:3' : '16:9'}
-              borderRadius="small"
-              snap={layout === 'row' ? 'bottom' : 'right'}
-              loading={loading}
-              upToTablet={{
-                borderRadius: size('spacing.small'),
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-              }}
-            >
-              {topRightSection &&
-                <Block position="absolute" top="regular" right="regular" zIndex={1}>
-                  {topRightSection()}
-                </Block>
-              }
-            </ResponsiveImage>
-          </div>
+          <ResponsiveImage
+            layout={layout}
+            path={imagePath}
+            src={imageSrc}
+            placeholder={placeholder}
+            sizes={mediaSizes}
+            aspectRatio={layout === 'column' ? '1:1' : '16:9'}
+            borderRadius="small"
+            margin={layout === 'column' ? 'large' : null}
+            snap={layout === 'row' ? 'bottom' : null}
+            loading={loading}
+            upToTablet={{
+              borderRadius: size('spacing.small'),
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              margin: 0,
+            }}
+          >
+            {topRightSection &&
+              <Block position="absolute" top="regular" right="regular" zIndex={1}>
+                {topRightSection()}
+              </Block>
+            }
+          </ResponsiveImage>
         }
         <Block
           overflow="hidden"
-          padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : ['large', 'large', 'large', '0']}
+          padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : 'large'}
           upToTablet={{
             padding: size('spacing.large'),
             paddingTop: 0,
@@ -202,7 +199,6 @@ CommunityTile.propTypes = {
   noGallery: bool,
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']),
-  imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
   lazyLoadImage: bool.isRequired,
   event: object,
 };

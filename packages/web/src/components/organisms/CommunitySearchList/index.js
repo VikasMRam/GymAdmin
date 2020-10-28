@@ -163,7 +163,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             <CommunityTile
               community={similarProperty}
               layout="column"
-              imageSize="regular"
               noGallery
               lazyLoadImage={index !== 0}
               event={{
