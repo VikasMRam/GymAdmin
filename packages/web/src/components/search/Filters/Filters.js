@@ -30,8 +30,8 @@ const PRICE = 'price';
 const SIZE = 'size';
 const MORE_FILTERS = 'moreFilters';
 
-const Filters = ({ ...props }) => {
-  const [isOpen, setIsOpen] = useState(props.isOpen || false);
+const Filters = ({ isOpen: defaultIsOpen, ...props }) => {
+  const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
   const closeModal = useCallback(() => setIsOpen(false), []);
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
   const breakpoint = useBreakpoint();
@@ -92,6 +92,7 @@ const Filters = ({ ...props }) => {
         display="flex"
         flexGap="regular"
         css={buttonsCss}
+        {...props}
       >
         <Button
           upTo="tablet"

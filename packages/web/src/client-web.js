@@ -4,7 +4,7 @@ import 'react-hot-loader/patch';
 import 'isomorphic-fetch';
 
 import React from 'react';
-import { hydrate } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -48,5 +48,12 @@ Modal.setAppElement('#app');
 
 loadableReady(() => {
   hydrate(renderApp(), root);
+  if (module.hot) {
+    module.hot.accept('./components/App', () => {
+      require('./components/App');
+      console.log('rerendering');
+      hydrate(renderApp(), root);
+    });
+  }
 });
 
