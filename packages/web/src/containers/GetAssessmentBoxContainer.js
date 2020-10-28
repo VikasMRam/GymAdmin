@@ -105,7 +105,6 @@ export default class GetAssessmentBoxContainer extends Component {
       <div className={className}>
         {layout === 'box' && !completedAssessment && isBrowser &&
           <GetAssessmentBox
-            palette="primary"
             layout={boxLayout}
             buttonProps={buttonProps}
           />

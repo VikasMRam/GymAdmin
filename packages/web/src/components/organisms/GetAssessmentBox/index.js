@@ -1,62 +1,74 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
-import { oneOf, object } from 'prop-types';
+import { object, string } from 'prop-types';
 
-import { size } from 'sly/common/components/themes';
+import { getKey } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import pad from 'sly/web/components/helpers/pad';
-import { textAlign } from 'sly/web/components/helpers/text';
-import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Heading, Box, Icon, Button } from 'sly/common/components/atoms';
+import { Heading, Box, Icon, Button, Grid, Block } from 'sly/common/components/atoms';
 
-const PaddedHeading = pad(Heading, 'large');
-PaddedHeading.displayName = 'PaddedHeading';
-
-const StyledIcon = textAlign(pad(Icon, 'large'));
-StyledIcon.displayName = 'StyledIcon';
-
-const FullWidthButton = fullWidth(Button);
-FullWidthButton.displayName = 'FullWidthButton';
-
-const TextAlignCenteredBox = textAlign(Box);
-TextAlignCenteredBox.displayName = 'TextAlignCenteredBox';
-
-const Wrapper = styled.div`
-  ${ifProp({ layout: 'fixed' }, css`
-    max-width: ${size('layout.col5')};
-    margin-left: auto;
-    margin-right: auto;
-  `)}
-`;
-
-const StyledHeading = styled(PaddedHeading)`
-  ${ifProp({ layout: 'fluid' }, css`
-    max-width: ${size('layout.col6')};
-    margin-left: auto;
-    margin-right: auto;
-  `)}
-`;
-
-const GetAssessmentBox = ({ palette, layout, buttonProps }) => (
-  <TextAlignCenteredBox background={`${palette}.lighter-90`}>
-    <Wrapper layout={layout}>
-      <StyledIcon icon="logo" palette="primary" size="hero" />
-      <StyledHeading layout={layout} level="subtitle">Complete this 3-minute assessment tool to get personalized senior living and care options.</StyledHeading>
-      <FullWidthButton {...buttonProps} background={palette}>Start</FullWidthButton>
-    </Wrapper>
-  </TextAlignCenteredBox>
+const GetAssessmentBox = ({ palette, layout, buttonProps, ...props }) => (
+  <Box {...props}>
+    <Grid
+      dimensions={['max-content', '1fr', 'max-content']}
+      justifyContent="center"
+      alignItems="center"
+      flow={layout}
+      upToTablet={{
+        gridTemplateColumns: 'auto',
+      }}
+    >
+      <Block
+        position="relative"
+        marginRight={layout === 'column' ? 'large' : null}
+        marginBottom={layout === 'row' ? 'large' : null}
+        upToTablet={{
+          marginRight: 0,
+          marginBottom: getKey('sizes.spacing.large'),
+        }}
+      >
+        <Icon icon="house" palette={palette} size="title" />
+        <Icon icon="search" palette="warning" marginLeft="-large" marginTop="small" />
+      </Block>
+      <Block
+        marginRight={layout === 'column' ? 'xLarge' : null}
+        marginBottom={layout === 'row' ? 'xLarge' : null}
+        upToTablet={{
+          marginRight: 0,
+          marginBottom: getKey('sizes.spacing.large'),
+        }}
+      >
+        <Heading level="subtitle" size="subtitle" pad="regular" palette={palette}>
+          Need help finding senior living options?
+        </Heading>
+        <Block palette={palette}>
+          Complete this 2-minute quick to get personalized senior living and care options.
+        </Block>
+      </Block>
+      <Button
+        width="100%"
+        height="max-content"
+        palette="slate"
+        background={palette}
+        {...buttonProps}
+      >
+        Take the quiz
+      </Button>
+    </Grid>
+  </Box>
 );
 
 GetAssessmentBox.propTypes = {
-  layout: oneOf(['fluid', 'fixed']).isRequired,
+  layout: string.isRequired,
   palette: palettePropType,
   buttonProps: object,
 };
 
 GetAssessmentBox.defaultProps = {
-  layout: 'fluid',
+  layout: 'column',
   buttonProps: {},
+  background: 'blue',
+  palette: 'white',
+  padding: ['xxLarge', 'xLarge'],
+  'data-testid': 'GetAssessmentBox',
 };
 
 export default GetAssessmentBox;

@@ -306,9 +306,9 @@ describe('Community survey', () => {
     it('Visit community page', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
 
-      waitForHydration(cy.get('div[class*=GetAssessmentBox__Wrapper]')).within(() => {
-        cy.get('h3').contains('Complete this 3-minute assessment tool to get personalized senior living and care options.').should('exist');
-        cy.get('a').contains('Start').click();
+      waitForHydration(cy.get('div[data-testid*=GetAssessmentBox]')).within(() => {
+        cy.get('h3').contains('Need help finding senior living options?').should('exist');
+        cy.get('a').contains('Take the quiz').click();
       });
       // waitForHydration(cy.get('button').contains('Start')).click();
     });
