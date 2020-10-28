@@ -47,7 +47,7 @@ const CommunitySearchPageTemplate = ({
   <>
     <TemplateHeader>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="wizardSearch" {...searchParams} />
+      {/*<BannerNotificationAdContainer type="wizardSearch" {...searchParams} />*/}
     </TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>

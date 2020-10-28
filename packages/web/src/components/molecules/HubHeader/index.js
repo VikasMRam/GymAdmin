@@ -126,7 +126,7 @@ const HubHeader = ({
 }) => (
   <>
     <HeaderContainer />
-    <BannerNotificationAdContainer type="covid-19" />
+    {/*<BannerNotificationAdContainer type="covid-19" />*/}
     <HeroWrapper>
       <ImageWrapper
         mobileBGGradientPalette={mobileBGGradientPalette}

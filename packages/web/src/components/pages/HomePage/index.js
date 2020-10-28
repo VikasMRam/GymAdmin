@@ -334,7 +334,7 @@ const HomePage = ({
   const HeaderContent = (
     <>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="wizardHome" noMarginBottom />
+      {/*<BannerNotificationAdContainer type="wizardHome" noMarginBottom />*/}
       <ContentOverImage
         image="react-assets/home/cover4.jpg"
         imageAlt="A Home To Love"

@@ -277,9 +277,9 @@ export default class CommunityDetailPage extends Component {
         <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
-          {!bannerNotification && !isActiveAdult && partnerAgent && (
-            <BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom />
-          )}
+          {/*{!bannerNotification && !isActiveAdult && partnerAgent && (*/}
+            {/*<BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom />*/}
+          {/*)}*/}
           {bannerNotification && (
             <BannerNotification>
               {bannerNotification}
