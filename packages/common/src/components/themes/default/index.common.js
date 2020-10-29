@@ -23,6 +23,7 @@ theme.palette = {
   magenta    : makeColor('#6d27ca'),
   orange     : makeColor('#F99106'),
   razzmatazz : makeColor('#F40767'),
+  blue       : makeColor('#186DC5'),
 };
 
 theme.fonts = {

@@ -15,9 +15,7 @@ const SURE_NOT_HELP = 'SureNotHelp';
 
 const wrapperStyles = css`
   padding: ${size('spacing.xxLarge')} ${size('spacing.xLarge')};
-  > ${Heading} {
-    margin-bottom: ${size('spacing.xLarge')};
-  }
+
   > :last-child {
     margin-bottom: 0;
   }
@@ -60,7 +58,7 @@ const PostConversionGreetingForm = ({
   return (
     <div className={className}>
       <ContentWrapper>
-        <Heading level="subtitle">{heading}</Heading>
+        <Heading level="subtitle" marginBottom="xLarge">{heading}</Heading>
         {description && <LargePaddedBlock>{description}</LargePaddedBlock>}
         {children && <PaddedBlock>{children}</PaddedBlock>}
         <RejectButton onClick={onReturnClick || doDismiss} to={onReturnClick ? null : toUrl}>
