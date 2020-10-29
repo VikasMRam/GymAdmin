@@ -6,7 +6,6 @@ import { size } from 'sly/common/components/themes';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import Footer from 'sly/web/components/organisms/Footer';
-import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 
 const TwoColumnWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -47,7 +46,7 @@ const CommunitySearchPageTemplate = ({
   <>
     <TemplateHeader>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="wizardSearch" {...searchParams} />
+      {/*<BannerNotificationAdContainer type="wizardSearch" {...searchParams} />*/}
     </TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>
