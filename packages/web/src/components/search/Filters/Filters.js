@@ -97,31 +97,31 @@ const Filters = ({
       >
         <Button
           upTo="tablet"
-          onPointerDown={openFilters}
+          onClick={openFilters}
         >
           Filters
         </Button>
         <Button
           startingWith="tablet"
-          onPointerDown={() => openFilters(COMMUNITY_TYPE)}
+          onClick={() => openFilters(COMMUNITY_TYPE)}
         >
           Community type
         </Button>
         <Button
           startingWith="tablet"
-          onPointerDown={() => openFilters(SIZE)}
+          onClick={() => openFilters(SIZE)}
         >
           Size
         </Button>
         <Button
           startingWith="tablet"
-          onPointerDown={() => openFilters(PRICE)}
+          onClick={() => openFilters(PRICE)}
         >
           Price
         </Button>
         <Button
           startingWith="tablet"
-          onPointerDown={() => openFilters(MORE_FILTERS)}
+          onClick={() => openFilters(MORE_FILTERS)}
         >
           More filters
         </Button>

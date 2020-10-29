@@ -168,7 +168,6 @@ export default class ResponsiveImage extends React.Component {
           alt={alt || getAlt(imageProps.src)}
           className={classNameProp}
           {...imageProps}
-          {...props}
         />
       ) : (
         <picture>
@@ -179,7 +178,6 @@ export default class ResponsiveImage extends React.Component {
             className={imgClassName}
             onError={this.failedLoadImageHandler}
             {...imageProps}
-            {...props}
           />
         </picture>
       );
