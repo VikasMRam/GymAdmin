@@ -65,26 +65,19 @@ export const HeaderWithClose = styled(({ children, icon, onClose, ...props }) =>
         borderRadius="large"
       />
     )}
-    <Heading level="subtitle">{children}</Heading>
+    <Heading level="subtitle" margin="0" flexGrow="1">{children}</Heading>
     <IconButton
       icon="close"
       palette="slate"
       onClick={onClose}
       padding="0"
+      flexGrow="0"
       transparent
     />
   </Block>
 ))`
   display: flex;
   align-items: center;
-
-  ${Heading} {
-    margin: 0;
-    flex-grow: 1;
-  }
-  ${IconButton} {
-    flex-grow: 0;
-  }
 `;
 
 HeaderWithClose.propTypes = {
