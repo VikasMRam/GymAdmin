@@ -335,8 +335,12 @@ jobs:
           background: true
 
       - run:
-          name: npm run dev
-          command: npm run start:web
+          name: npm run build:web:prod
+          command: npm run build:web:prod
+
+      - run:
+          name: npm run start:web:prod
+          command: npm run start:web:prod
           background: true
 
       - run:
