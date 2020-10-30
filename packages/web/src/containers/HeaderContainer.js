@@ -31,9 +31,7 @@ const logoLabel = 'logo';
 const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, headerItemLabel, value);
 
 const getDefaultHeaderItems = (layout) => {
-  let items = [
-    { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  ];
+  let items = [];
 
   if (layout !== 'wizards') {
     items = [
@@ -61,9 +59,6 @@ const defaultMenuItems = () => {
     },
     {
       name: 'Nursing Homes', to: '/nursing-homes', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
-    },
-    {
-      name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
     },
     { name: 'Contact Us', to: '/contact', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
     { name: 'About Us', to: '/about', section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
