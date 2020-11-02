@@ -80,7 +80,7 @@
     "react-dom": "16.13.1",
     "react-ga": "2.7.0",
     "react-google-maps": "9.4.5",
-    "react-helmet": "5.2.1",
+    "react-helmet": "6.1.0",
     "react-lazy": "1.1.0",
     "react-measure": "2.3.0",
     "react-modal": "3.11.2",
