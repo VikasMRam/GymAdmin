@@ -8,7 +8,6 @@ import { Label, Heading, Link } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
-import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -126,7 +125,6 @@ const HubHeader = ({
 }) => (
   <>
     <HeaderContainer />
-    <BannerNotificationAdContainer type="covid-19" />
     <HeroWrapper>
       <ImageWrapper
         mobileBGGradientPalette={mobileBGGradientPalette}

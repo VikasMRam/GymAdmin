@@ -7,9 +7,6 @@ import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { getIsActiveAdult, getIsSellerAgentCTA } from 'sly/web/services/helpers/community';
-import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
-import pad from 'sly/web/components/helpers/pad';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import { Link, Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
@@ -18,8 +15,6 @@ import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
 import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
-
-const PaddedBlock = pad(Block, 'regular');
 
 @branch(
   ({ completedAssessment, agentId }) => completedAssessment && agentId,
@@ -105,7 +100,6 @@ export default class GetAssessmentBoxContainer extends Component {
       <div className={className}>
         {layout === 'box' && !completedAssessment && isBrowser &&
           <GetAssessmentBox
-            palette="primary"
             layout={boxLayout}
             buttonProps={buttonProps}
           />
@@ -142,12 +136,12 @@ export default class GetAssessmentBoxContainer extends Component {
                 heading="Request sent! One of our Local Senior Living Experts will reach out to assist you."
                 description="Questions? You can contact us by phone or email:"
               >
-                <PaddedBlock>
+                <Block pad="regular">
                   <Link href="mailto:sharon@seniorly.com">sharon@seniorly.com</Link>
-                </PaddedBlock>
-                <PaddedBlock>
+                </Block>
+                <Block pad="regular">
                   <Link href="tel:8558664515">(855) 866-4515</Link>
-                </PaddedBlock>
+                </Block>
               </PostConversionGreetingForm>
             }
           </PaddedHeaderWithCloseBody>

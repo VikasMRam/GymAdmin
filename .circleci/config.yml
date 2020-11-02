@@ -335,13 +335,17 @@ jobs:
           background: true
 
       - run:
-          name: npm run dev
-          command: npm run start:web
+          name: npm run build:web:prod
+          command: npm run build:web:prod
+
+      - run:
+          name: npm run start:web:prod
+          command: npm run start:web:prod
           background: true
 
       - run:
           name: Waiting for Local Go to be up and running
-          command: npx wait-on -i 2000 http-get://localhost:8080/v0/ping
+          command: npx wait-on -i 1000 -s 1 http-get://localhost:8080/v0/ping
 
       - run:
           name: Waiting for Local React to be up and running

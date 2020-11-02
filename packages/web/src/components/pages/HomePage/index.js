@@ -10,7 +10,6 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import { Label, Heading, Block, Button, Hr, Link, Paragraph } from 'sly/common/components/atoms';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
@@ -334,7 +333,7 @@ const HomePage = ({
   const HeaderContent = (
     <>
       <HeaderContainer />
-      <BannerNotificationAdContainer type="wizardHome" noMarginBottom />
+      {/*<BannerNotificationAdContainer type="wizardHome" noMarginBottom />*/}
       <ContentOverImage
         image="react-assets/home/cover4.jpg"
         imageAlt="A Home To Love"
