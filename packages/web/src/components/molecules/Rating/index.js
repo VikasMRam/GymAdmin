@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import React, { Fragment } from 'react';
-import { number, object } from 'prop-types';
+import { number, object, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { getThemePropType, size } from 'sly/common/components/themes';
@@ -45,8 +45,7 @@ const randHash = () =>
     .substring(7);
 
 // eslint-disable-next-line react/prop-types
-const MaskedStar = ({ value, ...props }) => {
-  const id = `star-mask-${randHash()}`;
+const MaskedStar = ({ id, value, ...props }) => {
   const x = Math.round(((value % 1) * 0.8 + 0.1) * 24);
   return (
     <>
@@ -59,7 +58,14 @@ const MaskedStar = ({ value, ...props }) => {
   );
 };
 
-const Rating = React.forwardRef(({ palette, variation, value, size, ...props }, ref) => (
+const Rating = React.forwardRef(({
+  palette,
+  variation,
+  value,
+  size,
+  seedId,
+  ...props
+}, ref) => (
   <Wrapper {...props}>
     <StyledStar ref={ref} size={size} viewBox="0 0 120 24">
       {times(5, i => (
@@ -67,7 +73,7 @@ const Rating = React.forwardRef(({ palette, variation, value, size, ...props }, 
           {value >= i + 1 && <StarPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
           {value < i + 1 && <StarFillPath palette={palette} variation="lighter-60" transform={`translate(${i * 24}, 0)`} />}
           {value > i &&
-            value < i + 1 && <MaskedStar palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
+            value < i + 1 && <MaskedStar id={`${seedId}_${i}`} palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
         </Fragment>
       ))}
     </StyledStar>
@@ -82,12 +88,14 @@ Rating.propTypes = {
   value: number.isRequired,
   palette: palettePropType,
   variation: variationPropType,
+  seedId: string,
 };
 
 Rating.defaultProps = {
   size: 'body',
   palette: 'primary',
   variation: 'base',
+  seedId: `${randHash()}`,
 };
 
 export default Rating;

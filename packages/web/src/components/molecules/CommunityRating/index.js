@@ -14,7 +14,7 @@ const StyledRating = styled(Rating)`
   margin-right: ${size('spacing.small')};
 `;
 
-const CommunityRating = ({ rating, numReviews, description, size, palette, variation, goToReviews, ...props }) => {
+const CommunityRating = ({ rating, numReviews, description, size, palette, variation, goToReviews, seedId, ...props }) => {
   if (rating < 1) {
     return <div />;
   }
@@ -30,6 +30,7 @@ const CommunityRating = ({ rating, numReviews, description, size, palette, varia
       </Block>
       {rating > 0 &&
         <StyledRating
+          seedId={seedId}
           value={rating}
           palette={palette}
           variation={variation}

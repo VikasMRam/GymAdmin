@@ -32,7 +32,7 @@ export default function SearchContainer({ location, match }) {
     const showOptions = Object.keys(SHOW_OPTIONS);
     const current = showOptions.indexOf(show);
     const next = Number(!current);
-    setShow(next);
+    setShow(showOptions[next]);
   }, [show]);
 
   // console.log({location, match})

@@ -129,6 +129,7 @@ export default class CommunityInfo extends Component {
           direction={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
+            seedId={community.id}
             rating={reviewsValue}
             numReviews={numReviews}
             palette={inverted ? 'white' : 'primary'}

@@ -22,8 +22,6 @@ const {
   sourceMaps,
   devServer,
   when,
-  setDevTool,
-  // optimization,
 } = require('webpack-blocks');
 
 const {
@@ -108,42 +106,29 @@ const base = group([
   }),
 
   defineConstants({
-    'process.env.STORYBOOK_GIT_BRANCH': STORYBOOK_GIT_BRANCH,
-    'process.env.NODE_ENV': NODE_ENV,
-    'process.env.SLY_ENV': SLY_ENV,
-    'process.env.GA_ENV': GA_ENV,
-    'process.env.ASSETS_URL': ASSETS_URL,
-    'process.env.PUBLIC_PATH': PUBLIC_PATH,
-    'process.env.HOST': HOST,
-    'process.env.PORT': PORT,
-    'process.env.API_URL': API_URL,
-    'process.env.DOMAIN': DOMAIN,
-    'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
-    'process.env.VERSION': VERSION,
-    'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
-    'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
-    'process.env.HIDE_CHATBOX': HIDE_CHATBOX,
-    'process.env.DISABLE_EXPERIMENTS': DISABLE_EXPERIMENTS,
-    'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
-    'process.env.ENABLE_EXPERIMENT_DEBUGGER': ENABLE_EXPERIMENT_DEBUGGER,
-  }),
-
-  devServer({
-    inline: false,
-    writeToDisk(filePath) {
-      return /dist\/(node\/|server)/.test(filePath) || /loadable-stats/.test(filePath);
-    },
-    // watchOptions: {
-    //   poll: 1000,
-    //   ignored: ['node_modules'],
-    // },
+    'process.env.STORYBOOK_GIT_BRANCH': JSON.stringify(STORYBOOK_GIT_BRANCH),
+    'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+    'process.env.SLY_ENV': JSON.stringify(SLY_ENV),
+    'process.env.GA_ENV': JSON.stringify(GA_ENV),
+    'process.env.ASSETS_URL': JSON.stringify(ASSETS_URL),
+    'process.env.PUBLIC_PATH': JSON.stringify(PUBLIC_PATH),
+    'process.env.HOST': JSON.stringify(HOST),
+    'process.env.PORT': JSON.stringify(PORT),
+    'process.env.API_URL': JSON.stringify(API_URL),
+    'process.env.DOMAIN': JSON.stringify(DOMAIN),
+    'process.env.GOOGLE_MAPS_API_KEY': JSON.stringify(GOOGLE_MAPS_API_KEY),
+    'process.env.VERSION': JSON.stringify(VERSION),
+    'process.env.FB_CLIENT_ID': JSON.stringify(FB_CLIENT_ID),
+    'process.env.GOOGLE_CLIENT_ID': JSON.stringify(GOOGLE_CLIENT_ID),
+    'process.env.HIDE_CHATBOX': JSON.stringify(HIDE_CHATBOX),
+    'process.env.DISABLE_EXPERIMENTS': JSON.stringify(DISABLE_EXPERIMENTS),
+    'process.env.MUTE_REDUX_LOGGER': JSON.stringify(MUTE_REDUX_LOGGER),
+    'process.env.ENABLE_EXPERIMENT_DEBUGGER': JSON.stringify(ENABLE_EXPERIMENT_DEBUGGER),
   }),
 
   match(['*.js', '!*node_modules*'], [babel({
     rootMode: 'upward',
   })]),
-
-  // addPlugins([new webpack.ProgressPlugin()]),
 ]);
 
 const devCORS = group([
@@ -173,33 +158,13 @@ const node = (context, { merge }) =>
 
 const server = createConfig([
   base,
-
   entryPoint({ server: serverEntryPath }),
-
   setOutput({
     filename: '[name].js',
     libraryTarget: 'commonjs2',
   }),
-
   node,
-
   assets,
-
-  env('development', [
-    (context, { merge }) =>
-      merge({
-        watch: true,
-      }),
-    setDevTool('eval-source-map'),
-    // addPlugins([
-    //   new webpack.BannerPlugin({
-    //     banner: 'require("source-map-support").install();',
-    //     raw: true,
-    //     entryOnly: false,
-    //   }),
-    //   new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
-    // ]),
-  ]),
 ]);
 
 const replaceExternalConstants = (text) => {
