@@ -73,24 +73,28 @@ const Search = ({
           />
         ))}
       </Block>
-      <Map
+      <Block
         gridArea="map"
-        defaultCenter={defaultCenter}
-        center={center}
-        communities={communities}
-        zoom={zoom}
-        onChange={onMapChange}
-        width="100%"
-        height="100%"
-        upToLaptop={{
-          display: show === MAP ? 'block' : 'none',
-          height: `calc(100vh - ${filtersBottom}px)`,
-        }}
-        startingWithLaptop={{
-          position: 'sticky',
-          height: `calc(100vh - ${filtersTop}px)`,
-        }}
-      />
+      >
+        <Map
+          defaultCenter={defaultCenter}
+          center={center}
+          communities={communities}
+          zoom={zoom}
+          onChange={onMapChange}
+          width="100%"
+          height="100%"
+          upToLaptop={{
+            display: show === MAP ? 'block' : 'none',
+            height: `calc(100vh - ${filtersBottom}px)`,
+          }}
+          startingWithLaptop={{
+            position: 'sticky',
+            top: '0px !important',
+            height: `calc(100vh - ${filtersTop}px)`,
+          }}
+        />
+      </Block>
     </Block>
   );
 };
