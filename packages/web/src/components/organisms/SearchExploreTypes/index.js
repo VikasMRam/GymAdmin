@@ -1,7 +1,6 @@
 import React from 'react';
 import { string, node, object } from 'prop-types';
 
-import { filterLinkPath } from 'sly/web/services/helpers/search';
 import { Heading, Link, Grid, Block } from 'sly/common/components/atoms';
 
 const tocsHeadingDesc = {
@@ -41,7 +40,7 @@ const tocsHeadingDesc = {
 
 const HeadingDesc = ({ heading, to, children }) => (
   <article>
-    <Link to={to}>
+    <Link to={to} target="_blank">
       <Heading level="subtitle" size="body" pad="small" palette="primary">{heading}</Heading>
     </Link>
     <Block size="caption" palette="grey">{children}</Block>
@@ -54,12 +53,11 @@ HeadingDesc.propTypes = {
   children: node,
 };
 
-const mapTocToHeadingDesc = (toc, searchParams) => {
-  const { path } = filterLinkPath(searchParams, { toc });
+const mapTocToHeadingDesc = (toc) => {
   const currentToc = tocsHeadingDesc[toc];
 
   return (
-    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={path}>
+    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}`}>
       {currentToc.desc}
     </HeadingDesc>
   );
@@ -69,8 +67,8 @@ const SearchExploreTypes = ({ title, searchParams, ...props }) => {
   const tocKeys = Object.keys(tocsHeadingDesc);
   const column1Keys = tocKeys.slice(0, tocKeys.length / 2);
   const column2Keys = tocKeys.slice(tocKeys.length  / 2);
-  const column1 = column1Keys.map(elem => mapTocToHeadingDesc(elem, searchParams));
-  const column2 = column2Keys.map(elem => mapTocToHeadingDesc(elem, searchParams));
+  const column1 = column1Keys.map(mapTocToHeadingDesc);
+  const column2 = column2Keys.map(mapTocToHeadingDesc);
 
   return (
     <Block as="section" {...props}>

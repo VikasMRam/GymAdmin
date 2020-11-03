@@ -148,7 +148,7 @@ const CommunitySearchPage = ({
                     links={guideContent.seoLinks}
                   />
                 )}
-                <SearchExploreTypes searchParams={searchParams} title={`Explore other types of communities in ${city}, ${state}`} />
+                <SearchExploreTypes title={`Explore other types of communities in ${city}, ${state}`} />
                 <GetAssessmentBoxContainer
                   completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
                   agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
