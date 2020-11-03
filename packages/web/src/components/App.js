@@ -319,10 +319,6 @@ const routes = [
     exact: true,
   },
   {
-    path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
-    component: SearchContainer,
-  },
-  {
     path: '/',
     component: HomePageContainer,
     exact: true,
@@ -388,30 +384,33 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router requiresAuth={[/^\/dashboard/]}>
-            <Switch>
-              <Route
-                path="/ping"
-                render={() => <h1>pong</h1>}
-                exact
-              />
-              <Route
-                path="/ads.txt"
-                render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
-                exact
-              />
-              <Route
-                path={`/:toc(${careTypes})/:state/:city/filters`}
-                render={({ match }) => (
-                  <Redirect
-                    to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
-                  />
-                )}
-              />
-              {routeComponents}
-              <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-            </Switch>
-          </Router>
+          {/*<Router requiresAuth={[/^\/dashboard/]}>*/}
+          {/*  <Switch>*/}
+          {/*    <Route*/}
+          {/*      path="/ping"*/}
+          {/*      render={() => <h1>pong</h1>}*/}
+          {/*      exact*/}
+          {/*    />*/}
+          {/*    <Route*/}
+          {/*      path="/ads.txt"*/}
+          {/*      render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}*/}
+          {/*      exact*/}
+          {/*    />*/}
+          {/*    <Route*/}
+          {/*      path={`/:toc(${careTypes})/:state/:city/filters`}*/}
+          {/*      render={({ match }) => (*/}
+          {/*        <Redirect*/}
+          {/*          to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}*/}
+          {/*        />*/}
+          {/*      )}*/}
+          {/*    />*/}
+          {/*    {routeComponents}*/}
+          {/*    <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />*/}
+          {/*  </Switch>*/}
+          {/*</Router>*/}
+          <Route path={`/nusearch/:toc(${careTypes.join('|')})/:state/:city`}>
+            <SearchContainer />
+          </Route>
           {!hideChatbox && <ChatBoxContainer />}
         </ThemeProvider>
       </>

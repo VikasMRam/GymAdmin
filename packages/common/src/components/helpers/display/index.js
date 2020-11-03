@@ -13,6 +13,10 @@ export const withDisplay = ({
   flexWrap,
   order,
   visibility,
+  gridTemplateColumns,
+  gridTemplateRows,
+  gridTemplateAreas,
+  gridArea,
 }) => css({
   display: block === true ? 'block' : display,
   justifyContent,
@@ -25,5 +29,9 @@ export const withDisplay = ({
   flexWrap,
   order,
   flex,
+  gridTemplateColumns,
+  gridTemplateRows,
+  gridTemplateAreas,
+  gridArea,
 });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, forwardRef } from 'react';
 import { arrayOf, object, func, number } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
@@ -6,9 +6,7 @@ import styled, { css } from 'styled-components';
 
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
-// import Block from 'sly/common/components/atoms/Block';
-
-const Block = styled.div``;
+import Block from 'sly/common/components/atoms/Block';
 
 const Marker = () => (
   <Block
@@ -20,14 +18,14 @@ const Marker = () => (
   />
 );
 
-const Map = ({
+const Map = forwardRef(({
   defaultCenter,
   communities,
   center,
   zoom,
   onChange,
   ...props
-}) => {
+}, ref) => {
   const onDrag = useCallback(debounce((map) => {
     onChange(map);
   }, 200), []);
@@ -36,14 +34,13 @@ const Map = ({
     onChange(map);
   }, []);
 
-  console.log('props', props);
-
   const onChildClickCallback = (key) => {
     console.log('marker clicked', key);
   };
 
   return (
     <Block
+      ref={ref}
       {...props}
     >
       <GoogleMap
@@ -71,7 +68,7 @@ const Map = ({
   );
 
   // }
-};
+});
 
 Map.defaultProps = {
   communities: [],

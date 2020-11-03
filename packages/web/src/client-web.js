@@ -4,7 +4,7 @@ import 'react-hot-loader/patch';
 import 'isomorphic-fetch';
 
 import React from 'react';
-import { hydrate, render } from 'react-dom';
+import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Modal from 'react-modal';

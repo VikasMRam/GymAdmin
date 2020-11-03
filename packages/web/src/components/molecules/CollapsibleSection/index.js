@@ -2,13 +2,13 @@ import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
-import useDimensions from 'react-use-dimensions';
 
 import { size, key, palette } from 'sly/common/components/themes';
 import { Icon, Heading } from 'sly/common/components/atoms';
 import { weight as weightPropType } from 'sly/common/propTypes/weight';
 import Block from 'sly/common/components/atoms/Block';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
+import useDimensions from 'sly/common/components/helpers/useDimensions';
 
 const noop = () => {};
 

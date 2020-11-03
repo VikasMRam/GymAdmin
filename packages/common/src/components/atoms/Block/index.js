@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { bool, oneOfType } from 'prop-types';
 
@@ -22,12 +22,12 @@ import {
   withMedia,
 } from 'sly/common/components/helpers';
 
-const Block = styled(({ showIf, ...props }) => {
+const Block = styled(forwardRef(({ showIf, ...props }, ref) => {
   if (!showIf) {
     return null;
   }
-  return <Root {...props} />;
-})`
+  return <Root ref={ref} {...props} />;
+}))`
   ${withSpacing}
   ${withText}
   ${withElementSize}

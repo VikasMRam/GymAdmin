@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, forwardRef } from 'react';
 import { bool, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
@@ -11,7 +11,15 @@ import CollapsibleSection
   from 'sly/web/components/molecules/CollapsibleSection';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import Icon from 'sly/common/components/atoms/Icon';
-import { COMMUNITY_TYPE, MORE_FILTERS, PRICE, SIZE, LIST, MAP } from 'sly/web/components/search/constants';
+import {
+  COMMUNITY_TYPE,
+  MORE_FILTERS,
+  PRICE,
+  SIZE,
+  LIST,
+  MAP,
+  SHOW_OPTIONS,
+} from 'sly/web/components/search/constants';
 
 const Buttons = styled(Block)`
   > * {
@@ -27,12 +35,12 @@ const Buttons = styled(Block)`
   }
 `;
 
-const Filters = ({
+const Filters = forwardRef(({
   isOpen: defaultIsOpen,
-  show,
+  nextShow,
   toggleShow,
   ...props
-}) => {
+}, ref) => {
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
   const closeModal = useCallback(() => setIsOpen(false), []);
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
@@ -91,6 +99,7 @@ const Filters = ({
         </Block>
       </Modal>
       <Buttons
+        ref={ref}
         display="flex"
         flexGap="regular"
         {...props}
@@ -130,16 +139,16 @@ const Filters = ({
           marginLeft="auto"
           onClick={toggleShow}
         >
-          <Icon icon="map" />&nbsp;Map
+          <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
         </Button>
       </Buttons>
     </>
   );
-};
+});
 
 Filters.propTypes = {
   isOpen: bool,
-  show: string,
+  nextShow: string,
   toggleShow: func,
 };
 

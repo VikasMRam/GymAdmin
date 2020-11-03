@@ -33,7 +33,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event,
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, ...props
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -69,6 +69,7 @@ const CommunityTile = ({
       position="relative"
       className={className}
       background={plusCategory ? 'primary.background' : 'white.base'}
+      {...props}
     >
       {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
       <Wrapper

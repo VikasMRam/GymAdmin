@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useResizeObserver from 'use-resize-observer';
+import { useLocation, useRouteMatch } from 'react-router';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
@@ -12,12 +13,13 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import BannerNotificationAdContainer
   from 'sly/web/containers/BannerNotificationAdContainer';
 import Footer from 'sly/web/components/organisms/Footer';
-import { LIST, SHOW_OPTIONS } from 'sly/web/components/search/constants';
+import careTypes from 'sly/web/constants/careTypes';
+import { LIST } from 'sly/web/components/search/constants';
 
-export default function SearchContainer({ location, match }) {
+export default function SearchContainer() {
+  const location = useLocation();
+  const match = useRouteMatch(`/nusearch/:toc(${careTypes.join('|')})/:state/:city`);
   // const [kitchens, setKitchens] = useState([]);
-  const { ref: mapRef, width, height } = useResizeObserver();
-  const breakpoint = useBreakpoint();
 
   const searchParams = getSearchParams(match, location);
   const { requestInfo } = usePrefetch(
@@ -26,20 +28,12 @@ export default function SearchContainer({ location, match }) {
     request => request(searchParams),
   );
 
-  const [show, setShow] = useState(LIST);
-
-  const toggleShow = useCallback(() => {
-    const showOptions = Object.keys(SHOW_OPTIONS);
-    const current = showOptions.indexOf(show);
-    const next = Number(!current);
-    setShow(showOptions[next]);
-  }, [show]);
-
   // console.log({location, match})
   const onMapChange = useCallback(() => {
     console.log('map changed');
   }, []);
 
+  const [show, setShow] = useState(LIST);
 
   const center = {
     lng: 0,
@@ -62,15 +56,18 @@ export default function SearchContainer({ location, match }) {
       </TemplateHeader>
       <Search
         show={show}
-        toggleShow={toggleShow}
-        mapRef={mapRef}
+        setShow={setShow}
         onMapChange={onMapChange}
         defaultCenter={defaultCenter}
         center={center}
         communities={requestInfo.normalized || []}
         zoom={zoom}
       />
-      <Footer />
+      <Footer
+        upToLaptop={{
+          display: show === LIST ? 'block' : 'none',
+        }}
+      />
     </>
   );
 }
