@@ -178,6 +178,7 @@ NewModal.propTypes = {
   children: any,
   onClose: func,
   isOpen: bool,
+  transparent: bool,
 };
 
 NewModal.defaultProps = {
