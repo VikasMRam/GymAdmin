@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { node } from 'prop-types';
 
 import Block from 'sly/common/components/atoms/Block';
 
-const FilterButton = ({ children, ...props }) => {
+const FilterButton = forwardRef(({ children, ...props }, ref) => {
   return (
     <Block
+      ref={ref}
       display="flex"
       alignItems="center"
       border="regular"
@@ -17,7 +18,7 @@ const FilterButton = ({ children, ...props }) => {
       {children}
     </Block>
   );
-};
+});
 
 FilterButton.propTypes = {
   children: node,

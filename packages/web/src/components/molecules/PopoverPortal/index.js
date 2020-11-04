@@ -132,16 +132,18 @@ export default class PopoverPortal extends Component {
 
     return (
       <Wrapper ref={this.ref}>
-        <Measure bounds onResize={this.onButtonResize}>
-          {({ measureRef }) => (
-            <StyledFilterButton
-              ref={measureRef}
-              onClick={this.toggle}
-            >
-              {button}
-            </StyledFilterButton>
-          )}
-        </Measure>
+        {button && (
+          <Measure bounds onResize={this.onButtonResize}>
+            {({ measureRef }) => (
+              <StyledFilterButton
+                ref={measureRef}
+                onClick={this.toggle}
+              >
+                {button}
+              </StyledFilterButton>
+            )}
+          </Measure>
+        )}
         <PopoverWrapper left={left} isOpen={isOpen}>
           <MobileHeader>
             {headerButton}

@@ -20,7 +20,7 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${palette('slate', 'base')}e5;
+  background-color: ${ifProp('transparent', 'transparent', `${palette('slate', 'base')}e5`)};
   overflow: auto;
   z-index: calc(${key('zIndexes.modal.overlay')} - ${prop('instanceNumber')});
 `;
@@ -107,9 +107,6 @@ const PORTAL_ELEMENT_CLASS = 'modal-portal';
 let instanceNumber = 0;
 
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
-// FIXME: we had to uqickly introduce this because the modals were impeding agents
-// to update the Stages
-// FIXME: more than one modal are currently possible, we have to mimic the mechanism used in react-modal
 export default class NewModal extends Component {
   static typeHydrationId = 'NewModal';
   overlayRef = React.createRef();
@@ -161,12 +158,12 @@ export default class NewModal extends Component {
   };
 
   render() {
-    const { children, isOpen, ...props } = this.props;
+    const { children, isOpen, transparent, ...props } = this.props;
     const { mounted, instanceNumber } = this.state;
 
     return mounted && ReactDom.createPortal(
       (
-        <Overlay ref={this.overlayRef} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
+        <Overlay ref={this.overlayRef} transparent={transparent} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
           <Modal isOpen={isOpen} {...props}>
             {children}
           </Modal>

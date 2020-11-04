@@ -1,4 +1,4 @@
-import React, { useCallback, useState, forwardRef } from 'react';
+import React, { useCallback, useState, forwardRef, useMemo } from 'react';
 import { bool, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
@@ -20,6 +20,7 @@ import {
   MAP,
   SHOW_OPTIONS,
 } from 'sly/web/components/search/constants';
+import useDimensions from 'sly/common/components/helpers/useDimensions';
 
 const Buttons = styled(Block)`
   > * {
@@ -49,9 +50,26 @@ const Filters = forwardRef(({
     type => isOpen === type || (breakpoint && breakpoint.isMobile() && isOpen),
     [isOpen, breakpoint],
   );
+  const [priceButtonRef, priceButtonCoords] = useDimensions();
+  const [sizeButtonRef, sizeButtonCoords] = useDimensions();
+  const popOverCss = useMemo(() => {
+    if (breakpoint?.atLeastLaptop() && [PRICE, SIZE].includes(isOpen)) {
+      const coords = ({
+        [PRICE]: priceButtonCoords,
+        [SIZE]: sizeButtonCoords,
+      })[isOpen];
+      return {
+        position: 'absolute',
+        top: coords.top + coords.height,
+        left: coords.left,
+      };
+    }
+    return null;
+  }, [breakpoint, isOpen, priceButtonCoords, sizeButtonCoords]);
+
   return (
     <>
-      <Modal isOpen={!!isOpen} onClose={closeModal}>
+      <Modal isOpen={!!isOpen} transparent css={popOverCss} onClose={closeModal}>
         <HeaderWithClose onClose={closeModal} />
         <Block>
           <CollapsibleSection
@@ -117,12 +135,14 @@ const Filters = forwardRef(({
           Community type
         </Button>
         <Button
+          ref={sizeButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(SIZE)}
         >
           Size
         </Button>
         <Button
+          ref={priceButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(PRICE)}
         >
