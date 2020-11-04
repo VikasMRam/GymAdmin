@@ -1,14 +1,14 @@
 import React, {
   Component,
   useContext,
-  useLayoutEffect,
+  useLayoutEffect, useMemo,
   useState,
 } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-
-import { isBrowser } from 'sly/web/config';
-import theme from 'sly/common/components/themes/default';
+import debounce from 'lodash/debounce';
 import { node } from 'prop-types';
+
+import theme from 'sly/common/components/themes/default';
 
 export const MOBILE = 'mobile';
 export const TABLET = 'tablet';
@@ -22,8 +22,9 @@ const sizes = Object.keys(breakpoints).reduce((acc, key) => {
 }, {});
 
 class Breakpoint {
-  constructor(currentWidth) {
+  constructor(currentWidth, scrollY) {
     this.currentWidth = currentWidth;
+    this.scrollY = scrollY;
   }
 
   atLeast(breakpoint) {
@@ -67,14 +68,19 @@ function getDisplayName(WrappedComponent) {
 const BreakpointContext = React.createContext(null);
 
 export const BreakpointProvider = ({ children }) => {
-  const [breakpoint, setBreakpoint] = useState(new Breakpoint(window.innerWidth));
+  const [breakpoint, setBreakpoint] = useState(new Breakpoint(window.innerWidth, window.scrollY));
+
+  const newBreakpoint = useMemo(() => debounce(() => {
+    setBreakpoint(new Breakpoint(window.innerWidth, window.scrollY));
+  }, 150), []);
 
   useLayoutEffect(() => {
-    const newBreakpoint = () => {
-      setBreakpoint(new Breakpoint(window.innerWidth));
-    };
     window.addEventListener('resize', newBreakpoint);
-    return () => window.removeEventListener('resize', newBreakpoint);
+    window.addEventListener('scroll', newBreakpoint);
+    return () => {
+      window.removeEventListener('resize', newBreakpoint);
+      window.removeEventListener('scroll', newBreakpoint);
+    };
   }, []);
 
   return (

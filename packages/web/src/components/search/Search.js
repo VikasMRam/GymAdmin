@@ -20,7 +20,10 @@ const Search = ({
   onMapChange,
   communities,
   zoom,
+  headerHeight,
 }) => {
+  const breakpoint = useBreakpoint();
+
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
     const current = showOptions.indexOf(show);
@@ -32,13 +35,21 @@ const Search = ({
   }, [nextShow]);
 
   const [filtersRef, {
-    bottom: filtersBottom,
-    top: filtersTop,
+    height: filtersHeight = 84,
   }] = useDimensions();
+
+  console.log({ headerHeight, filtersHeight });
+  const { upToLaptopOffset, startingWithLaptopOffset } = useMemo(() => ({
+    upToLaptopOffset: filtersHeight + headerHeight,
+    startingWithLaptopOffset: headerHeight,
+  }), [filtersHeight, headerHeight]);
 
   return (
     <Block
       flexDirection="column"
+      css={{
+        paddingTop: headerHeight,
+      }}
       upToLaptop={{
         display: 'flex',
       }}
@@ -83,15 +94,19 @@ const Search = ({
           zoom={zoom}
           onChange={onMapChange}
           width="100%"
-          height="100%"
           upToLaptop={{
             display: show === MAP ? 'block' : 'none',
-            height: `calc(100vh - ${filtersBottom}px)`,
+            paddingTop: `${upToLaptopOffset}px`,
+            marginTop: `-${upToLaptopOffset}px`,
+            height: '100vh',
           }}
           startingWithLaptop={{
             position: 'sticky',
             top: '0px !important',
-            height: `calc(100vh - ${filtersTop}px)`,
+            // bottom: '100vh !important',
+            paddingTop: `${startingWithLaptopOffset}px`,
+            marginTop: `-${startingWithLaptopOffset}px`,
+            height: '100vh',
           }}
         />
       </Block>

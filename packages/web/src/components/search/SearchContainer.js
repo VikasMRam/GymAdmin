@@ -15,11 +15,15 @@ import BannerNotificationAdContainer
 import Footer from 'sly/web/components/organisms/Footer';
 import careTypes from 'sly/web/constants/careTypes';
 import { LIST } from 'sly/web/components/search/constants';
+import useDimensions from 'sly/common/components/helpers/useDimensions';
 
 export default function SearchContainer() {
   const location = useLocation();
   const match = useRouteMatch(`/nusearch/:toc(${careTypes.join('|')})/:state/:city`);
   // const [kitchens, setKitchens] = useState([]);
+  const [headerRef, {
+    height: headerHeight = 80,
+  }] = useDimensions();
 
   const searchParams = getSearchParams(match, location);
   const { requestInfo } = usePrefetch(
@@ -47,7 +51,15 @@ export default function SearchContainer() {
 
   return (
     <>
-      <TemplateHeader noBottomMargin>
+      <TemplateHeader
+        ref={headerRef}
+        noBottomMargin
+        css={{
+          position: 'fixed',
+          zIndex: 1000,
+          width: '100%',
+        }}
+      >
         <HeaderContainer />
         <BannerNotificationAdContainer
           type="wizardSearch"
@@ -55,6 +67,7 @@ export default function SearchContainer() {
         />
       </TemplateHeader>
       <Search
+        headerHeight={headerHeight}
         show={show}
         setShow={setShow}
         onMapChange={onMapChange}
