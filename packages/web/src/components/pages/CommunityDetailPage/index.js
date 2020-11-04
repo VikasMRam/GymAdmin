@@ -64,6 +64,7 @@ import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNo
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 // import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
+import TrustScoreTile from 'sly/web/components/organisms/profiles/TrustScoreTile';
 
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -277,9 +278,9 @@ export default class CommunityDetailPage extends Component {
         <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
-          {/*{!bannerNotification && !isActiveAdult && partnerAgent && (*/}
-            {/*<BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom />*/}
-          {/*)}*/}
+          {/* {!bannerNotification && !isActiveAdult && partnerAgent && ( */}
+          {/* <BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom /> */}
+          {/* )} */}
           {bannerNotification && (
             <BannerNotification>
               {bannerNotification}
@@ -429,6 +430,13 @@ export default class CommunityDetailPage extends Component {
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                   community={community}
                 />
+                }
+                {rgsAux.rgsInfo && rgsAux.rgsInfo.trustScore &&
+                <StyledHeadingBoxSection
+                  heading={`Seniorly Trust Score for ${community.name}`}
+                >
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
                 }
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
                   <StyledHeadingBoxSection
