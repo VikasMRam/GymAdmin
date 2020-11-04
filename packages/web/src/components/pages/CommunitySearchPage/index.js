@@ -3,16 +3,17 @@ import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
 import loadable from '@loadable/component';
 
-import { size, palette } from 'sly/common/components/themes';
+import { isBrowser } from 'sly/web/config';
+import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
+import { SEARCH_PAGE_VIEWED } from 'sly/web/services/api/constants';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { titleize } from 'sly/web/services/helpers/strings';
-import { getTocSeoLabel } from 'sly/web/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
 import { getBreadCrumbsForLocation, getStateAbbr } from 'sly/web/services/helpers/url';
 import PageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
-import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import CommunitySearchPageTemplate from 'sly/web/components/templates/CommunitySearchPageTemplate';
-import { Heading, Button, Hr, Box } from 'sly/common/components/atoms';
+import { Button, Hr, Box, Grid } from 'sly/common/components/atoms';
 import { Image } from 'sly/web/components/atoms';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/web/components/organisms/CommunityFilterList';
@@ -21,21 +22,10 @@ import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import pad from 'sly/web/components/helpers/pad';
 import ResponsiveSidebar from 'sly/web/components/molecules/ResponsiveSidebar';
-import { PROFILE_VIEWED, SEARCH_PAGE_VIEWED } from 'sly/web/services/api/constants';
+import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import SearchExploreTypes from 'sly/web/components/organisms/SearchExploreTypes';
 
 const SearchMap = loadable(() => import(/* webpackChunkName: "chunkSearchMap" */'sly/web/components/organisms/SearchMap'));
-
-/**
- * Order of appearance as in editor :
- * description, <p>1</p>
- guide, <p>2</p>
- articles, <p>3</p>
- resources, <p>4</p>
- neighborhoods, <p>5</p>
- hospitals, <p>6</p>
- reviews, <p>7</p>
- */
-const guideTypes = ['description', 'guide', 'articles', 'resources', 'neighborhoods', 'hospitals', 'reviews'];
 
 const TopWrapper = pad(styled.div`
   display: flex;
@@ -49,8 +39,6 @@ const TopWrapper = pad(styled.div`
   }
 `);
 
-const StyledHeading = pad(Heading, 'large');
-
 const StyledHr = styled(Hr)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -63,26 +51,6 @@ const FilterColumnWrapper = styled(Box)`
   margin-bottom: ${size('spacing.xLarge')}
 `;
 
-const LegacyContent = pad(styled.div`
-  a {
-    text-decoration: none;
-    color: ${palette('base')};
-
-    &:hover {
-      color: ${palette('filler')};
-      cursor: pointer;
-    }
-
-    &:active {
-      color: ${palette('base')};
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-`, 'large');
-
 const ApplyFilterButton = styled(Button)`
   width: 100%;
   display: block;
@@ -92,10 +60,6 @@ const ApplyFilterButton = styled(Button)`
     display: none!important;
   }
 `;
-
-LegacyContent.defaultProps = {
-  palette: 'primary',
-};
 
 const CommunitySearchPage = ({
   isMapView,
@@ -113,7 +77,6 @@ const CommunitySearchPage = ({
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
   const state = getStateAbbr(searchParams.state);
-  const tocLabel = getTocSeoLabel(searchParams.toc);
   let latitude = 0;
   let longitude = 0;
 
@@ -165,16 +128,38 @@ const CommunitySearchPage = ({
             </FilterColumnWrapper>
           </>
         )}
-      >
-        <BreadCrumb pad="large" items={getBreadCrumbsForLocation(searchParams)} />
-        {!isMapView && !isFetchingResults && (
+        after={(
           <>
-            <StyledHeading level="hero" size="title">{listSize} {tocLabel} near {city}, {state}</StyledHeading>
-            {(guideContent && (guideContent.autoDescription || guideContent.manualDescription)) && (
-              <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent.manualDescription || guideContent.autoDescription }} />
+            {!isMapView && !isFetchingResults && (
+              <Grid
+                background="primary.lighter-95"
+                padding={['xxxLarge', 'xLarge']}
+                flow="row"
+                gap="xxxLarge"
+                upToTablet={{
+                  gridGap: getKey('sizes.spacing.xxLarge'),
+                  paddingTop: getKey('sizes.spacing.xxLarge'),
+                  paddingBottom: getKey('sizes.spacing.xxLarge'),
+                }}
+              >
+                {hasGeoGuideContent && guideContent.seoLinks && (
+                  <SeoLinks
+                    title={`Assisted Living Facilities near ${city}, ${state}`}
+                    links={guideContent.seoLinks}
+                  />
+                )}
+                <SearchExploreTypes title={`Explore other types of communities in ${city}, ${state}`} />
+                <GetAssessmentBoxContainer
+                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                />
+              </Grid>
             )}
           </>
         )}
+      >
+        <BreadCrumb pad="large" items={getBreadCrumbsForLocation(searchParams)} />
         <TopWrapper>
           {isMapView && (
             <IconButton icon="list" ghost transparent to={listViewUrl}>
@@ -197,22 +182,12 @@ const CommunitySearchPage = ({
         </TopWrapper>
         <StyledHr fullWidth />
         {!isMapView && !isFetchingResults && (
-          <>
-            <CommunitySearchList
-              communityList={communityList}
-              searchParams={searchParams}
-              requestMeta={requestMeta}
-              location={location}
-            />
-            {hasGeoGuideContent && (
-              guideTypes.map(key => (
-                guideContent[key] ? <LegacyContent dangerouslySetInnerHTML={{ __html: guideContent[key] }} key={key} /> : null
-              ))
-            )}
-            {hasGeoGuideContent && guideContent.seoLinks && (
-              <SeoLinks title="Assisted Living in Nearby Cities" links={guideContent.seoLinks} />
-            )}
-          </>
+          <CommunitySearchList
+            communityList={communityList}
+            searchParams={searchParams}
+            requestMeta={requestMeta}
+            location={location}
+          />
         )}
         {isMapView && (
           <SearchMap

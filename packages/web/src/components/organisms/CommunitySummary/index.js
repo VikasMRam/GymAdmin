@@ -197,7 +197,7 @@ const CommunitySummary = ({
 
         }
         {
-          showFriendsFamilyNumber &&
+          communityPhone &&
           <div>
             <Span size="caption">For Friends & Family</Span>
             <StyledIcon palette="slate" icon="help" size="caption" data-tip data-for="fafPhone" />
@@ -207,31 +207,14 @@ const CommunitySummary = ({
             </TooltipContent>
             }
             <br/>
-            <Link href={`tel:${fafn}`} onClick={onConciergeNumberClicked}>
-              {phoneFormatter(fafn, true)}
+            <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
+              {phoneFormatter(communityPhone, true)}
             </Link>
           </div>
 
         }
 
       </PhoneNumWrapper>
-      {
-        !partnerAgent && communityPhone &&
-          <>
-            Call to connect directly with the community
-            <StyledIcon palette="slate" variation="dark" icon="help" size="caption" data-tip data-for="phone" />
-            {isBrowser &&
-            <TooltipContent id="phone" effect="solid" type="light" multiline>
-              This phone number will connect you to the community.
-            </TooltipContent>
-            }
-            <br/>
-            <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
-              {phoneFormatter(communityPhone, true)}
-            </Link>
-
-          </>
-      }
 
       {typeCare.includes(ACTIVE_ADULT) &&
         <>
