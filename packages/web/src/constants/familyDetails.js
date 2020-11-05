@@ -30,6 +30,39 @@ export const FAMILY_STATUS_TEST = 'Test';
 export const ESTIMATED_MOVE_IN = 'estimated-move-in';
 export const WAITLISTED = 'waitlisted';
 
+//CANNOT HELP
+export const FAMILY_CLOSE_CANNOT_HELP = 'Cannot Help';
+export const FAMILY_CLOSE_UNRESPONSIVE = 'Unresponsive';
+export const FAMILY_CLOSE_NOHELP = 'Doesn\'t want help';
+export const FAMILY_CLOSE_NOTDECISIONMAKER = 'Not decision maker';
+
+//NOT BILLABLE
+export const FAMILY_CLOSE_NOT_BILLABLE = 'Not Billable';
+export const FAMILY_CLOSE_SNF = 'Rehab / SNF / Nursing home';
+export const FAMILY_CLOSE_LOW_FUNDS = 'Low funds / Medicaid';
+export const FAMILY_CLOSE_APARTMENT = '55+ / Apartment';
+export const FAMILY_CLOSE_PASSED_AWAY = 'Passed away / hospice';
+export const FAMILY_CLOSE_NO_FEE = 'No contract / No referral fee';
+
+//NOT MOVING AT THIS TIME
+export const FAMILY_CLOSE_NOT_PRESENT = 'Not moving at this time';
+export const FAMILY_CLOSE_EARLY = 'Early researcher / Looking 1+ year out';
+export const FAMILY_CLOSE_IN_HOME_CARE = 'Looking for in home care';
+export const FAMILY_CLOSE_CHANGED_MIND = 'No longer moving / Changed mind';
+
+//REJECT
+export const FAMILY_CLOSE_REJECT = 'Reject';
+export const FAMILY_CLOSE_OUTSIDE = 'Outside territory';
+export const FAMILY_CLOSE_ALREADY_WORKING = 'Working with family before Seniorly';
+export const FAMILY_CLOSE_DUPLICATE = 'Duplicate Seniorly Lead';
+export const FAMILY_CLOSE_INVALID_CONTACT = 'Invalid contact information';
+export const FAMILY_CLOSE_NOT_LOOKING = 'Not looking for senior living';
+
+//MISCELLANEOUS
+export const FAMILY_CLOSE_MISC = 'Miscellaneous';
+
+
+
 export const STAGE_CLIENT_TYPE_MAP = {
   New: 'new',
   Prospects: 'prospecting',
@@ -45,6 +78,13 @@ export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Outside territory',
   'Outside of territory',
 ];
+export const FAMILY_CLOSE_ORDERED = {};
+  FAMILY_CLOSE_ORDERED[FAMILY_CLOSE_CANNOT_HELP] = [FAMILY_CLOSE_UNRESPONSIVE, FAMILY_CLOSE_NOHELP, FAMILY_CLOSE_NOTDECISIONMAKER];
+  FAMILY_CLOSE_ORDERED[FAMILY_CLOSE_NOT_BILLABLE] = [FAMILY_CLOSE_SNF, FAMILY_CLOSE_LOW_FUNDS, FAMILY_CLOSE_APARTMENT, FAMILY_CLOSE_PASSED_AWAY, FAMILY_CLOSE_NO_FEE];
+  FAMILY_CLOSE_ORDERED[FAMILY_CLOSE_NOT_PRESENT]= [FAMILY_CLOSE_EARLY, FAMILY_CLOSE_IN_HOME_CARE, FAMILY_CLOSE_CHANGED_MIND];
+  FAMILY_CLOSE_ORDERED[FAMILY_CLOSE_REJECT]= [FAMILY_CLOSE_OUTSIDE, FAMILY_CLOSE_ALREADY_WORKING, FAMILY_CLOSE_DUPLICATE, FAMILY_CLOSE_INVALID_CONTACT, FAMILY_CLOSE_NOT_LOOKING];
+  FAMILY_CLOSE_ORDERED[FAMILY_CLOSE_MISC]= DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS;
+
 
 export const SOURCE_OPTIONS = [
   'Direct Call',

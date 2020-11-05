@@ -9,6 +9,7 @@ import {
   FAMILY_STAGE_WON,
   FAMILY_STAGE_LOST,
   FAMILY_STAGE_REJECTED,
+  FAMILY_CLOSE_ORDERED,
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
   FAMILY_STAGE_FAMILY_CHOSEN,
@@ -101,6 +102,17 @@ export default class UpdateFamilyStageForm extends Component {
         };
         prev.push(option);
       }
+      return prev;
+    }, []);
+    const NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_ORDERED };
+    const closeOptions = Object.keys(NEW_FAMILY_CLOSE_ORDERED).reduce((prev, sg) => {
+      const closeReasons = NEW_FAMILY_CLOSE_ORDERED[sg].map(s => ({ value: s, label: s }));
+
+      const option = {
+        label: sg,
+        options: closeReasons,
+      };
+      prev.push(option);
       return prev;
     }, []);
     const roomTypeOptions = roomTypes.map(t => ({ value: t, label: t }));
@@ -287,7 +299,7 @@ export default class UpdateFamilyStageForm extends Component {
             label="Closed reason"
             type="choice"
             component={ReduxField}
-            options={lossReasonOptions}
+            options={closeOptions}
             required
           />
         }
