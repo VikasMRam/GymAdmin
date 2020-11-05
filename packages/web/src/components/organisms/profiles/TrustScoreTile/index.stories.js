@@ -13,5 +13,6 @@ const RhodaGoldmanPlazaWithAll = { ...RhodaGoldmanPlaza, rgsAux };
 // const RhodaGoldmanPlazaNoRating = { ...RhodaGoldmanPlaza, propRatings: { reviewsValue: 0 } };
 
 storiesOf('Organisms|TrustScoreTile', module)
-  .add('default', () => <div style={{ maxWidth: '380px' }} ><TrustScoreTile community={RhodaGoldmanPlazaWithAll} /></div>)
+  .add('default', () => <div style={{ padding: '100px' }}> <TrustScoreTile community={RhodaGoldmanPlazaWithAll} /></div>)
+  .add('defaultMaxWidth', () => <div style={{ maxWidth: '380px' }} ><TrustScoreTile community={RhodaGoldmanPlazaWithAll} /></div>)
   .add('noRgs', () => <div style={{ maxWidth: '380px' }} ><TrustScoreTile community={RhodaGoldmanPlaza} /></div>);

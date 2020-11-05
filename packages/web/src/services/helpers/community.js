@@ -108,19 +108,22 @@ export const getTrustScoreType = (community, scoreType) => {
   const lid = formatDate(scoreParams.lastInspectionDate);
   const lastInspectionDate = ld.match(/invalid/) ? 'unknown date' : lid;
   const prop2 = `Most recent inspection on ${lastInspectionDate}`;
+  let valueText = 'Good';
   let prop3 = 'Has fewer complaints relative to communities in the state.';
   if (trustScore > 50 &&  trustScore < 61) {
     prop3 = 'Has more complaints relative to communities in the state';
+    valueText = 'Moderate';
   } else if (trustScore > 25 &&  trustScore < 51) {
     prop3 = 'Has significantly more complaints and inspections relative to communities in the state';
+    valueText = 'Poor';
   }
   const licensingUrl = getStateLink(state);
   const moreInfoText = 'Seniorly Trust Score is a rating of an assisted living community ' +
     'that is a represents how assisted living facilities are complying with state regulations. Public access to assisted living records ' +
-    `varies greatly state by state. Visit ${state} website to learn more about the regulations and practices in ${state}.`;
+    `varies greatly state by state. Visit the state website to learn more about the regulations and practices in ${state}.`;
 
   const trustScores = { stateScore:
-      { value: trustScore, prop1, prop2, prop3, moreInfoText, licensingUrl } };
+      { value: trustScore, prop1, prop2, prop3, moreInfoText, licensingUrl, valueText } };
   // livabilityScore: {} }; // Can add other types of score in the future.
   return trustScores[scoreType];
 };
