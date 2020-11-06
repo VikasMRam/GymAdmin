@@ -41,6 +41,7 @@ const ColumnWrapper = styled.aside`
 const CommunitySearchPageTemplate = ({
   children,
   column,
+  after,
   searchParams,
 }) => (
   <>
@@ -54,6 +55,7 @@ const CommunitySearchPageTemplate = ({
         <MainWrapper>{children}</MainWrapper>
       </TwoColumnWrapper>
     </TemplateContent>
+    {after}
     <Footer />
   </>
 );
@@ -61,6 +63,7 @@ const CommunitySearchPageTemplate = ({
 CommunitySearchPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
+  after: any,
   searchParams: object,
 };
 
