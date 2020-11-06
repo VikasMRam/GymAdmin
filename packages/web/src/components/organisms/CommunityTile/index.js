@@ -1,7 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
-import { ifProp } from 'styled-tools';
 
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
@@ -19,10 +17,6 @@ const communityDefaultImages = {
   '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
   '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
 };
-
-const Wrapper = styled(Grid)`
-  ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
-`;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <Button testID="ActionButton" width="100%" onClick={onClick} ghost={ghost} key={text}>
@@ -72,8 +66,8 @@ const CommunityTile = ({
       {...props}
     >
       {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
-      <Wrapper
-        layout={layout}
+      <Grid
+        flow={layout}
         borderRadius="small"
         border="regular"
         borderPalette="grey.stroke"
@@ -81,7 +75,7 @@ const CommunityTile = ({
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{
-          gridTemplateColumns: 'auto',
+          gridTemplateColumns: 'auto!important',
         }}
       >
         {!noGallery &&
@@ -174,7 +168,7 @@ const CommunityTile = ({
             </Block>
           }
         </Block>
-      </Wrapper>
+      </Grid>
     </Block>
   );
 };
@@ -199,7 +193,7 @@ CommunityTile.propTypes = {
   className: string,
   noGallery: bool,
   showFloorPlan: bool,
-  layout: oneOf(['column', 'row']),
+  layout: oneOf(['column', 'row']).isRequired,
   lazyLoadImage: bool.isRequired,
   event: object,
 };

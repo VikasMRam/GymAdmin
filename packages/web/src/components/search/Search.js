@@ -83,10 +83,10 @@ const Search = ({
         {communities.map(community => (
           <CommunityTile
             key={community.id}
-            // layout="column"
             noGallery
             community={community}
             marginBottom="xLarge"
+            layout="column"
           />
         ))}
       </Block>

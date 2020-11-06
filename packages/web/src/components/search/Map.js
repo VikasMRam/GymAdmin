@@ -48,12 +48,13 @@ const Map = forwardRef(({
         onZoomAnimationEnd={onZoom}
         zoom={zoom}
       >
-        {communities.map(({ latitude, longitude, id }) => (
+        {communities.map(({ latitude, longitude, id }, i) => (
           <Marker
             key={id}
             selectedCommunity={selectedCommunity && selectedCommunity.id === id ? selectedCommunity : null}
-            latitude={latitude}
-            longitude={longitude}
+            lat={latitude}
+            lng={longitude}
+            number={i + 1}
           />
         ))}
       </GoogleMap>
