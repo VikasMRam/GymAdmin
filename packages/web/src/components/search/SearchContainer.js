@@ -53,10 +53,6 @@ export default function SearchContainer() {
     };
   }
 
-  const zoom = 3;
-  // check if we just have the placeId from the url but
-  // no geocode yet or the current geocode is obsolete
-
   return (
     <>
       <TemplateHeader
@@ -84,7 +80,6 @@ export default function SearchContainer() {
         defaultCenter={defaultCenter}
         center={center}
         communities={requestInfo.normalized || []}
-        zoom={zoom}
       />
       <Footer
         upToLaptop={{

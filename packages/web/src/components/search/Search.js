@@ -1,5 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { arrayOf, number, func, oneOf, string } from 'prop-types';
+import React, { useCallback, useMemo, createRef } from 'react';
+import { arrayOf, func, string } from 'prop-types';
+
+import { getBoundsForSearchResults, findOptimalZoomForBounds } from './maps';
 
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
@@ -7,10 +9,10 @@ import Block from 'sly/common/components/atoms/Block';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
-import { css } from 'styled-components';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
-import Footer from 'sly/web/components/organisms/Footer';
+
+const mapRef = createRef();
 
 const Search = ({
   show,
@@ -20,7 +22,6 @@ const Search = ({
   defaultCenter,
   onMapChange,
   communities,
-  zoom,
   headerHeight,
   selectedCommunity,
 }) => {
@@ -49,6 +50,12 @@ const Search = ({
   const onMarkerClick = (key) => {
     setClickedMarker(key);
   };
+
+  let zoom = 1;
+  if (communities.length && mapRef.current) {
+    const bounds = getBoundsForSearchResults(communities);
+    zoom = findOptimalZoomForBounds(bounds, { width: mapRef.current.clientWidth, height: mapRef.current.clientHeight });
+  }
 
   return (
     <Block
@@ -94,6 +101,7 @@ const Search = ({
         gridArea="map"
       >
         <Map
+          ref={mapRef}
           defaultCenter={defaultCenter}
           center={center}
           communities={communities}
@@ -130,7 +138,6 @@ Search.propTypes = {
   defaultCenter: coordPropType,
   onSearchSubmit: func,
   communities: arrayOf(coordPropType),
-  zoom: number,
   onMapChange: func,
   selectedCommunity: coordPropType,
 };
