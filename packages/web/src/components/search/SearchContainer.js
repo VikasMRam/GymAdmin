@@ -38,12 +38,20 @@ export default function SearchContainer() {
   }, []);
 
   const [show, setShow] = useState(LIST);
+  const [clickedMarker, setClickedMarker] = useState(null);
 
-  const center = {
+  let center = {
     lng: 0,
     lat: 0,
   };
   const defaultCenter = center;
+
+  if (requestInfo.normalized && requestInfo.normalized.length) {
+    center = {
+      lng: requestInfo.normalized[0].longitude,
+      lat: requestInfo.normalized[0].latitude,
+    };
+  }
 
   const zoom = 3;
   // check if we just have the placeId from the url but
@@ -70,6 +78,8 @@ export default function SearchContainer() {
         headerHeight={headerHeight}
         show={show}
         setShow={setShow}
+        setClickedMarker={setClickedMarker}
+        selectedCommunity={clickedMarker}
         onMapChange={onMapChange}
         defaultCenter={defaultCenter}
         center={center}

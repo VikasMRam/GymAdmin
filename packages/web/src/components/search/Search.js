@@ -15,12 +15,14 @@ import Footer from 'sly/web/components/organisms/Footer';
 const Search = ({
   show,
   setShow,
+  setClickedMarker,
   center,
   defaultCenter,
   onMapChange,
   communities,
   zoom,
   headerHeight,
+  selectedCommunity,
 }) => {
   const breakpoint = useBreakpoint();
 
@@ -43,6 +45,10 @@ const Search = ({
     upToLaptopOffset: filtersHeight + headerHeight,
     startingWithLaptopOffset: headerHeight,
   }), [filtersHeight, headerHeight]);
+
+  const onMarkerClick = (key) => {
+    setClickedMarker(key);
+  };
 
   return (
     <Block
@@ -93,6 +99,8 @@ const Search = ({
           communities={communities}
           zoom={zoom}
           onChange={onMapChange}
+          onMarkerClick={onMarkerClick}
+          selectedCommunity={selectedCommunity}
           width="100%"
           upToLaptop={{
             display: show === MAP ? 'block' : 'none',
@@ -117,12 +125,14 @@ const Search = ({
 Search.propTypes = {
   show: string,
   setShow: func,
+  setClickedMarker: func,
   center: coordPropType,
   defaultCenter: coordPropType,
   onSearchSubmit: func,
   communities: arrayOf(coordPropType),
   zoom: number,
   onMapChange: func,
+  selectedCommunity: coordPropType,
 };
 
 export default Search;

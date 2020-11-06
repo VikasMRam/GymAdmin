@@ -1,22 +1,13 @@
-import React, { useState, useEffect, useCallback, forwardRef } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import { arrayOf, object, func, number } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
-import styled, { css } from 'styled-components';
+
+import Marker from './MapMarker';
 
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
 import Block from 'sly/common/components/atoms/Block';
-
-const Marker = () => (
-  <Block
-    width={24}
-    height={24}
-    css={css({
-      background: 'red',
-    })}
-  />
-);
 
 const Map = forwardRef(({
   defaultCenter,
@@ -24,6 +15,8 @@ const Map = forwardRef(({
   center,
   zoom,
   onChange,
+  onMarkerClick,
+  selectedCommunity,
   ...props
 }, ref) => {
   const onDrag = useCallback(debounce((map) => {
@@ -35,7 +28,8 @@ const Map = forwardRef(({
   }, []);
 
   const onChildClickCallback = (key) => {
-    console.log('marker clicked', key);
+    const community = communities.find(x => x.id === key);
+    onMarkerClick(community);
   };
 
   return (
@@ -47,7 +41,7 @@ const Map = forwardRef(({
         bootstrapURLKeys={{ key: gMapsApiKey }}
         center={center}
         defaultCenter={defaultCenter}
-        defaultZoom={13}
+        defaultZoom={123}
         hoverDistance={25}
         onChildClick={onChildClickCallback}
         onDrag={onDrag}
@@ -57,17 +51,14 @@ const Map = forwardRef(({
         {communities.map(({ latitude, longitude, id }) => (
           <Marker
             key={id}
-            lat={latitude}
-            lng={longitude}
-            place="place"
-            show
+            selectedCommunity={selectedCommunity && selectedCommunity.id === id ? selectedCommunity : null}
+            latitude={latitude}
+            longitude={longitude}
           />
         ))}
       </GoogleMap>
     </Block>
   );
-
-  // }
 });
 
 Map.defaultProps = {
@@ -80,6 +71,8 @@ Map.propTypes = {
   communities: arrayOf(object),
   onChange: func,
   zoom: number,
+  onMarkerClick: func,
+  selectedCommunity: object,
 };
 
 export default Map;
