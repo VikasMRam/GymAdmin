@@ -333,7 +333,7 @@ const HomePage = ({
       >
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
-            Find The Best Senior Living Near You
+            Find The Best Assisted Living Near You
           </StyledHeading>
           <StyledLabel palette="white">
             Search Assisted Living, Memory Care, Nursing Homes and More
