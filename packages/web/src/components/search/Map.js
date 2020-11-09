@@ -1,4 +1,4 @@
-import React, { useCallback, forwardRef } from 'react';
+import React, { useCallback, useState, forwardRef } from 'react';
 import { arrayOf, object, func, number } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
@@ -27,7 +27,7 @@ const Map = forwardRef(({
     onChange(map);
   }, []);
 
-  const onChildClickCallback = (key) => {
+  const onChildClickCallback = (key, event) => {
     console.log('onChildClickCallback', key);
     const community = communities.find(x => x.id === key);
     onMarkerClick(community);
@@ -43,7 +43,7 @@ const Map = forwardRef(({
         center={center}
         defaultCenter={defaultCenter}
         defaultZoom={3}
-        hoverDistance={25}
+        hoverDistance={50}
         onChildClick={onChildClickCallback}
         onDrag={onDrag}
         onZoomAnimationEnd={onZoom}
