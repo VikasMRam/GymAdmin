@@ -36,17 +36,6 @@ const StyledLabel = styled(Label)`
   text-align: center;
   margin-bottom: ${size('spacing.large')};
 `;
-const ImageCreditDiv = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-bottom: ${size('spacing.large')};
-  margin-right: ${size('spacing.large')};
-`;
-const ImageCreditLabel = styled.label`
-  font-size: ${size('text', 'tiny')};
-  color: ${palette('white', 'base')};
-`;
 
 const StyledSection = styled(Section)`
   text-align: center;
@@ -335,7 +324,7 @@ const HomePage = ({
       <HeaderContainer />
       {/*<BannerNotificationAdContainer type="wizardHome" noMarginBottom />*/}
       <ContentOverImage
-        image="react-assets/home/cover4.jpg"
+        image="react-assets/home/cover5.jpg"
         imageAlt="A Home To Love"
         imageHeight={640}
         mobileHeight={getKey('sizes.header.home.heroImage.mobileHeight')}
@@ -357,11 +346,6 @@ const HomePage = ({
             placeholder="Search by city, zip, community name"
           />
         </SearchBoxWrapper>
-        <ImageCreditDiv>
-          <ImageCreditLabel palette="white">
-            Sagebrook Senior Living San Francisco
-          </ImageCreditLabel>
-        </ImageCreditDiv>
       </ContentOverImage>
     </>
   );
