@@ -153,6 +153,8 @@ export default class CommunityInfo extends Component {
               palette={palette || (inverted ? 'white' : 'primary')}
               size="caption"
               testID="Rate"
+              overflow="hidden"
+              clamped
             >
               <Block
                 display="inline"
