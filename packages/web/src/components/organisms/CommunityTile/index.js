@@ -27,7 +27,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, size: sizeProp, ...props
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -56,6 +56,7 @@ const CommunityTile = ({
 
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
+  const spacing = sizeProp === 'small' ? 'regular' : 'large';
 
   return (
     <Block
@@ -72,7 +73,7 @@ const CommunityTile = ({
         border="regular"
         borderPalette="grey.stroke"
         gap="large"
-        dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
+        dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH[sizeProp], 'auto']}
         // no column layout support below tablet
         upToTablet={{
           gridTemplateColumns: 'auto!important',
@@ -99,7 +100,7 @@ const CommunityTile = ({
             sizes={mediaSizes}
             aspectRatio={layout === 'column' ? '1:1' : '16:9'}
             borderRadius="small"
-            margin={layout === 'column' ? 'large' : null}
+            margin={layout === 'column' ? spacing : null}
             snap={layout === 'row' ? 'bottom' : null}
             loading={loading}
             upToTablet={{
@@ -118,9 +119,9 @@ const CommunityTile = ({
         }
         <Block
           overflow="hidden"
-          padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : 'large'}
+          padding={layout === 'row' ? ['0', spacing, spacing, spacing] : spacing}
           upToTablet={{
-            padding: size('spacing.large'),
+            padding: size('spacing', spacing),
             paddingTop: 0,
           }}
         >
@@ -128,6 +129,7 @@ const CommunityTile = ({
             community={community}
             showFloorPlan={showFloorPlan}
             event={event}
+            size={sizeProp}
             priceTextSize={layout === 'row' ? 'body' : undefined}
             pad={actionButtons.length ? 'large' : undefined}
             swapRatingPrice={layout === 'row'}
@@ -194,6 +196,7 @@ CommunityTile.propTypes = {
   noGallery: bool,
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']).isRequired,
+  size: oneOf(['regular', 'small']).isRequired,
   lazyLoadImage: bool.isRequired,
   event: object,
 };
@@ -201,6 +204,7 @@ CommunityTile.propTypes = {
 CommunityTile.defaultProps = {
   actionButtons: [],
   layout: 'row',
+  size: 'regular',
   lazyLoadImage: true,
 };
 

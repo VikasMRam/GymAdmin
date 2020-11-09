@@ -28,6 +28,7 @@ const Map = forwardRef(({
   }, []);
 
   const onChildClickCallback = (key) => {
+    console.log('onChildClickCallback', key);
     const community = communities.find(x => x.id === key);
     onMarkerClick(community);
   };

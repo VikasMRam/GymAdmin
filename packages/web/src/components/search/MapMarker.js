@@ -3,31 +3,28 @@ import { object, number } from 'prop-types';
 
 import Pin from './Pin';
 
-import MapTile from 'sly/web/components/molecules/MapTile';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 
-const Marker = ({ selectedCommunity, number }) => (
-  <div>
-    <Pin number={number} />
+const Marker = ({ selectedCommunity, number, ...props }) => (
+  <>
+    <Pin
+      number={number}
+      css={{
+        background: 'red',
+        transform: 'translate(-50%, -100%)',
+      }}
+      {...props}
+    />
     {selectedCommunity &&
-      <MapTile
-        tileInfo={{
-          id: selectedCommunity.id,
-          name: selectedCommunity.name,
-          startingRate: selectedCommunity.startingRate,
-          mainImage: selectedCommunity.imageUrl,
-          url: selectedCommunity.url,
-          propInfo: {
-            communityDescription: selectedCommunity.description,
-            typeCare: selectedCommunity.webViewInfo.firstLineValue.split(','),
-          },
-          propRatings: {
-            reviewsValue: selectedCommunity.reviewsValue,
-            numReviews: selectedCommunity.numReviews,
-          },
-        }}
+      <CommunityTile
+        community={selectedCommunity}
+        size="small"
+        layout="column"
+        width="344px"
+        noGallery
       />
     }
-  </div>
+  </>
 );
 
 Marker.propTypes = {

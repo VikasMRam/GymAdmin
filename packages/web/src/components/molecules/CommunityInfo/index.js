@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { bool, string, object } from 'prop-types';
+import { bool, string, object, oneOf } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { community as communityPropType } from 'sly/common/propTypes/community';
@@ -30,6 +30,7 @@ export default class CommunityInfo extends Component {
     event: object,
     priceTextSize: string.isRequired,
     swapRatingPrice: bool,
+    size: oneOf(['regular', 'small']).isRequired,
   };
 
   static defaultProps = {
@@ -39,13 +40,19 @@ export default class CommunityInfo extends Component {
     justifyContent: 'space-between',
     direction: 'column',
     priceTextSize: 'subtitle',
+    size: 'regular',
   };
 
   render() {
     const {
-      community, inverted, showFloorPlan, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
+      community, inverted, showFloorPlan, palette, headerIsLink, event, swapRatingPrice, size, ...props
     } = this.props;
+    let { priceTextSize } = this.props;
     const { webViewInfo, propInfo = {}, propRatings, mainService } = community;
+
+    if (size === 'small') {
+      priceTextSize = 'body';
+    }
 
     const address = getAddress(community);
     const { reviewsValue, numReviews } = propRatings || community;
@@ -62,7 +69,11 @@ export default class CommunityInfo extends Component {
     }
 
     if (livingTypes && livingTypes.length) {
-      livingTypeComponent = (
+      const livingTypesStr = livingTypes.map((livingType, i) =>
+        `${i ? `${i === livingTypes.length - 1 ? ' & ' : ', '}` : ''}${livingType}`);
+      livingTypeComponent = size === 'small' ? (
+        <Block size="caption" pad="regular" clamped>{livingTypesStr}</Block>
+      ) : (
         <IconItem
           icon="hospital"
           iconSize="body"
@@ -73,8 +84,7 @@ export default class CommunityInfo extends Component {
           title={livingTypes.join(',')}
           clamped
         >
-          {livingTypes.map((livingType, i) =>
-            <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
+          {livingTypesStr}
         </IconItem>
       );
     }
@@ -82,8 +92,8 @@ export default class CommunityInfo extends Component {
     const headerContent  = (
       <Heading
         level="subtitle"
-        size="subtitle"
-        pad="regular"
+        size={size === 'small' ? 'body' : 'subtitle'}
+        pad={size}
         title={community.name}
         palette={inverted ? 'white' : 'slate'}
         clamped
@@ -104,18 +114,20 @@ export default class CommunityInfo extends Component {
         <div>
           {header}
           {address && (
-            <IconItem
-              icon="location"
-              iconPalette={inverted ? 'white' : 'slate'}
-              iconSize="body"
-              title={address}
-              palette={inverted ? 'white' : 'slate'}
-              size="caption"
-              pad="small"
-              clamped
-            >
-              {address}
-            </IconItem>
+            size === 'small' ? <Block size="caption" pad="small" clamped>{address}</Block> : (
+              <IconItem
+                icon="location"
+                iconPalette={inverted ? 'white' : 'slate'}
+                iconSize="body"
+                title={address}
+                palette={inverted ? 'white' : 'slate'}
+                size="caption"
+                pad="small"
+                clamped
+              >
+                {address}
+              </IconItem>
+            )
           )}
           {livingTypeComponent}
         </div>
@@ -134,6 +146,7 @@ export default class CommunityInfo extends Component {
             numReviews={numReviews}
             palette={inverted ? 'white' : 'primary'}
             size="caption"
+            marginRight="large"
           />
           {community.startingRate ? (
             <Block
