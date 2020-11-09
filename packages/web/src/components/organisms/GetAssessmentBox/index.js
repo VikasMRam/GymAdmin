@@ -40,7 +40,7 @@ const GetAssessmentBox = ({ palette, layout, buttonProps, ...props }) => (
           Need help finding senior living options?
         </Heading>
         <Block palette={palette}>
-          Complete this 2-minute quick to get personalized senior living and care options.
+          Complete this 2-minute quiz to get personalized senior living and care options.
         </Block>
       </Block>
       <Button
