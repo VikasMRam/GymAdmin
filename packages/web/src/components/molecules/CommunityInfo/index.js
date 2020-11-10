@@ -23,7 +23,6 @@ export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
     inverted: bool,
-    showFloorPlan: bool,
     palette: palettePropType,
     className: string,
     headerIsLink: bool,
@@ -33,7 +32,6 @@ export default class CommunityInfo extends Component {
   };
 
   static defaultProps = {
-    showFloorPlan: true,
     display: 'flex',
     height: '100%',
     justifyContent: 'space-between',
@@ -43,19 +41,17 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, showFloorPlan, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
+      community, inverted, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
     } = this.props;
     const { propInfo = {}, propRatings } = community;
 
-    const address = getAddress(community);
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
     const capacity = propInfo.capacity || community.capacity;
 
     let livingTypeComponent = null;
-    let livingTypes = typeCare;
 
-    if (livingTypes && livingTypes.length) {
+    if (typeCare && typeCare.length) {
       livingTypeComponent = (
         <IconItem
           icon="hospital"
@@ -67,7 +63,7 @@ export default class CommunityInfo extends Component {
           title={livingTypes.join(',')}
           clamped
         >
-          {livingTypes.slice(0, 3).map((livingType, i) =>
+          {typeCare.slice(0, 3).map((livingType, i) =>
             <Fragment key={livingType}>{<>{i === 0 ? '' : ' · '}</>}{livingType}</Fragment>)}
         </IconItem>
       );
@@ -102,7 +98,7 @@ export default class CommunityInfo extends Component {
             icon="family"
             iconPalette={inverted ? 'white' : 'slate'}
             iconSize="body"
-            title={address}
+            title={capacity}
             palette={inverted ? 'white' : 'slate'}
             size="caption"
             pad="small"

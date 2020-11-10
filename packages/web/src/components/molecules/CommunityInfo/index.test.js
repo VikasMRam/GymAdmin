@@ -8,8 +8,6 @@ import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-
 
 const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza} {...props} />);
 
-const expectedAddress = `${RhodaGoldmanPlaza.address.line1}, ${RhodaGoldmanPlaza.address.city}, ${RhodaGoldmanPlaza.address.state} ${RhodaGoldmanPlaza.address.zip}`;
-
 describe('CommunityInfo', () => {
   it('renders', () => {
     const wrapper = wrap();
