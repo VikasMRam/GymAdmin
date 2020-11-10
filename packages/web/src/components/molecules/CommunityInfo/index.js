@@ -45,21 +45,15 @@ export default class CommunityInfo extends Component {
     const {
       community, inverted, showFloorPlan, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
     } = this.props;
-    const { webViewInfo, propInfo = {}, propRatings, mainService } = community;
+    const { propInfo = {}, propRatings } = community;
 
     const address = getAddress(community);
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
+    const capacity = propInfo.capacity || community.capacity;
 
     let livingTypeComponent = null;
     let livingTypes = typeCare;
-    if (webViewInfo) {
-      const { firstLineValue } = webViewInfo;
-      livingTypes = firstLineValue.split(',');
-    }
-    if (mainService) {
-      livingTypes = mainService.split(',');
-    }
 
     if (livingTypes && livingTypes.length) {
       livingTypeComponent = (
@@ -73,8 +67,8 @@ export default class CommunityInfo extends Component {
           title={livingTypes.join(',')}
           clamped
         >
-          {livingTypes.map((livingType, i) =>
-            <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
+          {livingTypes.slice(0, 3).map((livingType, i) =>
+            <Fragment key={livingType}>{<>{i === 0 ? '' : ' · '}</>}{livingType}</Fragment>)}
         </IconItem>
       );
     }
@@ -103,29 +97,24 @@ export default class CommunityInfo extends Component {
       <Block {...props}>
         <div>
           {header}
-          {address && (
-            <IconItem
-              icon="location"
-              iconPalette={inverted ? 'white' : 'slate'}
-              iconSize="body"
-              title={address}
-              palette={inverted ? 'white' : 'slate'}
-              size="caption"
-              pad="small"
-              clamped
-            >
-              {address}
-            </IconItem>
-          )}
           {livingTypeComponent}
+          <IconItem
+            icon="family"
+            iconPalette={inverted ? 'white' : 'slate'}
+            iconSize="body"
+            title={address}
+            palette={inverted ? 'white' : 'slate'}
+            size="caption"
+            pad="small"
+            clamped
+          >
+            {capacity}
+          </IconItem>
         </div>
         <Block
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          upToTablet={{
-            flexDirection: 'row-reverse',
-          }}
           direction={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
