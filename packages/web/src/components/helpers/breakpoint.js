@@ -70,9 +70,11 @@ const BreakpointContext = React.createContext(null);
 export const BreakpointProvider = ({ children }) => {
   const [breakpoint, setBreakpoint] = useState(new Breakpoint(window.innerWidth, window.scrollY));
 
-  const newBreakpoint = useMemo(() => debounce(() => {
+  const debouncedNewBreakpoint = useMemo(() => debounce(() => {
     setBreakpoint(new Breakpoint(window.innerWidth, window.scrollY));
-  }, 150), []);
+  }), []);
+
+  const newBreakpoint = useMemo(() => () => window.requestAnimationFrame(debouncedNewBreakpoint, 150), []);
 
   useLayoutEffect(() => {
     window.addEventListener('resize', newBreakpoint);

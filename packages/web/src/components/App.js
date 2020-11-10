@@ -37,7 +37,6 @@ import {
 } from 'sly/web/constants/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
-import SearchContainer from 'sly/web/components/search/SearchContainer';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/web/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/web/components/pages/OurHistoryPage'));
@@ -45,6 +44,7 @@ const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPo
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/web/components/pages/PartnersPage'));
 const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/web/containers/CommunityPartnersPageContainer'));
 const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/web/containers/CommunitySearchPageContainer'));
+const SearchContainer = loadable(() => import(/* webpackChunkname: "chunkSearchContainer" */ 'sly/web/components/search/SearchContainer'));
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/web/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/web/containers/HomePageContainer'));
 const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NearMePageContainer'));
@@ -319,6 +319,10 @@ const routes = [
     exact: true,
   },
   {
+    path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
+    component: SearchContainer,
+  },
+  {
     path: '/',
     component: HomePageContainer,
     exact: true,
@@ -384,33 +388,30 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          {/*<Router requiresAuth={[/^\/dashboard/]}>*/}
-          {/*  <Switch>*/}
-          {/*    <Route*/}
-          {/*      path="/ping"*/}
-          {/*      render={() => <h1>pong</h1>}*/}
-          {/*      exact*/}
-          {/*    />*/}
-          {/*    <Route*/}
-          {/*      path="/ads.txt"*/}
-          {/*      render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}*/}
-          {/*      exact*/}
-          {/*    />*/}
-          {/*    <Route*/}
-          {/*      path={`/:toc(${careTypes})/:state/:city/filters`}*/}
-          {/*      render={({ match }) => (*/}
-          {/*        <Redirect*/}
-          {/*          to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}*/}
-          {/*        />*/}
-          {/*      )}*/}
-          {/*    />*/}
-          {/*    {routeComponents}*/}
-          {/*    <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />*/}
-          {/*  </Switch>*/}
-          {/*</Router>*/}
-          <Route path={`/nusearch/:toc(${careTypes.join('|')})/:state/:city`}>
-            <SearchContainer />
-          </Route>
+          <Router requiresAuth={[/^\/dashboard/]}>
+            <Switch>
+              <Route
+                path="/ping"
+                render={() => <h1>pong</h1>}
+                exact
+              />
+              <Route
+                path="/ads.txt"
+                render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
+                exact
+              />
+              <Route
+                path={`/:toc(${careTypes})/:state/:city/filters`}
+                render={({ match }) => (
+                  <Redirect
+                    to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+                  />
+                )}
+              />
+              {routeComponents}
+              <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+            </Switch>
+          </Router>
           {!hideChatbox && <ChatBoxContainer />}
         </ThemeProvider>
       </>

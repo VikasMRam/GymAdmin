@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, forwardRef } from 'react';
 import ReactDom from 'react-dom';
 import styled from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
@@ -6,6 +6,7 @@ import { any, func, bool, element, string } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/common/components/themes';
+import { withShadow } from 'sly/common/components/helpers';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import Heading from 'sly/common/components/atoms/Heading';
 import Block from 'sly/common/components/atoms/Block';
@@ -45,13 +46,16 @@ export const PaddedHeaderWithCloseBody = styled.div`
   padding-top: 0;
 `;
 
-export const HeaderWithClose = styled(({ children, icon, onClose, ...props }) => (
+export const HeaderWithClose = forwardRef(({ children, icon, onClose, ...props }, ref) => (
   <Block
+    ref={ref}
     padding={[
       'xLarge',
       'xLarge',
       children || icon ? 'xLarge' : 0,
     ]}
+    display="flex"
+    alignItems="center"
     {...props}
   >
     {icon && (
@@ -75,10 +79,7 @@ export const HeaderWithClose = styled(({ children, icon, onClose, ...props }) =>
       transparent
     />
   </Block>
-))`
-  display: flex;
-  align-items: center;
-`;
+));
 
 HeaderWithClose.propTypes = {
   children: element,

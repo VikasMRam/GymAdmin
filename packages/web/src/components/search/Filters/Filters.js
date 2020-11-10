@@ -2,7 +2,7 @@ import React, { useCallback, useState, forwardRef, useMemo } from 'react';
 import { bool, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import Button from './FilterButton';
+import FilterButton from './FilterButton';
 
 import { palette, size } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
@@ -21,6 +21,8 @@ import {
   SHOW_OPTIONS,
 } from 'sly/web/components/search/constants';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
+import Button from 'sly/common/components/atoms/Button';
+import Popover from 'sly/web/components/molecules/NewPopover';
 
 const Buttons = styled(Block)`
   > * {
@@ -35,6 +37,28 @@ const Buttons = styled(Block)`
     }
   }
 `;
+
+const CollapsibleSectionPopoverSwitch = ({ isPopOver, children, ...props }) => {
+  if (isPopOver) {
+    return children;
+  }
+  return (
+    <CollapsibleSection {...props}>
+      {children}
+    </CollapsibleSection>
+  );
+};
+
+const ModalPopoverSwitch = ({ isPopOver, children, ...props }) => {
+  const Component = isPopOver
+    ? Popover
+    : Modal;
+  return (
+    <Component {...props}>
+      {children}
+    </Component>
+  );
+};
 
 const Filters = forwardRef(({
   isOpen: defaultIsOpen,
@@ -69,98 +93,122 @@ const Filters = forwardRef(({
 
   return (
     <>
-      <Modal isOpen={!!isOpen} transparent css={popOverCss} onClose={closeModal}>
-        <HeaderWithClose onClose={closeModal} />
-        <Block>
-          <CollapsibleSection
-            showIf={showIf(COMMUNITY_TYPE)}
-            title="Type of community"
+      <ModalPopoverSwitch isOpen={!!isOpen} isPopOver={!!popOverCss} css={popOverCss} onClose={closeModal}>
+        {!popOverCss && (
+          <HeaderWithClose onClose={closeModal}>
+            Filters
+          </HeaderWithClose>
+        )}
+        <CollapsibleSection
+          showIf={showIf(COMMUNITY_TYPE)}
+          title="Type of community"
+          borderless
+        >
+          Type of community
+        </CollapsibleSection>
+        <CollapsibleSectionPopoverSwitch
+          isPopOver={!!popOverCss}
+          showIf={showIf(SIZE)}
+          title="Size"
+          borderless
+        >
+          Size
+        </CollapsibleSectionPopoverSwitch>
+        <CollapsibleSectionPopoverSwitch
+          isPopOver={!!popOverCss}
+          showIf={showIf(PRICE)}
+          title="Price"
+          borderless
+        >
+          Price
+        </CollapsibleSectionPopoverSwitch>
+        <CollapsibleSection
+          showIf={showIf(MORE_FILTERS)}
+          title="Care services"
+          borderless
+        >
+          Care services
+        </CollapsibleSection>
+        <CollapsibleSection
+          showIf={showIf(MORE_FILTERS)}
+          title="Non-care services"
+          borderless
+        >
+          Non-care services
+        </CollapsibleSection>
+        <CollapsibleSection
+          showIf={showIf(MORE_FILTERS)}
+          title="Amenities"
+          borderless
+        >
+          Amenities
+        </CollapsibleSection>
+        <CollapsibleSection
+          showIf={showIf(MORE_FILTERS)}
+          title="Community space"
+          borderless
+        >
+          CommunitySpace
+        </CollapsibleSection>
+        <Block
+          display="flex"
+          padding="large xLarge"
+        >
+          <Button>
+            Clear all
+          </Button>
+          <Button
+            marginLeft="auto"
           >
-            Type of community
-          </CollapsibleSection>
-          <CollapsibleSection
-            showIf={showIf(SIZE)}
-            title="Size"
-          >
-            Size
-          </CollapsibleSection>
-          <CollapsibleSection
-            showIf={showIf(PRICE)}
-            title="Price"
-          >
-            Price
-          </CollapsibleSection>
-          <CollapsibleSection
-            showIf={showIf(MORE_FILTERS)}
-            title="Care services"
-          >
-            Care services
-          </CollapsibleSection>
-          <CollapsibleSection
-            showIf={showIf(MORE_FILTERS)}
-            title="Non-care services"
-          >
-            Non-care services
-          </CollapsibleSection>
-          <CollapsibleSection
-            showIf={showIf(MORE_FILTERS)}
-            title="Amenities"
-          >
-            Amenities
-          </CollapsibleSection>
-          <CollapsibleSection
-            showIf={showIf(MORE_FILTERS)}
-            title="Community space"
-          >
-            CommunitySpace
-          </CollapsibleSection>
+            Show results
+          </Button>
         </Block>
-      </Modal>
+      </ModalPopoverSwitch>
       <Buttons
         ref={ref}
         display="flex"
         flexGap="regular"
         {...props}
       >
-        <Button
+        <FilterButton
           upTo="tablet"
           onClick={openFilters}
         >
           Filters
-        </Button>
-        <Button
+        </FilterButton>
+        <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(COMMUNITY_TYPE)}
         >
           Community type
-        </Button>
-        <Button
+        </FilterButton>
+        <FilterButton
           ref={sizeButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(SIZE)}
         >
           Size
-        </Button>
-        <Button
+        </FilterButton>
+        <FilterButton
           ref={priceButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(PRICE)}
         >
           Price
-        </Button>
-        <Button
+        </FilterButton>
+        <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(MORE_FILTERS)}
         >
           More filters
-        </Button>
-        <Button
+        </FilterButton>
+        <FilterButton
           upTo="laptop"
           marginLeft="auto"
           onClick={toggleShow}
         >
           <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-        </Button>
+        </FilterButton>
       </Buttons>
     </>
   );
