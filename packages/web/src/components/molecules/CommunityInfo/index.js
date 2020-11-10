@@ -8,16 +8,6 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
-const getAddress = ({ address, addressString }) => {
-  if (address) {
-    const { line1, line2, city, state, zip } = address;
-    return `${line1}, ${line2}, ${city}, ${state} ${zip}`
-      .replace(/, ,/g, ', ')
-      .replace(/\s+/g, ' ');
-  }
-
-  return addressString;
-};
 
 export default class CommunityInfo extends Component {
   static propTypes = {
@@ -60,7 +50,7 @@ export default class CommunityInfo extends Component {
           palette={inverted ? 'white' : 'slate'}
           size="caption"
           pad="regular"
-          title={livingTypes.join(',')}
+          title={typeCare.join(',')}
           clamped
         >
           {typeCare.slice(0, 3).map((livingType, i) =>
