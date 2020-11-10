@@ -1,5 +1,5 @@
 import React from 'react';
-import { number } from 'prop-types';
+import { number, bool } from 'prop-types';
 import styled from 'styled-components';
 
 const Svg = styled.svg``;
@@ -7,6 +7,8 @@ const Svg = styled.svg``;
 const Pin = ({ number, active, ...props }) => {
   const primaryColor = active ? 'white' : '#1A7473';
   const secondaryColor = active ? '#1A7473' : 'white';
+  const numberLeftMargin = number < 10 ? 13.792 : 9.792;
+
   return (
     // eslint-disable-next-line
     <Svg
@@ -33,18 +35,19 @@ const Pin = ({ number, active, ...props }) => {
               <use fill="black" fillOpacity="1" filter="url(#filter-2)" xlinkHref="#path-1" />
               <path stroke={secondaryColor} strokeWidth="2" d="M18,-1 C12.7573559,-1 8.0124692,1.05524335 4.57730095,4.37364174 C1.12939883,7.70434115 -1,12.3065479 -1,17.3881355 C-1,22.474116 1.13317182,27.0800339 4.575485,30.422198 L18.000603,43.3909678 L31.4123379,30.4126286 C34.8658256,27.0822505 37,22.4754186 37,17.3881355 C37,12.3065479 34.8706012,7.70434115 31.4226991,4.37364174 C27.9875308,1.05524335 23.2426441,-1 18,-1 Z" fill={primaryColor} fillRule="evenodd" />
             </g>
-            <text id="11" fontFamily="AzoSans-Medium, Azo Sans" fontSize="16" fontWeight="400" fill={secondaryColor}>
-              <tspan x="9.792" y="20">{number}</tspan>
+            <text id="11" dominantBaseline="middle" fontFamily="AzoSans-Medium, Azo Sans" fontSize="16" fontWeight="400" fill={secondaryColor}>
+              <tspan x={numberLeftMargin} y="20">{number}</tspan>
             </text>
           </g>
         </g>
       </g>
     </Svg>
   );
-}
+};
 
 Pin.propTypes = {
   number,
+  active: bool,
 };
 
 export default Pin;

@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react';
-import { object, number } from 'prop-types';
+import React from 'react';
+import { object, number, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import Pin from './Pin';
@@ -28,6 +28,7 @@ const Marker = ({ selectedCommunity, number, $hover, ...props }) => (
         css={{
           width: 344,
           transform: 'translate(-50%, -54px)',
+          zIndex: 1000,
         }}
       />
     }
@@ -37,6 +38,7 @@ const Marker = ({ selectedCommunity, number, $hover, ...props }) => (
 Marker.propTypes = {
   selectedCommunity: object,
   number: number.isRequired,
+  $hover: bool,
 };
 
 export default Marker;
