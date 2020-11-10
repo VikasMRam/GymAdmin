@@ -329,6 +329,19 @@ export default class UpdateFamilyStageForm extends Component {
             required
           />
         }
+        {isNext(FAMILY_STAGE_LOST) && !DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
+          !PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
+        <Field
+          type="textarea"
+          rows={3}
+          showCharacterCount
+          name={'rejectNote'}
+          label="Additional Note"
+          placeholder="Please leave a note on the reason for closing this lead..."
+          component={ReduxField}
+          maxLength={200}
+        />
+        }
         {((isNext(FAMILY_STAGE_LOST) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason)) ||
           (isNext(FAMILY_STAGE_REJECTED) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason))) &&
           <Field

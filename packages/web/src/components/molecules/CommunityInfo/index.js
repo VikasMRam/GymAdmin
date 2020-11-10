@@ -8,22 +8,11 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
-const getAddress = ({ address, addressString }) => {
-  if (address) {
-    const { line1, line2, city, state, zip } = address;
-    return `${line1}, ${line2}, ${city}, ${state} ${zip}`
-      .replace(/, ,/g, ', ')
-      .replace(/\s+/g, ' ');
-  }
-
-  return addressString;
-};
 
 export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
     inverted: bool,
-    showFloorPlan: bool,
     palette: palettePropType,
     className: string,
     headerIsLink: bool,
@@ -33,7 +22,6 @@ export default class CommunityInfo extends Component {
   };
 
   static defaultProps = {
-    showFloorPlan: true,
     display: 'flex',
     height: '100%',
     justifyContent: 'space-between',
@@ -43,25 +31,17 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, showFloorPlan, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
+      community, inverted, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
     } = this.props;
-    const { webViewInfo, propInfo = {}, propRatings, mainService } = community;
+    const { propInfo = {}, propRatings } = community;
 
-    const address = getAddress(community);
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
+    const capacity = propInfo.capacity || community.capacity;
 
     let livingTypeComponent = null;
-    let livingTypes = typeCare;
-    if (webViewInfo) {
-      const { firstLineValue } = webViewInfo;
-      livingTypes = firstLineValue.split(',');
-    }
-    if (mainService) {
-      livingTypes = mainService.split(',');
-    }
 
-    if (livingTypes && livingTypes.length) {
+    if (typeCare && typeCare.length) {
       livingTypeComponent = (
         <IconItem
           icon="hospital"
@@ -70,11 +50,11 @@ export default class CommunityInfo extends Component {
           palette={inverted ? 'white' : 'slate'}
           size="caption"
           pad="regular"
-          title={livingTypes.join(',')}
+          title={typeCare.join(',')}
           clamped
         >
-          {livingTypes.map((livingType, i) =>
-            <Fragment key={livingType}>{!!i && <>{i === livingTypes.length - 1 ? ' & ' : ', '}</>}{livingType}</Fragment>)}
+          {typeCare.slice(0, 3).map((livingType, i) =>
+            <Fragment key={livingType}>{<>{i === 0 ? '' : ' · '}</>}{livingType}</Fragment>)}
         </IconItem>
       );
     }
@@ -103,29 +83,24 @@ export default class CommunityInfo extends Component {
       <Block {...props}>
         <div>
           {header}
-          {address && (
-            <IconItem
-              icon="location"
-              iconPalette={inverted ? 'white' : 'slate'}
-              iconSize="body"
-              title={address}
-              palette={inverted ? 'white' : 'slate'}
-              size="caption"
-              pad="small"
-              clamped
-            >
-              {address}
-            </IconItem>
-          )}
           {livingTypeComponent}
+          <IconItem
+            icon="family"
+            iconPalette={inverted ? 'white' : 'slate'}
+            iconSize="body"
+            title={capacity}
+            palette={inverted ? 'white' : 'slate'}
+            size="caption"
+            pad="small"
+            clamped
+          >
+            {capacity}
+          </IconItem>
         </div>
         <Block
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          upToTablet={{
-            flexDirection: 'row-reverse',
-          }}
           direction={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
