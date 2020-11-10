@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, bool } from 'prop-types';
+import { number, any } from 'prop-types';
 import styled from 'styled-components';
 
 const Svg = styled.svg``;
@@ -47,7 +47,7 @@ const Pin = ({ number, active, ...props }) => {
 
 Pin.propTypes = {
   number,
-  active: bool,
+  active: any,
 };
 
 export default Pin;
