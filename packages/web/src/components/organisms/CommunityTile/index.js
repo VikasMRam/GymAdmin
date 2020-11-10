@@ -61,7 +61,6 @@ const CommunityTile = ({
   return (
     <Block
       as="article"
-      position="relative"
       className={className}
       background={plusCategory ? 'primary.background' : 'white.base'}
       {...props}
@@ -206,6 +205,8 @@ CommunityTile.defaultProps = {
   layout: 'row',
   size: 'regular',
   lazyLoadImage: true,
+  position: 'relative',
+  borderRadius: 'small',
 };
 
 export default CommunityTile;

@@ -24,6 +24,9 @@ const Marker = ({ selectedCommunity, number, $hover, ...props }) => (
         community={selectedCommunity}
         size="small"
         layout="column"
+        shadowBlur="small"
+        shadowSpread="tiny"
+        shadowVOffset="small"
         noGallery
         css={{
           width: 344,

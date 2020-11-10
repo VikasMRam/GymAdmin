@@ -1,4 +1,4 @@
-import React, { useCallback, useState, forwardRef } from 'react';
+import React, { useCallback, forwardRef } from 'react';
 import { arrayOf, object, func, number } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
@@ -48,6 +48,12 @@ const Map = forwardRef(({
         onDrag={onDrag}
         onZoomAnimationEnd={onZoom}
         zoom={zoom}
+        options={maps => ({
+          zoomControl: true,
+          zoomControlOptions: {
+           position: maps.ControlPosition.TOP_LEFT,
+          },
+         })}
       >
         {communities.map(({ latitude, longitude, id }, i) => (
           <Marker
