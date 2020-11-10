@@ -48,7 +48,6 @@ const Search = ({
   }), [filtersHeight, headerHeight]);
 
   const onMarkerClick = (key) => {
-    console.log('onMarkerClick', key);
     setClickedMarker(key);
   };
 

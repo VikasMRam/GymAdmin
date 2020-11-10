@@ -39,7 +39,7 @@ export default function SearchContainer() {
 
   const [show, setShow] = useState(LIST);
   const [clickedMarker, setClickedMarker] = useState(null);
-console.log('clickedMarker', clickedMarker);
+
   let center = {
     lng: 0,
     lat: 0,
