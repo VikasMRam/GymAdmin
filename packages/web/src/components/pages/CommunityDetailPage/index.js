@@ -259,12 +259,6 @@ export default class CommunityDetailPage extends Component {
         ? 'Pricing and Floor Plans'
         : 'Pricing';
 
-    const showSimilarEarlier =
-      pricesList.length === 0 &&
-      floorPlans.length > 0 &&
-      address.city === 'Sacramento' &&
-      address.state === 'CA' &&
-      (!communityDescription || communityDescription === '');
     const similarCommunityStyle = {
       layout: 'column',
       imageSize: 'regular',
@@ -322,26 +316,7 @@ export default class CommunityDetailPage extends Component {
                       ))}
                     </StyledHeadingBoxSection>
                   )}
-                {showSimilarEarlier && (
-                  <StyledHeadingBoxSection
-                    heading={`Similar ${typeOfCare} Communities`}
-                    id="sticky-sidebar-boundary"
-                  >
-                    <TrackedSimilarCommunitiesContainer
-                      communities={similarProperties}
-                      communityStyle={similarCommunityStyle}
-                    />
-                    <BackToSearch>
-                      <Button
-                        href={getCitySearchUrl({ propInfo, address })}
-                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
-                        ghost
-                      >
-                        Communities In {address.city}
-                      </Button>
-                    </BackToSearch>
-                  </StyledHeadingBoxSection>
-                )}
+
                 {!isActiveAdult &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
@@ -508,27 +483,25 @@ export default class CommunityDetailPage extends Component {
                   city={address.city}
                   name={name}
                 />
-                {!showSimilarEarlier && (
-                  <StyledHeadingBoxSection
-                    heading={`Similar ${typeOfCare} Communities`}
-                    id="sticky-sidebar-boundary"
-                    extraBottomMargin
-                  >
-                    <TrackedSimilarCommunitiesContainer
-                      communities={similarProperties}
-                      communityStyle={similarCommunityStyle}
-                    />
-                    <BackToSearch>
-                      <Button
-                        href={getCitySearchUrl({ propInfo, address })}
-                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
-                        ghost
-                      >
-                        Communities In {address.city}
-                      </Button>
-                    </BackToSearch>
-                  </StyledHeadingBoxSection>
-                )}
+                <StyledHeadingBoxSection
+                  heading={`Similar ${typeOfCare} Communities`}
+                  id="sticky-sidebar-boundary"
+                  extraBottomMargin
+                >
+                  <TrackedSimilarCommunitiesContainer
+                    communities={similarProperties}
+                    communityStyle={similarCommunityStyle}
+                  />
+                  <BackToSearch>
+                    <Button
+                      href={getCitySearchUrl({ propInfo, address })}
+                      event={{ action: 'click', category: 'backToSearch', label: community.id }}
+                      ghost
+                    >
+                      Communities In {address.city}
+                    </Button>
+                  </BackToSearch>
+                </StyledHeadingBoxSection>
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
