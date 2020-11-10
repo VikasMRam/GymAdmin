@@ -13,7 +13,6 @@ import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,
   ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
-  ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS,
 } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
@@ -23,8 +22,7 @@ import {
   End,
 } from 'sly/web/containers/wizards/assessment/common';
 /* Wizard Step Imports - End */
-import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
-import ProgressBar from 'sly/web/components/molecules/ProgressBar';
+
 
 @withWS
 @withRedirectTo
