@@ -13,18 +13,11 @@ const expectedAddress = `${RhodaGoldmanPlaza.address.line1}, ${RhodaGoldmanPlaza
 describe('CommunityInfo', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(
-      wrapper
-        .find('IconItem')
-        .at(0)
-        .render()
-        .text(),
-    ).toContain(expectedAddress);
-    RhodaGoldmanPlaza.webViewInfo.firstLineValue.split(',').forEach((livingType) => {
+    RhodaGoldmanPlaza.propInfo.typeCare.forEach((livingType) => {
       expect(
         wrapper
           .find('IconItem')
-          .at(1)
+          .at(0)
           .render()
           .text(),
       ).toContain(livingType);
