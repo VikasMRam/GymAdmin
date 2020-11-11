@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { bool, string, object, oneOf } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';

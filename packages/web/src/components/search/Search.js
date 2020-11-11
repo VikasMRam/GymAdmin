@@ -52,9 +52,13 @@ const Search = ({
   };
 
   let zoom = 1;
+  let mapWidth;
+  let mapHeight;
   if (communities.length && mapRef.current) {
     const bounds = getBoundsForSearchResults(communities);
     zoom = findOptimalZoomForBounds(bounds, { width: mapRef.current.clientWidth, height: mapRef.current.clientHeight });
+    mapWidth = mapRef.current.clientWidth;
+    mapHeight = mapRef.current.clientHeight;
   }
 
   return (
@@ -110,6 +114,10 @@ const Search = ({
           onMarkerClick={onMarkerClick}
           selectedCommunity={selectedCommunity}
           width="100%"
+          mapDimensions={{
+            width: mapWidth,
+            height: mapHeight,
+          }}
           upToLaptop={{
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
@@ -124,6 +132,8 @@ const Search = ({
             marginTop: `-${startingWithLaptopOffset}px`,
             height: '100vh',
           }}
+          markerSize={((breakpoint && breakpoint.isMobile()) || show !== MAP) ? 'small' : undefined}
+          fixCommunityTileAtBottom={show !== LIST}
         />
       </Block>
     </Block>

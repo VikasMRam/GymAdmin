@@ -27,7 +27,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, size: sizeProp, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, size: sizeProp, noLayoutBreakingInTablet, ...props
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -74,7 +74,7 @@ const CommunityTile = ({
         gap="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH[sizeProp], 'auto']}
         // no column layout support below tablet
-        upToTablet={{
+        upToTablet={noLayoutBreakingInTablet ? null : {
           gridTemplateColumns: 'auto!important',
         }}
       >
@@ -102,7 +102,7 @@ const CommunityTile = ({
             margin={layout === 'column' ? spacing : null}
             snap={layout === 'row' ? 'bottom' : null}
             loading={loading}
-            upToTablet={{
+            upToTablet={noLayoutBreakingInTablet ? null : {
               borderRadius: size('spacing.small'),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
@@ -119,7 +119,7 @@ const CommunityTile = ({
         <Block
           overflow="hidden"
           padding={layout === 'row' ? ['0', spacing, spacing, spacing] : spacing}
-          upToTablet={{
+          upToTablet={noLayoutBreakingInTablet ? null : {
             padding: size('spacing', spacing),
             paddingTop: 0,
           }}

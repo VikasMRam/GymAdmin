@@ -1,5 +1,5 @@
 import React, { useCallback, forwardRef } from 'react';
-import { arrayOf, object, func, number } from 'prop-types';
+import { arrayOf, object, func, number, string, bool } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
 
@@ -18,6 +18,9 @@ const Map = forwardRef(({
   onChange,
   onMarkerClick,
   selectedCommunity,
+  markerSize,
+  mapDimensions,
+  fixCommunityTileAtBottom,
   ...props
 }, ref) => {
   const onDrag = useCallback(debounce((map) => {
@@ -63,6 +66,9 @@ const Map = forwardRef(({
             lat={latitude}
             lng={longitude}
             number={i + 1}
+            size={markerSize}
+            mapDimensions={mapDimensions}
+            fixCommunityTileAtBottom={fixCommunityTileAtBottom}
           />
         ))}
       </GoogleMap>
@@ -82,6 +88,9 @@ Map.propTypes = {
   zoom: number,
   onMarkerClick: func,
   selectedCommunity: object,
+  markerSize: string,
+  mapDimensions: object,
+  fixCommunityTileAtBottom: bool,
 };
 
 export default Map;
