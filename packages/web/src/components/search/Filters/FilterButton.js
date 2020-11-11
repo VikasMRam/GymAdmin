@@ -1,11 +1,37 @@
 import React, { forwardRef } from 'react';
 import { node } from 'prop-types';
+import styled, { css } from 'styled-components';
 
-import Block from 'sly/common/components/atoms/Block';
+import {
+  withBorder,
+  withDisplay,
+  withElementSize,
+  withMedia,
+  withSpacing,
+} from 'sly/common/components/helpers';
+import { palette, size } from 'sly/common/components/themes';
+
+const Button = styled.div(
+  withDisplay,
+  withBorder,
+  withElementSize,
+  withSpacing,
+  withMedia,
+  css`
+    margin-right: ${size('spacing.medium')};
+    cursor: pointer;
+    &:last-child {
+      margin-right: 0;
+    }
+    &:hover {
+      border-color: ${palette('slate.lighter-60')};
+    }
+  `,
+);
 
 const FilterButton = forwardRef(({ children, ...props }, ref) => {
   return (
-    <Block
+    <Button
       ref={ref}
       display="flex"
       alignItems="center"
@@ -16,7 +42,7 @@ const FilterButton = forwardRef(({ children, ...props }, ref) => {
       {...props}
     >
       {children}
-    </Block>
+    </Button>
   );
 });
 

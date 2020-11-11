@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from 'sly/common/components/themes/color';
+import { makeColor, makeColorTable } from 'sly/common/components/themes/color';
 
 const theme = {};
 
@@ -25,6 +25,8 @@ theme.palette = {
   razzmatazz : makeColor('#F40767'),
   blue       : makeColor('#186DC5'),
 };
+
+console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

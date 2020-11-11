@@ -2,8 +2,16 @@ import React, { useCallback, useState, forwardRef, useMemo } from 'react';
 import { bool, func, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
+import {
+  SIZE,
+  PRICE,
+  TOC,
+  TOCS,
+} from './constants';
 import FilterButton from './FilterButton';
+import FilterChoice from './FilterChoice';
 
+import Field from 'sly/common/components/molecules/Field';
 import { palette, size } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
@@ -12,17 +20,15 @@ import CollapsibleSection
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import Icon from 'sly/common/components/atoms/Icon';
 import {
-  COMMUNITY_TYPE,
   MORE_FILTERS,
-  PRICE,
-  SIZE,
-  LIST,
-  MAP,
   SHOW_OPTIONS,
 } from 'sly/web/components/search/constants';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
+import { getColor } from 'sly/common/components/helpers/getColor';
+
+const TOC_OPTIONS = Object.values(TOCS);
 
 const Buttons = styled(Block)`
   > * {
@@ -100,11 +106,11 @@ const Filters = forwardRef(({
           </HeaderWithClose>
         )}
         <CollapsibleSection
-          showIf={showIf(COMMUNITY_TYPE)}
+          showIf={showIf(TOC)}
           title="Type of community"
           borderless
         >
-          Type of community
+          <FilterChoice type="radio" options={TOC_OPTIONS} />
         </CollapsibleSection>
         <CollapsibleSectionPopoverSwitch
           isPopOver={!!popOverCss}
@@ -164,7 +170,7 @@ const Filters = forwardRef(({
           </Button>
         </Block>
       </ModalPopoverSwitch>
-      <Buttons
+      <Block
         ref={ref}
         display="flex"
         flexGap="regular"
@@ -178,7 +184,7 @@ const Filters = forwardRef(({
         </FilterButton>
         <FilterButton
           startingWith="tablet"
-          onClick={() => openFilters(COMMUNITY_TYPE)}
+          onClick={() => openFilters(TOC)}
         >
           Community type
         </FilterButton>
@@ -209,7 +215,7 @@ const Filters = forwardRef(({
         >
           <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
         </FilterButton>
-      </Buttons>
+      </Block>
     </>
   );
 });
