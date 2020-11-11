@@ -336,7 +336,7 @@ export default class UpdateFamilyStageForm extends Component {
           rows={3}
           showCharacterCount
           name={'rejectNote'}
-          label="Additional Note"
+          label="Additional Note(optional)"
           placeholder="Please leave a note on the reason for closing this lead..."
           component={ReduxField}
           maxLength={200}
