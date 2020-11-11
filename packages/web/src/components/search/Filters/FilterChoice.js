@@ -19,30 +19,43 @@ const Row = styled.div(
 );
 
 const Label = styled.label(
+  withSpacing,
   withColor,
   css`
     display: block;
     flex-grow: 1;
-  `
+  `,
 );
 
-const Title = styled.div`
-  color: ${palette('slate.base')};
-`;
+const Title = styled.div(
+  withSpacing,
+  withColor,
+);
 
 const CheckboxRow = ({ checked, label, description }) => (
   <Row marginBottom="regular">
     <Checkbox checked={checked} />
-    <Label color="slate">{label}</Label>
+    <Label
+      paddingLeft="large"
+      color="slate"
+    >
+      {label}
+    </Label>
   </Row>
 );
 
 const RadioRow = ({ label, description, checked }) => (
-  <Row
-    marginBottom={!description ? 'regular' : 'xLarge'}
-  >
-    <Label color="slate.lighter-30">
-      <Title>{label}</Title>
+  <Row marginBottom={!description ? 'regular' : 'xLarge'}>
+    <Label
+      palette="slate.lighter-30"
+      paddingRight="large"
+    >
+      <Title
+        palette="slate.base"
+        marginBottom={!description ? 'none' : 'small'}
+      >
+        {label}
+      </Title>
       {description}
     </Label>
     <Radio checked={checked} />
@@ -55,7 +68,6 @@ const FilterChoice = ({ type, options, onChange, value = [], ...props }) => {
     value = [value];
   }
 
-  console.log('options', options, value);
   const change = useCallback((checked, optionValue) => {
     if (checked) {
       onChange(value.filter(x => x !== optionValue));

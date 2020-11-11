@@ -1,22 +1,26 @@
 import React from 'react';
 import { bool, string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { palette } from 'sly/common/components/themes';
 import { Icon } from 'sly/common/components/atoms';
+import { withSpacing } from 'sly/common/components/helpers';
 
-export const StyledIcon = styled(Icon)`
-  svg {
-    #circle {
-      display: ${ifProp('checked', 'block', 'none')};
-      fill: ${p => palette(p.palette, 'base')};
+export const StyledIcon = styled(Icon)(
+  withSpacing,
+  css`
+    svg {
+      #circle {
+        display: ${ifProp('checked', 'block', 'none')};
+        fill: ${p => palette(p.palette, 'base')};
+      }
+      #box {
+        stroke: ${palette('slate', 'stroke')};
+      }
     }
-    #box {
-      stroke: ${palette('slate', 'stroke')};
-    }
-  }
-`;
+  `,
+);
 
 const Radio = props => <StyledIcon icon="radio" {...props} />;
 
