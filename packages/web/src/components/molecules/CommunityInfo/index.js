@@ -44,7 +44,7 @@ export default class CommunityInfo extends Component {
     if (typeCare && typeCare.length) {
       livingTypeComponent = (
         <IconItem
-          icon="hospital"
+          icon="house"
           iconSize="body"
           iconPalette={inverted ? 'white' : 'slate'}
           palette={inverted ? 'white' : 'slate'}
