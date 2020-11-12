@@ -22,7 +22,7 @@ const Marker = ({ selectedCommunity, number, $hover, size, mapDimensions, fixCom
     };
     if (mapDimensions.width < 768) {
       size = 'small';
-      extraCss.top = 132;
+      // extraCss.top = 132;
       extraCss.width = mapWidth - 16;
     }
   }
