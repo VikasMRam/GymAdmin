@@ -381,7 +381,11 @@ export default class CommunityDetailPage extends Component {
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
-
+                {rgsAux && rgsAux.trustScore && rgsAux.trustScore > 0 &&
+                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
+                }
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />

@@ -1,6 +1,7 @@
 import { areaCode } from './phone';
 import { tocs } from './search';
 
+import { stateNames } from 'sly/web/services/helpers/url';
 import { formatDate } from 'sly/web/services/helpers/date';
 
 export const getIsCCRC = (community) => {
@@ -79,7 +80,7 @@ export const showFafNumber = (address)  => {
   return address.zipcode.cityTier === '1';
 };
 
-export const getFafNumber = (communityPhone = '', tier)  => {
+export const getFafNumber = (communityPhone = '')  => {
   // Hard coded business logic ( only for tier 1
   const tier1Nums = ['4153004354', '6506845456'];
   let fafn = tier1Nums[0];
@@ -90,8 +91,10 @@ export const getFafNumber = (communityPhone = '', tier)  => {
   return fafn;
 };
 
-const getStateLink = (addressState) => {
-  if (addressState === 'CA') {
+const getStateLink = (addressState, licenseNumber) => {
+  if (addressState === 'CA' && licenseNumber !== '') {
+    return `https://www.ccld.dss.ca.gov/carefacilitysearch/FacDetail/${licenseNumber}`;
+  } else if (addressState === 'CA') {
     return 'https://www.cdss.ca.gov/inforesources/community-care-licensing';
   }
   return 'https://www.ahcancal.org/Assisted-Living/Policy/Pages/state-regulations.aspx';
@@ -99,31 +102,38 @@ const getStateLink = (addressState) => {
 
 // valid types : stateScore
 export const getTrustScoreType = (community, scoreType) => {
-  const { rgsAux = { rgsInfo: {} }, address: { state } }  = community;
+  const { name, propInfo: { licenseNumber = '' }, rgsAux = { rgsInfo: {} }, address: { state } }  = community;
   const { rgsInfo = {} } = rgsAux;
   const { trustScore, scoreParams = { lastInspectionDate: '', licensedDate: ''  } } = rgsInfo;
   const ld = formatDate(scoreParams.licensedDate);
   const lastLicensedDate = ld.match(/invalid/) ? 'unknown date' : ld;
-  const prop1 = `Licensed since ${lastLicensedDate}`;
   const lid = formatDate(scoreParams.lastInspectionDate);
   const lastInspectionDate = ld.match(/invalid/) ? 'unknown date' : lid;
+  const fullStateName = stateNames[state];
+  const licensingUrl = getStateLink(state, licenseNumber);
+  const linkText = `To learn more, visit the state licensing authority for ${name}`;
+  const prop1 = `Licensed since ${lastLicensedDate}`;
   const prop2 = `Most recent inspection on ${lastInspectionDate}`;
-  let valueText = 'Good';
-  let prop3 = 'Has fewer complaints relative to communities in the state.';
-  if (trustScore > 50 &&  trustScore < 61) {
-    prop3 = 'Has more complaints relative to communities in the state';
-    valueText = 'Moderate';
-  } else if (trustScore > 25 &&  trustScore < 51) {
-    prop3 = 'Has significantly more complaints and inspections relative to communities in the state';
+  let prop3 = `Has fewer complaints relative to communities in ${fullStateName}`;
+  if (trustScore < 71) {
+    prop3 = `Has more complaints relative to communities in ${fullStateName}`;
+  }
+  let valueText = 'Excellent';
+  if (trustScore > 70 && trustScore < 81) {
+    valueText = 'Good';
+  } else if (trustScore > 50 && trustScore < 71) {
+    valueText = 'Okay';
+  } else if (trustScore < 51) {
     valueText = 'Poor';
   }
-  const licensingUrl = getStateLink(state);
-  const moreInfoText = 'Seniorly Trust Score is a rating of an assisted living community ' +
-    'that is a represents how assisted living facilities are complying with state regulations. Public access to assisted living records ' +
-    `varies greatly state by state. Visit the state website to learn more about the regulations and practices in ${state}.`;
 
+  const moreInfoText = 'Our Trust Score gives you an easy too for evaluating assisted living options. When building a Trust Score, ' +
+    'we look at each community\'s compliance with state regulations-information that can be hard to access-and other key factors that ' +
+    'indicate overall quality and responsible management. ';
   const trustScores = { stateScore:
-      { value: trustScore, prop1, prop2, prop3, moreInfoText, licensingUrl, valueText } };
+      { value: trustScore, prop1, prop2, prop3, moreInfoText, linkText, licensingUrl, valueText } };
   // livabilityScore: {} }; // Can add other types of score in the future.
+  // Next iteration: GET REQUEST TO https://www.ccld.dss.ca.gov/transparencyapi/api/EmailSubscribe?facNum=015600130&Semail=sushanthr+testccld@gmail.com
+
   return trustScores[scoreType];
 };
