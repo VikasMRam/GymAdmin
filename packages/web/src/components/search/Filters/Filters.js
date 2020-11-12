@@ -1,18 +1,22 @@
 import React, { useCallback, useState, forwardRef, useMemo } from 'react';
 import { bool, func, string } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import {
   SIZE,
-  PRICE,
+  BUDGET,
   TOC,
   TOCS,
+  SIZES,
+  BUDGETS,
+  CARE_SERVICES_OPTIONS,
+  NON_CARE_SERVICES_OPTIONS,
+  ROOM_AMENITIES_OPTIONS,
+  COMMUNITY_AMENITIES_OPTIONS,
 } from './constants';
 import FilterButton from './FilterButton';
 import FilterChoice from './FilterChoice';
 
-import Field from 'sly/common/components/molecules/Field';
-import { palette, size } from 'sly/common/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import CollapsibleSection
@@ -26,23 +30,10 @@ import {
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
-import { getColor } from 'sly/common/components/helpers/getColor';
 
 const TOC_OPTIONS = Object.values(TOCS);
-
-const Buttons = styled(Block)`
-  > * {
-    margin-right: ${size('spacing.medium')};
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    &:hover {
-      border-color: ${palette('slate.lighter-60')};
-    }
-  }
-`;
+const SIZE_OPTIONS = Object.values(SIZES);
+const BUDGET_OPTIONS = Object.values(BUDGETS);
 
 const CollapsibleSectionPopoverSwitch = ({ isPopOver, children, ...props }) => {
   if (isPopOver) {
@@ -83,9 +74,9 @@ const Filters = forwardRef(({
   const [priceButtonRef, priceButtonCoords] = useDimensions();
   const [sizeButtonRef, sizeButtonCoords] = useDimensions();
   const popOverCss = useMemo(() => {
-    if (breakpoint?.atLeastLaptop() && [PRICE, SIZE].includes(isOpen)) {
+    if (breakpoint?.atLeastLaptop() && [BUDGET, SIZE].includes(isOpen)) {
       const coords = ({
-        [PRICE]: priceButtonCoords,
+        [BUDGET]: priceButtonCoords,
         [SIZE]: sizeButtonCoords,
       })[isOpen];
       return {
@@ -118,43 +109,43 @@ const Filters = forwardRef(({
           title="Size"
           borderless
         >
-          Size
+          <FilterChoice type="radio" options={SIZE_OPTIONS} />
         </CollapsibleSectionPopoverSwitch>
         <CollapsibleSectionPopoverSwitch
           isPopOver={!!popOverCss}
-          showIf={showIf(PRICE)}
+          showIf={showIf(BUDGET)}
           title="Price"
           borderless
         >
-          Price
+          <FilterChoice type="radio" options={BUDGET_OPTIONS} />
         </CollapsibleSectionPopoverSwitch>
         <CollapsibleSection
           showIf={showIf(MORE_FILTERS)}
           title="Care services"
           borderless
         >
-          Care services
+          <FilterChoice type="checkbox" options={CARE_SERVICES_OPTIONS} />
         </CollapsibleSection>
         <CollapsibleSection
           showIf={showIf(MORE_FILTERS)}
           title="Non-care services"
           borderless
         >
-          Non-care services
+          <FilterChoice type="checkbox" options={NON_CARE_SERVICES_OPTIONS} />
         </CollapsibleSection>
         <CollapsibleSection
           showIf={showIf(MORE_FILTERS)}
           title="Amenities"
           borderless
         >
-          Amenities
+          <FilterChoice type="checkbox" options={ROOM_AMENITIES_OPTIONS} />
         </CollapsibleSection>
         <CollapsibleSection
           showIf={showIf(MORE_FILTERS)}
           title="Community space"
           borderless
         >
-          CommunitySpace
+          <FilterChoice type="checkbox" options={COMMUNITY_AMENITIES_OPTIONS} />
         </CollapsibleSection>
         <Block
           display="flex"
@@ -198,7 +189,7 @@ const Filters = forwardRef(({
         <FilterButton
           ref={priceButtonRef}
           startingWith="tablet"
-          onClick={() => openFilters(PRICE)}
+          onClick={() => openFilters(BUDGET)}
         >
           Price
         </FilterButton>

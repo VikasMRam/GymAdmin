@@ -8,6 +8,10 @@ export const GUIDE = 'own-guide';
 export const BUDGET = 'budget';
 export const RADIUS = 'radius';
 export const SORT = 'sort';
+export const CARE_SERVICES = 'care-services';
+export const NON_CARE_SERVICES = 'non-care-services';
+export const ROOM_AMENITIES = 'room-amenities';
+export const COMMUNITY_AMENITIES = 'community-amenities';
 
 // TOC
 export const AL = 'assisted-living';
@@ -62,3 +66,126 @@ export const TOCS = {
     seoLabel: 'Skilled Nursing Facilities',
   },
 };
+
+// SIZE
+
+export const SMALL = 'small';
+export const MEDIUM = 'medium';
+export const LARGE = 'large';
+
+export const SIZES = {
+  [SMALL]: {
+    label: 'Small',
+    value: SMALL,
+    description: '<20 resident capacity',
+  },
+  [MEDIUM]: {
+    label: 'Medium',
+    value: MEDIUM,
+    description: '20-50 resident capacity',
+  },
+  [LARGE]: {
+    label: 'Large',
+    value: LARGE,
+    description: '50+ resident capacity',
+  },
+};
+
+// BUDGET
+
+const $2500 = 2500;
+const $3000 = 3000;
+const $3500 = 3500;
+const $4000 = 4000;
+const $4500 = 4500;
+const $5000 = 5000;
+const $5500 = 5500;
+const $6000 = 6000;
+const $100000 = 100000;
+
+export const BUDGETS = {
+  [$2500]: {
+    label: 'Up to $2500',
+    segment: '2500-dollars',
+    value: $2500,
+  },
+  [$3000]: {
+    label: 'Up to $3000',
+    segment: '3000-dollars',
+    value: $3000,
+  },
+  [$3500]: {
+    label: 'Up to $3500',
+    segment: '3500-dollars',
+    value: $3500,
+  },
+  [$4000]: {
+    label: 'Up to $4000',
+    segment: '4000-dollars',
+    value: $4000,
+  },
+  [$4500]: {
+    label: 'Up to $4500',
+    segment: '4500-dollars',
+    value: $4500,
+  },
+  [$5000]: {
+    label: 'Up to $5000',
+    segment: '5000-dollars',
+    value: $5000,
+  },
+  [$5500]: {
+    label: 'Up to $5500',
+    segment: '5500-dollars',
+    value: $5500,
+  },
+  [$6000]: {
+    label: 'Up to $6000',
+    segment: '6000-dollars',
+    value: $6000,
+  },
+  [$100000]: {
+    label: 'More than $6000',
+    segment: 'greater-than-6000-dollars',
+    value: $100000,
+  },
+};
+
+// SERVICES
+
+export const CARE_SERVICES_OPTIONS = [
+  { value: 'Medication management', label: 'Medication management' },
+  { value: 'Meal preparation and service', label: 'Meal preparation and service' },
+  { value: 'Transportation arrangement', label: 'Transportation arrangement' },
+  { value: '24-hour call system', label: '24-hour call system' },
+  { value: '24-hour supervision', label: '24-hour supervision' },
+  { value: 'Coordination with health care providers', label: 'Coordination with health care providers' },
+];
+
+export const NON_CARE_SERVICES_OPTIONS = [
+  { value: 'Housekeeping and linen services', label: 'Housekeeping and linen services' },
+  { value: 'Fitness programs', label: 'Fitness programs' },
+  { value: 'Community-sponsored activities', label: 'Community-sponsored activities' },
+  { value: 'Move-in coordination', label: 'Move-in coordination' },
+  { value: 'Planned day trips', label: 'Planned day trips' },
+  { value: 'Transportation arrangement (non-medical)', label: 'Transportation arrangement (non-medical)' },
+];
+
+export const ROOM_AMENITIES_OPTIONS = [
+  { value: 'Cable', label: 'Cable' },
+  { value: 'Wifi', label: 'Wifi' },
+  { value: 'Internet', label: 'Internet' },
+  { value: 'Telephone', label: 'Telephone' },
+  { value: 'Air-conditioning', label: 'Air-conditioning' },
+  { value: 'Kitchenettes', label: 'Kitchenettes' },
+];
+
+export const COMMUNITY_AMENITIES_OPTIONS = [
+  { value: 'Dining room', label: 'Dining room' },
+  { value: 'Restaurant-style dining', label: 'Restaurant-style dining' },
+  { value: 'Outdoor patio', label: 'Outdoor patio' },
+  { value: 'Garden', label: 'Garden' },
+  { value: 'Beauty salon', label: 'Beauty salon' },
+  { value: 'Located close to shopping centers', label: 'Located close to shopping centers' },
+];
+
