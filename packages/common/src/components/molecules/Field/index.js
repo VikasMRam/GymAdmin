@@ -152,7 +152,7 @@ const Field = ({
         pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : undefined}
         wideWidth={wideWidth}
         display="flex"
-        // flex={1}
+        flex={1}
       >
         <Block
           display="flex"
