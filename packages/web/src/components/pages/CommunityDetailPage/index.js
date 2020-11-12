@@ -406,13 +406,6 @@ export default class CommunityDetailPage extends Component {
                   community={community}
                 />
                 }
-                {rgsAux.rgsInfo && rgsAux.rgsInfo.trustScore &&
-                <StyledHeadingBoxSection
-                  heading={`Seniorly Trust Score for ${community.name}`}
-                >
-                  <TrustScoreTile community={community} />
-                </StyledHeadingBoxSection>
-                }
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
                   <StyledHeadingBoxSection
                     heading={`Helpful ${typeOfCare} Resources`}
