@@ -57,6 +57,8 @@ export default class Router extends Component {
       ensureAuthenticated()
         .then(() => {
           history.replace(decodeURIComponent(loginRedirect));
+          //temp fix for issues with redirect not working.
+          window.location.reload(false);
         })
         .catch(() => {
           const params = removeQueryParamFromURL('loginRedirect', search);
