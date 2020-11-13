@@ -196,7 +196,7 @@ const routes = [
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,
-    component: CommunitySearchPageContainer,
+    component: SearchContainer, // CommunitySearchPageContainer,
     exact: true,
   },
   {
@@ -318,10 +318,10 @@ const routes = [
     component: AssessmentWizardPageContainer,
     exact: true,
   },
-  {
-    path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
-    component: SearchContainer,
-  },
+  // {
+  //   path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
+  //   component: SearchContainer,
+  // },
   {
     path: '/',
     component: HomePageContainer,

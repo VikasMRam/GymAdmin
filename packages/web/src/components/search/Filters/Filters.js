@@ -9,6 +9,7 @@ import {
   TOCS,
   SIZES,
   BUDGETS,
+  NH,
   CARE_SERVICES_OPTIONS,
   NON_CARE_SERVICES_OPTIONS,
   ROOM_AMENITIES_OPTIONS,
@@ -22,11 +23,7 @@ import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import CollapsibleSection
   from 'sly/web/components/molecules/CollapsibleSection';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
-import Icon from 'sly/common/components/atoms/Icon';
-import {
-  MORE_FILTERS,
-  SHOW_OPTIONS,
-} from 'sly/web/components/search/constants';
+import { MORE_FILTERS } from 'sly/web/components/search/constants';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
@@ -59,8 +56,9 @@ const ModalPopoverSwitch = ({ isPopOver, children, ...props }) => {
 
 const Filters = forwardRef(({
   isOpen: defaultIsOpen,
-  nextShow,
-  toggleShow,
+  onFilterChange,
+  currentFilters,
+  children,
   ...props
 }, ref) => {
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
@@ -68,7 +66,7 @@ const Filters = forwardRef(({
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
   const breakpoint = useBreakpoint();
   const showIf = useCallback(
-    type => isOpen === type || (breakpoint && breakpoint.isMobile() && isOpen),
+    type => Boolean(isOpen === type || (breakpoint && breakpoint.isMobile() && isOpen)),
     [isOpen, breakpoint],
   );
   const [priceButtonRef, priceButtonCoords] = useDimensions();
@@ -88,6 +86,10 @@ const Filters = forwardRef(({
     return null;
   }, [breakpoint, isOpen, priceButtonCoords, sizeButtonCoords]);
 
+  const onTocFilterChange = useCallback((filter, value) => {
+    onFilterChange(filter, value.length === 0 ? [NH] : value);
+  }, [currentFilters]);
+
   return (
     <>
       <ModalPopoverSwitch isOpen={!!isOpen} isPopOver={!!popOverCss} css={popOverCss} onClose={closeModal}>
@@ -101,7 +103,13 @@ const Filters = forwardRef(({
           title="Type of community"
           borderless
         >
-          <FilterChoice type="radio" options={TOC_OPTIONS} />
+          <FilterChoice
+            type="radio"
+            options={TOC_OPTIONS}
+            filter={TOC}
+            onChange={onTocFilterChange}
+            value={currentFilters[TOC]}
+          />
         </CollapsibleSection>
         <CollapsibleSectionPopoverSwitch
           isPopOver={!!popOverCss}
@@ -199,13 +207,8 @@ const Filters = forwardRef(({
         >
           More filters
         </FilterButton>
-        <FilterButton
-          upTo="laptop"
-          marginLeft="auto"
-          onClick={toggleShow}
-        >
-          <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-        </FilterButton>
+
+        {children}
       </Block>
     </>
   );

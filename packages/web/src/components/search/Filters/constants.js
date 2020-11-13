@@ -14,6 +14,7 @@ export const ROOM_AMENITIES = 'room-amenities';
 export const COMMUNITY_AMENITIES = 'community-amenities';
 
 // TOC
+export const NH = 'nursing-homes';
 export const AL = 'assisted-living';
 export const IL = 'independent-living';
 export const MC = 'memory-care';

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { upTo, startingWith } from 'sly/common/components/helpers';
 import Block from 'sly/common/components/atoms/Block';
-import { withSpacing, withMedia, withDisplay, withColor, withElementSize } from 'sly/common/components/helpers';
+import { withSpacing, withMedia, withDisplay, withColor, withElementSize, withText } from 'sly/common/components/helpers';
 import Radio from 'sly/web/components/molecules/Radio';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
 import { size, palette } from 'sly/common/components/themes';
@@ -14,6 +14,8 @@ const Row = styled.div(
   withElementSize,
   css`
     display: flex;
+    align-items: center;
+    cursor: pointer;
     > * {
       flex-grow: 0;
     }
@@ -21,6 +23,7 @@ const Row = styled.div(
 );
 
 const Label = styled.label(
+  withText,
   withSpacing,
   withColor,
   withMedia,
@@ -42,21 +45,25 @@ const Title = styled.div(
   withColor,
 );
 
-const CheckboxRow = ({ checked, label }) => (
+const CheckboxRow = ({ checked, label, ...props }) => (
   <Row
     marginBottom="regular"
     elementSize="regular"
+    {...props}
   >
-    <Label>
+    <Label size="caption">
       {label}
     </Label>
     <Checkbox checked={checked} />
   </Row>
 );
 
-const RadioRow = ({ label, description, checked }) => (
-  <Row marginBottom={!description ? 'regular' : 'xLarge'}>
-    <Label palette="slate.lighter-30">
+const RadioRow = ({ label, description, checked, ...props }) => (
+  <Row
+    marginBottom={!description ? 'regular' : 'xLarge'}
+    {...props}
+  >
+    <Label palette="slate.lighter-30" size="caption">
       <Title
         palette="slate.base"
         marginBottom={!description ? 'none' : 'small'}
@@ -72,16 +79,19 @@ const RadioRow = ({ label, description, checked }) => (
   </Row>
 );
 
-const FilterChoice = ({ type, options, onChange, value = [], ...props }) => {
+const FilterChoice = ({ type, filter, options, onChange, value = [], ...props }) => {
   if (!Array.isArray(value)) {
     value = [value];
   }
 
   const change = useCallback((checked, optionValue) => {
     if (checked) {
-      onChange(value.filter(x => x !== optionValue));
+      onChange(filter, value.filter(x => x !== optionValue));
     } else {
-      onChange([...value, optionValue]);
+      const previousValue = type === 'radio'
+        ? []
+        : value;
+      onChange(filter, [...previousValue, optionValue]);
     }
   }, [value, onChange]);
 
