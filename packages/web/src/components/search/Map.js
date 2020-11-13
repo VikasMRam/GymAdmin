@@ -8,6 +8,7 @@ import Marker from './MapMarker';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
 import Block from 'sly/common/components/atoms/Block';
+import STYLES from 'sly/web/constants/map';
 
 const Map = forwardRef(({
   defaultCenter,
@@ -52,6 +53,7 @@ const Map = forwardRef(({
           zoomControlOptions: {
            position: maps.ControlPosition.TOP_LEFT,
           },
+          styles: STYLES,
          })}
       >
         {communities.map(({ latitude, longitude, id }, i) => (
