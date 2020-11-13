@@ -132,7 +132,6 @@ const Search = ({
             marginTop: `-${startingWithLaptopOffset}px`,
             height: '100vh',
           }}
-          markerSize={((breakpoint && breakpoint.isMobile()) || show !== MAP) ? 'small' : undefined}
           fixCommunityTileAtBottom={show !== LIST}
         />
       </Block>
