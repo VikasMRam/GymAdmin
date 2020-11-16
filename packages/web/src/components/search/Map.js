@@ -1,4 +1,4 @@
-import React, { useCallback, forwardRef } from 'react';
+import React, { useCallback, forwardRef, useState } from 'react';
 import { arrayOf, object, func, number, bool } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
@@ -9,6 +9,7 @@ import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
 import Block from 'sly/common/components/atoms/Block';
 import STYLES from 'sly/web/constants/map';
+import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 
 const Map = forwardRef(({
   defaultCenter,
@@ -34,6 +35,10 @@ const Map = forwardRef(({
     const community = communities.find(x => x.id === key);
     onMarkerClick(community);
   };
+
+  const breakpoint = useBreakpoint();
+  const [hoveredMarker, setHoveredMarker] = useState();
+  selectedCommunity = hoveredMarker || selectedCommunity;
 
   return (
     <Block
@@ -67,6 +72,8 @@ const Map = forwardRef(({
             number={i + 1}
             mapDimensions={mapDimensions}
             fixCommunityTileAtBottom={fixCommunityTileAtBottom}
+            onMouseEnter={breakpoint && breakpoint.isLaptop() ? () => setHoveredMarker(communities[i]) : null}
+            onMouseLeave={breakpoint && breakpoint.isLaptop() ? () => setHoveredMarker(null) : null}
           />
         ))}
       </GoogleMap>
