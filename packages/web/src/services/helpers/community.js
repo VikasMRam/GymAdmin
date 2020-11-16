@@ -127,8 +127,8 @@ export const getTrustScoreType = (community, scoreType) => {
     valueText = 'Poor';
   }
 
-  const moreInfoText = 'Our Trust Score gives you an easy too for evaluating assisted living options. When building a Trust Score, ' +
-    'we look at each community\'s compliance with state regulations-information that can be hard to access-and other key factors that ' +
+  const moreInfoText = 'Our Trust Score gives you an easy tool for evaluating assisted living options. When building a Trust Score, ' +
+    'we look at each community\'s compliance with state regulations (information that can be hard to access) and other key factors that ' +
     'indicate overall quality and responsible management. ';
   const trustScores = { stateScore:
       { value: trustScore, prop1, prop2, prop3, moreInfoText, linkText, licensingUrl, valueText } };
