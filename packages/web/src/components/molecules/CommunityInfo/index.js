@@ -8,7 +8,11 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
-
+const communityDefaultIcon = {
+  'up to 20 Beds': 'community-size-small',
+  '20 - 51 Beds': 'community-size-medium',
+  '51 +': 'community-size-large',
+};
 export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
@@ -33,18 +37,19 @@ export default class CommunityInfo extends Component {
     const {
       community, inverted, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
     } = this.props;
-    const { propInfo = {}, propRatings } = community;
+    const { propInfo = {}, propRatings, communitySize } = community;
 
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
     const capacity = propInfo.capacity || community.capacity;
+    const placeholder = communityDefaultIcon[communitySize || 'up to 20 Beds'];
 
     let livingTypeComponent = null;
 
     if (typeCare && typeCare.length) {
       livingTypeComponent = (
         <IconItem
-          icon="house"
+          icon={placeholder}
           iconSize="body"
           iconPalette={inverted ? 'white' : 'slate'}
           palette={inverted ? 'white' : 'slate'}
