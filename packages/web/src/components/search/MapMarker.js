@@ -8,40 +8,69 @@ import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 
 const Wrapper = styled.div``;
 
-const Marker = ({ selectedCommunity, number, $hover, ...props }) => (
-  <Wrapper
-    {...props}
-  >
-    <Pin
-      number={number}
-      active={$hover || selectedCommunity}
-      css={{
-        transform: 'translate(-50%, -100%)',
-      }}
-    />
-    {selectedCommunity &&
-      <CommunityTile
-        community={selectedCommunity}
-        size="small"
-        layout="column"
-        shadowBlur="small"
-        shadowSpread="tiny"
-        shadowVOffset="small"
-        noGallery
+const Marker = ({ selectedCommunity, number, $hover, mapDimensions, fixCommunityTileAtBottom, ...props }) => {
+  let extraCss = {
+    transform: 'translate(-50%, -54px)',
+  };
+  const tileWidth =  mapDimensions ? mapDimensions.width - 16 : '100%';
+
+  if (fixCommunityTileAtBottom && mapDimensions) {
+    extraCss = {
+      position: 'fixed',
+      left: 0,
+      top: (mapDimensions.height / 2) - 212,
+    };
+    if (mapDimensions.width > 768 && mapDimensions.width < 1080) {
+      extraCss.left = `${(mapDimensions.width - 680) / 2}px`;
+      extraCss.top = (mapDimensions.height / 2) - 286;
+    }
+  }
+  const tileCss = {
+    width: 344,
+    zIndex: 1000,
+    ...extraCss,
+  };
+
+  return (
+    <Wrapper
+      {...props}
+    >
+      <Pin
+        number={number}
+        active={$hover || selectedCommunity}
         css={{
-          width: 344,
-          transform: 'translate(-50%, -54px)',
-          zIndex: 1000,
+          transform: 'translate(-50%, -100%)',
         }}
       />
-    }
-  </Wrapper>
-);
+      {selectedCommunity &&
+        <CommunityTile
+          community={selectedCommunity}
+          type="map"
+          layout="column"
+          shadowBlur="small"
+          shadowSpread="tiny"
+          shadowVOffset="small"
+          noGallery
+          css={tileCss}
+          upToLaptop={{
+            width: '680px!important',
+          }}
+          upToTablet={{
+            width: `${tileWidth}px!important`,
+            left: '-49%!important',
+          }}
+        />
+      }
+    </Wrapper>
+  );
+};
 
 Marker.propTypes = {
   selectedCommunity: object,
   number: number.isRequired,
   $hover: bool,
+  mapDimensions: object,
+  fixCommunityTileAtBottom: bool,
 };
 
 export default Marker;

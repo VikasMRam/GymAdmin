@@ -3,7 +3,7 @@ import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-
 
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
+import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
@@ -27,7 +27,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, size: sizeProp, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, ...props
 }) => {
   const {
     name, gallery = {}, communitySize, plusCategory,
@@ -56,7 +56,7 @@ const CommunityTile = ({
 
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
-  const spacing = sizeProp === 'small' ? 'regular' : 'large';
+  const spacing = type === 'map' ? 'regular' : 'large';
 
   return (
     <Block
@@ -72,10 +72,15 @@ const CommunityTile = ({
         border="regular"
         borderPalette="grey.stroke"
         gap="large"
-        dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH[sizeProp], 'auto']}
+        dimensions={[type === 'list' ? COLUMN_LAYOUT_IMAGE_WIDTH : COLUMN_LAYOUT_IMAGE_WIDTH_SMALL, 'auto']}
+        upToLaptop={type === 'list' ? null : {
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH} auto!important`,
+        }}
         // no column layout support below tablet
-        upToTablet={{
+        upToTablet={type === 'list' ? {
           gridTemplateColumns: 'auto!important',
+        } : {
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto!important`,
         }}
       >
         {!noGallery &&
@@ -102,7 +107,7 @@ const CommunityTile = ({
             margin={layout === 'column' ? spacing : null}
             snap={layout === 'row' ? 'bottom' : null}
             loading={loading}
-            upToTablet={{
+            upToTablet={type === 'map' ? null : {
               borderRadius: size('spacing.small'),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
@@ -119,7 +124,7 @@ const CommunityTile = ({
         <Block
           overflow="hidden"
           padding={layout === 'row' ? ['0', spacing, spacing, spacing] : spacing}
-          upToTablet={{
+          upToTablet={type === 'map' ? null : {
             padding: size('spacing', spacing),
             paddingTop: 0,
           }}
@@ -128,7 +133,7 @@ const CommunityTile = ({
             community={community}
             showFloorPlan={showFloorPlan}
             event={event}
-            size={sizeProp}
+            type={type}
             priceTextSize={layout === 'row' ? 'body' : undefined}
             pad={actionButtons.length ? 'large' : undefined}
             swapRatingPrice={layout === 'row'}
@@ -195,7 +200,7 @@ CommunityTile.propTypes = {
   noGallery: bool,
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']).isRequired,
-  size: oneOf(['regular', 'small']).isRequired,
+  type: oneOf(['list', 'map']).isRequired,
   lazyLoadImage: bool.isRequired,
   event: object,
 };
@@ -203,7 +208,7 @@ CommunityTile.propTypes = {
 CommunityTile.defaultProps = {
   actionButtons: [],
   layout: 'row',
-  size: 'regular',
+  type: 'list',
   lazyLoadImage: true,
   position: 'relative',
   borderRadius: 'small',
