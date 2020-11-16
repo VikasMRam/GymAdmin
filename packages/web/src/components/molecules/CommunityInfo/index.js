@@ -119,6 +119,18 @@ export default class CommunityInfo extends Component {
             size="caption"
             pad="small"
             clamped
+            css={type === 'map' ? css`
+              ${upTo('tablet', `
+                *:first-child {
+                  display: none;
+                }
+              `)}
+              ${startingWith('laptop', css`
+                *:first-child {
+                  display: none;
+                }
+              `)}
+            ` : null}
           >
             {capacity}
           </IconItem>
