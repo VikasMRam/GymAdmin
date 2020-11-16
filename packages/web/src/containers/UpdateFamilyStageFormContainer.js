@@ -95,7 +95,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
-      stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
+      stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
       rejectDescription, rejectReason, chosenDetails,
     } = data;
@@ -129,9 +129,13 @@ export default class UpdateFamilyStageFormContainer extends Component {
       const title = 'Stage Change';
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;
+        if (rejectNote) {
+          reason = `${lossReason}, ${rejectNote}`
+        }
         if (lostDescription) {
           reason = lostDescription;
-        } else if (PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(lossReason) && preferredLocation) {
+        }
+        if (PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(lossReason) && preferredLocation) {
           reason = `${lossReason}. Preferred in: ${preferredLocation.displayText}`;
         }
         note = `Stage changed from ${previousStage} to ${stage}. Closed Reason: ${reason}`;

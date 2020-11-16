@@ -5,7 +5,7 @@ describe('Marketplace Home Page', () => {
 
     cy.visit('/');
 
-    cy.contains('Find The Best Senior Living Near You');
+    cy.contains('Find The Best Assisted Living Near You');
 
     cy.get('div[class*=HomePage__SearchBoxWrapper]').within(() => {
       cy.get('input[class*=Input__StyledInput]')
