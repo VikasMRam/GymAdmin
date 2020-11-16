@@ -88,10 +88,10 @@ const FilterChoice = ({ type, filter, options, onChange, value = [], ...props })
     if (checked) {
       onChange(filter, value.filter(x => x !== optionValue));
     } else {
-      const previousValue = type === 'radio'
+      const currentValue = type === 'radio'
         ? []
-        : value;
-      onChange(filter, [...previousValue, optionValue]);
+        : [...value];
+      onChange(filter, [...currentValue, optionValue]);
     }
   }, [value, onChange]);
 

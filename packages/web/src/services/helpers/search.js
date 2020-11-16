@@ -28,6 +28,10 @@ const searchParamsWhitelist = [
   'toc',
   'state',
   'city',
+  'care-services',
+  'non-care-services',
+  'room-amenities',
+  'community-amenities',
   'communitySlug',
   'size',
   'budget',
@@ -191,17 +195,13 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   }
 
   let path = `/${toc}`;
+  const qsString = stringify(qs, { arrayFormat: 'comma' });
+  const qsPart = qsString ? `?${qsString}` : '';
   if (state && city && communitySlug) {
-    const qsString = stringify(qs);
-    const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}/${communitySlug}${qsPart}`;
   } else if (state && city) {
-    const qsString = objectToURLQueryParams(qs);
-    const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}${qsPart}`;
   } else if (state) {
-    const qsString = objectToURLQueryParams(qs);
-    const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}${qsPart}`;
   }
 

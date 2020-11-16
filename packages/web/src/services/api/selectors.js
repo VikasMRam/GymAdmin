@@ -89,7 +89,7 @@ export const twoSetsAreEqual = (a, b) => {
   return a === b;
 };
 
-export function getRequestInfo(state, request) {
+export function getRequestInfo(request, entities) {
   const error = request && request.error ? request.error : false;
   const hasStarted = hasRequestStarted(request);
   const isLoading = isRequestLoading(request);
@@ -100,8 +100,8 @@ export function getRequestInfo(state, request) {
     isInvalid: request?.invalid,
     hasFinished: hasStarted && !isLoading,
     hasFailed: !!error,
-    result: getRequestResult(state.api.entities, request),
-    normalized: getRequestResult(state.api.entities, request, true),
+    result: getRequestResult(entities, request),
+    normalized: getRequestResult(entities, request, true),
     headers: getRequestHeaders(request),
     meta: getRequestMeta(request),
     status: request?.status,
@@ -113,14 +113,10 @@ export function createMemoizedRequestInfoSelector() {
   let lastRequestInfo = null;
   let lastRequest;
 
-  return function getMemoizedRequestInfo(state, params = {}) {
-    const { call } = params;
-    const args = JSON.stringify(params.args);
-    const request = state.api.requests?.[call]?.[args];
-
+  return function getMemoizedRequestInfo(request, entities) {
     if (typeof lastRequest === 'undefined' || request !== lastRequest) {
       lastRequest = request;
-      lastRequestInfo = getRequestInfo(state, request);
+      lastRequestInfo = getRequestInfo(request, entities);
     }
 
     return lastRequestInfo;

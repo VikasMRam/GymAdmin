@@ -402,7 +402,7 @@ export const getOrigin = () => {
 };
 
 export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
-export const parseURLQueryParams = obj => parse(obj);
+export const parseURLQueryParams = obj => parse(obj, { arrayFormat: 'comma' });
 
 export const getStateAbbr = (state) => {
   if (state) {

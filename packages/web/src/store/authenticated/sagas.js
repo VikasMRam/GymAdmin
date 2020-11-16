@@ -7,7 +7,10 @@ import { createMemoizedRequestInfoSelector } from 'sly/web/services/api';
 
 
 const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
-const getUser = state => getMemoizedRequestInfo(state, { call: 'getUser', args: { id: 'me' } });
+const getUser = state => getMemoizedRequestInfo(
+  state.api.requests.['getUser']?.['{"id":"me"}'],
+  state.api.entities,
+);
 
 export function* authenticate(reason, options) {
   // check if there is an user

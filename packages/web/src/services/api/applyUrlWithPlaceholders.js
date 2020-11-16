@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-export default function applyUrlWithPlaceholders(url, placeholders) {
+export default function applyUrlWithPlaceholders(url, placeholders, options = { encode: true, arrayFormat: 'none' }) {
   const query = {};
 
   const completeUrl = Object.keys(placeholders).reduce((acc, key) => {
@@ -18,7 +18,7 @@ export default function applyUrlWithPlaceholders(url, placeholders) {
   }, url);
 
   if (Object.keys(query).length > 0) {
-    return `${completeUrl}?${queryString.stringify(query)}`;
+    return `${completeUrl}?${queryString.stringify(query, { arrayFormat: options.arrayFormat, encode: options.encode, })}`;
   }
 
   return completeUrl;
