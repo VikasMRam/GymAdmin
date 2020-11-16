@@ -1,6 +1,6 @@
 import { fitBounds } from 'google-map-react';
 
-const MIN_ZOOM = 6;
+const MIN_ZOOM = 11;
 const MAX_ZOOM = 17;
 
 // helper stuff
