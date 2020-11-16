@@ -18,7 +18,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Button, Block, Heading, Box, Hr } from 'sly/common/components/atoms';
+import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -60,7 +60,7 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
 // import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 // import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
-import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
+// import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 // import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
@@ -82,7 +82,7 @@ const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePict
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 // const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 // const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
-const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
+// const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 // const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 
@@ -265,6 +265,7 @@ export default class CommunityDetailPage extends Component {
       showDescription: true,
     };
 
+
     return (
       <>
         {getHelmetForCommunityPage(community, location)}
@@ -381,7 +382,11 @@ export default class CommunityDetailPage extends Component {
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
-
+                {rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.trustScore && rgsAux.rgsInfo.trustScore > 0 &&
+                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
+                }
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />

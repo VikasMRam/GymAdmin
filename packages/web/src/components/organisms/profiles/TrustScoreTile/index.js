@@ -23,11 +23,19 @@ const RotatedBlock = styled(Block)`
 
 const TrustScoreTile = ({ layout, community }) => {
   const { value, valueText, prop1, prop2, prop3, moreInfoText, licensingUrl } = getTrustScoreType(community, 'stateScore');
-  let imagePath = 'images/profiles/moderate-score.png';
-  if (value > 75) {
+  let imagePath = 'images/profiles/excellent-score.png';
+  let icon = 'check';
+  let iconP = 'primary';
+  if (value > 70 && value < 81) {
     imagePath = 'images/profiles/good-score.png';
-  } else if (value > 50) {
-    imagePath = 'images/profiles/moderate-score.png';
+  } else if (value > 50 && value < 71) {
+    imagePath = 'images/profiles/okay-score.png';
+    icon = 'close';
+    iconP = 'danger';
+  } else if (value < 51) {
+    imagePath = 'images/profiles/poor-score.png';
+    icon = 'close';
+    iconP = 'danger';
   }
   return (
     <Block
@@ -78,10 +86,11 @@ const TrustScoreTile = ({ layout, community }) => {
               {prop2}
             </IconItem>
             <IconItem
-              icon="check"
+              icon={icon}
               iconSize="body"
               size="body"
               pad="large"
+              iconPalette={iconP}
             >
               {prop3}
             </IconItem>
@@ -99,11 +108,13 @@ const TrustScoreTile = ({ layout, community }) => {
         marginBottom="regular"
       >
         {moreInfoText}
-      </Block>
-      <Block
-        marginBottom="regular"
-      >
-        <Link href={licensingUrl} to={licensingUrl}>Visit the state licensing authority for {community.name}</Link>
+        <Link
+          event={{ category: 'licensingAuthority', action: 'click', label: community.id, value: 0 }}
+          href={licensingUrl}
+          to={licensingUrl}
+        >
+          To learn more, visit the state licensing authority for {community.name}
+        </Link>
       </Block>
     </Block>
   );
