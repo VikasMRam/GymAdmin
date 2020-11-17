@@ -49,7 +49,7 @@ theme.sizes = {
     },
     home: {
       heroSearchBox: {
-        width: '30rem',   // 480px
+        width: '32rem',   // 512px
       },
       heroImage: {
         height: '40rem',   // 640px

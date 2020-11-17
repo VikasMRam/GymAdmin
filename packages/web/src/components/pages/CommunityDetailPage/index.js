@@ -18,7 +18,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
-import { Button, Block, Heading, Box, Hr } from 'sly/common/components/atoms';
+import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -60,10 +60,11 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
 // import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 // import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
-import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
+// import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 // import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
+import TrustScoreTile from 'sly/web/components/organisms/profiles/TrustScoreTile';
 
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -81,7 +82,7 @@ const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePict
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 // const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
 // const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
-const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
+// const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 // const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 
@@ -258,17 +259,12 @@ export default class CommunityDetailPage extends Component {
         ? 'Pricing and Floor Plans'
         : 'Pricing';
 
-    const showSimilarEarlier =
-      pricesList.length === 0 &&
-      floorPlans.length > 0 &&
-      address.city === 'Sacramento' &&
-      address.state === 'CA' &&
-      (!communityDescription || communityDescription === '');
     const similarCommunityStyle = {
       layout: 'column',
       imageSize: 'regular',
       showDescription: true,
     };
+
 
     return (
       <>
@@ -277,9 +273,9 @@ export default class CommunityDetailPage extends Component {
         <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
-          {/*{!bannerNotification && !isActiveAdult && partnerAgent && (*/}
-            {/*<BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom />*/}
-          {/*)}*/}
+          {/* {!bannerNotification && !isActiveAdult && partnerAgent && ( */}
+          {/* <BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom /> */}
+          {/* )} */}
           {bannerNotification && (
             <BannerNotification>
               {bannerNotification}
@@ -321,26 +317,7 @@ export default class CommunityDetailPage extends Component {
                       ))}
                     </StyledHeadingBoxSection>
                   )}
-                {showSimilarEarlier && (
-                  <StyledHeadingBoxSection
-                    heading={`Similar ${typeOfCare} Communities`}
-                    id="sticky-sidebar-boundary"
-                  >
-                    <TrackedSimilarCommunitiesContainer
-                      communities={similarProperties}
-                      communityStyle={similarCommunityStyle}
-                    />
-                    <BackToSearch>
-                      <Button
-                        href={getCitySearchUrl({ propInfo, address })}
-                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
-                        ghost
-                      >
-                        Communities In {address.city}
-                      </Button>
-                    </BackToSearch>
-                  </StyledHeadingBoxSection>
-                )}
+
                 {!isActiveAdult &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
@@ -405,7 +382,11 @@ export default class CommunityDetailPage extends Component {
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
-
+                {rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.trustScore && rgsAux.rgsInfo.trustScore > 0 &&
+                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
+                }
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
@@ -500,27 +481,25 @@ export default class CommunityDetailPage extends Component {
                   city={address.city}
                   name={name}
                 />
-                {!showSimilarEarlier && (
-                  <StyledHeadingBoxSection
-                    heading={`Similar ${typeOfCare} Communities`}
-                    id="sticky-sidebar-boundary"
-                    extraBottomMargin
-                  >
-                    <TrackedSimilarCommunitiesContainer
-                      communities={similarProperties}
-                      communityStyle={similarCommunityStyle}
-                    />
-                    <BackToSearch>
-                      <Button
-                        href={getCitySearchUrl({ propInfo, address })}
-                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
-                        ghost
-                      >
-                        Communities In {address.city}
-                      </Button>
-                    </BackToSearch>
-                  </StyledHeadingBoxSection>
-                )}
+                <StyledHeadingBoxSection
+                  heading={`Similar ${typeOfCare} Communities`}
+                  id="sticky-sidebar-boundary"
+                  extraBottomMargin
+                >
+                  <TrackedSimilarCommunitiesContainer
+                    communities={similarProperties}
+                    communityStyle={similarCommunityStyle}
+                  />
+                  <BackToSearch>
+                    <Button
+                      href={getCitySearchUrl({ propInfo, address })}
+                      event={{ action: 'click', category: 'backToSearch', label: community.id }}
+                      ghost
+                    >
+                      Communities In {address.city}
+                    </Button>
+                  </BackToSearch>
+                </StyledHeadingBoxSection>
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
