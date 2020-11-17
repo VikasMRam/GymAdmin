@@ -71,16 +71,18 @@ const CommunityTile = ({
         borderRadius="small"
         border="regular"
         borderPalette="grey.stroke"
-        gap="large"
+        gap={type === 'list' ? 'large' : 'regular'}
         dimensions={[type === 'list' ? COLUMN_LAYOUT_IMAGE_WIDTH : COLUMN_LAYOUT_IMAGE_WIDTH_SMALL, 'auto']}
         upToLaptop={type === 'list' ? null : {
           gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH} auto!important`,
+          gridGap: `${getKey('sizes.spacing.large')}!important`,
         }}
         // no column layout support below tablet
         upToTablet={type === 'list' ? {
           gridTemplateColumns: 'auto!important',
         } : {
           gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto!important`,
+          gridGap: `${getKey('sizes.spacing.regular')}!important`,
         }}
       >
         {!noGallery &&

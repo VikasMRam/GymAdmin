@@ -49,7 +49,7 @@ const StyledDiv = styled.div`
 
 const Avatar = ({ user, ...props }) =>
   user.picture ? (
-    <StyledImg src={user.picture.src} path={user.picture.path} title={user.name} {...props} />
+    <StyledImg src={user.picture.src} aspectRatio="1:1" path={user.picture.path} title={user.name} {...props} />
   ) : (
     <StyledDiv data-title={user.name} {...props}>
       {user.name.split(' ').map(n => n[0]).join('').slice(0, 2)}

@@ -297,7 +297,7 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
     const state = urlize(stateFull[0].long_name);
     const { lat, lng } = geometry.location;
     return {
-      toc: 'assisted-living',
+      toc: 'nursing-homes',
       state,
       city,
       latitude: lat(),
@@ -306,9 +306,9 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
   } else if (stateFull.length > 0) {
     const state = urlize(stateFull[0].long_name);
     return {
-      toc: 'assisted-living',
+      toc: 'nursing-homes',
       state,
     };
   }
-  return { toc: 'assisted-living' };
+  return { toc: 'nursing-homes' };
 };
