@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, node, object } from 'prop-types';
+import { string, node } from 'prop-types';
 
 import { Heading, Link, Grid, Block } from 'sly/common/components/atoms';
 
@@ -63,7 +63,7 @@ const mapTocToHeadingDesc = (toc) => {
   );
 };
 
-const SearchExploreTypes = ({ title, searchParams, ...props }) => {
+const SearchExploreTypes = ({ title, ...props }) => {
   const tocKeys = Object.keys(tocsHeadingDesc);
   const column1Keys = tocKeys.slice(0, tocKeys.length / 2);
   const column2Keys = tocKeys.slice(tocKeys.length  / 2);
@@ -74,10 +74,9 @@ const SearchExploreTypes = ({ title, searchParams, ...props }) => {
     <Block as="section" {...props}>
       <Heading level="subtitle" size="subtitle" pad="xLarge">{title}</Heading>
       <Grid
-        dimensions={['50%', '50%']}
         gap="xLarge"
         upToTablet={{
-          gridTemplateColumns: 'auto',
+          gridTemplateColumns: 'auto!important',
         }}
       >
         <Grid flow="row" gap="xLarge">
@@ -92,7 +91,6 @@ const SearchExploreTypes = ({ title, searchParams, ...props }) => {
 };
 
 SearchExploreTypes.propTypes = {
-  searchParams: object.isRequired,
   title: string.isRequired,
 };
 

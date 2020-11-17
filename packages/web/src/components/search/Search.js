@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo, useState, createRef } from 'react';
-import { arrayOf, func, string } from 'prop-types';
+import { arrayOf, func, string, object } from 'prop-types';
 
 import { getBoundsForSearchResults, findOptimalZoomForBounds } from './maps';
+import ExploreContainer from './ExploreContainer';
 
 import {
   TemplateHeader,
@@ -136,6 +137,7 @@ const Search = ({
             />
           ))}
         </Block>
+        {show === LIST && <ExploreContainer gridArea="explore" filters={currentFilters} />}
         <Block
           gridArea="map"
         >
@@ -191,6 +193,7 @@ Search.propTypes = {
   communities: arrayOf(coordPropType),
   onMapChange: func,
   selectedCommunity: coordPropType,
+  currentFilters: object,
 };
 
 export default Search;
