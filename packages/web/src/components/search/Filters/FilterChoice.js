@@ -97,7 +97,7 @@ const FilterChoice = ({ type, filter, options, onChange, value = [], ...props })
 
   return (
     <Block
-      padding="xLarge"
+      padding="xLarge 0"
     >
       {options.map(({ label, value: optionValue, description }) => {
         const Row = type === 'checkbox'

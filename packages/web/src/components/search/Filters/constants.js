@@ -1,7 +1,6 @@
 // filter types
 export const STATE = 'state';
 export const CITY = 'city';
-export const REGION = 'region';
 export const TOC = 'toc';
 export const SIZE = 'size';
 export const GUIDE = 'own-guide';

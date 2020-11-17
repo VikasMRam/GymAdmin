@@ -20,7 +20,6 @@ const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
     // used only to force different h{level} than default
     level={level}
     pad={getPad(size || level)}
-    marginBottom="xxLarge"
     {...props}
   />
 ))``;

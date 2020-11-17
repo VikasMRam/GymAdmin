@@ -4,12 +4,20 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import Search from 'sly/web/components/search/Search';
 import { getSearchParams, filterLinkPath } from 'sly/web/services/helpers/search';
+import { TOC, NH } from 'sly/web/components/search/Filters/constants';
 import careTypes from 'sly/web/constants/careTypes';
 
-const getApiFilters = (filters) => Object.entries(filters).reduce((acc, [key, value]) => {
-  acc[`filter[${key}]`] = encodeURIComponent(value);
-  return acc;
-}, {});
+const getApiFilters = (filters) => Object.entries(filters)
+// .filter(([key, value]) => {
+//     return !['city', 'state'].includes(key)
+//       && !(key === TOC && value === NH);
+//   })
+  .reduce((acc, [key, value]) => {
+    acc[`filter[${key}]`] = encodeURIComponent(value);
+    return acc;
+  }, {
+    //   'filter[geo]': '37.7749295,-122.4194155,10',
+  });
 
 export default function SearchContainer() {
   const location = useLocation();
@@ -18,7 +26,7 @@ export default function SearchContainer() {
   // const [kitchens, setKitchens] = useState([]);
   const currentFilters = getSearchParams(match, location);
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo } = usePrefetch('getSearchResources', request => request(apiFilters, { encode: false }));
+  const { requestInfo } = usePrefetch('getCommunitySearch', request => request(apiFilters, { encode: false }));
 
   const [communities, setCommunities] = useState(requestInfo.normalized);
   useEffect(() => {

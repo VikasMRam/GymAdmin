@@ -8,6 +8,7 @@ import {
   withSpacing,
   withText,
   withClamping,
+  withDisplay,
 } from 'sly/common/components/helpers';
 
 const H1 = styled.h1``;
@@ -29,6 +30,7 @@ const HeadingRoot = styled(({ innerRef, ...props }) => {
   ${withColor}
   ${withAlign}
   ${withClamping}
+  ${withDisplay}
 `;
 
 HeadingRoot.propTypes = {

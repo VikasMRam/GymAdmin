@@ -1,0 +1,32 @@
+
+SEARCH / SEO LINK
+#################
+
+This can be done via searchbox or seo link
+
+default filters:
+  - toc? (null == nursing-homes)
+  - state
+  - city
+
+NEAR ME / MAP
+#############
+
+default filters:
+  - geo (lat, lng, radius?)
+  - near-me
+
+BOTH
+####
+
+optional filters:
+  - size
+  - budget
+  - care-services
+  - non-care-services
+  - room-amenities
+  - community-amenities
+
+optional sort:
+  -
+
