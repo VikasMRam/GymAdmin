@@ -384,7 +384,7 @@ export default class CommunityDetailPage extends Component {
                 </StyledHeadingBoxSection>
                 {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
                 <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
-                  <TrustScoreTile showIf={rgsAux && rgsAux.rgsInfo && (rgsAux.rgsInfo.trustScore && rgsAux.rgsInfo.trustScore > 0)} community={community} />
+                  <TrustScoreTile community={community} />
                 </StyledHeadingBoxSection>
                 }
                 {partnerAgent && (
