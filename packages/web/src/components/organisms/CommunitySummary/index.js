@@ -88,13 +88,13 @@ const CommunitySummary = ({
   goToReviews, searchParams,
 }) => {
   const {
-    address, name, propRatings, propInfo, twilioNumber, partnerAgents,
+    address, name, propRatings, propInfo, twilioNumber, partnerAgents, care,
   } = community;
   const {
     line1, line2, city, state, zip, zipcode
   } = address;
   const {
-    communityPhone, typeCare, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
+    communityPhone, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -112,7 +112,7 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const careTypes = getCareTypes(state, typeCare);
+  const careTypes = getCareTypes(state, care);
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 

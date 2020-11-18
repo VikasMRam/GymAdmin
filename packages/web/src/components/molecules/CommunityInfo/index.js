@@ -40,7 +40,7 @@ export default class CommunityInfo extends Component {
     const { propInfo = {}, propRatings, communitySize } = community;
 
     const { reviewsValue, numReviews } = propRatings || community;
-    const typeCare = propInfo.typeCare || community.typeCare;
+    const typeCare = community.care || community.typeCare;
     const capacity = propInfo.capacity || community.capacity;
     const placeholder = communityDefaultIcon[communitySize || 'up to 20 Beds'];
 
@@ -89,18 +89,21 @@ export default class CommunityInfo extends Component {
         <div>
           {header}
           {livingTypeComponent}
-          <IconItem
-            icon="family"
-            iconPalette={inverted ? 'white' : 'slate'}
-            iconSize="body"
-            title={capacity}
-            palette={inverted ? 'white' : 'slate'}
-            size="caption"
-            pad="small"
-            clamped
-          >
-            {capacity}
-          </IconItem>
+          {capacity !== "" &&
+            <IconItem
+              icon="family"
+              iconPalette={inverted ? 'white' : 'slate'}
+              iconSize="body"
+              title={capacity}
+              palette={inverted ? 'white' : 'slate'}
+              size="caption"
+              pad="small"
+              clamped
+            >
+              {capacity}
+            </IconItem>
+          }
+
         </div>
         <Block
           display="flex"

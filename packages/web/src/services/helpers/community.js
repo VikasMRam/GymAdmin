@@ -5,12 +5,9 @@ import { stateNames } from 'sly/web/services/helpers/url';
 import { formatDate } from 'sly/web/services/helpers/date';
 
 export const getIsCCRC = (community) => {
-  const { propInfo } = community;
-  if (propInfo) {
-    const { typeCare } = propInfo;
-    if (typeCare) {
-      return typeCare.includes('Continuing Care Retirement Community(CCRC)');
-    }
+  const { care } = community;
+  if (care) {
+    return care.includes('Continuing Care Retirement Community(CCRC)');
   }
   return false;
 };
@@ -24,23 +21,17 @@ export const getHasContract = (community) => {
 };
 
 export const getIsSNF = (community) => {
-  const { propInfo } = community;
-  if (propInfo) {
-    const { typeCare: typeCares } = propInfo;
-    if (typeCares) {
-      return typeCares.includes('Skilled Nursing Facility');
-    }
+  const { care } = community;
+  if (care) {
+    return care.includes('Skilled Nursing Facility');
   }
   return false;
 };
 
 export const getIsActiveAdult = (community) => {
-  const { propInfo } = community;
-  if (propInfo) {
-    const { typeCare: typeCares } = propInfo;
-    if (typeCares) {
-      return typeCares.length === 1 && typeCares.includes('Active Adult (55+)');
-    }
+  const { care } = community;
+  if (care) {
+    return care.includes('Active Adult Communities(55+)');
   }
   return false;
 };
