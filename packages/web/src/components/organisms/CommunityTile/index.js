@@ -27,7 +27,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, ...props
 }) => {
   const {
     name, gallery, communitySize, plusCategory,
@@ -60,7 +60,11 @@ const CommunityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'regular' : 'large';
-  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
+  imageAspectRatio = type === 'map' ? imageAspectRatio || '1:1' : imageAspectRatio;
+  imageMargin = layout === 'column' ? [imageMargin || 0, spacing, imageMargin || 0, imageMargin || 0] : null;
+  if (type === 'map') {
+    imageMargin = spacing;
+  }
 
   return (
     <Block
@@ -110,7 +114,7 @@ const CommunityTile = ({
             sizes={mediaSizes}
             aspectRatio={imageAspectRatio}
             borderRadius="small"
-            margin={layout === 'column' ? spacing : null}
+            margin={imageMargin}
             snap={layout === 'row' ? 'bottom' : null}
             loading={loading}
             upToTablet={type === 'map' ? null : {
@@ -210,6 +214,7 @@ CommunityTile.propTypes = {
   lazyLoadImage: bool.isRequired,
   event: object,
   imageAspectRatio: string.isRequired,
+  imageMargin: string,
 };
 
 CommunityTile.defaultProps = {

@@ -20,13 +20,13 @@ const IconWrapper = styled.div`
 
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
-  textPalette, textVariation, iconRightMarginSpacing, borderPalette, borderVariation, ...props
+  textPalette, textVariation, iconRightMarginSpacing, borderPalette, borderVariation, clamped, ...props
 }) => (
-  <Block {...props}>
+  <Block {...props} clamped={clamped}>
     <IconWrapper borderless={borderless} borderPalette={borderPalette} borderVariation={borderVariation} iconRightMarginSpacing={iconRightMarginSpacing}>
       <Icon icon={icon} size={iconSize} palette={iconPalette} variation={iconVariation} />
     </IconWrapper>
-    <Block size={size} palette={textPalette} variation={textVariation}>{children}</Block>
+    <Block size={size} palette={textPalette} variation={textVariation} clamped={clamped}>{children}</Block>
   </Block>
 );
 
@@ -43,6 +43,7 @@ IconItem.propTypes = {
   iconRightMarginSpacing: string,
   borderPalette: palettePropType,
   borderVariation: variationPropType,
+  clamped: bool,
 };
 
 IconItem.defaultProps = {
