@@ -14,10 +14,10 @@ import communityPropType from 'sly/common/propTypes/community';
 const nonCareServicesOptions = [
   { value: 'Housekeeping and linen services', label: 'Housekeeping and linen services' },
   { value: 'Transportation arrangement (non-medical)', label: 'Transportation arrangement (non-medical)' },
-  { value: 'Community Operated Transportation', label: 'Community operated transportation' },
+  { value: 'Community operated transportation', label: 'Community operated transportation' },
   { value: 'Fitness programs', label: 'Fitness programs' },
   { value: 'Concierge services', label: 'Concierge services' },
-  { value: 'Scheduled Daily Activities', label: 'Scheduled daily activities' },
+  { value: 'Scheduled daily activities', label: 'Scheduled daily activities' },
   { value: 'Community-sponsored activities', label: 'Community-sponsored activities' },
   { value: 'Resident-run activities', label: 'Resident-run activities' },
   { value: 'Planned day trips', label: 'Planned day trips' },
@@ -27,7 +27,7 @@ const nonCareServicesOptions = [
 ];
 
 const familyOvernightOptions = [
-  { value: 'Family Overnight Stay Rooms', label: 'Family overnight stay rooms' },
+  { value: 'Family overnight stay rooms', label: 'Family overnight stay rooms' },
 ];
 
 const amenitiesOptions = [
@@ -50,7 +50,7 @@ const communitySpaceOptions = [
   { value: 'Outdoor space', label: 'Outdoor space' },
   { value: 'Outdoor patio', label: 'Outdoor patio' },
   { value: 'Garden', label: 'Garden' },
-  { value: 'Small Library', label: 'Small Library' },
+  { value: 'Small library', label: 'Small library' },
   { value: 'Gaming room', label: 'Gaming room' },
   { value: 'Computer center', label: 'Computer center' },
   { value: 'Fitness room', label: 'Fitness room' },
@@ -61,7 +61,7 @@ const communitySpaceOptions = [
   { value: 'Religious/meditation center', label: 'Religious/meditation center' },
   { value: 'Located close to shopping centers', label: 'Located close to shopping centers' },
   { value: 'Located close to restaurants', label: 'Located close to restaurants' },
-  { value: 'Pet Friendly', label: 'Pet Friendly' },
+  { value: 'Pet friendly', label: 'Pet friendly' },
 ];
 
 const careServicesOptions = [
