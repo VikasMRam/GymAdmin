@@ -25,6 +25,7 @@ export default function SearchContainer() {
   const match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state/:city`);
   // const [kitchens, setKitchens] = useState([]);
   const currentFilters = getSearchParams(match, location);
+
   const apiFilters = getApiFilters(currentFilters);
   const { requestInfo } = usePrefetch('getSearchResources', request => request(currentFilters));
 

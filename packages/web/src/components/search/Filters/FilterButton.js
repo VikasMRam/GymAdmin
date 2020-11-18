@@ -1,17 +1,20 @@
 import React, { forwardRef } from 'react';
-import { node } from 'prop-types';
+import { bool, node, number } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import {
   withBorder,
+  withColor, withDimensions,
   withDisplay,
   withElementSize,
   withMedia,
-  withSpacing,
+  withSpacing, withText,
 } from 'sly/common/components/helpers';
 import { palette, size } from 'sly/common/components/themes';
 
 const Button = styled.div(
+  withText,
+  withColor,
   withDisplay,
   withBorder,
   withElementSize,
@@ -29,11 +32,36 @@ const Button = styled.div(
   `,
 );
 
-const FilterButton = forwardRef(({ children, ...props }, ref) => {
+const Number = styled.span(
+  withSpacing,
+  withDisplay,
+  withColor,
+  css`
+    text-align: center;
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+  `,
+);
+
+Number.defaultProps = {
+  marginRight: 'regular',
+  palette: 'white.base',
+  background: 'primary.base',
+};
+
+const FilterButton = forwardRef(({
+  number = 0,
+  selected,
+  children,
+  ...props
+}, ref) => {
   return (
     <Button
       ref={ref}
       display="flex"
+      background={(number || selected) && 'primary.lighter-90'}
+      size="caption"
       alignItems="center"
       border="regular"
       borderRadius="large"
@@ -41,12 +69,18 @@ const FilterButton = forwardRef(({ children, ...props }, ref) => {
       padding="0 large"
       {...props}
     >
+      {number > 0 && (
+        <Number>{number}</Number>
+      )}
+      {' '}
       {children}
     </Button>
   );
 });
 
 FilterButton.propTypes = {
+  selected: bool,
+  number,
   children: node,
 };
 

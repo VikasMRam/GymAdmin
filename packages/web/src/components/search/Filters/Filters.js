@@ -1,5 +1,5 @@
 import React, { useCallback, useState, forwardRef, useMemo } from 'react';
-import { bool, func, string } from 'prop-types';
+import { bool, func, node, object, string } from 'prop-types';
 import styled from 'styled-components';
 
 import {
@@ -38,6 +38,12 @@ import Collapsible from 'sly/web/components/search/Filters/Collapsible';
 const TOC_OPTIONS = Object.values(TOCS);
 const SIZE_OPTIONS = Object.values(SIZES);
 const BUDGET_OPTIONS = Object.values(BUDGETS);
+
+const addFilterReducer = (acc, [_, value]) => {
+  return Array.isArray(value)
+    ? acc + value.length
+    : (value && (acc + 1) || acc);
+};
 
 const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => {
   if (!showIf) {
@@ -108,11 +114,34 @@ const Filters = forwardRef(({
     return null;
   }, [breakpoint, isOpen, priceButtonCoords, sizeButtonCoords]);
 
+  const title = useMemo(() => {
+    if (breakpoint?.isMobile()) {
+      return 'Filters';
+    }
+    switch (isOpen) {
+      case TOC: return 'Filter by community type';
+      case MORE_FILTERS: return 'More filters';
+      default: return null;
+    }
+  }, [breakpoint, isOpen]);
+
   const onTocFilterChange = useCallback((filter, value) => {
     onFilterChange(filter, value.length === 0 ? [NH] : value);
   }, [currentFilters]);
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
+
+  const totalNumberOfFilters = Object.entries(currentFilters).reduce(addFilterReducer, 0);
+  const totalMoreFilters = Object.entries(currentFilters).filter(([key]) => [
+    CARE_SERVICES,
+    NON_CARE_SERVICES,
+    ROOM_AMENITIES,
+    COMMUNITY_AMENITIES,
+  ].includes(key))
+    .reduce(addFilterReducer, 0);
+  const currentTocText = currentFilters[TOC] === 'nursing-homes'
+    ? ''
+    : TOCS[currentFilters[TOC]].label;
 
   return (
     <>
@@ -122,9 +151,9 @@ const Filters = forwardRef(({
         css={popOverCss}
         onClose={closeModal}
       >
-        {!popOverCss && (
+        {title && (
           <HeaderWithClose onClose={closeModal}>
-            Filters
+            {title}
           </HeaderWithClose>
         )}
         <ModalBody padding="0 xLarge">
@@ -241,14 +270,16 @@ const Filters = forwardRef(({
         <FilterButton
           upTo="tablet"
           onClick={openFilters}
+          number={totalNumberOfFilters}
         >
           Filters
         </FilterButton>
         <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(TOC)}
+          selected={currentTocText}
         >
-          Community type
+          {currentTocText || 'Community type'}
         </FilterButton>
         <FilterButton
           ref={sizeButtonRef}
@@ -267,6 +298,7 @@ const Filters = forwardRef(({
         <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(MORE_FILTERS)}
+          number={totalMoreFilters}
         >
           More filters
         </FilterButton>
@@ -281,6 +313,9 @@ Filters.propTypes = {
   isOpen: bool,
   nextShow: string,
   toggleShow: func,
+  onFilterChange: func,
+  currentFilters: object,
+  children: node,
 };
 
 export default Filters;
