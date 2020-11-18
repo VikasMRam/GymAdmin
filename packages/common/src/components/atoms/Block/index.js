@@ -18,6 +18,7 @@ import {
   withCursor,
   withWidth,
   withHeight,
+  withLineHeight,
   withShadow,
   withMedia,
 } from 'sly/common/components/helpers';
@@ -41,6 +42,7 @@ const Block = styled(({ showIf, ...props }) => {
   ${withShadow}
   ${withWidth}
   ${withHeight}
+  ${withLineHeight}
   // put withDisplay after other styles for applied display styles to have more priority
   ${withDisplay}
   // put withMedia first for media query styles to have first priority
