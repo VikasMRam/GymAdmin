@@ -1,5 +1,3 @@
-export const MORE_FILTERS = 'moreFilters';
-
 export const LIST = 'list';
 export const MAP = 'map';
 

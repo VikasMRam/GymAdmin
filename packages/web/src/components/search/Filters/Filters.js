@@ -18,6 +18,8 @@ import {
   NON_CARE_SERVICES_OPTIONS,
   ROOM_AMENITIES_OPTIONS,
   COMMUNITY_AMENITIES_OPTIONS,
+  MORE_FILTERS,
+  ALL_FILTERS,
 } from './constants';
 import FilterButton from './FilterButton';
 import FilterChoice from './FilterChoice';
@@ -29,7 +31,6 @@ import Modal, {
   ModalBody,
 } from 'sly/web/components/atoms/NewModal';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
-import { MORE_FILTERS } from 'sly/web/components/search/constants';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
@@ -39,11 +40,18 @@ const TOC_OPTIONS = Object.values(TOCS);
 const SIZE_OPTIONS = Object.values(SIZES);
 const BUDGET_OPTIONS = Object.values(BUDGETS);
 
-const addFilterReducer = (acc, [_, value]) => {
+const addFilterReducer = (acc, [key, value]) => {
+  if (key === TOC && value === NH) {
+    return acc;
+  }
   return Array.isArray(value)
     ? acc + value.length
     : (value && (acc + 1) || acc);
 };
+
+const filterFilters = (currentFilters, list) => Object.entries(currentFilters)
+  .filter(([key]) => list.includes(key))
+  .reduce(addFilterReducer, 0);
 
 const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => {
   if (!showIf) {
@@ -131,17 +139,13 @@ const Filters = forwardRef(({
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
 
-  const totalNumberOfFilters = Object.entries(currentFilters).reduce(addFilterReducer, 0);
-  const totalMoreFilters = Object.entries(currentFilters).filter(([key]) => [
-    CARE_SERVICES,
-    NON_CARE_SERVICES,
-    ROOM_AMENITIES,
-    COMMUNITY_AMENITIES,
-  ].includes(key))
-    .reduce(addFilterReducer, 0);
+  const totalNumberOfFilters = filterFilters(currentFilters, ALL_FILTERS);
+  const totalMoreFilters = filterFilters(currentFilters, MORE_FILTERS);
   const currentTocText = currentFilters[TOC] === 'nursing-homes'
     ? ''
     : TOCS[currentFilters[TOC]].label;
+  const currentSizeText = SIZES[currentFilters[SIZE]]?.label;
+  const currentBudgetText = BUDGETS[currentFilters[BUDGET]]?.label;
 
   return (
     <>
@@ -285,15 +289,17 @@ const Filters = forwardRef(({
           ref={sizeButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(SIZE)}
+          selected={currentSizeText}
         >
-          Size
+          {currentSizeText || 'Size'}
         </FilterButton>
         <FilterButton
           ref={priceButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(BUDGET)}
+          selected={currentBudgetText}
         >
-          Price
+          {currentBudgetText || 'Price'}
         </FilterButton>
         <FilterButton
           startingWith="tablet"
