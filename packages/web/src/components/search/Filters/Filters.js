@@ -23,7 +23,7 @@ import FilterButton from './FilterButton';
 import FilterChoice from './FilterChoice';
 
 import Block from 'sly/common/components/atoms/Block';
-import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
+import Modal, { HeaderWithClose, ModalBody } from 'sly/web/components/atoms/NewModal';
 import CollapsibleSection
   from 'sly/web/components/molecules/CollapsibleSection';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
@@ -36,12 +36,16 @@ const TOC_OPTIONS = Object.values(TOCS);
 const SIZE_OPTIONS = Object.values(SIZES);
 const BUDGET_OPTIONS = Object.values(BUDGETS);
 
-const CollapsibleSectionPopoverSwitch = ({ isPopOver, children, showIf, ...props }) => {
+const CollapsibleSectionPopoverSwitch = ({ isPopOver, showIf, children, ...props }) => {
   if (!showIf) {
     return null;
   }
   if (isPopOver) {
-    return children;
+    return (
+      <Block {...props}>
+        {children}
+      </Block>
+    );
   }
   return (
     <CollapsibleSection {...props}>
@@ -55,7 +59,9 @@ const ModalPopoverSwitch = ({ isPopOver, children, ...props }) => {
     ? Popover
     : Modal;
   return (
-    <Component {...props}>
+    <Component
+      {...props}
+    >
       {children}
     </Component>
   );
@@ -99,105 +105,120 @@ const Filters = forwardRef(({
 
   return (
     <>
-      <ModalPopoverSwitch isOpen={!!isOpen} isPopOver={!!popOverCss} css={popOverCss} onClose={closeModal}>
+      <ModalPopoverSwitch
+        isOpen={!!isOpen}
+        isPopOver={!!popOverCss}
+        css={popOverCss}
+        onClose={closeModal}
+      >
         {!popOverCss && (
           <HeaderWithClose onClose={closeModal}>
             Filters
           </HeaderWithClose>
         )}
-        <CollapsibleSection
-          showIf={showIf(TOC)}
-          title="Type of community"
-          borderless
-        >
-          <FilterChoice
-            type="radio"
-            options={TOC_OPTIONS}
-            filter={TOC}
-            onChange={onTocFilterChange}
-            value={currentFilters[TOC]}
-          />
-        </CollapsibleSection>
-        <CollapsibleSectionPopoverSwitch
-          isPopOver={!!popOverCss}
-          showIf={showIf(SIZE)}
-          title="Size"
-          borderless
-        >
-          <FilterChoice
-            type="radio"
-            options={SIZE_OPTIONS}
-            filter={SIZE}
-            onChange={onFilterChange}
-            value={currentFilters[SIZE]}
-          />
-        </CollapsibleSectionPopoverSwitch>
-        <CollapsibleSectionPopoverSwitch
-          isPopOver={!!popOverCss}
-          showIf={showIf(BUDGET)}
-          title="Price"
-          borderless
-        >
-          <FilterChoice
-            type="radio"
-            options={BUDGET_OPTIONS}
-            filter={BUDGET}
-            onChange={onFilterChange}
-            value={currentFilters[BUDGET]}
-          />
-        </CollapsibleSectionPopoverSwitch>
-        <CollapsibleSection
-          showIf={showIf(MORE_FILTERS)}
-          title="Care services"
-          borderless
-        >
-          <FilterChoice
-            type="checkbox"
-            options={CARE_SERVICES_OPTIONS}
-            filter={CARE_SERVICES}
-            onChange={onFilterChange}
-            value={currentFilters[CARE_SERVICES]}
-          />
-        </CollapsibleSection>
-        <CollapsibleSection
-          showIf={showIf(MORE_FILTERS)}
-          title="Non-care services"
-          borderless
-        >
-          <FilterChoice
-            type="checkbox"
-            options={NON_CARE_SERVICES_OPTIONS}
-            filter={NON_CARE_SERVICES}
-            onChange={onFilterChange}
-            value={currentFilters[NON_CARE_SERVICES]}
-          />
-        </CollapsibleSection>
-        <CollapsibleSection
-          showIf={showIf(MORE_FILTERS)}
-          title="Amenities"
-          borderless
-        >
-          <FilterChoice
-            type="checkbox"
-            options={ROOM_AMENITIES_OPTIONS}
-            filter={ROOM_AMENITIES}
-            onChange={onFilterChange}
-            value={currentFilters[ROOM_AMENITIES]}
-          />
-        </CollapsibleSection>
-        <CollapsibleSection
-          showIf={showIf(MORE_FILTERS)}
-          title="Community space"
-          borderless
-        >
-          <FilterChoice
-            type="checkbox"
-            options={COMMUNITY_AMENITIES_OPTIONS}
-            filter={COMMUNITY_AMENITIES}
-            onChange={onFilterChange}
-            value={currentFilters[COMMUNITY_AMENITIES]}
-          />
-        </CollapsibleSection>
+        <ModalBody>
+          <CollapsibleSectionPopoverSwitch
+            isPopOver={breakpoint?.atLeastLaptop()}
+            showIf={showIf(TOC)}
+            title="Type of community"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="radio"
+              options={TOC_OPTIONS}
+              filter={TOC}
+              onChange={onTocFilterChange}
+              value={currentFilters[TOC]}
+            />
+          </CollapsibleSectionPopoverSwitch>
+          <CollapsibleSectionPopoverSwitch
+            isPopOver={!!popOverCss}
+            showIf={showIf(SIZE)}
+            title="Size"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="radio"
+              options={SIZE_OPTIONS}
+              filter={SIZE}
+              onChange={onFilterChange}
+              value={currentFilters[SIZE]}
+            />
+          </CollapsibleSectionPopoverSwitch>
+          <CollapsibleSectionPopoverSwitch
+            isPopOver={!!popOverCss}
+            showIf={showIf(BUDGET)}
+            title="Price"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="radio"
+              options={BUDGET_OPTIONS}
+              filter={BUDGET}
+              onChange={onFilterChange}
+              value={currentFilters[BUDGET]}
+            />
+          </CollapsibleSectionPopoverSwitch>
+          <CollapsibleSection
+            showIf={showIf(MORE_FILTERS)}
+            title="Care services"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="checkbox"
+              options={CARE_SERVICES_OPTIONS}
+              filter={CARE_SERVICES}
+              onChange={onFilterChange}
+              value={currentFilters[CARE_SERVICES]}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection
+            showIf={showIf(MORE_FILTERS)}
+            title="Non-care services"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="checkbox"
+              options={NON_CARE_SERVICES_OPTIONS}
+              filter={NON_CARE_SERVICES}
+              onChange={onFilterChange}
+              value={currentFilters[NON_CARE_SERVICES]}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection
+            showIf={showIf(MORE_FILTERS)}
+            title="Amenities"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="checkbox"
+              options={ROOM_AMENITIES_OPTIONS}
+              filter={ROOM_AMENITIES}
+              onChange={onFilterChange}
+              value={currentFilters[ROOM_AMENITIES]}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection
+            showIf={showIf(MORE_FILTERS)}
+            title="Community space"
+            size="small"
+            borderless
+          >
+            <FilterChoice
+              type="checkbox"
+              options={COMMUNITY_AMENITIES_OPTIONS}
+              filter={COMMUNITY_AMENITIES}
+              onChange={onFilterChange}
+              value={currentFilters[COMMUNITY_AMENITIES]}
+            />
+          </CollapsibleSection>
+        </ModalBody>
         <Block
           display="flex"
           padding="large xLarge"

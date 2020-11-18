@@ -38,6 +38,15 @@ const Search = ({
     height: headerHeight = 80,
   }] = useDimensions();
 
+  const [filtersRef, {
+    height: filtersHeight = 84,
+  }] = useDimensions();
+
+  const { upToLaptopOffset, startingWithLaptopOffset } = useMemo(() => ({
+    upToLaptopOffset: filtersHeight + headerHeight,
+    startingWithLaptopOffset: headerHeight,
+  }), [filtersHeight, headerHeight]);
+
   const [show, setShow] = useState(LIST);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
 
@@ -50,15 +59,6 @@ const Search = ({
   const toggleShow = useCallback(() => {
     setShow(nextShow);
   }, [nextShow]);
-
-  const [filtersRef, {
-    height: filtersHeight = 84,
-  }] = useDimensions();
-
-  const { upToLaptopOffset, startingWithLaptopOffset } = useMemo(() => ({
-    upToLaptopOffset: filtersHeight + headerHeight,
-    startingWithLaptopOffset: headerHeight,
-  }), [filtersHeight, headerHeight]);
 
   const onMarkerClick = (key) => {
     setSelectedCommunity(key);
