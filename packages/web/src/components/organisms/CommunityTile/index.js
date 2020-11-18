@@ -27,12 +27,15 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, ...props
 }) => {
   const {
-    name, gallery = {}, communitySize, plusCategory,
+    name, gallery, communitySize, plusCategory,
   } = community;
-  const { images = [] } = gallery;
+  let images = [];
+  if (gallery) {
+    ({ images = [] } = gallery);
+  }
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'primary' : 'white';
@@ -57,6 +60,7 @@ const CommunityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'regular' : 'large';
+  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
 
   return (
     <Block
@@ -104,7 +108,7 @@ const CommunityTile = ({
             src={imageSrc}
             placeholder={placeholder}
             sizes={mediaSizes}
-            aspectRatio={layout === 'column' ? '1:1' : '16:9'}
+            aspectRatio={imageAspectRatio}
             borderRadius="small"
             margin={layout === 'column' ? spacing : null}
             snap={layout === 'row' ? 'bottom' : null}
@@ -205,6 +209,7 @@ CommunityTile.propTypes = {
   type: oneOf(['list', 'map']).isRequired,
   lazyLoadImage: bool.isRequired,
   event: object,
+  imageAspectRatio: string.isRequired,
 };
 
 CommunityTile.defaultProps = {
@@ -214,6 +219,7 @@ CommunityTile.defaultProps = {
   lazyLoadImage: true,
   position: 'relative',
   borderRadius: 'small',
+  imageAspectRatio: '3:2',
 };
 
 export default CommunityTile;

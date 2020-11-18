@@ -1,8 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import PlusBadge from 'sly/web/components/molecules/PlusBadge';
+import PlusBadge from '.';
 
 storiesOf('Molecules|PlusBadge', module)
-  .add('default', () => <PlusBadge  />)
+  .add('default', () => <PlusBadge />)
+  .add('fullWidth', () => <PlusBadge fullWidth />)
   .add('plusCategory', () => <PlusBadge plusCategory="best value" />);
