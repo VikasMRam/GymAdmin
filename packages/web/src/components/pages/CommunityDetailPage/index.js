@@ -309,7 +309,7 @@ export default class CommunityDetailPage extends Component {
                             icon="check"
                             iconPalette="primary"
                             iconVariation="base"
-                            borderless={false}
+                            borderless
                           >
                             {item}
                           </IconItem>
@@ -382,7 +382,7 @@ export default class CommunityDetailPage extends Component {
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
-                {rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.trustScore && rgsAux.rgsInfo.trustScore > 0 &&
+                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
                 <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
                   <TrustScoreTile community={community} />
                 </StyledHeadingBoxSection>
