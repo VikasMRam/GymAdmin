@@ -3,7 +3,6 @@ import { oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { upTo, startingWith } from 'sly/common/components/helpers';
-import Block from 'sly/common/components/atoms/Block';
 import { withSpacing, withMedia, withDisplay, withColor, withElementSize, withText } from 'sly/common/components/helpers';
 import Radio from 'sly/web/components/molecules/Radio';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
@@ -96,9 +95,7 @@ const FilterChoice = ({ type, filter, options, onChange, value = [], ...props })
   }, [value, onChange]);
 
   return (
-    <Block
-      padding="xLarge 0"
-    >
+    <>
       {options.map(({ label, value: optionValue, description }) => {
         const Row = type === 'checkbox'
           ? CheckboxRow
@@ -114,7 +111,7 @@ const FilterChoice = ({ type, filter, options, onChange, value = [], ...props })
           />
         );
       })}
-    </Block>
+    </>
   );
 };
 

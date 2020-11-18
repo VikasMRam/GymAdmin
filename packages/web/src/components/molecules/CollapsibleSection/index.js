@@ -64,6 +64,7 @@ const CollapsibleSection = ({
   size,
   innerRef,
   className,
+  borderBottom,
   headingWeight,
   borderless,
   showIf,
@@ -90,6 +91,7 @@ const CollapsibleSection = ({
       as={Block}
       collapsed={collapsed}
       borderless={borderless}
+      borderBottom={borderBottom}
       ref={innerRef}
       showIf={showIf}
       className={className}

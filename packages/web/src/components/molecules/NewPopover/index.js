@@ -1,15 +1,24 @@
 import React, { useRef, useCallback, useLayoutEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { bool, func, node } from 'prop-types';
 
-import { withShadow } from 'sly/common/components/helpers';
+import { withShadow, withBorder } from 'sly/common/components/helpers';
 
-const PopoverBlock = styled.div`
-  background: white;
-  width: 360px;
-  z-index: 1000;
-  ${withShadow}
-`;
+const PopoverBlock = styled.div(
+  withShadow,
+  withBorder,
+  css`
+    background: white;
+    width: 360px;
+    z-index: 100;
+    border-radius: 4px;
+  `,
+);
+
+PopoverBlock.defaultProps = {
+  shadow: 'regular',
+  border: 'regular',
+};
 
 const Popover = ({ onClose, isOpen, children, ...props }) => {
   const blockRef = useRef();
@@ -41,9 +50,6 @@ const Popover = ({ onClose, isOpen, children, ...props }) => {
   return (
     <PopoverBlock
       ref={blockRef}
-      shadowBlur="regular"
-      shadowSpread="tiny"
-      shadowVOffset="small"
       {...props}
     >
       {children}

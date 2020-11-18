@@ -57,6 +57,7 @@ export const HeaderWithClose = forwardRef(({ children, icon, onClose, ...props }
     flexShrink="0"
     padding="0 xLarge"
     height="76px"
+    borderBottom="regular"
     {...props}
   >
     {icon && (
@@ -108,16 +109,15 @@ ModalBody.defaultProps = {
   padding: 'xLarge',
 };
 
-export const ModalActions = styled(Block)`
-  > * {
-    margin-left: ${size('spacing.large')};
-  }
-`;
-
-ModalActions.defaultProps = {
-  padding: [0, 'xLarge', 'xLarge'],
-  align: 'right',
-};
+export const ModalActions = forwardRef((props, ref) => (
+  <Block
+    ref={ref}
+    display="flex"
+    padding="large xLarge"
+    borderTop="regular"
+    {...props}
+  />
+));
 
 const PORTAL_ELEMENT_CLASS = 'modal-portal';
 let instanceNumber = 0;

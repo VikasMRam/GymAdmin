@@ -26,7 +26,7 @@ export default function SearchContainer() {
   // const [kitchens, setKitchens] = useState([]);
   const currentFilters = getSearchParams(match, location);
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo } = usePrefetch('getCommunitySearch', request => request(apiFilters, { encode: false }));
+  const { requestInfo } = usePrefetch('getSearchResources', request => request(currentFilters));
 
   const [communities, setCommunities] = useState(requestInfo.normalized);
   useEffect(() => {
