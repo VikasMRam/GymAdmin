@@ -17,13 +17,25 @@ export const shouldShowZillowSearchAd = (toc) => {
 
 export const  shouldShowZillowProfileAd = (community) => {
   // return true;
+  // S1303 : Zillow Ad Tiles on CCRC Do Not Send List
+  // https://airtable.com/tblt2MRAZThT31Ee9/viwlPQXuHxbH2unIj/recfsTZBjUSGl0TUe?blocks=hide
+  const specialSlugs = ['moosehaven', 'san-francisco-towers-san-francisco', 'sequoias-san-francisco-the',
+    'the-village-at-orchard-ridge-winchester', 'westminister-at-lake-ridge', 'towers-at-laguna-woods-village',
+    'falcons-landing', 'reata-glen', 'the-glen-at-scripps-ranch', 'la-costa-glen-carlsbad', 'penney-retirement-community',
+    'smith-village', 'woodland-pond-at-new-paltz', 'lasell-village', 'sequoias-portola-valley-the'];
   if (!community || !community.propInfo || !community.propInfo.typeCare) {
     return false;
   }
-  const { propInfo: { typeCare: careList }, address: { city: cityLabel, county, state } } = community;
-  if (county === 'Alameda' && state === 'CA' && careList && careList[0] === 'continuing-care-retirement-community') {
-    const { rgsAux: { rgsInfo: { contractInfo } } } = community;
-    if (contractInfo && contractInfo.hasContract) {
+  const { id, propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
+  if (specialSlugs.indexOf(id) > -1) {
+    return true;
+  }
+  // S1482 : Remove Zillow Ads on Communities where we have contracts
+  if (careList && careList[0] === 'continuing-care-retirement-community') {
+    // eslint-disable-next-line camelcase
+    const { rgsAux: { rgsInfo: { contract_info } } } = community;
+    // eslint-disable-next-line camelcase
+    if (contract_info && contract_info.hasContract) {
       return false;
     }
   }

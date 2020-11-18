@@ -309,7 +309,7 @@ export default class CommunityDetailPage extends Component {
                             icon="check"
                             iconPalette="primary"
                             iconVariation="base"
-                            borderless={false}
+                            borderless
                           >
                             {item}
                           </IconItem>
