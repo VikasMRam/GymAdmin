@@ -10,7 +10,7 @@ const SeoLinks = ({ title, links, ...props }) => (
       dimensions={['50%', '50%']}
       gap="large"
       upToTablet={{
-        gridTemplateColumns: 'auto',
+        gridTemplateColumns: 'auto!important',
       }}
     >
       {links.map(link => (
