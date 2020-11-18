@@ -45,8 +45,8 @@ const TrustScoreTile = ({ layout, community }) => {
       <Wrapper
         flow={layout}
         borderRadius="small"
-        border="large"
-        borderPalette="grey.stroke"
+        border="regular"
+        borderPalette="slate.stroke"
         padding="large"
         marginBottom="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
@@ -109,11 +109,10 @@ const TrustScoreTile = ({ layout, community }) => {
       >
         {moreInfoText}
         <Link
-          event={{ category: 'licensingAuthority', action: 'click', label: community.id, value: 0 }}
           href={licensingUrl}
           to={licensingUrl}
         >
-          To learn more, visit the state licensing authority for {community.name}
+          To learn more, visit the state licensing authority for {community.name}.
         </Link>
       </Block>
     </Block>
