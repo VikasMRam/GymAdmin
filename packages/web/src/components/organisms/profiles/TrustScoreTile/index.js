@@ -45,9 +45,9 @@ const TrustScoreTile = ({ layout, community }) => {
       <Wrapper
         flow={layout}
         borderRadius="small"
-        border="large"
-        borderPalette="grey.stroke"
-        padding="large"
+        border="regular"
+        borderPalette="slate.stroke"
+        padding="regular"
         marginBottom="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
@@ -58,7 +58,7 @@ const TrustScoreTile = ({ layout, community }) => {
         <RotatedBlock position="relative" alignItems="center" display="flex" direction="column" justifyContent="center" >
           <ResponsiveImage src={assetPath(imagePath)} />
           <Block  position="absolute">
-            <Block textAlign="center" size="superHero">{value}</Block>
+            <Block textAlign="center" size="superHero" lineHeight="nano">{value}</Block>
             <Block textAlign="center">{valueText}</Block>
           </Block>
         </RotatedBlock>
@@ -104,16 +104,13 @@ const TrustScoreTile = ({ layout, community }) => {
       >
         What is Seniorly Trust Score?
       </Block>
-      <Block
-        marginBottom="regular"
-      >
+      <Block>
         {moreInfoText}
         <Link
-          event={{ category: 'licensingAuthority', action: 'click', label: community.id, value: 0 }}
           href={licensingUrl}
           to={licensingUrl}
         >
-          To learn more, visit the state licensing authority for {community.name}
+          To learn more, visit the state licensing authority for {community.name}.
         </Link>
       </Block>
     </Block>

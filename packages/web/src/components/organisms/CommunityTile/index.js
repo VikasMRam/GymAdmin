@@ -27,12 +27,15 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, ...props
 }) => {
   const {
-    name, gallery = {}, communitySize, plusCategory,
+    name, gallery, communitySize, plusCategory,
   } = community;
-  const { images = [] } = gallery;
+  let images = [];
+  if (gallery) {
+    ({ images = [] } = gallery);
+  }
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'primary' : 'white';
@@ -57,6 +60,11 @@ const CommunityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'regular' : 'large';
+  imageAspectRatio = type === 'map' ? imageAspectRatio || '1:1' : imageAspectRatio;
+  imageMargin = layout === 'column' ? [imageMargin || 0, spacing, imageMargin || 0, imageMargin || 0] : null;
+  if (type === 'map') {
+    imageMargin = spacing;
+  }
 
   return (
     <Block
@@ -104,9 +112,9 @@ const CommunityTile = ({
             src={imageSrc}
             placeholder={placeholder}
             sizes={mediaSizes}
-            aspectRatio={layout === 'column' ? '1:1' : '16:9'}
+            aspectRatio={imageAspectRatio}
             borderRadius="small"
-            margin={layout === 'column' ? spacing : null}
+            margin={imageMargin}
             snap={layout === 'row' ? 'bottom' : null}
             loading={loading}
             upToTablet={type === 'map' ? null : {
@@ -205,6 +213,8 @@ CommunityTile.propTypes = {
   type: oneOf(['list', 'map']).isRequired,
   lazyLoadImage: bool.isRequired,
   event: object,
+  imageAspectRatio: string.isRequired,
+  imageMargin: string,
 };
 
 CommunityTile.defaultProps = {
@@ -214,6 +224,7 @@ CommunityTile.defaultProps = {
   lazyLoadImage: true,
   position: 'relative',
   borderRadius: 'small',
+  imageAspectRatio: '3:2',
 };
 
 export default CommunityTile;

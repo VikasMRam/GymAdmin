@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { number, string } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
+import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, palette } from 'sly/common/components/themes';
@@ -12,9 +11,6 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const marginLeftNext = css`
-  margin-left: calc(${size('spacing.large')} - ${size('spacing.regular')});
-`;
 const ChevronLink = styled(({ flip, ...props }) => (
   <Button
     ghost
@@ -24,19 +20,27 @@ const ChevronLink = styled(({ flip, ...props }) => (
     {...props}
   >
     <Icon
-      rotate={flip ? -1 : 1}
+      rotate={flip ? 2 : 0}
       icon="chevron"
       size="caption"
       palette="slate"
     />
   </Button>
 ))`
-  margin-right: ${ifProp('flip', 0, size('spacing.large'))};
-  ${ifProp('flip', marginLeftNext, 0)};
+  margin-right: ${size('spacing.large')};
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  line-height: normal;
 `;
 
 const PageLink = styled(Button)`
-  margin-right: ${size('spacing.regular')};
+  margin-right: ${size('spacing.large')};
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  line-height: normal;
+  font-weight: normal;
   &:last-of-type {
     margin-right: 0;
   }
@@ -45,11 +49,14 @@ const PageLink = styled(Button)`
 const BreakView = styled.span`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   height: ${size('element.regular')};
   color: ${palette('slate', 'base')};
   border-color: ${palette('white', 'base')};
   cursor: default;
-  margin-right: ${size('spacing.regular')};
+  width: 32px;
+  height: 32px;
+  margin-right: ${size('spacing.large')};
 `;
 
 export default class Pagination extends Component {
@@ -84,11 +91,11 @@ export default class Pagination extends Component {
     }
     const prev = current - 1;
     if (prev === 0) {
-      return <ChevronLink to={basePath} />;
+      return <ChevronLink to={basePath} flip />;
     }
 
     const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
-    return <ChevronLink to={prevHref} />;
+    return <ChevronLink to={prevHref} flip />;
   }
 
   nextButton() {
@@ -105,7 +112,7 @@ export default class Pagination extends Component {
 
     const next = current + 1;
     const nextHref = `${basePath}${delim}${pageParam}=${next}`;
-    return <ChevronLink to={nextHref} flip />;
+    return <ChevronLink to={nextHref} />;
   }
 
   ellipsis = index => (

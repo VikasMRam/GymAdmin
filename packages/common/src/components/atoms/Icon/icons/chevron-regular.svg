@@ -1,1 +1,14 @@
-<svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.72 7.773L11.992 16.5 3.266 7.773" fill="none"/></svg>
+<svg width="24px" height="24px" viewBox="0 0 24 24">
+    <defs>
+        <path d="M8.71,15.88 L12.59,12 L8.71,8.12 C8.32,7.73 8.32,7.1 8.71,6.71 C9.1,6.32 9.73,6.32 10.12,6.71 L14.71,11.3 C15.1,11.69 15.1,12.32 14.71,12.71 L10.12,17.3 C9.73,17.69 9.1,17.69 8.71,17.3 C8.33,16.91 8.32,16.27 8.71,15.88 Z" id="chevron-path-1"></path>
+    </defs>
+    <g id="icon-/-chevron-right" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="chevron-mask-2" fill="white">
+            <use xlink:href="#chevron-path-1"></use>
+        </mask>
+        <use id="Path" fill="#000000" fill-rule="nonzero" xlink:href="#chevron-path-1"></use>
+        <g id="color-/-slate-/-base" mask="url(#chevron-mask-2)" fill="currentColor" fill-rule="nonzero">
+            <rect id="color" x="0" y="0" width="24" height="24"></rect>
+        </g>
+    </g>
+</svg>

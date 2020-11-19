@@ -1,60 +1,58 @@
 import React from 'react';
 import { string, bool } from 'prop-types';
-import styled from 'styled-components';
 
-import { size, palette } from 'sly/common/components/themes';
 import { Badge, Icon, Block } from 'sly/common/components/atoms';
 
-const StyledBadge = styled(Badge)`
-  width: ${p => p.fullWidth ? '100%' : 'auto'};
-  border-radius: ${size('spacing.small')};
-  border-bottom-left-radius: ${p => p.fullWidth ? '0' : size('border.xxLarge')};
-  border-bottom-right-radius: ${p => p.fullWidth ? '0' : size('border.xxLarge')};
-  background-color: ${palette('primary', 'base')};
-  display: inline-flex;
-  justify-content: ${p => p.fullWidth ? 'left' : 'center'};
-  align-items: ${p => p.fullWidth ? 'left' : 'center'};
-  padding: ${size('spacing.small')} ${size('spacing.regular')};
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.small')};
-`;
-const PlusBlock = styled(Block)`
-  font-style: italic;
-  margin-right: ${size('spacing.small')};
-`;
-const CategoryBlock = styled(Block)`
-  text-transform: uppercase;
-  margin-left: ${size('spacing.small')};
-`;
 const PlusBadge = ({ plusCategory, fullWidth }) => (
-  <StyledBadge fullWidth={fullWidth}>
-    <StyledIcon icon="logo" palette="white" size="body" />
-    <PlusBlock  palette="white" size="body">
+  <Badge
+    fullWidth={fullWidth}
+    direction="row"
+    alignItems="center"
+    background="primary"
+    borderRadius="small"
+    padding={['small', 'regular']}
+    width={fullWidth ? '100%' : 'auto'}
+    justifyContent={fullWidth ? 'left' : 'center'}
+    css={fullWidth ? {
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    } : null}
+  >
+    <Icon icon="logo" palette="white" size="body" marginRight="small" />
+    <Block
+      palette="white"
+      size="body"
+      marginRight="small"
+      css={{
+        fontStyle: 'italic',
+      }}
+    >
       plus
-    </PlusBlock>
+    </Block>
     {plusCategory &&
     <Block palette="white">
       |
     </Block>
     }
     {plusCategory &&
-    <CategoryBlock palette="white" size="body">
-      {plusCategory}
-    </CategoryBlock>
+      <Block
+        palette="white"
+        size="body"
+        marginLeft="small"
+        css={{
+          textTransform: 'uppercase',
+        }}
+      >
+        {plusCategory}
+      </Block>
     }
 
-  </StyledBadge>
+  </Badge>
 );
 
 PlusBadge.propTypes = {
   plusCategory: string,
   fullWidth: bool,
-};
-
-PlusBadge.defaultProps = {
-  fullWidth: false,
 };
 
 export default PlusBadge;
