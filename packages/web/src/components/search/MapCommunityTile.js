@@ -7,8 +7,6 @@ const MapCommunityTile = forwardRef(({ community, ...props }, ref) => (
   <CommunityTile
     ref={ref}
     community={community}
-    lat={community.latitude}
-    lng={community.longitude}
     type="map"
     layout="column"
     shadowBlur="small"

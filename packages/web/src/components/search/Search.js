@@ -22,7 +22,6 @@ import Filters from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import { getBreadCrumbsForLocation } from 'sly/web/services/helpers/url';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
-import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
@@ -44,8 +43,6 @@ const Search = ({
   count,
   basePath,
 }) => {
-  const breakpoint = useBreakpoint();
-
   const [headerRef, {
     height: headerHeight = 80,
   }] = useDimensions();

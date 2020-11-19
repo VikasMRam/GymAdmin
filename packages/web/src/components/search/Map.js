@@ -11,6 +11,7 @@ import Block from 'sly/common/components/atoms/Block';
 import STYLES from 'sly/web/constants/map';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import MapCommunityTile from 'sly/web/components/search/MapCommunityTile';
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 
 const Map = forwardRef(({
   defaultCenter,
@@ -39,7 +40,11 @@ const Map = forwardRef(({
   selectedCommunity = hoveredMarker || selectedCommunity;
 
   const selectedCommunityTile = selectedCommunity && (
-    <MapCommunityTile community={selectedCommunity} />
+    <MapCommunityTile
+      community={selectedCommunity}
+      lat={selectedCommunity.latitude}
+      lng={selectedCommunity.longitude}
+    />
   );
 
   return (
