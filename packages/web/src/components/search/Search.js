@@ -16,13 +16,16 @@ import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
+import Link from 'sly/common/components/atoms/Link';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
+import { getBreadCrumbsForLocation } from 'sly/web/services/helpers/url';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Pagination from 'sly/web/components/molecules/Pagination';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 const mapRef = createRef();
 
@@ -143,37 +146,63 @@ const Search = ({
             display: show === LIST ? 'block' : 'none',
           }}
         >
-          {communities.map(community => (
-            <CommunityTile
-              key={community.id}
-              noGallery
-              community={community}
-              margin="0 xLarge xLarge"
-              layout="column"
-            />
+          {communities.map((community, i) => (
+            <Link
+              to={community.url}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: i,
+                value: community.id,
+              }}
+              block
+            >
+              <CommunityTile
+                key={community.id}
+                noGallery
+                community={community}
+                margin="0 xLarge xLarge"
+                layout="column"
+              />
+            </Link>
           ))}
           <Block
             display="flex"
             direction="column"
             alignItems="center"
             padding="xLarge 0"
+            upToTablet={{
+              paddingBottom: getKey('sizes.spacing.xxLarge'),
+            }}
           >
-            {communities.length > 0 && (
+            {communities.length > 0 &&
               <Pagination
                 basePath={basePath}
                 pageParam="page-number"
                 current={current}
                 total={total}
+                collapsedInMobile
                 css={{
                   marginBottom: getKey('sizes.spacing.large'),
                 }}
-              />
-            )}
-            <Block pad="xLarge">{start} - {end} of {count} results</Block>
+              />}
+            <Block
+              pad="xLarge"
+              upToTablet={{
+                display: 'none',
+              }}
+            >
+              {start} - {end} of {count} results
+            </Block>
+            <BreadCrumb
+              items={getBreadCrumbsForLocation(currentFilters, true)}
+              upToTablet={{
+                display: 'none!important',
+              }}
+            />
           </Block>
           <ExploreContainer filters={currentFilters} />
         </Block>
-
         <Block
           gridArea="map"
         >
