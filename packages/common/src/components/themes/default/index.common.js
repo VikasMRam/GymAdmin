@@ -164,6 +164,7 @@ theme.sizes = {
   },
 
   lineHeight: {
+    nano     : '0.8',
     micro    : '1.2',    // 12px / 10px
     tiny     : '1.167',  // 14px / 12px
     caption  : '1.429',  // 20px / 14px
