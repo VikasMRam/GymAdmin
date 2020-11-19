@@ -139,12 +139,12 @@ const Search = ({
             paddingBottom: getKey('sizes.spacing.xxLarge'),
           }}
         >
-          {communities.map(community => (
+          {communities.map((community, i) => (
             <CommunityTile
               key={community.id}
               noGallery
               community={community}
-              marginBottom="xLarge"
+              marginBottom={i < communities.length - 1 ? 'xLarge' : null}
               layout="column"
             />
           ))}
@@ -158,11 +158,19 @@ const Search = ({
                   pageParam="page-number"
                   current={current}
                   total={total}
+                  collapsedInMobile
                   css={{
                     marginBottom: getKey('sizes.spacing.large'),
                   }}
                 />}
-              <Block pad="xLarge">{start} - {end} of {count} results</Block>
+              <Block
+                pad="xLarge"
+                upToTablet={{
+                  display: 'none',
+                }}
+              >
+                {start} - {end} of {count} results
+              </Block>
             </Block>
             <ExploreContainer filters={currentFilters} />
           </Block>

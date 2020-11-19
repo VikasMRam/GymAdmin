@@ -13,6 +13,7 @@ import {
   withClamping,
   withCursor,
   withSnap,
+  withMedia,
 } from 'sly/common/components/helpers';
 
 const hoverBackgroundColor = ({
@@ -80,6 +81,7 @@ const StyledButton = styled.button`
   &:focus {
     outline: none;
   }
+  ${withMedia}
   ${withDisplay}
 `;
 // put withDisplay last to make sure that this display styles are always first priority
