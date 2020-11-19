@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { number, string } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
+import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, palette } from 'sly/common/components/themes';
@@ -12,9 +11,6 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const marginLeftNext = css`
-  margin-left: calc(${size('spacing.large')} - ${size('spacing.regular')});
-`;
 const ChevronLink = styled(({ flip, ...props }) => (
   <Button
     ghost
@@ -31,12 +27,11 @@ const ChevronLink = styled(({ flip, ...props }) => (
     />
   </Button>
 ))`
-  margin-right: ${ifProp('flip', 0, size('spacing.large'))};
+  margin-right: ${size('spacing.large')};
   width: 32px;
   height: 32px;
   padding: 0;
   line-height: normal;
-  ${ifProp('flip', marginLeftNext, 0)};
 `;
 
 const PageLink = styled(Button)`
@@ -96,7 +91,7 @@ export default class Pagination extends Component {
     }
     const prev = current - 1;
     if (prev === 0) {
-      return <ChevronLink to={basePath} />;
+      return <ChevronLink to={basePath} flip />;
     }
 
     const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
