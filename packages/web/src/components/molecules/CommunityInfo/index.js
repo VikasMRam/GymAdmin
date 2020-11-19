@@ -89,7 +89,7 @@ export default class CommunityInfo extends Component {
         <div>
           {header}
           {livingTypeComponent}
-          {capacity !== "" &&
+          {capacity !== '' &&
             <IconItem
               icon="family"
               iconPalette={inverted ? 'white' : 'slate'}
