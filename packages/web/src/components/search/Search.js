@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState, createRef } from 'react';
-import { arrayOf, func, string, object } from 'prop-types';
+import { arrayOf, func, string, object, number } from 'prop-types';
 
 import { getBoundsForSearchResults, findOptimalZoomForBounds } from './maps';
 import ExploreContainer from './ExploreContainer';
 
+import { getKey } from 'sly/common/components/themes';
 import {
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
@@ -21,6 +22,7 @@ import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
+import Pagination from 'sly/web/components/molecules/Pagination';
 
 const mapRef = createRef();
 
@@ -31,6 +33,12 @@ const Search = ({
   onFilterChange,
   onMapChange,
   communities,
+  current,
+  total,
+  start,
+  end,
+  count,
+  basePath,
 }) => {
   const breakpoint = useBreakpoint();
 
@@ -126,6 +134,10 @@ const Search = ({
         <Block
           gridArea="list"
           padding="0 xLarge"
+          pad="xxxLarge"
+          upToTablet={{
+            paddingBottom: getKey('sizes.spacing.xxLarge'),
+          }}
         >
           {communities.map(community => (
             <CommunityTile
@@ -137,7 +149,24 @@ const Search = ({
             />
           ))}
         </Block>
-        {show === LIST && <ExploreContainer gridArea="explore" filters={currentFilters} />}
+        {show === LIST && (
+          <Block>
+            <Block display="flex" direction="column" alignItems="center">
+              {communities.length > 0 &&
+                <Pagination
+                  basePath={basePath}
+                  pageParam="page-number"
+                  current={current}
+                  total={total}
+                  css={{
+                    marginBottom: getKey('sizes.spacing.large'),
+                  }}
+                />}
+              <Block pad="xLarge">{start} - {end} of {count} results</Block>
+            </Block>
+            <ExploreContainer filters={currentFilters} />
+          </Block>
+        )}
         <Block
           gridArea="map"
         >
@@ -194,6 +223,12 @@ Search.propTypes = {
   onMapChange: func,
   selectedCommunity: coordPropType,
   currentFilters: object,
+  current: number,
+  total: number,
+  start: number,
+  end: number,
+  count: number,
+  basePath: string,
 };
 
 export default Search;
