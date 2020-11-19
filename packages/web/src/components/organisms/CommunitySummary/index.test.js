@@ -20,7 +20,7 @@ const getCommunity = (state, tag) => {
   community.address.state = state;
 
   if (tag) {
-    community.propInfo.typeCare = [...community.propInfo.typeCare, tag];
+    community.care = [...community.care, tag];
   }
 
   return community;
