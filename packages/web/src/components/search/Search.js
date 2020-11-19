@@ -166,44 +166,42 @@ const Search = ({
               />
             </Link>
           ))}
-          <section>
+          <Block
+            display="flex"
+            direction="column"
+            alignItems="center"
+            padding="xLarge 0"
+            upToTablet={{
+              paddingBottom: getKey('sizes.spacing.xxLarge'),
+            }}
+          >
+            {communities.length > 0 &&
+              <Pagination
+                basePath={basePath}
+                pageParam="page-number"
+                current={current}
+                total={total}
+                collapsedInMobile
+                css={{
+                  marginBottom: getKey('sizes.spacing.large'),
+                }}
+              />}
             <Block
-              display="flex"
-              direction="column"
-              alignItems="center"
-              padding="xLarge 0"
+              pad="xLarge"
               upToTablet={{
-                paddingBottom: getKey('sizes.spacing.xxLarge'),
+                display: 'none',
               }}
             >
-              {communities.length > 0 &&
-                <Pagination
-                  basePath={basePath}
-                  pageParam="page-number"
-                  current={current}
-                  total={total}
-                  collapsedInMobile
-                  css={{
-                    marginBottom: getKey('sizes.spacing.large'),
-                  }}
-                />}
-              <Block
-                pad="xLarge"
-                upToTablet={{
-                  display: 'none',
-                }}
-              >
-                {start} - {end} of {count} results
-              </Block>
-              <BreadCrumb
-                items={getBreadCrumbsForLocation(currentFilters, true)}
-                upToTablet={{
-                  display: 'none!important',
-                }}
-              />
+              {start} - {end} of {count} results
             </Block>
-            <ExploreContainer filters={currentFilters} />
-          </section>
+            <BreadCrumb
+              items={getBreadCrumbsForLocation(currentFilters, true)}
+              upToTablet={{
+                display: 'none!important',
+              }}
+            />
+          </Block>
+          <ExploreContainer filters={currentFilters} />
         </Block>
         <Block
           gridArea="map"
