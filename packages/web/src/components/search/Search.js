@@ -166,8 +166,6 @@ const Search = ({
               />
             </Link>
           ))}
-        </Block>
-        {show === LIST && (
           <section>
             <Block
               display="flex"
@@ -206,7 +204,7 @@ const Search = ({
             </Block>
             <ExploreContainer filters={currentFilters} />
           </section>
-        )}
+        </Block>
         <Block
           gridArea="map"
         >
