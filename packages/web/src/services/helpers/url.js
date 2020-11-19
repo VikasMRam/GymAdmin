@@ -271,16 +271,20 @@ export const getBreadCrumbsForCommunity = ({ name, propInfo, address }) => {
   ];
 };
 
-export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
+export const getBreadCrumbsForLocation = ({ toc, state, city }, noHomeAndToc) => {
   const tocBc = tocPaths([titleize(toc)]);
   // TODO: use react router generated paths once router wiring is complete
-  const baseBcs = [{
+  let baseBcs = [{
     path: '/',
     label: 'Home',
   }];
   // TODO A better job
   if (tocBc) {
-    baseBcs.push(tocBc);
+    if (!noHomeAndToc) {
+      baseBcs.push(tocBc);
+    } else {
+      baseBcs = [];
+    }
   } else {
     // Safety
     return baseBcs;

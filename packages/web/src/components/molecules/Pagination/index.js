@@ -34,6 +34,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
   height: 32px;
   padding: 0;
   line-height: normal;
+  ${ifProp('collapsedInMobile', upTo('tablet', 'margin-right: 0!important;'))}
 `;
 
 const PageLink = styled(Button)`
@@ -100,6 +101,7 @@ export default class Pagination extends Component {
         <ChevronLink
           to={basePath}
           flip
+          collapsedInMobile={collapsedInMobile}
           startingWithTablet={current === 0 ? {
             display: 'none!important',
           } : null}
@@ -108,7 +110,7 @@ export default class Pagination extends Component {
     }
 
     const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
-    return <ChevronLink to={prevHref} flip />;
+    return <ChevronLink to={prevHref} collapsedInMobile={collapsedInMobile} flip />;
   }
 
   nextButton() {
@@ -121,6 +123,7 @@ export default class Pagination extends Component {
       return (
         <ChevronLink
           to={basePath}
+          collapsedInMobile={collapsedInMobile}
           startingWithTablet={{
             display: 'none!important',
           }}
@@ -135,7 +138,7 @@ export default class Pagination extends Component {
 
     const next = current + 1;
     const nextHref = `${basePath}${delim}${pageParam}=${next}`;
-    return <ChevronLink to={nextHref} />;
+    return <ChevronLink to={nextHref} collapsedInMobile={collapsedInMobile} />;
   }
 
   ellipsis = (index) => {

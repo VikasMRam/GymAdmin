@@ -16,13 +16,16 @@ import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
+import Link from 'sly/common/components/atoms/Link';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
+import { getBreadCrumbsForLocation } from 'sly/web/services/helpers/url';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Pagination from 'sly/web/components/molecules/Pagination';
+import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 const mapRef = createRef();
 
@@ -140,18 +143,37 @@ const Search = ({
           }}
         >
           {communities.map((community, i) => (
-            <CommunityTile
-              key={community.id}
-              noGallery
-              community={community}
-              marginBottom={i < communities.length - 1 ? 'xLarge' : null}
-              layout="column"
-            />
+            <Link
+              to={community.url}
+              event={{
+                category: 'SearchPage',
+                action: 'communityClick',
+                label: i,
+                value: community.id,
+              }}
+              block
+            >
+              <CommunityTile
+                key={community.id}
+                noGallery
+                community={community}
+                marginBottom={i < communities.length - 1 ? 'xLarge' : null}
+                layout="column"
+              />
+            </Link>
           ))}
         </Block>
         {show === LIST && (
-          <Block>
-            <Block display="flex" direction="column" alignItems="center">
+          <section>
+            <Block
+              display="flex"
+              direction="column"
+              alignItems="center"
+              pad="xxxLarge"
+              upToTablet={{
+                paddingBottom: getKey('sizes.spacing.xxLarge'),
+              }}
+            >
               {communities.length > 0 &&
                 <Pagination
                   basePath={basePath}
@@ -171,9 +193,15 @@ const Search = ({
               >
                 {start} - {end} of {count} results
               </Block>
+              <BreadCrumb
+                items={getBreadCrumbsForLocation(currentFilters, true)}
+                upToTablet={{
+                  display: 'none!important',
+                }}
+              />
             </Block>
             <ExploreContainer filters={currentFilters} />
-          </Block>
+          </section>
         )}
         <Block
           gridArea="map"
