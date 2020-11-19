@@ -216,7 +216,7 @@ const CommunitySummary = ({
 
       </PhoneNumWrapper>
 
-      {typeCare.includes(ACTIVE_ADULT) &&
+      {care.includes(ACTIVE_ADULT) &&
         <>
           {communityPhone && <Hr/>}
           <OverlayTwoColumnListWrapper>

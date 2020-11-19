@@ -129,7 +129,7 @@ describe('CommunitySummary', () => {
 
     expect(styledTags.at(0).render().text()).toBe('Assisted Living');
     expect(styledTags.at(1).render().text()).toBe('Memory Care');
-    expect(styledTags.at(2).render().text()).toBe('CCRC');
+    expect(styledTags.at(2).render().text()).toBe('Continuing Care Retirement Community');
 
     verify(wrapper);
     expect(styledTags).toHaveLength(3);
