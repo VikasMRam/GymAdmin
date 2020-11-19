@@ -1,6 +1,5 @@
 import React, { useCallback, useState, forwardRef, useMemo } from 'react';
 import { bool, func, node, object, string } from 'prop-types';
-import styled from 'styled-components';
 
 import {
   SIZE,
@@ -40,18 +39,16 @@ const TOC_OPTIONS = Object.values(TOCS);
 const SIZE_OPTIONS = Object.values(SIZES);
 const BUDGET_OPTIONS = Object.values(BUDGETS);
 
-const addFilterReducer = (acc, [key, value]) => {
-  if (key === TOC && value === NH) {
-    return acc;
-  }
-  return Array.isArray(value)
-    ? acc + value.length
-    : (value && (acc + 1) || acc);
-};
-
-const filterFilters = (currentFilters, list) => Object.entries(currentFilters)
+const countFilters = (currentFilters, list) => Object.entries(currentFilters)
   .filter(([key]) => list.includes(key))
-  .reduce(addFilterReducer, 0);
+  .reduce((acc, [key, value]) => {
+    if (key === TOC && value === NH) {
+      return acc;
+    }
+    return Array.isArray(value)
+      ? acc + value.length
+      : (value && (acc + 1) || acc);
+  }, 0);
 
 const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => {
   if (!showIf) {
@@ -93,12 +90,17 @@ const ModalPopoverSwitch = ({ isPopOver, children, ...props }) => {
 const Filters = forwardRef(({
   isOpen: defaultIsOpen,
   onFilterChange,
+  onClearFilters,
   currentFilters,
   children,
   ...props
 }, ref) => {
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
   const closeModal = useCallback(() => setIsOpen(false), []);
+  const clearFilters = useCallback(() => {
+    onClearFilters();
+    setIsOpen(false);
+  }, []);
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
   const breakpoint = useBreakpoint();
   const showIf = useCallback(
@@ -139,8 +141,8 @@ const Filters = forwardRef(({
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
 
-  const totalNumberOfFilters = filterFilters(currentFilters, ALL_FILTERS);
-  const totalMoreFilters = filterFilters(currentFilters, MORE_FILTERS);
+  const totalNumberOfFilters = countFilters(currentFilters, ALL_FILTERS);
+  const totalMoreFilters = countFilters(currentFilters, MORE_FILTERS);
   const currentTocText = currentFilters[TOC] === 'nursing-homes'
     ? ''
     : TOCS[currentFilters[TOC]].label;
@@ -255,11 +257,17 @@ const Filters = forwardRef(({
           </Collapsible>
         </ModalBody>
         <ModalActions>
-          <Button>
+          <Button
+            ghost
+            border="none"
+            onClick={clearFilters}
+            disabled={totalNumberOfFilters === 0}
+          >
             Clear all
           </Button>
           <Button
             marginLeft="auto"
+            onClick={closeModal}
           >
             Show results
           </Button>
@@ -320,6 +328,7 @@ Filters.propTypes = {
   nextShow: string,
   toggleShow: func,
   onFilterChange: func,
+  onClearFilters: func,
   currentFilters: object,
   children: node,
 };

@@ -31,6 +31,7 @@ const Search = ({
   center,
   defaultCenter,
   onFilterChange,
+  onClearFilters,
   onMapChange,
   communities,
   current,
@@ -122,6 +123,7 @@ const Search = ({
           padding="xLarge"
           currentFilters={currentFilters}
           onFilterChange={onFilterChange}
+          onClearFilters={onClearFilters}
         >
           <FilterButton
             upTo="laptop"
@@ -131,12 +133,14 @@ const Search = ({
             <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
           </FilterButton>
         </Filters>
+
         <Block
           gridArea="list"
-          padding="0 xLarge"
-          pad="xxxLarge"
           upToTablet={{
             paddingBottom: getKey('sizes.spacing.xxLarge'),
+          }}
+          upToLaptop={{
+            display: show === LIST ? 'block' : 'none',
           }}
         >
           {communities.map(community => (
@@ -144,29 +148,32 @@ const Search = ({
               key={community.id}
               noGallery
               community={community}
-              marginBottom="xLarge"
+              margin="0 xLarge xLarge"
               layout="column"
             />
           ))}
-        </Block>
-        {show === LIST && (
-          <Block>
-            <Block display="flex" direction="column" alignItems="center">
-              {communities.length > 0 &&
-                <Pagination
-                  basePath={basePath}
-                  pageParam="page-number"
-                  current={current}
-                  total={total}
-                  css={{
-                    marginBottom: getKey('sizes.spacing.large'),
-                  }}
-                />}
-              <Block pad="xLarge">{start} - {end} of {count} results</Block>
-            </Block>
-            <ExploreContainer filters={currentFilters} />
+          <Block
+            display="flex"
+            direction="column"
+            alignItems="center"
+            padding="xLarge 0"
+          >
+            {communities.length > 0 && (
+              <Pagination
+                basePath={basePath}
+                pageParam="page-number"
+                current={current}
+                total={total}
+                css={{
+                  marginBottom: getKey('sizes.spacing.large'),
+                }}
+              />
+            )}
+            <Block pad="xLarge">{start} - {end} of {count} results</Block>
           </Block>
-        )}
+          <ExploreContainer filters={currentFilters} />
+        </Block>
+
         <Block
           gridArea="map"
         >
@@ -219,6 +226,8 @@ Search.propTypes = {
   center: coordPropType,
   defaultCenter: coordPropType,
   onSearchSubmit: func,
+  onFilterChange: func,
+  onClearFilters: func,
   communities: arrayOf(coordPropType),
   onMapChange: func,
   selectedCommunity: coordPropType,

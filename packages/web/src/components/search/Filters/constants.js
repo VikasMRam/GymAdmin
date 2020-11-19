@@ -12,6 +12,9 @@ export const NON_CARE_SERVICES = 'non-care-services';
 export const ROOM_AMENITIES = 'room-amenities';
 export const COMMUNITY_AMENITIES = 'community-amenities';
 
+export const PAGE_NUMBER = 'page-number';
+export const PAGE_SIZE = 'page-size';
+
 export const MORE_FILTERS = [
   CARE_SERVICES,
   NON_CARE_SERVICES,
@@ -24,6 +27,12 @@ export const ALL_FILTERS = [
   SIZE,
   BUDGET,
   ...MORE_FILTERS,
+];
+
+export const CLEARABLE_FILTERS = [
+  PAGE_NUMBER,
+  PAGE_SIZE,
+  ...ALL_FILTERS,
 ];
 
 // TOC
