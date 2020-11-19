@@ -40,6 +40,16 @@ class Breakpoint {
   atLeastTablet = () => this.atLeast(TABLET);
   atLeastLaptop = () => this.atLeast(LAPTOP);
 
+  upTo(breakpoint) {
+    if (!sizes[breakpoint]) {
+      throw new Error(`no breakpoint ${breakpoint}`);
+    }
+    return this.currentWidth < sizes[breakpoint];
+  }
+
+  upToTablet = () => this.upTo(TABLET);
+  upToLaptop = () => this.upTo(LAPTOP);
+
   is(breakpoint) {
     if (!sizes[breakpoint]) {
       throw new Error(`no breakpoint ${breakpoint}`);

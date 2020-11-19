@@ -200,12 +200,10 @@ const Search = ({
             startingWithLaptop={{
               position: 'sticky',
               top: '0px !important',
-              // bottom: '100vh !important',
               paddingTop: `${startingWithLaptopOffset}px`,
               marginTop: `-${startingWithLaptopOffset}px`,
               height: '100vh',
             }}
-            fixCommunityTileAtBottom={show !== LIST}
           />
         </Block>
       </Block>

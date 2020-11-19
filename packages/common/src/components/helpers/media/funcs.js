@@ -15,8 +15,8 @@ export const upTo = (device, styles) => css`
   }
 `;
 
-export const startingWith = (device, styles) => css`
+export const startingWith = (device, styles) => device ? css`
   @media screen and (min-width: ${size('breakpoint', device)}) {
     ${makeStyles(styles)}
   }
-`;
+` : makeStyles(styles);

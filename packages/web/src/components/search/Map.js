@@ -1,15 +1,16 @@
-import React, { useCallback, forwardRef, useState } from 'react';
+import React, { useCallback, forwardRef, useState, useMemo } from 'react';
 import { arrayOf, object, func, number, bool } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
 
-import Marker from './MapMarker';
+import Marker from './Marker';
 
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
 import Block from 'sly/common/components/atoms/Block';
 import STYLES from 'sly/web/constants/map';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
+import MapCommunityTile from 'sly/web/components/search/MapCommunityTile';
 
 const Map = forwardRef(({
   defaultCenter,
@@ -19,11 +20,8 @@ const Map = forwardRef(({
   onChange,
   onMarkerClick,
   selectedCommunity,
-  mapDimensions,
-  fixCommunityTileAtBottom,
-  ...props
-}, ref) => {
-  const onDrag = useCallback(debounce((map) => {
+  ...props }, ref) => {
+  const onDrag = useMemo(() => debounce((map) => {
     onChange(map);
   }, 200), []);
 
@@ -40,6 +38,10 @@ const Map = forwardRef(({
   const [hoveredMarker, setHoveredMarker] = useState();
   selectedCommunity = hoveredMarker || selectedCommunity;
 
+  const selectedCommunityTile = selectedCommunity && (
+    <MapCommunityTile community={selectedCommunity} />
+  );
+
   return (
     <Block
       ref={ref}
@@ -51,7 +53,10 @@ const Map = forwardRef(({
         defaultCenter={defaultCenter}
         defaultZoom={3}
         hoverDistance={50}
+        onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
+        onChildMouseEnter={(_, { community }) => setHoveredMarker(community)}
+        onChildMouseLeave={() => setHoveredMarker(null)}
         onDrag={onDrag}
         onZoomAnimationEnd={onZoom}
         zoom={zoom}
@@ -63,20 +68,23 @@ const Map = forwardRef(({
           styles: STYLES,
          })}
       >
-        {communities.map(({ latitude, longitude, id }, i) => (
-          <Marker
-            key={id}
-            selectedCommunity={selectedCommunity && selectedCommunity.id === id ? selectedCommunity : null}
-            lat={latitude}
-            lng={longitude}
-            number={i + 1}
-            mapDimensions={mapDimensions}
-            fixCommunityTileAtBottom={fixCommunityTileAtBottom}
-            onMouseEnter={breakpoint && breakpoint.isLaptop() ? () => setHoveredMarker(communities[i]) : null}
-            onMouseLeave={breakpoint && breakpoint.isLaptop() ? () => setHoveredMarker(null) : null}
-          />
-        ))}
+        {communities.map((community, i) => {
+          const { latitude, longitude, id } = community;
+          return (
+            <Marker
+              key={id}
+              community={community}
+              active={selectedCommunity?.id === id}
+              lat={latitude}
+              lng={longitude}
+              number={i + 1}
+            />
+          );
+        })}
+        {breakpoint?.atLeastLaptop() && selectedCommunityTile}
       </GoogleMap>
+
+      {breakpoint?.upToLaptop() && selectedCommunityTile}
     </Block>
   );
 });
@@ -93,8 +101,6 @@ Map.propTypes = {
   zoom: number,
   onMarkerClick: func,
   selectedCommunity: object,
-  mapDimensions: object,
-  fixCommunityTileAtBottom: bool,
 };
 
 export default Map;

@@ -26,7 +26,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
-  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
+  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, noGallery,
   layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, ...props
 }) => {
   const {
@@ -69,7 +69,6 @@ const CommunityTile = ({
   return (
     <Block
       as="article"
-      className={className}
       background={plusCategory ? 'primary.background' : 'white.base'}
       {...props}
     >
