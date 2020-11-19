@@ -58,7 +58,7 @@ const TrustScoreTile = ({ layout, community }) => {
         <RotatedBlock position="relative" alignItems="center" display="flex" direction="column" justifyContent="center" >
           <ResponsiveImage src={assetPath(imagePath)} />
           <Block  position="absolute">
-            <Block textAlign="center" size="superHero" lineHeight="0.8">{value}</Block>
+            <Block textAlign="center" size="superHero" lineHeight="nano">{value}</Block>
             <Block textAlign="center">{valueText}</Block>
           </Block>
         </RotatedBlock>
@@ -98,15 +98,13 @@ const TrustScoreTile = ({ layout, community }) => {
         </div>
       </Wrapper>
       <Block
-        marginBottom="small"
+        marginBottom="regular"
         size="regular"
         weight="medium"
       >
         What is Seniorly Trust Score?
       </Block>
-      <Block
-        marginBottom="regular"
-      >
+      <Block>
         {moreInfoText}
         <Link
           href={licensingUrl}
