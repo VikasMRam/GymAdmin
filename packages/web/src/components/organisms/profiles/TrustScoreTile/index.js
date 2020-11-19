@@ -47,7 +47,7 @@ const TrustScoreTile = ({ layout, community }) => {
         borderRadius="small"
         border="regular"
         borderPalette="slate.stroke"
-        padding="large"
+        padding="regular"
         marginBottom="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
@@ -58,7 +58,7 @@ const TrustScoreTile = ({ layout, community }) => {
         <RotatedBlock position="relative" alignItems="center" display="flex" direction="column" justifyContent="center" >
           <ResponsiveImage src={assetPath(imagePath)} />
           <Block  position="absolute">
-            <Block textAlign="center" size="superHero">{value}</Block>
+            <Block textAlign="center" size="superHero" lineHeight="nano">{value}</Block>
             <Block textAlign="center">{valueText}</Block>
           </Block>
         </RotatedBlock>
@@ -104,9 +104,7 @@ const TrustScoreTile = ({ layout, community }) => {
       >
         What is Seniorly Trust Score?
       </Block>
-      <Block
-        marginBottom="regular"
-      >
+      <Block>
         {moreInfoText}
         <Link
           href={licensingUrl}
