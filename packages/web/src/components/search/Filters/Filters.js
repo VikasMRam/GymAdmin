@@ -1,5 +1,5 @@
 import React, { useCallback, useState, forwardRef, useMemo } from 'react';
-import { bool, func, string } from 'prop-types';
+import { bool, func, node, object, string } from 'prop-types';
 import styled from 'styled-components';
 
 import {
@@ -18,39 +18,62 @@ import {
   NON_CARE_SERVICES_OPTIONS,
   ROOM_AMENITIES_OPTIONS,
   COMMUNITY_AMENITIES_OPTIONS,
+  MORE_FILTERS,
+  ALL_FILTERS,
 } from './constants';
 import FilterButton from './FilterButton';
 import FilterChoice from './FilterChoice';
 
 import Block from 'sly/common/components/atoms/Block';
-import Modal, { HeaderWithClose, ModalBody } from 'sly/web/components/atoms/NewModal';
-import CollapsibleSection
-  from 'sly/web/components/molecules/CollapsibleSection';
+import Modal, {
+  HeaderWithClose,
+  ModalActions,
+  ModalBody,
+} from 'sly/web/components/atoms/NewModal';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
-import { MORE_FILTERS } from 'sly/web/components/search/constants';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
+import Collapsible from 'sly/web/components/search/Filters/Collapsible';
 
 const TOC_OPTIONS = Object.values(TOCS);
 const SIZE_OPTIONS = Object.values(SIZES);
 const BUDGET_OPTIONS = Object.values(BUDGETS);
 
-const CollapsibleSectionPopoverSwitch = ({ isPopOver, showIf, children, ...props }) => {
+const addFilterReducer = (acc, [key, value]) => {
+  if (key === TOC && value === NH) {
+    return acc;
+  }
+  return Array.isArray(value)
+    ? acc + value.length
+    : (value && (acc + 1) || acc);
+};
+
+const filterFilters = (currentFilters, list) => Object.entries(currentFilters)
+  .filter(([key]) => list.includes(key))
+  .reduce(addFilterReducer, 0);
+
+const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => {
   if (!showIf) {
     return null;
   }
   if (isPopOver) {
     return (
-      <Block {...props}>
+      <Block
+        paddingTop="xLarge"
+        {...props}
+      >
         {children}
       </Block>
     );
   }
   return (
-    <CollapsibleSection {...props}>
+    <Collapsible
+      borderBottom="regular"
+      {...props}
+    >
       {children}
-    </CollapsibleSection>
+    </Collapsible>
   );
 };
 
@@ -79,29 +102,50 @@ const Filters = forwardRef(({
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
   const breakpoint = useBreakpoint();
   const showIf = useCallback(
-    type => Boolean(isOpen === type || (breakpoint && breakpoint.isMobile() && isOpen)),
+    type => Boolean(isOpen === type || (breakpoint?.isMobile() && isOpen)),
     [isOpen, breakpoint],
   );
   const [priceButtonRef, priceButtonCoords] = useDimensions();
   const [sizeButtonRef, sizeButtonCoords] = useDimensions();
   const popOverCss = useMemo(() => {
-    if (breakpoint?.atLeastLaptop() && [BUDGET, SIZE].includes(isOpen)) {
+    if (breakpoint?.atLeastTablet() && [BUDGET, SIZE].includes(isOpen)) {
       const coords = ({
         [BUDGET]: priceButtonCoords,
         [SIZE]: sizeButtonCoords,
       })[isOpen];
       return {
         position: 'absolute',
-        top: coords.top + coords.height,
+        top: coords.top + coords.height + 16,
         left: coords.left,
       };
     }
     return null;
   }, [breakpoint, isOpen, priceButtonCoords, sizeButtonCoords]);
 
+  const title = useMemo(() => {
+    if (breakpoint?.isMobile()) {
+      return 'Filters';
+    }
+    switch (isOpen) {
+      case TOC: return 'Filter by community type';
+      case MORE_FILTERS: return 'More filters';
+      default: return null;
+    }
+  }, [breakpoint, isOpen]);
+
   const onTocFilterChange = useCallback((filter, value) => {
     onFilterChange(filter, value.length === 0 ? [NH] : value);
   }, [currentFilters]);
+
+  const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
+
+  const totalNumberOfFilters = filterFilters(currentFilters, ALL_FILTERS);
+  const totalMoreFilters = filterFilters(currentFilters, MORE_FILTERS);
+  const currentTocText = currentFilters[TOC] === 'nursing-homes'
+    ? ''
+    : TOCS[currentFilters[TOC]].label;
+  const currentSizeText = SIZES[currentFilters[SIZE]]?.label;
+  const currentBudgetText = BUDGETS[currentFilters[BUDGET]]?.label;
 
   return (
     <>
@@ -111,18 +155,16 @@ const Filters = forwardRef(({
         css={popOverCss}
         onClose={closeModal}
       >
-        {!popOverCss && (
+        {title && (
           <HeaderWithClose onClose={closeModal}>
-            Filters
+            {title}
           </HeaderWithClose>
         )}
-        <ModalBody>
-          <CollapsibleSectionPopoverSwitch
-            isPopOver={breakpoint?.atLeastLaptop()}
+        <ModalBody padding="0 xLarge">
+          <CollapsiblePopoverSwitch
+            isPopOver={breakpoint?.atLeastTablet()}
             showIf={showIf(TOC)}
             title="Type of community"
-            size="small"
-            borderless
           >
             <FilterChoice
               type="radio"
@@ -131,13 +173,11 @@ const Filters = forwardRef(({
               onChange={onTocFilterChange}
               value={currentFilters[TOC]}
             />
-          </CollapsibleSectionPopoverSwitch>
-          <CollapsibleSectionPopoverSwitch
+          </CollapsiblePopoverSwitch>
+          <CollapsiblePopoverSwitch
             isPopOver={!!popOverCss}
             showIf={showIf(SIZE)}
             title="Size"
-            size="small"
-            borderless
           >
             <FilterChoice
               type="radio"
@@ -146,13 +186,11 @@ const Filters = forwardRef(({
               onChange={onFilterChange}
               value={currentFilters[SIZE]}
             />
-          </CollapsibleSectionPopoverSwitch>
-          <CollapsibleSectionPopoverSwitch
+          </CollapsiblePopoverSwitch>
+          <CollapsiblePopoverSwitch
             isPopOver={!!popOverCss}
             showIf={showIf(BUDGET)}
             title="Price"
-            size="small"
-            borderless
           >
             <FilterChoice
               type="radio"
@@ -161,12 +199,11 @@ const Filters = forwardRef(({
               onChange={onFilterChange}
               value={currentFilters[BUDGET]}
             />
-          </CollapsibleSectionPopoverSwitch>
-          <CollapsibleSection
+          </CollapsiblePopoverSwitch>
+          <Collapsible
             showIf={showIf(MORE_FILTERS)}
             title="Care services"
-            size="small"
-            borderless
+            disabled={disableMoreFiltersCollapse}
           >
             <FilterChoice
               type="checkbox"
@@ -175,12 +212,11 @@ const Filters = forwardRef(({
               onChange={onFilterChange}
               value={currentFilters[CARE_SERVICES]}
             />
-          </CollapsibleSection>
-          <CollapsibleSection
+          </Collapsible>
+          <Collapsible
             showIf={showIf(MORE_FILTERS)}
             title="Non-care services"
-            size="small"
-            borderless
+            disabled={disableMoreFiltersCollapse}
           >
             <FilterChoice
               type="checkbox"
@@ -189,12 +225,11 @@ const Filters = forwardRef(({
               onChange={onFilterChange}
               value={currentFilters[NON_CARE_SERVICES]}
             />
-          </CollapsibleSection>
-          <CollapsibleSection
+          </Collapsible>
+          <Collapsible
             showIf={showIf(MORE_FILTERS)}
             title="Amenities"
-            size="small"
-            borderless
+            disabled={disableMoreFiltersCollapse}
           >
             <FilterChoice
               type="checkbox"
@@ -203,12 +238,12 @@ const Filters = forwardRef(({
               onChange={onFilterChange}
               value={currentFilters[ROOM_AMENITIES]}
             />
-          </CollapsibleSection>
-          <CollapsibleSection
+          </Collapsible>
+          <Collapsible
             showIf={showIf(MORE_FILTERS)}
             title="Community space"
-            size="small"
-            borderless
+            borderBottom="none"
+            disabled={disableMoreFiltersCollapse}
           >
             <FilterChoice
               type="checkbox"
@@ -217,12 +252,9 @@ const Filters = forwardRef(({
               onChange={onFilterChange}
               value={currentFilters[COMMUNITY_AMENITIES]}
             />
-          </CollapsibleSection>
+          </Collapsible>
         </ModalBody>
-        <Block
-          display="flex"
-          padding="large xLarge"
-        >
+        <ModalActions>
           <Button>
             Clear all
           </Button>
@@ -231,7 +263,7 @@ const Filters = forwardRef(({
           >
             Show results
           </Button>
-        </Block>
+        </ModalActions>
       </ModalPopoverSwitch>
       <Block
         ref={ref}
@@ -242,32 +274,37 @@ const Filters = forwardRef(({
         <FilterButton
           upTo="tablet"
           onClick={openFilters}
+          number={totalNumberOfFilters}
         >
           Filters
         </FilterButton>
         <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(TOC)}
+          selected={currentTocText}
         >
-          Community type
+          {currentTocText || 'Community type'}
         </FilterButton>
         <FilterButton
           ref={sizeButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(SIZE)}
+          selected={currentSizeText}
         >
-          Size
+          {currentSizeText || 'Size'}
         </FilterButton>
         <FilterButton
           ref={priceButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(BUDGET)}
+          selected={currentBudgetText}
         >
-          Price
+          {currentBudgetText || 'Price'}
         </FilterButton>
         <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(MORE_FILTERS)}
+          number={totalMoreFilters}
         >
           More filters
         </FilterButton>
@@ -282,6 +319,9 @@ Filters.propTypes = {
   isOpen: bool,
   nextShow: string,
   toggleShow: func,
+  onFilterChange: func,
+  currentFilters: object,
+  children: node,
 };
 
 export default Filters;
