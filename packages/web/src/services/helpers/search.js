@@ -312,3 +312,5 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
   }
   return { toc: 'nursing-homes' };
 };
+
+export const clearFilters = (filtersToClear, currentFilters) => {}

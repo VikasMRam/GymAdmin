@@ -62,7 +62,7 @@ const Collapsible = forwardRef(({
       borderBottom={!disabled && borderBottom}
     >
       <Header
-        onClick={!disabled && toggle}
+        onClick={(!disabled && toggle) || null}
         paddingTop="xLarge"
         paddingBottom={collapsed ? 'xLarge' : 'medium'}
       >

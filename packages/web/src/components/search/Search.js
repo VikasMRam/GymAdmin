@@ -34,6 +34,7 @@ const Search = ({
   center,
   defaultCenter,
   onFilterChange,
+  onClearFilters,
   onMapChange,
   communities,
   current,
@@ -125,6 +126,7 @@ const Search = ({
           padding="xLarge"
           currentFilters={currentFilters}
           onFilterChange={onFilterChange}
+          onClearFilters={onClearFilters}
         >
           <FilterButton
             upTo="laptop"
@@ -134,12 +136,14 @@ const Search = ({
             <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
           </FilterButton>
         </Filters>
+
         <Block
           gridArea="list"
-          padding="0 xLarge"
-          pad="xxxLarge"
           upToTablet={{
             paddingBottom: getKey('sizes.spacing.xxLarge'),
+          }}
+          upToLaptop={{
+            display: show === LIST ? 'block' : 'none',
           }}
         >
           {communities.map((community, i) => (
@@ -157,7 +161,7 @@ const Search = ({
                 key={community.id}
                 noGallery
                 community={community}
-                marginBottom={i < communities.length - 1 ? 'xLarge' : null}
+                margin="0 xLarge xLarge"
                 layout="column"
               />
             </Link>
@@ -169,7 +173,7 @@ const Search = ({
               display="flex"
               direction="column"
               alignItems="center"
-              pad="xxxLarge"
+              padding="xLarge 0"
               upToTablet={{
                 paddingBottom: getKey('sizes.spacing.xxLarge'),
               }}
@@ -255,6 +259,8 @@ Search.propTypes = {
   center: coordPropType,
   defaultCenter: coordPropType,
   onSearchSubmit: func,
+  onFilterChange: func,
+  onClearFilters: func,
   communities: arrayOf(coordPropType),
   onMapChange: func,
   selectedCommunity: coordPropType,

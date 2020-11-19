@@ -59,7 +59,7 @@ const CheckboxRow = ({ checked, label, ...props }) => (
 
 const RadioRow = ({ label, description, checked, ...props }) => (
   <Row
-    marginBottom={!description ? 'regular' : 'xLarge'}
+    marginBottom="xLarge"
     {...props}
   >
     <Label palette="slate.lighter-30" size="caption">
