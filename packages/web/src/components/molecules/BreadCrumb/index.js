@@ -5,12 +5,12 @@ import { arrayOf, shape, string, object } from 'prop-types';
 import { size } from 'sly/common/components/themes';
 import { text as textPropType } from 'sly/common/propTypes/text';
 import { withPad } from 'sly/common/components/helpers';
-import { Link } from 'sly/common/components/atoms';
+import { Link, Block } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 
 const getSize = p => size('text', p.size);
 
-const Wrapper = styled.nav`
+const Wrapper = styled(Block)`
   ${withPad}
 
   ol {
@@ -33,7 +33,7 @@ const Wrapper = styled.nav`
 `;
 
 const BreadCrumb = ({ items, innerRef, size, ...props }) => (
-  <Wrapper ref={innerRef} size={size} {...props}>
+  <Wrapper ref={innerRef} size={size} as="nav" {...props}>
     <ol itemScope itemType="http://schema.org/BreadcrumbList">
       {
         items.map((item, index) => {

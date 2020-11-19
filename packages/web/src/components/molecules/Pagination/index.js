@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { number, string } from 'prop-types';
+import { number, string, bool } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, palette } from 'sly/common/components/themes';
-import { Button, Icon } from 'sly/common/components/atoms';
+import { upTo } from 'sly/common/components/helpers';
+import { Button, Icon, Block } from 'sly/common/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +34,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
   height: 32px;
   padding: 0;
   line-height: normal;
+  ${ifProp('collapsedInMobile', upTo('tablet', 'margin-right: 0!important;'))}
 `;
 
 const PageLink = styled(Button)`
@@ -44,9 +47,10 @@ const PageLink = styled(Button)`
   &:last-of-type {
     margin-right: 0;
   }
+  ${ifProp('collapsedInMobile', upTo('tablet', 'display: none!important;'))}
 `;
 
-const BreakView = styled.span`
+const BreakView = styled(Block)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -57,6 +61,7 @@ const BreakView = styled.span`
   width: 32px;
   height: 32px;
   margin-right: ${size('spacing.large')};
+  ${ifProp('collapsedInMobile', upTo('tablet', 'display: none!important;'))}
 `;
 
 export default class Pagination extends Component {
@@ -69,6 +74,7 @@ export default class Pagination extends Component {
     pageParam: string.isRequired,
     className: string,
     palette: palettePropType,
+    collapsedInMobile: bool,
   };
 
   static defaultProps = {
@@ -80,30 +86,50 @@ export default class Pagination extends Component {
 
   prevButton() {
     const {
-      current, basePath, pageParam,
+      current, basePath, pageParam, collapsedInMobile,
     } = this.props;
 
-    if (current <= 0) return null;
+    if (current <= 0 && !collapsedInMobile) return null;
 
     let delim = '?';
     if (basePath.indexOf(delim) > -1) {
       delim = '&';
     }
     const prev = current - 1;
-    if (prev === 0) {
-      return <ChevronLink to={basePath} flip />;
+    if (prev < 1) {
+      return (
+        <ChevronLink
+          to={basePath}
+          flip
+          collapsedInMobile={collapsedInMobile}
+          startingWithTablet={current === 0 ? {
+            display: 'none!important',
+          } : null}
+        />
+      );
     }
 
     const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
-    return <ChevronLink to={prevHref} flip />;
+    return <ChevronLink to={prevHref} collapsedInMobile={collapsedInMobile} flip />;
   }
 
   nextButton() {
     const {
-      current, total, basePath, pageParam,
+      current, total, basePath, pageParam, collapsedInMobile,
     } = this.props;
 
-    if (current >= total - 1) return null;
+    if (current >= total - 1) {
+      if (!collapsedInMobile) return null;
+      return (
+        <ChevronLink
+          to={basePath}
+          collapsedInMobile={collapsedInMobile}
+          startingWithTablet={{
+            display: 'none!important',
+          }}
+        />
+      );
+    }
 
     let delim = '?';
     if (basePath && basePath.indexOf(delim) > -1) {
@@ -112,22 +138,27 @@ export default class Pagination extends Component {
 
     const next = current + 1;
     const nextHref = `${basePath}${delim}${pageParam}=${next}`;
-    return <ChevronLink to={nextHref} />;
+    return <ChevronLink to={nextHref} collapsedInMobile={collapsedInMobile} />;
   }
 
-  ellipsis = index => (
-    <BreakView
-      ghost
-      palette="slate"
-      key={index}
-    >
-      ...
-    </BreakView>
-  );
+  ellipsis = (index) => {
+    const { collapsedInMobile } = this.props;
+
+    return (
+      <BreakView
+        ghost
+        palette="slate"
+        key={index}
+        collapsedInMobile={collapsedInMobile}
+      >
+        ...
+      </BreakView>
+    );
+  }
 
   pageButton(index) {
     const {
-      current, basePath, pageParam, palette: paletteProp,
+      current, basePath, pageParam, palette: paletteProp, collapsedInMobile,
     } = this.props;
     const sel = current === index;
     let delim = '?';
@@ -150,6 +181,7 @@ export default class Pagination extends Component {
         palette={palette}
         borderPalette={borderPalette}
         selected={sel}
+        collapsedInMobile={collapsedInMobile}
       >
         {index + 1}
       </PageLink>
@@ -199,12 +231,27 @@ export default class Pagination extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, current, total, collapsedInMobile } = this.props;
 
     return (
       <Wrapper className={className}>
         { this.prevButton() }
         { this.pagination() }
+        {collapsedInMobile && (
+          <Block
+            startingWithTablet={{
+              display: 'none!important',
+            }}
+            css={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minWidth: '242px',
+            }}
+          >
+            Page {current + 1} of {Math.ceil(total)}
+          </Block>
+        )}
         { this.nextButton() }
       </Wrapper>
     );
