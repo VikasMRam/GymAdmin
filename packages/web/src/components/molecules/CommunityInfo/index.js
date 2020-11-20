@@ -80,7 +80,7 @@ export default class CommunityInfo extends Component {
             `)}
           ` : null}
         >
-          {typeCare.join(',')}
+          {typeCare.join(' · ')}
         </IconItem>
       );
     }
