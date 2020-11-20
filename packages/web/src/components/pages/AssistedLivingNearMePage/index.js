@@ -30,7 +30,7 @@ import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
-import { getTocSeoLabel } from 'sly/web/services/helpers/search';
+import { getTocSeoLabel } from 'sly/web/components/search/helpers';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 
 const StyledLink = styled(Link)`

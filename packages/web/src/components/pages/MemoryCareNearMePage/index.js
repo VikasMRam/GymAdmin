@@ -28,7 +28,7 @@ import {
 import { Heading, Paragraph, Link, Box } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/web/services/helpers/search';
+import { getTocSeoLabel } from 'sly/web/components/search/helpers';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 

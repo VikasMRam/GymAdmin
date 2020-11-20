@@ -1,54 +1,7 @@
 import { urlize, stateRegionMap, getStateAbbr, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 
 const validNumber = x => typeof x === 'number' || x === undefined;
-export const filterLinkPath = (currentFilters, nextFilters = {}) => {
-  let pageFilters = {
-    'page-number': currentFilters['page-number'] || null,
-    'page-size': currentFilters['page-size'] || null,
-  };
-  if (validNumber(nextFilters['page-number']) || validNumber(nextFilters['page-size'])) {
-    pageFilters = {
-      'page-number': nextFilters['page-number'],
-      'page-size': nextFilters['page-size'],
-    };
-  }
 
-  const filters = {
-    ...currentFilters,
-    ...nextFilters,
-    ...pageFilters,
-  };
-
-  const {
-    state, city, ...qs
-  } = filters;
-  const stateAbbr = getStateAbbr(state);
-  const region = stateRegionMap[stateAbbr];
-
-  const selected = !Object.keys(nextFilters)
-    .some(key => currentFilters[key] !== nextFilters[key]);
-
-  if (selected) {
-    Object.keys(nextFilters)
-      .forEach(filter => delete qs[filter]);
-  }
-
-  let path = '/agents';
-  if (region && city) {
-    const qsString = objectToURLQueryParams(qs);
-    const qsPart = qsString ? `?${qsString}` : '';
-    path = `${path}/${urlize(region)}/${urlize(city)}-${urlize(stateAbbr)}${qsPart}`;
-  } else if (region) {
-    const qsString = objectToURLQueryParams(qs);
-    const qsPart = qsString ? `?${qsString}` : '';
-    path = `${path}/${urlize(region)}${qsPart}`;
-  }
-
-  return {
-    path,
-    selected,
-  };
-};
 
 export const generateAskAgentQuestionContents = (name, city, type) => {
   let heading = `Ask your Local Senior Living Expert a question about ${name} in ${city}.`;

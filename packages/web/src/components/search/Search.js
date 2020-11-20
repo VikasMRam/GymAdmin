@@ -25,6 +25,7 @@ import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
+import SearchPagination from 'sly/web/components/search/SearchPagination';
 
 const mapRef = createRef();
 
@@ -36,12 +37,7 @@ const Search = ({
   onClearFilters,
   onMapChange,
   communities,
-  current,
-  total,
-  start,
-  end,
-  count,
-  basePath,
+  pagination,
 }) => {
   const [headerRef, {
     height: headerHeight = 80,
@@ -163,41 +159,10 @@ const Search = ({
               />
             </Link>
           ))}
-          <Block
-            display="flex"
-            direction="column"
-            alignItems="center"
-            padding="xLarge 0"
-            upToTablet={{
-              paddingBottom: getKey('sizes.spacing.xxLarge'),
-            }}
-          >
-            {communities.length > 0 &&
-              <Pagination
-                basePath={basePath}
-                pageParam="page-number"
-                current={current}
-                total={total}
-                collapsedInMobile
-                css={{
-                  marginBottom: getKey('sizes.spacing.large'),
-                }}
-              />}
-            <Block
-              pad="xLarge"
-              upToTablet={{
-                display: 'none',
-              }}
-            >
-              {start} - {end} of {count} results
-            </Block>
-            <BreadCrumb
-              items={getBreadCrumbsForLocation(currentFilters, true)}
-              upToTablet={{
-                display: 'none!important',
-              }}
-            />
-          </Block>
+          <SearchPagination
+            currentFilters={currentFilters}
+            pagination={pagination}
+          />
           <ExploreContainer filters={currentFilters} />
         </Block>
         <Block

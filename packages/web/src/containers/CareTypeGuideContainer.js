@@ -3,7 +3,7 @@ import { object, array } from 'prop-types';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import CareTypeGuidePage from 'sly/web/components/pages/CareTypeGuidePage';
-import { getGuideParams } from 'sly/web/services/helpers/search';
+import { getGuideParams } from 'sly/web/components/search/helpers';
 import { prefetch } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 

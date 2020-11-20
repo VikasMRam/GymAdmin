@@ -11,7 +11,7 @@ import CommunitySearchPageTemplate from 'sly/web/components/templates/CommunityS
 import { Box, Heading, Link } from 'sly/common/components/atoms';
 import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
-import { getTocSeoLabel } from 'sly/web/services/helpers/search';
+import { getTocSeoLabel } from 'sly/web/components/search/helpers';
 import SearchMap from 'sly/web/components/organisms/SearchMap';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import CollapsibleSection from 'sly/web/components/molecules/CollapsibleSection';

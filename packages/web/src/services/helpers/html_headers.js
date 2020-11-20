@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { string, arrayOf } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { tocs } from 'sly/web/services/helpers/search';
+import { tocs } from 'sly/web/components/search/helpers';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getStateAbbr, getCitySearchUrl } from 'sly/web/services/helpers/url';
 import { getImagePath } from 'sly/web/services/images';

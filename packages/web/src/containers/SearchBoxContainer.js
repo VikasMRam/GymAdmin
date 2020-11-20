@@ -8,7 +8,7 @@ import { query } from 'sly/web/services/api';
 import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
-} from 'sly/web/services/helpers/search';
+} from 'sly/web/components/search/helpers';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SearchBox from 'sly/web/components/molecules/SearchBox';

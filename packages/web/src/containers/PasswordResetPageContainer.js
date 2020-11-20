@@ -4,7 +4,7 @@ import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { getSearchParams } from 'sly/web/services/helpers/search';
+import { getSearchParams } from 'sly/web/components/search/helpers';
 import { DASHBOARD_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { createValidator, required } from 'sly/web/services/validation';
 import { withRedirectTo } from 'sly/common/services/redirectTo';

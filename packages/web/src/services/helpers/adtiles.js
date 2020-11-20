@@ -1,4 +1,4 @@
-import { tocs } from 'sly/web/services/helpers/search';
+import { tocs } from 'sly/web/components/search/helpers';
 import { tocPaths, urlize } from 'sly/web/services/helpers/url';
 import { zillowIBuyerCities } from 'sly/web/services/helpers/zillow_cities';
 

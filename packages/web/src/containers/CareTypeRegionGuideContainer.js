@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import CareTypeRegionGuidePage from 'sly/web/components/pages/CareTypeRegionGuidePage';
-import { getGuideParams } from 'sly/web/services/helpers/search';
+import { getGuideParams } from 'sly/web/components/search/helpers';
 import { prefetch } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
