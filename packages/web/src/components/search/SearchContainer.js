@@ -1,27 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router';
-import queryString from 'query-string';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import Search from 'sly/web/components/search/Search';
-import { getSearchParams, filterLinkPath } from 'sly/web/components/search/helpers';
+import { getSearchParams, filterLinkPath, getApiFilters, getPagination } from 'sly/web/components/search/helpers';
 import {
   TOC,
   NH,
   CLEARABLE_FILTERS,
 } from 'sly/web/components/search/Filters/constants';
 import careTypes from 'sly/web/constants/careTypes';
-import { getPagination } from 'sly/web/components/search/pagination';
-
-const getApiFilters = filters => Object.entries(filters)
-  .filter(([key, value]) => {
-    return !['city', 'state'].includes(key)
-      && !(key === TOC && value === NH);
-  })
-  .reduce((acc, [key, value]) => {
-    acc[`filter[${key}]`] = encodeURIComponent(value);
-    return acc;
-  }, {});
 
 export default function SearchContainer() {
   const location = useLocation();
