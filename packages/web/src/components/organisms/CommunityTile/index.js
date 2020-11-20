@@ -60,11 +60,12 @@ const CommunityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'regular' : 'large';
-  imageAspectRatio = type === 'map' ? imageAspectRatio || '1:1' : imageAspectRatio;
+  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
   imageMargin = layout === 'column' ? [imageMargin || 0, spacing, imageMargin || 0, imageMargin || 0] : null;
   if (type === 'map') {
     imageMargin = spacing;
   }
+  const imageSnap = imageMargin && type !== 'map' ? 'right' : null;
 
   return (
     <Block
@@ -101,7 +102,7 @@ const CommunityTile = ({
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
             borderRadius="small"
-            snap={layout === 'row' ? 'bottom' : null}
+            snap={layout === 'row' ? 'bottom' : imageSnap}
             transparent
           />
         }
@@ -115,7 +116,7 @@ const CommunityTile = ({
             aspectRatio={imageAspectRatio}
             borderRadius="small"
             margin={imageMargin}
-            snap={layout === 'row' ? 'bottom' : null}
+            snap={layout === 'row' ? 'bottom' : imageSnap}
             loading={loading}
             upToTablet={type === 'map' ? null : {
               borderRadius: size('spacing.small'),
