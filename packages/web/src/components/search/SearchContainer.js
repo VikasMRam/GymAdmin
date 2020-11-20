@@ -19,7 +19,7 @@ export default function SearchContainer() {
   const currentFilters = getSearchParams(match, location);
 
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo } = usePrefetch('getSearchResources', request => request(apiFilters));
+  const { requestInfo } = usePrefetch('getCommunitySearch', request => request(apiFilters));
 
   const [communities, setCommunities] = useState(requestInfo.normalized);
   useEffect(() => {

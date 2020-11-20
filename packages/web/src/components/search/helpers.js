@@ -316,10 +316,10 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
 };
 
 export const getApiFilters = filters => Object.entries(filters)
-  .filter(([key, value]) => {
-    return !['city', 'state'].includes(key)
-      && !(key === TOC && value === NH);
-  })
+  // .filter(([key, value]) => {
+  //   return !['city', 'state'].includes(key)
+  //     && !(key === TOC && value === NH);
+  // })
   .reduce((acc, [key, value]) => {
     acc[`filter[${key}]`] = encodeURIComponent(value);
     return acc;
