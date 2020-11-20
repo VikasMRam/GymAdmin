@@ -1,7 +1,7 @@
 import { stringify } from 'query-string';
-import { titleize } from 'sly/web/services/helpers/strings';
 
-import { urlize, getStateAbbr, objectToURLQueryParams, parseURLQueryParams } from './url';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { urlize, getStateAbbr, objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
 
 export const getRadiusFromMapBounds = (bounds) => {
   const center = bounds.getCenter();

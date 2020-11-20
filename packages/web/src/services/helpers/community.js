@@ -1,5 +1,4 @@
 import { areaCode } from './phone';
-import { tocs } from './search';
 
 import { stateNames } from 'sly/web/services/helpers/url';
 import { formatDate } from 'sly/web/services/helpers/date';

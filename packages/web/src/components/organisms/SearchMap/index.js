@@ -11,7 +11,7 @@ import Checkbox from 'sly/web/components/molecules/Checkbox';
 import Map from 'sly/web/components/atoms/Map';
 import MapTile from 'sly/web/components/molecules/MapTile';
 import GreenMarker from 'sly/web/../public/icons/greenmarker.png';
-import { getRadiusFromMapBounds } from 'sly/web/services/helpers/search';
+import { getRadiusFromMapBounds } from 'sly/web/components/search/helpers';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 
 const MapWrapper = styled.div`

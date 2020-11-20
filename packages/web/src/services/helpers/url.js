@@ -1,19 +1,7 @@
 import { stringify, parse } from 'query-string';
 
 import { titleize } from 'sly/web/services/helpers/strings';
-import { communitySizeSearchParamMap } from 'sly/web/services/helpers/search';
-
-export const getSearchUrl = (matchParams) => {
-  /*
-   { careType: 'assisted-living', state: 'califo', city: 'sf' }
-   */
-  const outUrl = {
-    city: matchParams.city,
-    state: matchParams.state,
-    toc: matchParams.toc,
-  };
-  return outUrl;
-};
+import { communitySizeSearchParamMap } from 'sly/web/components/search/helpers';
 
 export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
@@ -387,10 +375,6 @@ export const getCitySearchUrl = ({ propInfo, address }) => {
 export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
   const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
   return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}`;
-};
-export const getCitySearchWithSizeUrlMapView = ({ propInfo, address }) => {
-  const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
-  return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}&view=map`;
 };
 
 export const getOrigin = () => {

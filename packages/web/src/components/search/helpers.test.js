@@ -1,5 +1,5 @@
 
-import { filterSearchParams, filterLinkPath } from 'sly/web/services/helpers/search';
+import { filterSearchParams, filterLinkPath } from 'sly/web/components/search/helpers';
 
 const baseParams = { toc: 'assisted-living', state: 'california', city: 'san-francisco' };
 const filterParams = {

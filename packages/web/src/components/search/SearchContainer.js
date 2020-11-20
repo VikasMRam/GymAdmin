@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import Search from 'sly/web/components/search/Search';
-import { getSearchParams, filterLinkPath, clearFilters } from 'sly/web/services/helpers/search';
+import { getSearchParams, filterLinkPath, clearFilters } from 'sly/web/components/search/helpers';
 import {
   TOC,
   NH,
