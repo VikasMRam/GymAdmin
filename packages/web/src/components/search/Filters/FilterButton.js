@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { bool, node, number } from 'prop-types';
+import { bool, node, number, oneOf, oneOfType, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import {
@@ -81,7 +81,7 @@ const FilterButton = forwardRef(({
 FilterButton.propTypes = {
   selected: bool,
   number,
-  children: node,
+  children: oneOfType([node, string]),
 };
 
 export default FilterButton;

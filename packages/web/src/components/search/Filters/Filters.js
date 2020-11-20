@@ -289,7 +289,7 @@ const Filters = forwardRef(({
         <FilterButton
           startingWith="tablet"
           onClick={() => openFilters(TOC)}
-          selected={currentTocText}
+          selected={Boolean(currentTocText)}
         >
           {currentTocText || 'Community type'}
         </FilterButton>
@@ -297,7 +297,7 @@ const Filters = forwardRef(({
           ref={sizeButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(SIZE)}
-          selected={currentSizeText}
+          selected={Boolean(currentSizeText)}
         >
           {currentSizeText || 'Size'}
         </FilterButton>
@@ -305,7 +305,7 @@ const Filters = forwardRef(({
           ref={priceButtonRef}
           startingWith="tablet"
           onClick={() => openFilters(BUDGET)}
-          selected={currentBudgetText}
+          selected={Boolean(currentBudgetText)}
         >
           {currentBudgetText || 'Price'}
         </FilterButton>
