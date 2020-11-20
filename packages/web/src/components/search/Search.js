@@ -1,7 +1,11 @@
 import React, { useCallback, useMemo, useState, createRef } from 'react';
 import { arrayOf, func, string, object, number } from 'prop-types';
 
-import { getBoundsForSearchResults, findOptimalZoomForBounds } from './maps';
+import {
+  getBoundsForSearchResults,
+  findOptimalZoomForBounds,
+  findOptimalZoomForResults, getBoundsCenter,
+} from './maps';
 import ExploreContainer from './ExploreContainer';
 
 import { getKey } from 'sly/common/components/themes';
@@ -20,23 +24,16 @@ import Link from 'sly/common/components/atoms/Link';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
-import { getBreadCrumbsForLocation } from 'sly/web/services/helpers/url';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
-import Pagination from 'sly/web/components/molecules/Pagination';
-import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
-
-const mapRef = createRef();
 
 const Search = ({
   currentFilters,
-  center,
-  defaultCenter,
   onFilterChange,
   onClearFilters,
-  onMapChange,
   communities,
+  meta,
   pagination,
 }) => {
   const [headerRef, {
@@ -65,19 +62,11 @@ const Search = ({
     setShow(nextShow);
   }, [nextShow]);
 
+  // console.log('bounds', { zoom, center, boundsCenter, bounds })
+
   const onMarkerClick = (key) => {
     setSelectedCommunity(key);
   };
-
-  let zoom = 1;
-  let mapWidth;
-  let mapHeight;
-  if (communities.length && mapRef.current) {
-    const bounds = getBoundsForSearchResults(communities);
-    zoom = findOptimalZoomForBounds(bounds, { width: mapRef.current.clientWidth, height: mapRef.current.clientHeight });
-    mapWidth = mapRef.current.clientWidth;
-    mapHeight = mapRef.current.clientHeight;
-  }
 
   return (
     <>
@@ -141,6 +130,7 @@ const Search = ({
         >
           {communities.map((community, i) => (
             <Link
+              key={community.id}
               to={community.url}
               event={{
                 category: 'SearchPage',
@@ -151,7 +141,6 @@ const Search = ({
               block
             >
               <CommunityTile
-                key={community.id}
                 noGallery
                 community={community}
                 margin="0 xLarge xLarge"
@@ -169,19 +158,12 @@ const Search = ({
           gridArea="map"
         >
           <Map
-            ref={mapRef}
-            defaultCenter={defaultCenter}
-            center={center}
             communities={communities}
-            zoom={zoom}
-            onChange={onMapChange}
+            meta={meta}
+            onFilterChange={onFilterChange}
             onMarkerClick={onMarkerClick}
             selectedCommunity={selectedCommunity}
             width="100%"
-            mapDimensions={{
-              width: mapWidth,
-              height: mapHeight,
-            }}
             upToLaptop={{
               display: show === MAP ? 'block' : 'none',
               paddingTop: `${upToLaptopOffset}px`,

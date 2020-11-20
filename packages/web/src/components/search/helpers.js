@@ -2,8 +2,14 @@ import queryString, { stringify } from 'query-string';
 
 import { titleize } from 'sly/web/services/helpers/strings';
 import { urlize, getStateAbbr, objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
-import { NH, TOC } from 'sly/web/components/search/Filters';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
+import {
+  CITY,
+  GEO, NH,
+  PAGE_NUMBER,
+  PAGE_SIZE,
+  STATE, TOC,
+} from 'sly/web/components/search/Filters';
 
 export const getRadiusFromMapBounds = (bounds) => {
   const center = bounds.getCenter();
@@ -28,6 +34,7 @@ export const getRadiusFromMapBounds = (bounds) => {
 
 const searchParamsWhitelist = [
   'toc',
+  'geo',
   'state',
   'city',
   'care-services',
@@ -316,17 +323,21 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
 };
 
 export const getApiFilters = filters => Object.entries(filters)
-  // .filter(([key, value]) => {
-  //   return !['city', 'state'].includes(key)
-  //     && !(key === TOC && value === NH);
-  // })
+  .filter(([key, value]) => {
+    return !(filters[GEO] && [CITY, STATE].includes(key))
+      && !(key === TOC && value === NH);
+  })
   .reduce((acc, [key, value]) => {
-    acc[`filter[${key}]`] = encodeURIComponent(value);
+    if (!acc[key]) {
+      acc[`filter[${key}]`] = encodeURIComponent(value);
+    }
     return acc;
-  }, {});
+  }, {
+    [PAGE_SIZE]: filters[PAGE_SIZE],
+    [PAGE_NUMBER]: filters[PAGE_NUMBER],
+  });
 
-export const getPagination = (requestInfo, location, currentFilters) => {
-  const requestMeta = requestInfo.meta;
+export const getPagination = (requestMeta, location, currentFilters) => {
   let current;
   let total;
   let start;

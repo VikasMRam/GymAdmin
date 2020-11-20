@@ -6,6 +6,7 @@ export const SIZE = 'size';
 export const GUIDE = 'own-guide';
 export const BUDGET = 'budget';
 export const RADIUS = 'radius';
+export const GEO = 'geo';
 export const SORT = 'sort';
 export const CARE_SERVICES = 'care-services';
 export const NON_CARE_SERVICES = 'non-care-services';
