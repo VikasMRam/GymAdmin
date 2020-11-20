@@ -526,10 +526,6 @@ export const getHelmetForCommunityPage = (community, location) => {
       {imageUrl && <meta content={imageUrl} property="twitter:image:src" /> }
       <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
 
-
-      {
-        search && search.length > 0 && <meta name="robots" content="noindex" />
-      }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
       <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
       <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
