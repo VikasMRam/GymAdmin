@@ -328,7 +328,9 @@ export const getApiFilters = filters => Object.entries(filters)
       && !(key === TOC && value === NH);
   })
   .reduce((acc, [key, value]) => {
-    if (!acc[key]) {
+    if (key === GEO) {
+      acc[`filter[${key}]`] = value;
+    } else if (!acc[key]) {
       acc[`filter[${key}]`] = encodeURIComponent(value);
     }
     return acc;

@@ -34,15 +34,15 @@ const Map = ({
 
   const onMapChange = useCallback((event) => {
     const { lat, lng } = event.center.toJSON();
-    onFilterChange(GEO, `${lat},${lng},${getVisibleRadius(mapDimensions, lng, event.zoom)}`);
+    onFilterChange(GEO, `${lat},${lng},${getVisibleRadius(mapDimensions, lng, event.zoom).toFixed(2)}`);
     setMapCenter({
       lat,
       lng,
       zoom: event.zoom,
     });
-  }, [mapDimensions, mapDimensions]);
+  }, [mapDimensions]);
 
-  const onDrag = useMemo(() => debounce(onMapChange, 200), []);
+  const onDrag = useMemo(() => debounce(onMapChange, 200), [mapDimensions]);
 
   const onChildClickCallback = useCallback((key) => {
     const community = communities.find(x => x.id === key);
