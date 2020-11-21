@@ -20,12 +20,18 @@ import coordPropType from 'sly/common/propTypes/coordPropType';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
 import Link from 'sly/common/components/atoms/Link';
+import Heading from 'sly/common/components/atoms/Heading';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
 import { LIST, MAP, PAGE_SIZE, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
+import { tocs, getTocSeoLabel } from 'sly/web/components/search/helpers';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { getStateAbbr } from 'sly/web/services/helpers/url';
+
+
 
 const Search = ({
   currentFilters,
@@ -55,6 +61,7 @@ const Search = ({
   const [communityIndex, setCommunityIndex] = useState(null);
 
   const page = currentFilters['page-number'] || 0;
+
   const listSize = meta['filtered-count'];
 
   const nextShow = useMemo(() => {
@@ -73,6 +80,15 @@ const Search = ({
     setSelectedCommunity(key);
     setCommunityIndex(parseInt(index)+1);
   };
+
+
+  const stateStr = titleize(currentFilters.state);
+  const cityStr = titleize(currentFilters.city);
+  const tocLabel = getTocSeoLabel(currentFilters.toc);
+  const locationStr = cityStr ? `${cityStr}, ${stateStr}` : `${stateStr}`;
+
+  const title = `${tocLabel} in ${locationStr}`;
+
 
   return (
     <>
@@ -111,22 +127,33 @@ const Search = ({
           gridTemplateAreas: '"filters map" "list  map"',
         }}
       >
-        <Filters
-          ref={filtersRef}
+        <Block
           gridArea="filters"
           padding="xLarge"
-          currentFilters={currentFilters}
-          onFilterChange={onFilterChange}
-          onClearFilters={onClearFilters}
         >
-          <FilterButton
-            upTo="laptop"
-            marginLeft="auto"
-            onClick={toggleShow}
+
+          {listSize &&
+          <Block size="caption">
+            {listSize} results
+          </Block>
+          }
+          <Heading level="hero" size="subtitle">{title}</Heading>
+          <Filters
+            ref={filtersRef}
+            currentFilters={currentFilters}
+            onFilterChange={onFilterChange}
+            onClearFilters={onClearFilters}
           >
-            <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-          </FilterButton>
-        </Filters>
+
+            <FilterButton
+              upTo="laptop"
+              marginLeft="auto"
+              onClick={toggleShow}
+            >
+              <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
+            </FilterButton>
+          </Filters>
+        </Block>
 
         <Block
           gridArea="list"
