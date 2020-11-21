@@ -53,22 +53,22 @@ HeadingDesc.propTypes = {
   children: node,
 };
 
-const mapTocToHeadingDesc = (toc) => {
+const mapTocToHeadingDesc = (toc, city, state) => {
   const currentToc = tocsHeadingDesc[toc];
 
   return (
-    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}`}>
+    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}/${state}/${city}`}>
       {currentToc.desc}
     </HeadingDesc>
   );
 };
 
-const SearchExploreTypes = ({ title, ...props }) => {
+const SearchExploreTypes = ({ title, city, state, ...props }) => {
   const tocKeys = Object.keys(tocsHeadingDesc);
   const column1Keys = tocKeys.slice(0, tocKeys.length / 2);
   const column2Keys = tocKeys.slice(tocKeys.length  / 2);
-  const column1 = column1Keys.map(mapTocToHeadingDesc);
-  const column2 = column2Keys.map(mapTocToHeadingDesc);
+  const column1 = column1Keys.map(toc => mapTocToHeadingDesc(toc, city, state));
+  const column2 = column2Keys.map(toc => mapTocToHeadingDesc(toc, city, state));
 
   return (
     <Block as="section" {...props}>
@@ -92,6 +92,8 @@ const SearchExploreTypes = ({ title, ...props }) => {
 
 SearchExploreTypes.propTypes = {
   title: string.isRequired,
+  city: string.isRequired,
+  state: string.isRequired,
 };
 
 export default SearchExploreTypes;

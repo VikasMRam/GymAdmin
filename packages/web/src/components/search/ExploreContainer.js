@@ -10,6 +10,8 @@ import Grid from 'sly/common/components/atoms/Grid';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 import SearchExploreTypes from 'sly/web/components/organisms/SearchExploreTypes';
+import { titleize } from 'sly/web/services/helpers/strings';
+
 
 function ExploreContainer({ filters }) {
   const { requestInfo } = usePrefetch('getGeoGuides', request => request(filters, { encode: false }));
@@ -39,11 +41,11 @@ function ExploreContainer({ filters }) {
     >
       {hasGeoGuideContent && guideContent.seoLinks && (
         <SeoLinks
-          title={`Assisted Living Facilities near ${filters.city}, ${filters.state}`}
+          title={`Assisted Living Facilities near ${titleize(filters.city)}, ${titleize(filters.state)}`}
           links={guideContent.seoLinks}
         />
       )}
-      <SearchExploreTypes title={`Explore other types of communities in ${filters.city}, ${filters.state}`} />
+      <SearchExploreTypes title={`Explore other types of communities in ${titleize(filters.city)}, ${titleize(filters.state)}`} city={filters.city} state={filters.state}/>
       <GetAssessmentBoxContainer
         completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
         agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}

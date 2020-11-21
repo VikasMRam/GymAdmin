@@ -13,8 +13,6 @@ import {
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import BannerNotificationAdContainer
-  from 'sly/web/containers/BannerNotificationAdContainer';
 import Footer from 'sly/web/components/organisms/Footer';
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
@@ -23,7 +21,7 @@ import Icon from 'sly/common/components/atoms/Icon';
 import Link from 'sly/common/components/atoms/Link';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
-import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
+import { LIST, MAP, PAGE_SIZE, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
@@ -51,6 +49,10 @@ const Search = ({
 
   const [show, setShow] = useState(LIST);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  const [communityIndex, setCommunityIndex] = useState(null);
+
+  const page = currentFilters['page-number'] || 0;
 
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
@@ -64,8 +66,9 @@ const Search = ({
 
   // console.log('bounds', { zoom, center, boundsCenter, bounds })
 
-  const onMarkerClick = (key) => {
+  const onMarkerClick = (key, index) => {
     setSelectedCommunity(key);
+    setCommunityIndex(parseInt(index)+1);
   };
 
   return (
@@ -132,6 +135,8 @@ const Search = ({
             <Link
               key={community.id}
               to={community.url}
+              onMouseEnter={() => setHoveredCommunity(community)}
+              onMouseLeave={() => setHoveredCommunity(null)}
               event={{
                 category: 'SearchPage',
                 action: 'communityClick',
@@ -145,6 +150,13 @@ const Search = ({
                 community={community}
                 margin="0 xLarge xLarge"
                 layout="column"
+                index={(page*PAGE_SIZE)+(i+1)}
+                event={{
+                  category: 'SearchPage',
+                  action: 'communityClick',
+                  label: i,
+                  value: community.id,
+                }}
               />
             </Link>
           ))}
@@ -159,10 +171,14 @@ const Search = ({
         >
           <Map
             communities={communities}
+            page={page}
+            pageSize = {PAGE_SIZE}
             meta={meta}
             onFilterChange={onFilterChange}
             onMarkerClick={onMarkerClick}
             selectedCommunity={selectedCommunity}
+            communityIndex={communityIndex}
+            hoveredCommunity={hoveredCommunity}
             width="100%"
             upToLaptop={{
               display: show === MAP ? 'block' : 'none',

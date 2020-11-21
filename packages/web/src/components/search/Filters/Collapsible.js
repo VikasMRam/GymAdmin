@@ -2,7 +2,7 @@ import React, { forwardRef, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { bool, string, node, object } from 'prop-types';
 
-import { getKey, key } from 'sly/common/components/themes';
+import { getKey, key, size } from 'sly/common/components/themes';
 import { Icon, Heading } from 'sly/common/components/atoms';
 import Block from 'sly/common/components/atoms/Block';
 import {
@@ -29,6 +29,11 @@ const Content = styled.div(
     box-sizing: border-box;
     overflow: hidden;
     transition: height ${key('transitions.default')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: auto;
+      display: grid;
+      grid-template-columns: 50% 50%;
+    }
   `,
 );
 
