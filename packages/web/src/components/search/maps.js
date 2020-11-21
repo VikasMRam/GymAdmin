@@ -1,5 +1,7 @@
-/* eslint-disable fp/no-this */
+/* eslint-disable no-underscore-dangle */
 import GoogleMap, { fitBounds } from 'google-map-react';
+
+import { gMapsApiKey } from 'sly/web/config';
 
 export const MIN_ZOOM = 6;
 export const MAX_ZOOM = 17;
@@ -27,9 +29,9 @@ class Maps {
   getMaps = () => {
     if (!this._mapsPromise) {
       this._mapsPromise = GoogleMap.googleMapLoader({
-        key: process.env.REACT_APP_GOOGLE_KEY,
+        key: gMapsApiKey,
         libraries: ['places'],
-      }).then(maps => {
+      }).then((maps) => {
         this.sessionToken = new maps.places.AutocompleteSessionToken();
         this.autocompleteService = new maps.places.AutocompleteService();
         this.geocoder = new maps.Geocoder();
@@ -39,12 +41,12 @@ class Maps {
     return this._mapsPromise;
   };
 
-  getGeocode = async query => {
+  getGeocode = async (query) => {
     await this.getMaps();
     return new Promise((resolve, reject) => {
       this.geocoder.geocode(query, (results, status) => {
         if ([OK, ZERO_RESULTS].includes(status)) {
-          resolve(results);
+          resolve(results || []);
         } else {
           reject(new Error(status));
         }
@@ -57,14 +59,14 @@ class Maps {
     return new Promise((resolve, reject) => {
       const query = {
         componentRestrictions: {
-          country: 'uk',
+          country: 'us',
         },
         input,
         sessionToken: this.sessionToken,
       };
       this.autocompleteService.getPlacePredictions(query, (predictions, status) => {
         if ([OK, ZERO_RESULTS].includes(status)) {
-          resolve(predictions);
+          resolve(predictions || []);
         } else {
           reject(new Error(status));
         }

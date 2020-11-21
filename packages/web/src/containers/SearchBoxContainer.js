@@ -9,6 +9,7 @@ import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
 } from 'sly/web/components/search/helpers';
+import { maps } from 'sly/web/components/search/maps';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SearchBox from 'sly/web/components/molecules/SearchBox';
@@ -46,21 +47,6 @@ export default class SearchBoxContainer extends Component {
     selectedSuggestion: undefined,
   };
 
-  componentDidMount() {
-    const googleScript = document.getElementById('google-map-script');
-
-    if (window.google) {
-      this.onGoogleServiceReady();
-    } else {
-      // googleScript.addEventListener('load', this.onGoogleServiceReady);
-    }
-  }
-
-  onGoogleServiceReady = () => {
-    this.autocompleteService = new window.google.maps.places.AutocompleteService();
-    this.geocodeService = new window.google.maps.Geocoder();
-  };
-
   handleTextboxBlur = () => {
     this.setState({
       isTextboxInFocus: false,
@@ -86,11 +72,10 @@ export default class SearchBoxContainer extends Component {
     });
 
     if (suggestion.resourceType === 'GoogleCity') {
-      this.geocodeService.geocode({
+      maps.getGeocode({
         placeId: suggestion.place_id,
-      },
-      (responses = [], status) => {
-        if (status === 'OK' && responses.length) {
+      })
+        .then((responses = []) => {
           const searchParams = getSearchParamFromPlacesResponse(responses[0]);
           const { path } = filterLinkPath(searchParams);
           suggestion.url = path;
@@ -100,8 +85,8 @@ export default class SearchBoxContainer extends Component {
           } else {
             redirectTo(path);
           }
-        }
-      });
+        })
+        .catch(e => console.error(e));
     } else if (onLocationSearch) {
       onLocationSearch(suggestion);
     } else if (suggestion.action === 'redirect') {
@@ -193,16 +178,6 @@ export default class SearchBoxContainer extends Component {
     }
   };
 
-  getGoogleAutocomplete = input => new Promise((resolve) => {
-    this.autocompleteService.getPlacePredictions(
-      {
-        types: ['(regions)'],
-        input,
-      },
-      resolve,
-    );
-  });
-
   getAutocomplete = (query) => {
     const { getSearch } = this.props;
 
@@ -243,9 +218,9 @@ export default class SearchBoxContainer extends Component {
     }
 
     return Promise.all([
-      this.getGoogleAutocomplete(e.target.value)
-        .then((args) => {
-          const googleSuggestions = args.map(s => ({
+      maps.getPlacePredictions(e.target.value)
+        .then((results) => {
+          const googleSuggestions = results.map(s => ({
             ...s,
             id: s.place_id,
             name: s.description,
@@ -258,7 +233,8 @@ export default class SearchBoxContainer extends Component {
           this.setState({
             suggestions: [...googleSuggestions, ...suggestions],
           });
-        }),
+        })
+        .catch(e => console.error(e)),
       this.getAutocomplete(query),
     ]);
   };

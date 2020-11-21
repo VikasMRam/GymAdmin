@@ -101,7 +101,7 @@ const Map = ({
       {...props}
     >
       <GoogleMap
-        bootstrapURLKeys={{ key: gMapsApiKey }}
+        googleMapLoader={maps.getMaps}
         center={mapCenter}
         defaultZoom={DEFAULT_ZOOM}
         hoverDistance={HOVER_DISTANCE}
@@ -119,7 +119,6 @@ const Map = ({
           },
           styles: STYLES,
          })}
-        googleMapLoader={maps.getMaps}
       >
         {communities.map((community, i) => {
           const { latitude, longitude, id } = community;
