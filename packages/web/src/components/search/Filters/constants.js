@@ -15,6 +15,7 @@ export const COMMUNITY_AMENITIES = 'community-amenities';
 
 export const PAGE_NUMBER = 'page-number';
 export const PAGE_SIZE = 'page-size';
+export const DEFAULT_PAGE_SIZE = 20;
 
 export const MORE_FILTERS = [
   CARE_SERVICES,
