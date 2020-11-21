@@ -14,9 +14,11 @@ import MapCommunityTile from 'sly/web/components/search/MapCommunityTile';
 import { GEO } from 'sly/web/components/search/Filters';
 import {
   DEFAULT_ZOOM,
+  HOVER_DISTANCE,
   findOptimalZoomForBounds,
   getBoundsCenter,
-  getBoundsForSearchResults, getVisibleRadius, HOVER_DISTANCE,
+  getBoundsForSearchResults,
+  getGeographyFromMap,
   slyToApiPoint,
 } from 'sly/web/components/search/maps';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
@@ -34,7 +36,8 @@ const Map = ({
 
   const onMapChange = useCallback((event) => {
     const { lat, lng } = event.center.toJSON();
-    onFilterChange(GEO, `${lat},${lng},${getVisibleRadius(mapDimensions, lng, event.zoom).toFixed(2)}`);
+    const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
+    onFilterChange(GEO, geo.join(','));
     setMapCenter({
       lat,
       lng,
