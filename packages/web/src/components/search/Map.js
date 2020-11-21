@@ -29,12 +29,19 @@ const Map = ({
   onFilterChange,
   onMarkerClick,
   selectedCommunity,
+  communityIndex,
+  hoveredCommunity,
+  page,
+  pageSize,
   ...props }) => {
   const breakpoint = useBreakpoint();
   const [mapRef, mapDimensions] = useDimensions();
   const [mapCenter, setMapCenter] = useState(null);
 
   const onMapChange = useCallback((event) => {
+    if (!event || !event.center) {
+      return
+    }
     const { lat, lng } = event.center.toJSON();
     const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
     onFilterChange(GEO, geo.join(','));
@@ -48,8 +55,8 @@ const Map = ({
   const onDrag = useMemo(() => debounce(onMapChange, 200), [mapDimensions]);
 
   const onChildClickCallback = useCallback((key) => {
-    const community = communities.find(x => x.id === key);
-    onMarkerClick(community);
+    const community = communities[key];
+    onMarkerClick(community, key);
   }, [communities]);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
@@ -61,10 +68,12 @@ const Map = ({
 
   const [hoveredMarker, setHoveredMarker] = useState();
   selectedCommunity = hoveredMarker || selectedCommunity;
+  communityIndex = hoveredMarker ? communities.indexOf(hoveredMarker) + 1 : communityIndex;
 
   const selectedCommunityTile = selectedCommunity && (
     <MapCommunityTile
       community={selectedCommunity}
+      index={(page*pageSize) + communityIndex}
       lat={selectedCommunity.latitude}
       lng={selectedCommunity.longitude}
     />
@@ -99,12 +108,12 @@ const Map = ({
           const { latitude, longitude, id } = community;
           return (
             <Marker
-              key={id}
+              key={i}
               community={community}
-              active={selectedCommunity?.id === id}
+              active={selectedCommunity?.id === id || hoveredCommunity?.id === id}
               lat={latitude}
               lng={longitude}
-              number={i + 1}
+              number={(page*pageSize) + (i + 1)}
             />
           );
         })}

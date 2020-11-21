@@ -39,7 +39,7 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, palette, headerIsLink, event, swapRatingPrice, type, ...props
+      community, inverted, palette, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
     let { priceTextSize } = this.props;
     const { propInfo = {}, propRatings, communitySize } = community;
@@ -94,6 +94,7 @@ export default class CommunityInfo extends Component {
         palette={inverted ? 'white' : 'slate'}
         clamped
       >
+        {index && `${index}. `}
         {community.name}
       </Heading>
     );

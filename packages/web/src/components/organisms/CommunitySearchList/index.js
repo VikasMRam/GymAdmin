@@ -165,6 +165,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               layout="column"
               noGallery
               lazyLoadImage={index !== 0}
+              index={index+1}
               event={{
                 category: 'SearchPage',
                 action: 'communityClick',

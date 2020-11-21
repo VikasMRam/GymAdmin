@@ -8,25 +8,35 @@ import {
 } from './maps';
 import ExploreContainer from './ExploreContainer';
 
+import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
 import { getKey } from 'sly/common/components/themes';
 import {
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import BannerNotificationAdContainer
-  from 'sly/web/containers/BannerNotificationAdContainer';
 import Footer from 'sly/web/components/organisms/Footer';
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
 import Link from 'sly/common/components/atoms/Link';
+import Heading from 'sly/common/components/atoms/Heading';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import Filters from 'sly/web/components/search/Filters';
-import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
+import { LIST, MAP, PAGE_SIZE, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
+import { tocs, getTocSeoLabel , getLocationLabel} from 'sly/web/components/search/helpers';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { getStateAbbr } from 'sly/web/services/helpers/url';
+import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
+import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
+  from 'sly/web/constants/wizards/assessment';
+import { isBrowser } from 'sly/web/config';
+
 
 const Search = ({
   currentFilters,
@@ -35,6 +45,7 @@ const Search = ({
   communities,
   meta,
   pagination,
+  location
 }) => {
   const [headerRef, {
     height: headerHeight = 80,
@@ -51,6 +62,12 @@ const Search = ({
 
   const [show, setShow] = useState(LIST);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  const [communityIndex, setCommunityIndex] = useState(null);
+
+  const page = currentFilters['page-number'] || 0;
+
+  const listSize = meta['filtered-count'];
 
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
@@ -64,12 +81,26 @@ const Search = ({
 
   // console.log('bounds', { zoom, center, boundsCenter, bounds })
 
-  const onMarkerClick = (key) => {
+  const onMarkerClick = (key, index) => {
     setSelectedCommunity(key);
+    setCommunityIndex(parseInt(index)+1);
   };
+
+  const city = currentFilters.city;
+  const state = currentFilters.state;
+  const stateStr = titleize(state);
+  const cityStr = titleize(city);
+  const locLabel = getLocationLabel(currentFilters);
+  const tocLabel = getTocSeoLabel(currentFilters.toc);
+  const locationStr = cityStr ? `${cityStr}, ${stateStr}` : `${stateStr}`;
+  const title = `${tocLabel} in ${locationStr}`;
+  const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
 
   return (
     <>
+    {getHelmetForSearchPage({
+      ...currentFilters, url: location, communityList: communities, listSize,
+    })}
       <TemplateHeader
         ref={headerRef}
         noBottomMargin
@@ -102,22 +133,33 @@ const Search = ({
           gridTemplateAreas: '"filters map" "list  map"',
         }}
       >
-        <Filters
-          ref={filtersRef}
+        <Block
           gridArea="filters"
           padding="xLarge"
-          currentFilters={currentFilters}
-          onFilterChange={onFilterChange}
-          onClearFilters={onClearFilters}
         >
-          <FilterButton
-            upTo="laptop"
-            marginLeft="auto"
-            onClick={toggleShow}
+
+          {listSize &&
+          <Block size="caption">
+            {listSize} results
+          </Block>
+          }
+          <Heading level="hero" size="subtitle">{title}</Heading>
+          <Filters
+            ref={filtersRef}
+            currentFilters={currentFilters}
+            onFilterChange={onFilterChange}
+            onClearFilters={onClearFilters}
           >
-            <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-          </FilterButton>
-        </Filters>
+
+            <FilterButton
+              upTo="laptop"
+              marginLeft="auto"
+              onClick={toggleShow}
+            >
+              <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
+            </FilterButton>
+          </Filters>
+        </Block>
 
         <Block
           gridArea="list"
@@ -129,24 +171,54 @@ const Search = ({
           }}
         >
           {communities.map((community, i) => (
-            <Link
-              key={community.id}
-              to={community.url}
-              event={{
-                category: 'SearchPage',
-                action: 'communityClick',
-                label: i,
-                value: community.id,
-              }}
-              block
-            >
-              <CommunityTile
-                noGallery
-                community={community}
+            <>
+              <Link
+                key={community.id}
+                to={community.url}
+                onMouseEnter={() => setHoveredCommunity(community)}
+                onMouseLeave={() => setHoveredCommunity(null)}
+                event={{
+                  category: 'SearchPage',
+                  action: 'communityClick',
+                  label: i,
+                  value: community.id,
+                }}
+                block
+              >
+                <CommunityTile
+                  noGallery
+                  community={community}
+                  margin="0 xLarge xLarge"
+                  layout="column"
+                  index={(page*PAGE_SIZE)+(i+1)}
+                  event={{
+                    category: 'SearchPage',
+                    action: 'communityClick',
+                    label: i,
+                    value: community.id,
+                  }}
+                />
+              </Link>
+              {!showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              <Block
                 margin="0 xLarge xLarge"
-                layout="column"
-              />
-            </Link>
+              >
+                <GetAssessmentBoxContainer
+                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                />
+              </Block>
+              }
+              {
+                showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+                <Block
+                  margin="0 xLarge xLarge"
+                >
+                  <SearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
+                </Block>
+              }
+            </>
           ))}
           <SearchPagination
             currentFilters={currentFilters}
@@ -159,10 +231,14 @@ const Search = ({
         >
           <Map
             communities={communities}
+            page={page}
+            pageSize = {PAGE_SIZE}
             meta={meta}
             onFilterChange={onFilterChange}
             onMarkerClick={onMarkerClick}
             selectedCommunity={selectedCommunity}
+            communityIndex={communityIndex}
+            hoveredCommunity={hoveredCommunity}
             width="100%"
             upToLaptop={{
               display: show === MAP ? 'block' : 'none',

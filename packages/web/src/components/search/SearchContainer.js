@@ -57,8 +57,9 @@ export default function SearchContainer() {
       onFilterChange={onFilterChange}
       onClearFilters={onClearFilters}
       communities={communities || []}
-      meta={requestInfo.meta}
+      meta={requestInfo.meta || {}}
       pagination={pagination}
+      location={location}
     />
   );
 }
