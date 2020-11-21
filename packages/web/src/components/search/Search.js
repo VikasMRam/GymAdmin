@@ -8,6 +8,7 @@ import {
 } from './maps';
 import ExploreContainer from './ExploreContainer';
 
+import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
 import { getKey } from 'sly/common/components/themes';
 import {
   TemplateHeader,
@@ -33,6 +34,7 @@ const Search = ({
   communities,
   meta,
   pagination,
+  location
 }) => {
   const [headerRef, {
     height: headerHeight = 80,
@@ -53,6 +55,7 @@ const Search = ({
   const [communityIndex, setCommunityIndex] = useState(null);
 
   const page = currentFilters['page-number'] || 0;
+  const listSize = meta['filtered-count'];
 
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
@@ -73,6 +76,9 @@ const Search = ({
 
   return (
     <>
+    {getHelmetForSearchPage({
+      ...currentFilters, url: location, communityList: communities, listSize,
+    })}
       <TemplateHeader
         ref={headerRef}
         noBottomMargin
