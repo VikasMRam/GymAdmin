@@ -352,7 +352,10 @@ export const getPagination = (requestMeta, location, currentFilters) => {
     start = present + 1;
     end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
   }
-  const qs = queryString.stringify(currentFilters);
+  const paginationFilters = {...currentFilters};
+  //remove city/state/toc/page-number from map
+  ['toc', 'state', 'city', 'page-number'].forEach(e => delete paginationFilters[e]);
+  const qs = queryString.stringify(paginationFilters);
   let basePath = location.pathname;
   if (qs.length > 0) {
     basePath = `${basePath}?${qs}`;
