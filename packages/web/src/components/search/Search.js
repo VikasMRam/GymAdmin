@@ -27,10 +27,15 @@ import { LIST, MAP, PAGE_SIZE, SHOW_OPTIONS } from 'sly/web/components/search/co
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
-import { tocs, getTocSeoLabel } from 'sly/web/components/search/helpers';
+import { tocs, getTocSeoLabel , getLocationLabel} from 'sly/web/components/search/helpers';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getStateAbbr } from 'sly/web/services/helpers/url';
-
+import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
+import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
+  from 'sly/web/constants/wizards/assessment';
+import { isBrowser } from 'sly/web/config';
 
 
 const Search = ({
@@ -81,14 +86,15 @@ const Search = ({
     setCommunityIndex(parseInt(index)+1);
   };
 
-
-  const stateStr = titleize(currentFilters.state);
-  const cityStr = titleize(currentFilters.city);
+  const city = currentFilters.city;
+  const state = currentFilters.state;
+  const stateStr = titleize(state);
+  const cityStr = titleize(city);
+  const locLabel = getLocationLabel(currentFilters);
   const tocLabel = getTocSeoLabel(currentFilters.toc);
   const locationStr = cityStr ? `${cityStr}, ${stateStr}` : `${stateStr}`;
-
   const title = `${tocLabel} in ${locationStr}`;
-
+  const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
 
   return (
     <>
@@ -165,33 +171,54 @@ const Search = ({
           }}
         >
           {communities.map((community, i) => (
-            <Link
-              key={community.id}
-              to={community.url}
-              onMouseEnter={() => setHoveredCommunity(community)}
-              onMouseLeave={() => setHoveredCommunity(null)}
-              event={{
-                category: 'SearchPage',
-                action: 'communityClick',
-                label: i,
-                value: community.id,
-              }}
-              block
-            >
-              <CommunityTile
-                noGallery
-                community={community}
-                margin="0 xLarge xLarge"
-                layout="column"
-                index={(page*PAGE_SIZE)+(i+1)}
+            <>
+              <Link
+                key={community.id}
+                to={community.url}
+                onMouseEnter={() => setHoveredCommunity(community)}
+                onMouseLeave={() => setHoveredCommunity(null)}
                 event={{
                   category: 'SearchPage',
                   action: 'communityClick',
                   label: i,
                   value: community.id,
                 }}
-              />
-            </Link>
+                block
+              >
+                <CommunityTile
+                  noGallery
+                  community={community}
+                  margin="0 xLarge xLarge"
+                  layout="column"
+                  index={(page*PAGE_SIZE)+(i+1)}
+                  event={{
+                    category: 'SearchPage',
+                    action: 'communityClick',
+                    label: i,
+                    value: community.id,
+                  }}
+                />
+              </Link>
+              {!showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              <Block
+                margin="0 xLarge xLarge"
+              >
+                <GetAssessmentBoxContainer
+                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                />
+              </Block>
+              }
+              {
+                showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+                <Block
+                  margin="0 xLarge xLarge"
+                >
+                  <SearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
+                </Block>
+              }
+            </>
           ))}
           <SearchPagination
             currentFilters={currentFilters}
