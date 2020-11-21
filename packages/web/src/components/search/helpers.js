@@ -309,8 +309,7 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
       toc: 'nursing-homes',
       state,
       city,
-      latitude: lat(),
-      longitude: lng(),
+      geo: `${lat()},${lng()}`,
     };
   } else if (stateFull.length > 0) {
     const state = urlize(stateFull[0].long_name);
