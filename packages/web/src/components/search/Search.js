@@ -72,7 +72,7 @@ const Search = memo(({
 
   // console.log('bounds', { zoom, center, boundsCenter, bounds })
 
-  const page = currentFilters['page-number'] || 0;
+  const page = meta['page-number'] || 0;
   const cursor = (DEFAULT_PAGE_SIZE * page) + 1;
   const { city, state } = currentFilters;
   const stateStr = titleize(state);
