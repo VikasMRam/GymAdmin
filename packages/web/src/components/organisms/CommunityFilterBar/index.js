@@ -4,7 +4,7 @@ import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
-import { budgets, sizes, getFiltersApplied, tocs } from 'sly/web/services/helpers/search';
+import { budgets, sizes, getFiltersApplied, tocs } from 'sly/web/components/search/helpers';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 import { Button } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
