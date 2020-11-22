@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { arrayOf, func, object } from 'prop-types';
 
 import ExploreContainer from './ExploreContainer';
@@ -30,8 +30,9 @@ import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTile
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
   from 'sly/web/constants/wizards/assessment';
 import { isBrowser } from 'sly/web/config';
+import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
 
-const Search = ({
+const Search = memo(({
   currentFilters,
   onFilterChange,
   onClearFilters,
@@ -158,33 +159,11 @@ const Search = ({
         >
           {communities.map((community, i) => (
             <>
-              <Link
-                key={community.id}
-                to={community.url}
-                onMouseEnter={() => setHoveredCommunity(community)}
-                onMouseLeave={() => setHoveredCommunity(null)}
-                event={{
-                  category: 'SearchPage',
-                  action: 'communityClick',
-                  label: i,
-                  value: community.id,
-                }}
-                block
-              >
-                <CommunityTile
-                  noGallery
-                  community={community}
-                  margin="0 xLarge xLarge"
-                  layout="column"
-                  index={cursor + i}
-                  event={{
-                    category: 'SearchPage',
-                    action: 'communityClick',
-                    label: i,
-                    value: community.id,
-                  }}
-                />
-              </Link>
+              <ListCommunityTile
+                setHoveredCommunity={setHoveredCommunity}
+                index={cursor + i}
+                community={community}
+              />
               {!showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
               <Block
                 margin="0 xLarge xLarge"
@@ -248,7 +227,7 @@ const Search = ({
       />
     </>
   );
-};
+});
 
 Search.propTypes = {
   onFilterChange: func,

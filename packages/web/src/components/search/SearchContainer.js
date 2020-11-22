@@ -17,18 +17,18 @@ export default function SearchContainer() {
   const history = useHistory();
   const match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state/:city`);
   // const [kitchens, setKitchens] = useState([]);
-  const currentFilters = getSearchParams(match, location);
+  const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
 
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo } = usePrefetch('getCommunitySearch', request => request(apiFilters));
+  const { requestInfo: requestResult } = usePrefetch('getCommunitySearch', request => request(apiFilters));
 
   // set the state to avoid blank page during fetch
-  const [communities, setCommunities] = useState(requestInfo.normalized);
+  const [requestInfo, setRequestInfo] = useState(requestResult);
   useEffect(() => {
-    if (requestInfo.hasFinished && communities !== requestInfo.normalized) {
-      setCommunities(requestInfo.normalized);
+    if (requestResult.hasFinished && requestInfo !== requestResult) {
+      setRequestInfo(requestResult);
     }
-  }, [requestInfo]);
+  }, [requestResult]);
 
   const onFilterChange = useCallback((param, value) => {
     history.push(filterLinkPath(currentFilters, {
@@ -56,7 +56,7 @@ export default function SearchContainer() {
       currentFilters={currentFilters}
       onFilterChange={onFilterChange}
       onClearFilters={onClearFilters}
-      communities={communities || []}
+      communities={requestInfo.normalized || []}
       meta={requestInfo.meta || {}}
       pagination={pagination}
       location={location}
