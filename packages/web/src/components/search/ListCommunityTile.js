@@ -6,7 +6,7 @@ import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 
 const ListCommunityTile = memo(({ community, setHoveredCommunity, index }) => {
-  const onMouseEnter = useCallback(() => setHoveredCommunity(community), []);
+  const onMouseEnter = useCallback(() => setHoveredCommunity(community), [community]);
   const onMouseLeave = useCallback(() => setHoveredCommunity(null), []);
   return (
     <Link
