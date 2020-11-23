@@ -34,7 +34,8 @@ const Search = memo(({
   currentFilters,
   onFilterChange,
   onClearFilters,
-  requestInfo,
+  communities,
+  meta,
   pagination,
   location,
 }) => {
@@ -55,7 +56,7 @@ const Search = memo(({
   const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
 
-  const listSize = requestInfo.meta['filtered-count'];
+  const listSize = meta['filtered-count'];
 
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
@@ -78,11 +79,10 @@ const Search = memo(({
   const title = `${tocLabel} in ${locationStr}`;
   const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
 
-  const communities = requestInfo.communities || [];
   return (
     <>
       {getHelmetForSearchPage({
-        ...currentFilters, url: location, communityList: normalized, listSize,
+        ...currentFilters, url: location, communityList: communities, listSize,
       })}
       <TemplateHeader
         ref={headerRef}
@@ -121,10 +121,10 @@ const Search = memo(({
           padding="xLarge"
         >
 
-          {!!listSize &&
-            <Block size="caption">
-              {listSize} results
-            </Block>
+          {listSize &&
+          <Block size="caption">
+            {listSize} results
+          </Block>
           }
           <Heading level="hero" size="subtitle">{title}</Heading>
           <Filters
@@ -142,17 +142,6 @@ const Search = memo(({
               <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
             </FilterButton>
           </Filters>
-          {(requestInfo.hasFinished && !listSize) &&
-            <Block
-              marginTop="xxxLarge"
-              upToTablet={{
-                marginTop: getKey('sizes.spacing.xxLarge'),
-              }}
-            >
-              <Heading level="subtitle" size="subtitle" pad="regular">No results</Heading>
-              <div>Try removing some filters or zooming out on the map to find more communities.</div>
-            </Block>
-          }
         </Block>
 
         <Block
@@ -195,7 +184,7 @@ const Search = memo(({
             currentFilters={currentFilters}
             pagination={pagination}
           />
-          {!!listSize && <ExploreContainer filters={currentFilters} />}
+          <ExploreContainer filters={currentFilters} />
         </Block>
         <Block
           gridArea="map"

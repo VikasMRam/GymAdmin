@@ -9,7 +9,6 @@ import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
 
 import Marker from './Marker';
-import SearchOnMoveControl from './SearchOnMoveControl';
 
 import Block from 'sly/common/components/atoms/Block';
 import STYLES from 'sly/web/constants/map';
@@ -49,9 +48,7 @@ const Map = ({
   ...props }) => {
   const breakpoint = useBreakpoint();
   const [mapRef, mapDimensions] = useDimensions();
-
   const [mapCenter, setMapCenter] = useState(coordsFromGeoFilter(currentFilters.geo));
-  const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
   const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
@@ -110,17 +107,6 @@ const Map = ({
     />
   );
 
-  const onRedoToggle = useMemo((toggled) => {
-    setRedoSearchOnMove(toggled);
-  }, []);
-
-  const handleOnLoad = ({ map, maps }) => {
-    const controlButtonDiv = document.createElement('div');
-    // eslint-disable-next-line no-unused-vars
-    const _ = new SearchOnMoveControl(controlButtonDiv, map, onRedoToggle);
-    map.controls[maps.ControlPosition.TOP_RIGHT].push(controlButtonDiv);
-  };
-
   return (
     <Block
       ref={mapRef}
@@ -139,14 +125,12 @@ const Map = ({
         onChildMouseLeave={() => onMarkerHover(null)}
         zoom={mapCenter?.zoom}
         options={maps => ({
-          fullscreenControl: false,
           zoomControl: true,
           zoomControlOptions: {
            position: maps.ControlPosition.TOP_LEFT,
           },
           styles: STYLES,
          })}
-        onGoogleApiLoaded={handleOnLoad}
       >
         {communities.map((community, i) => {
           const { latitude, longitude, id } = community;
