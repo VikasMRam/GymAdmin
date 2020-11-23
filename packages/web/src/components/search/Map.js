@@ -30,8 +30,6 @@ import {
 } from 'sly/web/components/search/maps';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 
-let redoSearchOnMove = false;
-
 const Map = ({
   communities,
   meta,
@@ -44,6 +42,7 @@ const Map = ({
   const breakpoint = useBreakpoint();
   const [mapRef, mapDimensions] = useDimensions();
   const [mapCenter, setMapCenter] = useState(null);
+  const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
   const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
@@ -62,16 +61,18 @@ const Map = ({
   }, [apiMetaCenter, boundsCenter]);
 
   const onDrag = useMemo(() => debounce((event) => {
-    if (redoSearchOnMove) {
-      const { lat, lng } = event.center.toJSON();
-      const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
-      onFilterChange(GEO, geo.join(','));
-      setMapCenter({
-        lat,
-        lng,
-        zoom: event.zoom,
-      });
+    if (!redoSearchOnMove) {
+      return;
     }
+
+    const { lat, lng } = event.center.toJSON();
+    const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
+    onFilterChange(GEO, geo.join(','));
+    setMapCenter({
+      lat,
+      lng,
+      zoom: event.zoom,
+    });
   }, 200), [mapDimensions, redoSearchOnMove]);
 
   const onZoom = useCallback((zoom) => {
@@ -99,9 +100,10 @@ const Map = ({
     />
   );
 
-  const onRedoToggle = (toggled) => {
-    redoSearchOnMove = toggled;
-  };
+  const onRedoToggle = useMemo((toggled) => {
+    setRedoSearchOnMove(toggled);
+  }, []);
+
   const handleOnLoad = ({ map, maps }) => {
     const controlButtonDiv = document.createElement('div');
     // eslint-disable-next-line no-unused-vars
