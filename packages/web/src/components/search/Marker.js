@@ -21,8 +21,9 @@ const Marker = ({
         css={{
           transform: 'translate(-50%, -100%)',
           position: 'absolute',
-          zIndex: active ? 900 : 800,
+          zIndex: active ? (900 - number) : 800,
         }}
+        {...props}
       />
     </Wrapper>
   );

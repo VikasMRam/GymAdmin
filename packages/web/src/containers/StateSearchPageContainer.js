@@ -66,7 +66,6 @@ export default class StateSearchPageContainer extends Component {
       return <Redirect to={replaceLastSegment(pathname, urlize(ucStateQp)) + search} />;
     }
 
-
     const mapViewUrl = generateFilterLinkPath({
       changedParams: {
         view: 'map',

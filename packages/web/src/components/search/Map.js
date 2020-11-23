@@ -29,6 +29,13 @@ import {
   slyToApiPoint,
 } from 'sly/web/components/search/maps';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
+import { PinDefs } from 'sly/web/components/search/Pin';
+import {
+  coordsFromGeoFilter,
+  COMPONENT_STATE,
+  MAP,
+  NONE,
+} from 'sly/web/components/search/helpers';
 
 const Map = ({
   communities,
@@ -38,10 +45,12 @@ const Map = ({
   onMarkerHover,
   selectedCommunity,
   cursor,
+  currentFilters,
   ...props }) => {
   const breakpoint = useBreakpoint();
   const [mapRef, mapDimensions] = useDimensions();
-  const [mapCenter, setMapCenter] = useState(null);
+
+  const [mapCenter, setMapCenter] = useState(coordsFromGeoFilter(currentFilters.geo));
   const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
@@ -49,42 +58,43 @@ const Map = ({
   const boundsCenter = useMemo(() => getBoundsCenter(bounds), [bounds]);
 
   useEffect(() => {
-    if (!mapCenter) {
-      const { lat, lng } = boundsCenter || apiMetaCenter;
-      setMapCenter({
-        lat,
-        lng,
-        // this gives a default zoom if there are no bounds
-        zoom: findOptimalZoomForBounds(bounds, mapDimensions),
-      });
-    }
-  }, [apiMetaCenter, boundsCenter]);
-
-  const onDrag = useMemo(() => debounce((event) => {
-    if (!redoSearchOnMove) {
+    if (mapCenter?.controlled === MAP) {
       return;
     }
 
-    const { lat, lng } = event.center.toJSON();
-    const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
-    onFilterChange(GEO, geo.join(','));
-    setMapCenter({
-      lat,
-      lng,
-      zoom: event.zoom,
-    });
-  }, 200), [mapDimensions, redoSearchOnMove]);
+    const { lat, lng } = boundsCenter || apiMetaCenter;
+    const zoom = findOptimalZoomForBounds(bounds, mapDimensions);
 
-  const onZoom = useCallback((zoom) => {
-    const { lat, lng } = mapCenter;
-    const geo = getGeographyFromMap({ lat, lng, zoom }, mapDimensions);
-    onFilterChange(GEO, geo.join(','));
     setMapCenter({
       lat,
       lng,
+      // this gives a default zoom if there are no bounds
       zoom,
+      controlled: COMPONENT_STATE,
     });
-  }, [mapDimensions]);
+  }, [apiMetaCenter, boundsCenter, mapDimensions]);
+
+  const onChange = useCallback(({ center: { lat, lng }, zoom }) => {
+    if (mapCenter.controlled === COMPONENT_STATE) {
+      setMapCenter({
+        ...mapCenter,
+        controlled: NONE,
+      });
+    } else {
+      const geo = getGeographyFromMap({
+        lat,
+        lng,
+        zoom,
+      }, mapDimensions);
+      onFilterChange(GEO, geo.join(','));
+      setMapCenter({
+        lat,
+        lng,
+        zoom,
+        controlled: MAP,
+      });
+    }
+  }, [mapCenter, mapDimensions]);
 
   const onChildClickCallback = useCallback((key) => {
     const community = communities.find(({ id }) => id === key);
@@ -116,17 +126,17 @@ const Map = ({
       ref={mapRef}
       {...props}
     >
+      <PinDefs />
       <GoogleMap
         googleMapLoader={maps.getMaps}
         center={mapCenter}
         defaultZoom={DEFAULT_ZOOM}
         hoverDistance={HOVER_DISTANCE}
+        onChange={onChange}
         onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
         onChildMouseEnter={(_, { community }) => onMarkerHover(community)}
         onChildMouseLeave={() => onMarkerHover(null)}
-        onDrag={onDrag}
-        onZoomAnimationEnd={onZoom}
         zoom={mapCenter?.zoom}
         options={maps => ({
           fullscreenControl: false,
@@ -171,6 +181,7 @@ Map.propTypes = {
   onMarkerClick: func,
   onMarkerHover: func,
   selectedCommunity: object,
+  currentFilters: object,
 };
 
 export default Map;
