@@ -178,7 +178,7 @@ export default class HeaderContainer extends PureComponent {
     const { redirectTo } = this.props;
 
     if (addresses.length) {
-      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}?geo=${latitude},${longitude},10`;
+      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; //?geo=${latitude},${longitude},10`;
 
       redirectTo(path);
     }
