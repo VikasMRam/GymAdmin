@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Measure from 'react-measure';
 
 import CollapsibleSection, { Header } from 'sly/web/components/molecules/CollapsibleSection';
 import { ClampedText } from 'sly/web/components/atoms';

@@ -55,6 +55,7 @@ CommunityRating.propTypes = {
   palette: palettePropType,
   variation: variationPropType,
   className: string,
+  seedId: number,
 };
 
 CommunityRating.defaultProps = {

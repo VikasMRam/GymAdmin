@@ -1,6 +1,6 @@
+/* eslint react/prop-types: 0 */
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
-import { bool, oneOfType } from 'prop-types';
 
 import Root from './Root';
 

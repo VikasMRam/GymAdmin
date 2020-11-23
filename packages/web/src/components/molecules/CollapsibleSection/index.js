@@ -136,6 +136,7 @@ CollapsibleSection.propTypes = {
   innerRef: object,
   className: string,
   headingWeight: weightPropType,
+  borderBottom: string,
   borderless: bool,
   id: string,
   showIf: bool,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, string, object, oneOf } from 'prop-types';
+import { bool, string, object, oneOf, number } from 'prop-types';
 import { css } from 'styled-components';
 
 import { upTo, startingWith } from 'sly/common/components/helpers';
@@ -26,6 +26,7 @@ export default class CommunityInfo extends Component {
     priceTextSize: string.isRequired,
     swapRatingPrice: bool,
     type: oneOf(['list', 'map']).isRequired,
+    index: number,
   };
 
   static defaultProps = {
