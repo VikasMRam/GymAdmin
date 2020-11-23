@@ -56,8 +56,7 @@ export default function SearchContainer() {
       currentFilters={currentFilters}
       onFilterChange={onFilterChange}
       onClearFilters={onClearFilters}
-      communities={requestInfo.normalized || []}
-      meta={requestInfo.meta || {}}
+      requestInfo={requestInfo}
       pagination={pagination}
       location={location}
     />

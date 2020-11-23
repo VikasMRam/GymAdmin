@@ -21,7 +21,6 @@ const SearchPagination = ({
   } = pagination;
 
   return (
-
     <Block
       display="flex"
       direction="column"
@@ -32,30 +31,35 @@ const SearchPagination = ({
       }}
     >
       {total > 0 &&
-      <Pagination
-        basePath={basePath}
-        pageParam="page-number"
-        current={current}
-        total={total}
-        collapsedInMobile
-        css={{
-          marginBottom: getKey('sizes.spacing.large'),
-        }}
-      />}
-      <Block
-        pad="xLarge"
-        upToTablet={{
-          display: 'none',
-        }}
-      >
-        {start} - {end} of {count} results
-      </Block>
-      <BreadCrumb
-        items={getBreadCrumbsForLocation(currentFilters, true)}
-        upToTablet={{
-          display: 'none!important',
-        }}
-      />
+        <Pagination
+          basePath={basePath}
+          pageParam="page-number"
+          current={current}
+          total={total}
+          collapsedInMobile
+          css={{
+            marginBottom: getKey('sizes.spacing.large'),
+          }}
+        />
+      }
+      {count > 0 &&
+        <Block
+          pad="xLarge"
+          upToTablet={{
+            display: 'none',
+          }}
+        >
+          {start} - {end} of {count} results
+        </Block>
+      }
+      {count > 0 &&
+        <BreadCrumb
+          items={getBreadCrumbsForLocation(currentFilters, true)}
+          upToTablet={{
+            display: 'none!important',
+          }}
+        />
+      }
     </Block>
   );
 };
