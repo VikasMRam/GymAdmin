@@ -9,8 +9,8 @@ import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
 
 import Marker from './Marker';
+import SearchOnMoveControl from './SearchOnMoveControl';
 
-import { gMapsApiKey } from 'sly/web/config';
 import Block from 'sly/common/components/atoms/Block';
 import STYLES from 'sly/web/constants/map';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
@@ -29,6 +29,8 @@ import {
   slyToApiPoint,
 } from 'sly/web/components/search/maps';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
+
+let redoSearchOnMove = false;
 
 const Map = ({
   communities,
@@ -60,15 +62,17 @@ const Map = ({
   }, [apiMetaCenter, boundsCenter]);
 
   const onDrag = useMemo(() => debounce((event) => {
-    const { lat, lng } = event.center.toJSON();
-    const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
-    onFilterChange(GEO, geo.join(','));
-    setMapCenter({
-      lat,
-      lng,
-      zoom: event.zoom,
-    });
-  }, 200), [mapDimensions]);
+    if (redoSearchOnMove) {
+      const { lat, lng } = event.center.toJSON();
+      const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
+      onFilterChange(GEO, geo.join(','));
+      setMapCenter({
+        lat,
+        lng,
+        zoom: event.zoom,
+      });
+    }
+  }, 200), [mapDimensions, redoSearchOnMove]);
 
   const onZoom = useCallback((zoom) => {
     const { lat, lng } = mapCenter;
@@ -95,6 +99,16 @@ const Map = ({
     />
   );
 
+  const onRedoToggle = (toggled) => {
+    redoSearchOnMove = toggled;
+  };
+  const handleOnLoad = ({ map, maps }) => {
+    const controlButtonDiv = document.createElement('div');
+    // eslint-disable-next-line no-unused-vars
+    const _ = new SearchOnMoveControl(controlButtonDiv, map, onRedoToggle);
+    map.controls[maps.ControlPosition.TOP_RIGHT].push(controlButtonDiv);
+  };
+
   return (
     <Block
       ref={mapRef}
@@ -113,12 +127,14 @@ const Map = ({
         onZoomAnimationEnd={onZoom}
         zoom={mapCenter?.zoom}
         options={maps => ({
+          fullscreenControl: false,
           zoomControl: true,
           zoomControlOptions: {
            position: maps.ControlPosition.TOP_LEFT,
           },
           styles: STYLES,
          })}
+        onGoogleApiLoaded={handleOnLoad}
       >
         {communities.map((community, i) => {
           const { latitude, longitude, id } = community;
