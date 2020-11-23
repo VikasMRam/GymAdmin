@@ -152,7 +152,7 @@ const getSDForSearchResource = ({
 };
 
 export const getHelmetForSearchPage = ({
-  url, city, state, toc, latitude, longitude, listSize, communityList, geoGuide,
+  url, city, state, toc, latitude, longitude, listSize, communityList,
 }) => {
   let actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
@@ -164,14 +164,11 @@ export const getHelmetForSearchPage = ({
     };
   }
 
-  const guideContent = geoGuide.guideContent || {};
-  const { seoTitle, seoDescription } = guideContent;
-
   const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
   const numResultsStr = (listSize && listSize < 15) ? `THE BEST ${listSize}` : 'THE BEST 15';
-  const title = seoTitle || `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
+  const title = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
 
-  let description = seoDescription || (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
+  let description = (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
     `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`);
 
   if (toc === 'nursing-homes') {

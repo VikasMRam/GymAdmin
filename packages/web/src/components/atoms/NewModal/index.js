@@ -6,7 +6,7 @@ import { any, func, bool, element, string } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/common/components/themes';
-import { withShadow, withSpacing } from 'sly/common/components/helpers';
+import { withSpacing } from 'sly/common/components/helpers';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';

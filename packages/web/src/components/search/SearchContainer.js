@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
@@ -7,6 +7,7 @@ import { getSearchParams, filterLinkPath, getApiFilters, getPagination } from 's
 import {
   TOC,
   NH,
+  GEO,
   CLEARABLE_FILTERS,
 } from 'sly/web/components/search/Filters/constants';
 import careTypes from 'sly/web/constants/careTypes';
@@ -16,17 +17,18 @@ export default function SearchContainer() {
   const history = useHistory();
   const match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state/:city`);
   // const [kitchens, setKitchens] = useState([]);
-  const currentFilters = getSearchParams(match, location);
+  const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
 
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo } = usePrefetch('getCommunitySearch', request => request(apiFilters));
+  const { requestInfo: requestResult } = usePrefetch('getCommunitySearch', request => request(apiFilters));
 
-  const [communities, setCommunities] = useState(requestInfo.normalized);
+  // set the state to avoid blank page during fetch
+  const [requestInfo, setRequestInfo] = useState(requestResult);
   useEffect(() => {
-    if (requestInfo.hasFinished && communities !== requestInfo.normalized) {
-      setCommunities(requestInfo.normalized);
+    if (requestResult.hasFinished && requestInfo !== requestResult) {
+      setRequestInfo(requestResult);
     }
-  }, [requestInfo]);
+  }, [requestResult]);
 
   const onFilterChange = useCallback((param, value) => {
     history.push(filterLinkPath(currentFilters, {
@@ -47,36 +49,17 @@ export default function SearchContainer() {
     history.push(filterLinkPath(currentFilters, nextFilters).path);
   }, [currentFilters]);
 
-  const onMapChange = useCallback(() => {
-    console.log('map changed');
-  }, []);
-
-  let center = {
-    lng: 0,
-    lat: 0,
-  };
-
-  const defaultCenter = center;
-
-  if (requestInfo.normalized && requestInfo.normalized.length) {
-    center = {
-      lng: requestInfo.normalized[0].longitude,
-      lat: requestInfo.normalized[0].latitude,
-    };
-  }
-
-  const pagination = getPagination(requestInfo, location, currentFilters);
+  const pagination = useMemo(() => getPagination(requestInfo.meta, location, currentFilters), [requestInfo]);
 
   return (
     <Search
       currentFilters={currentFilters}
-      onMapChange={onMapChange}
       onFilterChange={onFilterChange}
       onClearFilters={onClearFilters}
-      defaultCenter={defaultCenter}
-      center={center}
-      communities={communities || []}
+      communities={requestInfo.normalized || []}
+      meta={requestInfo.meta || {}}
       pagination={pagination}
+      location={location}
     />
   );
 }

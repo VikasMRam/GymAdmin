@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, string, object, oneOf } from 'prop-types';
+import { bool, string, object, oneOf, number } from 'prop-types';
 import { css } from 'styled-components';
 
 import { upTo, startingWith } from 'sly/common/components/helpers';
@@ -26,6 +26,7 @@ export default class CommunityInfo extends Component {
     priceTextSize: string.isRequired,
     swapRatingPrice: bool,
     type: oneOf(['list', 'map']).isRequired,
+    index: number,
   };
 
   static defaultProps = {
@@ -39,7 +40,7 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, palette, headerIsLink, event, swapRatingPrice, type, ...props
+      community, inverted, palette, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
     let { priceTextSize } = this.props;
     const { propInfo = {}, propRatings, communitySize } = community;
@@ -94,6 +95,7 @@ export default class CommunityInfo extends Component {
         palette={inverted ? 'white' : 'slate'}
         clamped
       >
+        {index && `${index}. `}
         {community.name}
       </Heading>
     );

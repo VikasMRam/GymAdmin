@@ -14,6 +14,7 @@ export const withShadow = ({ shadow, shadowHOffset, shadowVOffset, shadowBlur, s
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     `;
   }
+  return css``;
 };
 
 export const withShadowOnHover = ({

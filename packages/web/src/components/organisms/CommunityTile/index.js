@@ -27,7 +27,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, ...props
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, index, ...props
 }) => {
   const {
     name, gallery, communitySize, plusCategory,
@@ -148,6 +148,7 @@ const CommunityTile = ({
             priceTextSize={layout === 'row' ? 'body' : undefined}
             pad={actionButtons.length ? 'large' : undefined}
             swapRatingPrice={layout === 'row'}
+            index={index}
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
@@ -216,6 +217,7 @@ CommunityTile.propTypes = {
   event: object,
   imageAspectRatio: string.isRequired,
   imageMargin: string,
+  index: number,
 };
 
 CommunityTile.defaultProps = {

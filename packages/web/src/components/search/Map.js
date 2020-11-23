@@ -1,47 +1,95 @@
-import React, { useCallback, forwardRef, useState, useMemo } from 'react';
-import { arrayOf, object, func, number, bool } from 'prop-types';
+import React, {
+  useCallback,
+  useState,
+  useMemo,
+  useEffect,
+} from 'react';
+import { arrayOf, object, func, number } from 'prop-types';
 import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
 
 import Marker from './Marker';
 
-import coordPropType from 'sly/common/propTypes/coordPropType';
 import { gMapsApiKey } from 'sly/web/config';
 import Block from 'sly/common/components/atoms/Block';
 import STYLES from 'sly/web/constants/map';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import MapCommunityTile from 'sly/web/components/search/MapCommunityTile';
-import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import {
+  GEO,
+} from 'sly/web/components/search/Filters';
+import {
+  maps,
+  DEFAULT_ZOOM,
+  HOVER_DISTANCE,
+  findOptimalZoomForBounds,
+  getBoundsCenter,
+  getBoundsForSearchResults,
+  getGeographyFromMap,
+  slyToApiPoint,
+} from 'sly/web/components/search/maps';
+import useDimensions from 'sly/common/components/helpers/useDimensions';
 
-const Map = forwardRef(({
-  defaultCenter,
+const Map = ({
   communities,
-  center,
-  zoom,
-  onChange,
+  meta,
+  onFilterChange,
   onMarkerClick,
+  onMarkerHover,
   selectedCommunity,
-  ...props }, ref) => {
-  const onDrag = useMemo(() => debounce((map) => {
-    onChange(map);
-  }, 200), []);
-
-  const onZoom = useCallback((map) => {
-    onChange(map);
-  }, []);
-
-  const onChildClickCallback = (key) => {
-    const community = communities.find(x => x.id === key);
-    onMarkerClick(community);
-  };
-
+  cursor,
+  ...props }) => {
   const breakpoint = useBreakpoint();
-  const [hoveredMarker, setHoveredMarker] = useState();
-  selectedCommunity = hoveredMarker || selectedCommunity;
+  const [mapRef, mapDimensions] = useDimensions();
+  const [mapCenter, setMapCenter] = useState(null);
+
+  const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
+  const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
+  const boundsCenter = useMemo(() => getBoundsCenter(bounds), [bounds]);
+
+  useEffect(() => {
+    if (!mapCenter) {
+      const { lat, lng } = boundsCenter || apiMetaCenter;
+      setMapCenter({
+        lat,
+        lng,
+        // this gives a default zoom if there are no bounds
+        zoom: findOptimalZoomForBounds(bounds, mapDimensions),
+      });
+    }
+  }, [apiMetaCenter, boundsCenter]);
+
+  const onDrag = useMemo(() => debounce((event) => {
+    const { lat, lng } = event.center.toJSON();
+    const geo = getGeographyFromMap({ lat, lng, zoom: event.zoom }, mapDimensions);
+    onFilterChange(GEO, geo.join(','));
+    setMapCenter({
+      lat,
+      lng,
+      zoom: event.zoom,
+    });
+  }, 200), [mapDimensions]);
+
+  const onZoom = useCallback((zoom) => {
+    const { lat, lng } = mapCenter;
+    const geo = getGeographyFromMap({ lat, lng, zoom }, mapDimensions);
+    onFilterChange(GEO, geo.join(','));
+    setMapCenter({
+      lat,
+      lng,
+      zoom,
+    });
+  }, [mapDimensions]);
+
+  const onChildClickCallback = useCallback((key) => {
+    const community = communities.find(({ id }) => id === key);
+    onMarkerClick(community);
+  }, [communities]);
 
   const selectedCommunityTile = selectedCommunity && (
     <MapCommunityTile
       community={selectedCommunity}
+      index={cursor + communities.indexOf(selectedCommunity)}
       lat={selectedCommunity.latitude}
       lng={selectedCommunity.longitude}
     />
@@ -49,22 +97,21 @@ const Map = forwardRef(({
 
   return (
     <Block
-      ref={ref}
+      ref={mapRef}
       {...props}
     >
       <GoogleMap
-        bootstrapURLKeys={{ key: gMapsApiKey }}
-        center={center}
-        defaultCenter={defaultCenter}
-        defaultZoom={3}
-        hoverDistance={50}
+        googleMapLoader={maps.getMaps}
+        center={mapCenter}
+        defaultZoom={DEFAULT_ZOOM}
+        hoverDistance={HOVER_DISTANCE}
         onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
-        onChildMouseEnter={(_, { community }) => setHoveredMarker(community)}
-        onChildMouseLeave={() => setHoveredMarker(null)}
+        onChildMouseEnter={(_, { community }) => onMarkerHover(community)}
+        onChildMouseLeave={() => onMarkerHover(null)}
         onDrag={onDrag}
         onZoomAnimationEnd={onZoom}
-        zoom={zoom}
+        zoom={mapCenter?.zoom}
         options={maps => ({
           zoomControl: true,
           zoomControlOptions: {
@@ -82,7 +129,7 @@ const Map = forwardRef(({
               active={selectedCommunity?.id === id}
               lat={latitude}
               lng={longitude}
-              number={i + 1}
+              number={cursor + i}
             />
           );
         })}
@@ -92,19 +139,19 @@ const Map = forwardRef(({
       {breakpoint?.upToLaptop() && selectedCommunityTile}
     </Block>
   );
-});
+};
 
 Map.defaultProps = {
   communities: [],
 };
 
 Map.propTypes = {
-  center: coordPropType,
-  defaultCenter: coordPropType,
+  cursor: number,
   communities: arrayOf(object),
-  onChange: func,
-  zoom: number,
+  meta: object,
+  onFilterChange: func,
   onMarkerClick: func,
+  onMarkerHover: func,
   selectedCommunity: object,
 };
 

@@ -1,43 +1,43 @@
-import React, { useCallback, useMemo, useState, createRef } from 'react';
-import { arrayOf, func, string, object, number } from 'prop-types';
+import React, { memo, useCallback, useMemo, useState } from 'react';
+import { arrayOf, func, object } from 'prop-types';
 
-import { getBoundsForSearchResults, findOptimalZoomForBounds } from './maps';
 import ExploreContainer from './ExploreContainer';
 
+import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
 import { getKey } from 'sly/common/components/themes';
 import {
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import BannerNotificationAdContainer
-  from 'sly/web/containers/BannerNotificationAdContainer';
 import Footer from 'sly/web/components/organisms/Footer';
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
-import Link from 'sly/common/components/atoms/Link';
-import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import Filters from 'sly/web/components/search/Filters';
+import Heading from 'sly/common/components/atoms/Heading';
+import Filters, { DEFAULT_PAGE_SIZE } from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
-import { getBreadCrumbsForLocation } from 'sly/web/services/helpers/url';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
-import Pagination from 'sly/web/components/molecules/Pagination';
-import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
+import { getTocSeoLabel, getLocationLabel } from 'sly/web/components/search/helpers';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
+import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
+  from 'sly/web/constants/wizards/assessment';
+import { isBrowser } from 'sly/web/config';
+import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
 
-const mapRef = createRef();
-
-const Search = ({
+const Search = memo(({
   currentFilters,
-  center,
-  defaultCenter,
   onFilterChange,
   onClearFilters,
-  onMapChange,
   communities,
+  meta,
   pagination,
+  location,
 }) => {
   const [headerRef, {
     height: headerHeight = 80,
@@ -54,6 +54,9 @@ const Search = ({
 
   const [show, setShow] = useState(LIST);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [hoveredCommunity, setHoveredCommunity] = useState(null);
+
+  const listSize = meta['filtered-count'];
 
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
@@ -65,22 +68,24 @@ const Search = ({
     setShow(nextShow);
   }, [nextShow]);
 
-  const onMarkerClick = (key) => {
-    setSelectedCommunity(key);
-  };
+  // console.log('bounds', { zoom, center, boundsCenter, bounds })
 
-  let zoom = 1;
-  let mapWidth;
-  let mapHeight;
-  if (communities.length && mapRef.current) {
-    const bounds = getBoundsForSearchResults(communities);
-    zoom = findOptimalZoomForBounds(bounds, { width: mapRef.current.clientWidth, height: mapRef.current.clientHeight });
-    mapWidth = mapRef.current.clientWidth;
-    mapHeight = mapRef.current.clientHeight;
-  }
+  const page = meta['page-number'] || 0;
+  const cursor = (DEFAULT_PAGE_SIZE * page) + 1;
+  const { city, state } = currentFilters;
+  const stateStr = titleize(state);
+  const cityStr = titleize(city);
+  const locLabel = getLocationLabel(currentFilters);
+  const tocLabel = getTocSeoLabel(currentFilters.toc);
+  const locationStr = cityStr ? `${cityStr}, ${stateStr}` : `${stateStr}`;
+  const title = `${tocLabel} in ${locationStr}`;
+  const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
 
   return (
     <>
+      {getHelmetForSearchPage({
+        ...currentFilters, url: location, communityList: communities, listSize,
+      })}
       <TemplateHeader
         ref={headerRef}
         noBottomMargin
@@ -91,10 +96,10 @@ const Search = ({
         }}
       >
         <HeaderContainer />
-          { /*<BannerNotificationAdContainer
-          type="wizardSearch"
-          {...currentFilters}
-        /> */}
+        {/* <BannerNotificationAdContainer
+            type="wizardSearch"
+            {...currentFilters}
+          /> */}
       </TemplateHeader>
 
       {/* SEARCH */}
@@ -113,22 +118,33 @@ const Search = ({
           gridTemplateAreas: '"filters map" "list  map"',
         }}
       >
-        <Filters
-          ref={filtersRef}
+        <Block
           gridArea="filters"
           padding="xLarge"
-          currentFilters={currentFilters}
-          onFilterChange={onFilterChange}
-          onClearFilters={onClearFilters}
         >
-          <FilterButton
-            upTo="laptop"
-            marginLeft="auto"
-            onClick={toggleShow}
+
+          {listSize &&
+          <Block size="caption">
+            {listSize} results
+          </Block>
+          }
+          <Heading level="hero" size="subtitle">{title}</Heading>
+          <Filters
+            ref={filtersRef}
+            currentFilters={currentFilters}
+            onFilterChange={onFilterChange}
+            onClearFilters={onClearFilters}
           >
-            <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-          </FilterButton>
-        </Filters>
+
+            <FilterButton
+              upTo="laptop"
+              marginLeft="auto"
+              onClick={toggleShow}
+            >
+              <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
+            </FilterButton>
+          </Filters>
+        </Block>
 
         <Block
           gridArea="list"
@@ -140,24 +156,32 @@ const Search = ({
           }}
         >
           {communities.map((community, i) => (
-            <Link
-              to={community.url}
-              event={{
-                category: 'SearchPage',
-                action: 'communityClick',
-                label: i,
-                value: community.id,
-              }}
-              block
-            >
-              <CommunityTile
-                key={community.id}
-                noGallery
+            <>
+              <ListCommunityTile
+                setHoveredCommunity={setHoveredCommunity}
+                index={cursor + i}
                 community={community}
-                margin="0 xLarge xLarge"
-                layout="column"
               />
-            </Link>
+              {!showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              <Block
+                margin="0 xLarge xLarge"
+              >
+                <GetAssessmentBoxContainer
+                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                />
+              </Block>
+              }
+              {
+                showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+                <Block
+                  margin="0 xLarge xLarge"
+                >
+                  <SearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
+                </Block>
+              }
+            </>
           ))}
           <SearchPagination
             currentFilters={currentFilters}
@@ -169,19 +193,14 @@ const Search = ({
           gridArea="map"
         >
           <Map
-            ref={mapRef}
-            defaultCenter={defaultCenter}
-            center={center}
             communities={communities}
-            zoom={zoom}
-            onChange={onMapChange}
-            onMarkerClick={onMarkerClick}
-            selectedCommunity={selectedCommunity}
+            meta={meta}
+            onFilterChange={onFilterChange}
+            onMarkerClick={setSelectedCommunity}
+            onMarkerHover={setHoveredCommunity}
+            selectedCommunity={hoveredCommunity || selectedCommunity}
+            cursor={cursor}
             width="100%"
-            mapDimensions={{
-              width: mapWidth,
-              height: mapHeight,
-            }}
             upToLaptop={{
               display: show === MAP ? 'block' : 'none',
               paddingTop: `${upToLaptopOffset}px`,
@@ -206,27 +225,16 @@ const Search = ({
       />
     </>
   );
-};
+});
 
 Search.propTypes = {
-  show: string,
-  setShow: func,
-  setClickedMarker: func,
-  center: coordPropType,
-  defaultCenter: coordPropType,
-  onSearchSubmit: func,
   onFilterChange: func,
   onClearFilters: func,
-  communities: arrayOf(coordPropType),
-  onMapChange: func,
-  selectedCommunity: coordPropType,
   currentFilters: object,
-  current: number,
-  total: number,
-  start: number,
-  end: number,
-  count: number,
-  basePath: string,
+  communities: arrayOf(coordPropType),
+  meta: object,
+  pagination: object,
+  location: object,
 };
 
 export default Search;

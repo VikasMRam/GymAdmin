@@ -1,125 +1,125 @@
 export const STYLES = [
   {
-    "featureType": "poi.attraction",
-    "stylers": [
+    featureType: 'poi.attraction',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "poi.business",
-    "stylers": [
+    featureType: 'poi.business',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "poi.government",
-    "stylers": [
+    featureType: 'poi.government',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "poi.medical",
-    "stylers": [
+    featureType: 'poi.medical',
+    stylers: [
       {
-        "saturation": -100
-      }
-    ]
+        saturation: -100,
+      },
+    ],
   },
   {
-    "featureType": "poi.medical",
-    "elementType": "labels.icon",
-    "stylers": [
+    featureType: 'poi.medical',
+    elementType: 'labels.icon',
+    stylers: [
       {
-        "saturation": -100
+        saturation: -100,
       },
       {
-        "lightness": 25
-      }
-    ]
+        lightness: 25,
+      },
+    ],
   },
   {
-    "featureType": "poi.park",
-    "stylers": [
+    featureType: 'poi.park',
+    stylers: [
       {
-        "color": "#cee8b6"
-      }
-    ]
+        color: '#cee8b6',
+      },
+    ],
   },
   {
-    "featureType": "poi.place_of_worship",
-    "stylers": [
+    featureType: 'poi.place_of_worship',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "poi.school",
-    "stylers": [
+    featureType: 'poi.school',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "poi.sports_complex",
-    "stylers": [
+    featureType: 'poi.sports_complex',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry.fill",
-    "stylers": [
+    featureType: 'road.highway',
+    elementType: 'geometry.fill',
+    stylers: [
       {
-        "color": "#fceed5"
-      }
-    ]
+        color: '#fceed5',
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry.stroke",
-    "stylers": [
+    featureType: 'road.highway',
+    elementType: 'geometry.stroke',
+    stylers: [
       {
-        "color": "#f6cc83"
-      }
-    ]
+        color: '#f6cc83',
+      },
+    ],
   },
   {
-    "featureType": "transit",
-    "elementType": "labels.icon",
-    "stylers": [
+    featureType: 'transit',
+    elementType: 'labels.icon',
+    stylers: [
       {
-        "saturation": -100
+        saturation: -100,
       },
       {
-        "lightness": 25
-      }
-    ]
+        lightness: 25,
+      },
+    ],
   },
   {
-    "featureType": "transit",
-    "elementType": "labels.text",
-    "stylers": [
+    featureType: 'transit',
+    elementType: 'labels.text',
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: 'off',
+      },
+    ],
   },
   {
-    "featureType": "water",
-    "stylers": [
+    featureType: 'water',
+    stylers: [
       {
-        "color": "#aadaff"
-      }
-    ]
-  }
+        color: '#aadaff',
+      },
+    ],
+  },
 ];

@@ -6,6 +6,7 @@ export const SIZE = 'size';
 export const GUIDE = 'own-guide';
 export const BUDGET = 'budget';
 export const RADIUS = 'radius';
+export const GEO = 'geo';
 export const SORT = 'sort';
 export const CARE_SERVICES = 'care-services';
 export const NON_CARE_SERVICES = 'non-care-services';
@@ -14,6 +15,7 @@ export const COMMUNITY_AMENITIES = 'community-amenities';
 
 export const PAGE_NUMBER = 'page-number';
 export const PAGE_SIZE = 'page-size';
+export const DEFAULT_PAGE_SIZE = 20;
 
 export const MORE_FILTERS = [
   CARE_SERVICES,
