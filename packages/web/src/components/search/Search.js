@@ -34,8 +34,7 @@ const Search = memo(({
   currentFilters,
   onFilterChange,
   onClearFilters,
-  communities,
-  meta,
+  requestInfo,
   pagination,
   location,
 }) => {
@@ -56,7 +55,7 @@ const Search = memo(({
   const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
 
-  const listSize = meta['filtered-count'];
+  const listSize = requestInfo.meta['filtered-count'];
 
   const nextShow = useMemo(() => {
     const showOptions = Object.keys(SHOW_OPTIONS);
@@ -81,10 +80,11 @@ const Search = memo(({
   const title = `${tocLabel} in ${locationStr}`;
   const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
 
+  const communities = requestInfo.communities || [];
   return (
     <>
       {getHelmetForSearchPage({
-        ...currentFilters, url: location, communityList: communities, listSize,
+        ...currentFilters, url: location, communityList: normalized, listSize,
       })}
       <TemplateHeader
         ref={headerRef}
@@ -144,7 +144,7 @@ const Search = memo(({
               <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
             </FilterButton>
           </Filters>
-          {!listSize &&
+          {(requestInfo.hasFinished && !listSize) &&
             <Block
               marginTop="xxxLarge"
               upToTablet={{
