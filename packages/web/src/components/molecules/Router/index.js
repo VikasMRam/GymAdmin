@@ -1,8 +1,8 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import { func, object, node, array } from 'prop-types';
 import { Redirect, useLocation } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
-import { withRouter, __RouterContext } from 'react-router';
+import { withRouter } from 'react-router';
 
 import {
   parseURLQueryParams,
@@ -20,23 +20,23 @@ const searchWhitelist = [
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
-const LoginRedirect = () => {
-  const { staticContext } = useContext(__RouterContext);
-  const location = useLocation();
-
-  const {
-    pathname,
-    search,
-    hash,
-  } = location;
-  const afterLogin = `${pathname}${search}${hash}`;
-  const url = `/?${stringify({ loginRedirect: afterLogin })}`;
-
-  if (isServer) {
-    staticContext.status = 302;
-  }
-  return <Redirect to={url} />;
-};
+// const LoginRedirect = () => {
+//   const { staticContext } = useContext(__RouterContext);
+//   const location = useLocation();
+//
+//   const {
+//     pathname,
+//     search,
+//     hash,
+//   } = location;
+//   const afterLogin = `${pathname}${search}${hash}`;
+//   const url = `/?${stringify({ loginRedirect: afterLogin })}`;
+//
+//   if (isServer) {
+//     staticContext.status = 302;
+//   }
+//   return <Redirect to={url} />;
+// };
 
 @withApiContext
 @withAuth
