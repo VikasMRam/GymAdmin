@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { arrayOf, func, object } from 'prop-types';
 
 import ExploreContainer from './ExploreContainer';
@@ -67,8 +67,6 @@ const Search = memo(({
   const toggleShow = useCallback(() => {
     setShow(nextShow);
   }, [nextShow]);
-
-  // console.log('bounds', { zoom, center, boundsCenter, bounds })
 
   const page = meta['page-number'] || 0;
   const cursor = (DEFAULT_PAGE_SIZE * page) + 1;
@@ -156,32 +154,31 @@ const Search = memo(({
           }}
         >
           {communities.map((community, i) => (
-            <>
+            <Fragment key={community.id}>
               <ListCommunityTile
                 setHoveredCommunity={setHoveredCommunity}
                 index={cursor + i}
                 community={community}
               />
               {!showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
-              <Block
-                margin="0 xLarge xLarge"
-              >
-                <GetAssessmentBoxContainer
-                  completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
-                  agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
-                  startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
-                />
-              </Block>
+                <Block
+                  margin="0 xLarge xLarge"
+                >
+                  <GetAssessmentBoxContainer
+                    completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
+                    agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+                    startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                  />
+                </Block>
               }
-              {
-                showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 xLarge xLarge"
                 >
                   <SearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
                 </Block>
               }
-            </>
+            </Fragment>
           ))}
           <SearchPagination
             currentFilters={currentFilters}
@@ -193,6 +190,7 @@ const Search = memo(({
           gridArea="map"
         >
           <Map
+            currentFilters={currentFilters}
             communities={communities}
             meta={meta}
             onFilterChange={onFilterChange}
@@ -236,5 +234,7 @@ Search.propTypes = {
   pagination: object,
   location: object,
 };
+
+Search.displayName = 'Search';
 
 export default Search;
