@@ -29,6 +29,7 @@ import {
   slyToApiPoint,
 } from 'sly/web/components/search/maps';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
+import { PinDefs } from 'sly/web/components/search/Pin';
 
 const Map = ({
   communities,
@@ -100,6 +101,7 @@ const Map = ({
       ref={mapRef}
       {...props}
     >
+      <PinDefs />
       <GoogleMap
         googleMapLoader={maps.getMaps}
         center={mapCenter}
