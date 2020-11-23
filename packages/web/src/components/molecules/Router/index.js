@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, object, node, array } from 'prop-types';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
 import { withRouter } from 'react-router';
 
@@ -125,7 +125,7 @@ export default class Router extends Component {
           staticContext.status = 302;
         }
         return <Redirect to={url} />;
-        //return <LoginRedirect />;
+        // return <LoginRedirect />;
       } else if (isServer) {
         // we do this because we don't want to prefetch in the server
         // all of dashboard (or any other section that requires auth)
