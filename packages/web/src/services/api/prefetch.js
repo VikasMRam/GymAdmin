@@ -90,9 +90,10 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
       const args = dispatcher(argumentsAbsorber, props);
       const { placeholders = {} } = api[apiCall].method(...args);
 
+
       const requestInfo = getMemoizedRequestInfo(
         state.api.requests?.[apiCall]?.[JSON.stringify(placeholders)],
-        state.api.entitities,
+        state.api.entities,
       );
 
       return {
