@@ -115,6 +115,7 @@ const Map = ({
   return (
     <Block
       ref={mapRef}
+      overflow="hidden"
       {...props}
     >
       <PinDefs />
@@ -148,7 +149,7 @@ const Map = ({
           styles: mapsTheme.propertyDetailTheme,
          })}
       >
-        {communities.map((community, i) => {
+        {mapDimensions.width && communities.map((community, i) => {
           const { latitude, longitude, id } = community;
           return (
             <Marker
