@@ -123,12 +123,12 @@ const Search = memo(({
           padding="xLarge"
         >
 
-          {listSize &&
-          <Block css={{
-            marginBottom: 'small',
-          }}>
-            {listSize} results
-          </Block>
+          {!!listSize &&
+            <Block css={{
+              marginBottom: 'small',
+            }}>
+              {listSize} results
+            </Block>
           }
           <Heading level="hero" size="title">{title}</Heading>
           <Filters
@@ -146,6 +146,17 @@ const Search = memo(({
               <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
             </FilterButton>
           </Filters>
+          {(hasFinished && !listSize) &&
+            <Block
+              marginTop="xxxLarge"
+              upToTablet={{
+                marginTop: getKey('sizes.spacing.xxLarge'),
+              }}
+            >
+              <Heading level="subtitle" size="subtitle" pad="regular">No results</Heading>
+              <div>Try removing some filters or zooming out on the map to find more communities.</div>
+            </Block>
+          }
         </Block>
 
         <Block
