@@ -19,6 +19,7 @@ import {
   withWidth,
   withHeight,
   withShadow,
+  withShadowOnHover,
   withMedia,
 } from 'sly/common/components/helpers';
 
@@ -39,6 +40,7 @@ const Block = styled(forwardRef(({ showIf, ...props }, ref) => {
   ${withCursor}
   ${withOverflow}
   ${withShadow}
+  ${withShadowOnHover}
   ${withWidth}
   ${withHeight}
   // put withDisplay after other styles for applied display styles to have more priority
@@ -96,6 +98,12 @@ Block.propTypesList = [
   'shadowBlur',
   'shadowSpread',
   'shadowPalette',
+  // shadowOnHover
+  'shadowOnHoverHOffset',
+  'shadowOnHoverVOffset',
+  'shadowOnHoverBlur',
+  'shadowOnHoverSpread',
+  'shadowOnHoverPalette',
   'css',
   // display
   'display',
