@@ -64,7 +64,7 @@ const FilterButton = forwardRef(({
       size="caption"
       alignItems="center"
       border="regular"
-      borderRadius="large"
+      borderRadius="xLarge"
       elementSize="small"
       padding="0 large"
       {...props}

@@ -46,7 +46,7 @@ export default function SearchContainer() {
         }
         return acc;
       }, {});
-    history.push(filterLinkPath(currentFilters, nextFilters).path);
+    history.push(filterLinkPath({}, nextFilters).path);
   }, [currentFilters]);
 
   const pagination = useMemo(() => getPagination(requestInfo.meta, location, currentFilters), [requestInfo]);

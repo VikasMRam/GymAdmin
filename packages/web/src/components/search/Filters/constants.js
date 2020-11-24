@@ -31,9 +31,13 @@ export const ALL_FILTERS = [
   ...MORE_FILTERS,
 ];
 
-export const CLEARABLE_FILTERS = [
+export const PAGINATION_FILTERS = [
   PAGE_NUMBER,
   PAGE_SIZE,
+];
+
+export const CLEARABLE_FILTERS = [
+  ...PAGINATION_FILTERS,
   ...ALL_FILTERS,
 ];
 
@@ -79,10 +83,10 @@ export const TOCS = {
     seoLabel: 'Continuing Care Retirement Communities',
   },
   [AA]: {
-    label: 'Active Adult Communities(55+)',
+    label: 'Active Adult Communities (55+)',
     value: AA,
     description: 'Communities of houses and apartments for residents 55 and older who live independently, enjoying an active, social lifestyle.',
-    seoLabel: 'Active Adult (55+)',
+    seoLabel: 'Active Adult Communities(55+)',
   },
   [SNF]: {
     label: 'Skilled Nursing Facilities',

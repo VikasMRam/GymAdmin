@@ -53,6 +53,7 @@ const Map = ({
   const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
+  console.log("api center", apiMetaCenter);
   const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
   const boundsCenter = useMemo(() => getBoundsCenter(bounds), [bounds]);
 
@@ -61,8 +62,8 @@ const Map = ({
       return;
     }
 
-    const { lat, lng } = boundsCenter || apiMetaCenter;
-    const zoom = findOptimalZoomForBounds(bounds, mapDimensions);
+    const { lat, lng } = (boundsCenter && boundsCenter.lat !== 0) ? boundsCenter : apiMetaCenter;
+    const zoom = bounds && bounds.lat && findOptimalZoomForBounds(bounds, mapDimensions) || DEFAULT_ZOOM;
 
     setMapCenter({
       lat,

@@ -1,2 +1,3 @@
-export const COLUMN_LAYOUT_IMAGE_WIDTH = '270px';
+export const COLUMN_LAYOUT_IMAGE_WIDTH = '258px';
+export const COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM = '150px';
 export const COLUMN_LAYOUT_IMAGE_WIDTH_SMALL = '72px';

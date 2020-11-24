@@ -19,6 +19,7 @@ import {
   COMMUNITY_AMENITIES_OPTIONS,
   MORE_FILTERS,
   ALL_FILTERS,
+  PAGINATION_FILTERS,
 } from './constants';
 import FilterButton from './FilterButton';
 import FilterChoice from './FilterChoice';
@@ -67,6 +68,9 @@ const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => 
   return (
     <Collapsible
       borderBottom="regular"
+      upToTablet={{
+        collapsedDefault: true,
+      }}
       {...props}
     >
       {children}
@@ -98,9 +102,8 @@ const Filters = forwardRef(({
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
   const closeModal = useCallback(() => setIsOpen(false), []);
   const clearFilters = useCallback(() => {
-    onClearFilters();
-    setIsOpen(false);
-  }, []);
+    onClearFilters([...PAGINATION_FILTERS, isOpen]);
+  }, [isOpen]);
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
   const breakpoint = useBreakpoint();
   const showIf = useCallback(
@@ -206,6 +209,7 @@ const Filters = forwardRef(({
             showIf={showIf(MORE_FILTERS)}
             title="Care services"
             disabled={disableMoreFiltersCollapse}
+
           >
             <FilterChoice
               type="checkbox"

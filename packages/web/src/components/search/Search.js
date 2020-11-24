@@ -18,6 +18,7 @@ import Heading from 'sly/common/components/atoms/Heading';
 import Filters, { DEFAULT_PAGE_SIZE } from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
+import Link from 'sly/common/components/atoms/Link';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
 import { getTocSeoLabel, getLocationLabel } from 'sly/web/components/search/helpers';
@@ -115,23 +116,36 @@ const Search = ({
         startingWithLaptop={{
           display: 'grid',
           gridTemplateRows: 'auto auto',
-          gridTemplateColumns: '684px auto',
+          gridTemplateColumns: '708px auto',
           gridTemplateAreas: '"filters map" "list  map"',
         }}
       >
         <Block
           gridArea="filters"
           padding="xLarge"
+          css={{
+            zIndex: '100',
+          }}
         >
 
           {!!listSize &&
-            <Block css={{
+            <Block
+              upToLaptop={{
+                display: show === LIST ? 'block' : 'none',
+              }}
+              css={{
               marginBottom: 'small',
             }}>
               {listSize} results
             </Block>
           }
-          <Heading level="hero" size="title">{title}</Heading>
+          <Block
+            upToLaptop={{
+              display: show === LIST ? 'block' : 'none',
+            }}
+          >
+            <Heading level="hero" size="title">{title}</Heading>
+          </Block>
           <Filters
             ref={filtersRef}
             currentFilters={currentFilters}
@@ -155,7 +169,10 @@ const Search = ({
               }}
             >
               <Heading level="subtitle" size="subtitle" pad="regular">No results</Heading>
-              <div>Try removing some filters or zooming out on the map to find more communities.</div>
+              <Block marginBottom="large">Try removing some filters or zooming out on the map to find more communities.</Block>
+              <Link onClick={() => onClearFilters()}>
+                Clear all filters
+              </Link>
             </Block>
           }
         </Block>
