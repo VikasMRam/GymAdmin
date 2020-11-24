@@ -234,7 +234,7 @@ const Search = ({
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
             marginTop: `-${upToLaptopOffset}px`,
-            height: '100vh',
+            height: `calc(100vh - ${getKey('sizes.spacing.xxLarge')})`,
           }}
           startingWithLaptop={{
             position: 'sticky',
