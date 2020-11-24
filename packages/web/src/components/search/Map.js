@@ -11,7 +11,7 @@ import debounce from 'lodash/debounce';
 import Marker from './Marker';
 
 import Block from 'sly/common/components/atoms/Block';
-import STYLES from 'sly/web/constants/map';
+import mapsTheme from 'sly/web/components/themes/maps';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import MapCommunityTile from 'sly/web/components/search/MapCommunityTile';
 import {
@@ -126,10 +126,13 @@ const Map = ({
         zoom={mapCenter?.zoom}
         options={maps => ({
           zoomControl: true,
+          fullscreenControl: false,
           zoomControlOptions: {
            position: maps.ControlPosition.TOP_LEFT,
           },
-          styles: STYLES,
+          draggable: true,
+          gestureHandling: "greedy",
+          styles: mapsTheme.propertyDetailTheme,
          })}
       >
         {communities.map((community, i) => {
