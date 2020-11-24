@@ -74,15 +74,12 @@ const Map = ({
   }, [apiMetaCenter, boundsCenter, mapDimensions]);
 
   const onChange = useCallback(({ center: { lat, lng }, zoom }) => {
-    if (!redoSearchOnMove) {
-      return;
-    }
     if (mapCenter.controlled === COMPONENT_STATE) {
       setMapCenter({
         ...mapCenter,
         controlled: NONE,
       });
-    } else {
+    } else if (redoSearchOnMove) {
       const geo = getGeographyFromMap({
         lat,
         lng,
@@ -96,7 +93,7 @@ const Map = ({
         controlled: MAP,
       });
     }
-  }, [mapCenter, mapDimensions]);
+  }, [redoSearchOnMove, mapCenter, mapDimensions]);
 
   const onChildClickCallback = useCallback((key) => {
     const community = communities.find(({ id }) => id === key);
@@ -133,14 +130,13 @@ const Map = ({
       <GoogleMap
         googleMapLoader={maps.getMaps}
         center={mapCenter}
-        defaultZoom={DEFAULT_ZOOM}
+        zoom={mapCenter?.zoom}
         hoverDistance={HOVER_DISTANCE}
         onChange={onChange}
         onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
         onChildMouseEnter={(_, { community }) => onMarkerHover(community)}
         onChildMouseLeave={() => onMarkerHover(null)}
-        zoom={mapCenter?.zoom}
         options={maps => ({
           zoomControl: true,
           fullscreenControl: false,

@@ -32,7 +32,7 @@ import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
 import { getStateAbbr } from 'sly/web/services/helpers/url';
 
 
-const Search = memo(({
+const Search = ({
   currentFilters,
   onFilterChange,
   onClearFilters,
@@ -202,34 +202,31 @@ const Search = memo(({
           />
           <ExploreContainer filters={currentFilters} />
         </Block>
-        <Block
+        <Map
           gridArea="map"
-        >
-          <Map
-            currentFilters={currentFilters}
-            communities={communities}
-            meta={meta}
-            onFilterChange={onFilterChange}
-            onMarkerClick={setSelectedCommunity}
-            onMarkerHover={setHoveredCommunity}
-            selectedCommunity={hoveredCommunity || selectedCommunity}
-            cursor={cursor}
-            width="100%"
-            upToLaptop={{
-              display: show === MAP ? 'block' : 'none',
-              paddingTop: `${upToLaptopOffset}px`,
-              marginTop: `-${upToLaptopOffset}px`,
-              height: '100vh',
-            }}
-            startingWithLaptop={{
-              position: 'sticky',
-              top: '0px !important',
-              paddingTop: `${startingWithLaptopOffset}px`,
-              marginTop: `-${startingWithLaptopOffset}px`,
-              height: '100vh',
-            }}
-          />
-        </Block>
+          currentFilters={currentFilters}
+          communities={communities}
+          meta={meta}
+          onFilterChange={onFilterChange}
+          onMarkerClick={setSelectedCommunity}
+          onMarkerHover={setHoveredCommunity}
+          selectedCommunity={hoveredCommunity || selectedCommunity}
+          cursor={cursor}
+          width="100%"
+          upToLaptop={{
+            display: show === MAP ? 'block' : 'none',
+            paddingTop: `${upToLaptopOffset}px`,
+            marginTop: `-${upToLaptopOffset}px`,
+            height: '100vh',
+          }}
+          startingWithLaptop={{
+            position: 'sticky',
+            top: '0px !important',
+            paddingTop: `${startingWithLaptopOffset}px`,
+            marginTop: `-${startingWithLaptopOffset}px`,
+            height: '100vh',
+          }}
+        />
       </Block>
       {/* SEARCH_END */}
       <Footer
@@ -239,7 +236,7 @@ const Search = memo(({
       />
     </>
   );
-});
+};
 
 Search.propTypes = {
   onFilterChange: func,
@@ -254,4 +251,4 @@ Search.propTypes = {
 
 Search.displayName = 'Search';
 
-export default Search;
+export default memo(Search);
