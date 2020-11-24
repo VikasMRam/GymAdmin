@@ -30,6 +30,8 @@ const ListCommunityTile = memo(({ community, setHoveredCommunity, index }) => {
         index={index}
         shadowOnHoverBlur="large"
         shadowOnHoverVOffset="small"
+        shadowOnHoverPalette="black.base"
+        shadowOnHoverPaletteOpacity="10"
       />
     </Link>
   );
