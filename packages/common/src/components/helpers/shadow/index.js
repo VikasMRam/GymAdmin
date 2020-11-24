@@ -23,10 +23,11 @@ export const withShadowOnHover = ({
   shadowOnHoverBlur,
   shadowOnHoverSpread,
   shadowOnHoverPalette = 'slate.filler',
+  shadowOnHoverPaletteOpacity = '80',
 }) =>
   (shadowOnHoverHOffset || shadowOnHoverVOffset || shadowOnHoverBlur || shadowOnHoverSpread) && css`
     ${withTransition('all')}
     &:hover {
-      box-shadow: ${shadowOnHoverHOffset ? size('spacing', shadowOnHoverHOffset) : '0'} ${shadowOnHoverVOffset ? size('spacing', shadowOnHoverVOffset) : '0'} ${size('spacing', shadowOnHoverBlur)} ${size('spacing', shadowOnHoverSpread)} ${palette(shadowOnHoverPalette)}80;
+      box-shadow: ${shadowOnHoverHOffset ? size('spacing', shadowOnHoverHOffset) : '0'} ${shadowOnHoverVOffset ? size('spacing', shadowOnHoverVOffset) : '0'} ${size('spacing', shadowOnHoverBlur)} ${size('spacing', shadowOnHoverSpread)} ${palette(shadowOnHoverPalette)}${shadowOnHoverPaletteOpacity};
     }
   `;

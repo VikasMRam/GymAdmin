@@ -59,7 +59,7 @@ const CommunityTile = ({
 
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
-  const spacing = type === 'map' ? 'regular' : 'large';
+  const spacing = type === 'map' ? 'regular' : 'xLarge';
   imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
   imageMargin = layout === 'column' ? [imageMargin || 0, spacing, imageMargin || 0, imageMargin || 0] : null;
   if (type === 'map') {
