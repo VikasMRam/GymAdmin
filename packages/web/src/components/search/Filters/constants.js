@@ -51,43 +51,43 @@ export const TOCS = {
   [AL]: {
     label: 'Assisted Living',
     value: AL,
-    description: 'Ideal for seniors who need help with some activities of daily living,but are interested in a social, active lifestyle.',
+    description: 'For seniors who need some help with daily activities and want a supportive community that’s active, social, and engaging.',
     seoLabel: 'Assisted Living Facilities',
+  },
+  [MC]: {
+    label: 'Memory Care',
+    value: MC,
+    description: 'A supervised and secured community designed to support engagement and quality of life for residents living with dementia.',
+    seoLabel: 'Memory Care Facilities',
   },
   [IL]: {
     label: 'Independent Living',
     value: IL,
-    description: 'For residents who want to enjoy retirement without the responsibilites of home upkeep and daily chores.',
+    description: 'For active older adults who want to downsize to a home in a retirement community but don’t need help to live independently.',
     seoLabel: 'Independent Living Communities',
   },
   [BNC]: {
     label: 'Board and Care Home',
     value: BNC,
-    description: 'Houses in residential neighborhoods that are equipped  and staffed to care for a small number o residents, usually 2-10.',
+    description: 'Homes in residential neighborhoods that are equipped and staffed to provide daily care for a small number of residents.',
     seoLabel: 'Board and Care Homes',
-  },
-  [MC]: {
-    label: 'Memory Care',
-    value: MC,
-    description: 'Facilities with safe designed environments for residents to improve quality of life, reduce confusion and prevent wandering.',
-    seoLabel: 'Memory Care Facilities',
   },
   [CCRC]: {
     label: 'Continuing Care Retirement Communities',
     value: CCRC,
-    description: 'For residents who want to age in place. Has accomodations for nursing home care, independent and assisted living.',
+    description: 'For residents who want to age in place as their care needs change—from Independent Living to nursing care. Requires a buy-in fee.',
     seoLabel: 'Continuing Care Retirement Communities',
   },
   [AA]: {
-    label: 'Active Adult (55+)',
+    label: 'Active Adult Communities(55+)',
     value: AA,
-    description: 'Retirement communities where residents can stay ative and social.',
+    description: 'Communities of houses and apartments for residents 55 and older who live independently, enjoying an active, social lifestyle.',
     seoLabel: 'Active Adult (55+)',
   },
   [SNF]: {
     label: 'Skilled Nursing Facilities',
     value: SNF,
-    description: 'Safety and comfort for residents who need 24-hour medical supervision.',
+    description: 'For seniors with more serious medical needs who require skilled care following a hospitalization, illness, or surgery.',
     seoLabel: 'Skilled Nursing Facilities',
   },
 };
@@ -102,17 +102,17 @@ export const SIZES = {
   [SMALL]: {
     label: 'Small',
     value: SMALL,
-    description: '<20 resident capacity',
+    description: '(<20) Home-like environment',
   },
   [MEDIUM]: {
     label: 'Medium',
     value: MEDIUM,
-    description: '20-50 resident capacity',
+    description: '(20-50) Boutique environment',
   },
   [LARGE]: {
     label: 'Large',
     value: LARGE,
-    description: '50+ resident capacity',
+    description: '(50+) Hotel-like environment',
   },
 };
 

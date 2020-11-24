@@ -73,8 +73,8 @@ export const tocs = [
     label: 'Nursing Homes',
     value: 'nursing-homes',
     segment: 'nursing-homes',
-    searchLabel: 'Nursing Homes',
-    seoLabel: 'Nursing Homes',
+    searchLabel: 'Senior Living Communities',
+    seoLabel: 'Senior Living Communities',
   },
   {
     label: 'Assisted Living',

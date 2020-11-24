@@ -29,6 +29,8 @@ import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
   from 'sly/web/constants/wizards/assessment';
 import { isBrowser } from 'sly/web/config';
 import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
+import { getStateAbbr } from 'sly/web/services/helpers/url';
+
 
 const Search = memo(({
   currentFilters,
@@ -71,7 +73,7 @@ const Search = memo(({
   const page = meta['page-number'] || 0;
   const cursor = (DEFAULT_PAGE_SIZE * page) + 1;
   const { city, state } = currentFilters;
-  const stateStr = titleize(state);
+  const stateStr = getStateAbbr(titleize(state));
   const cityStr = titleize(city);
   const locLabel = getLocationLabel(currentFilters);
   const tocLabel = getTocSeoLabel(currentFilters.toc);
@@ -122,11 +124,13 @@ const Search = memo(({
         >
 
           {listSize &&
-          <Block size="caption">
+          <Block css={{
+            marginBottom: 'small',
+          }}>
             {listSize} results
           </Block>
           }
-          <Heading level="hero" size="subtitle">{title}</Heading>
+          <Heading level="hero" size="title">{title}</Heading>
           <Filters
             ref={filtersRef}
             currentFilters={currentFilters}
