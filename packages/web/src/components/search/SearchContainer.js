@@ -60,6 +60,7 @@ export default function SearchContainer() {
       meta={requestInfo.meta || {}}
       pagination={pagination}
       location={location}
+      hasFinished={requestInfo.hasFinished}
     />
   );
 }
