@@ -61,6 +61,7 @@ class Maps {
         componentRestrictions: {
           country: 'us',
         },
+        types: ['(regions)'],
         input,
         sessionToken: this.sessionToken,
       };
