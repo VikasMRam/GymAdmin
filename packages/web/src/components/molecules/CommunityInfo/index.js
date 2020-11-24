@@ -15,6 +15,15 @@ const communityDefaultIcon = {
   '20 - 51 Beds': 'community-size-medium',
   '51 +': 'community-size-large',
 };
+
+const validSizes = Object.keys(communityDefaultIcon);
+
+const getPlaceholderIcon = communitySize => communityDefaultIcon[
+  (communitySize && validSizes.includes(communitySize))
+    ? communitySize
+    : 'up to 20 Beds'
+];
+
 export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
@@ -52,7 +61,7 @@ export default class CommunityInfo extends Component {
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = propInfo.typeCare || community.typeCare;
     const capacity = propInfo.capacity || community.capacity;
-    const placeholder = communityDefaultIcon[communitySize || 'up to 20 Beds'];
+    const placeholder = getPlaceholderIcon(communitySize);
 
     let livingTypeComponent = null;
 

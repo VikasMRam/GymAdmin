@@ -44,9 +44,15 @@ export default class GetAssessmentBoxContainer extends Component {
   };
 
   state = {
+    didRender: false,
     modalOpened: false,
   };
 
+  componentDidMount() {
+    this.setState({
+      didRender: true,
+    });
+  }
   toggleModal = () => {
     const { modalOpened } = this.state;
     this.setState({
@@ -76,7 +82,7 @@ export default class GetAssessmentBoxContainer extends Component {
     const {
       status = {}, layout, boxLayout, agent, community, completedAssessment, completedPricing, startLink, className, extraProps,
     } = this.props;
-    const { modalOpened } = this.state;
+    const { modalOpened, didRender } = this.state;
     let hasFinished = true;
     let buttonProps = {
       to: startLink,
@@ -98,7 +104,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
     return (
       <div className={className}>
-        {layout === 'box' && !completedAssessment && isBrowser &&
+        {layout === 'box' && !completedAssessment && didRender && isBrowser &&
           <GetAssessmentBox
             layout={boxLayout}
             buttonProps={buttonProps}
