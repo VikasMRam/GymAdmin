@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useCallback, useMemo, useState } from 'react';
-import { arrayOf, func, object } from 'prop-types';
+import { arrayOf, func, object, bool } from 'prop-types';
 
 import ExploreContainer from './ExploreContainer';
 
@@ -40,6 +40,7 @@ const Search = memo(({
   meta,
   pagination,
   location,
+  hasFinished,
 }) => {
   const [headerRef, {
     height: headerHeight = 80,
@@ -248,6 +249,7 @@ Search.propTypes = {
   meta: object,
   pagination: object,
   location: object,
+  hasFinished: bool,
 };
 
 Search.displayName = 'Search';

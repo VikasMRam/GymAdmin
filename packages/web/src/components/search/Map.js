@@ -9,6 +9,7 @@ import GoogleMap from 'google-map-react';
 import debounce from 'lodash/debounce';
 
 import Marker from './Marker';
+import SearchOnMoveControl from './SearchOnMoveControl';
 
 import Block from 'sly/common/components/atoms/Block';
 import mapsTheme from 'sly/web/components/themes/maps';
@@ -49,6 +50,7 @@ const Map = ({
   const breakpoint = useBreakpoint();
   const [mapRef, mapDimensions] = useDimensions();
   const [mapCenter, setMapCenter] = useState(coordsFromGeoFilter(currentFilters.geo));
+  const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
   const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
@@ -72,6 +74,9 @@ const Map = ({
   }, [apiMetaCenter, boundsCenter, mapDimensions]);
 
   const onChange = useCallback(({ center: { lat, lng }, zoom }) => {
+    if (!redoSearchOnMove) {
+      return;
+    }
     if (mapCenter.controlled === COMPONENT_STATE) {
       setMapCenter({
         ...mapCenter,
@@ -106,6 +111,9 @@ const Map = ({
       lng={selectedCommunity.longitude}
     />
   );
+  const onRedoToggle = useCallback(() => {
+    setRedoSearchOnMove(!redoSearchOnMove);
+  });
 
   return (
     <Block
@@ -113,6 +121,15 @@ const Map = ({
       {...props}
     >
       <PinDefs />
+      <SearchOnMoveControl
+        active={redoSearchOnMove}
+        onClick={onRedoToggle}
+        css={{
+          zIndex: 1000,
+          position: 'absolute',
+          right: 0,
+        }}
+      />
       <GoogleMap
         googleMapLoader={maps.getMaps}
         center={mapCenter}
