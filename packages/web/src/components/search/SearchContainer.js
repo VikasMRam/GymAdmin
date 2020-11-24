@@ -51,7 +51,6 @@ export default function SearchContainer() {
 
   const pagination = useMemo(() => getPagination(requestInfo.meta, location, currentFilters), [requestInfo]);
 
-  console.log('SearchContainer', requestInfo);
   return (
     <Search
       currentFilters={currentFilters}

@@ -24,9 +24,10 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       community={community}
       type="map"
       layout="column"
-      shadowBlur="small"
-      shadowSpread="tiny"
+      shadowBlur="regular"
       shadowVOffset="small"
+      shadowPalette="black.base"
+      shadowPaletteOpacity="20"
       noGallery
       startingWithAll={{
         zIndex: 1000,

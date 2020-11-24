@@ -25,6 +25,7 @@ theme.palette = {
   orange     : makeColor('#F99106'),
   razzmatazz : makeColor('#F40767'),
   blue       : makeColor('#186DC5'),
+  black      : makeColor('#000000'),
 };
 
 if (isBrowser && isDev) {
