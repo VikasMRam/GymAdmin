@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, { forwardRef, useCallback, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { bool, string, node, object } from 'prop-types';
 
@@ -10,6 +10,7 @@ import {
   withDisplay,
   withSpacing,
 } from 'sly/common/components/helpers';
+import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 
 const Header = styled.div(
   withSpacing,
@@ -40,13 +41,19 @@ const Content = styled.div(
 const Collapsible = forwardRef(({
   children,
   title,
-  collapsedDefault,
   borderBottom,
   disabled,
   showIf,
   ...props
 }, ref) => {
-  const [collapsed, setCollapsed] = useState(collapsedDefault);
+  const [userCollapsed, setCollapsed] = useState(null);
+  const breakpoint = useBreakpoint();
+  const collapsed = useMemo(() => {
+    if (userCollapsed === null) {
+      return !breakpoint?.atLeastTablet();
+    }
+    return userCollapsed;
+  }, [userCollapsed, breakpoint]);
   const [height, setHeight] = useState(null);
   const contentRef = useCallback((element) => {
     if (element?.scrollHeight) {
@@ -103,7 +110,6 @@ Collapsible.displayName = 'Collapsible';
 Collapsible.propTypes = {
   children: node,
   title: string.isRequired,
-  collapsedDefault: bool.isRequired,
   innerRef: object,
   showIf: bool,
   disabled: bool,
@@ -111,7 +117,6 @@ Collapsible.propTypes = {
 };
 
 Collapsible.defaultProps = {
-  collapsedDefault: false,
   showIf: true,
   borderBottom: 'regular',
   disabled: false,
