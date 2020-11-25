@@ -40,7 +40,7 @@ export default class CommunityInfo extends Component {
     const { propInfo = {}, propRatings, communitySize } = community;
 
     const { reviewsValue, numReviews } = propRatings || community;
-    const typeCare = community.care || community.typeCare;
+    const typeCare = community.care || community.typeCare || propInfo.typeCare;
     const capacity = propInfo.capacity || community.capacity;
     const placeholder = communityDefaultIcon[communitySize || 'up to 20 Beds'];
 

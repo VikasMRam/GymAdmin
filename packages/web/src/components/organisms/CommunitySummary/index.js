@@ -94,7 +94,7 @@ const CommunitySummary = ({
     line1, line2, city, state, zip, zipcode
   } = address;
   const {
-    communityPhone, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
+    communityPhone, typeCare, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
   } = propInfo;
   const { reviewsValue, numReviews } = propRatings;
   const formattedAddress = `${line1}, ${line2}, ${city},
@@ -112,7 +112,7 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const careTypes = getCareTypes(state, care);
+  const careTypes = care ? getCareTypes(state, care) : getCareTypes(state, typeCare);
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
@@ -216,7 +216,7 @@ const CommunitySummary = ({
 
       </PhoneNumWrapper>
 
-      {care.includes(ACTIVE_ADULT) &&
+      {care && care.includes(ACTIVE_ADULT) &&
         <>
           {communityPhone && <Hr/>}
           <OverlayTwoColumnListWrapper>
