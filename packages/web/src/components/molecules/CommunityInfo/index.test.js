@@ -38,6 +38,7 @@ describe('CommunityInfo', () => {
   it('renders without LivingTypes', () => {
     const newRhodaGoldmanPlaza = { ...RhodaGoldmanPlaza };
     newRhodaGoldmanPlaza.care = undefined;
+    newRhodaGoldmanPlaza.propInfo = undefined;
     newRhodaGoldmanPlaza.webViewInfo = undefined;
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
 
