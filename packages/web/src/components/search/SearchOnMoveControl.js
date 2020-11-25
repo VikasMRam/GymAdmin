@@ -11,7 +11,8 @@ import Checkbox from 'sly/web/components/molecules/Checkbox';
 const SearchOnMoveControl = ({ onClick, active, ...props }) => (
   <Box {...props}>
     <Block display="flex" onClick={onClick} cursor="pointer">
-      <Checkbox checked={active} marginRight="medium" /><Block size="caption">Search as map moves</Block>
+      <Checkbox checked={active} marginRight="medium" palette={active ? 'primary' : 'grey'} />
+      <Block size="caption">Search as map moves</Block>
     </Block>
   </Box>
 );
