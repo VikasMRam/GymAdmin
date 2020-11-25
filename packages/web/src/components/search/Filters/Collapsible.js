@@ -83,6 +83,7 @@ const Collapsible = forwardRef(({
           marginLeft="auto"
           icon="chevron"
           palette="slate"
+          rotate={1}
           flip={!collapsed}
         />}
       </Header>
