@@ -31,7 +31,7 @@ export const getIsSNF = (community) => {
 export const getIsActiveAdult = (community) => {
   const { care } = community;
   if (care) {
-    return care.includes('Active Adult Communities(55+)');
+    return care.includes('Active Adult Communities (55+)');
   }
   return false;
 };
