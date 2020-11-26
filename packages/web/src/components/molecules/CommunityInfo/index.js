@@ -73,7 +73,7 @@ export default class CommunityInfo extends Component {
           iconPalette={inverted ? 'white' : 'slate'}
           palette={inverted ? 'white' : 'slate'}
           size="caption"
-          pad="regular"
+          pad="small"
           type={type}
           title={typeCare.join(',')}
           clamped
