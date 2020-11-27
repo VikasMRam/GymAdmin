@@ -1,6 +1,8 @@
 import React from 'react';
 import { number, any } from 'prop-types';
 import styled from 'styled-components';
+
+import { getKey } from 'sly/common/components/themes';
 import { withShadow } from 'sly/common/components/helpers';
 
 const Svg = styled.svg(
@@ -43,6 +45,7 @@ const Pin = ({ number, active, ...props }) => {
         transform: 'translate(-50%, -100%)',
         position: 'absolute',
         zIndex: active ? 900 : (800 - number),
+        filter: `drop-shadow(0 ${getKey('sizes.spacing.small')} ${getKey('sizes.spacing.regular')} ${getKey('palette.black.base')}20)`,
       }}
       {...props}
     >
