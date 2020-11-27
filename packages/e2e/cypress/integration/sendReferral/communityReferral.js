@@ -103,7 +103,7 @@ describe('Sending Referral to Community', () => {
       cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('div [class*=DashboardAgentFamilyOverviewSection__TwoColumn]').contains('Add family')).click('right');
       addfamilyContact();
-      waitForHydration(cy.get('button').contains('Create')).click();
+      waitForHydration(cy.get('button').contains('Create')).click({ force: true });
       select('div[class*=Notifications]').contains('Family added successfully');
     });
 
@@ -112,18 +112,18 @@ describe('Sending Referral to Community', () => {
       cy.visit('/dashboard/agent/my-families/new');
 
       waitForHydration(cy.get('table').find('tbody').find('tr a[class*=ClientRowCard__StyledNameCell]').first()).click();
-      waitForHydration(cy.get('a[id*=communities]').contains('Communities')).click();
+      waitForHydration(cy.get('a[id*=communities]').contains('Communities')).click({ force: true });
 
       waitForHydration(cy.get('button').contains('Search for communities')).click({ force: true });
 
       cy.get('form[name="CommunityAgentSearchForm"]').within(() => {
         waitForHydration(cy.get('div input[placeholder=\'Search by city, state, zip\']')).clear();
         waitForHydration(cy.get('div input[placeholder="Search by name"]')).type(community.name);
-        waitForHydration(cy.get('[data-cy="search"]').eq(1)).click();
+        waitForHydration(cy.get('[data-cy="search"]').eq(1)).click({ force: true });
       });
 
       waitForHydration(cy.get('div[class*="DashboardCommunityReferralSearch__StyledDashboardAdminReferralCommunityTile"]').first()).click('right');
-      waitForHydration(cy.get('button').contains('Send Referral')).click();
+      waitForHydration(cy.get('button').contains('Send Referral')).click({ force: true });
       select('.Notifications').contains('Sent referrral successfully');
     });
   });
