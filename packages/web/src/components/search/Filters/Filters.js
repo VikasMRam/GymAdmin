@@ -102,7 +102,7 @@ const Filters = forwardRef(({
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
   const closeModal = useCallback(() => setIsOpen(false), []);
   const clearFilters = useCallback(() => {
-    onClearFilters([...PAGINATION_FILTERS, isOpen]);
+    onClearFilters([...PAGINATION_FILTERS, ...isOpen]);
   }, [isOpen]);
   const openFilters = useCallback((section = true) => setIsOpen(section), []);
   const breakpoint = useBreakpoint();
@@ -273,7 +273,7 @@ const Filters = forwardRef(({
             marginLeft="auto"
             onClick={closeModal}
           >
-            Show results
+            Save
           </Button>
         </ModalActions>
       </ModalPopoverSwitch>
@@ -285,7 +285,7 @@ const Filters = forwardRef(({
       >
         <FilterButton
           upTo="tablet"
-          onClick={openFilters}
+          onClick={() => openFilters(ALL_FILTERS)}
           number={totalNumberOfFilters}
         >
           Filters

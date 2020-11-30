@@ -53,7 +53,6 @@ const Map = ({
   const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
-  console.log("api center", apiMetaCenter);
   const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
   const boundsCenter = useMemo(() => getBoundsCenter(bounds), [bounds]);
 
@@ -133,7 +132,6 @@ const Map = ({
         googleMapLoader={maps.getMaps}
         center={mapCenter}
         zoom={mapCenter?.zoom}
-        hoverDistance={HOVER_DISTANCE}
         onChange={onChange}
         onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
@@ -147,6 +145,7 @@ const Map = ({
           },
           draggable: true,
           gestureHandling: "greedy",
+          clickableIcons: false,
           styles: mapsTheme.propertyDetailTheme,
          })}
       >
