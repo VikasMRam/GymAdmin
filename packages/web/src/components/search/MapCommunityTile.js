@@ -9,10 +9,10 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
   <Link
     to={community.url}
     event={{
-      category: 'SearchPage',
+      category: 'search-map',
       action: 'mapClick',
-      label: community.name,
-      value: community.id,
+      label: community.id,
+      value: index,
     }}
     marginBottom="xLarge"
     block

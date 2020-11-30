@@ -32,7 +32,6 @@ import { isBrowser } from 'sly/web/config';
 import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
 import { getStateAbbr } from 'sly/web/services/helpers/url';
 
-
 const Search = ({
   currentFilters,
   onFilterChange,
