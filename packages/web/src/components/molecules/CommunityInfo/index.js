@@ -59,7 +59,7 @@ export default class CommunityInfo extends Component {
     }
 
     const { reviewsValue, numReviews } = propRatings || community;
-    const typeCare = propInfo.typeCare || community.typeCare;
+    const typeCare = community.care || community.typeCare || propInfo.typeCare;
     const capacity = propInfo.capacity || community.capacity;
     const placeholder = getPlaceholderIcon(communitySize);
 
@@ -121,6 +121,7 @@ export default class CommunityInfo extends Component {
         <div>
           {header}
           {livingTypeComponent}
+          {capacity !== '' &&
           <IconItem
             icon="family"
             iconPalette={inverted ? 'white' : 'slate'}
@@ -145,6 +146,7 @@ export default class CommunityInfo extends Component {
           >
             {capacity}
           </IconItem>
+          }
         </div>
         <Block
           display="flex"
