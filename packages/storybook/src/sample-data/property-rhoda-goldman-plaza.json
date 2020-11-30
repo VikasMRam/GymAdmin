@@ -6,6 +6,7 @@
   "name": "Rhoda Goldman Plaza",
   "phoneNumber": "123456789",
   "numReviews": 9,
+  "care": ["Assisted Living", "Memory Care"],
   "webViewInfo": {
     "ctaText": "Get Pricing.",
     "firstLineValue": "Assisted Living, Memory Care, Respite Care",

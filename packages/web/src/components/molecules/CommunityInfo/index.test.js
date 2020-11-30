@@ -11,7 +11,7 @@ const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza
 describe('CommunityInfo', () => {
   it('renders', () => {
     const wrapper = wrap();
-    RhodaGoldmanPlaza.propInfo.typeCare.forEach((livingType) => {
+    RhodaGoldmanPlaza.care.forEach((livingType) => {
       expect(
         wrapper
           .find('IconItem')
@@ -37,6 +37,7 @@ describe('CommunityInfo', () => {
 
   it('renders without LivingTypes', () => {
     const newRhodaGoldmanPlaza = { ...RhodaGoldmanPlaza };
+    newRhodaGoldmanPlaza.care = undefined;
     newRhodaGoldmanPlaza.propInfo = undefined;
     newRhodaGoldmanPlaza.webViewInfo = undefined;
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });

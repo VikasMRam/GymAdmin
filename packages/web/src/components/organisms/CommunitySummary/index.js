@@ -88,7 +88,7 @@ const CommunitySummary = ({
   goToReviews, searchParams,
 }) => {
   const {
-    address, name, propRatings, propInfo, twilioNumber, partnerAgents,
+    address, name, propRatings, propInfo, twilioNumber, partnerAgents, care,
   } = community;
   const {
     line1, line2, city, state, zip, zipcode
@@ -112,7 +112,7 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const careTypes = getCareTypes(state, typeCare);
+  const careTypes = care ? getCareTypes(state, care) : getCareTypes(state, typeCare);
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
@@ -216,7 +216,7 @@ const CommunitySummary = ({
 
       </PhoneNumWrapper>
 
-      {typeCare.includes(ACTIVE_ADULT) &&
+      {care && care.includes(ACTIVE_ADULT) &&
         <>
           {communityPhone && <Hr/>}
           <OverlayTwoColumnListWrapper>

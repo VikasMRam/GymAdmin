@@ -11,6 +11,7 @@ const community = {
     state: 'CA',
     zip: '94115',
   },
+  care: ['Assisted Living'],
   propInfo: {
     typeCare: ['Assisted Living'],
   },
