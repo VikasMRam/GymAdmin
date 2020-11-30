@@ -8,7 +8,7 @@ import StateSearchPage from 'sly/web/components/pages/StateSearchPage';
 import ModalController from 'sly/web/controllers/ModalController';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { prefetch } from 'sly/web/services/api';
-import { getSearchParams } from 'sly/web/services/helpers/search';
+import { getSearchParams } from 'sly/web/components/search/helpers';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 import { withRouter } from 'react-router';
 
@@ -65,7 +65,6 @@ export default class StateSearchPageContainer extends Component {
     if (hasNotPermittedSeparators) {
       return <Redirect to={replaceLastSegment(pathname, urlize(ucStateQp)) + search} />;
     }
-
 
     const mapViewUrl = generateFilterLinkPath({
       changedParams: {

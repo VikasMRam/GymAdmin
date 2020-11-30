@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { generateSearchUrl, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { getSearchParams } from 'sly/web/services/helpers/search';
+import { getSearchParams } from 'sly/web/components/search/helpers';
 import { getQueryParamsSetter } from 'sly/web/services/helpers/queryParams';
 import ModalController from 'sly/web/controllers/ModalController';
 import HomePage from 'sly/web/components/pages/HomePage';
@@ -81,7 +81,7 @@ class HomePageContainer extends Component {
     const { redirectTo } = this.props;
 
     if (addresses.length) {
-      const path = `${generateSearchUrl(['Assisted Living'], addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
+      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`;  //?geo=${latitude},${longitude},10`;
 
       redirectTo(path);
     }

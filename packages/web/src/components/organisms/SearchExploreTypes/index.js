@@ -1,40 +1,36 @@
 import React from 'react';
-import { string, node, object } from 'prop-types';
+import { string, node } from 'prop-types';
 
 import { Heading, Link, Grid, Block } from 'sly/common/components/atoms';
 
 const tocsHeadingDesc = {
   'assisted-living': {
-    heading: 'Asssisted Living',
-    desc: 'Ideal for seniors who need help with some activities of daily living,but are interested in a social, active lifestyle.',
+    heading: 'Assisted Living',
+    desc: 'For seniors who need some help with daily activities and want a supportive community that’s active, social, and engaging.',
   },
   'memory-care': {
     heading: 'Memory Care',
-    desc: 'Facilities with safe designed environments for residents to improve quality of life, reduce confusion and prevent wandering.',
-  },
-  'nursing-homes': {
-    heading: 'Nursing Homes',
-    desc: 'Safety and comfort for residents who need 24-hour medical supervision.',
+    desc: 'A supervised and secured community designed to support engagement and quality of life for residents living with dementia.',
   },
   'independent-living': {
     heading: 'Independent Living',
-    desc: 'For residents who want to enjoy retirement without the responsibilites of home upkeep and daily chores.',
+    desc: 'For active older adults who want to downsize to a home in a retirement community but don’t need help to live independently.',
   },
   'board-and-care-home': {
     heading: 'Board and Care Home',
-    desc: 'Houses in residential neighborhoods that are equipped  and staffed to care for a small number o residents, usually 2-10.',
+    desc: 'Homes in residential neighborhoods that are equipped and staffed to provide daily care for a small number of residents.',
   },
   'continuing-care-retirement-community': {
-    heading: 'Continuing Care Retirement Communities (CCRC)',
-    desc: 'For residents who want to age in place. Has accomodations for nursing home care, independent and assisted living.',
+    heading: 'Continuing Care Retirement Communities',
+    desc: 'For residents who want to age in place as their care needs change—from Independent Living to nursing care. Requires a buy-in fee.',
   },
   'active-adult': {
-    heading: 'Active Adult (55+)',
-    desc: 'Retirement communities where residents can stay ative and social.',
+    heading: 'Active Adult Communities (55+)',
+    desc: 'Communities of houses and apartments for residents 55 and older who live independently, enjoying an active, social lifestyle.',
   },
   'skilled-nursing-facility': {
     heading: 'Skilled Nursing Facilities',
-    desc: 'For residents who need transitional care between a hospital and a personal residence.',
+    desc: 'For seniors with more serious medical needs who require skilled care following a hospitalization, illness, or surgery.',
   },
 };
 
@@ -53,31 +49,30 @@ HeadingDesc.propTypes = {
   children: node,
 };
 
-const mapTocToHeadingDesc = (toc) => {
+const mapTocToHeadingDesc = (toc, city, state) => {
   const currentToc = tocsHeadingDesc[toc];
 
   return (
-    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}`}>
+    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}/${state}/${city}`}>
       {currentToc.desc}
     </HeadingDesc>
   );
 };
 
-const SearchExploreTypes = ({ title, searchParams, ...props }) => {
+const SearchExploreTypes = ({ title, city, state, ...props }) => {
   const tocKeys = Object.keys(tocsHeadingDesc);
   const column1Keys = tocKeys.slice(0, tocKeys.length / 2);
   const column2Keys = tocKeys.slice(tocKeys.length  / 2);
-  const column1 = column1Keys.map(mapTocToHeadingDesc);
-  const column2 = column2Keys.map(mapTocToHeadingDesc);
+  const column1 = column1Keys.map(toc => mapTocToHeadingDesc(toc, city, state));
+  const column2 = column2Keys.map(toc => mapTocToHeadingDesc(toc, city, state));
 
   return (
     <Block as="section" {...props}>
       <Heading level="subtitle" size="subtitle" pad="xLarge">{title}</Heading>
       <Grid
-        dimensions={['50%', '50%']}
         gap="xLarge"
         upToTablet={{
-          gridTemplateColumns: 'auto',
+          gridTemplateColumns: 'auto!important',
         }}
       >
         <Grid flow="row" gap="xLarge">
@@ -92,8 +87,9 @@ const SearchExploreTypes = ({ title, searchParams, ...props }) => {
 };
 
 SearchExploreTypes.propTypes = {
-  searchParams: object.isRequired,
   title: string.isRequired,
+  city: string.isRequired,
+  state: string.isRequired,
 };
 
 export default SearchExploreTypes;

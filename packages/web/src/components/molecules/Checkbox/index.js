@@ -1,21 +1,15 @@
 import React from 'react';
 import { bool, string } from 'prop-types';
-import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 
-import { palette } from 'sly/common/components/themes';
 import { Icon } from 'sly/common/components/atoms';
 
-const checkedPalette = ({ palette: checkedPalette }) => palette(checkedPalette, 'darker-30');
-const uncheckedPalette = ({ uncheckedPalette }) => palette(uncheckedPalette, 'base');
-
-export const StyledIcon = styled(Icon)`
-  svg {
-    color: ${ifProp('checked', checkedPalette, uncheckedPalette)};
-  }
-`;
-
-const Checkbox = props => props.checked ? <StyledIcon icon="checkbox" {...props} /> : <StyledIcon icon="checkbox-empty" {...props} />;
+const Checkbox = ({ checked, palette, ...props }) => (
+  <Icon
+    icon={checked ? 'checkbox' : 'checkbox-empty'}
+    palette={palette}
+    {...props}
+  />
+);
 
 Checkbox.propTypes = {
   checked: bool.isRequired,
@@ -25,7 +19,6 @@ Checkbox.propTypes = {
 Checkbox.defaultProps = {
   checked: false,
   palette: 'primary',
-  uncheckedPalette: 'white',
 };
 
 export default Checkbox;

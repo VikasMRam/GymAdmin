@@ -104,4 +104,6 @@ const config = {
   },
 };
 
-module.exports = merge(config.all, config[config.all.slyEnv]);
+const mergedConfig = merge(config.all, config[config.all.slyEnv]);
+
+module.exports = mergedConfig;

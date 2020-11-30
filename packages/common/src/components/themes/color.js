@@ -20,10 +20,10 @@ const gradients = [
   { percentage: 0.95, tint: white, variant: 'lighter-95' },
 ];
 const clear = color => color || '';
-const names = gradients.map(({ variant }) => variant);
+const variants = gradients.map(({ variant }) => variant);
 
 // eslint-disable-next-line no-return-assign
-export const colorIndex = names.reduce((c, name, i) => ((c[name] = i, c)), {});
+export const colorIndex = variants.reduce((c, name, i) => ((c[name] = i, c)), {});
 
 export function makeColor(base) {
   const color = Color(base);
@@ -38,7 +38,10 @@ export function makeColorTable(palette) {
   return Object.entries(palette)
     .reduce((cumul, [name, colors]) => {
       // eslint-disable-next-line no-return-assign
-      cumul[name] = names.reduce((c, name) => (c[name] = (clear(colors[name]), c)), {});
+      cumul[name] = variants.slice(5).reduce((c, variant) => {
+        c[variant] = clear(colors[variant]);
+        return c;
+      }, {});
       return cumul;
     }, {});
 }

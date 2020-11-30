@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, forwardRef } from 'react';
 import ReactDom from 'react-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 import { any, func, bool, element, string } from 'prop-types';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/common/components/themes';
+import { withSpacing } from 'sly/common/components/helpers';
 import IconButton from 'sly/common/components/molecules/IconButton';
-import Heading from 'sly/common/components/atoms/Heading';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
 
@@ -20,23 +20,27 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${palette('slate', 'base')}e5;
+  background-color: ${ifProp('transparent', 'transparent', css`${palette('slate', 'base')}e5`)};
   overflow: auto;
   z-index: calc(${key('zIndexes.modal.overlay')} - ${prop('instanceNumber')});
 `;
 
 const Modal = styled.div`
-  margin: auto;
+  ${withSpacing};
+
   border-radius: 6px;
   background-color: ${palette('white', 'base')};
-  display: ${ifProp('isOpen', 'block', 'none')};
+  display: ${ifProp('isOpen', 'flex', 'none')};
+  flex-direction: column;
 
-  width: calc(100% - ${size('spacing.xxLarge')});
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    width: ${size('layout.col4')};
-  }
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col6')};
+  width: 100%;
+  max-height: calc(100vh - 1rem);
+  margin-top: 1rem;
+
+  @media screen and (min-width: 552px) {
+    max-height: calc(100vh - 48px);
+    margin-top: unset;
+    max-width: ${size('layout.col6')};
   }
 `;
 
@@ -45,13 +49,15 @@ export const PaddedHeaderWithCloseBody = styled.div`
   padding-top: 0;
 `;
 
-export const HeaderWithClose = styled(({ children, icon, onClose, ...props }) => (
+export const HeaderWithClose = forwardRef(({ children, icon, onClose, ...props }, ref) => (
   <Block
-    padding={[
-      'xLarge',
-      'xLarge',
-      children || icon ? 'xLarge' : 0,
-    ]}
+    ref={ref}
+    display="flex"
+    alignItems="center"
+    flexShrink="0"
+    padding="0 xLarge"
+    height="76px"
+    borderBottom="regular"
     {...props}
   >
     {icon && (
@@ -65,20 +71,29 @@ export const HeaderWithClose = styled(({ children, icon, onClose, ...props }) =>
         borderRadius="large"
       />
     )}
-    <Heading level="subtitle" margin="0" flexGrow="1">{children}</Heading>
+
+    <Block
+      as="h3"
+      size="subtitle"
+      fontWeight="medium"
+      flexGrow="1"
+      marginRight="xLarge"
+      clamped
+    >
+      {children}
+    </Block>
+
     <IconButton
       icon="close"
       palette="slate"
+      iconSize="body"
       onClick={onClose}
       padding="0"
       flexGrow="0"
       transparent
     />
   </Block>
-))`
-  display: flex;
-  align-items: center;
-`;
+));
 
 HeaderWithClose.propTypes = {
   children: element,
@@ -86,30 +101,28 @@ HeaderWithClose.propTypes = {
   onClose: func,
 };
 
-export const ModalBody = styled(Block)``;
+export const ModalBody = styled(Block)`
+  overflow-y: auto;
+`;
 
 ModalBody.defaultProps = {
   padding: 'xLarge',
 };
 
-export const ModalActions = styled(Block)`
-  > * {
-    margin-left: ${size('spacing.large')};
-  }
-`;
-
-ModalActions.defaultProps = {
-  padding: [0, 'xLarge', 'xLarge'],
-  align: 'right',
-};
+export const ModalActions = forwardRef((props, ref) => (
+  <Block
+    ref={ref}
+    display="flex"
+    padding="large xLarge"
+    borderTop="regular"
+    {...props}
+  />
+));
 
 const PORTAL_ELEMENT_CLASS = 'modal-portal';
 let instanceNumber = 0;
 
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
-// FIXME: we had to uqickly introduce this because the modals were impeding agents
-// to update the Stages
-// FIXME: more than one modal are currently possible, we have to mimic the mechanism used in react-modal
 export default class NewModal extends Component {
   static typeHydrationId = 'NewModal';
   overlayRef = React.createRef();
@@ -161,12 +174,12 @@ export default class NewModal extends Component {
   };
 
   render() {
-    const { children, isOpen, ...props } = this.props;
+    const { children, isOpen, transparent, ...props } = this.props;
     const { mounted, instanceNumber } = this.state;
 
     return mounted && ReactDom.createPortal(
       (
-        <Overlay ref={this.overlayRef} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
+        <Overlay ref={this.overlayRef} transparent={transparent} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
           <Modal isOpen={isOpen} {...props}>
             {children}
           </Modal>
@@ -181,6 +194,7 @@ NewModal.propTypes = {
   children: any,
   onClose: func,
   isOpen: bool,
+  transparent: bool,
 };
 
 NewModal.defaultProps = {

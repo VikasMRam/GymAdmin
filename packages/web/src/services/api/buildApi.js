@@ -25,7 +25,7 @@ export default function buildApi(endpoints, config = {}) {
 
     return apiFetch(
       baseUrl,
-      applyUrlWithPlaceholders(path, placeholders),
+      applyUrlWithPlaceholders(path, placeholders, requestOptions),
       configureOptions(augmentedOptions),
     );
   };

@@ -12,6 +12,7 @@ import { addAppWrapper } from './preview.common';
 
 import theme from 'sly/common/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
+import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -19,11 +20,13 @@ dayjs.extend(utc);
 Modal.setAppElement('#root');
 
 addDecorator(story => (
-  <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      {story()}
-    </ThemeProvider>
-  </BrowserRouter>
+  <BreakpointProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        {story()}
+      </ThemeProvider>
+    </BrowserRouter>
+  </BreakpointProvider>
 ));
 
 addDecorator(addAppWrapper);

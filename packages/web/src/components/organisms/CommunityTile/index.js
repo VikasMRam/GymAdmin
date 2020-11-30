@@ -1,11 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
-import { ifProp } from 'styled-tools';
 
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
+import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
@@ -20,10 +18,6 @@ const communityDefaultImages = {
   '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
 };
 
-const Wrapper = styled(Grid)`
-  ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
-`;
-
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <Button testID="ActionButton" width="100%" onClick={onClick} ghost={ghost} key={text}>
     {text}
@@ -32,13 +26,16 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
-  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event,
+  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, noGallery,
+  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, index, ...props
 }) => {
   const {
-    name, gallery = {}, communitySize, plusCategory,
+    name, gallery, communitySize, plusCategory,
   } = community;
-  const { images = [] } = gallery;
+  let images = [];
+  if (gallery) {
+    ({ images = [] } = gallery);
+  }
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'primary' : 'white';
@@ -62,25 +59,39 @@ const CommunityTile = ({
 
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
+  const spacing = type === 'map' ? 'regular' : 'xLarge';
+  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
+  imageMargin = layout === 'column' ? [imageMargin || 0, spacing, imageMargin || 0, imageMargin || 0] : null;
+  if (type === 'map') {
+    imageMargin = spacing;
+  }
+  const imageSnap = imageMargin && type !== 'map' ? 'right' : null;
 
   return (
     <Block
       as="article"
-      position="relative"
-      className={className}
       background={plusCategory ? 'primary.background' : 'white.base'}
+      {...props}
     >
       {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
-      <Wrapper
-        layout={layout}
+      <Grid
+        flow={layout}
         borderRadius="small"
         border="regular"
         borderPalette="grey.stroke"
-        gap="large"
-        dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
+        gap={type === 'list' ? null : 'regular'}
+        dimensions={[type === 'list' ? COLUMN_LAYOUT_IMAGE_WIDTH : COLUMN_LAYOUT_IMAGE_WIDTH_SMALL, 'auto']}
+        upToLaptop={type === 'list' ? null : {
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto!important`,
+          gridGap: `${getKey('sizes.spacing.large')}!important`,
+        }}
         // no column layout support below tablet
-        upToTablet={{
-          gridTemplateColumns: 'auto',
+        upToTablet={type === 'list' ? {
+          gridTemplateColumns: 'auto!important',
+          gridGap: `${getKey('sizes.spacing.large')}!important`,
+        } : {
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto!important`,
+          gridGap: `${getKey('sizes.spacing.regular')}!important`,
         }}
       >
         {!noGallery &&
@@ -91,7 +102,7 @@ const CommunityTile = ({
             onSlideChange={onSlideChange}
             currentSlide={currentSlide}
             borderRadius="small"
-            snap={layout === 'row' ? 'bottom' : null}
+            snap={layout === 'row' ? 'bottom' : imageSnap}
             transparent
           />
         }
@@ -102,12 +113,12 @@ const CommunityTile = ({
             src={imageSrc}
             placeholder={placeholder}
             sizes={mediaSizes}
-            aspectRatio={layout === 'column' ? '1:1' : '16:9'}
+            aspectRatio={imageAspectRatio}
             borderRadius="small"
-            margin={layout === 'column' ? 'large' : null}
-            snap={layout === 'row' ? 'bottom' : null}
+            margin={imageMargin}
+            snap={layout === 'row' ? 'bottom' : imageSnap}
             loading={loading}
-            upToTablet={{
+            upToTablet={type === 'map' ? null : {
               borderRadius: size('spacing.small'),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
@@ -123,9 +134,9 @@ const CommunityTile = ({
         }
         <Block
           overflow="hidden"
-          padding={layout === 'row' ? ['0', 'large', 'large', 'large'] : 'large'}
-          upToTablet={{
-            padding: size('spacing.large'),
+          padding={layout === 'row' ? ['0', spacing, spacing, spacing] : spacing}
+          upToTablet={type === 'map' ? null : {
+            padding: size('spacing', spacing),
             paddingTop: 0,
           }}
         >
@@ -133,9 +144,11 @@ const CommunityTile = ({
             community={community}
             showFloorPlan={showFloorPlan}
             event={event}
+            type={type}
             priceTextSize={layout === 'row' ? 'body' : undefined}
             pad={actionButtons.length ? 'large' : undefined}
             swapRatingPrice={layout === 'row'}
+            index={index}
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
@@ -173,7 +186,7 @@ const CommunityTile = ({
             </Block>
           }
         </Block>
-      </Wrapper>
+      </Grid>
     </Block>
   );
 };
@@ -198,15 +211,23 @@ CommunityTile.propTypes = {
   className: string,
   noGallery: bool,
   showFloorPlan: bool,
-  layout: oneOf(['column', 'row']),
+  layout: oneOf(['column', 'row']).isRequired,
+  type: oneOf(['list', 'map']).isRequired,
   lazyLoadImage: bool.isRequired,
   event: object,
+  imageAspectRatio: string.isRequired,
+  imageMargin: string,
+  index: number,
 };
 
 CommunityTile.defaultProps = {
   actionButtons: [],
   layout: 'row',
+  type: 'list',
   lazyLoadImage: true,
+  position: 'relative',
+  borderRadius: 'small',
+  imageAspectRatio: '3:2',
 };
 
 export default CommunityTile;

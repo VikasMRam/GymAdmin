@@ -20,6 +20,24 @@ const searchWhitelist = [
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
+// const LoginRedirect = () => {
+//   const { staticContext } = useContext(__RouterContext);
+//   const location = useLocation();
+//
+//   const {
+//     pathname,
+//     search,
+//     hash,
+//   } = location;
+//   const afterLogin = `${pathname}${search}${hash}`;
+//   const url = `/?${stringify({ loginRedirect: afterLogin })}`;
+//
+//   if (isServer) {
+//     staticContext.status = 302;
+//   }
+//   return <Redirect to={url} />;
+// };
+
 @withApiContext
 @withAuth
 @withRouter
@@ -107,6 +125,7 @@ export default class Router extends Component {
           staticContext.status = 302;
         }
         return <Redirect to={url} />;
+        // return <LoginRedirect />;
       } else if (isServer) {
         // we do this because we don't want to prefetch in the server
         // all of dashboard (or any other section that requires auth)

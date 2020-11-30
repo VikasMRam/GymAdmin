@@ -1,6 +1,6 @@
-import React from 'react';
+/* eslint react/prop-types: 0 */
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
 
 import Root from './Root';
 
@@ -19,15 +19,16 @@ import {
   withWidth,
   withHeight,
   withShadow,
+  withShadowOnHover,
   withMedia,
 } from 'sly/common/components/helpers';
 
-const Block = styled(({ showIf, ...props }) => {
+const Block = styled(forwardRef(({ showIf, ...props }, ref) => {
   if (!showIf) {
     return null;
   }
-  return <Root {...props} />;
-})`
+  return <Root ref={ref} {...props} />;
+}))`
   ${withSpacing}
   ${withText}
   ${withElementSize}
@@ -39,6 +40,7 @@ const Block = styled(({ showIf, ...props }) => {
   ${withCursor}
   ${withOverflow}
   ${withShadow}
+  ${withShadowOnHover}
   ${withWidth}
   ${withHeight}
   // put withDisplay after other styles for applied display styles to have more priority
@@ -47,13 +49,116 @@ const Block = styled(({ showIf, ...props }) => {
   ${withMedia}
 `;
 
-Block.propTypes = {
-  showIf: bool,
-};
+Block.propTypesList = [
+  // spacing
+  'padding',
+  'paddingTop',
+  'paddingRight',
+  'paddingBottom',
+  'paddingLeft',
+  'margin',
+  'marginTop',
+  'marginRight',
+  'marginBottom',
+  'marginLeft',
+  'pad',
+  'horizontalGutter',
+  'verticalGutter',
+  // text
+  'size',
+  'weight',
+  'lineHeight',
+  'textDecoration',
+  'textTransform',
+  // element
+  'elementSize',
+  // color
+  'palette',
+  'variation',
+  'background',
+  'backgroundVariation',
+  'border',
+  'borderPalette',
+  'borderVariation',
+  // border
+  'border',
+  'borderTop',
+  'borderRight',
+  'borderBottom',
+  'borderLeft',
+  'borderPalette',
+  'borderVariation',
+  'borderRadius',
+  // snap
+  'snap',
+  // skipping align because it will dissapear in favour of display
+  // shadow
+  'shadowHOffset',
+  'shadowVOffset',
+  'shadowBlur',
+  'shadowSpread',
+  'shadowPalette',
+  // shadowOnHover
+  'shadowOnHoverHOffset',
+  'shadowOnHoverVOffset',
+  'shadowOnHoverBlur',
+  'shadowOnHoverSpread',
+  'shadowOnHoverPalette',
+  'css',
+  // display
+  'display',
+  'block',
+  'flex',
+  'justifyContent',
+  'alignItems',
+  'flexDirection',
+  'flexGrow',
+  'flexShrink',
+  'flexBasis',
+  'flexWrap',
+  'order',
+  'visibility',
+  // media
+  'upTo',
+  'upToMobile',
+  'upToTablet',
+  'upToLapTop',
+  'startingWith',
+  'startingWithMobile',
+  'startingWithTablet',
+  'startingWithLapTop',
+  // misc
+  '_css',
+  'className',
+  'clamped',
+  'cursor',
+  'overflow',
+  'width',
+  'height',
+];
 
 Block.defaultProps = {
   showIf: true,
   display: 'block',
+};
+
+Block.filterBlockProps = (props) => {
+  const blockProps = {};
+  const rest = {};
+  const propNames = Object.keys(props);
+  for (let i = 0; i <= propNames.length; i++) {
+    const propName = propNames[i];
+    if (!propName) {
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+    if (Block.propTypesList.includes(propName)) {
+      blockProps[propName] = props[propName];
+    } else {
+      rest[propName] = props[propName];
+    }
+  }
+  return [blockProps, rest];
 };
 
 export default Block;

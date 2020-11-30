@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 import careTypes from 'sly/web/constants/careTypes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
-import { getSearchParams } from 'sly/web/services/helpers/search';
+import { getSearchParams } from 'sly/web/components/search/helpers';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
 function Component() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { getSearchParams } from 'sly/web/services/helpers/search';
+import { getSearchParams } from 'sly/web/components/search/helpers';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import SearchComponent from 'sly/web/external/apps/search/Component';

@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import configureStore from 'sly/web/store/configure';
 import theme from 'sly/common/components/themes/default';
 import { hydrateComponents } from 'sly/web/services/partialHydration';
+import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 
 export default function partiallyHydrateClient(componentsToHydrate, routePath, root) {
   const initialState = window.__INITIAL_STATE__;
@@ -21,11 +22,13 @@ export default function partiallyHydrateClient(componentsToHydrate, routePath, r
   // eslint-disable-next-line react/prop-types
   const Providers = ({ children }) => (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Route path={routePath} render={() => children} />
-        </BrowserRouter>
-      </ThemeProvider>
+      <BreakpointProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Route path={routePath} render={() => children} />
+          </BrowserRouter>
+        </ThemeProvider>
+      </BreakpointProvider>
     </Provider>
   );
 

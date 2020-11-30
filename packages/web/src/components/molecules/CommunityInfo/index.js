@@ -1,6 +1,8 @@
-import React, { Fragment, Component } from 'react';
-import { bool, string, object } from 'prop-types';
+import React, { Component } from 'react';
+import { bool, string, object, oneOf, number } from 'prop-types';
+import { css } from 'styled-components';
 
+import { upTo, startingWith } from 'sly/common/components/helpers';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { Block, Heading, Link } from 'sly/common/components/atoms';
@@ -13,6 +15,15 @@ const communityDefaultIcon = {
   '20 - 51 Beds': 'community-size-medium',
   '51 +': 'community-size-large',
 };
+
+const validSizes = Object.keys(communityDefaultIcon);
+
+const getPlaceholderIcon = communitySize => communityDefaultIcon[
+  (communitySize && validSizes.includes(communitySize))
+    ? communitySize
+    : 'up to 20 Beds'
+];
+
 export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
@@ -23,6 +34,8 @@ export default class CommunityInfo extends Component {
     event: object,
     priceTextSize: string.isRequired,
     swapRatingPrice: bool,
+    type: oneOf(['list', 'map']).isRequired,
+    index: number,
   };
 
   static defaultProps = {
@@ -31,18 +44,24 @@ export default class CommunityInfo extends Component {
     justifyContent: 'space-between',
     direction: 'column',
     priceTextSize: 'subtitle',
+    type: 'list',
   };
 
   render() {
     const {
-      community, inverted, palette, headerIsLink, event, priceTextSize, swapRatingPrice, ...props
+      community, inverted, palette, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
+    let { priceTextSize } = this.props;
     const { propInfo = {}, propRatings, communitySize } = community;
+
+    if (type === 'map') {
+      priceTextSize = 'body';
+    }
 
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = community.care || community.typeCare || propInfo.typeCare;
     const capacity = propInfo.capacity || community.capacity;
-    const placeholder = communityDefaultIcon[communitySize || 'up to 20 Beds'];
+    const placeholder = getPlaceholderIcon(communitySize);
 
     let livingTypeComponent = null;
 
@@ -54,12 +73,24 @@ export default class CommunityInfo extends Component {
           iconPalette={inverted ? 'white' : 'slate'}
           palette={inverted ? 'white' : 'slate'}
           size="caption"
-          pad="regular"
+          pad="small"
+          type={type}
           title={typeCare.join(',')}
           clamped
+          css={type === 'map' ? css`
+            ${upTo('tablet', `
+              *:first-child {
+                display: none;
+              }
+            `)}
+            ${startingWith('laptop', css`
+              *:first-child {
+                display: none;
+              }
+            `)}
+          ` : null}
         >
-          {typeCare.slice(0, 3).map((livingType, i) =>
-            <Fragment key={livingType}>{<>{i === 0 ? '' : ' · '}</>}{livingType}</Fragment>)}
+          {typeCare.join(' · ')}
         </IconItem>
       );
     }
@@ -67,12 +98,13 @@ export default class CommunityInfo extends Component {
     const headerContent  = (
       <Heading
         level="subtitle"
-        size="subtitle"
-        pad="regular"
+        size={type === 'map' ? 'body' : 'subtitle'}
+        pad={type === 'map' ? 'small' : 'regular'}
         title={community.name}
         palette={inverted ? 'white' : 'slate'}
         clamped
       >
+        {index && `${index}. `}
         {community.name}
       </Heading>
     );
@@ -90,20 +122,31 @@ export default class CommunityInfo extends Component {
           {header}
           {livingTypeComponent}
           {capacity !== '' &&
-            <IconItem
-              icon="family"
-              iconPalette={inverted ? 'white' : 'slate'}
-              iconSize="body"
-              title={capacity}
-              palette={inverted ? 'white' : 'slate'}
-              size="caption"
-              pad="small"
-              clamped
-            >
-              {capacity}
-            </IconItem>
+          <IconItem
+            icon="family"
+            iconPalette={inverted ? 'white' : 'slate'}
+            iconSize="body"
+            title={capacity}
+            palette={inverted ? 'white' : 'slate'}
+            size="caption"
+            pad="small"
+            clamped
+            css={type === 'map' ? css`
+              ${upTo('tablet', `
+                *:first-child {
+                  display: none;
+                }
+              `)}
+              ${startingWith('laptop', css`
+                *:first-child {
+                  display: none;
+                }
+              `)}
+            ` : null}
+          >
+            {capacity}
+          </IconItem>
           }
-
         </div>
         <Block
           display="flex"
@@ -112,16 +155,20 @@ export default class CommunityInfo extends Component {
           direction={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
+            seedId={community.id}
             rating={reviewsValue}
             numReviews={numReviews}
             palette={inverted ? 'white' : 'primary'}
             size="caption"
+            marginRight="large"
           />
           {community.startingRate ? (
             <Block
               palette={palette || (inverted ? 'white' : 'primary')}
               size="caption"
               testID="Rate"
+              overflow="hidden"
+              clamped
             >
               <Block
                 display="inline"

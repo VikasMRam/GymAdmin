@@ -5,11 +5,6 @@ import config from 'sly/web/config';
 import { size, palette } from 'sly/common/components/themes';
 import { Icon, Block, Hr, Link } from 'sly/common/components/atoms';
 
-const FooterWrapper = styled.footer`
-  background-color: ${palette('slate', 'base')};
-  color: ${palette('white', 'base')};
-`;
-
 const FooterTopWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -205,7 +200,12 @@ class Footer extends PureComponent {
       );
     });
     return (
-      <FooterWrapper>
+      <Block
+        as="footer"
+        background="slate.base"
+        color="white.base"
+        {...this.props}
+      >
         <FooterTopWrapper>
           <GroupDiv>
             <GroupItem to="/">
@@ -231,7 +231,7 @@ class Footer extends PureComponent {
             </SocialIcons>
           </RightWrapper>
         </FooterBottomWrapper>
-      </FooterWrapper>
+      </Block>
     );
   }
 }

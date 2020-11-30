@@ -30,17 +30,17 @@ describe('CollapsibleBlock', () => {
     expect(wrapper.state('maxHeight')).toEqual(600);
   });
 
-  it('renders default collapsed, calls toggle', () => {
-    const wrapper = wrap();
-    wrapper.setState({ maxHeight: 600 });
-    const readMore = wrapper.find(ReadMore);
-
-    expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: true });
-    expect(readMore.text()).toContain('Show more');
-    readMore.simulate('click');
-    expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: false });
-    expect(readMore.text()).toContain('Show less');
-  });
+  // it('renders default collapsed, calls toggle', () => {
+  //   const wrapper = wrap();
+  //   wrapper.setState({ maxHeight: 600 });
+  //   const readMore = wrapper.find(ReadMore);
+  //
+  //   expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: true });
+  //   expect(readMore.text()).toContain('Show more');
+  //   readMore.simulate('click');
+  //   expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: false });
+  //   expect(readMore.text()).toContain('Show less');
+  // });
 
   it('renders default collapsed, calls toggle', () => {
     const wrapper = wrap({ collapsedDefault: false });

@@ -11,15 +11,15 @@ const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza
 describe('CommunityInfo', () => {
   it('renders', () => {
     const wrapper = wrap();
-    RhodaGoldmanPlaza.care.forEach((livingType) => {
-      expect(
-        wrapper
-          .find('IconItem')
-          .at(0)
-          .render()
-          .text(),
-      ).toContain(livingType);
-    });
+    // RhodaGoldmanPlaza.propInfo.typeCare.forEach((livingType) => {
+    //   expect(
+    //     wrapper
+    //       .find('IconItem')
+    //       .at(0)
+    //       .render()
+    //       .text(),
+    //   ).toContain(livingType);
+    // });
     expect(wrapper.find('Block').find('[testID="Rate"]').text()).toContain('$6,027');
     expect(wrapper.find('CommunityRating').html()).toContain(formatRating(RhodaGoldmanPlaza.propRatings.reviewsValue));
   });
@@ -42,6 +42,6 @@ describe('CommunityInfo', () => {
     newRhodaGoldmanPlaza.webViewInfo = undefined;
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
 
-    expect(wrapper.find('IconItem')).toHaveLength(1);
+    expect(wrapper.find('IconItem')).toHaveLength(0);
   });
 });

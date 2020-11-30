@@ -103,7 +103,7 @@ const CommunityChoiceTile = ({
   onClick,
 }) => {
   const {
-    name, picture, startingRate, numReviews, reviewsValue,
+    id, name, picture, startingRate, numReviews, reviewsValue,
   } = community;
 
   return (
@@ -124,7 +124,7 @@ const CommunityChoiceTile = ({
             <Deskrate> per month</Deskrate>
           </div>
           <ReviewsWrapper>
-            <Rating value={reviewsValue} size="caption" />
+            <Rating seedId={id} value={reviewsValue} size="caption" />
             <NumberReviews>{numReviews}</NumberReviews>
           </ReviewsWrapper>
         </Data>

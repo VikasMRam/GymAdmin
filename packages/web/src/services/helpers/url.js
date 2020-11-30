@@ -1,19 +1,7 @@
 import { stringify, parse } from 'query-string';
 
 import { titleize } from 'sly/web/services/helpers/strings';
-import { communitySizeSearchParamMap } from 'sly/web/services/helpers/search';
-
-export const getSearchUrl = (matchParams) => {
-  /*
-   { careType: 'assisted-living', state: 'califo', city: 'sf' }
-   */
-  const outUrl = {
-    city: matchParams.city,
-    state: matchParams.state,
-    toc: matchParams.toc,
-  };
-  return outUrl;
-};
+import { communitySizeSearchParamMap } from 'sly/web/components/search/helpers';
 
 export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
@@ -271,16 +259,20 @@ export const getBreadCrumbsForCommunity = ({ name, propInfo, address }) => {
   ];
 };
 
-export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
+export const getBreadCrumbsForLocation = ({ toc, state, city }, noHomeAndToc) => {
   const tocBc = tocPaths([titleize(toc)]);
   // TODO: use react router generated paths once router wiring is complete
-  const baseBcs = [{
+  let baseBcs = [{
     path: '/',
     label: 'Home',
   }];
   // TODO A better job
   if (tocBc) {
-    baseBcs.push(tocBc);
+    if (!noHomeAndToc) {
+      baseBcs.push(tocBc);
+    } else {
+      baseBcs = [];
+    }
   } else {
     // Safety
     return baseBcs;
@@ -384,10 +376,6 @@ export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
   const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
   return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}`;
 };
-export const getCitySearchWithSizeUrlMapView = ({ propInfo, address }) => {
-  const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
-  return `${getCitySearchUrl({ propInfo, address })}?size=${sizeParam}&view=map`;
-};
 
 export const getOrigin = () => {
   if (!window) {
@@ -402,7 +390,7 @@ export const getOrigin = () => {
 };
 
 export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
-export const parseURLQueryParams = obj => parse(obj);
+export const parseURLQueryParams = obj => parse(obj, { arrayFormat: 'comma' });
 
 export const getStateAbbr = (state) => {
   if (state) {

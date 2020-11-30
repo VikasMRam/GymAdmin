@@ -63,7 +63,7 @@ const Html = ({
         {/* End Google Platform Library Code */}
         {/* eslint-enable */}
 
-        <script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} />
+        {/*<script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} />*/}
         {helmet.style.toComponent()}
       </body>
     </html>

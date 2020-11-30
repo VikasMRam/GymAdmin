@@ -13,7 +13,7 @@ const GetAssessmentBox = ({ palette, layout, buttonProps, ...props }) => (
       alignItems="center"
       flow={layout}
       upToTablet={{
-        gridTemplateColumns: 'auto',
+        gridTemplateColumns: 'auto!important',
       }}
     >
       <Block

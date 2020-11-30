@@ -8,7 +8,7 @@ import { size } from 'sly/common/components/themes';
 import { gridColumns } from 'sly/web/components/themes';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
-import { getTocLabel, getLocationLabel } from 'sly/web/services/helpers/search';
+import { getTocLabel, getLocationLabel } from 'sly/web/components/search/helpers';
 import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
 import pad from 'sly/web/components/helpers/pad';
 import { Link, Block, Heading } from 'sly/common/components/atoms';
@@ -165,6 +165,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               layout="column"
               noGallery
               lazyLoadImage={index !== 0}
+              index={index+1}
               event={{
                 category: 'SearchPage',
                 action: 'communityClick',

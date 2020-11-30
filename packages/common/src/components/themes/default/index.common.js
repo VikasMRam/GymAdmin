@@ -1,5 +1,6 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from 'sly/common/components/themes/color';
+import { isBrowser, isDev } from 'sly/web/config';
+import { makeColor, makeColorTable } from 'sly/common/components/themes/color';
 
 const theme = {};
 
@@ -24,7 +25,12 @@ theme.palette = {
   orange     : makeColor('#F99106'),
   razzmatazz : makeColor('#F40767'),
   blue       : makeColor('#186DC5'),
+  black      : makeColor('#000000'),
 };
+
+if (isBrowser && isDev) {
+  console.table(makeColorTable(theme.palette));
+}
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -131,6 +137,7 @@ theme.sizes = {
   },
 
   border: {
+    none: '0px',
     regular: '0.062rem',   // 1px
     large  : '0.125rem',   // 2px
     xLarge : '0.1875rem',  // 3px

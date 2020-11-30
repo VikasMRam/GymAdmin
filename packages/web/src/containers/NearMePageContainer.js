@@ -111,7 +111,7 @@ export default class NearMePageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
 
     if (addresses.length) {
-      const path = `/${searchParams.toc}/${generateCityPathSearchUrl(addresses[0])}?latitude=${latitude}&longitude=${longitude}`;
+      const path = `/${searchParams.toc}/${generateCityPathSearchUrl(addresses[0])}`; //?geo=${latitude},${longitude},10`;
       history.push(path);
     }
   };

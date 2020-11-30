@@ -1,14 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import { connect, useDispatch, useSelector, useStore } from 'react-redux';
 import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { createSelector } from 'reselect';
 
 import { isServer } from 'sly/web/config';
 import api from 'sly/web/services/api/apiInstance';
-import { createMemoizedRequestInfoSelector } from 'sly/web/services/api/selectors';
+import {
+  createMemoizedRequestInfoSelector,
+} from 'sly/web/services/api/selectors';
 import withPrefetchWait from 'sly/web/services/api/withPrefetchWait';
-import withReduxContext from 'sly/web/services/api/withReduxContext';
-import withApiContext, { apiContextPropType } from 'sly/web/services/api/context';
+import withApiContext, {
+  ApiContext,
+  apiContextPropType,
+} from 'sly/web/services/api/context';
 import { invalidateRequests } from 'sly/web/services/api/actions';
 
 const defaultDispatcher = call => call();
@@ -17,6 +22,55 @@ function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
       || WrappedComponent.name
       || 'Component';
+}
+
+export function usePrefetch(apiCall, dispatcher = defaultDispatcher) {
+  // capture dispatcher call args
+  const args = dispatcher((...args) => args);
+  const { placeholders = {}, options = {} } = api[apiCall].method(...args);
+  const argsKey = JSON.stringify(placeholders);
+
+  const dispatch = useDispatch();
+
+  const fetch = useCallback(() => dispatch(
+    api[apiCall].asAction(placeholders, options),
+  ), [argsKey]);
+
+  const invalidate = useCallback(() => dispatch(
+    invalidateRequests(apiCall, placeholders),
+  ), [argsKey]);
+
+  const getMemoizedRequestInfo = useMemo(createMemoizedRequestInfoSelector, []);
+
+  const requestInfo = useSelector(state => getMemoizedRequestInfo(
+    state.api.requests?.[apiCall]?.[argsKey],
+    state.api.entities,
+  ));
+
+  const { hasStarted, isLoading, isInvalid } = requestInfo;
+  // initial fetch
+  // red flag here having a hook inside a conditional, but hoping that it's ok
+  // as this branch will always be accessed or not consistently for the env
+  if (isServer) {
+    const apiContext = useContext(ApiContext);
+    const { hasStarted, isLoading, isInvalid } = requestInfo;
+    const shouldSkip = isServer && (apiContext.skipApiCalls || api[apiCall].ssrIgnore);
+    if (isInvalid || (!shouldSkip && !hasStarted)) {
+      apiContext.promises.push(fetch());
+    }
+  } else {
+    useEffect(() => {
+      if (isInvalid || !hasStarted) {
+        fetch();
+      }
+    }, [requestInfo]);
+  }
+
+  return {
+    requestInfo,
+    fetch,
+    invalidate,
+  };
 }
 
 function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
@@ -35,9 +89,11 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
 
       const args = dispatcher(argumentsAbsorber, props);
       const { placeholders = {} } = api[apiCall].method(...args);
+
+
       const requestInfo = getMemoizedRequestInfo(
-        state,
-        { call: apiCall, args: placeholders },
+        state.api.requests?.[apiCall]?.[JSON.stringify(placeholders)],
+        state.api.entities,
       );
 
       return {
@@ -56,7 +112,6 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
     );
 
     @withApiContext
-    @withReduxContext
     @withPrefetchWait
     @connect(mapStateToProps, { fetch, invalidate })
 
