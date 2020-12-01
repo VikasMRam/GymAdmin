@@ -39,5 +39,3 @@ module.exports.EXTERNAL_PATH = envPick(process.env.EXTERNAL_PATH, '/external');
 module.exports.EXTERNAL_ASSET_URL = `${process.env.PUBLIC_PATH}/external`;
 module.exports.EXTERNAL_URL = `${process.env.HOST}${process.env.EXTERNAL_PATH}`;
 module.exports.EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
-
-console.log('env.js PORT', process.env.PORT, process.argv);
