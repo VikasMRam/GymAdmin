@@ -20,7 +20,7 @@ module.exports.NODE_ENV = envPick(process.env.NODE_ENV, 'development');
 module.exports.SLY_ENV = envPick(process.env.SLY_ENV, 'development');
 module.exports.GA_ENV = envPick(process.env.GA_ENV, 'development');
 module.exports.HOST = envPick(process.env.HOST, 'http://www.lvh.me');
-module.exports.PORT = envPick(process.env.PORT, 8000);
+module.exports.PORT = process.env.PORT || 8000;
 module.exports.DEV_PORT = envPick(process.env.DEV_PORT, +process.env.PORT + 1 || 8001);
 module.exports.ASSETS_URL = envPick(process.env.ASSETS_URL, 'https://d354o3y6yz93dt.cloudfront.net');
 module.exports.PUBLIC_PATH = '/react-assets';
@@ -39,3 +39,5 @@ module.exports.EXTERNAL_PATH = envPick(process.env.EXTERNAL_PATH, '/external');
 module.exports.EXTERNAL_ASSET_URL = `${process.env.PUBLIC_PATH}/external`;
 module.exports.EXTERNAL_URL = `${process.env.HOST}${process.env.EXTERNAL_PATH}`;
 module.exports.EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
+
+console.log('env.js PORT', process.env.PORT, process.argv);
