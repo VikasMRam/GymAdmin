@@ -112,7 +112,7 @@ const Filters = forwardRef(({
   const closeModal = useCallback(() => sendEvent('close-filter', isOpen.toString()) || setIsOpen(false), [isOpen]);
   const clearFilters = useCallback(() => {
     sendEvent('clear-filters', isOpen.toString());
-    const clearFilters = typeof isOpen === 'string' ? onClearFilters([...PAGINATION_FILTERS, isOpen]) : onClearFilters([...PAGINATION_FILTERS, ...isOpen])
+    typeof isOpen === 'string' ? onClearFilters([...PAGINATION_FILTERS, isOpen]) : onClearFilters([...PAGINATION_FILTERS, ...isOpen])
 
   }, [isOpen]);
   const openFilters = useCallback((section = true) => sendEvent('open-filter', section.toString()) || setIsOpen(section), []);
