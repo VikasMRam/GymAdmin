@@ -154,6 +154,7 @@ const Map = ({
         googleMapLoader={maps.getMaps}
         center={mapCenter}
         zoom={mapCenter?.zoom}
+        hoverDistance={HOVER_DISTANCE}
         onChange={onChange}
         onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
