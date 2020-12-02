@@ -160,7 +160,11 @@ export default class ReferralSearchContainer extends Component {
 
   getGeoFromLocationValue = (value) => {
     if (value && value.searchParams) {
-      return [value.searchParams.latitude, value.searchParams.longitude, 10].join(',');
+      return value.searchParams.geo
+    }
+
+    if (value && value.info) {
+      return [value.info.geo.Latitude, value.info.geo.Longitude, 10].join(',');
     }
     return null;
   };
