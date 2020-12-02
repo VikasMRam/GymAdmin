@@ -152,6 +152,9 @@ const Filters = forwardRef(({
   const onTocFilterChange = useCallback((filter, value) => {
     onFilterChange(filter, value.length === 0 ? [NH] : value);
   }, [currentFilters]);
+  const onBudgetFilterChange = useCallback((filter, value) => {
+    onFilterChange(filter, value.length === 0 ? null : value);
+  }, [currentFilters]);
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
 
@@ -212,7 +215,7 @@ const Filters = forwardRef(({
               type="radio"
               options={BUDGET_OPTIONS}
               filter={BUDGET}
-              onChange={onFilterChange}
+              onChange={onBudgetFilterChange}
               value={currentFilters[BUDGET]}
             />
           </CollapsiblePopoverSwitch>
