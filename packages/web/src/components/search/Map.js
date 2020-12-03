@@ -71,7 +71,7 @@ const Map = ({
     }
 
     const { lat, lng } = (boundsCenter && boundsCenter.lat !== 0) ? boundsCenter : apiMetaCenter;
-    const zoom = bounds && bounds.lat && findOptimalZoomForBounds(bounds, mapDimensions) || DEFAULT_ZOOM;
+    const zoom = bounds ? findOptimalZoomForBounds(bounds, mapDimensions) : DEFAULT_ZOOM;
 
     setMapCenter({
       lat,
