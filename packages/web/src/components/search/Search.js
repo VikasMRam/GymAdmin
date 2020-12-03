@@ -75,10 +75,9 @@ const Search = ({
   const cursor = (DEFAULT_PAGE_SIZE * page) + 1;
   const { city, state } = currentFilters;
   const stateStr = getStateAbbr(titleize(state));
-  const cityStr = titleize(city);
   const locLabel = getLocationLabel(currentFilters);
   const tocLabel = getTocSeoLabel(currentFilters.toc);
-  const locationStr = cityStr ? `${cityStr}, ${stateStr}` : `${stateStr}`;
+  const locationStr = city ? `${titleize(city)}, ${stateStr}` : `${stateStr}`;
   const title = `${tocLabel} in ${locationStr}`;
   const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
 
@@ -192,7 +191,7 @@ const Search = ({
                 index={cursor + i}
                 community={community}
               />
-              {!showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 xLarge xLarge"
                 >

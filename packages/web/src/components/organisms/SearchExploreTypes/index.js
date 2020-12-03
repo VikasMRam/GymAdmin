@@ -51,9 +51,10 @@ HeadingDesc.propTypes = {
 
 const mapTocToHeadingDesc = (toc, city, state) => {
   const currentToc = tocsHeadingDesc[toc];
+  const uri = city ? `${state}/${city}` : state;
 
   return (
-    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}/${state}/${city}`}>
+    <HeadingDesc key={currentToc.heading} heading={currentToc.heading} to={`/${toc}/${uri}`}>
       {currentToc.desc}
     </HeadingDesc>
   );
@@ -88,7 +89,7 @@ const SearchExploreTypes = ({ title, city, state, ...props }) => {
 
 SearchExploreTypes.propTypes = {
   title: string.isRequired,
-  city: string.isRequired,
+  city: string,
   state: string.isRequired,
 };
 

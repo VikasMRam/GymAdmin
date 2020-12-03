@@ -27,6 +27,8 @@ function ExploreContainer({ filters }) {
   const guideContent = geoGuide && geoGuide.guideContent;
   const hasGeoGuideContent = guideContent && !(guideContent.ownGuidePage && guideContent.ownGuidePage === 'true');
 
+  const title = filters.city ? `${titleize(filters.city)}, ${titleize(filters.state)}` : titleize(filters.state);
+
   return (
     <Grid
       background="primary.lighter-95"
@@ -41,16 +43,19 @@ function ExploreContainer({ filters }) {
     >
       {hasGeoGuideContent && guideContent.seoLinks && (
         <SeoLinks
-          title={`Assisted Living Facilities near ${titleize(filters.city)}, ${titleize(filters.state)}`}
+          title={`Assisted Living Facilities near ${title}`}
           links={guideContent.seoLinks}
         />
       )}
-      <SearchExploreTypes title={`Explore other types of communities in ${titleize(filters.city)}, ${titleize(filters.state)}`} city={filters.city} state={filters.state}/>
+      <SearchExploreTypes title={`Explore other types of communities in  ${title}`} city={filters.city} state={filters.state}/>
+      { filters.city &&
       <GetAssessmentBoxContainer
         completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
         agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
         startLink={`/wizards/assessment/location/${filters.state}/${filters.city}?skipIntro=true`}
       />
+      }
+
     </Grid>
   );
 }
