@@ -124,6 +124,10 @@ const Search = ({
           css={{
             zIndex: '100',
           }}
+          upToLaptop={{
+            paddingTop: getKey('sizes.spacing.medium'),
+            paddingBottom: getKey('sizes.spacing.medium'),
+          }}
         >
 
           {!!listSize &&
@@ -232,7 +236,7 @@ const Search = ({
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
             marginTop: `-${upToLaptopOffset}px`,
-            height: `calc(100vh - ${getKey('sizes.spacing.xxLarge')})`,
+            height: `calc(100vh - ${getKey('sizes.spacing.xLarge')})`,
           }}
           startingWithLaptop={{
             position: 'sticky',
