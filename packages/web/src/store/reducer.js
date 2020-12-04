@@ -6,7 +6,6 @@ import modal from './modal/reducer';
 import authenticated from './authenticated/reducer';
 import experiments from './experiments/reducer';
 import controller from './controller/reducer';
-import chatBox from './chatBox/reducer';
 
 import { reducer as api } from 'sly/web/services/api';
 import notifications from 'sly/web/services/notifications/reducer';
@@ -20,6 +19,5 @@ export default combineReducers({
   authenticated,
   experiments,
   controller,
-  chatBox,
 });
 

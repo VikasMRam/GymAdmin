@@ -1,7 +1,6 @@
 import isPlainObject from 'lodash/isPlainObject';
 
 export * from './modal/actions';
-export * from './chatBox/actions';
 export * from './authenticated/actions';
 
 const validKeys = ['type', 'payload', 'error', 'meta'];

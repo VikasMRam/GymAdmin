@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bool, func } from 'prop-types';
 
 import ChatBox from 'sly/web/components/organisms/ChatBox';
-import { toggleChatBoxFooterReached } from 'sly/web/store/actions';
-import { hasChatBoxFooterReached } from 'sly/web/store/selectors';
 
-class ChatBoxContainer extends Component {
-  static propTypes = {
-    footerReached: bool,
-    dispatchToggleAction: func,
+export default class ChatBoxContainer extends Component {
+  state = {
+    footerReached: false,
   };
 
   componentDidMount() {
@@ -22,32 +17,22 @@ class ChatBoxContainer extends Component {
   }
 
   handleScroll = () => {
-    const { dispatchToggleAction, footerReached } = this.props;
+    const { footerReached } = this.state;
     const isFooterReached = (window.innerHeight + window.pageYOffset) >= (document.body.offsetHeight - 60);
 
     // Important: don't trigger rerender unnecessarily
     if (isFooterReached !== footerReached) {
-      dispatchToggleAction();
+      this.setState({
+        footerReached: !footerReached,
+      });
     }
   };
 
   render() {
-    const { footerReached } = this.props;
+    const { footerReached } = this.state;
 
     return (
       <ChatBox footerReached={footerReached} />
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    footerReached: hasChatBoxFooterReached(state),
-  };
-};
-
-const mapDispatchToProps = {
-  dispatchToggleAction: toggleChatBoxFooterReached,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatBoxContainer);
