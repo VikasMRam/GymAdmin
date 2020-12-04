@@ -106,17 +106,17 @@ export const SIZES = {
   [SMALL]: {
     label: 'Small',
     value: SMALL,
-    description: '(<20) Home-like environment',
+    description: 'Up to 20 residents. A home-like environment with shared common areas and family-style dining, equipped and staffed to support daily care.',
   },
   [MEDIUM]: {
     label: 'Medium',
     value: MEDIUM,
-    description: '(20-50) Boutique environment',
+    description: 'Between 20-50 residents. A boutique-like environment with communal areas and dining, services, activities, and amenities.',
   },
   [LARGE]: {
     label: 'Large',
     value: LARGE,
-    description: '(50+) Hotel-like environment',
+    description: '50+ residents. A hotel-like environment with a dining room, concierge services, and wide range of activities and amenities.',
   },
 };
 
