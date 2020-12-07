@@ -52,7 +52,7 @@ const TrustScoreTile = ({ layout, community }) => {
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{
-          gridTemplateColumns: 'auto',
+          gridTemplateColumns: 'auto!important',
         }}
       >
         <RotatedBlock position="relative" alignItems="center" display="flex" direction="column" justifyContent="center" >
