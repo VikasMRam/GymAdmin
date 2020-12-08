@@ -36,6 +36,15 @@ import {
   MAP,
   NONE,
 } from 'sly/web/components/search/helpers';
+import SlyEvent from 'sly/web/services/helpers/events';
+
+const eventCategory = 'search-map';
+const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+  category: eventCategory,
+  action,
+  label,
+  value,
+});
 
 const Map = ({
   communities,
@@ -53,7 +62,6 @@ const Map = ({
   const [redoSearchOnMove, setRedoSearchOnMove] = useState(false);
 
   const apiMetaCenter = useMemo(() => slyToApiPoint(meta?.geo), [meta]);
-  console.log("api center", apiMetaCenter);
   const bounds = useMemo(() => getBoundsForSearchResults(communities), [communities]);
   const boundsCenter = useMemo(() => getBoundsCenter(bounds), [bounds]);
 
@@ -63,7 +71,7 @@ const Map = ({
     }
 
     const { lat, lng } = (boundsCenter && boundsCenter.lat !== 0) ? boundsCenter : apiMetaCenter;
-    const zoom = bounds && bounds.lat && findOptimalZoomForBounds(bounds, mapDimensions) || DEFAULT_ZOOM;
+    const zoom = bounds ? findOptimalZoomForBounds(bounds, mapDimensions) : DEFAULT_ZOOM;
 
     setMapCenter({
       lat,
@@ -81,6 +89,7 @@ const Map = ({
         controlled: NONE,
       });
     } else if (redoSearchOnMove) {
+      sendEvent('map-move', 'redo-search-on');
       const geo = getGeographyFromMap({
         lat,
         lng,
@@ -93,12 +102,23 @@ const Map = ({
         zoom,
         controlled: MAP,
       });
+    } else {
+      sendEvent('map-move', 'redo-search-off');
     }
   }, [redoSearchOnMove, mapCenter, mapDimensions]);
 
   const onChildClickCallback = useCallback((key) => {
     const community = communities.find(({ id }) => id === key);
+    const index = cursor + communities.indexOf(community);
+
+    sendEvent('pin-click', community.name , index);
     onMarkerClick(community);
+  }, [communities]);
+
+  const onMapMarkerHover = useCallback((community) => {
+    const index = cursor + communities.indexOf(community);
+    sendEvent('pin-hover', community.name , index);
+    onMarkerHover(community);
   }, [communities]);
 
   const selectedCommunityTile = selectedCommunity && (
@@ -110,6 +130,7 @@ const Map = ({
     />
   );
   const onRedoToggle = useCallback(() => {
+    sendEvent('redo-search', redoSearchOnMove ? 'off' : 'on');
     setRedoSearchOnMove(!redoSearchOnMove);
   });
 
@@ -137,7 +158,7 @@ const Map = ({
         onChange={onChange}
         onClick={() => onMarkerClick(null)}
         onChildClick={onChildClickCallback}
-        onChildMouseEnter={(_, { community }) => onMarkerHover(community)}
+        onChildMouseEnter={(_, { community }) => onMapMarkerHover(community)}
         onChildMouseLeave={() => onMarkerHover(null)}
         options={maps => ({
           zoomControl: true,
@@ -147,6 +168,7 @@ const Map = ({
           },
           draggable: true,
           gestureHandling: "greedy",
+          clickableIcons: false,
           styles: mapsTheme.propertyDetailTheme,
          })}
       >

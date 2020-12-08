@@ -1,5 +1,6 @@
 import { areaCode } from './phone';
 
+import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
 import { stateNames } from 'sly/web/services/helpers/url';
 import { formatDate } from 'sly/web/services/helpers/date';
 
@@ -126,4 +127,13 @@ export const getTrustScoreType = (community, scoreType) => {
   // Next iteration: GET REQUEST TO https://www.ccld.dss.ca.gov/transparencyapi/api/EmailSubscribe?facNum=015600130&Semail=sushanthr+testccld@gmail.com
 
   return trustScores[scoreType];
+};
+
+export const getPartnerAgent = (community) => {
+  const { partnerAgents } = community;
+  // filtering out status 1 partnerAgents
+  const livePartnerAgents = partnerAgents && partnerAgents.filter(e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
+  const partnerAgent = livePartnerAgents && livePartnerAgents.length > 0 ? livePartnerAgents[0] : null;
+
+  return partnerAgent;
 };

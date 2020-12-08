@@ -15,8 +15,11 @@ import careTypes from 'sly/web/constants/careTypes';
 export default function SearchContainer() {
   const location = useLocation();
   const history = useHistory();
-  const match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state/:city`);
-  // const [kitchens, setKitchens] = useState([]);
+  let match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state/:city`);
+  if (!match) {
+    match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state`);
+  }
+
   const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
 
   const apiFilters = getApiFilters(currentFilters);

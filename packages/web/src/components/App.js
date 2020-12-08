@@ -207,7 +207,7 @@ const routes = [
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state`,
-    component: StateSearchPageContainer,
+    component: SearchContainer,
     exact: true,
   },
   {

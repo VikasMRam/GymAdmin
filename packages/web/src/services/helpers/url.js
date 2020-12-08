@@ -38,11 +38,12 @@ export const tocPaths = (toc) => {
           path: '/skilled-nursing-facility',
           label: 'Skilled Nursing Facility',
         };
+      case 'Active Adult Communities (55+)':
       case 'Active Adult (55+)':
       case 'Active Adult':
         return {
           path: '/active-adult',
-          label: 'Active Adult (55+)',
+          label: 'Active Adult Communities (55+)',
         };
       default:
         return {

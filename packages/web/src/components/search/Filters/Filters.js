@@ -35,6 +35,15 @@ import useDimensions from 'sly/common/components/helpers/useDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
 import Collapsible from 'sly/web/components/search/Filters/Collapsible';
+import SlyEvent from 'sly/web/services/helpers/events';
+
+const eventCategory = 'filters';
+const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+  category: eventCategory,
+  action,
+  label,
+  value,
+});
 
 const TOC_OPTIONS = Object.values(TOCS);
 const SIZE_OPTIONS = Object.values(SIZES);
@@ -100,11 +109,13 @@ const Filters = forwardRef(({
   ...props
 }, ref) => {
   const [isOpen, setIsOpen] = useState(defaultIsOpen || false);
-  const closeModal = useCallback(() => setIsOpen(false), []);
+  const closeModal = useCallback(() => sendEvent('close-filter', isOpen.toString()) || setIsOpen(false), [isOpen]);
   const clearFilters = useCallback(() => {
-    onClearFilters([...PAGINATION_FILTERS, isOpen]);
+    sendEvent('clear-filters', isOpen.toString());
+    typeof isOpen === 'string' ? onClearFilters([...PAGINATION_FILTERS, isOpen]) : onClearFilters([...PAGINATION_FILTERS, ...isOpen])
+
   }, [isOpen]);
-  const openFilters = useCallback((section = true) => setIsOpen(section), []);
+  const openFilters = useCallback((section = true) => sendEvent('open-filter', section.toString()) || setIsOpen(section), []);
   const breakpoint = useBreakpoint();
   const showIf = useCallback(
     type => Boolean(isOpen === type || (breakpoint?.isMobile() && isOpen)),
@@ -140,6 +151,9 @@ const Filters = forwardRef(({
 
   const onTocFilterChange = useCallback((filter, value) => {
     onFilterChange(filter, value.length === 0 ? [NH] : value);
+  }, [currentFilters]);
+  const onBudgetFilterChange = useCallback((filter, value) => {
+    onFilterChange(filter, value.length === 0 ? null : value);
   }, [currentFilters]);
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
@@ -201,7 +215,7 @@ const Filters = forwardRef(({
               type="radio"
               options={BUDGET_OPTIONS}
               filter={BUDGET}
-              onChange={onFilterChange}
+              onChange={onBudgetFilterChange}
               value={currentFilters[BUDGET]}
             />
           </CollapsiblePopoverSwitch>
@@ -273,7 +287,7 @@ const Filters = forwardRef(({
             marginLeft="auto"
             onClick={closeModal}
           >
-            Show results
+            Save
           </Button>
         </ModalActions>
       </ModalPopoverSwitch>
@@ -285,7 +299,7 @@ const Filters = forwardRef(({
       >
         <FilterButton
           upTo="tablet"
-          onClick={openFilters}
+          onClick={() => openFilters(ALL_FILTERS)}
           number={totalNumberOfFilters}
         >
           Filters

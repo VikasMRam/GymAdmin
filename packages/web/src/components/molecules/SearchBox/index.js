@@ -43,9 +43,9 @@ const GROUP_LABELS = {
 };
 
 const GROUP_ICONS = {
-  City: 'map',
-  Zipcode: 'map',
-  GoogleCity: 'map',
+  City: 'location',
+  Zipcode: 'location',
+  GoogleCity: 'location',
   Community: 'community-size-large',
   PartnerAgent: 'user',
 };
