@@ -45,7 +45,7 @@ const Pin = ({ number, active, ...props }) => {
         transform: 'translate(-50%, -100%)',
         position: 'absolute',
         zIndex: active ? 900 : (800 - number),
-        filter: `drop-shadow(0 ${getKey('sizes.spacing.small')} ${getKey('sizes.spacing.regular')} ${getKey('palette.black.base')}20)`,
+        filter: `drop-shadow(0 ${getKey('sizes.spacing.small')} ${getKey('sizes.spacing.regular')} ${getKey('palette.black.base')}30)`,
       }}
       {...props}
     >
