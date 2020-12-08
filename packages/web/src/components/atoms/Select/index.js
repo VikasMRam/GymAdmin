@@ -66,6 +66,7 @@ const Wrapper = styled(Block)`
   .react-select__menu-list {
     padding-top: 0px;
     padding-bottom: 0px;
+    max-height:  ${size('element.xxxHuge')};
   }
 
   .react-select__indicator {

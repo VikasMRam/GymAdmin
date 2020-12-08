@@ -18,6 +18,8 @@ const Head = styled.div`
 const Wrapper = styled.div`
   padding: 0 ${size('spacing.xLarge')};
   padding-bottom: ${size('spacing.xLarge')};
+  overflow-y: auto;
+  max-height: 70vh;
 `;
 
 const Bottom = styled.div`
@@ -59,7 +61,7 @@ const ThreeSectionFormTemplate = ({
         </div>
         {topRightIcon && topRightIconOnClick && <TopRightIconButton onClick={topRightIconOnClick} icon={topRightIcon} palette={topRightIconPalette} />}
       </Head>
-      <Hr />
+      <Hr marginTop="0"/>
       <Wrapper>
         {children}
       </Wrapper>
