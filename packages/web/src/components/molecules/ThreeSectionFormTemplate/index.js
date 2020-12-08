@@ -61,7 +61,7 @@ const ThreeSectionFormTemplate = ({
         </div>
         {topRightIcon && topRightIconOnClick && <TopRightIconButton onClick={topRightIconOnClick} icon={topRightIcon} palette={topRightIconPalette} />}
       </Head>
-      <Hr marginTop="0"/>
+      <Hr marginTop="0" />
       <Wrapper>
         {children}
       </Wrapper>
