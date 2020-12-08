@@ -1,17 +1,7 @@
 import { Component } from 'react';
 import { object } from 'prop-types';
 
-import { getIsCCRC, getHasContract } from 'sly/web/services/helpers/community';
-import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
-
-export const getPartnerAgent = (community) => {
-  const { partnerAgents } = community;
-  // filtering out status 1 partnerAgents
-  const livePartnerAgents = partnerAgents && partnerAgents.filter(e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
-  const partnerAgent = livePartnerAgents && livePartnerAgents.length > 0 ? livePartnerAgents[0] : null;
-
-  return partnerAgent;
-};
+import { getIsCCRC, getHasContract, getPartnerAgent } from 'sly/web/services/helpers/community';
 
 export default class Chatbox extends Component {
   static typeHydrationId = 'Chatbox';

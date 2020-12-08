@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import UnhydratedChatbox, { getPartnerAgent } from './Chatbox';
+import UnhydratedChatbox from './Chatbox';
 
 import { size, palette } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
@@ -19,7 +19,7 @@ import {
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
-import { getIsActiveAdult } from 'sly/web/services/helpers/community';
+import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
