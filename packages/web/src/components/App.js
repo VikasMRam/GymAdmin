@@ -19,6 +19,7 @@ import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
 import {
   DASHBOARD_PATH,
   DASHBOARD_ACCOUNT_PATH,
+  FAMILY_DASHBOARD_HOME_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
   AGENT_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -64,6 +65,7 @@ const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHou
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/web/containers/DashboardHomePageContainer'));
+const DashboardFamilyHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/dashboard/families/HomePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/DashboardFavoritesPageContainer'));
 const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/web/containers/DashboardMyAccountPageContainer'));
 const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/web/containers/DashboardAgentProfilePageContainer'));
@@ -111,6 +113,11 @@ const routes = [
   {
     path: DASHBOARD_PATH,
     component: DashboardHomePageContainer,
+    exact: true,
+  },
+  {
+    path: FAMILY_DASHBOARD_HOME_PATH,
+    component: DashboardFamilyHomePageContainer,
     exact: true,
   },
   {

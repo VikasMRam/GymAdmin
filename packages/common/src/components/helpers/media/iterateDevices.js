@@ -4,6 +4,7 @@ import { withProp } from 'styled-tools';
 import { upTo, startingWith } from './funcs';
 
 export default css`
+  ${withProp('upToDesktop', upToDesktop => upTo('desktop', upToDesktop))}
   ${withProp('upToLaptop', upToLaptop => upTo('laptop', upToLaptop))}
   ${withProp('upToTablet', upToTablet => upTo('tablet', upToTablet))}
   ${withProp('upToMobile', upToMobile => upTo('mobile', upToMobile))}
