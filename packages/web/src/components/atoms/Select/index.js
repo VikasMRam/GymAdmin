@@ -14,7 +14,6 @@ const { Option, Group, SingleValue } = components;
 
 const StyledOption = styled(Option)`
   .react-select__menu-list &.react-select__option {
-    ${ifProp('showIcon', css`padding-left: 0;`)};
     color: ${palette('base')};
   }
 `;
@@ -67,6 +66,7 @@ const Wrapper = styled(Block)`
   .react-select__menu-list {
     padding-top: 0px;
     padding-bottom: 0px;
+    max-height:  ${size('element.xxxHuge')};
   }
 
   .react-select__indicator {
@@ -106,7 +106,7 @@ const Wrapper = styled(Block)`
 
 const StyledIcon = styled(Icon)`
   justify-content: center;
-  margin: 0 ${size('spacing.small')} 0 ${size('spacing.regular')};
+  margin: 0 ${size('spacing.small')} 0 0;
   align-self: baseline;
 `;
 
