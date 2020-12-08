@@ -23,6 +23,7 @@ const ListCommunityTile = memo(({ community, setHoveredCommunity, index }) => {
       to={community.url}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      target="_blank"
       event={{
         category: eventCategory,
         action: 'community-click',

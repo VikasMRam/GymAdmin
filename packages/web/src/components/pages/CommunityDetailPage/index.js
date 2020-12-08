@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
+import UnhydratedChatbox from './Chatbox';
+
 import { size, palette } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import {
@@ -17,7 +19,7 @@ import {
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
-import { getIsActiveAdult } from 'sly/web/services/helpers/community';
+import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
@@ -49,7 +51,6 @@ import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAge
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
-import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
 import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
 import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
 import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
@@ -85,6 +86,7 @@ const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 // const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 // const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
+const Chatbox = withHydration(UnhydratedChatbox, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -202,7 +204,6 @@ export default class CommunityDetailPage extends Component {
       floorPlans,
       similarProperties,
       gallery = {},
-      partnerAgents,
       twilioNumber,
       guideUrl,
       user: communityUser,
@@ -244,10 +245,7 @@ export default class CommunityDetailPage extends Component {
 
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
-    // filtering out status 1 partnerAgents
-    const livePartnerAgents = partnerAgents && partnerAgents.filter(e => e.status === AGENT_STATUS_LIVE_ON_PROFILE);
-    const partnerAgent = livePartnerAgents && livePartnerAgents.length > 0 ? livePartnerAgents[0] : null;
-
+    const partnerAgent = getPartnerAgent(community);
     const { nearbyCities } = rgsAux;
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
@@ -268,6 +266,7 @@ export default class CommunityDetailPage extends Component {
 
     return (
       <>
+        <Chatbox community={community} />
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />

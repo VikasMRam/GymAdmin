@@ -14,6 +14,7 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       label: community.id,
       value: index,
     }}
+    target="_blank"
     marginBottom="xLarge"
     block
     zIndex={10}
