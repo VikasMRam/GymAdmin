@@ -341,6 +341,9 @@ const HomePage = ({
               gridTemplateColumns: 'unset!important',
               gridGap: `${getKey('sizes.spacing.xMassive')}!important`,
             }}
+            startingWithLaptop={{
+              alignItems: 'center',
+            }}
           >
             <div>
               <Heading level="hero" size="superHero" pad="xLarge">
