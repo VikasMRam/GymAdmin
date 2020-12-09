@@ -26,6 +26,7 @@ theme.palette = {
   razzmatazz : makeColor('#F40767'),
   blue       : makeColor('#186DC5'),
   black      : makeColor('#000000'),
+  harvest    : makeColor('#9F8352'),
 };
 
 if (isBrowser && isDev) {
