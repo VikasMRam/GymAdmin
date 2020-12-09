@@ -7,7 +7,7 @@ export const MIN_ZOOM = 6;
 export const MAX_ZOOM = 17;
 export const DEFAULT_ZOOM = 13;
 
-export const HOVER_DISTANCE = 40;
+export const HOVER_DISTANCE = 20;
 
 
 const TILE_SIZE = 256;

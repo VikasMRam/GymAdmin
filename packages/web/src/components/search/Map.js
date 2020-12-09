@@ -160,6 +160,14 @@ const Map = ({
         onChildClick={onChildClickCallback}
         onChildMouseEnter={(_, { community }) => onMapMarkerHover(community)}
         onChildMouseLeave={() => onMarkerHover(null)}
+        distanceToMouse={(pt, mousePos /* , markerProps */) => {
+          const { x } = pt;
+          const y = pt.y - 28;
+          return Math.sqrt(
+            (x - mousePos.x) * (x - mousePos.x) +
+              (y - mousePos.y) * (y - mousePos.y)
+          );
+        }}   
         options={maps => ({
           zoomControl: true,
           fullscreenControl: false,
