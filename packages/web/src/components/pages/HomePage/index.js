@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { size, palette, getKey } from 'sly/common/components/themes';
+import { size, getKey } from 'sly/common/components/themes';
 import { gridColumns, assetPath } from 'sly/web/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import { Label, Heading, Block, Button, Hr, Link, Paragraph } from 'sly/common/components/atoms';
-import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
+import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
+import { Centered, ResponsiveImage, Image } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
 import DiscoverHomeTile from 'sly/web/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/web/components/molecules/MeetOthersTile';
@@ -20,22 +20,6 @@ import Footer from 'sly/web/components/organisms/Footer';
 import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
 import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
-
-const SearchBoxWrapper = styled(MiddleContent)`
-  width: 90%;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.home.heroSearchBox.width')};
-  }
-`;
-const StyledHeading = styled(Heading)`
-  text-align: center;
-  margin-bottom: ${size('spacing.regular')};
-`;
-const StyledLabel = styled(Label)`
-  text-align: center;
-  margin-bottom: ${size('spacing.large')};
-`;
 
 const StyledSection = styled(Section)`
   text-align: center;
@@ -324,28 +308,100 @@ const HomePage = ({
       <HeaderContainer />
       {/*<BannerNotificationAdContainer type="wizardHome" noMarginBottom />*/}
       <ContentOverImage
-        image="react-assets/home/cover5.jpg"
+        image="react-assets/home/cover6.jpg"
         imageAlt="A Home To Love"
-        imageHeight={640}
-        mobileHeight={getKey('sizes.header.home.heroImage.mobileHeight')}
-        tabletHeight={getKey('sizes.header.home.heroImage.height')}
-        laptopHeight={getKey('sizes.header.home.heroImage.height')}
+        imageHeight={540}
+        mobileHeight="852px"
+        tabletHeight="540px"
+        laptopHeight="540px"
+        pad="xMassive"
+        upToLaptop={{
+          // important for margin to be applied after overlapping text content that overflows
+          display: 'inline-block',
+        }}
       >
-        <SearchBoxWrapper>
-          <StyledHeading level="hero" size="hero" palette="white">
-            Find The Best Assisted Living Near You
-          </StyledHeading>
-          <StyledLabel palette="white">
-            Search Assisted Living, Memory Care, Nursing Homes and More
-          </StyledLabel>
-          <SearchBoxContainer
-            onCurrentLocation={onCurrentLocation}
-            layout="homeHero"
-            onLocationSearch={onLocationSearch}
-            include="community"
-            placeholder="Search by city, zip, community name"
-          />
-        </SearchBoxWrapper>
+        <MiddleContent
+          width="100%"
+          css={{
+            maxWidth: getKey('sizes.layout.col12'),
+          }}
+          upToTablet={{
+            maxWidth: `${getKey('sizes.layout.col4')}!important`,
+            marginTop: `${getKey('sizes.spacing.xxxLarge')}!important`,
+          }}
+          upToLaptop={{
+            marginTop: '120px!important',
+            maxWidth: `${getKey('sizes.layout.col8')}!important`,
+          }}
+        >
+          <Grid
+            gap="xxxLarge"
+            dimensions={[getKey('sizes.layout.col7'), '1fr']}
+            upToLaptop={{
+              gridTemplateColumns: 'unset!important',
+              gridGap: `${getKey('sizes.spacing.xMassive')}!important`,
+            }}
+          >
+            <div>
+              <Heading level="hero" size="superHero" pad="xLarge">
+                Find a senior living community you’ll love
+              </Heading>
+              <Block size="displayS" pad="xLarge">
+                Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
+              </Block>
+              <Button
+                to="/wizards/assessment"
+                kind="jumbo"
+                upToTablet={{
+                  width: '100%',
+                }}
+              >
+                Get started
+              </Button>
+            </div>
+            <Grid
+              gap="large"
+              flow="row"
+              startingWithTablet={{
+                gridTemplateColumns: '1fr 1fr!important',
+              }}
+              startingWithLaptop={{
+                gridTemplateColumns: 'unset!important',
+              }}
+            >
+              <Grid
+                gap="large"
+                dimensions={['1fr', '1fr']}
+              >
+                <Image
+                  src={assetPath('images/home/hero-1.png')}
+                  alt="face1"
+                  aspectRatio="1:1"
+                />
+                <Image
+                  src={assetPath('images/home/hero-2.png')}
+                  alt="face2"
+                  aspectRatio="1:1"
+                />
+              </Grid>
+              <Grid
+                gap="large"
+                dimensions={['1fr', '1fr']}
+              >
+                <Image
+                  src={assetPath('images/home/hero-3.png')}
+                  alt="face3"
+                  aspectRatio="1:1"
+                />
+                <Image
+                  src={assetPath('images/home/hero-4.png')}
+                  alt="face4"
+                  aspectRatio="1:1"
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </MiddleContent>
       </ContentOverImage>
     </>
   );

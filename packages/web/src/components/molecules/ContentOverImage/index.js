@@ -4,9 +4,10 @@ import { string, number, oneOfType, node } from 'prop-types';
 import { prop } from 'styled-tools';
 
 import { size, palette } from 'sly/common/components/themes';
+import { Block } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Block)`
   position: relative;
   background-color: ${palette('slate', 'filler')};
   height: ${prop('mobileHeight', 'auto')};
@@ -29,7 +30,7 @@ const StyledImage = styled(ResponsiveImage)`
   display: block;
 `;
 
-export const MiddleContent = styled.div`
+export const MiddleContent = styled(Block)`
   margin: auto;
   position: absolute;
   top: 50%;
@@ -37,8 +38,8 @@ export const MiddleContent = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const ContentOverImage = ({ image, imageAlt, mobileHeight, tabletHeight, laptopHeight, imageHeight, children }) => (
-  <Wrapper mobileHeight={mobileHeight} tabletHeight={tabletHeight} laptopHeight={laptopHeight}>
+const ContentOverImage = ({ image, imageAlt, mobileHeight, tabletHeight, laptopHeight, imageHeight, children, ...props }) => (
+  <Wrapper mobileHeight={mobileHeight} tabletHeight={tabletHeight} laptopHeight={laptopHeight} {...props}>
     <StyledImage path={image} alt={imageAlt} height={imageHeight} />
     {children}
   </Wrapper>

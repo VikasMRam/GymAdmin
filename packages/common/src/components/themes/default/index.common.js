@@ -157,6 +157,7 @@ theme.sizes = {
     xxxLarge: '3.000rem',   // 48px
     huge    : '4.000rem',   // 64px
     massive : '4.500rem',   // 72px
+    xMassive: '5.000rem',   // 80px
   },
 
   text: {
@@ -165,10 +166,16 @@ theme.sizes = {
     caption   : '0.875rem',   // 14px
     body      : '1.000rem',   // 16px
     subtitle  : '1.250rem',   // 20px
+    displayS  : '1.500rem',   // 24px
     title     : '1.750rem',   // 28px
+    display   : '2.000rem',   // 32px
     hero      : '2.250rem',   // 36px
+    displayL  : '2.500rem',   // 40px
     superHero : '3.000rem',   // 48px
     xxLarge   : '4.500rem',   // 72px
+    // Display XL : '3.000rem',   // 48px 60px height
+    // Body XL    : '1.500rem',   // 24px 36px height
+    // Body L     : '1.250rem',   // 20px 32px height
   },
 
   lineHeight: {
