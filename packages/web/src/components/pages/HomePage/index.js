@@ -565,6 +565,63 @@ const HomePage = ({
         <SeoLinks title="Assisted Living by City" links={ALSeoCities} />
         <SeoLinks title="Assisted Living by State" links={ALSeoStates} />
       </TemplateContent>
+      <Grid
+        upToTablet={{
+          display: 'flex!important',
+          flexDirection: 'column-reverse',
+        }}
+      >
+        <Block
+          background="primary"
+          padding="xLarge"
+          align="center"
+          verticalAlign="middle"
+          display="flex"
+        >
+          <Block
+            width="480px"
+            upToTablet={{
+              width: 'auto!important',
+            }}
+          >
+            <Block
+              weight="medium"
+              size="displayS"
+              pad="xLarge"
+              palette="white"
+              upToTablet={{
+                textAlign: 'center',
+              }}
+            >
+              See why thousands of families in your area trust Seniorly to find their next home.
+            </Block>
+            <Button
+              background="primary"
+              palette="white"
+              borderPalette="white"
+              to="/wizards/assessment"
+              kind="jumbo"
+              upToTablet={{
+                width: '100%',
+              }}
+            >
+              Get started
+            </Button>
+          </Block>
+        </Block>
+        <ResponsiveImage
+          path="react-assets/home/bottom-banner.jpg"
+          alt="bottom-banner"
+          aspectRatio="1:1"
+          paddingTop="396px!important"
+          upToLaptop={{
+            paddingTop: '388px!important',
+          }}
+          upToTablet={{
+            paddingTop: '240px!important',
+          }}
+        />
+      </Grid>
       <Footer />
     </>
   );
