@@ -11,7 +11,7 @@ import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/Ba
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
-import { Centered, ResponsiveImage, Image } from 'sly/web/components/atoms';
+import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
 import DiscoverHomeTile from 'sly/web/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/web/components/molecules/MeetOthersTile';
@@ -376,13 +376,13 @@ const HomePage = ({
                 gap="large"
                 dimensions={['1fr', '1fr']}
               >
-                <Image
-                  src={assetPath('images/home/hero-1.png')}
+                <ResponsiveImage
+                  path="react-assets/home/hero-1.png"
                   alt="face1"
                   aspectRatio="1:1"
                 />
-                <Image
-                  src={assetPath('images/home/hero-2.png')}
+                <ResponsiveImage
+                  path="react-assets/home/hero-2.png"
                   alt="face2"
                   aspectRatio="1:1"
                 />
@@ -391,13 +391,13 @@ const HomePage = ({
                 gap="large"
                 dimensions={['1fr', '1fr']}
               >
-                <Image
-                  src={assetPath('images/home/hero-3.png')}
+                <ResponsiveImage
+                  path="react-assets/home/hero-3.png"
                   alt="face3"
                   aspectRatio="1:1"
                 />
-                <Image
-                  src={assetPath('images/home/hero-4.png')}
+                <ResponsiveImage
+                  path="react-assets/home/hero-4.png"
                   alt="face4"
                   aspectRatio="1:1"
                 />
