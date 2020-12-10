@@ -7,7 +7,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
 import Masonry from 'sly/web/components/common/Masonry';
-import { Heading, Hr, Paragraph, Link } from 'sly/common/components/atoms';
+import { Heading, Hr, Paragraph, Link, Block } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
@@ -17,6 +17,8 @@ import CommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSec
 import { textAlign } from 'sly/web/components/helpers/text';
 import Grid from 'sly/common/components/atoms/Grid';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
+import { MPLACE_RESOURCE_ARTICLE, MPLACE_RESOURCE_OFFER } from 'sly/web/constants/homeBase';
+import AdTile from 'sly/web/components/organisms/AdTile';
 
 const columnCounts = [
   {
@@ -52,9 +54,9 @@ const StyledLink = styled(Link)`
 `;
 
 // to prevent community tile's gallery causing overlap which prevents hover from working
-const StyledCommunityTile = shadow(styled(CommunityTile)`
-  position: relative;
-`);
+// const StyledCommunityTile = shadow(styled(CommunityTile)`
+//   position: relative;
+// `);
 
 const Wrapper = styled.div`
   max-width: ${size('layout.col8')};
@@ -83,111 +85,127 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
+
 const FamilyHomePage = ({
-  partnerAgent, city, state, userSaves, onGallerySlideChange, currentGalleryImage, onLocationSearch, ishowSlyWorksVideoPlaying,
+  partnerAgent, city, state, homeBase, onGallerySlideChange, currentGalleryImage, onLocationSearch, ishowSlyWorksVideoPlaying,
   toggleHowSlyWorksVideoPlaying, clickHandlers, isLoading,
 }) => {
-  let communityTiles;
-
+  let communityTiles; let marketplaceOfferTiles; let
+    resourceArticleTiles; let agent;
   if (!isLoading) {
+    const { recommendedCommunities } = homeBase;
     communityTiles =
-      userSaves.map((userSave, i) => {
-        const { community, id } = userSave;
-        const onSlideChange = i => onGallerySlideChange(id, i);
-        const currentSlide = currentGalleryImage[id];
-        const actionButtons = [
-          {
-            text: 'Ask Question',
-            onClick: clickHandlers[i].openAskAgentQuestionModal,
-          },
-        ];
+      recommendedCommunities.map((community) => {
+        // const onSlideChange = i => onGallerySlideChange(id, i);
+        // const currentSlide = currentGalleryImage[id];
+        // const actionButtons = [
+        //   {
+        //     text: 'Ask Question',
+        //     onClick: clickHandlers[i].openAskAgentQuestionModal,
+        //   },
+        // ];
 
         return (
           <StyledLink to={community.url} key={community.id}>
-            <StyledCommunityTile
-              addNote
+            <CommunityTile
               canFavourite
               isFavourite
-              currentSlide={currentSlide}
-              onSlideChange={onSlideChange}
-              key={userSave.id}
-              community={userSave.community}
-              actionButtons={actionButtons}
-              note={userSave.info.note}
-              width="100%"
-              onAddNoteClick={clickHandlers[i].openNoteModification}
-              onEditNoteClick={clickHandlers[i].openNoteModification}
-              onUnfavouriteClick={clickHandlers[i].onUnfavouriteClick}
+              // currentSlide={currentSlide}
+              // onSlideChange={onSlideChange}
+              noGallery
+              layout="column"
+              key={community.id}
+              community={community}
+              // actionButtons={actionButtons}
+              // onAddNoteClick={clickHandlers[i].openNoteModification}
+              // onEditNoteClick={clickHandlers[i].openNoteModification}
+              // onUnfavouriteClick={clickHandlers[i].onUnfavouriteClick}
             />
           </StyledLink>
         );
       });
+    // Create checklist
+    const { client = {} } = homeBase;
+    // Add partner agent info
+    agent = homeBase.agent;
+    // Add marketplace offers
+    const { mplaceResources = [] } = homeBase;
+    const resourceArticles = mplaceResources.filter((mplaceResource) => {
+      return mplaceResource.type === MPLACE_RESOURCE_ARTICLE;
+    });
+    const mplaceOffers = mplaceResources.filter((mplaceResource) => {
+      return mplaceResource.type === MPLACE_RESOURCE_OFFER;
+    });
+    if (resourceArticles.length > 0) {
+      resourceArticleTiles = resourceArticles.map((ra) => {
+        return (
+          <StyledLink to={ra.ctaUrl} key={ra.id}>
+            <AdTile
+              title={ra.title}
+              buttonText="Learn more"
+              layout="row"
+            />
+          </StyledLink>
+        );
+      });
+    }
+    if (mplaceOffers.length > 0) {
+      marketplaceOfferTiles = mplaceOffers.map((ra) => {
+        return (
+          <StyledLink to={ra.ctaUrl} key={ra.id}>
+            <AdTile
+              title={ra.title}
+              buttonText="Learn more"
+              buttonPosition="right"
+            />
+          </StyledLink>
+        );
+      });
+    }
   }
 
   return (
     <DashboardPageTemplate activeMenuItem="My Dashboard">
-      <Grid dimensions={['25%', '75%']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
-        <Grid gap="large" flow="row">
-          {partnerAgent &&
-          <HeadingBoxSection heading={`Your Local Senior Living Expert in ${city},${state}`} >
-            <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
-          </HeadingBoxSection>
-          }
-          <HeadingBoxSection heading="Checklist">
-            Your Checklist
-          </HeadingBoxSection>
+      {isLoading && 'Loading...'}
+      {!isLoading &&
+        <Grid dimensions={['25%', '75%']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
+          <Grid gap="large" flow="row">
+            {agent &&
+            <HeadingBoxSection heading={`Your Local Senior Living Expert in ${city},${state}`} >
+              <CommunityAgentSectionContainer agent={agent} pad="xLarge" />
+            </HeadingBoxSection>
+            }
+            <HeadingBoxSection heading="Checklist">
+              Your Checklist
+            </HeadingBoxSection>
+          </Grid>
+          <Grid gap="large" flow="row">
+            <HeadingBoxSection overflow="auto" heading="Recommended communities for you">
+              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
+                {communityTiles}
+              </Grid>
+            </HeadingBoxSection>
+            {/* <HeadingBoxSection overflow="auto" heading="Recommended communities for you"> */}
+            {/*  <Grid gap="large" dimensions={['repeat(3,288px)']} overflow="auto"> */}
+            {/*    {communityTiles} */}
+            {/*  </Grid> */}
+            {/* </HeadingBoxSection> */}
+            <HeadingBoxSection heading="Resources">
+              {resourceArticleTiles}
+            </HeadingBoxSection>
+            <HeadingBoxSection heading="Marketplace">
+              {marketplaceOfferTiles}
+            </HeadingBoxSection>
+          </Grid>
         </Grid>
-        <Grid gap="large" flow="row">
-          <HeadingBoxSection heading="Recommended communities for you">
-            {communityTiles}
-          </HeadingBoxSection>
-          <HeadingBoxSection heading="Resources">
-            Resources for you
-          </HeadingBoxSection>
-          <HeadingBoxSection heading="Marketplace">
-            Marketplace
-          </HeadingBoxSection>
-        </Grid>
-      </Grid>
-
-      {/* <SectionForm heading="Recommended Communities"> */}
-      {/*  {isLoading && 'Loading...'} */}
-      {/*  {!isLoading && communityTiles.length > 0 && */}
-      {/*  <Masonry columnCounts={columnCounts}> */}
-      {/*    {communityTiles} */}
-      {/*  </Masonry> */}
-      {/*  } */}
-      {/*  {!isLoading && !communityTiles.length && */}
-      {/*  <> */}
-      {/*    <Wrapper> */}
-      {/*      <PaddedHeading size="subtitle" weight="regular">You haven&apos;t saved any communities yet.</PaddedHeading> */}
-      {/*      <Paragraph align="center" pad="xLarge" size="caption"> */}
-      {/*        Add communities to your saved list to organize and compare which options are the best fit for you. */}
-      {/*      </Paragraph> */}
-      {/*      <SearchBoxWrapper> */}
-      {/*        <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /> */}
-      {/*      </SearchBoxWrapper> */}
-      {/*    </Wrapper> */}
-      {/*    <StyledHr /> */}
-      {/*    <Wrapper> */}
-      {/*      <SlyVideoHeading size="subtitle" weight="regular">Learn about Seniorly</SlyVideoHeading> */}
-      {/*      <HowSlyWorksVideo */}
-      {/*        isPlaying={ishowSlyWorksVideoPlaying} */}
-      {/*        onThumbnailClick={toggleHowSlyWorksVideoPlaying} */}
-      {/*        onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'dashboard-family-favorites', e.target.currentTime)} */}
-      {/*        onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'dashboard-family-favorites', e.target.currentTime)} */}
-      {/*      /> */}
-      {/*    </Wrapper> */}
-      {/*  </> */}
-      {/*  } */}
-      {/* </SectionForm> */}
-
+      }
     </DashboardPageTemplate>
   );
 };
 
 FamilyHomePage.propTypes = {
   userSaves: arrayOf(object),
+  homeBase: object,
   onGallerySlideChange: func,
   currentGalleryImage: object,
   onLocationSearch: func,

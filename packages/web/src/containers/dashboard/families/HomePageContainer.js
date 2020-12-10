@@ -22,6 +22,7 @@ import FamilyHomePage from 'sly/web/components/pages/familyDashboard/Home';
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
+@prefetch('homeBase', 'getHomeBase', req => req({ id: 'me' }))
 @query('updateUuidAux', 'updateUuidAux')
 @withModal
 @withNotification
@@ -30,6 +31,7 @@ export default class HomePageContainer extends Component {
   static propTypes = {
     userSaves: arrayOf(object),
     uuidAux: object,
+    homeBase: object,
     updateUserSave: func.isRequired,
     status: object,
     history: object,
@@ -91,7 +93,6 @@ export default class HomePageContainer extends Component {
       .then(() => status.userSaves.refetch())
       .then(() => notifyInfo('Community has been removed from favorites'));
   };
-
   getClickHandler = (userSave, i) => {
     const { status, showModal, hideModal, notifyInfo } = this.props;
     const { result: rawUserSaves = [] } = status.userSaves;
@@ -156,21 +157,20 @@ export default class HomePageContainer extends Component {
   };
 
   render() {
-    const { status, userSaves, uuidAux } = this.props;
+    const { status, homeBase } = this.props;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
     const clickHandlers = [];
 
-    if (status.uuidAux && status.uuidAux.error) {
+    if (status.homeBase && status.homeBase.error) {
       return <RefreshRedirect to="/" />;
     }
     // if (status.uuidAux.hasFinished) {
     //   clickHandlers = userSaves.map(this.getClickHandler);
     // }
-    console.log('Seeing uuidAux', uuidAux);
 
     return (
       <FamilyHomePage
-        userSaves={userSaves}
+        homeBase={homeBase}
         onGallerySlideChange={this.handleOnGallerySlideChange}
         toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
         currentGalleryImage={currentGalleryImage}
@@ -178,7 +178,7 @@ export default class HomePageContainer extends Component {
         ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
         onUnfavouriteClick={this.handleUnfavouriteClick}
         clickHandlers={clickHandlers}
-        isLoading={!status.userSaves.hasFinished}
+        isLoading={!status.homeBase.hasFinished}
       />
     );
   }
