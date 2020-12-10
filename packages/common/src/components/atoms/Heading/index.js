@@ -25,7 +25,7 @@ const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
 ))``;
 
 StyledHeading.propTypes = {
-  size: oneOf(['hero', 'title', 'subtitle', 'body']).isRequired,
+  size: oneOf(['hero', 'title', 'subtitle', 'body', 'superHero', 'displayL', 'displayS']).isRequired,
   level: any, // should be deprecated
 };
 

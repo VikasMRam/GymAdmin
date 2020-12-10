@@ -3,7 +3,7 @@ import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { withRedirectTo } from 'sly/common/services/redirectTo';
-import { generateSearchUrl, objectToURLQueryParams } from 'sly/web/services/helpers/url';
+import { generateSearchUrl } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { getSearchParams } from 'sly/web/components/search/helpers';
 import { getQueryParamsSetter } from 'sly/web/services/helpers/queryParams';
@@ -22,45 +22,12 @@ class HomePageContainer extends Component {
     redirectTo: func.isRequired,
   };
 
-  state = {
-    activeDiscoverHome: null,
-    howSlyWorksVideoPlaying: false,
-  };
-
-  setActiveDiscoverHome = (activeDiscoverHome) => {
-    const previouslyActiveDiscoverHomeTitle = this.state.activeDiscoverHome ? this.state.activeDiscoverHome.title : null;
-    this.setState({ activeDiscoverHome });
-    let event;
-    if (activeDiscoverHome) {
-      event = {
-        action: 'click', category: 'discoverHomeSeeMore', label: activeDiscoverHome.title, value: 'modalOpened',
-      };
-    } else {
-      event = {
-        action: 'click', category: 'discoverHomeSeeMore', label: previouslyActiveDiscoverHomeTitle, value: 'modalClosed',
-      };
-    }
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleToggleHowSlyWorksVideoPlaying = () => {
-    const { howSlyWorksVideoPlaying } = this;
-    this.setState({ howSlyWorksVideoPlaying: !howSlyWorksVideoPlaying });
-    const event = {
-      action: 'start', category: 'howSlyWorksVideo', label: 'home',
-    };
-    if (howSlyWorksVideoPlaying) {
-      event.action = 'stop';
-    }
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   handleOnLocationSearch = (result, isFromModal) => {
     const { redirectTo } = this.props;
     let event;
     if (isFromModal) {
       event = {
-        action: 'submit', category: 'discoverHomeSeeMoreSearch', label: result.displayText,
+        action: 'submit', category: 'freedomToExploreSearch', label: result.displayText,
       };
     } else {
       event = {
@@ -68,12 +35,8 @@ class HomePageContainer extends Component {
       };
     }
     SlyEvent.getInstance().sendEvent(event);
-
-    const { activeDiscoverHome } = this.state;
-
     if (result.action === 'redirect') {
-      redirectTo(activeDiscoverHome ?
-        `${result.url}&${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
+      redirectTo(result.url);
     }
   };
 
@@ -88,7 +51,6 @@ class HomePageContainer extends Component {
   };
 
   render() {
-    const { howSlyWorksVideoPlaying } = this.state;
     const { searchParams, setQueryParams, pathName, history } = this.props;
     const { modal, currentStep } = searchParams;
     return (
@@ -98,13 +60,10 @@ class HomePageContainer extends Component {
           hide,
         }) => (
           <HomePage
-            setActiveDiscoverHome={this.setActiveDiscoverHome}
             onLocationSearch={this.handleOnLocationSearch}
-            toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
             queryParams={{ modal, currentStep }}
             setQueryParams={setQueryParams}
             pathName={pathName}
-            ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
             showModal={show}
             hideModal={hide}
             history={history}

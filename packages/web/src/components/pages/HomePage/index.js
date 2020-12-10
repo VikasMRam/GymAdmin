@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, func, string, object } from 'prop-types';
+import { func, string, object } from 'prop-types';
 
 import { host } from 'sly/web/config';
 import { size, getKey } from 'sly/common/components/themes';
@@ -13,11 +13,10 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
-import DiscoverHomeTile from 'sly/web/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/web/components/molecules/MeetOthersTile';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import Footer from 'sly/web/components/organisms/Footer';
-import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
+import HomeCTABox from 'sly/web/components/organisms/HomeCTABox';
 import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
 
@@ -29,15 +28,6 @@ const StyledSection = styled(Section)`
     margin-bottom: ${size('spacing.xLarge')};
   }
 `;
-const TwoColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  ${gridColumns(1, size('spacing.xLarge'))};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${gridColumns(2, size('spacing.xLarge'))};
-  }
-`;
-
 const ThreeColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
@@ -101,14 +91,6 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const VideoSection = styled(StyledSection)`
-  width: 100%;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col8')};
-  }
-`;
-
 const CenteredTile = styled(({
   title, to, alt, image, children, ...props
 }) => (
@@ -123,53 +105,6 @@ const CenteredTile = styled(({
   overflow: hidden;
   border-radius: ${size('spacing.small')};
 `;
-
-const firstRowDiscoverHomes = [
-  {
-    title: 'Assisted Living',
-    description: 'Living that includes assistance with activities of daily living (ADLs)',
-    image: 'react-assets/home/discover-home/assisted-living.jpeg',
-    alt: 'assisted living senior living seniorly',
-    buttonText: 'See more',
-    searchParams: { toc: 'assisted-living' },
-  },
-  {
-    title: 'Board and Care Home',
-    description: 'A residential personal care home that’s usually more affordable',
-    image: 'react-assets/home/discover-home/care-home.jpeg',
-    alt: 'board and care home senior living seniorly',
-    buttonText: 'See more',
-    searchParams: { size: 'small' },
-  },
-
-];
-
-const secondRowDiscoverHomes = [
-  {
-    title: 'Luxury Assisted Living',
-    description: 'The ultimate in comfort, care and community',
-    image: 'react-assets/home/discover-home/1-bedroom-tile.jpeg',
-    alt: 'luxury assisted living senior living seniorly',
-    buttonText: 'See more',
-    searchParams: { size: 'large', budget: 5000 },
-  },
-  {
-    title: 'Memory Care Options',
-    description: 'For those with Alzheimer’s, Dementia and more',
-    image: 'react-assets/home/discover-home/shared-rooms-tile.jpeg',
-    alt: 'memory care senior living seniorly',
-    buttonText: 'See more',
-    searchParams: { toc: 'memory-care' },
-  },
-  {
-    title: 'More Senior Living',
-    description: 'Compare all retirement community features, cost, photos and reviews',
-    image: 'react-assets/home/discover-home/studios-tile.jpeg',
-    alt: 'senior living seniorly',
-    buttonText: 'See more',
-    searchParams: {},
-  },
-];
 
 const usefulInformationTiles = [
   {
@@ -300,13 +235,20 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 });
 
 const HomePage = ({
-  showModal, hideModal, onLocationSearch, setActiveDiscoverHome, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying, onCurrentLocation,
+  showModal, hideModal, onLocationSearch,
 }) => {
   const HeaderContent = (
-    <>
+    <Block
+      pad="xMassive"
+      upToLaptop={{
+        marginBottom: `calc(${getKey('sizes.spacing.xMassive')} + ${getKey('sizes.spacing.xLarge')})`,
+      }}
+      upToTablet={{
+        marginBottom: getKey('sizes.spacing.xMassive'),
+      }}
+    >
       <HeaderContainer />
-      {/*<BannerNotificationAdContainer type="wizardHome" noMarginBottom />*/}
+      {/* <BannerNotificationAdContainer type="wizardHome" noMarginBottom /> */}
       <ContentOverImage
         image="react-assets/home/cover6.jpg"
         imageAlt="A Home To Love"
@@ -346,7 +288,7 @@ const HomePage = ({
             }}
           >
             <div>
-              <Heading level="hero" size="superHero" pad="xLarge">
+              <Heading size="superHero" pad="xLarge">
                 Find a senior living community you’ll love
               </Heading>
               <Block size="displayS" pad="xLarge">
@@ -406,10 +348,10 @@ const HomePage = ({
           </Grid>
         </MiddleContent>
       </ContentOverImage>
-    </>
+    </Block>
   );
 
-  const onButtonClick = (discoverHome) => {
+  const onButtonClick = () => {
     const modalContent = (
       <>
         <Heading size="subtitle">Please enter a location:</Heading>
@@ -422,37 +364,15 @@ const HomePage = ({
         />
       </>
     );
-    const onClose = () => {
-      setActiveDiscoverHome();
+    sendEvent('freedomToExploreSearch', 'open');
+
+    const closeModal = () => {
       hideModal();
+      sendEvent('freedomToExploreSearch', 'close');
     };
 
-    setActiveDiscoverHome(discoverHome);
-    showModal(modalContent, onClose, 'searchBox');
+    showModal(modalContent, closeModal, 'searchBox');
   };
-
-
-  const firstRowDiscoverHomesComponents = firstRowDiscoverHomes.map(discoverHome => (
-    <DiscoverHomeTile
-      key={discoverHome.title}
-      title={discoverHome.title}
-      description={discoverHome.description}
-      image={discoverHome.image}
-      buttonText={discoverHome.buttonText}
-      onButtonClick={() => onButtonClick(discoverHome)}
-    />
-  ));
-
-  const secondRowDiscoverHomesComponents = secondRowDiscoverHomes.map(discoverHome => (
-    <DiscoverHomeTile
-      key={discoverHome.title}
-      title={discoverHome.title}
-      description={discoverHome.description}
-      image={discoverHome.image}
-      buttonText={discoverHome.buttonText}
-      onButtonClick={() => onButtonClick(discoverHome)}
-    />
-  ));
 
   const usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
     <CenteredTile key={usefulInformation.title} {...usefulInformation}>
@@ -482,30 +402,58 @@ const HomePage = ({
   return (
     <>
       {header}
-      <TemplateHeader>{HeaderContent}</TemplateHeader>
+      <TemplateHeader noBottomMargin>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <VideoSection title="How Seniorly Can Help You Find The Best Senior Living Options" id="watch-video">
-          <StyledBlock>
-            This short video will explain how Seniorly can help you find the best assisted living or any senior living community.{' '}
-            <Link href="tel:+18558664515">Call us at (855) 866-4515.</Link>
-          </StyledBlock>
-          <HowSlyWorksVideo
-            isPlaying={ishowSlyWorksVideoPlaying}
-            onThumbnailClick={toggleHowSlyWorksVideoPlaying}
-            onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'home', e.target.currentTime)}
-            onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'home', e.target.currentTime)}
-          />
-        </VideoSection>
-        <Hr />
-        <StyledSection title="Discover The Best Senior Living Near You" subtitle=" Our search is simple, the results are comprehensive and all information is fully transparent">
-          <TwoColumnWrapper>
-            {firstRowDiscoverHomesComponents}
-          </TwoColumnWrapper>
-          <ThreeColumnWrapper>
-            {secondRowDiscoverHomesComponents}
-          </ThreeColumnWrapper>
-        </StyledSection>
-        <Hr />
+        <Section
+          titleSize="displayL"
+          title="Why do 3.5 million families use Seniorly every year?"
+          headingMaxWidth={getKey('sizes.layout.col8')}
+          css={{
+            marginBottom: `calc(2 * ${getKey('sizes.spacing.xMassive')})`,
+          }}
+          centerTitle
+        >
+          <Grid
+            gap="xLarge"
+            upToLaptop={{
+              gridTemplateColumns: 'auto!important',
+            }}
+          >
+            <HomeCTABox
+              image={assetPath('vectors/home/advisor.svg')}
+              heading="Your Own Advisor"
+              buttonText="Speak with an expert"
+              buttonProps={{
+                to: '/wizards/assessment',
+              }}
+            >
+              We connect you with a Seniorly Local Advisor, our trusted partner who knows the communities in your area. Rely on your advisor as much or as little as you need to find a new home you&apos;ll love.
+            </HomeCTABox>
+            <HomeCTABox
+              image={assetPath('vectors/home/smart-search.svg')}
+              heading="Our Smart Search"
+              buttonText="Take our quiz"
+              buttonPalette="primary"
+              buttonProps={{
+                to: '/wizards/assessment',
+              }}
+            >
+              Take our short quiz to set your personal preferences, then see the communities we recommend for you. Seniorly Smart Search helps you make sense of your options and choose wisely.
+            </HomeCTABox>
+            <HomeCTABox
+              image={assetPath('vectors/home/freedom-to-explore.svg')}
+              heading="Freedom to Explore"
+              buttonText="Explore communities"
+              buttonPalette="harvest"
+              buttonProps={{
+                onClick: () => onButtonClick(),
+              }}
+            >
+              Want to explore communities on your own? No problem. We give you the tools to navigate through over 40,000 of the best communities—with access to monthly pricing and exclusive photos.
+            </HomeCTABox>
+          </Grid>
+        </Section>
+
         <StyledSection title="Let Us Help You Find The Best Senior Living" subtitle="Here's what others have said">
           <ThreeColumnWrapper>
             {familiesWeHaveHelpedTilesComponents}
@@ -629,16 +577,12 @@ const HomePage = ({
 
 HomePage.propTypes = {
   onLocationSearch: func,
-  setActiveDiscoverHome: func,
   pathName: string,
   queryParams: object,
   setQueryParams: func,
-  ishowSlyWorksVideoPlaying: bool,
-  toggleHowSlyWorksVideoPlaying: func,
   showModal: func,
   hideModal: func,
   history: object,
-  onCurrentLocation: func,
 };
 
 export default HomePage;
