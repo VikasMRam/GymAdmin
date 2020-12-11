@@ -7,7 +7,7 @@ import { Heading, Block } from 'sly/web/components/atoms';
 const Section = ({
   title, subtitle, children, centerTitle, titleSize, headingMargin, headingMaxWidth, ...props
 }) => (
-  <section {...props}>
+  <Block {...props}>
     <Block
       margin={centerTitle && title ? 'auto' : null}
       pad={headingMargin}
@@ -16,7 +16,7 @@ const Section = ({
       }}
     >
       {title && (
-        <Heading size={titleSize} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
+        <Heading testID="Heading" size={titleSize} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
       )}
       {subtitle &&
         <Block>
@@ -25,7 +25,7 @@ const Section = ({
       }
     </Block>
     <article>{children}</article>
-  </section>
+  </Block>
 );
 
 Section.propTypes = {
@@ -40,6 +40,7 @@ Section.propTypes = {
 
 Section.defaultProps = {
   headingMargin: 'xLarge',
+  as: 'section',
 };
 
 export default Section;
