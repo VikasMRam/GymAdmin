@@ -13,11 +13,11 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
-import MeetOthersTile from 'sly/web/components/molecules/MeetOthersTile';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import Footer from 'sly/web/components/organisms/Footer';
 import HomeCTABox from 'sly/web/components/organisms/HomeCTABox';
 import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
+import IconItem from 'sly/web/components/molecules/IconItem';
 import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
 
 const StyledSection = styled(Section)`
@@ -26,14 +26,6 @@ const StyledSection = styled(Section)`
 
   & > h2 {
     margin-bottom: ${size('spacing.xLarge')};
-  }
-`;
-const ThreeColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  ${gridColumns(1, size('spacing.xLarge'))};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
 
@@ -209,23 +201,6 @@ const mostSearchedCities = [
   },
 ];
 
-const familiesWeHaveHelpedTiles = [
-  {
-    image: 'react-assets/home/meet-others/Sharon.jpg',
-    title: 'Sharon T.',
-    description: '"I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke."',
-  },
-  {
-    image: 'react-assets/home/meet-others/Kathy.jpg',
-    title: 'Aileen H.',
-    description: '"I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls. Your site was the only one that allowed me to search on my own time and it listed more info than other sites."',
-  },
-  {
-    image: 'react-assets/home/meet-others/Henry.jpg',
-    title: 'Henry W.',
-    description: '"We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do."',
-  },
-];
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -387,15 +362,6 @@ const HomePage = ({
     </CenteredTile>
   ));
 
-  const familiesWeHaveHelpedTilesComponents = familiesWeHaveHelpedTiles.map(familyWeHaveHelped => (
-    <MeetOthersTile
-      key={familyWeHaveHelped.title}
-      image={familyWeHaveHelped.image}
-      title={familyWeHaveHelped.title}
-      description={familyWeHaveHelped.description}
-    />
-  ));
-
   const canonicalUrl = `${host}`;
   const significantLinks = usefulInformationTiles.map(info => info.to);
   const header = getHelmetForHomePage({ canonicalUrl, significantLinks });
@@ -410,6 +376,9 @@ const HomePage = ({
           headingMaxWidth={getKey('sizes.layout.col8')}
           css={{
             marginBottom: `calc(2 * ${getKey('sizes.spacing.xMassive')})`,
+          }}
+          upToLaptop={{
+            marginBottom: `${getKey('sizes.spacing.xMassive')}!important`,
           }}
           centerTitle
         >
@@ -454,12 +423,97 @@ const HomePage = ({
           </Grid>
         </Section>
 
-        <StyledSection title="Let Us Help You Find The Best Senior Living" subtitle="Here's what others have said">
-          <ThreeColumnWrapper>
-            {familiesWeHaveHelpedTilesComponents}
-          </ThreeColumnWrapper>
-        </StyledSection>
-        <Hr />
+        <Block
+          as="section"
+          display="grid"
+          css={{
+            marginBottom: `calc(2 * ${getKey('sizes.spacing.xMassive')})`,
+            gridGap: `calc(2 * ${getKey('sizes.spacing.xMassive')})`,
+          }}
+          upToLaptop={{
+            marginBottom: `${getKey('sizes.spacing.xMassive')}!important`,
+            gridGap: `${getKey('sizes.spacing.xMassive')}!important`,
+          }}
+        >
+          <Grid
+            gap="xxxLarge"
+            upToLaptop={{
+              gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr`,
+            }}
+            upToTablet={{
+              gridTemplateColumns: 'auto!important',
+            }}
+          >
+            <ResponsiveImage
+              path="react-assets/home/smarter-way.png"
+              alt="smarter-way"
+              css={{
+                maxWidth: '100%',
+              }}
+            />
+            <div>
+              <Heading
+                level="subtitle"
+                size="display"
+                pad="xLarge"
+                css={{
+                  maxWidth: getKey('sizes.layout.col4'),
+                }}
+              >
+                A Smarter Way to Find Your Next Home
+              </Heading>
+              <Block size="subtitle" weight="regular" pad="xLarge">Our&nbsp;
+                <Block display="inline" background="harvest.lighter-90" palette="harvest.darker-15" padding={['small', 'tiny']}><b>Seniorly</b> Smart Search</Block>
+                &nbsp;advanced technology and network of knowledgeable local experts work together to guide you to the next home you&apos;ll love.
+              </Block>
+              <Grid flow="row" gap="medium">
+                <IconItem icon="search" iconPalette="harvest">Customized search with curated results</IconItem>
+                <IconItem icon="security" iconPalette="harvest">Community pricing with full transparency</IconItem>
+                <IconItem icon="star" iconPalette="harvest">Customers rate us 4 out of 5 stars</IconItem>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid
+            gap="xxxLarge"
+            upToLaptop={{
+              gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr`,
+            }}
+            upToTablet={{
+              gridTemplateColumns: 'auto!important',
+            }}
+          >
+            <div>
+              <Heading
+                level="subtitle"
+                size="display"
+                pad="xLarge"
+                css={{
+                  maxWidth: getKey('sizes.layout.col4'),
+                }}
+              >
+                Your Seniorly Local Advisor
+              </Heading>
+              <Block size="subtitle" weight="regular" pad="xLarge">After you complete our Smart Search, you’ll work with a&nbsp;
+                <Block display="inline" background="harvest.lighter-90" palette="harvest.darker-15" padding={['small', 'tiny']}><b>Seniorly</b> Local Advisor</Block>
+                &nbsp;, your own expert who guides from the first step of your senior living journey—to the day you settle in to your new home.
+              </Block>
+              <Grid flow="row" gap="medium">
+                <IconItem icon="tick" iconPalette="harvest">Answers all your questions</IconItem>
+                <IconItem icon="tick" iconPalette="harvest">Shares insights and knowledge </IconItem>
+                <IconItem icon="tick" iconPalette="harvest">Tours communities with you</IconItem>
+                <IconItem icon="tick" iconPalette="harvest">Helps you choose wisely</IconItem>
+              </Grid>
+            </div>
+            <ResponsiveImage
+              path="react-assets/home/local-advisor.png"
+              alt="local-advisor"
+              css={{
+                maxWidth: '100%',
+              }}
+            />
+          </Grid>
+        </Block>
+
         <StyledSection title="Useful Senior Living Resources" subtitle="Get expert planning information for families and caregivers">
           <UIColumnWrapper>
             {usefulInformationTilesComponents}
