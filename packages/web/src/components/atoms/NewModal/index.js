@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 import { any, func, bool, element, string } from 'prop-types';
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/common/components/themes';
@@ -150,10 +151,21 @@ export default class NewModal extends Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.state.mounted && this.props.isOpen !== prevProps.isOpen) {
+      if (this.props.isOpen) {
+        disableBodyScroll(this.el);
+      } else {
+        enableBodyScroll(this.el);
+      }
+    }
+  }
+
   componentWillUnmount() {
     document.body.removeChild(this.el);
     this.el = null;
     instanceNumber--;
+    clearAllBodyScrollLocks();
   }
 
   insertEl = () => {
