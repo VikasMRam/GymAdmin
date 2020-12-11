@@ -5,7 +5,8 @@
   "scripts": {
     "preinstall": "../../scripts/check-install-allowed.sh",
     "lint": "../../node_modules/.bin/eslint .",
-    "start": "cypress run"
+    "start": "cypress run",
+    "open": "cypress open"
   },
   "devDependencies": {
     "cypress": "5.5.0"

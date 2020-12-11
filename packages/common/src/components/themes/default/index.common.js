@@ -173,9 +173,6 @@ theme.sizes = {
     displayL  : '2.500rem',   // 40px
     superHero : '3.000rem',   // 48px
     xxLarge   : '4.500rem',   // 72px
-    // Display XL : '3.000rem',   // 48px 60px height
-    // Body XL    : '1.500rem',   // 24px 36px height
-    // Body L     : '1.250rem',   // 20px 32px height
   },
 
   lineHeight: {

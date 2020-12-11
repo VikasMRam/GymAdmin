@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="53px" height="53px" viewBox="0 0 53 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M31,28 L29.42,28 L28.86,27.46 C31.26,24.66 32.5,20.84 31.82,16.78 C30.88,11.22 26.24,6.78 20.64,6.1 C12.18,5.06 5.06,12.18 6.1,20.64 C6.78,26.24 11.22,30.88 16.78,31.82 C20.84,32.5 24.66,31.26 27.46,28.86 L28,29.42 L28,31 L36.5,39.5 C37.32,40.32 38.66,40.32 39.48,39.5 C40.3,38.68 40.3,37.34 39.48,36.52 L31,28 Z M19,28 C14.02,28 10,23.98 10,19 C10,14.02 14.02,10 19,10 C23.98,10 28,14.02 28,19 C28,23.98 23.98,28 19,28 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Laptop" transform="translate(-1042.000000, -892.000000)">
+            <g id="Group-23-Copy" transform="translate(908.000000, 844.000000)">
+                <g id="Group-5" transform="translate(134.000000, 48.000000)">
+                    <circle id="Oval-Copy-2" fill="#D8CDB9" cx="24" cy="24" r="24"></circle>
+                    <g id="icon-/-search" transform="translate(12.000000, 12.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                        <g id="color-/-slate-/-base" mask="url(#mask-2)" fill="#253348" fill-rule="nonzero">
+                            <rect id="color" x="0" y="0" width="48" height="48"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

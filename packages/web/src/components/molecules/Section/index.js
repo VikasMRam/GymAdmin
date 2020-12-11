@@ -1,37 +1,29 @@
 import React from 'react';
 import { string, node, bool } from 'prop-types';
-import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
 import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
 import { Heading, Block } from 'sly/web/components/atoms';
 
-const margin = ({ headingMargin }) => size('spacing', headingMargin);
-
-const HeadingWrapper = styled.div`
-  margin-bottom: ${margin};
-`;
-
-const CenteredHeading = styled(Heading)`
-  text-align: center;
-`;
-
 const Section = ({
-  title, subtitle, children, centerTitle, titleSize, headingMargin, ...props
+  title, subtitle, children, centerTitle, titleSize, headingMargin, headingMaxWidth, ...props
 }) => (
   <section {...props}>
-    <HeadingWrapper headingMargin={headingMargin}>
+    <Block
+      margin={centerTitle && title ? 'auto' : null}
+      pad={headingMargin}
+      css={{
+        maxWidth: headingMaxWidth,
+      }}
+    >
       {title && (
-        centerTitle ?
-          <CenteredHeading size={titleSize} >{title}</CenteredHeading> :
-          <Heading size={titleSize}>{title}</Heading>
+        <Heading size={titleSize} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
       )}
       {subtitle &&
         <Block>
           {subtitle}
         </Block>
       }
-    </HeadingWrapper>
+    </Block>
     <article>{children}</article>
   </section>
 );
@@ -43,6 +35,7 @@ Section.propTypes = {
   children: node,
   titleSize: string,
   headingMargin: spacingPropType,
+  headingMaxWidth: string,
 };
 
 Section.defaultProps = {
