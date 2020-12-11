@@ -457,7 +457,7 @@ const HomePage = ({
                 size="display"
                 pad="xLarge"
                 css={{
-                  maxWidth: getKey('sizes.layout.col4'),
+                  maxWidth: `calc(${getKey('sizes.layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
                 }}
               >
                 A Smarter Way to Find Your Next Home
@@ -487,9 +487,6 @@ const HomePage = ({
                 level="subtitle"
                 size="display"
                 pad="xLarge"
-                css={{
-                  maxWidth: getKey('sizes.layout.col4'),
-                }}
               >
                 Your Seniorly Local Advisor
               </Heading>

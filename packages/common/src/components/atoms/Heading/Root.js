@@ -22,7 +22,9 @@ const HeadingRoot = styled(({ innerRef, ...props }) => {
     case 'superHero':
     case 'displayL':
       return <H1 ref={innerRef} {...props} />;
-    case 'title': return <H2 ref={innerRef} {...props} />;
+    case 'title':
+    case 'display':
+      return <H2 ref={innerRef} {...props} />;
     case 'subtitle':
     case 'displayS':
       return <H3 ref={innerRef} {...props} />;
