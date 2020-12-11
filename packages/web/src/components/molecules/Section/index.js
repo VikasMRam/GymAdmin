@@ -16,7 +16,7 @@ const Section = ({
       }}
     >
       {title && (
-        <Heading size={titleSize} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
+        <Heading testID="Heading" size={titleSize} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
       )}
       {subtitle &&
         <Block>
