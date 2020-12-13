@@ -18,7 +18,9 @@ import { textAlign } from 'sly/web/components/helpers/text';
 import Grid from 'sly/common/components/atoms/Grid';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { MPLACE_RESOURCE_ARTICLE, MPLACE_RESOURCE_OFFER } from 'sly/web/constants/homeBase';
-import AdTile from 'sly/web/components/organisms/AdTile';
+import MarketplaceResourceTile from 'sly/web/components/organisms/homeBase/MarketplaceResourceTile';
+import ChecklistTile from 'sly/web/components/organisms/homeBase/ChecklistTile';
+import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 
 const columnCounts = [
   {
@@ -87,7 +89,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 
 const FamilyHomePage = ({
-  partnerAgent, city, state, homeBase, onGallerySlideChange, currentGalleryImage, onLocationSearch, ishowSlyWorksVideoPlaying,
+  partnerAgent, city, state, homeBase, onBannerClose, currentGalleryImage, onLocationSearch, ishowSlyWorksVideoPlaying,
   toggleHowSlyWorksVideoPlaying, clickHandlers, isLoading,
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
@@ -140,11 +142,7 @@ const FamilyHomePage = ({
       resourceArticleTiles = resourceArticles.map((ra) => {
         return (
           <StyledLink to={ra.ctaUrl} key={ra.id}>
-            <AdTile
-              title={ra.title}
-              buttonText="Learn more"
-              layout="row"
-            />
+            <MarketplaceResourceTile marketplaceResource={ra} />
           </StyledLink>
         );
       });
@@ -153,30 +151,32 @@ const FamilyHomePage = ({
       marketplaceOfferTiles = mplaceOffers.map((ra) => {
         return (
           <StyledLink to={ra.ctaUrl} key={ra.id}>
-            <AdTile
-              title={ra.title}
-              buttonText="Learn more"
-              buttonPosition="right"
-            />
+            <MarketplaceResourceTile marketplaceResource={ra} />
           </StyledLink>
         );
       });
     }
   }
-
+  const itemList = [{ checked: true, text: 'Match with agent' }, { checked: true, text: 'Evaluate Options' },
+    { checked: false, text: 'Schedule Tours' }, { checked: false, text: 'Move' }];
+  const userName = 'Some user';
   return (
     <DashboardPageTemplate activeMenuItem="My Dashboard">
       {isLoading && 'Loading...'}
       {!isLoading &&
+      <div>
+        <BannerNotification onCloseClick={onBannerClose}>
+          <Block> Hi {userName}, Welcome to your dashboard </Block>
+        </BannerNotification>
         <Grid dimensions={['25%', '75%']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
-          <Grid gap="large" flow="row">
+          <Grid gap="large" flow="row" height="fit-content">
             {agent &&
-            <HeadingBoxSection heading={`Your Local Senior Living Expert in ${city},${state}`} >
+            <HeadingBoxSection maxHeight="100%" heading={`Your Local Senior Living Expert in ${city},${state}`} >
               <CommunityAgentSectionContainer agent={agent} pad="xLarge" />
             </HeadingBoxSection>
             }
-            <HeadingBoxSection heading="Checklist">
-              Your Checklist
+            <HeadingBoxSection maxHeight="100%"  heading="Checklist">
+              <ChecklistTile itemList={itemList} />
             </HeadingBoxSection>
           </Grid>
           <Grid gap="large" flow="row">
@@ -185,19 +185,19 @@ const FamilyHomePage = ({
                 {communityTiles}
               </Grid>
             </HeadingBoxSection>
-            {/* <HeadingBoxSection overflow="auto" heading="Recommended communities for you"> */}
-            {/*  <Grid gap="large" dimensions={['repeat(3,288px)']} overflow="auto"> */}
-            {/*    {communityTiles} */}
-            {/*  </Grid> */}
-            {/* </HeadingBoxSection> */}
-            <HeadingBoxSection heading="Resources">
-              {resourceArticleTiles}
+            <HeadingBoxSection overflow="auto" heading="Marketplace">
+              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
+                {marketplaceOfferTiles}
+              </Grid>
             </HeadingBoxSection>
-            <HeadingBoxSection heading="Marketplace">
-              {marketplaceOfferTiles}
+            <HeadingBoxSection overflow="auto" heading="Resources">
+              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(2,288px)']} overflow="auto">
+                {resourceArticleTiles}
+              </Grid>
             </HeadingBoxSection>
           </Grid>
         </Grid>
+      </div>
       }
     </DashboardPageTemplate>
   );

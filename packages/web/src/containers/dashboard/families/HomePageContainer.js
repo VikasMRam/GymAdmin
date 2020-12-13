@@ -82,7 +82,9 @@ export default class HomePageContainer extends Component {
     history.push(activeDiscoverHome ?
       `${result.url}?${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
   };
-
+  handleBannerClose = () => {
+    console.log('Banner Close was clicked');
+  }
   handleUnfavouriteClick = (id) => {
     const { updateUserSave, status, notifyInfo } = this.props;
     const { result: rawUserSaves } = status.userSaves;
@@ -171,6 +173,7 @@ export default class HomePageContainer extends Component {
     return (
       <FamilyHomePage
         homeBase={homeBase}
+        onBannerClose={this.handleBannerClose}
         onGallerySlideChange={this.handleOnGallerySlideChange}
         toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
         currentGalleryImage={currentGalleryImage}
