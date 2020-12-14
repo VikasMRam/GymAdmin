@@ -2,7 +2,7 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
+import { Button, Block, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -10,7 +10,6 @@ const ProviderSignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading size="subtitle" pad="xLarge">Create a community manager account</Heading>
     <Field
       name="name"
       label="Full Name"
