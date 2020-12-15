@@ -1,7 +1,7 @@
 import { tocs } from 'sly/web/components/search/helpers';
 import { tocPaths, urlize } from 'sly/web/services/helpers/url';
 
-export const ccrcAdTileStates = ['AZ', 'CT', 'DC', 'DE', 'HI', 'ID', 'IN', 'KS', 'KY', 'LA', 'MN', 'NE', 'NH', 'OH', 'OK', 'RI', 'TX', 'UT', 'WA', 'WI', 'MO', 'NY', 'NC']
+export const ccrcAdTileStates = ['AZ', 'CT', 'DC', 'DE', 'HI', 'ID', 'IN', 'KS', 'KY', 'LA', 'MN', 'NE', 'NH', 'OH', 'OK', 'RI', 'TX', 'UT', 'WA', 'WI', 'MO', 'NY', 'NC'];
 
 export const shouldShowZillowSearchAd = (toc) => {
   const validTocs = tocs.filter(e =>
@@ -41,13 +41,11 @@ export const  shouldShowZillowProfileAd = (community) => {
 };
 
 export const shouldShowZillowPostConversionAd = (community) => {
-  if (!community || !community.propInfo || !community.propInfo.typeCare) {
+  if (!community || !community.care) {
     return false;
   }
-  const { care, address: { city: cityLabel } } = community;
-  const toc = tocPaths(care);
-  const city = urlize(cityLabel);
-  return shouldShowZillowAd(toc, city);
+  const {care} = community;
+  return (care && (care[0] === 'active-adult' || care[0] === 'continuing-care-retirement-community'));
 };
 
 
