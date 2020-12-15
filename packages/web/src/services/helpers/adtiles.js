@@ -26,12 +26,12 @@ export const  shouldShowZillowProfileAd = (community) => {
   if (!community || !community.propInfo || !community.propInfo.typeCare) {
     return false;
   }
-  const { id, propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
+  const { id, care, address: { city: cityLabel } } = community;
   if (specialSlugs.indexOf(id) > -1) {
     return true;
   }
   // S1482 : Remove Zillow Ads on Communities where we have contracts
-  if (careList && careList[0] === 'continuing-care-retirement-community') {
+  if (care && care[0] === 'continuing-care-retirement-community') {
     // eslint-disable-next-line camelcase
     const { rgsAux: { rgsInfo: { contract_info } } } = community;
     // eslint-disable-next-line camelcase
@@ -39,7 +39,7 @@ export const  shouldShowZillowProfileAd = (community) => {
       return false;
     }
   }
-  const { path: tocSegment = '' } = tocPaths(careList);
+  const { path: tocSegment = '' } = tocPaths(care);
   const toc = tocSegment.substr(1);
   const city = urlize(cityLabel);
   return shouldShowZillowAd(toc, city);
