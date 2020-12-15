@@ -49,8 +49,8 @@ export const shouldShowZillowPostConversionAd = (community) => {
   if (!community || !community.propInfo || !community.propInfo.typeCare) {
     return false;
   }
-  const { propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
-  const toc = tocPaths(careList);
+  const { care, address: { city: cityLabel } } = community;
+  const toc = tocPaths(care);
   const city = urlize(cityLabel);
   return shouldShowZillowAd(toc, city);
 };
