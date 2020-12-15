@@ -1,12 +1,17 @@
 export const WHO_PERSON_OPTIONS = [
-  // v2 OPTIONS BELOW:
-  { label: 'Parents', value: 'parents' },
-  { label: 'Myself', value: 'myself' },
+  // v2 OPTIONS BELOW
+  { label: 'Parent', value: 'parents' },
   { label: 'Spouse', value: 'spouse' },
-  { label: 'Myself and spouse', value: 'myself-and-spouse' },
-  { label: 'Other Relative(s)', value: 'other-relatives' },
-  { label: 'Friend(s)', value: 'friend' },
-  { label: 'Other', value: 'other' },
+  { label: 'Myself', value: 'myself' },
+  { label: 'Someone else', value: 'other' },
+  // v11 OPTIONS BELOW:
+  // { label: 'Parents', value: 'parents' },
+  // { label: 'Myself', value: 'myself' },
+  // { label: 'Spouse', value: 'spouse' },
+  // { label: 'Myself and spouse', value: 'myself-and-spouse' },
+  // { label: 'Other Relative(s)', value: 'other-relatives' },
+  // { label: 'Friend(s)', value: 'friend' },
+  // { label: 'Other', value: 'other' },
   // v1 OPTIONS BELOW:
   // { label: 'Parent(s)', value: 'parents' },
   // { label: 'Mom', value: 'mom' },
@@ -49,13 +54,21 @@ export const LOCAL_EXPERT_OPTIONS = [
 ];
 
 export const SERVICES_OPTIONS = [
-  { label: 'Power of Attorney, wills, or other legal help', value: 'legal' },
+  // v2 SERVICES
   { label: 'Moving, packing, and/or estate sales', value: 'moving' },
   { label: 'Private caregiving services at home', value: 'private-caregiving' },
-  { label: 'Making an existing home more accessible', value: 'home-accessibility' },
   { label: 'Selling an existing home', value: 'home-sale' },
-  { label: 'Reverse mortgages on an existing home', value: 'reverse-mortgage' },
+  { label: 'Cell phone or tablet designed for seniors', value: 'celltab-seniors' },
+  { label: 'Subscription for Life Alert monitoring', value: 'subscriptions-lifealert' },
   { label: 'Not interested in any of these services at this time', value: 'none' },
+  // v1_1 SERVICES
+  // { label: 'Power of Attorney, wills, or other legal help', value: 'legal' },
+  // { label: 'Moving, packing, and/or estate sales', value: 'moving' },
+  // { label: 'Private caregiving services at home', value: 'private-caregiving' },
+  // { label: 'Making an existing home more accessible', value: 'home-accessibility' },
+  // { label: 'Selling an existing home', value: 'home-sale' },
+  // { label: 'Reverse mortgages on an existing home', value: 'reverse-mortgage' },
+  // { label: 'Not interested in any of these services at this time', value: 'none' },
 ];
 
 export const PRODUCTS_OPTIONS = [
@@ -75,16 +88,22 @@ export const FEELING_OPTIONS = [
 ];
 
 export const ADL_OPTIONS = [
-  { label: 'Memory care', value: 'memory-care' },
-  { label: 'Bathing', value: 'bathing' },
-  { label: 'Dressing', value: 'dressing' },
-  { label: 'Transferring', value: 'transferring' },
-  { label: 'Toileting', value: 'toileting' },
-  { label: 'Eating', value: 'eating' },
+  // version 2 options
+  { label: 'Memory care (wandering risk, increased confusion, etc.)', value: 'memory-care' },
+  { label: 'Activities of daily living', value: 'adl-general' },
   { label: 'Medication management', value: 'medication-management' },
-  { label: 'Other', value: 'other' },
-  { label: 'None', value: 'none' },
   { label: "I'm not sure", value: 'im-not-sure' },
+  // version 1 options
+  // { label: 'Memory care', value: 'memory-care' },
+  // { label: 'Bathing', value: 'bathing' },
+  // { label: 'Dressing', value: 'dressing' },
+  // { label: 'Transferring', value: 'transferring' },
+  // { label: 'Toileting', value: 'toileting' },
+  // { label: 'Eating', value: 'eating' },
+  // { label: 'Medication management', value: 'medication-management' },
+  // { label: 'Other', value: 'other' },
+  // { label: 'None', value: 'none' },
+  // { label: "I'm not sure", value: 'im-not-sure' },
 ];
 
 export const COEXISTING_ADL_OPTIONS = {

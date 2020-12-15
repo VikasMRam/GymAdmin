@@ -33,6 +33,7 @@ const ADL = ({
   let opts = ADL_OPTIONS;
   if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
     opts = opts.filter(e => !e.value.match(/memory-care/));
+    onSkipClick(); // Skip step and move ahead. ?
   }
 
   return (

@@ -29,13 +29,8 @@ const Who = ({
       </form>
     </Box>
     {hasTip &&
-      <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base" pad="large">
-          Getting to know you helps us personalize how we assist you.
-        </IconItem>
-        <IconItem icon="lock" iconPalette="slate" iconVariation="base">
-          Any information you share with us is private and secure.
-        </IconItem>
+      <TipBox heading="DID YOU KNOW?" height="fit-content">
+        Thousands of families trust and use Seniorly every year. We work hard to make sure you find the right senior living and care options.
       </TipBox>
     }
   </Wrapper>

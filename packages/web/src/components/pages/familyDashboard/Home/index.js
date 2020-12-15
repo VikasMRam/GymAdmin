@@ -21,6 +21,7 @@ import { MPLACE_RESOURCE_ARTICLE, MPLACE_RESOURCE_OFFER } from 'sly/web/constant
 import MarketplaceResourceTile from 'sly/web/components/organisms/homeBase/MarketplaceResourceTile';
 import ChecklistTile from 'sly/web/components/organisms/homeBase/ChecklistTile';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const columnCounts = [
   {
@@ -89,8 +90,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 
 const FamilyHomePage = ({
-  partnerAgent, city, state, homeBase, onBannerClose, currentGalleryImage, onLocationSearch, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying, clickHandlers, isLoading,
+  partnerAgent, city, state, homeBase, onBannerClose, showBanner, isLoading,
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
     resourceArticleTiles; let agent;
@@ -98,30 +98,15 @@ const FamilyHomePage = ({
     const { recommendedCommunities } = homeBase;
     communityTiles =
       recommendedCommunities.map((community) => {
-        // const onSlideChange = i => onGallerySlideChange(id, i);
-        // const currentSlide = currentGalleryImage[id];
-        // const actionButtons = [
-        //   {
-        //     text: 'Ask Question',
-        //     onClick: clickHandlers[i].openAskAgentQuestionModal,
-        //   },
-        // ];
-
         return (
           <StyledLink to={community.url} key={community.id}>
             <CommunityTile
               canFavourite
               isFavourite
-              // currentSlide={currentSlide}
-              // onSlideChange={onSlideChange}
               noGallery
               layout="column"
               key={community.id}
               community={community}
-              // actionButtons={actionButtons}
-              // onAddNoteClick={clickHandlers[i].openNoteModification}
-              // onEditNoteClick={clickHandlers[i].openNoteModification}
-              // onUnfavouriteClick={clickHandlers[i].onUnfavouriteClick}
             />
           </StyledLink>
         );
@@ -165,9 +150,11 @@ const FamilyHomePage = ({
       {isLoading && 'Loading...'}
       {!isLoading &&
       <div>
+        {showBanner &&
         <BannerNotification onCloseClick={onBannerClose}>
           <Block> Hi {userName}, Welcome to your dashboard </Block>
         </BannerNotification>
+        }
         <Grid dimensions={['25%', '75%']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&

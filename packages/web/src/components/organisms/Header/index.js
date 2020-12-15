@@ -150,7 +150,7 @@ const mapItem = (item, i, arr, menuOpen) => item.isButton ? (
 
 const Header = React.memo(({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
-  onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen,
+  onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen, template,
 }) => {
   const headerItemComponents = headerItems.map((...args) => mapItem(...args, menuOpen));
   menuItems = menuItems.sort((a, b) => a.section - b.section);
@@ -213,6 +213,7 @@ const Header = React.memo(({
         borderBottom="regular"
         borderPalette="slate"
         borderVariation="lighter-90"
+        horizontalAlign={template === 'wizard' ? 'center' : 'inherit'}
         padding={[0, 'large']}
       >
         <SeniorlyLogoWrapper onClick={onLogoClick} marginRight="xxLarge">
@@ -299,12 +300,14 @@ Header.propTypes = {
   className: string,
   hasSearchBox: bool,
   hideMenuItemsInSmallScreen: bool,
+  template: oneOf(['home', 'dashboard', 'wizard']),
 };
 
 Header.defaultProps = {
   menuItems: [],
   smallScreenMenuItems: [],
   hideMenuItemsInSmallScreen: true,
+  template: 'home',
 };
 
 export default Header;
