@@ -212,6 +212,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             wideWidth
           />
           <Field
+            name="experience"
+            label="Experience (Number of Years)"
+            type="number"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
             name="isPro"
             label="Is Pro"
             type="checkbox"
