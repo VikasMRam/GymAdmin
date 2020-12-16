@@ -26,7 +26,9 @@ const ChecklistTile = ({ layout, itemList }) => {
         gap="large"
         clamped
       >
-        <ProgressBar totalSteps={numSteps} currentStep={numChecked} />
+        <Block width="50%">
+          <Block palette="primary">{(numChecked / numSteps) * 100}% </Block><ProgressBar totalSteps={numSteps} currentStep={numChecked} />
+        </Block>
         <Block marginBottom="regular" border="1px solid" >
           {items}
         </Block>

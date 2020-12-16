@@ -7,7 +7,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import pad from 'sly/web/components/helpers/pad';
 import shadow from 'sly/web/components/helpers/shadow';
 import Masonry from 'sly/web/components/common/Masonry';
-import { Heading, Hr, Paragraph, Link, Block } from 'sly/common/components/atoms';
+import { Heading, Hr, Paragraph, Link, Block, Button } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
@@ -22,64 +22,13 @@ import MarketplaceResourceTile from 'sly/web/components/organisms/homeBase/Marke
 import ChecklistTile from 'sly/web/components/organisms/homeBase/ChecklistTile';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-
-const columnCounts = [
-  {
-    from: 0,
-    to: 767,
-    count: 1,
-  },
-  {
-    from: 768,
-    to: 1283,
-    count: 2,
-  },
-  {
-    from: 1284,
-    to: 1847,
-    count: 3,
-  },
-  {
-    from: 1848,
-    to: 2559,
-    count: 4,
-  },
-  {
-    from: 2560,
-    to: 5000,
-    count: 5,
-  },
-];
+import { assetPath } from 'sly/web/components/themes';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
 `;
 
-// to prevent community tile's gallery causing overlap which prevents hover from working
-// const StyledCommunityTile = shadow(styled(CommunityTile)`
-//   position: relative;
-// `);
-
-const Wrapper = styled.div`
-  max-width: ${size('layout.col8')};
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const SearchBoxWrapper = pad(styled.div`
-  max-width: ${size('layout.col5')};
-  margin-left: auto;
-  margin-right: auto;
-`, 'xxLarge');
-
-const StyledHr = styled(Hr)`
-  margin-left: -${size('spacing.xLarge')};
-  margin-right: -${size('spacing.xLarge')};
-`;
-
-const PaddedHeading = pad(textAlign(Heading), 'regular');
-const SlyVideoHeading = pad(textAlign(Heading), 'large');
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -90,10 +39,11 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 
 const FamilyHomePage = ({
-  partnerAgent, city, state, homeBase, onBannerClose, showBanner, isLoading,
+  partnerAgent, city, state, homeBase, onBannerClose, showBanner, isLoading, openAskAgentQuestionModal,
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
-    resourceArticleTiles; let agent;
+    resourceArticleTiles; let client; let agent;
+
   if (!isLoading) {
     const { recommendedCommunities } = homeBase;
     communityTiles =
@@ -112,8 +62,7 @@ const FamilyHomePage = ({
         );
       });
     // Create checklist
-    const { client = {} } = homeBase;
-    // Add partner agent info
+    client = homeBase.client;
     agent = homeBase.agent;
     // Add marketplace offers
     const { mplaceResources = [] } = homeBase;
@@ -152,7 +101,8 @@ const FamilyHomePage = ({
       <div>
         {showBanner &&
         <BannerNotification onCloseClick={onBannerClose}>
-          <Block> Hi {userName}, Welcome to your dashboard </Block>
+          <Block size="subtitle"> Hi {userName}, Welcome to your dashboard </Block>
+          <ResponsiveImage aspectRatio="3:2" src={assetPath('images/home-base/welcome.png')} />
         </BannerNotification>
         }
         <Grid dimensions={['25%', '75%']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
@@ -160,6 +110,7 @@ const FamilyHomePage = ({
             {agent &&
             <HeadingBoxSection maxHeight="100%" heading={`Your Local Senior Living Expert in ${city},${state}`} >
               <CommunityAgentSectionContainer agent={agent} pad="xLarge" />
+              <Button onClick={openAskAgentQuestionModal}> Ask {agent.name} a question</Button>
             </HeadingBoxSection>
             }
             <HeadingBoxSection maxHeight="100%"  heading="Checklist">
@@ -186,6 +137,7 @@ const FamilyHomePage = ({
         </Grid>
       </div>
       }
+
     </DashboardPageTemplate>
   );
 };

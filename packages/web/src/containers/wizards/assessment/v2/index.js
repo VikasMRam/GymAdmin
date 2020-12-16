@@ -78,7 +78,7 @@ export default class AssessmentWizardV2 extends Component {
 
   handleComplete = (data, { redirectLink }) => {
     const { redirectTo } = this.props;
-
+    console.log('redirectTo was called with', redirectLink);
     return redirectTo(redirectLink);
   };
 
@@ -148,7 +148,8 @@ export default class AssessmentWizardV2 extends Component {
     }
   };
 
-  handleNext = ({ from, to }) => {
+  handleNext = (data) => {
+    const { from, to }  = data;
     if (from !== 'Auth' && from !== 'Intro') {
       SlyEvent.getInstance().sendEvent({
         category: 'assessmentWizard',
@@ -159,6 +160,9 @@ export default class AssessmentWizardV2 extends Component {
     }
     if (from === 'LocalExpert') {
       this.waitForAgentMatched();
+    }
+    if (from === 'Auth') {
+      this.handleComplete(data, { redirectLink: '/dashboard/family/home?fromWizard=some' });
     }
     this.scrollToTop();
   };
@@ -204,9 +208,9 @@ export default class AssessmentWizardV2 extends Component {
           return (
             <section className={className}>
               {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
-              <Wrapper>
-                <ProgressBar label pad="xLarge" totalSteps={hadNoLocation ? 9 : 8} currentStep={props.currentStepIndex} />
-              </Wrapper>
+                <Wrapper>
+                  <ProgressBar label pad="xLarge" totalSteps={hadNoLocation ? 9 : 8} currentStep={props.currentStepIndex} />
+                </Wrapper>
               }
               <WizardSteps {...props}>
                 {!skipIntro && <WizardStep

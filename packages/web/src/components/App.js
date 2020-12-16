@@ -65,7 +65,7 @@ const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHou
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/web/containers/DashboardHomePageContainer'));
-const DashboardFamilyHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/dashboard/families/HomePageContainer'));
+const DashboardFamilyHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/dashboard/families/HomeBasePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/DashboardFavoritesPageContainer'));
 const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/web/containers/DashboardMyAccountPageContainer'));
 const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/web/containers/DashboardAgentProfilePageContainer'));
