@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
-import { stateAbbr } from  'sly/web/services/helpers/url';
+import { stateAbbr } from  'sly/web/constants/geo';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';

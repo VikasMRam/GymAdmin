@@ -56,6 +56,12 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     currentEdit: object,
   };
 
+  state = { selectedCountry: 'United States' };
+
+  onCountryChange = ( event ) => {
+    this.setState({ selectedCountry: event.target.value });
+  };
+
   handleSubmit = (values) => {
     const { match, updateCommunity, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
@@ -107,6 +113,8 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
         user={user}
         canEdit={canEdit}
         respiteAllowed={respiteAllowed}
+        onCountryChange={this.onCountryChange}
+        selectedCountry={this.state.selectedCountry}
         {...props}
       />
     );

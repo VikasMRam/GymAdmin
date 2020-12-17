@@ -1,7 +1,7 @@
 import { areaCode } from './phone';
 
 import { AGENT_STATUS_LIVE_ON_PROFILE } from 'sly/web/constants/agents';
-import { stateNames } from 'sly/web/services/helpers/url';
+import { stateNames } from 'sly/web/constants/geo';
 import { formatDate } from 'sly/web/services/helpers/date';
 
 export const getIsCCRC = (community) => {

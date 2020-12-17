@@ -38,9 +38,16 @@ export default class AddCommunityFormContainer extends Component {
     onCancel: func.isRequired
   };
 
+  state = { selectedCountry: 'United States' };
+
+  onCountryChange = ( event ) => {
+    this.setState({ selectedCountry: event.target.value });
+  };
+
+
   handleSubmit = (data) => {
     const { createCommunity, notifyError, notifyInfo, onSuccess, onCancel } = this.props;
-    const { name, communityPhone, typeCare, line1, line2, city, state, zip } = data;
+    const { name, communityPhone, typeCare, line1, line2, city, state, country, zip } = data;
 
     const payload = {
       type: COMMUNITY_RESOURCE_TYPE,
@@ -60,6 +67,7 @@ export default class AddCommunityFormContainer extends Component {
               line2: line2,
               city: city,
               state: state,
+              country: country,
               zip: zip,
             }
           }
@@ -79,9 +87,14 @@ export default class AddCommunityFormContainer extends Component {
   };
 
   render() {
+    const initialValues = {};
+    initialValues.country = 'United States';
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
+        onCountryChange={this.onCountryChange}
+        selectedCountry={this.state.selectedCountry}
+        initialValues={initialValues}
         {...this.props}
       />
     );

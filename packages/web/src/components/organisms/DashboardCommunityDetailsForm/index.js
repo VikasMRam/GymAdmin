@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { func, bool, object } from 'prop-types';
+import { func, bool, object, string } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
-import { states, sizeOfCommunity } from 'sly/web/constants/communities';
+import { sizeOfCommunity } from 'sly/web/constants/communities';
+import { states, countries } from 'sly/web/constants/geo'
 import {
   SectionForm,
   Section,
@@ -12,7 +13,9 @@ import {
   SectionHeader,
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 
-const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
+const getStatesOptions = ( country ) => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
+const getAvailableTags = ( country ) => AVAILABLE_TAGS[country];
+const countryOptions = countries.map(s => <option key={s} value={s}>{s}</option>);
 const sizeOfCommunityOptions = sizeOfCommunity.map(s => <option key={s} value={s}>{s}</option>);
 
 export default class DashboardCommunityDetailsForm extends Component {
@@ -22,11 +25,13 @@ export default class DashboardCommunityDetailsForm extends Component {
     submitting: bool,
     respiteAllowed: object,
     handleSubmit: func.isRequired,
+    onCountryChange: func,
+    selectedCountry: string,
   };
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit, respiteAllowed,
+      handleSubmit, invalid, submitting, canEdit, respiteAllowed, selectedCountry, onCountryChange
     } = this.props;
 
     return (
@@ -81,16 +86,61 @@ export default class DashboardCommunityDetailsForm extends Component {
             readOnly={!canEdit}
             placeholder="Name of parent company(if applicable)"
           />
+        </SectionForm>
+        <SectionForm heading="Location">
+          <EditField
+            name="address.line1"
+            label="Line 1"
+            type="text"
+            readOnly={!canEdit}
+          />
+          <EditField
+            name="address.line2"
+            label="Line 2"
+            type="text"
+            readOnly={!canEdit}
+          />
+          <EditField
+            name="address.city"
+            label="City"
+            type="text"
+            readOnly={!canEdit}
+          />
+          <EditField
+            name="address.country"
+            label="Country"
+            type="select"
+            onChange={onCountryChange}
+            readOnly={!canEdit}
+          >
+            <option>Select an option</option>
+            {countryOptions}
+          </EditField>
+          <EditField
+            name="address.state"
+            label="State"
+            type="select"
+            readOnly={!canEdit}
+          >
+            <option>Select an option</option>
+            {getStatesOptions(selectedCountry)}
+          </EditField>
+          <EditField
+            name="address.zip"
+            label="Zipcode"
+            type="text"
+            readOnly={!canEdit}
+          />
+        </SectionForm>
+        <SectionForm heading="Type of community">
           <EditField
             name="propInfo.typeCare"
             label="Care type"
             type="choice"
             readOnly={!canEdit}
             isMulti
-            options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}
+            options={getAvailableTags(selectedCountry).map(value => ({ label: value, value }))}
           />
-        </SectionForm>
-        <SectionForm heading="Respite care">
           <EditField
             name="propInfo.respiteAllowed.checked"
             type="boolean"
@@ -126,41 +176,6 @@ export default class DashboardCommunityDetailsForm extends Component {
           <EditField
             name="propInfo.capacity"
             label="Licensed capacity"
-            type="text"
-            readOnly={!canEdit}
-          />
-        </SectionForm>
-        <SectionForm heading="Location">
-          <EditField
-            name="address.line1"
-            label="Line 1"
-            type="text"
-            readOnly={!canEdit}
-          />
-          <EditField
-            name="address.line2"
-            label="Line 2"
-            type="text"
-            readOnly={!canEdit}
-          />
-          <EditField
-            name="address.city"
-            label="City"
-            type="text"
-            readOnly={!canEdit}
-          />
-          <EditField
-            name="address.state"
-            label="State"
-            type="select"
-            readOnly={!canEdit}
-          >
-            <option>Select an option</option>
-            {statesOptions}
-          </EditField>
-          <EditField
-            name="address.zip"
-            label="Zipcode"
             type="text"
             readOnly={!canEdit}
           />

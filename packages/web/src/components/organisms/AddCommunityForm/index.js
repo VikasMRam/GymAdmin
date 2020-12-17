@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -8,9 +8,11 @@ import pad from 'sly/web/components/helpers/pad';
 import { Block, Button } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
-import { states } from 'sly/web/constants/communities';
+import { countries, states } from 'sly/web/constants/geo';
 
-const statesOptions = states.map(s => <option key={s} value={s}>{s}</option>);
+const getStatesOptions = ( country ) => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
+const getAvailableTags = ( country ) => AVAILABLE_TAGS[country];
+const countryOptions = countries.map(s => <option key={s} value={s}>{s}</option>);
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -35,6 +37,8 @@ const FormSectionHeading = pad(Block, 'large');
 export default class AddCommunityForm extends Component {
   static propTypes = {
     handleSubmit: func,
+    onCountryChange: func,
+    selectedCountry: string,
     onCancel: func,
     invalid: bool,
     submitting: bool,
@@ -42,7 +46,7 @@ export default class AddCommunityForm extends Component {
 
   render() {
     const {
-      handleSubmit, invalid, submitting,
+      handleSubmit, invalid, submitting, selectedCountry, onCountryChange
     } = this.props;
 
     return (
@@ -66,16 +70,6 @@ export default class AddCommunityForm extends Component {
               required
               placeholder="(925) 555-5555"
               parens
-              component={ReduxField}
-              wideWidth
-            />
-            <Field
-              name="typeCare"
-              label="Care type"
-              type="choice"
-              required
-              isMulti
-              options={AVAILABLE_TAGS.map(value => ({ label: value, value }))}
               component={ReduxField}
               wideWidth
             />
@@ -109,15 +103,27 @@ export default class AddCommunityForm extends Component {
               wideWidth
             />
             <Field
+              name="country"
+              label="Country"
+              type="select"
+              required
+              onChange={onCountryChange}
+              component={ReduxField}
+              wideWidth
+            >
+              <option>Select an option</option>
+              {countryOptions}
+            </Field>
+            <Field
               name="state"
-              label="State"
+              label="State/Region"
               type="select"
               required
               component={ReduxField}
               wideWidth
             >
               <option>Select an option</option>
-              {statesOptions}
+              {getStatesOptions(selectedCountry)}
             </Field>
             <Field
               name="zip"
@@ -125,6 +131,18 @@ export default class AddCommunityForm extends Component {
               type="text"
               placeholder="Zipcode"
               required
+              component={ReduxField}
+              wideWidth
+            />
+          </FormSection>
+          <FormSection heading="Type of community">
+            <Field
+              name="typeCare"
+              label="Care type"
+              type="choice"
+              required
+              isMulti
+              options={getAvailableTags(selectedCountry).map(value => ({ label: value, value }))}
               component={ReduxField}
               wideWidth
             />
