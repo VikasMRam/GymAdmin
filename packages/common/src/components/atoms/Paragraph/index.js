@@ -21,6 +21,8 @@ const StyledP = styled.p`
 
 const Paragraph = props => <StyledP {...props} />;
 
+Paragraph.displayName = 'Paragraph';
+
 Paragraph.defaultProps = {
   palette: 'slate',
   size: 'body',

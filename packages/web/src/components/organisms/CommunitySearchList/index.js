@@ -32,19 +32,6 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const MSCColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  ${gridColumns(1, size('spacing.xLarge'))};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${gridColumns(2, size('spacing.xLarge'))};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${gridColumns(3, size('spacing.xLarge'))};
-  }
-`;
-
 const PaginationText = pad('div');
 const PaddedPagination = pad(Pagination, 'small');
 

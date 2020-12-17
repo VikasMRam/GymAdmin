@@ -24,7 +24,7 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
 const Wrapper = styled(Block)`
   // sizes relative to set font-size
   vertical-align: top;
-  align-self: center;
+  /* align-self: center; */
 
   width: max-content;
   height: max-content;
