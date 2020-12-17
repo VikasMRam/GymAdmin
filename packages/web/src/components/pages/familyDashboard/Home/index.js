@@ -39,7 +39,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 
 const FamilyHomePage = ({
-  partnerAgent, city, state, homeBase, onBannerClose, showBanner, isLoading, openAskAgentQuestionModal,
+  homeBase, onBannerClose, city, state, showBanner, onMarketplaceTileClick, isLoading, openAskAgentQuestionModal,
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
     resourceArticleTiles; let client; let agent;
@@ -51,7 +51,6 @@ const FamilyHomePage = ({
         return (
           <StyledLink to={community.url} key={community.id}>
             <CommunityTile
-              canFavourite
               isFavourite
               noGallery
               layout="column"
@@ -75,7 +74,13 @@ const FamilyHomePage = ({
     if (resourceArticles.length > 0) {
       resourceArticleTiles = resourceArticles.map((ra) => {
         return (
-          <StyledLink to={ra.ctaUrl} key={ra.id}>
+          <StyledLink
+            onClick={(evt) => {
+            onMarketplaceTileClick(evt, { category: 'resource', value: ra.ctaUrl, label: ra.id });
+            }}
+            to={ra.ctaUrl}
+            key={ra.id}
+          >
             <MarketplaceResourceTile marketplaceResource={ra} />
           </StyledLink>
         );
@@ -84,13 +89,20 @@ const FamilyHomePage = ({
     if (mplaceOffers.length > 0) {
       marketplaceOfferTiles = mplaceOffers.map((ra) => {
         return (
-          <StyledLink to={ra.ctaUrl} key={ra.id}>
+          <StyledLink
+            onClick={(evt) => {
+            onMarketplaceTileClick(evt, { category: 'offer', value: ra.ctaUrl, label: ra.id });
+            }}
+            to={ra.ctaUrl}
+            key={ra.id}
+          >
             <MarketplaceResourceTile marketplaceResource={ra} />
           </StyledLink>
         );
       });
     }
   }
+  // Move to checklist options
   const itemList = [{ checked: true, text: 'Match with agent' }, { checked: true, text: 'Evaluate Options' },
     { checked: false, text: 'Schedule Tours' }, { checked: false, text: 'Move' }];
   const userName = 'Some user';
@@ -143,19 +155,12 @@ const FamilyHomePage = ({
 };
 
 FamilyHomePage.propTypes = {
-  userSaves: arrayOf(object),
   homeBase: object,
-  onGallerySlideChange: func,
-  currentGalleryImage: object,
-  onLocationSearch: func,
-  ishowSlyWorksVideoPlaying: bool,
-  toggleHowSlyWorksVideoPlaying: func,
+  onBannerClose: func,
+  showBanner: bool,
+  onMarketplaceTileClick: func,
+  openAskAgentQuestionModal: func,
   isLoading: bool,
-  clickHandlers: arrayOf(shape({
-    openAskAgentQuestionModal: func.isRequired,
-    openNoteModification: func.isRequired,
-    onUnfavouriteClick: func.isRequired,
-  })),
 };
 
 export default FamilyHomePage;

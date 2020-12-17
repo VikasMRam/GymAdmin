@@ -1,33 +1,20 @@
 import React, { Component } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import { arrayOf, object, func } from 'prop-types';
-import * as immutable from 'object-path-immutable';
 
 import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
 import { prefetch, query, withAuth } from 'sly/web/services/api';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
-import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
-import CommunityAskQuestionAgentFormContainer from 'sly/web/containers/CommunityAskQuestionAgentFormContainer';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
-
 import FamilyHomePage from 'sly/web/components/pages/familyDashboard/Home';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import { Block, Link } from 'sly/common/components/atoms';
 
-
-@query('updateUserSave', 'updateUserSave')
-
-@prefetch('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
-  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-  'filter[status]': USER_SAVE_INIT_STATUS,
-}))
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @prefetch('homeBase', 'getHomeBase', req => req({ id: 'me' }))
 @query('updateUuidAux', 'updateUuidAux')
@@ -36,11 +23,10 @@ import { Block, Link } from 'sly/common/components/atoms';
 @withAuth
 export default class HomeBasePageContainer extends Component {
   static propTypes = {
-    userSaves: arrayOf(object),
     uuidAux: object,
     homeBase: object,
-    updateUserSave: func.isRequired,
     status: object,
+    location: object,
     history: object,
     notifyInfo: func.isRequired,
     showModal: func.isRequired,
@@ -53,6 +39,7 @@ export default class HomeBasePageContainer extends Component {
 
   state = {
     currentGalleryImage: {},
+    showBanner: true,
     modalOpen: false,
   };
 
@@ -65,73 +52,25 @@ export default class HomeBasePageContainer extends Component {
     });
   };
 
-  handleOnLocationSearch = (result) => {
+  handleBannerClose = () => {
     const event = {
-      action: 'submit', category: 'dashboardFamilyFavoritesSearch', label: result.displayText,
+      action: 'click', category: 'welcomeBannerClose',
     };
     SlyEvent.getInstance().sendEvent(event);
-
-    const { history } = this.props;
-    const { activeDiscoverHome } = this.state;
-
-    history.push(activeDiscoverHome ?
-      `${result.url}?${objectToURLQueryParams(activeDiscoverHome.searchParams)}` : result.url);
-  };
-  handleBannerClose = () => {
-    console.log('Banner Close was clicked');
+    this.setState({
+      showBanner: false,
+    });
+    addToLocalStorage('welcomeBannerSeen', true);
   }
 
-  handleUnfavouriteClick = (id) => {
-    const { updateUserSave, status, notifyInfo } = this.props;
-    const { result: rawUserSaves } = status.userSaves;
-    const rawUserSave = rawUserSaves.find(us => us.id === id);
-    const userSave = immutable.set(rawUserSave, 'attributes.status', USER_SAVE_DELETE_STATUS);
-
-    return updateUserSave({ id }, userSave)
-      .then(() => status.userSaves.refetch())
-      .then(() => notifyInfo('Community has been removed from favorites'));
-  };
-  getClickHandler = (userSave, i) => {
-    const { status, showModal, hideModal, notifyInfo } = this.props;
-    const { result: rawUserSaves = [] } = status.userSaves;
-    const { community } = userSave;
-
-    const openAskAgentQuestionModal = (e) => {
-      e.preventDefault();
-
-      const { addressString, name } = community;
-      const [, city] = addressString.split(',');
-      const { heading, placeholder, question } = generateAskAgentQuestionContents(name, city);
-
-      const modalComponentProps = {
-        toggleAskAgentQuestionModal: hideModal,
-        notifyInfo,
-        community,
-        heading,
-        placeholder,
-        question,
-      };
-
-      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
+  handleMarketplaceTileClick = (evt, { category, label, value }) => {
+    const event = {
+      action: 'click', category, label, value,
     };
+    SlyEvent.getInstance().sendEvent(event);
+    console.log('Marketplace Offer was clicked');
+  }
 
-    const openNoteModification = (e) => {
-      showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />,false);
-    };
-
-    const onUnfavouriteClick = (e) => {
-      e.preventDefault();
-
-      this.handleUnfavouriteClick(userSave.id);
-    };
-
-    return {
-      openAskAgentQuestionModal,
-      openNoteModification,
-      onUnfavouriteClick,
-    };
-  };
-  
   closeAskAgentQuestionModal = () => {
     const { hideModal } = this.props;
     SlyEvent.getInstance().sendEvent({
@@ -143,11 +82,11 @@ export default class HomeBasePageContainer extends Component {
   }
   openAskAgentQuestionModal = () => {
     const { showModal } = this.props;
-    showModal(<AskQuestionToAgentFormContainer entityId='homeBase' postSubmit={this.closeAskAgentQuestionModal}/>,this.closeAskAgentQuestionModal)
+    showModal(<AskQuestionToAgentFormContainer entityId="homeBase" postSubmit={this.closeAskAgentQuestionModal} />, this.closeAskAgentQuestionModal);
   }
 
   closeRequestConfirmationModal = () => {
-    const { hideModal, history, location } = this.props;
+    const { hideModal, history, location: { search } } = this.props;
     // this.setState({
     //   modalOpen: false,
     // });
@@ -157,12 +96,12 @@ export default class HomeBasePageContainer extends Component {
       label: 'requestConfirmation',
     });
     const qp = parseURLQueryParams(search);
+    console.log('seeing location', location.url);
     hideModal();
     if (qp.entry) {
-      delete qp['entry']
-      history.push(`${location.url}?${objectToURLQueryParams(qp)}`)
+      delete qp.entry;
+      history.push(`${location.url}?${objectToURLQueryParams(qp)}`);
     }
-
   }
   openRequestConfirmationModal = (qp) => {
     const { showModal, history } = this.props;
@@ -170,17 +109,22 @@ export default class HomeBasePageContainer extends Component {
   }
 
   render() {
-    const { location: { search }, history, status, homeBase } = this.props;
-    const { currentGalleryImage, modalOpen } = this.state;
+    const { location: { search }, status, homeBase } = this.props;
+    const { currentGalleryImage, modalOpen, showBanner } = this.state;
     const qp = parseURLQueryParams(search);
-    const clickHandlers = [];
-    
+    // const clickHandlers = [];
+    const bannerSeen = retrieveLocalStorage('welcomeBannerSeen');
+    // if (bannerSeen) {
+    //   this.setState({
+    //     showBanner: false,
+    //   });
+    // }
     if (status.homeBase && status.homeBase.error) {
       return <RefreshRedirect to="/" />;
     }
-    // if (qp.entry) {
-    //   this.openRequestConfirmationModal(qp);
-    // }
+    if (qp.entry) {
+      this.openRequestConfirmationModal(qp);
+    }
 
     return (
       <div>
@@ -204,10 +148,10 @@ export default class HomeBasePageContainer extends Component {
           currentGalleryImage={currentGalleryImage}
           onLocationSearch={this.handleOnLocationSearch}
           onUnfavouriteClick={this.handleUnfavouriteClick}
-          clickHandlers={clickHandlers}
+          onMarketplaceTileClick={this.handleMarketplaceTileClick}
           openAskAgentQuestionModal={this.openAskAgentQuestionModal}
           isLoading={!status.homeBase.hasFinished}
-          showBanner
+          showBanner={showBanner && !bannerSeen}
         />
       </div>
     );

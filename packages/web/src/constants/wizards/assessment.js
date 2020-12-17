@@ -185,7 +185,7 @@ export const DEMENTIA_FORGETFUL_DEFAULT_OPTIONS = {
 };
 
 export const TIMING_OPTIONS = [
-  // v2 options below
+  // v1 options below
   // { label: 'Just starting to research communities', value: 'starting' },
   // { label: 'Working with a senior living advisor', value: 'working' },
   // { label: 'Inquired directly to communities', value: 'inquired' },
