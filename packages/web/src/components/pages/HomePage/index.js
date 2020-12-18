@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { func, string, object } from 'prop-types';
 
 import { size, getKey } from 'sly/common/components/themes';
@@ -18,6 +18,7 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import QuotesCarroussel from 'sly/web/components/homepage/QuotesCarroussel';
 import CommunitiesByCity from 'sly/web/components/homepage/CommunitiesByCity';
 import Guides from 'sly/web/components/homepage/Guides';
+import { startingWith } from '../../../../../common/src/components/helpers/media';
 
 const StyledSection = styled(Section)`
   text-align: center;
@@ -34,6 +35,12 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   label,
   value,
 });
+
+const blockPad = css`
+  margin-bottom: 48px;
+  ${startingWith('tablet', css({ marginBottom: 64 }))}
+  ${startingWith('laptop', css({ marginBottom: 80 }))}
+`;
 
 const HomePage = ({
   showModal, hideModal, onLocationSearch,
@@ -177,7 +184,6 @@ const HomePage = ({
 
   return (
     <>
-      {header}
       <TemplateHeader noBottomMargin>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <Section
@@ -347,11 +353,9 @@ const HomePage = ({
 
       <CommunitiesByCity />
 
-      <Guides />
+      <Guides css={blockPad} />
 
-      <QuotesCarroussel
-        pad="xLarge"
-      />
+      <QuotesCarroussel css={blockPad} />
 
       <Grid
         upToTablet={{

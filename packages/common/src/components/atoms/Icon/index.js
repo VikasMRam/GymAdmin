@@ -9,6 +9,10 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Block from 'sly/common/components/atoms/Block';
 
 const iconSize = ({ size: s }) => {
+  if (typeof s === 'number') {
+    return `${s}px`;
+  }
+
   const textSize = getKey(`sizes.text.${s}`);
   const lineHeight = getKey(`sizes.lineHeight.${s}`);
   return textSize

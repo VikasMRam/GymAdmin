@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import Icon from 'sly/common/components/atoms/Icon';
 import IconButton from 'sly/common/components/molecules/IconButton'
 import Block from 'sly/common/components/atoms/Block';
+import Heading from 'sly/common/components/atoms/Heading';
 import Paragraph from 'sly/common/components/atoms/Paragraph';
 
 import {
@@ -14,8 +15,6 @@ import {
   startingWith,
   withTransition,
 } from 'sly/common/components/helpers/index';
-
-import HomepageHeading from './HomepageHeading';
 
 const quotes = [
   { id: '1', author: 'Delia', text: 'A Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
@@ -128,13 +127,14 @@ export default function QuotesCarroussel ({
 
   return (
     <Block {...props}>
-      <HomepageHeading
+      <Heading
+        font="title-xlarge"
         textAlign="center"
         margin="0 auto"
         maxWidth={450}
       >
         Families love the Seniorly experience.
-      </HomepageHeading>
+      </Heading>
       <Wrapper pad="xLarge">
         {quotes.map(({ id, author, text }, index) => {
           const iCenter = mod(index + center, quotes.length);

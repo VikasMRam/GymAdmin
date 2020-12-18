@@ -25,8 +25,7 @@ Paragraph.displayName = 'Paragraph';
 
 Paragraph.defaultProps = {
   palette: 'slate',
-  size: 'body',
-  lineHeight: '1.5',
+  font: 'body-regular',
   margin: '0',
   pad: 'large',
 };

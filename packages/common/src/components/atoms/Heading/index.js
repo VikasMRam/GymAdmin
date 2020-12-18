@@ -30,7 +30,7 @@ StyledHeading.propTypes = {
 };
 
 StyledHeading.defaultProps = {
-  size: 'title',
+  font: 'title-xlarge',
   palette: 'slate',
   variation: 'base',
   weight: 'medium',
