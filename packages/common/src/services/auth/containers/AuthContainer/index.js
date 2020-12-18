@@ -54,7 +54,7 @@ export default class AuthContainer extends Component {
     hasProviderSignup: true,
   };
 
-  state = { isOpen: false, title: 'Log In' };
+  state = { isOpen: false, title: '' };
 
   componentDidMount() {
     this.shouldAuth();
@@ -73,6 +73,20 @@ export default class AuthContainer extends Component {
       this.setState({ isOpen: true });
     } else if (this.state.isOpen && !authenticated.loggingIn) {
       this.setState({ isOpen: false });
+      this.setState({ title: '' });
+    }
+
+    if (authenticated.loggingIn && this.state.title === '') {
+      this.setState({ title: 'Login' });
+      if (authenticated.options && authenticated.options.register) {
+        this.setState({ title: 'Sign Up' });
+      }
+      if (authenticated.options && authenticated.options.provider) {
+        this.setState({ title: 'Create a community manager account' });
+      }
+      if (authenticated.options && authenticated.options.agent) {
+        this.setState({ title: 'Create a partner agent account' });
+      }
     }
   };
 
@@ -96,15 +110,12 @@ export default class AuthContainer extends Component {
 
     if (authenticated.options && authenticated.options.register) {
       initialStep = 'Signup';
-      this.setState({ title: 'Sign Up' });
     }
     if (authenticated.options && authenticated.options.provider) {
       initialStep = 'ProviderSignup';
-      this.setState({ title: 'Create a community manager account' });
     }
     if (authenticated.options && authenticated.options.agent) {
       initialStep = 'AgentSignup';
-      this.setState({ title: 'Create a partner agent account' });
     }
 
     const wizard = (
@@ -121,21 +132,21 @@ export default class AuthContainer extends Component {
             <WizardStep
               component={LoginFormContainer}
               name="Login"
-              onRegisterClick={() => (this.setState({ title: 'Sign Up' }) || goto('Signup'))}
-              onResetPasswordClick={() => (this.setState({ title: 'Having trouble logging in?' }) || goto('ResetPassword'))}
+              onRegisterClick={() => this.setState({ title: 'Sign Up' }, () => goto('Signup'))}
+              onResetPasswordClick={() => this.setState({ title: 'Having trouble logging in?' }, () => goto('ResetPassword'))}
               onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ResetPasswordFormContainer}
               name="ResetPassword"
-              onLoginClick={() => (this.setState({ title: 'Login' }) || goto('Login'))}
-              onSubmit={() => (this.setState({ title: 'Login' }) || goto('Login'))}
+              onLoginClick={() => this.setState({ title: 'Login' }, () => goto('Login'))}
+              onSubmit={() => this.setState({ title: 'Login' }, () => goto('Login'))}
             />
             <WizardStep
               component={SignupFormContainer}
               name="Signup"
-              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && (this.setState({ title: 'Login' }) || goto('Login')))}
-              onProviderClicked={() => (this.setState({ title: 'Create a community manager account' }) || goto('ProviderSignup'))}
+              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
+              onProviderClicked={() => this.setState({ title: 'Create a community manager account' }, () => goto('ProviderSignup'))}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
@@ -150,21 +161,21 @@ export default class AuthContainer extends Component {
             <WizardStep
               component={ProviderSignupFormContainer}
               name="ProviderSignup"
-              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.provider : true) && (this.setState({ title: 'Login' }) || goto('Login')))}
-              onSubmit={() => (this.setState({ title: 'What is the name of the community you want to manage?' }) && goto('ProviderFindCommunity'))}
+              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.provider : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
+              onSubmit={() => this.setState({ title: 'What is the name of the community you want to manage?' }, () => goto('ProviderFindCommunity'))}
             />
             <WizardStep
               component={AgentSignupFormContainer}
               name="AgentSignup"
-              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.agent : true) && (this.setState({ title: 'Login' }) || goto('Login')))}
+              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.agent : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
               onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderFindCommunityContainer}
               name="ProviderFindCommunity"
-              onClaimApproved={() => (this.setState({ title: '' }) || goto('ProviderConfirmation'))}
-              onApprovalNeeded={() => (this.setState({ title: '' }) || goto('ProviderClaimNeedsApproval'))}
-              onNotFound={() => (this.setState({ title: '' }) || goto('ProviderCommunityNotFound'))}
+              onClaimApproved={() => this.setState({ title: '' }, () => goto('ProviderConfirmation'))}
+              onApprovalNeeded={() => this.setState({ title: '' }, () => goto('ProviderClaimNeedsApproval'))}
+              onNotFound={() => this.setState({ title: '' }, () => goto('ProviderCommunityNotFound'))}
             />
             <WizardStep
               component={ProviderConfirmation}
