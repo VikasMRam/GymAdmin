@@ -2,7 +2,7 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { Heading, Block, Button, Form, Hr } from 'sly/common/components/atoms';
+import { Block, Button, Form, Hr } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -10,7 +10,6 @@ const ResetPasswordForm = ({
   handleSubmit, submitting, invalid, onLoginClick, error,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading pad="regular" size="subtitle">Having trouble logging in?</Heading>
     <Block pad="xLarge">Enter your email address and we&apos;ll email you a new password.</Block>
     <Field
       name="email"
