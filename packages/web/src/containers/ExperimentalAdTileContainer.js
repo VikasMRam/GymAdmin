@@ -25,7 +25,7 @@ export default class ExperimentalAdTileContainer extends Component {
             buttonProps={{ onClick: handleClick }}
             {...this.props}
           >
-            Our Local Senior Living Experts Can Help
+            Our Seniorly Local Advisorss Can Help
           </AdTile>
         </Variant>
         <Variant name="Need_Live_Help">
@@ -36,7 +36,7 @@ export default class ExperimentalAdTileContainer extends Component {
             buttonProps={{ onClick: handleClick }}
             {...this.props}
           >
-            Our Local Senior Living Experts are Available
+            Our Seniorly Local Advisorss are Available
           </AdTile>
         </Variant>
       </Experiment>

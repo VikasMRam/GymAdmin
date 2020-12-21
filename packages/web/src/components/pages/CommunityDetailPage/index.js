@@ -387,7 +387,7 @@ export default class CommunityDetailPage extends Component {
                 </StyledHeadingBoxSection>
                 }
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
+                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisors in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
                     <AskAgentQuestionButtonContainer
                       width="100%"

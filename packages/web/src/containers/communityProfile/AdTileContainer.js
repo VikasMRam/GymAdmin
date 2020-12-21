@@ -24,7 +24,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 export default class CommunityProfileAdTileContainer extends Component {
   static typeHydrationId = 'CommunityProfileAdTileContainer';
   static propTypes = {
-    type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
+    type: oneOf(['askAgent', 'getOffer', 'homeCare']).isRequired,
     zip: string.isRequired,
     community: communityProptype,
   };
@@ -37,7 +37,7 @@ export default class CommunityProfileAdTileContainer extends Component {
     isModalOpen: false,
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
-    modalHeading: 'Our Local Senior Living Experts can help you with your search.',
+    modalHeading: 'Our Seniorly Local Advisorss can help you with your search.',
   };
 
   componentDidMount() {
@@ -93,7 +93,7 @@ export default class CommunityProfileAdTileContainer extends Component {
   render() {
     const { type, community  } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
-    const { address: {zip, city, state }} = community;
+    const { address: { zip, city, state } } = community;
     const isHCA = hcaAdEnabled({ zip });
     const hcaAdTitle = `Home Care Assistance in ${city}, ${state}`;
     return (
@@ -122,7 +122,7 @@ export default class CommunityProfileAdTileContainer extends Component {
           image={assetPath('images/homecare-2.png')}
           buttonProps={{ onClick: this.handleUseHomecareClick }}
           showSecondary
-          linkProps={{href:"tel:+18558668719"}}
+          linkProps={{ href: 'tel:+18558668719' }}
           linkText="(855) 866-8719"
           {...this.props}
         >

@@ -58,23 +58,23 @@ const CommunityPWEstimatedPricingForm = ({
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">
-      Our Local Senior Living Expert will provide you {type} for {communityName}. Please help by answering these three questions:
+      Our Seniorly Local Advisors will provide you {type} for {communityName}. Please help by answering these three questions:
     </HeadingSection>
     <StyledBlock size="caption">
       What is your timeline to move in?
-      {/*<div onMouseEnter={() => onHelpHover('room-type')}>*/}
-        {/*<StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>*/}
-      {/*</div>*/}
+      {/* <div onMouseEnter={() => onHelpHover('room-type')}> */}
+      {/* <StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble> */}
+      {/* </div> */}
     </StyledBlock>
-    {/*<StyledField*/}
-      {/*options={ROOMTYPE_OPTIONS}*/}
-      {/*name="roomType"*/}
-      {/*type="boxChoice"*/}
-      {/*padding="regular"*/}
-      {/*component={ReduxField}*/}
-      {/*onChange={onRoomTypeChange}*/}
-      {/*multiChoice*/}
-    {/*/>*/}
+    {/* <StyledField */}
+    {/* options={ROOMTYPE_OPTIONS} */}
+    {/* name="roomType" */}
+    {/* type="boxChoice" */}
+    {/* padding="regular" */}
+    {/* component={ReduxField} */}
+    {/* onChange={onRoomTypeChange} */}
+    {/* multiChoice */}
+    {/* /> */}
     <StyledField
       options={MOVETIMELINE_OPTIONS}
       name="moveTimeline"

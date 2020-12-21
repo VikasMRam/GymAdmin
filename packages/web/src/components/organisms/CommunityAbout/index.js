@@ -103,7 +103,7 @@ const CommunityAbout = ({
     {!isActiveAdult &&
       <StyledArticle>
         <StyledHeading level="subtitle" size="body">
-          What is a Local Senior Living Expert in {city}, {state}?
+          What is a Seniorly Local Advisors in {city}, {state}?
         </StyledHeading>
         <Paragraph>
           A senior living expert is a professional who knows

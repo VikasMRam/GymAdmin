@@ -96,122 +96,122 @@ const MemoryCareNearMePage = ({
 
   const tocList = [
     {
-      title: "What is a Board and Care Home Near You?",
-      id: "what-is-board-and-care",
-      ref: bncRef
+      title: 'What is a Board and Care Home Near You?',
+      id: 'what-is-board-and-care',
+      ref: bncRef,
     },
     {
-      title: "What Services are Provided at a Board and Care Home?",
-      id: "services",
-      ref: servicesRef
+      title: 'What Services are Provided at a Board and Care Home?',
+      id: 'services',
+      ref: servicesRef,
     },
     {
-      title: "How Much Does a Board and Care Home Cost?",
-      id: "cost",
-      ref: costRef
+      title: 'How Much Does a Board and Care Home Cost?',
+      id: 'cost',
+      ref: costRef,
     },
     {
-      title: "Board and Care Homes vs. Other Types of Senior Living",
-      id: "other",
-      ref: otherRef
+      title: 'Board and Care Homes vs. Other Types of Senior Living',
+      id: 'other',
+      ref: otherRef,
     },
     {
-      title:" What Questions to Ask When Touring",
-      id: "touring-questions",
-      ref: touringRef
+      title: ' What Questions to Ask When Touring',
+      id: 'touring-questions',
+      ref: touringRef,
     },
     {
-      title: "Board and Care Home FAQs",
-      id: "frequently-asked-question",
-      ref: faqRef
+      title: 'Board and Care Home FAQs',
+      id: 'frequently-asked-question',
+      ref: faqRef,
 
     },
     {
-      title: "Next Steps",
-      id: "next",
-      ref: nextRef
+      title: 'Next Steps',
+      id: 'next',
+      ref: nextRef,
 
     },
     {
-      title: "Browse Board and Care Homes Near You",
-      id: "board-and-care-near-you",
-      ref: nearRef
+      title: 'Browse Board and Care Homes Near You',
+      id: 'board-and-care-near-you',
+      ref: nearRef,
     },
 
   ];
 
   const nextSteps = [
-    {title: "Evaluating a Board and Care Home", to:"https://www.seniorly.com/resources/articles/evaluating-a-board-and-care-home"},
-    {title: "Understanding the Cost of a Board and Care Home", to:"https://www.seniorly.com/resources/articles/understanding-the-cost-of-a-board-and-care-home"},
-    {title: "Frequently Asked Questions About Board and Care Home", to:"https://www.seniorly.com/resources/articles/seniorly-board-and-care-faqs"},
+    { title: 'Evaluating a Board and Care Home', to: 'https://www.seniorly.com/resources/articles/evaluating-a-board-and-care-home' },
+    { title: 'Understanding the Cost of a Board and Care Home', to: 'https://www.seniorly.com/resources/articles/understanding-the-cost-of-a-board-and-care-home' },
+    { title: 'Frequently Asked Questions About Board and Care Home', to: 'https://www.seniorly.com/resources/articles/seniorly-board-and-care-faqs' },
   ];
 
   const agents = [
     {
-      title: "Heather Williams-Shelly - Orange County, CA",
-      to: "https://www.seniorly.com/agents/pacific-west/santa-ana-ca/about-senior-living-ca-heather-williams-shelly-",
-      asset: "images/hub/agents/HeatherOC.png",
-      caption: "Heather Williams-Shelly has over 11 years of experience helping families find independent living, assisted living, and memory care options. She understands the challenges families face when making the decision to transition a loved one to a new home, and is dedicated to provide a compassionate service.",
-      first: "Heather"
+      title: 'Heather Williams-Shelly - Orange County, CA',
+      to: 'https://www.seniorly.com/agents/pacific-west/santa-ana-ca/about-senior-living-ca-heather-williams-shelly-',
+      asset: 'images/hub/agents/HeatherOC.png',
+      caption: 'Heather Williams-Shelly has over 11 years of experience helping families find independent living, assisted living, and memory care options. She understands the challenges families face when making the decision to transition a loved one to a new home, and is dedicated to provide a compassionate service.',
+      first: 'Heather',
     },
     {
-      title: "Mark & Karen Wolff - Sacramento, CA",
-      to: "https://www.seniorly.com/agents/pacific-west/rocklin-ca/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-",
-      asset: "images/hub/agents/Mark-Karen.png",
-      caption: "Mark Wolff has over 3 years of experience helping families finding senior living options from independent living, assisted living, board and care homes and memory care. He is dedicated to guiding families throughout the senior living process.",
-      first: "Mark and Karen"
+      title: 'Mark & Karen Wolff - Sacramento, CA',
+      to: 'https://www.seniorly.com/agents/pacific-west/rocklin-ca/senior-care-authority-sacramento-ca-mark-and-karyn-wolff-',
+      asset: 'images/hub/agents/Mark-Karen.png',
+      caption: 'Mark Wolff has over 3 years of experience helping families finding senior living options from independent living, assisted living, board and care homes and memory care. He is dedicated to guiding families throughout the senior living process.',
+      first: 'Mark and Karen',
     },
     {
-      title: "Kim Bertolino - Long Island, NY",
-      to: "https://www.seniorly.com/agents/northeast/mastic-beach-ny/oasis-senior-advisors-long-island-ny-kim-bertolino-",
-      asset: "images/hub/agents/Kim.png",
-      caption: "Kim Bertolino has over a year of experience helping families find independent living, assisted living, and memory care options. She is a certified senior advisor, and is dedicated to guiding families throughout the senior living process.",
-      first: "Kim"
+      title: 'Kim Bertolino - Long Island, NY',
+      to: 'https://www.seniorly.com/agents/northeast/mastic-beach-ny/oasis-senior-advisors-long-island-ny-kim-bertolino-',
+      asset: 'images/hub/agents/Kim.png',
+      caption: 'Kim Bertolino has over a year of experience helping families find independent living, assisted living, and memory care options. She is a certified senior advisor, and is dedicated to guiding families throughout the senior living process.',
+      first: 'Kim',
     },
   ];
 
   const faqs = [
     {
-      question: "Are board and care homes licensed?",
-      answer: "Not all states license board and care homes, which are sometimes also called residential care homes, residential personal care homes, or residential care facilities for the elderly. Check with your state's Department of Aging to understand whether licenses are required."
+      question: 'Are board and care homes licensed?',
+      answer: "Not all states license board and care homes, which are sometimes also called residential care homes, residential personal care homes, or residential care facilities for the elderly. Check with your state's Department of Aging to understand whether licenses are required.",
     },
     {
-      question: "What is a residential care home for elderly?",
-      answer: "The name \"board and care home\" is primarily used in California. In other states, this type of senior living can be called a residential care home or a residential personal care home or some variation of that.  Use your preferred online search engine to find the right term or ask one of our Seniorly Partner Agents in your region.  Or reach out to your state’s Department of Aging for details.  Regardless of the name, this type of senior housing is different from others because of its home-like, intimate setting."
+      question: 'What is a residential care home for elderly?',
+      answer: 'The name "board and care home" is primarily used in California. In other states, this type of senior living can be called a residential care home or a residential personal care home or some variation of that.  Use your preferred online search engine to find the right term or ask one of our Seniorly Partner Agents in your region.  Or reach out to your state’s Department of Aging for details.  Regardless of the name, this type of senior housing is different from others because of its home-like, intimate setting.',
     },
     {
-      question: "Does insurance pay for board and care?",
-      answer: "No, they do not. Low-income residents may be eligible for financial help from Medicaid or the Veterans Administration in some cases. While traditional health insurance doesn't cover the costs of a board and care home, long-term care insurance policies typically do cover them."
+      question: 'Does insurance pay for board and care?',
+      answer: "No, they do not. Low-income residents may be eligible for financial help from Medicaid or the Veterans Administration in some cases. While traditional health insurance doesn't cover the costs of a board and care home, long-term care insurance policies typically do cover them.",
     },
     {
-      question: "Are pets allowed in board and care homes?",
-      answer: "Some board and care homes only accept cats, some accept cats or dogs, and some have a communal pet that all the residents can enjoy. If you or your loved one wants to bring a pet, make sure to ask who takes care of the pet and whether there's a surcharge."
+      question: 'Are pets allowed in board and care homes?',
+      answer: "Some board and care homes only accept cats, some accept cats or dogs, and some have a communal pet that all the residents can enjoy. If you or your loved one wants to bring a pet, make sure to ask who takes care of the pet and whether there's a surcharge.",
     },
     {
-      question: "What is a care plan in a residential care home?",
-      answer: "In addition to their room and three meals a day, senior residents in a residential care home receive the customized help they need with the activities of daily living (ADLs), which include bathing, dressing and grooming, as well as help with medication management. Housekeeping services, linen and laundry are also provided. The goal is always to help senior residents maintain as much independence as possible. Some residential care homes also provide transportation to medical appointments, shopping and entertainment. Because these homes are small, they don't offer a great variety of planned activities.  However, many are known to welcome residents who all have something in common, like a shared passion for an activity or culture."
+      question: 'What is a care plan in a residential care home?',
+      answer: "In addition to their room and three meals a day, senior residents in a residential care home receive the customized help they need with the activities of daily living (ADLs), which include bathing, dressing and grooming, as well as help with medication management. Housekeeping services, linen and laundry are also provided. The goal is always to help senior residents maintain as much independence as possible. Some residential care homes also provide transportation to medical appointments, shopping and entertainment. Because these homes are small, they don't offer a great variety of planned activities.  However, many are known to welcome residents who all have something in common, like a shared passion for an activity or culture.",
     },
   ];
 
   const TableOfContents = () => {
     return (
       <>
-      <Heading level="subtitle" size="subtitle">
-        Table of Contents
-      </Heading>
-      <Paragraph>
-        {tocList.map(p => (
-          <StyledLink
-            href={`#${p.id}`}
-            onClick={e => handleAnchor(e, p.ref)}
-          >
-            {p.title}
-          </StyledLink>
+        <Heading level="subtitle" size="subtitle">
+          Table of Contents
+        </Heading>
+        <Paragraph>
+          {tocList.map(p => (
+            <StyledLink
+              href={`#${p.id}`}
+              onClick={e => handleAnchor(e, p.ref)}
+            >
+              {p.title}
+            </StyledLink>
         ))}
 
-      </Paragraph>
+        </Paragraph>
       </>
-    )
+    );
   };
 
   const SEOContent = () => {
@@ -387,7 +387,7 @@ const MemoryCareNearMePage = ({
         </StyledArticle>
 
 
-      <StyledArticle>
+        <StyledArticle>
           <Heading level="title" size="title">
             Is There Medical Care at a Board and Care Home?
           </Heading>
@@ -410,9 +410,9 @@ const MemoryCareNearMePage = ({
 
         <StyledArticle>
           <Heading level="title" size="title" >
-            What Is A Local Senior Living Expert?
+            What Is A Seniorly Local Advisors?
           </Heading>
-          <WhatIsPartnerAgent toc="board and care homes" agents={agents}/>
+          <WhatIsPartnerAgent toc="board and care homes" agents={agents} />
         </StyledArticle>
 
         <StyledArticle>
@@ -447,8 +447,7 @@ const MemoryCareNearMePage = ({
           <StyledTable>
             <thead>
               <tr>
-                <th>
-                </th>
+                <th />
                 <th>
                   Board and Care Home
                 </th>
@@ -618,8 +617,7 @@ const MemoryCareNearMePage = ({
           <StyledTable>
             <thead>
               <tr>
-                <th>
-                </th>
+                <th />
                 <th>
                   Board and Care Home
                 </th>
@@ -788,8 +786,7 @@ const MemoryCareNearMePage = ({
           <StyledTable>
             <thead>
               <tr>
-                <th>
-                </th>
+                <th />
                 <th>
                   Board and Care Home
                 </th>
@@ -1039,12 +1036,12 @@ const MemoryCareNearMePage = ({
           </Paragraph>
           {faqs.map(p => (
             <>
-            <Heading level="subtitle" size="subtitle">
-              {p.question}
-            </Heading>
-            <Paragraph>
-              {p.answer}
-            </Paragraph>
+              <Heading level="subtitle" size="subtitle">
+                {p.question}
+              </Heading>
+              <Paragraph>
+                {p.answer}
+              </Paragraph>
             </>
 
           ))}
@@ -1052,20 +1049,22 @@ const MemoryCareNearMePage = ({
 
 
         <StyledArticle>
-          <NextSteps nextRef={nextRef}
-                     toc="board and care homes"
-                     label="By asking these questions, and others like them, you can determine whether this senior living option is the right choice for you or your loved one. We are providing additional resources below to help you through the decision-making process. Explore one of the three topics below to help narrow down your search:"
-                     links={nextSteps} />
+          <NextSteps
+            nextRef={nextRef}
+            toc="board and care homes"
+            label="By asking these questions, and others like them, you can determine whether this senior living option is the right choice for you or your loved one. We are providing additional resources below to help you through the decision-making process. Explore one of the three topics below to help narrow down your search:"
+            links={nextSteps}
+          />
           <Heading level="subtitle" size="subtitle" >
             How Seniorly Works
           </Heading>
           <Paragraph>
-            <HowSlyWorksVideoContainer eventLabel='biard-and-care-home' />
+            <HowSlyWorksVideoContainer eventLabel="biard-and-care-home" />
           </Paragraph>
           <Heading level="subtitle" size="subtitle" >
             3 Ways Lyft Helps Transportation Needs for Seniors
           </Heading>
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/w5xK791ppM8" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/w5xK791ppM8" frameBorder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           <Paragraph>
             Mike Masserman of Lyft explains 3 great ways that Lyft helps transportation needs for seniors.
           </Paragraph>
@@ -1090,15 +1089,17 @@ const MemoryCareNearMePage = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         {faqPage(faqs)}
-        {tocSiteNavigationLD("https://www.seniorly.com/board-and-care-home", tocList)}
-        {guideLD(title, description, "https://www.seniorly.com/board-and-care-home")}
+        {tocSiteNavigationLD('https://www.seniorly.com/board-and-care-home', tocList)}
+        {guideLD(title, description, 'https://www.seniorly.com/board-and-care-home')}
       </Helmet>
-      <HubHeader imagePath="react-assets/hub/board-and-care-home-cover.jpg"
-         toc="board and care home"
-         heading="What is Board and Care Homes Near You?"
-         label="Use our free search to find board and care homes nearby"
-         onCurrentLocation={onCurrentLocation}
-         onLocationSearch={onLocationSearch} />
+      <HubHeader
+        imagePath="react-assets/hub/board-and-care-home-cover.jpg"
+        toc="board and care home"
+        heading="What is Board and Care Homes Near You?"
+        label="Use our free search to find board and care homes nearby"
+        onCurrentLocation={onCurrentLocation}
+        onLocationSearch={onLocationSearch}
+      />
       <HubPageTemplate>
         <Wrapper>
           <TwoColumn>
@@ -1108,12 +1109,12 @@ const MemoryCareNearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContent()}
-            <Heading level="title" size="title" ref={nearRef}>
-              {heading}
-            </Heading>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && (
+              {SEOContent()}
+              <Heading level="title" size="title" ref={nearRef}>
+                {heading}
+              </Heading>
+              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
+              {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}
                 searchParams={searchParams}
@@ -1125,7 +1126,7 @@ const MemoryCareNearMePage = ({
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
-      <PhoneCTAFooter/>
+      <PhoneCTAFooter />
       <Footer />
     </>
 

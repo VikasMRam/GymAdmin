@@ -71,133 +71,133 @@ const NearMePage = ({
 
   const tocList = [
     {
-      title: "How to Find the Best Nursing Home Near Me",
-      id: "what-is-nursing-home",
-      ref: nhRef
+      title: 'How to Find the Best Nursing Home Near Me',
+      id: 'what-is-nursing-home',
+      ref: nhRef,
     },
     {
-      title: "What Services are Offered by Nursing Homes Near Me?",
-      id: "services",
-      ref: servicesRef
+      title: 'What Services are Offered by Nursing Homes Near Me?',
+      id: 'services',
+      ref: servicesRef,
     },
     {
-      title: "Paying for a Nursing Home",
-      id: "paying",
-      ref: payingRef
+      title: 'Paying for a Nursing Home',
+      id: 'paying',
+      ref: payingRef,
     },
     {
-      title: "Choosing a Nursing Home",
-      id: "how",
-      ref: howRef
+      title: 'Choosing a Nursing Home',
+      id: 'how',
+      ref: howRef,
     },
     {
-      title: "What Type of Care is Offered at a Skilled Nursing Facility?",
-      id: "skilled-nursing-facility",
-      ref: snfRef
+      title: 'What Type of Care is Offered at a Skilled Nursing Facility?',
+      id: 'skilled-nursing-facility',
+      ref: snfRef,
     },
     {
-      title: "Independent Living",
-      id: "independent-living",
-      ref: ilRef
+      title: 'Independent Living',
+      id: 'independent-living',
+      ref: ilRef,
     },
     {
-      title: "Assisted Living",
-      id: "assisted-living",
-      ref: alRef
+      title: 'Assisted Living',
+      id: 'assisted-living',
+      ref: alRef,
     },
     {
-      title: "Memory Care",
-      id: "memory-care",
-      ref: mcRef
+      title: 'Memory Care',
+      id: 'memory-care',
+      ref: mcRef,
     },
     {
-      title: "Board and Care Home",
-      id: "board-and-care-home",
-      ref: bncRef
+      title: 'Board and Care Home',
+      id: 'board-and-care-home',
+      ref: bncRef,
     },
     {
-      title: "Hospice",
-      id: "hospice",
-      ref: hospiceRef
+      title: 'Hospice',
+      id: 'hospice',
+      ref: hospiceRef,
     },
     {
-      title: "Nursing Home FAQs",
-      id: "frequently-asked-question",
-      ref: faqRef
-    }
+      title: 'Nursing Home FAQs',
+      id: 'frequently-asked-question',
+      ref: faqRef,
+    },
   ];
 
   const agents = [
     {
-      title: "Sarah Odover - Los Angeles, CA",
-      to: "https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-",
-      asset: "images/hub/agents/Sarah.png",
-      caption: "Sarah Ordover has over 4 years of experience helping families find independent living, \n" +
-      "assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.",
-      first: "Sarah"
+      title: 'Sarah Odover - Los Angeles, CA',
+      to: 'https://www.seniorly.com/agents/pacific-west/beverley-hills/assisted-living-locators-los-angeles-ca-sarah-ordover-',
+      asset: 'images/hub/agents/Sarah.png',
+      caption: 'Sarah Ordover has over 4 years of experience helping families find independent living, \n' +
+      'assisted living, and memory care options. She has helped over 100 families so far in the Los Angeles area.',
+      first: 'Sarah',
     },
     {
-      title: "Heather Cartright - Sarasota, FL",
-      to: "https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-",
-      asset: "images/hub/agents/Heather.png",
-      caption: "Heather Cartright has over a year of experience helping families find independent living, \n" +
-      "assisted living, and memory care options. As a former assisted living facility administrator, \n" +
-      "she brings a unique skillset for senior living placement.",
-      first: "Heather"
+      title: 'Heather Cartright - Sarasota, FL',
+      to: 'https://www.seniorly.com/agents/south/ellenton-fl/my-care-finders-fl-heather-cartright-',
+      asset: 'images/hub/agents/Heather.png',
+      caption: 'Heather Cartright has over a year of experience helping families find independent living, \n' +
+      'assisted living, and memory care options. As a former assisted living facility administrator, \n' +
+      'she brings a unique skillset for senior living placement.',
+      first: 'Heather',
     },
     {
-      title: "Carol Katz - New Jersey",
-      to: "https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-",
-      asset: "images/hub/agents/Carol-Katz.png",
-      caption: "Carol Katz has over 10 years of experience helping families find independent living, \n" +
-      "assisted living, and memory care options. With her unique volunteer experience, she brings \n" +
-      "a special skillset for senior living placement.",
-      first: "Carol"
+      title: 'Carol Katz - New Jersey',
+      to: 'https://www.seniorly.com/agents/northeast/manalapan/adult-care-advisors-carol-katz-',
+      asset: 'images/hub/agents/Carol-Katz.png',
+      caption: 'Carol Katz has over 10 years of experience helping families find independent living, \n' +
+      'assisted living, and memory care options. With her unique volunteer experience, she brings \n' +
+      'a special skillset for senior living placement.',
+      first: 'Carol',
     },
   ];
   const faqs = [
     {
-      question: "Does Medicare pay for a nursing home?",
-      answer: "Yes, Medicare can be used to pay for a stay at a nursing home. However, seniors must qualify and this is where it can get complicated.  Medicare will only pay if a senior resident requires skilled nursing care and has been referred by a physician after discharge from a hospital, and only 100 days of skilled nursing care are offered per year.  For more on how to pay for a nursing home, scroll back up on this page to the payment section."
+      question: 'Does Medicare pay for a nursing home?',
+      answer: 'Yes, Medicare can be used to pay for a stay at a nursing home. However, seniors must qualify and this is where it can get complicated.  Medicare will only pay if a senior resident requires skilled nursing care and has been referred by a physician after discharge from a hospital, and only 100 days of skilled nursing care are offered per year.  For more on how to pay for a nursing home, scroll back up on this page to the payment section.',
     },
     {
-      question: "How much does a nursing home cost?",
-      answer: "The monthly average cost in 2019 for a nursing home was $7,513 for a semi-private room and $8,517 for a private room.  This is according to the Genworth Cost of Care Survey.  Remember, this is a monthly average calculated from across the entire U.S.  Therefore, you can expect the cost to fluctuate depending on where you live and the exact care needs being managed."
+      question: 'How much does a nursing home cost?',
+      answer: 'The monthly average cost in 2019 for a nursing home was $7,513 for a semi-private room and $8,517 for a private room.  This is according to the Genworth Cost of Care Survey.  Remember, this is a monthly average calculated from across the entire U.S.  Therefore, you can expect the cost to fluctuate depending on where you live and the exact care needs being managed.',
     },
     {
-      question: "What is the difference between assisted living and nursing home?",
-      answer: "Often, families search for “nursing home.” This term doesn’t really exist, but it is commonly defined as a Skilled Nursing Facility. There is a significant difference between Assisted Living communities and Skilled Nursing Facilities.\n" +
-      "According to the CDC, over 50% of Skilled Nursing Facility residents have either Alzheimer’s disease or other forms of dementia. Most residents also spend the majority of their time sedentary.\n" +
-      "In contrast, most Assisted Living residents maintain active lifestyles needing only basic daily services such as bathing, mobility assistance, on-site medical care, etc. Allowing seniors to lead active, independent lives while also aiming to make daily life simpler and safer is the primary goal of Assisted Living communities."
+      question: 'What is the difference between assisted living and nursing home?',
+      answer: 'Often, families search for “nursing home.” This term doesn’t really exist, but it is commonly defined as a Skilled Nursing Facility. There is a significant difference between Assisted Living communities and Skilled Nursing Facilities.\n' +
+      'According to the CDC, over 50% of Skilled Nursing Facility residents have either Alzheimer’s disease or other forms of dementia. Most residents also spend the majority of their time sedentary.\n' +
+      'In contrast, most Assisted Living residents maintain active lifestyles needing only basic daily services such as bathing, mobility assistance, on-site medical care, etc. Allowing seniors to lead active, independent lives while also aiming to make daily life simpler and safer is the primary goal of Assisted Living communities.',
     },
     {
-      question: "Does the VA pay for nursing home care?",
-      answer: "Yes, the VA will pay for nursing home care for qualified Veterans."},
+      question: 'Does the VA pay for nursing home care?',
+      answer: 'Yes, the VA will pay for nursing home care for qualified Veterans.' },
     {
-      question: "What qualifies a person for a nursing home?",
-      answer: "To qualify for a nursing home, first you have to identify what your care needs are. Since “nursing home” can be defined as many different types of senior care, you need to understand which care offers what kind of care.  For example, a skilled nursing facility offers the most comprehensive round the clock medical care. In contrast, an assisted living facility does not provide medical care, but instead offers professional assistance with the activities of daily living (ADLs)."
+      question: 'What qualifies a person for a nursing home?',
+      answer: 'To qualify for a nursing home, first you have to identify what your care needs are. Since “nursing home” can be defined as many different types of senior care, you need to understand which care offers what kind of care.  For example, a skilled nursing facility offers the most comprehensive round the clock medical care. In contrast, an assisted living facility does not provide medical care, but instead offers professional assistance with the activities of daily living (ADLs).',
     },
   ];
 
   const TableOfContents = () => {
     return (
       <>
-      <Heading level="subtitle" size="subtitle">
-        Table of Contents
-      </Heading>
-      <Paragraph>
-        {tocList.map(p => (
-          <StyledLink
-            href={`#${p.id}`}
-            onClick={e => handleAnchor(e, p.ref)}
-          >
-            {p.title}
-          </StyledLink>
+        <Heading level="subtitle" size="subtitle">
+          Table of Contents
+        </Heading>
+        <Paragraph>
+          {tocList.map(p => (
+            <StyledLink
+              href={`#${p.id}`}
+              onClick={e => handleAnchor(e, p.ref)}
+            >
+              {p.title}
+            </StyledLink>
         ))}
 
-      </Paragraph>
+        </Paragraph>
       </>
-    )
+    );
   };
 
   const SEOContentNH = () => {
@@ -461,7 +461,7 @@ const NearMePage = ({
           </ul>
           <Paragraph>
             In addition to this list, we can connect you to a{' '}
-            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
+            <Link href="https://www.seniorly.com/agents">Seniorly Local Advisors</Link>
             {' '}in almost any city
             in the United States.  These are senior housing experts who can assist you through every step of the process,
             from touring to negotiating rent to moving.  Their services are 100% free.  If you would like their assistance,
@@ -470,7 +470,7 @@ const NearMePage = ({
               ask@seniorly.com.
             </Link>
           </Paragraph>
-          <WhatIsPartnerAgent toc="nursing homes" agents={agents}/>
+          <WhatIsPartnerAgent toc="nursing homes" agents={agents} />
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
@@ -747,7 +747,7 @@ const NearMePage = ({
               </tbody>
             </StyledTable>
           </StyledArticle>
-          <ADLChart/>
+          <ADLChart />
           <Link
             href={`#${tocList[0].id}`}
             onClick={e => handleAnchor(e, nhRef)}
@@ -1161,12 +1161,12 @@ const NearMePage = ({
           </Paragraph>
           {faqs.map(p => (
             <>
-            <Heading level="subtitle" size="subtitle">
-              {p.question}
-            </Heading>
-            <Paragraph>
-              {p.answer}
-            </Paragraph>
+              <Heading level="subtitle" size="subtitle">
+                {p.question}
+              </Heading>
+              <Paragraph>
+                {p.answer}
+              </Paragraph>
             </>
 
           ))}
@@ -1186,15 +1186,17 @@ const NearMePage = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         {faqPage(faqs)}
-        {tocSiteNavigationLD("https://www.seniorly.com/nursing-home", tocList)}
-        {guideLD(title, description, "https://www.seniorly.com/nursing-home")}
+        {tocSiteNavigationLD('https://www.seniorly.com/nursing-home', tocList)}
+        {guideLD(title, description, 'https://www.seniorly.com/nursing-home')}
       </Helmet>
-      <HubHeader imagePath="react-assets/hub/assisted-living-cover.jpg"
-                 toc="nursing homes"
-                 heading="What is Nursing Home Near You?"
-                 label="Use our free search to find nursing homes nearby"
-                 onCurrentLocation={onCurrentLocation}
-                 onLocationSearch={onLocationSearch} />
+      <HubHeader
+        imagePath="react-assets/hub/assisted-living-cover.jpg"
+        toc="nursing homes"
+        heading="What is Nursing Home Near You?"
+        label="Use our free search to find nursing homes nearby"
+        onCurrentLocation={onCurrentLocation}
+        onLocationSearch={onLocationSearch}
+      />
       <HubPageTemplate>
         <Wrapper>
           <TwoColumn>
@@ -1204,12 +1206,12 @@ const NearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContentNH()}
-            <Heading level="title" size="title">
-              {heading}
-            </Heading>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && (
+              {SEOContentNH()}
+              <Heading level="title" size="title">
+                {heading}
+              </Heading>
+              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
+              {!isFetchingResults && (
               <CommunitySearchList
                 communityList={communityList}
                 searchParams={searchParams}
@@ -1221,7 +1223,7 @@ const NearMePage = ({
           </TwoColumn>
         </Wrapper>
       </HubPageTemplate>
-      <PhoneCTAFooter/>
+      <PhoneCTAFooter />
       <Footer />
     </>
   );

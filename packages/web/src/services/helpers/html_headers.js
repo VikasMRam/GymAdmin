@@ -25,7 +25,7 @@ const getSDForCommunity = ({
     personalSpace,
     communitySpace,
     nonCareServices,
-    languages, } = propInfo;
+    languages } = propInfo;
 
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -74,27 +74,26 @@ const getSDForCommunity = ({
   // https://schema.org/amenityFeature
   let amenities = [];
   if (communityHighlights) {
-    amenities = amenities.concat(communityHighlights)
+    amenities = amenities.concat(communityHighlights);
   }
   if (personalSpace) {
-    amenities = amenities.concat(personalSpace)
+    amenities = amenities.concat(personalSpace);
   }
   if (communitySpace) {
-    amenities = amenities.concat(communitySpace)
+    amenities = amenities.concat(communitySpace);
   }
   if (nonCareServices) {
-    amenities = amenities.concat(nonCareServices)
+    amenities = amenities.concat(nonCareServices);
   }
   if (languages) {
-    amenities = amenities.concat(languages)
+    amenities = amenities.concat(languages);
   }
-  if (amenities.length > 0 ) {
+  if (amenities.length > 0) {
     ld.amenityFeature = amenities.map(amenity => ({
       '@type': 'LocationFeatureSpecification',
       name: amenity,
       value: 'True',
     }));
-
   }
 
   return ld;
@@ -548,7 +547,7 @@ export const getHelmetForPartnersPage = () => {
   return (
     <Helmet>
       <title>Partner Agent Program</title>
-      <meta name="description" content="Seniorly partners with over 300 Local Senior Living Experts nationwide who provide a personalized approach to finding pricing, availability, amenities and more for thousands of senior care communities." />
+      <meta name="description" content="Seniorly partners with over 300 Seniorly Local Advisorss nationwide who provide a personalized approach to finding pricing, availability, amenities and more for thousands of senior care communities." />
     </Helmet>
   );
 };

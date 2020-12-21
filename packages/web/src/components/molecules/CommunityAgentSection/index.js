@@ -44,7 +44,7 @@ const CommunityAgentSection = ({
         <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl } }} />
         <Block textAlign="left">
           <Block weight="medium" palette="slate">{displayName}</Block>
-          <Block palette="grey">Local Senior Living Expert</Block>
+          <Block palette="grey">Seniorly Local Advisors</Block>
         </Block>
       </Grid>
       <Description pad="xLarge" dimensions={['max-content', 'max-content']} gap="xxLarge">
@@ -52,9 +52,9 @@ const CommunityAgentSection = ({
         <IconItem icon="favourite-light" iconPalette="slate">{recentFamiliesHelped} families helped</IconItem>
         {experience && <IconItem icon="favourite-light" iconPalette="slate">{experience} years of experience</IconItem>}
       </Description>
-      <Heading size="body">What is a Local Senior Living Expert?</Heading>
+      <Heading size="body">What is a Seniorly Local Advisors?</Heading>
       <Block>
-        Our Local Senior Living Experts specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
+        Our Seniorly Local Advisorss specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
       </Block>
     </Block>
   );

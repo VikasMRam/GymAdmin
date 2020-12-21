@@ -14,7 +14,7 @@ const LocalExpert = ({
   <Wrapper hasSecondColumn={hasTip}>
     <Box>
       <Heading level="subtitle" weight="medium" pad="xLarge">
-        Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.
+        Are you interested in working with a Seniorly Local Advisors? They can help you find senior living options that fit your budget and care needs.
       </Heading>
       <form onSubmit={handleSubmit}>
         <Field
