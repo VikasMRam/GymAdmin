@@ -7,7 +7,7 @@ import AssessmentWizardV11 from 'sly/web/containers/wizards/assessment/v1_1';
 import AssessmentWizardV2 from 'sly/web/containers/wizards/assessment/v2';
 
 const AssessmentWizard = ({ version, ...props }) => {
-  let WizardComponent = AssessmentWizardV11;
+  let WizardComponent = AssessmentWizardV2;
   if (version === 'v1') {
     WizardComponent = AssessmentWizardV1;
   }

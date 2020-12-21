@@ -47,10 +47,10 @@ const Medicaid = ({
     </Box>
     {hasTip &&
       <TipBox heading="YOU TYPICALLY QUALIFY IF:" height="fit-content">
+        <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
         <IconItem icon="warning" iconPalette="slate" iconVariation="base" pad="large">
           Asset limit in most states is $1,600 to $15,750.
         </IconItem>
-        <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
       </TipBox>
     }
   </Wrapper>

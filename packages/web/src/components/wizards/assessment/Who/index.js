@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
+// import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 

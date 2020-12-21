@@ -30,7 +30,7 @@ const Services = ({
     </Box>
     {hasTip &&
       <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        Families just like you use these services often. We will connect you directly with the service providers you are interested in.
+        We've partnered with some great companies to help with your transition.
       </TipBox>
     }
   </Wrapper>

@@ -29,7 +29,7 @@ const Timing = ({
       </Box>
       {hasTip &&
         <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-          This will help us understand and support you wherever you are in your search.
+          Whether you need to find options immediate or are planning ahead - we got you.
         </TipBox>
       }
     </Wrapper>

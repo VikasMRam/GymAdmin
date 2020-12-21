@@ -29,14 +29,8 @@ import {
 
 } from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
-// import WorkingWith from 'sly/web/containers/wizards/assessment/v1_1/WorkingWith';
-// import Age from 'sly/web/containers/wizards/assessment/v1_1/Age';
-// import Products from 'sly/web/containers/wizards/assessment/v1_1/Products';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
-// import LocalSearch from 'sly/web/containers/wizards/assessment/v1_1/LocalSearch';
 import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
-// import LocalExpert from 'sly/web/containers/wizards/assessment/v1_1/LocalExpert';
-/* Wizard Step Imports - End */
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 
@@ -78,7 +72,7 @@ export default class AssessmentWizardV2 extends Component {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
-  handleComplete = (data) => {
+  handleComplete = () => {
     const { redirectTo, entry } = this.props;
     const modal = getModalFromEntry(entry);
     // Add entry modal for homepage
@@ -189,7 +183,7 @@ export default class AssessmentWizardV2 extends Component {
     let skipOptionText = 'No thanks, connect me to an expert now.';
     const showSkipOption = true;
     const { agent, hasNoAgent } = this.state;
-
+    console.log('toc and agent and hasNoAgent', agent, hasNoAgent, toc);
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       skipOptionText = 'No thanks, I just want pricing.';

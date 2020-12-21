@@ -12,9 +12,9 @@ const BottomWrapper = styled.div`
   text-align: right;
 `;
 
-const BottomButton = styled(Button)`
-  margin-right: ${size('spacing.xLarge')};
-`;
+// const BottomButton = styled(Button)`
+//   margin-right: ${size('spacing.xLarge')};
+// `;
 
 const SectionForm = ({
   heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,

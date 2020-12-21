@@ -65,7 +65,7 @@ const ADL = ({
       </Box>
       {hasTip &&
         <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-          This helps us narrow down our recommendations to only those communities that can support your care needs.
+          Knowing more about you will help us narrow down our recommendations to only those communities that can support your care needs.
         </TipBox>
       }
     </Wrapper>
