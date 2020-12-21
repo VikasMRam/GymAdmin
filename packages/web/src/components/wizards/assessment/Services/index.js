@@ -30,7 +30,7 @@ const Services = ({
     </Box>
     {hasTip &&
       <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        We've partnered with some great companies to help with your transition.
+        We&lsquo;ve partnered with some great companies to help with your transition.
       </TipBox>
     }
   </Wrapper>
