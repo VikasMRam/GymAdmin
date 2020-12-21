@@ -44,6 +44,7 @@ export default class AssessmentWizardPageContainer extends Component {
         state={state}
         toc={toc}
         version={qp.version}
+        entry={qp.entry}
       />
     );
   }

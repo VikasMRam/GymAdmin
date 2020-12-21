@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
+import { stringify } from 'query-string';
 
 import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
 import { prefetch, query, withAuth } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { parseURLQueryParams, removeQueryParamFromURL } from 'sly/web/services/helpers/url';
 import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
+import { shouldShowModal, getWelcomeBannerContent, getWelcomeModalContent } from 'sly/web/services/helpers/homeBase';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import FamilyHomePage from 'sly/web/components/pages/familyDashboard/Home';
-import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
-import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
-import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
-import { Block, Link } from 'sly/common/components/atoms';
+import EntryModal from 'sly/web/components/organisms/homeBase/EntryModal';
 
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @prefetch('homeBase', 'getHomeBase', req => req({ id: 'me' }))
@@ -34,13 +33,11 @@ export default class HomeBasePageContainer extends Component {
   };
 
   static defaultProps = {
-    userSaves: [],
+    homeBase: { client: {}, agent: {} },
   };
 
   state = {
-    currentGalleryImage: {},
     showBanner: true,
-    modalOpen: false,
   };
 
   handleOnGallerySlideChange = (userSaveId, i) => {
@@ -86,62 +83,36 @@ export default class HomeBasePageContainer extends Component {
   }
 
   closeRequestConfirmationModal = () => {
-    const { hideModal, history, location: { search } } = this.props;
-    // this.setState({
-    //   modalOpen: false,
-    // });
+    const {
+      location,
+      history,
+    } = this.props;
+    const { pathname, search, hash } = location;
+    const params = removeQueryParamFromURL('modal', search);
+    history.replace(`${pathname}${stringify(params)}${hash}`);
     SlyEvent.getInstance().sendEvent({
       category: 'homeBase',
       action: 'closeModal',
       label: 'requestConfirmation',
     });
-    const qp = parseURLQueryParams(search);
-    console.log('seeing location', location.url);
-    hideModal();
-    if (qp.entry) {
-      delete qp.entry;
-      history.push(`${location.url}?${objectToURLQueryParams(qp)}`);
-    }
-  }
-  openRequestConfirmationModal = (qp) => {
-    const { showModal, history } = this.props;
-    showModal(<PostConversionGreetingForm onReturnClick={this.closeRequestConfirmationModal} heading="Your request was sent." />);
   }
 
   render() {
-    const { location: { search }, status, homeBase } = this.props;
-    const { currentGalleryImage, modalOpen, showBanner } = this.state;
+    const { location: { search }, status, homeBase, uuidAux } = this.props;
+    const { currentGalleryImage, showBanner } = this.state;
     const qp = parseURLQueryParams(search);
-    // const clickHandlers = [];
     const bannerSeen = retrieveLocalStorage('welcomeBannerSeen');
-    // if (bannerSeen) {
-    //   this.setState({
-    //     showBanner: false,
-    //   });
-    // }
+
     if (status.homeBase && status.homeBase.error) {
       return <RefreshRedirect to="/" />;
-    }
-    if (qp.entry) {
-      this.openRequestConfirmationModal(qp);
     }
 
     return (
       <div>
-        {/* <Modal isOpen={modalOpen} onClose={this.toggleModal}> */}
-        {/*  <HeaderWithClose onClose={this.toggleModal} /> */}
-        {/*  <PaddedHeaderWithCloseBody> */}
-        {/*    {agent && */}
-        {/*      <MatchedAgent */}
-        {/*        hasBox={false} */}
-        {/*        agent={agent} */}
-        {/*        heading={`Request sent! Your Local Senior Living Expert, ${agent.name} will get back to you with pricing information on this community.`} */}
-        {/*      /> */}
-        {/*    } */}
-        {/*  </PaddedHeaderWithCloseBody> */}
-        {/* </Modal> */}
+        <EntryModal content={getWelcomeModalContent(qp.modal)} isOpen={shouldShowModal(qp.modal)} onClose={this.closeRequestConfirmationModal} />
         <FamilyHomePage
           homeBase={homeBase}
+          uuidAux={uuidAux}
           onBannerClose={this.handleBannerClose}
           onGallerySlideChange={this.handleOnGallerySlideChange}
           toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
@@ -151,7 +122,9 @@ export default class HomeBasePageContainer extends Component {
           onMarketplaceTileClick={this.handleMarketplaceTileClick}
           openAskAgentQuestionModal={this.openAskAgentQuestionModal}
           isLoading={!status.homeBase.hasFinished}
-          showBanner={showBanner && !bannerSeen}
+          // showBanner={showBanner && !bannerSeen}
+          showBanner={showBanner}
+          welcomeBannerContent={getWelcomeBannerContent(homeBase, qp.modal)}
         />
       </div>
     );

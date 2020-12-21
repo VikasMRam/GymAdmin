@@ -1,50 +1,37 @@
 import React from 'react';
-import { arrayOf, object, func, bool, shape } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
-import SlyEvent from 'sly/web/services/helpers/events';
-import pad from 'sly/web/components/helpers/pad';
-import shadow from 'sly/web/components/helpers/shadow';
-import Masonry from 'sly/web/components/common/Masonry';
-import { Heading, Hr, Paragraph, Link, Block, Button } from 'sly/common/components/atoms';
-import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import { Link, Button } from 'sly/common/components/atoms';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import SectionForm from 'sly/web/components/molecules/SectionForm';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
 import CommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
-import { textAlign } from 'sly/web/components/helpers/text';
 import Grid from 'sly/common/components/atoms/Grid';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { MPLACE_RESOURCE_ARTICLE, MPLACE_RESOURCE_OFFER } from 'sly/web/constants/homeBase';
-import MarketplaceResourceTile from 'sly/web/components/organisms/homeBase/MarketplaceResourceTile';
+import MarketplaceResourceContentTile from 'sly/web/components/organisms/homeBase/MarketplaceResourceContentTile';
+import MarketplaceResourceOfferTile from 'sly/web/components/organisms/homeBase/MarketplaceResourceOfferTile';
 import ChecklistTile from 'sly/web/components/organisms/homeBase/ChecklistTile';
-import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import { assetPath } from 'sly/web/components/themes';
+import WelcomeBanner from 'sly/web/components/organisms/homeBase/WelcomeBanner';
+import { getChecklistItems } from 'sly/web/services/helpers/homeBase';
+
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
 `;
 
-
-const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
-  category,
-  action,
-  label,
-  value,
-});
-
-
 const FamilyHomePage = ({
-  homeBase, onBannerClose, city, state, showBanner, onMarketplaceTileClick, isLoading, openAskAgentQuestionModal,
+  homeBase, uuidAux, onBannerClose,  showBanner, onMarketplaceTileClick, isLoading, openAskAgentQuestionModal,
+  welcomeBannerContent,
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
-    resourceArticleTiles; let client; let agent;
+    resourceArticleTiles; let itemList; let agent; let city; let state;
 
   if (!isLoading) {
+    const { uuidInfo: { locationInfo } } = uuidAux;
+    city = locationInfo.city;
+    state  = locationInfo.state;
     const { recommendedCommunities } = homeBase;
     communityTiles =
       recommendedCommunities.map((community) => {
@@ -60,9 +47,11 @@ const FamilyHomePage = ({
           </StyledLink>
         );
       });
-    // Create checklist
-    client = homeBase.client;
+    // Get Agent
     agent = homeBase.agent;
+    // Create checklist
+    itemList = getChecklistItems(homeBase, uuidAux);
+
     // Add marketplace offers
     const { mplaceResources = [] } = homeBase;
     const resourceArticles = mplaceResources.filter((mplaceResource) => {
@@ -74,73 +63,63 @@ const FamilyHomePage = ({
     if (resourceArticles.length > 0) {
       resourceArticleTiles = resourceArticles.map((ra) => {
         return (
-          <StyledLink
+          <MarketplaceResourceContentTile
+            marketplaceResource={ra}
+            key={ra.id}
             onClick={(evt) => {
             onMarketplaceTileClick(evt, { category: 'resource', value: ra.ctaUrl, label: ra.id });
             }}
-            to={ra.ctaUrl}
-            key={ra.id}
-          >
-            <MarketplaceResourceTile marketplaceResource={ra} />
-          </StyledLink>
+          />
+
         );
       });
     }
     if (mplaceOffers.length > 0) {
       marketplaceOfferTiles = mplaceOffers.map((ra) => {
         return (
-          <StyledLink
+          <MarketplaceResourceOfferTile
+            marketplaceResource={ra}
+            key={ra.id}
             onClick={(evt) => {
             onMarketplaceTileClick(evt, { category: 'offer', value: ra.ctaUrl, label: ra.id });
             }}
-            to={ra.ctaUrl}
-            key={ra.id}
-          >
-            <MarketplaceResourceTile marketplaceResource={ra} />
-          </StyledLink>
+          />
         );
       });
     }
   }
-  // Move to checklist options
-  const itemList = [{ checked: true, text: 'Match with agent' }, { checked: true, text: 'Evaluate Options' },
-    { checked: false, text: 'Schedule Tours' }, { checked: false, text: 'Move' }];
-  const userName = 'Some user';
+
+
   return (
     <DashboardPageTemplate activeMenuItem="My Dashboard">
       {isLoading && 'Loading...'}
       {!isLoading &&
       <div>
-        {showBanner &&
-        <BannerNotification onCloseClick={onBannerClose}>
-          <Block size="subtitle"> Hi {userName}, Welcome to your dashboard </Block>
-          <ResponsiveImage aspectRatio="3:2" src={assetPath('images/home-base/welcome.png')} />
-        </BannerNotification>
-        }
-        <Grid dimensions={['25%', '75%']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
+        {showBanner && <WelcomeBanner onClose={onBannerClose} {...welcomeBannerContent} /> }
+        <Grid dimensions={['33%', '67%']} upToTablet={{ gridTemplateColumns: 'auto !important' }} gap="large">
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&
-            <HeadingBoxSection maxHeight="100%" heading={`Your Local Senior Living Expert in ${city},${state}`} >
+            <HeadingBoxSection maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city},${state}`} >
               <CommunityAgentSectionContainer agent={agent} pad="xLarge" />
               <Button onClick={openAskAgentQuestionModal}> Ask {agent.name} a question</Button>
             </HeadingBoxSection>
             }
-            <HeadingBoxSection maxHeight="100%"  heading="Checklist">
+            <HeadingBoxSection maxHeight="100%"  heading="Your senior living checklist">
               <ChecklistTile itemList={itemList} />
             </HeadingBoxSection>
           </Grid>
           <Grid gap="large" flow="row">
-            <HeadingBoxSection overflow="auto" heading="Recommended communities for you">
+            <HeadingBoxSection overflow="auto" heading="Explore communities recommended just for you">
               <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
                 {communityTiles}
               </Grid>
             </HeadingBoxSection>
-            <HeadingBoxSection overflow="auto" heading="Marketplace">
+            <HeadingBoxSection overflow="auto" heading="Services to help you with your transition">
               <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
                 {marketplaceOfferTiles}
               </Grid>
             </HeadingBoxSection>
-            <HeadingBoxSection overflow="auto" heading="Resources">
+            <HeadingBoxSection overflow="auto" heading="Senior living articles recommended for you">
               <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(2,288px)']} overflow="auto">
                 {resourceArticleTiles}
               </Grid>
@@ -156,6 +135,8 @@ const FamilyHomePage = ({
 
 FamilyHomePage.propTypes = {
   homeBase: object,
+  uuidAux: object,
+  welcomeBannerContent: object,
   onBannerClose: func,
   showBanner: bool,
   onMarketplaceTileClick: func,

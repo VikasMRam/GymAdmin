@@ -1,15 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { oneOf, object } from 'prop-types';
+import { oneOf, object, func } from 'prop-types';
 import { ifProp, prop } from 'styled-tools';
 
-import { getTrustScoreType } from 'sly/web/services/helpers/community';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Block, Grid, Button } from 'sly/common/components/atoms';
-import { community as communityPropType } from 'sly/common/propTypes/community';
-import IconItem from 'sly/web/components/molecules/IconItem';
-import Link from 'sly/common/components/atoms/Link';
-import { assetPath } from 'sly/web/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { getKey, size } from 'sly/common/components/themes';
 
@@ -18,9 +13,10 @@ const Wrapper = styled(Grid)`
   ${ifProp({ layout: 'row' }, 'grid-template-columns: auto;')}
 `;
 
-const MarketplaceResourceTile = ({ layout, marketplaceResource }) => {
-  const { title, description, ctaUrl, imageUrl } = marketplaceResource;
+const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) => {
+  const { title, description, ctaUrl, imageUrl, tag = 'Article' } = marketplaceResource;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
+  const imgHeight = layout === 'column' ? 172 : 216;
   return (
     <Block
       as="article"
@@ -32,6 +28,8 @@ const MarketplaceResourceTile = ({ layout, marketplaceResource }) => {
         border="regular"
         borderPalette="slate.stroke"
         marginBottom="large"
+        gap="large"
+        padding="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{
@@ -39,21 +37,23 @@ const MarketplaceResourceTile = ({ layout, marketplaceResource }) => {
           padding: '0',
         }}
       >
-        <Block>
-          <ResponsiveImage
-            src={imageUrl}
-            aspectRatio="3:2"
-            layout={layout}
-            sizes={mediaSizes}
-            upToTablet={{
+
+        <ResponsiveImage
+          src={imageUrl}
+          aspectRatio="3:2"
+          layout={layout}
+          sizes={mediaSizes}
+          upToTablet={{
               borderRadius: size('spacing.small'),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
               margin: 0,
             }}
-          />
-        </Block>
-        <Block padding="large" clamped>
+        />
+        <Block
+          padding="large"
+          layout={layout}
+        >
           <Block
             marginBottom="regular"
             size="subtitle"
@@ -62,21 +62,21 @@ const MarketplaceResourceTile = ({ layout, marketplaceResource }) => {
             {title}
           </Block>
           <Block marginBottom="regular"> {description}</Block>
-          <Block><Button to={ctaUrl} >Learn more </Button></Block>
+          <Button onClick={onClick} palette="white" to={ctaUrl} >Learn more</Button>
         </Block>
       </Wrapper>
     </Block>
   );
 };
 
-MarketplaceResourceTile.propTypes = {
+MarketplaceResourceOfferTile.propTypes = {
   marketplaceResource: object.isRequired,
-  score: object,
+  onClick: func,
   layout: oneOf(['column', 'row']),
 };
 
-MarketplaceResourceTile.defaultProps = {
+MarketplaceResourceOfferTile.defaultProps = {
   layout: 'column',
 };
 
-export default MarketplaceResourceTile;
+export default MarketplaceResourceOfferTile;

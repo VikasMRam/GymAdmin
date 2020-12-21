@@ -7,8 +7,9 @@ import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
-import { getWizardEndAd } from 'sly/web/services/helpers/adtiles';
+import { getModalFromEntry  } from 'sly/web/services/helpers/wizard';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
+import { FAMILY_DASHBOARD_HOME_PATH } from 'sly/web/constants/dashboardAppPaths';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,
@@ -47,6 +48,7 @@ export default class AssessmentWizardV2 extends Component {
   static typeHydrationId = 'AssessmentWizard_V2';
   static propTypes = {
     skipIntro: bool,
+    entry: string,
     ws: object,
     getAgent: func.isRequired,
     community: communityPropType,
@@ -76,10 +78,13 @@ export default class AssessmentWizardV2 extends Component {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
-  handleComplete = (data, { redirectLink }) => {
-    const { redirectTo } = this.props;
-    console.log('redirectTo was called with', redirectLink);
-    return redirectTo(redirectLink);
+  handleComplete = (data) => {
+    const { redirectTo, entry } = this.props;
+    const modal = getModalFromEntry(entry);
+    // Add entry modal for homepage
+    // TODO: ADD CUSTOMIZATION FROM DATA
+    const redirectPath = `${FAMILY_DASHBOARD_HOME_PATH}?modal=${modal}`;
+    return redirectTo(redirectPath);
   };
 
   onNoAgentMatch = () => {
@@ -162,7 +167,7 @@ export default class AssessmentWizardV2 extends Component {
       this.waitForAgentMatched();
     }
     if (from === 'Auth') {
-      this.handleComplete(data, { redirectLink: '/dashboard/family/home?fromWizard=some' });
+      this.handleComplete(data);
     }
     this.scrollToTop();
   };
