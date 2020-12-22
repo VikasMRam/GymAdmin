@@ -18,9 +18,16 @@ const H4 = styled.h4``;
 
 const HeadingRoot = styled(({ innerRef, ...props }) => {
   switch (props.level || props.size) { /* eslint-disable jsx-a11y/heading-has-content */
-    case 'hero': return <H1 ref={innerRef} {...props} />;
-    case 'title': return <H2 ref={innerRef} {...props} />;
-    case 'subtitle': return <H3 ref={innerRef} {...props} />;
+    case 'hero':
+    case 'superHero':
+    case 'displayL':
+      return <H1 ref={innerRef} {...props} />;
+    case 'title':
+    case 'display':
+      return <H2 ref={innerRef} {...props} />;
+    case 'subtitle':
+    case 'displayS':
+      return <H3 ref={innerRef} {...props} />;
     case 'body': return <H4 ref={innerRef} {...props} />;
     default: return <H1 ref={innerRef} {...props} />;
   }

@@ -11,6 +11,7 @@ import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 import SearchExploreTypes from 'sly/web/components/organisms/SearchExploreTypes';
 import { titleize } from 'sly/web/services/helpers/strings';
+import { getTocSeoLabel } from 'sly/web/components/search/helpers';
 
 
 function ExploreContainer({ filters }) {
@@ -24,8 +25,8 @@ function ExploreContainer({ filters }) {
   }, [requestInfo]);
 
   const geoGuide = geoGuides ? geoGuides[0] : {};
+  const tocLabel = getTocSeoLabel(filters.toc);
   const guideContent = geoGuide && geoGuide.guideContent;
-  const hasGeoGuideContent = guideContent && !(guideContent.ownGuidePage && guideContent.ownGuidePage === 'true');
 
   const title = filters.city ? `${titleize(filters.city)}, ${titleize(filters.state)}` : titleize(filters.state);
 
@@ -41,9 +42,9 @@ function ExploreContainer({ filters }) {
         paddingBottom: getKey('sizes.spacing.xxLarge'),
       }}
     >
-      {hasGeoGuideContent && guideContent.seoLinks && (
+      {guideContent.seoLinks && (
         <SeoLinks
-          title={`Assisted Living Facilities near ${title}`}
+          title={`${tocLabel} near ${title}`}
           links={guideContent.seoLinks}
         />
       )}

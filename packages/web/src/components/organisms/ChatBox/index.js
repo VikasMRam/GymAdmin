@@ -74,7 +74,7 @@ export default class ChatBox extends Component {
                 j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
                 f.parentNode.insertBefore(j,f);
               })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
-            }, 30000);
+            }, 5000);
           ` }}
         />
       </>

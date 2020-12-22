@@ -2,16 +2,15 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { Heading, Block, Button, Form, Grid } from 'sly/common/components/atoms';
+import { Block, Button, Form, Grid } from 'sly/common/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 
 const SignupForm = ({
-  handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, heading, submitButtonText, hasPassword,
+  handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
   hasPreference, hasProviderSignup,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading pad="xLarge" size="subtitle">{heading}</Heading>
     <Grid gap="regular">
       <Field
         name="firstName"
@@ -88,14 +87,12 @@ SignupForm.propTypes = {
   error: string,
   onLoginClicked: func,
   onProviderClicked: func,
-  heading: string.isRequired,
   submitButtonText: string.isRequired,
   hasPassword: bool,
   hasPreference: bool,
 };
 
 SignupForm.defaultProps = {
-  heading: 'Sign Up',
   submitButtonText: 'Sign Up',
   hasProviderSignup: true,
   hasPreference: true,

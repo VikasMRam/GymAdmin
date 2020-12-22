@@ -1,6 +1,6 @@
 import { responsive, select } from '../../helpers/tests';
 
-describe('Community Profile Sections', () => {
+describe('Marketplace Home Page Sections', () => {
   responsive(() => {
     it('Should have required components', () => {
       cy.visit('/');
@@ -11,13 +11,8 @@ describe('Community Profile Sections', () => {
       // Main image with search box and credit should exists
       select('.ContentOverImage__Wrapper').should('exist');
       select('.ContentOverImage__StyledImage').should('exist');
-      select('.HomePage__SearchBoxWrapper').should('exist');
-      select('.HomePage__ImageCreditDiv').should('exist');
-
-      // Watch Video section and Sly Phone Number should exists
-      select('.HomePage__StyledSection').contains('How Seniorly Can Help You Find The Best Senior Living Options').should('exist');
-      select('.HomePage__StyledSection').contains('Call us at (855) 866-4515.').should('exist');
-      select('.VideoThumbnail__Wrapper').should('exist');
+      select('header h1').contains("Find a senior living community you'll love").should('exist');
+      select('header button').contains('Get started').should('exist');
 
       // Type of Care tiles should exists
       select('.HomePage__StyledSection').contains('Discover The Best Senior Living Near You').should('exist');
