@@ -2,7 +2,7 @@ import { stringify, parse } from 'query-string';
 
 import { titleize } from 'sly/web/services/helpers/strings';
 import { communitySizeSearchParamMap } from 'sly/web/components/search/helpers';
-import { stateNames, stateAbbr } from 'sly/web/constants/geo';
+import { stateNames, stateAbbr, usStatePaths, caStatePaths } from 'sly/web/constants/geo';
 
 export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
@@ -27,6 +27,12 @@ export const tocPaths = (toc) => {
         return {
           path: '/board-and-care-home',
           label: 'Board and Care Home',
+        };
+      case 'Care Home':
+      case 'Care Home':
+        return {
+          path: '/care-home',
+          label: 'Care Home',
         };
       case 'Continuing Care Retirement Community(CCRC)':
       case 'Continuing Care Retirement Community':
@@ -113,7 +119,7 @@ export const urlize = inString =>
     .replace(/[\s-]+/g, ' ')
     .replace(/\s/g, '-');
 
-global.stateData = {
+  global.stateData = {
   names: stateNames,
   slugs: Object.entries(stateNames).reduce((res, [key, name]) => (res[key] = urlize(name), res), {}),
   stateRegionMap,
@@ -318,4 +324,28 @@ export const generateSearchUrl = (toc, address) => {
 
 export const generateCityPathSearchUrl = (address) => {
   return `${urlize(stateNames[address.state])}/${urlize(address.city)}`;
+};
+
+export const isInternationalPath = (path) => {
+  const pathParts = path.split('/');
+  //check if 1st part is care-home
+  if (pathParts.length > 1 && pathParts[1] === 'care-home') {
+    return true
+  }
+
+  if (pathParts.length > 2 && usStatePaths.indexOf(pathParts[2]) === -1) {
+    return true
+  }
+
+  return false
+};
+
+export const isCanadaPath = (path) => {
+  const pathParts = path.split('/');
+  //check if 1st part is care-home
+  if (pathParts.length > 2 && caStatePaths.indexOf(pathParts[2]) > -1) {
+    return true
+  }
+
+  return false
 };

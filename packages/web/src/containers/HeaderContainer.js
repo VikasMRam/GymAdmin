@@ -4,7 +4,7 @@ import { func, object, string, oneOf } from 'prop-types';
 import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
-import { generateSearchUrl, parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { generateSearchUrl, parseURLQueryParams, isInternationalPath } from 'sly/web/services/helpers/url';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { userIs } from 'sly/web/services/helpers/role';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
@@ -30,10 +30,16 @@ const headerMenuLabel = 'headerMenu';
 const logoLabel = 'logo';
 const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, headerItemLabel, value);
 
-const getDefaultHeaderItems = (layout) => {
-  let items = [
-    { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  ];
+const getDefaultHeaderItems = (layout, isInternationalPage) => {
+  let items = [];
+  if (!isInternationalPage) {
+    items = [{
+      name: 'Call for help (855) 866-4515',
+      to: 'tel:+18558664515',
+      palette: 'primary',
+      onClick: ({name}) => sendHeaderItemClickEvent(name)
+    }];
+  }
 
   if (layout !== 'wizards') {
     items = [
@@ -194,9 +200,11 @@ export default class HeaderContainer extends PureComponent {
     } = this.props;
     const { isDropdownOpen } = this.state;
 
-    const hItems = getDefaultHeaderItems(layout);
-    const lhItems = layout !== 'wizards' ? loginHeaderItems(user) : [];
-    const menuItems = generateMenuItems(user);
+    const isInternationalPage = isInternationalPath(location.pathname);
+
+    const hItems = getDefaultHeaderItems(layout, isInternationalPage);
+    const lhItems = layout !== 'wizards' && !isInternationalPage ? loginHeaderItems(user) : [];
+    const menuItems = isInternationalPage ? defaultMenuItems(user) : generateMenuItems(user);
 
     const logoutLeftMenuItem = menuItems.find(item => item.name === 'Log Out');
     if (logoutLeftMenuItem) {

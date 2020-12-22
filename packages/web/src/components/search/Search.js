@@ -30,7 +30,7 @@ import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
   from 'sly/web/constants/wizards/assessment';
 import { isBrowser } from 'sly/web/config';
 import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
-import { getStateAbbr } from 'sly/web/services/helpers/url';
+import { getStateAbbr, isInternationalPath, isCanadaPath } from 'sly/web/services/helpers/url';
 
 const Search = ({
   currentFilters,
@@ -80,6 +80,8 @@ const Search = ({
   const locationStr = city ? `${titleize(city)}, ${stateStr}` : `${stateStr}`;
   const title = `${tocLabel} in ${locationStr}`;
   const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
+  const isInternational = isInternationalPath(location.pathname);
+  const isCanada = isCanadaPath(location.pathname);
 
   return (
     <>
@@ -153,6 +155,7 @@ const Search = ({
             currentFilters={currentFilters}
             onFilterChange={onFilterChange}
             onClearFilters={onClearFilters}
+            showTOC={!isInternational || isCanada}
           >
 
             <FilterButton
@@ -195,7 +198,7 @@ const Search = ({
                 index={cursor + i}
                 community={community}
               />
-              {!showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!isInternational && !showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 xLarge xLarge"
                 >
@@ -206,7 +209,7 @@ const Search = ({
                   />
                 </Block>
               }
-              {showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!isInternational && showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 xLarge xLarge"
                 >
@@ -219,7 +222,9 @@ const Search = ({
             currentFilters={currentFilters}
             pagination={pagination}
           />
+          {!isInternationalPath &&
           <ExploreContainer filters={currentFilters} />
+          }
         </Block>
         <Map
           gridArea="map"

@@ -15,9 +15,7 @@ import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/role
 import { patchFormInitialValues } from 'sly/web/services/edits';
 
 const validate = createValidator({
-  name: [required],
-  'propInfo.communityPhone': [usPhone, dependentRequired('propInfo.ownerEmail', 'Either Phone or Email is required')],
-  'propInfo.ownerEmail': [email, dependentRequired('propInfo.communityPhone', 'Either Email or Phone is required')],
+  name: [required]
 });
 
 const formName = 'DashboardCommunityDetailsForm';
@@ -57,6 +55,24 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
   };
 
   state = { selectedCountry: 'United States' };
+
+  componentDidMount() {
+    this.setCountry();
+  }
+
+  componentDidUpdate() {
+    this.setCountry();
+  }
+
+  setCountry= () => {
+    const {
+      address,
+    } = this.props;
+    if (address && this.state.selectedCountry !== address.attributes.country ) {
+      this.setState({ selectedCountry: address.attributes.country });
+    }
+
+  };
 
   onCountryChange = ( event ) => {
     this.setState({ selectedCountry: event.target.value });

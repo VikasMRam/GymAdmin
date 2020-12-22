@@ -59,13 +59,18 @@ const MobileCommunityRating = styled(CommunityRating)`
   ${startingWith('laptop', 'display: none;')}
 `;
 
-const getCareTypes = (state, careTypes) => {
+const getCareTypes = (address, careTypes) => {
   const updatedCareTypes = [];
+
+  const { state, country } = address;
 
   careTypes.forEach((careType) => {
     const tocBc = tocPaths([careType]);
 
-    if (AVAILABLE_TAGS.includes(careType)) {
+    const availableTags = AVAILABLE_TAGS[country];
+
+
+    if (availableTags.includes(careType)) {
       const isPersonalCareHome = PERSONAL_CARE_HOME_STATES.includes(state) && careType === ASSISTED_LIVING;
       let tag = careType;
 
@@ -112,7 +117,7 @@ const CommunitySummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const careTypes = care ? getCareTypes(state, care) : getCareTypes(state, typeCare);
+  const careTypes = care ? getCareTypes(address, care) : getCareTypes(address, typeCare);
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 

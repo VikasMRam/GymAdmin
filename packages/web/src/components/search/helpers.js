@@ -120,6 +120,13 @@ export const tocs = [
     searchLabel: 'Skilled Nursing Facility',
     seoLabel: 'Skilled Nursing Facilities',
   },
+  {
+    label: 'Care Home',
+    value: 'care-home',
+    segment: 'care-home',
+    searchLabel: 'Care Homes',
+    seoLabel: 'Care Homes',
+  },
 ];
 
 export const sizes = [
@@ -271,7 +278,7 @@ export const getEvtHandler = (paramsToRemove, origFn) => {
 export const getTocSeoLabel = (toc) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
-    return 'nursing homes';
+    return 'Nursing Homes';
   }
   return actualToc.seoLabel;
 };

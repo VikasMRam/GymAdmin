@@ -50,6 +50,7 @@ export const BNC = 'board-and-care-home';
 export const CCRC = 'continuing-care-retirement-community';
 export const AA = 'active-adult';
 export const SNF = 'skilled-nursing-facility';
+export const CA = 'care-home';
 
 export const TOCS = {
   [AL]: {
@@ -93,7 +94,7 @@ export const TOCS = {
     value: SNF,
     description: 'For seniors with more serious medical needs who require skilled care following a hospitalization, illness, or surgery.',
     seoLabel: 'Skilled Nursing Facilities',
-  },
+  }
 };
 
 // SIZE

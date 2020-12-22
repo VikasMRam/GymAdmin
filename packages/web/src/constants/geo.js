@@ -206,7 +206,7 @@ export const ukStates = [
 
 export const states = {
   'United States': usStates,
-  'Canada': canadaStates,
+  Canada: canadaStates,
   'United Kingdom': ukStates,
 };
 
@@ -266,21 +266,21 @@ export const stateNames = {
   WA: 'Washington',
   WV: 'West Virginia',
   WI: 'Wisconsin',
-  WY: 'Wyoming', //end usa
-  AB:	'Alberta', //canada
-  BC:	'British Columbia',
-  MB:	'Manitoba',
-  NB:	'New Brunswick',
-  NL:	'Newfoundland and Labrador',
-  NS:	'Nova Scotia',
-  NT:	'Northwest Territories',
-  NU:	'Nunavut',
-  ON:	'Ontario',
-  PE:	'Prince Edward Island',
-  QC:	'Quebec',
-  SK:	'Saskatchewan',
-  YT:	'Yukon', //end canada
-  ABD: 'Aberdeenshire', //start uk
+  WY: 'Wyoming',
+  AB: 'Alberta',
+  BC: 'British Columbia',
+  MB: 'Manitoba',
+  NB: 'New Brunswick',
+  NL: 'Newfoundland and Labrador',
+  NS: 'Nova Scotia',
+  NT: 'Northwest Territories',
+  NU: 'Nunavut',
+  ON: 'Ontario',
+  PE: 'Prince Edward Island',
+  QC: 'Quebec',
+  SK: 'Saskatchewan',
+  YT: 'Yukon',
+  ABD: 'Aberdeenshire',
   AGY: 'Anglesey',
   ANS: 'Angus',
   ANT: 'Antrim',
@@ -404,7 +404,7 @@ export const stateNames = {
   WOR: 'Worcestershire',
   WRY: 'West Riding of Yorkshire',
   WYK: 'West Yorkshire',
-  YKS: 'Yorkshire', //end uk
+  YKS: 'Yorkshire',
 };
 
 export const stateAbbr = {
@@ -462,8 +462,8 @@ export const stateAbbr = {
   Washington: 'WA',
   'West Virginia': 'WV',
   Wisconsin: 'WI',
-  Wyoming: 'WY', //end usa
-  Alberta: 'AB', //start canada
+  Wyoming: 'WY',
+  Alberta: 'AB',
   'British Columbia': 'BC',
   Manitoba: 'MB',
   'New Brunswick': 'NB',
@@ -475,7 +475,7 @@ export const stateAbbr = {
   'Prince Edward Island': 'PE',
   Quebec: 'QC',
   Saskatchewan: 'SK',
-  Yukon: 'YT', //end canada
+  Yukon: 'YT',
   Aberdeenshire: 'ABD',
   Anglesey: 'AGY',
   Angus: 'ANS',
@@ -600,5 +600,16 @@ export const stateAbbr = {
   Worcestershire: 'WOR',
   'West Riding of Yorkshire': 'WRY',
   'West Yorkshire': 'WYK',
-  Yorkshire: 'YKS',//end UK
+  Yorkshire: 'YKS',
 };
+
+export const usStatePaths = ['alabama', 'alaska', 'arizona', 'arkansas', 'american-samoa', 'california', 'colorado',
+  'connecticut', 'district-of-columbia', 'delaware', 'florida', 'georgia', 'guam', 'hawaii', 'idaho', 'illinois',
+  'indiana', 'iowa', 'kansas', 'kentucky', 'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan', 'minnesota',
+  'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new-hampshire', 'new-jersey', 'new-mexico', 'new-york',
+  'north-carolina', 'north-dakota', 'ohio', 'oklahoma', 'oregon', 'pennsylvania', 'puerto-rico', 'rhode-island', 'south-carolina',
+  'south-dakota', 'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'us-virgin-islands', 'washington', 'west-virginia',
+  'wisconsin', 'wyoming'];
+
+export const caStatePaths = ['alberta', 'british-columbia', 'manitoba', 'new-brunswick', 'newfoundland-and-labrador', 'nova-scotia',
+  'northwest-territories', 'nunavut', 'ontario', 'prince-edward-island', 'quebec', 'saskatchewan', 'yukon'];
