@@ -11,9 +11,7 @@ import IconButton from 'sly/common/components/molecules/IconButton';
 
 const WelcomeBannerGrid = styled.div`
   ${withShadow}
-
   position: relative;
-  display: flex;
   padding-right: 24px;
   margin-bottom: ${size('spacing.xLarge')};
   background-color: ${palette('white', 'base')}; 
@@ -33,7 +31,7 @@ const WelcomeBannerGrid = styled.div`
 `;
 
 const WelcomeBanner = ({ onClose, title, description }) => (
-  <WelcomeBannerGrid display="flex">
+  <WelcomeBannerGrid>
     <Block padding="large" size="subtitle" gridArea="heading"> {title} </Block>
     <Block padding="large" gridArea="body">{description}</Block>
     <ResponsiveImage gridArea="image" aspectRatio="3:2" src={assetPath('images/homebase/welcome.png')} />

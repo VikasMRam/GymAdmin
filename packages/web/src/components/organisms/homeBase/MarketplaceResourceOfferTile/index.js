@@ -6,6 +6,7 @@ import { ifProp, prop } from 'styled-tools';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Block, Grid, Button } from 'sly/common/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import { assetPath } from 'sly/web/components/themes';
 import { getKey, size } from 'sly/common/components/themes';
 
 
@@ -21,6 +22,7 @@ const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) 
     <Block
       as="article"
       position="relative"
+      height="100%"
     >
       <Wrapper
         flow={layout}
@@ -29,20 +31,23 @@ const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) 
         borderPalette="slate.stroke"
         marginBottom="large"
         gap="large"
-        padding="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{
+          gridTemplateRows: 'min-content 1fr',
           gridTemplateColumns: 'auto!important',
           padding: '0',
+          height: 'inherit',
         }}
       >
 
         <ResponsiveImage
-          src={imageUrl}
+          src="https://d354o3y6yz93dt.cloudfront.net/images/320x214/68c0281350470f07313c8cd38c5ed0ca/BED1_DSC_0270_sm.webp"
+          // path={assetPath('images/homebase/Partner_Zillow.jpg')}
           aspectRatio="3:2"
           layout={layout}
           sizes={mediaSizes}
+          startingWithTablet={{ height: 'inherit !important' }}
           upToTablet={{
               borderRadius: size('spacing.small'),
               borderBottomLeftRadius: 0,
@@ -52,17 +57,20 @@ const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) 
         />
         <Block
           padding="large"
-          layout={layout}
+          upToTablet={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+          startingWithLaptop={{ display: 'grid', gridTemplateColumns: '70% 30%', justifyItems: 'center', alignItems: 'center' }}
         >
-          <Block
-            marginBottom="regular"
-            size="subtitle"
-            weight="medium"
-          >
-            {title}
-          </Block>
-          <Block marginBottom="regular"> {description}</Block>
-          <Button onClick={onClick} palette="white" to={ctaUrl} >Learn more</Button>
+          <div>
+            <Block
+              marginBottom="regular"
+              size="subtitle"
+              weight="medium"
+            >
+              {title}
+            </Block>
+            <Block marginBottom="regular"> {description}</Block>
+          </div>
+          <Button startingWithLaptop={{ height: 'fit-content' }} uptoTablet={{ width: '100%' }} onClick={onClick} palette="white" to={ctaUrl} >Learn more</Button>
         </Block>
       </Wrapper>
     </Block>

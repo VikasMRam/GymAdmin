@@ -24,14 +24,13 @@ const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const imgHeight = layout === 'column' ? 172 : 216;
   const dTags = tags.map(t => <Tag outline marginRight="regular" palette="green">{t}</Tag>);
-  // FIXME: Add use size constant;
-  const width  =  window.innerWidth > 768 ? '358px' : 'inherit';
   return (
     <Block
       as="article"
       position="relative"
       maxWidth="358px"
-      width={width}
+      height="100%"
+      startingWithLaptop={{ width: '358px' }}
     >
       <Wrapper
         flow={layout}
@@ -42,26 +41,26 @@ const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{
+          gridTemplateRows: 'min-content 1fr',
           gridTemplateColumns: 'auto!important',
           padding: '0',
+          height: 'inherit',
         }}
       >
-        <Block>
-          <ResponsiveImage
-            src={imageUrl}
-            height={imgHeight}
-            aspectRatio="3:2"
-            layout={layout}
-            sizes={mediaSizes}
-            upToTablet={{
-              borderRadius: size('spacing.small'),
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
-              margin: 0,
-            }}
-          />
-        </Block>
-        <Block padding="large">
+        <ResponsiveImage
+          src={imageUrl}
+          // height={imgHeight}
+          aspectRatio="3:2"
+          layout={layout}
+          sizes={mediaSizes}
+          upToTablet={{
+            borderRadius: size('spacing.small'),
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            margin: 0,
+          }}
+        />
+        <Block padding="large" css={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <Block
             marginBottom="regular"
             size="subtitle"

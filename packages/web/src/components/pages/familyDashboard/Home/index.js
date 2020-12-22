@@ -120,7 +120,7 @@ const FamilyHomePage = ({
               </Grid>
             </HeadingBoxSection>
             <HeadingBoxSection overflow="auto" heading="Senior living articles recommended for you">
-              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(2,288px)']} overflow="auto">
+              <Grid gap="large" startingWithTablet={{ gridTemplateColumns: 'repeat(2,50%) !important' }} dimensions={['repeat(4,288px)']}overflow="auto">
                 {resourceArticleTiles}
               </Grid>
             </HeadingBoxSection>
