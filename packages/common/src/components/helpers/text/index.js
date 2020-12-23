@@ -12,12 +12,11 @@ const tabletQuery = `@media screen and (min-width: ${getThemeSize('breakpoint.ta
 export const font = (textProp) => {
   const variants = getFont(textProp);
   if (Array.isArray(variants)) {
-    console.log('doing variants', variants)
     const [rest, mobile] = variants;
     return css({
       font: mobile,
       [tabletQuery]: { font: rest },
-    }); 
+    });
   }
   return css({
     font: variants,

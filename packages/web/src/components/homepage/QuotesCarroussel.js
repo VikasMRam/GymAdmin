@@ -17,13 +17,13 @@ import {
 } from 'sly/common/components/helpers/index';
 
 const quotes = [
-  { id: '1', author: 'Delia', text: 'A Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '2', author: 'Delia', text: 'B Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '3', author: 'Delia', text: 'C Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '4', author: 'Delia', text: 'D Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '5', author: 'Delia', text: 'E Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '6', author: 'Delia', text: 'F Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '7', author: 'Delia', text: 'H Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
+  { id: '1', author: 'Annie', text: 'This whole experience has changed our viewpoint of senior living. We thank Seniorly for the immediate, thorough, and compassionate care you provided.' },
+  { id: '2', author: 'Sheryl', text: 'How could I give anything but a 10/10? Mom is moving to a great home with wonderful women- and she\'s stunned she has this opportunity.' },
+  { id: '3', author: 'Amy', text: 'Sandy was really helpful, He didn\'t tell me what I wanted or hoped to hear, but told me what I needed to know, which was even better!' },
+  { id: '4', author: 'Cindy', text: 'Rachelle responded promptly and got right to work sending us recommendations. After we found a spot she checked back in to see if we needed any help or any other assistance. Polite, respectful and very professional.' },
+  { id: '5', author: 'Ronna', text: 'Donlyn was so helpful and very quilckly contacted several homes for us to tour. We found a perfect fit fpr my mom and could not be happier. Thank you, Donlyn and Seniorly. It was wonderful to know that I am not on this journey alone.' },
+  { id: '6', author: 'Gretchen', text: 'Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
+  { id: '7', author: 'Pam', text: 'Kriste Kidd was amazing. I truely believe that she was an angel sent to help me. She was caring, knowledgable and honest. I am so blessed to have her as my advisor! I plan on contacting her again for help placing my mom in a home in the spring.' },
 ];
 
 function mod(n, m) {
@@ -144,19 +144,10 @@ export default function QuotesCarroussel ({
           const position = iCenter < above
             ? iCenter
             : iCenter - quotes.length;
-          console.log(index, {
-            quotesLength: quotes.length,
-            iCenter,
-            center,
-            isEdge,
-            position,
-            above,
-            below
-          });
           return (
             <Card
               key={id}
-              background="harvest.lighter-90" 
+              background="harvest.lighter-90"
               borderRadius="regular"
               padding="xLarge"
               position={position}
@@ -183,14 +174,14 @@ export default function QuotesCarroussel ({
           icon="chevron"
           size="caption"
           palette="slate"
-          onClick={() => move(true)}
+          onClick={() => move()}
         />
         <Button
           rotate={0}
           icon="chevron"
           size="caption"
           palette="slate"
-          onClick={() => move()}
+          onClick={() => move(true)}
         />
       </Controls>
     </Block>

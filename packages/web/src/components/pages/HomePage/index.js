@@ -18,7 +18,7 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import QuotesCarroussel from 'sly/web/components/homepage/QuotesCarroussel';
 import CommunitiesByCity from 'sly/web/components/homepage/CommunitiesByCity';
 import Guides from 'sly/web/components/homepage/Guides';
-import { startingWith } from '../../../../../common/src/components/helpers/media';
+import { startingWith } from 'sly/common/components/helpers/media';
 
 const StyledSection = styled(Section)`
   text-align: center;
@@ -103,7 +103,7 @@ const HomePage = ({
                 Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
               </Block>
               <Button
-                to="/wizards/assessment"
+                to="/wizards/assessment?cta=generalOptions&entry=homepage"
                 kind="jumbo"
                 upToTablet={{
                   width: '100%',
@@ -209,7 +209,7 @@ const HomePage = ({
               heading="Your Own Advisor"
               buttonText="Speak with an expert"
               buttonProps={{
-                to: '/wizards/assessment',
+                to: '/wizards/assessment?cta=generalOptions&entry=homepage',
               }}
             >
               We connect you with a Seniorly Local Advisor, our trusted partner who knows the communities in your area. Rely on your advisor as much or as little as you need to find a new home you&apos;ll love.
@@ -220,7 +220,7 @@ const HomePage = ({
               buttonText="Take our quiz"
               buttonPalette="primary"
               buttonProps={{
-                to: '/wizards/assessment',
+                to: '/wizards/assessment?cta=speakExpert&entry=homepage',
               }}
             >
               Take our short quiz to set your personal preferences, then see the communities we recommend for you. Seniorly Smart Search helps you make sense of your options and choose wisely.
@@ -325,33 +325,55 @@ const HomePage = ({
               }}
             />
           </Grid>
+          <Grid
+            gap="xxxLarge"
+            upToLaptop={{
+              gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr`,
+            }}
+            upToTablet={{
+              gridTemplateColumns: 'auto!important',
+            }}
+          >
+            <ResponsiveImage
+              path="react-assets/home/home-base.png"
+              alt="smarter-way"
+              css={{
+                maxWidth: '100%',
+              }}
+            />
+            <div>
+              <Heading
+                level="subtitle"
+                size="display"
+                pad="xLarge"
+                css={{
+                  maxWidth: `calc(${getKey('sizes.layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
+                }}
+              >
+                Your Home Base
+              </Heading>
+              <Block size="subtitle" weight="regular" pad="xLarge">We keep your search results, advisor contact info, and your communications in a private, secure&nbsp;
+                <Block display="inline" background="harvest.lighter-90" palette="harvest.darker-15" padding={['small', 'tiny']}><b>Seniorly</b> Seniorly Home Base</Block>
+                &nbsp;to help you stay organized along the way. It’s easy to communicate with your advisor and change your preferences to explore different types of communities.
+              </Block>
+              <Grid flow="row" gap="medium">
+                <IconItem icon="community-size-small" iconPalette="harvest">See your recommended communities</IconItem>
+                <IconItem icon="list" iconPalette="harvest">Evaluate your options efficiently</IconItem>
+                <IconItem icon="message" iconPalette="harvest">Stay in touch with your personal advisor</IconItem>
+                <IconItem icon="baseline-loyalty" iconPalette="harvest">Get special offers for other products and services</IconItem>
+              </Grid>
+            </div>
+          </Grid>
         </Block>
 
-        <StyledSection title="Most Searched Cities for Senior Living">
+        <StyledSection title="Explore communities by city.">
           <Paragraph>
-            Find the best assisted living facilities, memory care communities and more within 8 of the most searched
-            cities in the United States. From{' '}
-            <Link href="https://www.seniorly.com/assisted-living/california/los-angeles">
-              Los Angeles
-            </Link>
-            {' '}and{' '}
-            <Link href="https://www.seniorly.com/assisted-living/california/sacramento">
-              Sacramento
-            </Link>
-            {' '}to{' '}
-            <Link href="https://www.seniorly.com/assisted-living/texas/dallas">
-              Dallas
-            </Link>
-            {' '}and{' '}
-            <Link href="https://www.seniorly.com/assisted-living/florida/orlando">
-              Orlando
-            </Link>
-            , you will find photos, estimated cost per month, unique property highlights and more
+            See our exclusive photos, monthly pricing, and expert insights for each community. You can learn more about the places you like or speak with a Seniorly Local Advisor in that city.
           </Paragraph>
         </StyledSection>
       </TemplateContent>
 
-      <CommunitiesByCity />
+      <CommunitiesByCity onLocationSearch={onLocationSearch}/>
 
       <Guides css={blockPad} />
 
@@ -391,7 +413,7 @@ const HomePage = ({
               background="primary"
               palette="white"
               borderPalette="white"
-              to="/wizards/assessment"
+              to="/wizards/assessment?cta=generalOptions&entry=homepage"
               kind="jumbo"
               upToTablet={{
                 width: '100%',
