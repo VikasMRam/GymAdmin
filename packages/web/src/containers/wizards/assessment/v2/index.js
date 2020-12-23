@@ -7,6 +7,7 @@ import { query } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import withWS from 'sly/web/services/ws/withWS';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
+import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import { getModalFromEntry  } from 'sly/web/services/helpers/wizard';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import { FAMILY_DASHBOARD_HOME_PATH } from 'sly/web/constants/dashboardAppPaths';
@@ -73,11 +74,17 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   handleComplete = () => {
-    const { redirectTo, entry } = this.props;
+    const { redirectTo, entry, community = {} } = this.props;
+    const qp = {};
     const modal = getModalFromEntry(entry);
+    if (modal) {
+      qp.modal = modal;
+    }
     // Add entry modal for homepage
-    // TODO: ADD CUSTOMIZATION FROM DATA
-    const redirectPath = `${FAMILY_DASHBOARD_HOME_PATH}?modal=${modal}`;
+    if (community && community.name) {
+      qp.communityName = community.name;
+    }
+    const redirectPath = `${FAMILY_DASHBOARD_HOME_PATH}?${objectToURLQueryParams(qp)}`;
     return redirectTo(redirectPath);
   };
 
@@ -148,7 +155,7 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   handleNext = (data) => {
-    console.log('This may be called');
+    { console.log('This may be called'); }
     const { from, to }  = data;
     if (from !== 'Auth' && from !== 'Intro') {
       SlyEvent.getInstance().sendEvent({

@@ -7,7 +7,7 @@ import { prefetch, query, withAuth } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { parseURLQueryParams, removeQueryParamFromURL } from 'sly/web/services/helpers/url';
 import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
-import { shouldShowModal, getWelcomeBannerContent, getWelcomeModalContent } from 'sly/web/services/helpers/homeBase';
+import { shouldShowModal, getWelcomeContent } from 'sly/web/services/helpers/homeBase';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
@@ -101,15 +101,17 @@ export default class HomeBasePageContainer extends Component {
     const { location: { search }, status, homeBase, uuidAux } = this.props;
     const { currentGalleryImage, showBanner } = this.state;
     const qp = parseURLQueryParams(search);
+    console.log('seeing query params', qp);
     const bannerSeen = retrieveLocalStorage('welcomeBannerSeen');
 
     if (status.homeBase && status.homeBase.error) {
       return <RefreshRedirect to="/" />;
     }
 
+
     return (
       <div>
-        <EntryModal content={getWelcomeModalContent(qp.modal)} isOpen={shouldShowModal(qp.modal)} onClose={this.closeRequestConfirmationModal} />
+        <EntryModal content={getWelcomeContent(homeBase, qp.modal, 'modal')} isOpen={shouldShowModal(qp.modal)} onClose={this.closeRequestConfirmationModal} />
         <FamilyHomePage
           homeBase={homeBase}
           uuidAux={uuidAux}
@@ -124,7 +126,7 @@ export default class HomeBasePageContainer extends Component {
           isLoading={!status.homeBase.hasFinished}
           // showBanner={showBanner && !bannerSeen}
           showBanner={showBanner}
-          welcomeBannerContent={getWelcomeBannerContent(homeBase, qp.modal)}
+          welcomeBannerContent={getWelcomeContent(homeBase, qp.modal, 'banner')}
         />
       </div>
     );

@@ -326,7 +326,7 @@ export default class CommunityDetailPage extends Component {
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="pricing-table"
-                    mode={{ cta: 'pricing', entry: 'pricing-table' }}
+                    mode={{ cta: 'pricing', entry: 'pricingTable' }}
                     extraProps={{
                       pricesList,
                       estimatedPriceList,

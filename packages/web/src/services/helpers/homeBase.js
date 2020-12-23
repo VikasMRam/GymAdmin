@@ -1,10 +1,73 @@
-export const getWelcomeBannerContent = (entry, homeBase) => {
-  const bc = {
-    title: 'Welcome',
-    description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more',
+import user from 'sly/common/propTypes/user';
+
+export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
+  const { modal = '', communityName = 'your requested community' } = qp;
+  // console.log('seeing homeBase', homebase);
+  // console.log('seeing entry', entry);
+  let key =  'communityPricing';
+  let userName = 'there';
+  if (homebase && homebase.user && homebase.user.name) {
+    userName =  homebase.user.name.split(' ')[0];
+  }
+  if (modal !== '') {
+    key = modal;
+  }
+  // Define which modal you want to display from entry
+  const welcomeText = {
+    communityPricing: {
+      banner: { title: `Hi ${userName}, welcome to your Home Base!`,
+        description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more.' },
+      modal: { heading: 'We\'ve sent your request!',
+        caption: 'What happens next?',
+        description: `Your Seniorly Local Advisor will contact you shortly to follow up with pricing and availability for ${communityName}. In the meantime, you can explore our recommendations and other helpful resources in your Home Base.`,
+      },
+      confirmationMatched: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+      confirmationNoAgent: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+    },
+    communityRecommendations: {
+      banner: { title: 'We need to ask a few quick questions to understand your needs',
+        description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
+      modal: { heading: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.',
+        description: 'We’ll send your request and connect you with one of our Seniorly Local Advisors who will help you with pricing and availability.' },
+      confirmationMatched: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+      confirmationNoAgent: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+    },
+    generalRecommendations: {
+      banner: { title: 'We need to ask a few quick questions to understand your needs',
+        description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
+      modal: { heading: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.',
+        description: 'We’ll send your request and connect you with one of our Seniorly Local Advisors who will help you with pricing and availability.' },
+      confirmationMatched: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+      confirmationNoAgent: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+    },
+    speakExpert: {
+      banner: { title: 'We need to ask a few quick questions to understand your needs',
+        description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
+      modal: { heading: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.',
+        description: 'We’ll send your request and connect you with one of our Seniorly Local Advisors who will help you with pricing and availability.' },
+      confirmationMatched: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+      confirmationNoAgent: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
+        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      },
+    },
   };
-  return bc;
+  return welcomeText[key][step];
 };
+
 
 export const getWelcomeModalContent = (entry, homeBase) => {
   const bc = {
@@ -15,7 +78,7 @@ export const getWelcomeModalContent = (entry, homeBase) => {
 };
 
 export const shouldShowModal = (modal) => {
-  const validModals = ['pricing', 'communityRecommendations', 'generalRecommendations', 'matchExpert'];
+  const validModals = ['communityPricing', 'communityRecommendations', 'generalRecommendations', 'speakExpert'];
   return validModals.indexOf(modal) > -1;
 };
 

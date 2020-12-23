@@ -42,8 +42,8 @@ const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) 
       >
 
         <ResponsiveImage
-          src="https://d354o3y6yz93dt.cloudfront.net/images/320x214/68c0281350470f07313c8cd38c5ed0ca/BED1_DSC_0270_sm.webp"
-          // path={assetPath('images/homebase/Partner_Zillow.jpg')}
+          // src="https://d354o3y6yz93dt.cloudfront.net/images/320x214/68c0281350470f07313c8cd38c5ed0ca/BED1_DSC_0270_sm.webp"
+          src={imageUrl}
           aspectRatio="3:2"
           layout={layout}
           sizes={mediaSizes}

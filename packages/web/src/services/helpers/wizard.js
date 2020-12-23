@@ -1,10 +1,13 @@
 export const getModalFromEntry = (entry) => {
   // Define which modal you want to display from entry
   const entryModals = {
-    communityPricing: 'pricing',
+    communityFooter: 'communityPricing',
+    communitySidebar: 'communityPricing',
+    pricingTable: 'communityPricing',
+    searchList: 'communityRecommendations',
     communityOptions: 'communityRecommendations',
     generalOptions: 'generalRecommendations',
-    speakExpert: 'matchExpert',
+    speakExpert: 'speakExpert',
   };
   return entryModals[entry];
 };
