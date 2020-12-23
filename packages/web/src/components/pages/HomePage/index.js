@@ -290,15 +290,27 @@ const HomePage = ({
             </div>
           </Grid>
           <Grid
-            gap="xxxLarge"
+            gap="xxLarge"
             upToLaptop={{
               gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr`,
             }}
             upToTablet={{
               gridTemplateColumns: 'auto!important',
             }}
+            startingWithLaptop={{
+              direction: 'rtl',
+            }}
           >
-            <div>
+            <ResponsiveImage
+              path="react-assets/home/local-advisor.png"
+              alt="local-advisor"
+              css={{
+                maxWidth: '100%',
+              }}
+            />
+            <Block startingWithLaptop={{
+              direction: 'ltr',
+            }}>
               <Heading
                 level="subtitle"
                 size="display"
@@ -316,14 +328,7 @@ const HomePage = ({
                 <IconItem icon="tick" iconPalette="harvest">Tours communities with you</IconItem>
                 <IconItem icon="tick" iconPalette="harvest">Helps you choose wisely</IconItem>
               </Grid>
-            </div>
-            <ResponsiveImage
-              path="react-assets/home/local-advisor.png"
-              alt="local-advisor"
-              css={{
-                maxWidth: '100%',
-              }}
-            />
+            </Block>
           </Grid>
           <Grid
             gap="xxxLarge"
@@ -335,7 +340,7 @@ const HomePage = ({
             }}
           >
             <ResponsiveImage
-              path="react-assets/home/home-base.png"
+              path="react-assets/home/homebase.png"
               alt="smarter-way"
               css={{
                 maxWidth: '100%',
