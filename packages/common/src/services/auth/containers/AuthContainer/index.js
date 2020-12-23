@@ -203,9 +203,7 @@ export default class AuthContainer extends Component {
     if (type === 'inline') {
       return (
         <Wrapper>
-          <Box>
-            {wizard}
-          </Box>
+          {wizard}
         </Wrapper>
       );
     }

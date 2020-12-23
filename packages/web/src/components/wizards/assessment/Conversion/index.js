@@ -42,19 +42,19 @@ const Conversion = ({
   return (
     <Wrapper hasSecondColumn={hasTip}>
 
-      <Box>
+      <Block>
         {/* <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading> */}
         <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
         <Block pad="xLarge">{description}</Block>
         {/* FIXME: auth container is being called from conversion component */ }
-        <Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} />
-      </Box>
+        <Block width="fit-content"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} /></Block>
+      </Block>
       {hasTip &&
-        <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-          <IconItem icon="check" iconPalette="slate" iconVariation="base">Get your own Seniorly Home Base for tracking your options</IconItem>
-          <IconItem icon="check" iconPalette="slate" iconVariation="base">See your recommended communities in one place</IconItem>
-          <IconItem icon="check" iconPalette="slate" iconVariation="base">Get a dedicated Seniorly Local Advisor</IconItem>
-          <IconItem icon="check" iconPalette="slate" iconVariation="base">See other resources and services you may need</IconItem>
+        <TipBox heading="BENEFITS OF CREATING A FREE ACCOUNT:" height="fit-content">
+          <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get your own Seniorly Home Base for tracking your options</IconItem>
+          <IconItem icon="check" iconPalette="harvest" iconVariation="base">See your recommended communities in one place</IconItem>
+          <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get a dedicated Seniorly Local Advisor</IconItem>
+          <IconItem icon="check" iconPalette="harvest" iconVariation="base">See other resources and services you may need</IconItem>
         </TipBox>
       }
     </Wrapper>

@@ -35,7 +35,7 @@ const getDefaultHeaderItems = (layout) => {
     // { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   ];
 
-  if (layout !== 'wizards') {
+  if (layout !== 'wizard') {
     items = [
       { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
       { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
@@ -284,12 +284,12 @@ export default class HeaderContainer extends PureComponent {
                     onHeaderBlur={this.toggleDropdown}
                     onLogoClick={this.onLogoClick}
                     headerItems={headerItems}
-                    hideMenuItemsInSmallScreen={layout !== 'wizards'}
+                    hideMenuItemsInSmallScreen={layout !== 'wizard'}
                     menuItems={menuItems}
                     smallScreenMenuItems={smallScreenMenuItems}
                     className={className}
                     onCurrentLocation={this.handleCurrentLocation}
-                    hasSearchBox={layout !== 'wizards'}
+                    hasSearchBox={layout !== 'wizard'}
                     template={layout}
                   />
                   <AuthContainer />

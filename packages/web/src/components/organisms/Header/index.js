@@ -214,6 +214,7 @@ const Header = React.memo(({
         borderPalette="slate"
         borderVariation="lighter-90"
         horizontalAlign={template === 'wizard' ? 'center' : 'inherit'}
+        justifyContent={template === 'wizard' ? 'center' : 'inherit'}
         padding={[0, 'large']}
       >
         <SeniorlyLogoWrapper onClick={onLogoClick} marginRight="xxLarge">
@@ -247,9 +248,11 @@ const Header = React.memo(({
             placeholder="Search by city, zip, community name"
           />
         )}
+        {template !== 'wizard'
+        &&
         <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
           {headerItemComponents}
-        </HeaderItems>
+        </HeaderItems>}
       </HeaderBar>
       {menuOpen &&
         <HeaderMenu ref={headerMenuRef} onClick={onMenuItemClick}>
