@@ -28,6 +28,17 @@ export default class AssessmentWizardPageContainer extends Component {
     let hasFinished = true;
     const qp = parseURLQueryParams(search);
     const skipIntro = qp.skipIntro && qp.skipIntro !== 'false' ? !!qp.skipIntro : false;
+    // wizard can be entered from many places/modes
+    let entry = 'page';
+    if (qp.layout) {
+      entry = qp.layout;
+    }
+    if (qp.cta) {
+      entry = qp.cta;
+    }
+    if (qp.entry) {
+      entry = qp.entry;
+    }
     if (status) {
       ({ hasFinished } = status.community);
     }
@@ -44,7 +55,7 @@ export default class AssessmentWizardPageContainer extends Component {
         state={state}
         toc={toc}
         version={qp.version}
-        entry={qp.entry}
+        entry={entry}
       />
     );
   }

@@ -326,6 +326,7 @@ export default class CommunityDetailPage extends Component {
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="pricing-table"
+                    mode={{ cta: 'pricing', entry: 'pricing-table' }}
                     extraProps={{
                       pricesList,
                       estimatedPriceList,
@@ -502,6 +503,7 @@ export default class CommunityDetailPage extends Component {
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
+                  mode={{ cta: 'pricing', entry: 'communityFooter' }}
                   layout="footer"
                 />
                 {/* {isActiveAdult && */}
@@ -518,6 +520,7 @@ export default class CommunityDetailPage extends Component {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
+                    mode={{ cta: 'pricing', entry: 'communitySidebar' }}
                     layout="sidebar"
                   />
 

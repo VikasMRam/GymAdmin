@@ -25,7 +25,7 @@ import {
   Timing,
   ADL,
   Budget,
-  Auth,
+  Conversion,
 
 } from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
@@ -148,6 +148,7 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   handleNext = (data) => {
+    console.log('This may be called');
     const { from, to }  = data;
     if (from !== 'Auth' && from !== 'Intro') {
       SlyEvent.getInstance().sendEvent({
@@ -177,13 +178,15 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   render() {
-    const { community, hasTip, className, toc, skipIntro } = this.props;
+    const { community, hasTip, className, toc, skipIntro, entry } = this.props;
     let { city, state } = this.props;
     let amount = 4000;
     let skipOptionText = 'No thanks, connect me to an expert now.';
     const showSkipOption = true;
     const { agent, hasNoAgent } = this.state;
-    console.log('toc and agent and hasNoAgent', agent, hasNoAgent, toc);
+    // Add agent presence
+    const conversionInfo = { toc, entry, agent, hasNoAgent };
+    // console.log('toc and agent and hasNoAgent', agent, hasNoAgent, toc);
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       skipOptionText = 'No thanks, I just want pricing.';
@@ -274,13 +277,18 @@ export default class AssessmentWizardV2 extends Component {
                   onBackClick={previous}
                 />
                 <WizardStep
-                  component={Auth}
+                  component={Conversion}
                   name="Auth"
                   signUpHeading={data.whatToDoNext === 'start' ?
                     'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                     : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                   onAuthSuccess={next}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                  whoNeedsHelp={data.lookingFor}
                   community={community}
+                  entry={entry}
+                  conversionInfo={conversionInfo}
                 />
               </WizardSteps>
             </section>

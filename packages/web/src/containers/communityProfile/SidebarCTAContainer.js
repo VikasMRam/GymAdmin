@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { object, bool, func } from 'prop-types';
-
 import { withRouter } from 'react-router';
+
 import communityPropType from 'sly/common/propTypes/community';
 import { isBrowser } from 'sly/web/config';
 import { getIsSellerAgentCTA } from 'sly/web/services/helpers/community';

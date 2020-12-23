@@ -6,7 +6,7 @@ import { isBrowser } from 'sly/web/config';
 import { prefetch } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
-import SlyEvent from 'sly/web/services/helpers/events';
+import SlyEvent, { objectToEventLabel } from 'sly/web/services/helpers/events';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import { Link, Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';
@@ -15,6 +15,8 @@ import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
 import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
+import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
+
 
 @branch(
   ({ completedAssessment, agentId }) => completedAssessment && agentId,
@@ -36,6 +38,7 @@ export default class GetAssessmentBoxContainer extends Component {
     completedAssessment: bool,
     completedPricing: bool,
     className: string,
+    mode: object.isRequired,
     extraProps: object.isRequired,
   };
   static defaultProps = {
@@ -52,6 +55,30 @@ export default class GetAssessmentBoxContainer extends Component {
     this.setState({
       didRender: true,
     });
+  }
+  startAssessmentFlow = () => {
+    const { completedAssessment, completedPricing, mode } = this.props;
+    if (isBrowser) {
+      SlyEvent.getInstance().sendEvent({
+        category: 'assessmentWizard',
+        action: 'start',
+        label: objectToEventLabel(mode),
+      });
+    }
+    if (completedAssessment || completedPricing) {
+      this.toggleModal();
+    }
+    // const { modalOpened } = this.state;
+    // this.setState({
+    //   modalOpened: !modalOpened,
+    // });
+    // const action = modalOpened ? 'open-modal' : 'close-modal';
+    // const { layout } = this.props;
+    // SlyEvent.getInstance().sendEvent({
+    //   category: 'assessmentWizard',
+    //   action,
+    //   label: layout,
+    // });
   }
   toggleModal = () => {
     const { modalOpened } = this.state;
@@ -80,14 +107,18 @@ export default class GetAssessmentBoxContainer extends Component {
 
   render() {
     const {
-      status = {}, layout, boxLayout, agent, community, completedAssessment, completedPricing, startLink, className, extraProps,
+      status = {}, layout, boxLayout, agent, community, completedAssessment, completedPricing, startLink, className, extraProps, mode,
     } = this.props;
     const { modalOpened, didRender } = this.state;
     let hasFinished = true;
+    // compose new startLink : Add query params from mode
+    const sl = `${startLink}?${objectToURLQueryParams(mode)}`;
     let buttonProps = {
-      to: startLink,
-      buttonTo: startLink,
+      to: sl,
+      buttonTo: sl,
+      onClick: this.startAssessmentFlow(),
     };
+
 
     if (completedAssessment || completedPricing) {
       buttonProps = {
@@ -108,13 +139,14 @@ export default class GetAssessmentBoxContainer extends Component {
           <GetAssessmentBox
             layout={boxLayout}
             buttonProps={buttonProps}
+            mode={mode}
           />
         }
         {layout === 'sidebar' &&
-          <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
+          <SidebarCTAContainer mode={mode} community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
         }
         {layout === 'footer' &&
-          <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
+          <StickyFooterCTAContainer mode={mode} community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
         }
         {layout === 'pricing-table' &&
           <CommunityPricingTable
@@ -122,6 +154,7 @@ export default class GetAssessmentBoxContainer extends Component {
             community={community}
             isAlreadyPricingRequested={completedPricing}
             buttonProps={buttonProps}
+            mode={mode}
           />
         }
         <Modal isOpen={modalOpened} onClose={this.toggleModal}>
