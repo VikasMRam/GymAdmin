@@ -87,7 +87,7 @@ PostConversionGreetingForm.propTypes = {
 };
 
 PostConversionGreetingForm.defaultProps = {
-  heading: "You're all set! A local senior living expert will reach out shortly.",
+  heading: "You're all set! A Seniorly Local Advisors will reach out shortly.",
   hasBox: true,
   onSubmit: _ => _,
 };

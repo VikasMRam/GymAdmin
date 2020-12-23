@@ -21,7 +21,7 @@ const CommunityPricingWizardLanding = ({ user, onBeginClick, buttonText }) => (
     <PaddedHeading>{(user && user.name) ? `Nice to meet you, ${user.name}` : 'Thank you for choosing Seniorly'}!</PaddedHeading>
     <PaddedBlock palette="primary" size="subtitle">Here&apos;s what happens next:</PaddedBlock>
     <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" size="subtitle">Complete your care profile to help your expert better understand your needs and preferences</PaddedIconItem>
-    <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" size="subtitle">We&apos;ll call shortly to match you with a Local Senior Living Expert - working with them is 100% free!</PaddedIconItem>
+    <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" size="subtitle">We&apos;ll call shortly to match you with a Seniorly Local Advisors - working with them is 100% free!</PaddedIconItem>
     <PaddedIconItem iconRightMarginSpacing="large" icon="check" iconPalette="green" size="subtitle">Your expert will guide you throughout your search, set up tours and answer all your questions</PaddedIconItem>
     <FullWidthButton onClick={onBeginClick}>{buttonText}</FullWidthButton>
   </section>

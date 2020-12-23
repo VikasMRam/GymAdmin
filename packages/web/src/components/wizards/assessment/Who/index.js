@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
+// import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -29,13 +29,8 @@ const Who = ({
       </form>
     </Box>
     {hasTip &&
-      <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base" pad="large">
-          Getting to know you helps us personalize how we assist you.
-        </IconItem>
-        <IconItem icon="lock" iconPalette="slate" iconVariation="base">
-          Any information you share with us is private and secure.
-        </IconItem>
+      <TipBox heading="DID YOU KNOW?" height="fit-content">
+        Thousands of families trust and use Seniorly every year. We work hard to make sure you find the right senior living and care options.
       </TipBox>
     }
   </Wrapper>

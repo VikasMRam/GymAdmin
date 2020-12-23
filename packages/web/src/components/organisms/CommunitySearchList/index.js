@@ -152,7 +152,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               layout="column"
               noGallery
               lazyLoadImage={index !== 0}
-              index={index+1}
+              index={index + 1}
               event={{
                 category: 'SearchPage',
                 action: 'communityClick',
@@ -167,6 +167,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
                 completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
                 agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
                 startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                mode={{ cta: 'options', entry: 'searchList' }}
               />
             </>
           }

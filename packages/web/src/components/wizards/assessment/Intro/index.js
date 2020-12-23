@@ -3,20 +3,20 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box, Icon, Form, Block } from 'sly/common/components/atoms';
+import { Heading, Box, Form, Block } from 'sly/common/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const Intro = ({
-  handleSubmit, showSkipOption, skipOptionText,
+  title, description, handleSubmit, showSkipOption, skipOptionText,
 }) => (
   <Wrapper>
     <Box>
       <Form onSubmit={handleSubmit}>
         <Block align="center" display="flex" direction="column">
-          <Icon icon="logo" palette="primary" size="superHero" pad="xLarge" />
           <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
-            Complete this 3-minute assessment tool to get personalized senior living and care options.
+            {title}
           </Heading>
+          {description !== '' && <Block>{description}</Block>}
         </Block>
         <Field
           name="whatToDoNext"
@@ -47,6 +47,8 @@ const Intro = ({
 );
 
 Intro.propTypes = {
+  title: string,
+  description: string,
   handleSubmit: func.isRequired,
   showSkipOption: bool,
   skipOptionText: string.isRequired,

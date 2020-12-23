@@ -28,7 +28,7 @@ const CommunityDisclaimerSection = ({
         <DescriptionWrapper>
           Seniorly is not affiliated with the owner or operator(s) of {name}.
           {description}
-          For exact details, connect to a Local Senior Living Expert in {city} by calling&nbsp;
+          For exact details, connect to a Seniorly Local Advisors in {city} by calling&nbsp;
           <Link href={`tel:${phone}`}>
             {phoneFormatter(phone, true)}
           </Link>

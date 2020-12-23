@@ -326,6 +326,7 @@ export default class CommunityDetailPage extends Component {
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="pricing-table"
+                    mode={{ cta: 'pricing', entry: 'pricingTable' }}
                     extraProps={{
                       pricesList,
                       estimatedPriceList,
@@ -387,7 +388,7 @@ export default class CommunityDetailPage extends Component {
                 </StyledHeadingBoxSection>
                 }
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
+                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisors in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
                     <AskAgentQuestionButtonContainer
                       width="100%"
@@ -502,6 +503,7 @@ export default class CommunityDetailPage extends Component {
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
+                  mode={{ cta: 'pricing', entry: 'communityFooter' }}
                   layout="footer"
                 />
                 {/* {isActiveAdult && */}
@@ -518,6 +520,7 @@ export default class CommunityDetailPage extends Component {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
+                    mode={{ cta: 'pricing', entry: 'communitySidebar' }}
                     layout="sidebar"
                   />
 

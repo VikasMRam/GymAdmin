@@ -54,9 +54,6 @@ const Budget = ({
     </Box>
     {hasTip &&
       <TipBox heading="DID YOU KNOW?" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base" pad="large">
-          Senior living communities typically include an apartment or room, care and/or supervision, and 3-meals per day.
-        </IconItem>
         <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
       </TipBox>
     }

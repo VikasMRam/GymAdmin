@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { func, oneOf, string } from 'prop-types';
 import styled from 'styled-components';
-
 import { withRouter } from 'react-router';
+
 import { size } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { query } from 'sly/web/services/api';
@@ -44,7 +44,7 @@ export default class SearchResultsAdTileContainer extends Component {
     isModalOpen: false,
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
-    modalHeading: 'Our Local Senior Living Experts can help you with your search.',
+    modalHeading: 'Our Seniorly Local Advisorss can help you with your search.',
   };
 
   componentDidMount() {

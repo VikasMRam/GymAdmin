@@ -131,11 +131,16 @@ export default class AskQuestionToAgentFormContainer extends Component {
       }),
       updateUuidAuxReq(),
     ])
-      .then(() => createOrUpdateUser({
-        name,
-        email,
-        phone,
-      }, { ignoreAlreadyRegistered: true }))
+      .then(() => {
+        if (user) {
+          return true;
+        }
+        return createOrUpdateUser({
+          name,
+          email,
+          phone,
+        }, { ignoreAlreadyRegistered: true })
+      })
       .then(() => {
         const c = `${category}-${actionType}${type ? `-${type}` : ''}`;
         const event = {

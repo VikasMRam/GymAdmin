@@ -285,7 +285,7 @@ export default class PricingWizardPage extends Component {
           {({
               data, onSubmit, isFinalStep, submitEnabled, next, currentStep, goto, ...props
           }) => {
-            let formHeading = `Thank you! Our Local Senior Living Expert will be contacting you shortly with ${type}. What is the best way to reach you?`;
+            let formHeading = `Thank you! Our Seniorly Local Advisors will be contacting you shortly with ${type}. What is the best way to reach you?`;
             let formSubheading = null;
             if (data.interest) {
               const contactFormHeadingObj = contactFormHeadingMap[data.interest];

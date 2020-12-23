@@ -23,6 +23,7 @@ export default {
   createUserSave: { method: post, path: '/marketplace/user-saves' },
   updateOldUserSave: { method: patch, path: '/platform/user-saves/:id' },
   createOldUserSave: { method: post, path: '/platform/user-saves' },
+  getHomeBase: { method: get, path: '/marketplace/home/:id', ssrIgnore: true },
 
   registerUser: { method: post, path: '/platform/auth/register' },
   loginUser: { method: post, path: '/platform/auth/login' },

@@ -22,9 +22,13 @@ const getSID = () => {
 };
 
 const getReferrer = () => {
-  const referrer = document.referrer;
+  const { referrer } = document;
   cookie.set('referrer', referrer, { domain, path: '/', maxAge: 27000000 });
   return referrer;
+};
+
+export const objectToEventLabel = (obj) => {
+  return stringify(obj, ';', ':');
 };
 
 export default class SlyEvent {

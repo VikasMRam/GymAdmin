@@ -32,7 +32,7 @@ const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, heade
 
 const getDefaultHeaderItems = (layout) => {
   let items = [
-    { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    // { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   ];
 
   if (layout !== 'wizards') {
@@ -178,7 +178,7 @@ export default class HeaderContainer extends PureComponent {
     const { redirectTo } = this.props;
 
     if (addresses.length) {
-      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; //?geo=${latitude},${longitude},10`;
+      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; // ?geo=${latitude},${longitude},10`;
 
       redirectTo(path);
     }
@@ -290,6 +290,7 @@ export default class HeaderContainer extends PureComponent {
                     className={className}
                     onCurrentLocation={this.handleCurrentLocation}
                     hasSearchBox={layout !== 'wizards'}
+                    template={layout}
                   />
                   <AuthContainer />
                   <Notifications messages={messages} dismiss={dismiss} />
