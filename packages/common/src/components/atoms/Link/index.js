@@ -32,6 +32,8 @@ export default class Link extends Component {
     routes: routesPropType,
   };
 
+  static displayName = 'Link';
+
   checkPropsForLinks() {
     const { to, href: hrefprop, event, ...props } = this.props;
     const { routes } = this.context;

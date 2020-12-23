@@ -7,6 +7,8 @@ import Block from 'sly/common/components/atoms/Block';
 import Heading from 'sly/common/components/atoms/Heading';
 import Paragraph from 'sly/common/components/atoms/Paragraph';
 
+import CarrousselButton from './CarrousselButton';
+
 import {
   withColor,
   withDisplay,
@@ -98,17 +100,6 @@ const Controls = styled.div`
   }
 `;
 
-const Button = styled(Icon)`
-  width: 48px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 24px;
-  background: white;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .1));
-`;
-
 export default function QuotesCarroussel ({
   heading,
   ...props
@@ -169,18 +160,12 @@ export default function QuotesCarroussel ({
         })}
       </Wrapper>
       <Controls>
-        <Button
+        <CarrousselButton
           rotate={2}
-          icon="chevron"
-          size="caption"
-          palette="slate"
           onClick={() => move()}
         />
-        <Button
+        <CarrousselButton
           rotate={0}
-          icon="chevron"
-          size="caption"
-          palette="slate"
           onClick={() => move(true)}
         />
       </Controls>

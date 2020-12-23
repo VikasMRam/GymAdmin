@@ -1,239 +1,209 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import config from 'sly/web/config';
 import { size, palette } from 'sly/common/components/themes';
-import { Icon, Block, Hr, Link } from 'sly/common/components/atoms';
+import Span from 'sly/web/components/atoms/Span';
+import { Icon, Block, Hr, Link, Heading } from 'sly/common/components/atoms';
 
-const FooterTopWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${size('spacing.large')} ${size('spacing.large')} 0
-    ${size('spacing.large')};
+const currentYear = (new Date()).getFullYear();
 
-  margin: 0 auto;
-  width: 100%;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col8')};
-    padding: ${size('spacing.xLarge')} 0 0 0;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-    padding-right: 0;
-  }
-`;
-
-const SeniorlyWhiteIcon = styled(Icon)`
-  margin-bottom: ${size('spacing.small')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > svg {
-      margin: 0 auto;
-    }
-  }
-
-`;
-
-const GroupDiv = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col2')};
-    margin-right: ${size('spacing.xLarge')};
-    &:first-child {
-      a {
-        text-align: center;
-      }
-    }
-    &:last-child {
-      margin-right: 0px
-    }
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col3')};
-  }
-`;
-
-const GroupHeading = styled.div`
-  font-size: ${size('text.subtitle')};
-  font-weight: bold;
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const GroupItem = styled(Link)`
-  display: block;
-  > * {
-    color: ${palette('white', 'base')};
-  }
-  color: ${palette('white', 'base')};
-  font-size: ${size('spacing.large')};
-  text-decoration: none;
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const FooterBottomWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${size('spacing.large')};
-
-  margin: 0 auto;
-  width: 100%;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col8')};
-
-    flex-direction: row;
-    justify-content: space-between;
-    padding: ${size('spacing.regular')} 0;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-  }
-`;
-
-const SocialIcons = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  order: 1;
-  margin-bottom: ${size('spacing.xLarge')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    order: 2;
-    margin-bottom: 0;
-  }
-`;
-
-const FooterIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
-
-const TradeMark = styled.div`
-  color: ${palette('white', 'base')};
-  margin-bottom: ${size('spacing.regular')};
-  order: 2;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin: ${size('spacing.regular')} 0;
-    order: 1;
-  }
-`;
-
-const Join = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-  order: 2;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    order: 1;
-    margin-bottom: 0;
-    margin-right: ${size('spacing.xLarge')};
-  }
-`;
-
-const RightWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  order: 1;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-direction: row;
-    align-items: center;
-    order: 2;
-  }
-`;
-
-const groups = {
-  Company: [
-    { name: 'Our Company', url: '/about', target: '_blank' },
-    { name: 'Our Partner Agents', url: '/agents', target: '_blank' },
-    { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
-    { name: 'Press', url: '/about#/#press', target: '_blank' },
-    { name: 'Contact', url: '/contact', target: '_blank' },
-    { name: 'Terms', url: '/tos', target: '_blank' },
-    { name: 'Privacy', url: '/privacy', target: '_blank' },
-    { name: 'Sitemap', url: '/sitemap', target: '_blank' },
-  ],
-  Listings: [
-    { name: 'For Referral Agents', url: '/partners/agents', target: '_blank' },
-    { name: 'For Communities', url: '/partners/communities', target: '_blank' },
-    { name: 'How It Works', url: '/how-it-works', target: '_blank' },
-  ],
-  Resources: [
-    { name: 'Senior Living Resources', url: '/resources', target: '_blank' },
-    { name: 'Assisted Living', url: '/assisted-living', target: '_blank' },
-    { name: 'Independent Living', url: '/independent-living', target: '_blank' },
-    { name: 'Board and Care Home', url: '/board-and-care-home', target: '_blank' },
-    { name: 'Memory Care', url: '/memory-care', target: '_blank' },
-    { name: 'Senior Living', url: '/senior-living', target: '_blank' },
-    { name: 'Veteran\'s Benefits', url: '/veterans-benefit-assisted-living', target: '_blank' },
-    { name: 'Home Care', url: '/in-home-care', target: '_blank' },
-    { name: 'Respite Care', url: '/respite-care', target: '_blank' },
-    { name: 'CCRC', url: '/continuing-care-retirement-community', target: '_blank' },
-    { name: 'Nursing Homes', url: '/nursing-homes', target: '_blank' },
-    { name: 'Skilled Nursing Facilities', url: '/skilled-nursing-facility', target: '_blank' },
-  ],
+const aboutUs = { 
+  'Our story': '/about', 
+  'Contact us': '/contact', 
+  'Press and media': '/about#/#press', 
+  'Careers': 'https://angel.co/company/seniorly/jobs', 
 };
 
-const Version = styled.span`
-  opacity: 0.5;
+const typesOf = {
+  'Assisted living': '/assisted-living', 
+  'Independent living': '/independent-living', 
+  'Board and care homes': '/board-and-care-home', 
+  'Memory care': '/memory-care', 
+  'Home care': '/in-home-care', 
+  'Respite care': '/respite-care', 
+  'Continuing care retirement communities (CCRC)': '/continuing-care-retirement-community', 
+  'Skilled nursing facilities': '/skilled-nursing-facility', 
+  'Senior living overview': '/senior-living', 
+};
+
+const forFamilies = {
+  'Senior living resources': '/resources', 
+  'How it works': '/how-it-works', 
+  'Seniorly Local Advisors': '/agents', 
+  'Veteran\'s benefits': '/veterans-benefit-assisted-living', 
+};
+
+const forPartners = {
+  'Partner agents': '/partners/agents', 
+  'Partner communities': '/partners/communities', 
+};
+
+const Body = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  border-bottom: none;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+    display: flex;
+    > * {
+      flex: 1 1 0px;
+    }
+    border-bottom: 1px solid ${palette('slate.lighter-90')};
+    padding-bottom: 0px;
+    margin-bottom: 24px;
+  }
 `;
 
-class Footer extends PureComponent {
-  render() {
-    const currentYear = (new Date()).getFullYear();
-    const groupComponents = Object.keys(groups).map((group) => {
-      const groupItemComponents = groups[group].map((item) => {
-        return (
-          <GroupItem key={item.name} to={item.url} target={item.target}>
-            {item.name}
-          </GroupItem>
-        );
-      });
-      return (
-        <GroupDiv key={group}>
-          <GroupHeading>{group}</GroupHeading>
-          {groupItemComponents}
-        </GroupDiv>
-      );
-    });
-    return (
-      <Block
-        as="footer"
-        background="slate.base"
-        color="white.base"
-        {...this.props}
-      >
-        <FooterTopWrapper>
-          <GroupDiv>
-            <GroupItem to="/">
-              <SeniorlyWhiteIcon icon="logo" palette="white" size="xxLarge" />
-              <Block>Find the Best Senior Living</Block>
-            </GroupItem>
-          </GroupDiv>
-          {groupComponents}
-        </FooterTopWrapper>
-        <Hr palette="grey" variation="dark" pad="regular" />
-        <FooterBottomWrapper>
-          <TradeMark>&copy; Seniorly {currentYear} <Version>{config.version}</Version></TradeMark>
-          <RightWrapper>
-            <Join>
-              Join Our Community
-            </Join>
-            <SocialIcons>
-              <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="hero" palette="white" /></Link>
-              <Link href="https://twitter.com/Seniorly"><FooterIcon icon="twitter" size="hero" palette="white" /></Link>
-              <Link href="https://www.linkedin.com/company/seniorly"><FooterIcon icon="linkedin" size="hero" palette="white" /></Link>
-              <Link href="https://www.instagram.com/seniorlyinc"><FooterIcon icon="instagram" size="hero" palette="white" /></Link>
-              <Link href="https://www.pinterest.com/seniorly"><FooterIcon icon="pinterest" size="hero" palette="white" /></Link>
-            </SocialIcons>
-          </RightWrapper>
-        </FooterBottomWrapper>
-      </Block>
-    );
+const FooterGroup = styled.div`
+  padding-top: 24px;
+  border-bottom: 1px solid ${palette('slate.lighter-90')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border-bottom: none;
   }
-}
+`;
+
+const GroupHeading = styled(Heading)`
+  text-transform: uppercase;
+`;
+
+GroupHeading.defaultProps = {
+  font: 'label',
+  palette: 'slate.lighter-30',
+  pad: 'xLarge',
+};
+
+const Links = ({ items }) => (
+  <Block
+    css={css`
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 12px;
+
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      @media screen and (min-width: ${size('breakpoint.laptop')}) {
+        flex-direction: column;
+      }
+
+      > a {
+        display: block;
+        margin-bottom: 12px;
+        padding-right: 16px;
+
+        @media screen and (min-width: ${size('breakpoint.tablet')}) {            
+          width: calc(100%/3); 
+        }
+
+        @media screen and (min-width: ${size('breakpoint.laptop')}) {
+          width: 100%;
+        }
+      }
+
+    `}
+  >
+    {Object.entries(items).map(([name, url]) => (
+      <Link
+        palette="slate"
+        font="body-small" 
+        to={url}
+      >
+        {name}
+      </Link>
+    ))}
+  </Block>
+);
+
+const Bottom = styled.div`
+  margin: 0 auto;
+  position: relative;
+  padding: 0px 24px 24px;
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    ${Icon} {
+      margin-bottom: 24px;
+    }
+  }
+
+  .right {
+    position: absolute;
+    top: 0px;
+    right: 24px;
+    > a {
+      margin-left: 12px;
+      color: ${palette('slate.base')}
+    }
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    .left {
+      flex-direction: row;
+      align-items: center;
+      ${Icon} {
+        margin-bottom: 0px;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+    display: flex;
+  }
+`;
+
+const Footer = () => (
+  <Block as="footer" background="harvest.lighter-90">
+    <Body>
+      <FooterGroup>
+        <GroupHeading>About us</GroupHeading>
+        <Links items={aboutUs} />
+      </FooterGroup>
+      <FooterGroup>
+        <GroupHeading>Types of senior living</GroupHeading>
+        <Links items={typesOf} />
+      </FooterGroup>
+      <FooterGroup>
+        <GroupHeading>For families</GroupHeading>
+        <Links items={forFamilies} />
+      </FooterGroup>
+      <FooterGroup>
+        <GroupHeading>For partners</GroupHeading>
+        <Links items={forPartners} />
+      </FooterGroup>
+    </Body>
+
+    <Bottom>
+      <div className="left">
+        <Link to="/"><Icon icon="logo" size={32} /></Link>
+        <Span font="body-small">
+          &copy; 
+          Seniorly {currentYear} 
+          <Span palette="slate.lighter-30">{config.version}</Span> 
+          {' '}· <Link to="/privacy">Privacy</Link>
+          {' '}· <Link to="/tos">Terms</Link>
+          {/* {' '}· <Link to="/sitemap">Sitemap</Link> */}
+        </Span>
+      </div>
+      <div className="right">
+        <Link href="https://www.facebook.com/seniorly/posts"><Icon icon="facebook" /></Link>
+        <Link href="https://www.instagram.com/seniorlyinc"><Icon icon="instagram" /></Link>
+        <Link href="https://twitter.com/Seniorly"><Icon icon="twitter" /></Link>
+        <Link href="https://www.linkedin.com/company/seniorly"><Icon icon="linkedin" /></Link>
+      </div>
+    </Bottom>
+  </Block>
+); 
 
 export default Footer;
