@@ -12,28 +12,34 @@ import IconButton from 'sly/common/components/molecules/IconButton';
 const WelcomeBannerGrid = styled.div`
   ${withShadow}
   position: relative;
-  padding-right: 24px;
+  padding: ${size('spacing.xLarge')} ${size('spacing.xLarge')} 0 ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
   background-color: ${palette('white', 'base')}; 
   ${startingWith('tablet', css`
-    display: grid;
+  padding: ${size('spacing.xxxLarge')} ${size('spacing.xxxLarge')} 0 ${size('spacing.xxxLarge')};
+  display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: auto 280px;
     grid-template-areas: 
       "heading image"
       "body image";
   `)}
-
-
   ${startingWith('laptop', css`
-    padding-right: 60px;
+  padding: ${size('spacing.huge')} ${size('spacing.huge')} 0 ${size('spacing.huge')};  
+  
   `)}
 `;
 
 const WelcomeBanner = ({ onClose, title, description }) => (
   <WelcomeBannerGrid>
-    <Block padding="large" size="subtitle" gridArea="heading"> {title} </Block>
-    <Block padding="large" gridArea="body">{description}</Block>
+    <Block
+      marginBottom={size('spacing.large')}
+      size="title"
+      gridArea="heading"
+    >
+      {title}
+    </Block>
+    <Block gridArea="body">{description}</Block>
     <ResponsiveImage gridArea="image" aspectRatio="3:2" src={assetPath('images/homebase/welcome.png')} />
     <IconButton
       icon="close"
