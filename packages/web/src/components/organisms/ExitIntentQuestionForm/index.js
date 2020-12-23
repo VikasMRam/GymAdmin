@@ -26,7 +26,7 @@ const ExitIntentQuestionForm = ({
   handleSubmit, submitting, error,
 }) => (
   <form onSubmit={handleSubmit}>
-    <StyledHeading level="title" size="subtitle">Wait! Get support from a Seniorly Local Advisors. This is a free service.</StyledHeading>
+    <StyledHeading level="title" size="subtitle">Wait! Get support from a Seniorly Local Advisor. This is a free service.</StyledHeading>
     <Field
       name="question"
       label="Your question"

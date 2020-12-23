@@ -410,7 +410,7 @@ const MemoryCareNearMePage = ({
 
         <StyledArticle>
           <Heading level="title" size="title" >
-            What Is A Seniorly Local Advisors?
+            What Is A Seniorly Local Advisor?
           </Heading>
           <WhatIsPartnerAgent toc="board and care homes" agents={agents} />
         </StyledArticle>

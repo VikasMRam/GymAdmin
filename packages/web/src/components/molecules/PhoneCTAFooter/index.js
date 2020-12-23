@@ -31,7 +31,7 @@ const PhoneCTAFooter = () => (
       <Link href="tel:+18558664515" palette="white">(855) 866-4515</Link>
     </StyledHeading>
     <StyledLabel palette="white">
-      Our Seniorly Local Advisorss are standing by
+      Our Seniorly Local Advisors are standing by
     </StyledLabel>
   </PhoneCTAWrapper>
 );

@@ -164,7 +164,7 @@ export default class GetAssessmentBoxContainer extends Component {
               <MatchedAgent
                 hasBox={false}
                 agent={agent}
-                heading={`Request sent! Your Seniorly Local Advisors, ${agent.name} will get back to you with pricing information on this community.`}
+                heading={`Request sent! Your Seniorly Local Advisor, ${agent.name} will get back to you with pricing information on this community.`}
               />
             }
             {!agent &&
@@ -172,7 +172,7 @@ export default class GetAssessmentBoxContainer extends Component {
                 hasBox={false}
                 community={community}
                 onReturnClick={this.toggleModal}
-                heading="Request sent! One of our Seniorly Local Advisorss will reach out to assist you."
+                heading="Request sent! One of our Seniorly Local Advisors will reach out to assist you."
                 description="Questions? You can contact us by phone or email:"
               >
                 <Block pad="regular">

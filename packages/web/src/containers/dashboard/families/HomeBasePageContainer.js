@@ -89,7 +89,8 @@ export default class HomeBasePageContainer extends Component {
     } = this.props;
     const { pathname, search, hash } = location;
     const params = removeQueryParamFromURL('modal', search);
-    history.replace(`${pathname}${stringify(params)}${hash}`);
+    const params2 = removeQueryParamFromURL('communityName', params);
+    history.replace(`${pathname}${stringify(params2)}${hash}`);
     SlyEvent.getInstance().sendEvent({
       category: 'homeBase',
       action: 'closeModal',
@@ -101,17 +102,20 @@ export default class HomeBasePageContainer extends Component {
     const { location: { search }, status, homeBase, uuidAux } = this.props;
     const { currentGalleryImage, showBanner } = this.state;
     const qp = parseURLQueryParams(search);
-    console.log('seeing query params', qp);
     const bannerSeen = retrieveLocalStorage('welcomeBannerSeen');
 
     if (status.homeBase && status.homeBase.error) {
       return <RefreshRedirect to="/" />;
     }
-
+    const wc = getWelcomeContent(homeBase, qp, 'modal');
+    let mc = wc.noAgent;
+    if (homeBase && homeBase.hasAreaAgent) {
+      mc = wc.matched;
+    }
 
     return (
       <div>
-        <EntryModal content={getWelcomeContent(homeBase, qp.modal, 'modal')} isOpen={shouldShowModal(qp.modal)} onClose={this.closeRequestConfirmationModal} />
+        <EntryModal content={mc} isOpen={shouldShowModal(qp.modal)} onClose={this.closeRequestConfirmationModal} />
         <FamilyHomePage
           homeBase={homeBase}
           uuidAux={uuidAux}

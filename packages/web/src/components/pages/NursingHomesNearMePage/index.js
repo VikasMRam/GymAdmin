@@ -461,7 +461,7 @@ const NearMePage = ({
           </ul>
           <Paragraph>
             In addition to this list, we can connect you to a{' '}
-            <Link href="https://www.seniorly.com/agents">Seniorly Local Advisors</Link>
+            <Link href="https://www.seniorly.com/agents">Seniorly Local Advisor</Link>
             {' '}in almost any city
             in the United States.  These are senior housing experts who can assist you through every step of the process,
             from touring to negotiating rent to moving.  Their services are 100% free.  If you would like their assistance,

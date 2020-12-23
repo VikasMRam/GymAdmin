@@ -524,7 +524,7 @@ const NearMePage = ({
         </StyledArticle>
         <StyledArticle>
           <Heading level="title" size="title" >
-            What Is A Seniorly Local Advisors?
+            What Is A Seniorly Local Advisor?
           </Heading>
           <WhatIsPartnerAgent toc="assisted living" agents={agents} />
         </StyledArticle>

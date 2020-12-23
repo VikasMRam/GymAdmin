@@ -39,7 +39,7 @@ export default class CarePageAdTileContainer extends Component {
     isModalOpen: false,
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
-    modalHeading: 'Our Seniorly Local Advisorss can help you with your search.',
+    modalHeading: 'Our Seniorly Local Advisors can help you with your search.',
   };
 
   componentDidMount() {

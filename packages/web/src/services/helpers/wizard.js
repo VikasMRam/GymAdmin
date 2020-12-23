@@ -25,7 +25,7 @@ export const getWizardContentFromEntry = (entry) => {
           title: 'We need to ask a few quick questions to understand your needs.',
           description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
         signup: { heading: 'Thanks! Your information helps us understand your needs and make personalized recommendations.',
-          description: 'We’ll send your request and connect you with one of our Seniorly Local Advisors who will help you with pricing and availability.' },
+          description: 'We’ll send your request and connect you with one of our Seniorly Local Advisor who will help you with pricing and availability.' },
       };
     case 'searchList':
     case 'communityOptions':
@@ -52,7 +52,7 @@ export const getWizardContentFromEntry = (entry) => {
           title: 'We need to ask a few quick questions to understand your needs',
           description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
         signup: { heading: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.',
-          description: 'We’ll send your request and connect you with one of our Seniorly Local Advisors who will help you with pricing and availability.' },
+          description: 'We’ll send your request and connect you with one of our Seniorly Local Advisor who will help you with pricing and availability.' },
       };
   }
 };

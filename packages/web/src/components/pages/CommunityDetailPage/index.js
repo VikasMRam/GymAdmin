@@ -176,7 +176,7 @@ const makeBanner = (profileContacted) => {
 
   return `We have your ${requests.join(
     '',
-  )} request. Your Seniorly Local Expert is checking with this community and will get back to you shortly.`;
+  )} request. Your Seniorly Local Advisor is checking with this community and will get back to you shortly.`;
 };
 
 export default class CommunityDetailPage extends Component {
@@ -388,7 +388,7 @@ export default class CommunityDetailPage extends Component {
                 </StyledHeadingBoxSection>
                 }
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisors in ${address.city}, ${address.state}`}>
+                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
                     <AskAgentQuestionButtonContainer
                       width="100%"

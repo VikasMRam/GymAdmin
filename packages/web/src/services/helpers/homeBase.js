@@ -59,13 +59,15 @@ export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
     speakExpert: {
       banner: { title: 'We need to ask a few quick questions to understand your needs',
         description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
-      modal: { heading: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.',
-        description: 'We’ll send your request and connect you with one of our Seniorly Local Advisors who will help you with pricing and availability.' },
-      confirmationMatched: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
-        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
-      },
-      confirmationNoAgent: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
-        description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
+      modal: {
+        matched: { heading: 'We\'ve sent your request!',
+          caption: 'What happens next?',
+          description: 'A Seniorly Local Advisor will contact you shortly to help you understand your options, offer expert insights, and answer any questions you may have. In the meantime, you can explore our recommendations and other helpful resources in your Home Base.',
+        },
+        noAgent: { heading: 'We\'ve sent your request!',
+          caption: 'Ready to explore your Home Base?',
+          description: 'This is your private Seniorly space where you’ll see our recommendations for the best communities for your needs and budget. You’ll also find other helpful resources and special offers in your Seniorly Home Base.',
+        },
       },
     },
   };

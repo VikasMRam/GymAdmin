@@ -48,14 +48,14 @@ const End = ({ handleSubmit, community, city, hasNoAgent, agent, adTile }) => (
           community={community}
           onSubmit={handleSubmit}
           heading={community ?
-            `You're all set! One of our Seniorly Local Advisorss will reach out shortly to assist you with pricing for ${community.name}.` :
-            `You're all set! One of our Seniorly Local Advisorss will reach out shortly to assist you with your search${city ? ` in ${city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ')}` : ''}.`
+            `You're all set! One of our Seniorly Local Advisors will reach out shortly to assist you with pricing for ${community.name}.` :
+            `You're all set! One of our Seniorly Local Advisors will reach out shortly to assist you with your search${city ? ` in ${city.replace('-', ' ').split(' ').map(s => capitalize(s)).join(' ')}` : ''}.`
           }
         />
       }
       {!hasNoAgent &&
         <MatchedAgent
-          heading={agent ? `We've matched you with your Seniorly Local Advisors, ${agent.name}. They will reach out shortly to assist you.` : ''}
+          heading={agent ? `We've matched you with your Seniorly Local Advisor, ${agent.name}. They will reach out shortly to assist you.` : ''}
           agent={agent}
           prevLink={community ? community.url : '/'}
         />

@@ -24,7 +24,7 @@ export default class MatchedAgentContainer extends Component {
     if (hasNoAgent) {
       return (
         <div>
-          <PaddedPostConversionGreetingForm heading={`You're all set! One of our Seniorly Local Advisorss will reach out shortly to assist you with pricing for ${community.name}.`} community={community} onSubmit={onSubmit} />
+          <PaddedPostConversionGreetingForm heading={`You're all set! One of our Seniorly Local Advisors will reach out shortly to assist you with pricing for ${community.name}.`} community={community} onSubmit={onSubmit} />
           {/* <PostConversionAdTileContainer type="homeCare" layout="row" community={community} /> */}
         </div>
       );

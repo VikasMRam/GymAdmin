@@ -547,7 +547,7 @@ export const getHelmetForPartnersPage = () => {
   return (
     <Helmet>
       <title>Partner Agent Program</title>
-      <meta name="description" content="Seniorly partners with over 300 Seniorly Local Advisorss nationwide who provide a personalized approach to finding pricing, availability, amenities and more for thousands of senior care communities." />
+      <meta name="description" content="Seniorly partners with over 300 Seniorly Local Advisors nationwide who provide a personalized approach to finding pricing, availability, amenities and more for thousands of senior care communities." />
     </Helmet>
   );
 };
