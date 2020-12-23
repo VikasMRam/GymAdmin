@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { forwardRef, useMemo, useCallback, useState, useEffect } from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
@@ -10,6 +11,9 @@ import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Grid from 'sly/common/components/atoms/Grid';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import { startingWith } from 'sly/common/components/helpers/media';
+import useScrollObserver from 'sly/common/components/helpers/useScrollObserver';
+
+import CarrousselButton from './CarrousselButton'
 
 const mostSearchedCities = [{
   to: '/assisted-living/california/los-angeles',
@@ -161,8 +165,26 @@ const mostSearchedCities = [{
   image: 'react-assets/home/cities/Raleigh.jpg',
   alt: 'Raleigh assisted living seniorly',
   subtitle: 'Raleigh, NC',
-},
-];
+}];
+
+const GridButton = forwardRef(({ direction, ...props }, ref) => {
+  const css = {
+    position: 'absolute',
+    top: 160,
+    [direction]: 24,
+  };
+  return (
+    <CarrousselButton
+      ref={ref}
+      css={css}
+      upToLaptop={{
+        display: 'none!important',
+      }}
+      rotate={direction === 'left' ? 2 : 0}
+      {...props}
+    />
+  );
+}); 
 
 const Bottom = styled.div`
   position: absolute;
@@ -187,9 +209,30 @@ const CityTile = styled(({
 `;
 
 const CommunitiesByCity = (onLocationSearch) => {
+  const [ref, dimensions] = useScrollObserver();
+  const [max, step] = useMemo(() => {
+    return [
+      (dimensions.scrollX + 24) / (240 + 16),
+      Math.floor(dimensions.clientWidth / (240 + 16))
+    ];
+  }, [dimensions]) || 0;
+
+  const [position, setPosition] = useState(0);
+  const move = useCallback((direction) => {
+    const newPos = Math.min(Math.max(0, position + (direction * step)), max)
+    setPosition(newPos);
+  }, [max, step, position])
+
+  useEffect(() => {
+    ref.current.scroll({
+      left: position * (240 + 16),
+      behavior: 'smooth',
+    });
+  }, [position]);
+
   return (
-    <Block padding="large">
-      <Grid gap="large" overflow="auto" dimensions={['repeat(15,240px)']}>
+    <Block position="relative">
+      <Grid ref={ref} gap="large" padding="large" overflow="auto" dimensions={['repeat(15,240px)']}>
         {mostSearchedCities.map(mostSearchedCity => (
           <CityTile key={mostSearchedCity.subtitle} size="body" {...mostSearchedCity}>
             <Heading palette="white" size="subtitle" level="subtitle" pad="0">{mostSearchedCity.subtitle}</Heading>
@@ -197,6 +240,10 @@ const CommunitiesByCity = (onLocationSearch) => {
           </CityTile>
         ))}
       </Grid>
+
+      <GridButton direction="left" onClick={() => move(-1)} />
+      <GridButton direction="right" onClick={() => move(+1)} />
+
       <Block
         display="flex"
         alignItems="center"
