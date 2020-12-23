@@ -9,6 +9,10 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Block from 'sly/common/components/atoms/Block';
 
 const iconSize = ({ size: s }) => {
+  if (typeof s === 'number') {
+    return `${s}px`;
+  }
+
   const textSize = getKey(`sizes.text.${s}`);
   const lineHeight = getKey(`sizes.lineHeight.${s}`);
   return textSize
@@ -24,7 +28,7 @@ const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)
 const Wrapper = styled(Block)`
   // sizes relative to set font-size
   vertical-align: top;
-  align-self: center;
+  /* align-self: center; */
 
   width: max-content;
   height: max-content;

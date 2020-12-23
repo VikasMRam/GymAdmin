@@ -1,11 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { func, string, object } from 'prop-types';
 
-import { host } from 'sly/web/config';
 import { size, getKey } from 'sly/common/components/themes';
-import { gridColumns, assetPath } from 'sly/web/components/themes';
-import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
+import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
@@ -13,12 +11,14 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Section from 'sly/web/components/molecules/Section';
-import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import Footer from 'sly/web/components/organisms/Footer';
 import HomeCTABox from 'sly/web/components/organisms/HomeCTABox';
 import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
+import QuotesCarroussel from 'sly/web/components/homepage/QuotesCarroussel';
+import CommunitiesByCity from 'sly/web/components/homepage/CommunitiesByCity';
+import Guides from 'sly/web/components/homepage/Guides';
+import { startingWith } from 'sly/common/components/helpers/media';
 
 const StyledSection = styled(Section)`
   text-align: center;
@@ -29,185 +29,18 @@ const StyledSection = styled(Section)`
   }
 `;
 
-const UIColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  ${gridColumns(1, size('spacing.xLarge'))};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${gridColumns(2, size('spacing.xLarge'))};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${gridColumns(3, size('spacing.xLarge'))};
-  }
-`;
-
-const MSCColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  ${gridColumns(1, size('spacing.xLarge'))};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${gridColumns(2, size('spacing.xLarge'))};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${gridColumns(4, size('spacing.xLarge'))};
-  }
-`;
-
-const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
-const CWTImage = styled(ResponsiveImage)`
-  margin-bottom: ${size('spacing.regular')};
-  height: ${size('picture.tiny.height')};
-`;
-
-const CWTColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xxLarge')};
-  > * {
-    margin-right: ${size('spacing.large')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    justify-content: center;
-    > * {
-      margin-right: ${size('spacing.huge')};
-    }
-  }
-`;
-
-// this is required for IE as it won't consider inline elements as flex children
-const StyledLink = styled(Link)`
-  display: block;
-`;
-
-const CenteredTile = styled(({
-  title, to, alt, image, children, ...props
-}) => (
-  <StyledLink key={title} to={to} {...props}>
-    <ResponsiveImage path={image} alt={alt} aspectRatio="3:2">
-      <Centered>
-        {children}
-      </Centered>
-    </ResponsiveImage>
-  </StyledLink>
-))`
-  overflow: hidden;
-  border-radius: ${size('spacing.small')};
-`;
-
-const usefulInformationTiles = [
-  {
-    to: '/independent-living',
-    image: 'react-assets/home/useful-info/independent-living.jpg',
-    alt: 'independent living senior living seniorly',
-    title: 'Independent Living',
-  },
-  {
-    to: '/assisted-living',
-    image: 'react-assets/home/useful-info/assisted-living.jpg',
-    alt: 'assisted living senior living seniorly',
-    title: 'Assisted Living',
-  },
-  {
-    to: '/memory-care',
-    image: 'react-assets/home/useful-info/memory-care.jpg',
-    alt: 'memory care senior living seniorly',
-    title: 'Memory Care',
-  },
-  {
-    to: '/board-and-care-home',
-    image: 'react-assets/home/useful-info/board-and-care.jpg',
-    alt: 'board and care home senior living seniorly',
-    title: 'Board & Care Home',
-  },
-  /* {
-    to: '#',
-    image: 'react-assets/home/useful-info/skilled-nursing.jpeg',
-    title: 'Skilled Nursing',
-  }, */
-  {
-    to: '/continuing-care-retirement-community',
-    image: 'react-assets/home/useful-info/ccrc.jpg',
-    alt: 'ccrc senior living seniorly',
-    title: 'CCRC / Life Plan',
-  },
-  {
-    to: '/resources',
-    image: 'react-assets/home/useful-info/more-resources.jpg',
-    alt: 'more senior living resources seniorly',
-    title: 'More Resources',
-  },
-];
-
-const mostSearchedCities = [
-  {
-    to: '/assisted-living/california/san-francisco',
-    image: 'react-assets/cities/SanFrancisco.jpeg',
-    alt: 'san francisco assisted living seniorly',
-    subtitle: 'San Francisco, CA',
-    title: '95+ communities',
-  },
-  {
-    to: '/assisted-living/california/los-angeles',
-    image: 'react-assets/cities/LosAngeles.jpeg',
-    alt: 'los angeles assisted living seniorly',
-    subtitle: 'Los Angeles, CA',
-    title: '105+ communities',
-  },
-  {
-    to: '/assisted-living/california/san-diego',
-    image: 'react-assets/cities/SanDiego.jpeg',
-    alt: 'san diego assisted living seniorly',
-    subtitle: 'San Diego, CA',
-    title: '75+ communities',
-  },
-  {
-    to: '/assisted-living/texas/dallas',
-    image: 'react-assets/cities/Dallas.jpeg',
-    alt: 'dallas assisted living seniorly',
-    subtitle: 'Dallas, TX',
-    title: '90+ communities',
-  },
-  {
-    to: '/assisted-living/florida/miami',
-    image: 'react-assets/cities/Miami.jpeg',
-    alt: 'miami assisted living seniorly',
-    subtitle: 'Miami, FL',
-    title: '150+ communities',
-  },
-  {
-    to: '/assisted-living/arizona/phoenix',
-    image: 'react-assets/cities/Pheonix.jpeg',
-    alt: 'phoenix assisted living seniorly',
-    subtitle: 'Phoenix, AZ',
-    title: '151+ communities',
-  },
-  {
-    to: '/assisted-living/florida/orlando',
-    image: 'react-assets/cities/Orlando.jpeg',
-    alt: 'orlando assisted living seniorly',
-    subtitle: 'Orlando, FL',
-    title: '60+ communities',
-  },
-  {
-    to: '/assisted-living/florida/sacramento',
-    image: 'react-assets/cities/Sacramento.jpeg',
-    alt: 'sacramento assisted living seniorly',
-    subtitle: 'Sacramento, CA',
-    title: '150+ communities',
-  },
-];
-
-
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
   action,
   label,
   value,
 });
+
+const blockPad = css`
+  margin-bottom: 48px;
+  ${startingWith('tablet', css({ marginBottom: 64 }))}
+  ${startingWith('laptop', css({ marginBottom: 80 }))}
+`;
 
 const HomePage = ({
   showModal, hideModal, onLocationSearch,
@@ -270,7 +103,7 @@ const HomePage = ({
                 Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
               </Block>
               <Button
-                to="/wizards/assessment"
+                to="/wizards/assessment?cta=generalOptions&entry=homepage"
                 kind="jumbo"
                 upToTablet={{
                   width: '100%',
@@ -349,25 +182,8 @@ const HomePage = ({
     showModal(modalContent, closeModal, 'searchBox');
   };
 
-  const usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
-    <CenteredTile key={usefulInformation.title} {...usefulInformation}>
-      <Heading palette="white">{usefulInformation.title}</Heading>
-    </CenteredTile>
-  ));
-
-  const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-    <CenteredTile key={mostSearchedCity.subtitle} size="body" {...mostSearchedCity}>
-      <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-      <Block palette="white">{mostSearchedCity.title}</Block>
-    </CenteredTile>
-  ));
-
-  const canonicalUrl = `${host}`;
-  const significantLinks = usefulInformationTiles.map(info => info.to);
-  const header = getHelmetForHomePage({ canonicalUrl, significantLinks });
   return (
     <>
-      {header}
       <TemplateHeader noBottomMargin>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <Section
@@ -393,7 +209,7 @@ const HomePage = ({
               heading="Your Own Advisor"
               buttonText="Speak with an expert"
               buttonProps={{
-                to: '/wizards/assessment',
+                to: '/wizards/assessment?cta=generalOptions&entry=homepage',
               }}
             >
               We connect you with a Seniorly Local Advisor, our trusted partner who knows the communities in your area. Rely on your advisor as much or as little as you need to find a new home you&apos;ll love.
@@ -404,7 +220,7 @@ const HomePage = ({
               buttonText="Take our quiz"
               buttonPalette="primary"
               buttonProps={{
-                to: '/wizards/assessment',
+                to: '/wizards/assessment?cta=speakExpert&entry=homepage',
               }}
             >
               Take our short quiz to set your personal preferences, then see the communities we recommend for you. Seniorly Smart Search helps you make sense of your options and choose wisely.
@@ -509,61 +325,60 @@ const HomePage = ({
               }}
             />
           </Grid>
+          <Grid
+            gap="xxxLarge"
+            upToLaptop={{
+              gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr`,
+            }}
+            upToTablet={{
+              gridTemplateColumns: 'auto!important',
+            }}
+          >
+            <ResponsiveImage
+              path="react-assets/home/home-base.png"
+              alt="smarter-way"
+              css={{
+                maxWidth: '100%',
+              }}
+            />
+            <div>
+              <Heading
+                level="subtitle"
+                size="display"
+                pad="xLarge"
+                css={{
+                  maxWidth: `calc(${getKey('sizes.layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
+                }}
+              >
+                Your Home Base
+              </Heading>
+              <Block size="subtitle" weight="regular" pad="xLarge">We keep your search results, advisor contact info, and your communications in a private, secure&nbsp;
+                <Block display="inline" background="harvest.lighter-90" palette="harvest.darker-15" padding={['small', 'tiny']}><b>Seniorly</b> Seniorly Home Base</Block>
+                &nbsp;to help you stay organized along the way. It’s easy to communicate with your advisor and change your preferences to explore different types of communities.
+              </Block>
+              <Grid flow="row" gap="medium">
+                <IconItem icon="community-size-small" iconPalette="harvest">See your recommended communities</IconItem>
+                <IconItem icon="list" iconPalette="harvest">Evaluate your options efficiently</IconItem>
+                <IconItem icon="message" iconPalette="harvest">Stay in touch with your personal advisor</IconItem>
+                <IconItem icon="baseline-loyalty" iconPalette="harvest">Get special offers for other products and services</IconItem>
+              </Grid>
+            </div>
+          </Grid>
         </Block>
 
-        <StyledSection title="Useful Senior Living Resources" subtitle="Get expert planning information for families and caregivers">
-          <UIColumnWrapper>
-            {usefulInformationTilesComponents}
-          </UIColumnWrapper>
-        </StyledSection>
-        <Hr />
-        <StyledSection title="Most Searched Cities for Senior Living">
+        <StyledSection title="Explore communities by city.">
           <Paragraph>
-            Find the best assisted living facilities, memory care communities and more within 8 of the most searched
-            cities in the United States. From{' '}
-            <Link href="https://www.seniorly.com/assisted-living/california/los-angeles">
-              Los Angeles
-            </Link>
-            {' '}and{' '}
-            <Link href="https://www.seniorly.com/assisted-living/california/sacramento">
-              Sacramento
-            </Link>
-            {' '}to{' '}
-            <Link href="https://www.seniorly.com/assisted-living/texas/dallas">
-              Dallas
-            </Link>
-            {' '}and{' '}
-            <Link href="https://www.seniorly.com/assisted-living/florida/orlando">
-              Orlando
-            </Link>
-            , you will find photos, estimated cost per month, unique property highlights and more
+            See our exclusive photos, monthly pricing, and expert insights for each community. You can learn more about the places you like or speak with a Seniorly Local Advisor in that city.
           </Paragraph>
-          <MSCColumnWrapper>
-            {mostSearchedCitiesComponents}
-          </MSCColumnWrapper>
         </StyledSection>
-        <Hr />
-        <StyledSection title="Corporate Senior Living Partners">
-          <CWTColumnWrapper>
-            <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
-          </CWTColumnWrapper>
-          <CWTColumnWrapper>
-            <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
-            <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
-          </CWTColumnWrapper>
-          <CWTColumnWrapper>
-            <StyledBlock size="subtitle">Become A Seniorly Partner Community</StyledBlock>
-            <Button href="/partners/communities" kind="jumbo">Create Account</Button>
-          </CWTColumnWrapper>
-        </StyledSection>
-        <SeoLinks title="Assisted Living by City" links={ALSeoCities} />
-        <SeoLinks title="Assisted Living by State" links={ALSeoStates} />
       </TemplateContent>
+
+      <CommunitiesByCity onLocationSearch={onLocationSearch}/>
+
+      <Guides css={blockPad} />
+
+      <QuotesCarroussel css={blockPad} />
+
       <Grid
         upToTablet={{
           display: 'flex!important',
@@ -598,7 +413,7 @@ const HomePage = ({
               background="primary"
               palette="white"
               borderPalette="white"
-              to="/wizards/assessment"
+              to="/wizards/assessment?cta=generalOptions&entry=homepage"
               kind="jumbo"
               upToTablet={{
                 width: '100%',

@@ -33,6 +33,10 @@ export function getKey(...args) {
   return prop(key)(theme);
 }
 
+export function getFont(variant) {
+  return prop(['sizes', 'font', variant].join('.'))(theme);
+}
+
 export function getSize(...args) {
   return getKey(['sizes', ...args].join('.'));
 }
