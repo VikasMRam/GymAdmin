@@ -34,7 +34,7 @@ const CommunityAgentSection = ({
     imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
   }
   let dimensions = ['max-content', 'max-content'];
-  if (layout === 'wizard') {
+  if (layout === 'homeBase') {
     dimensions = ['min-content', 'min-content'];
   }
 
