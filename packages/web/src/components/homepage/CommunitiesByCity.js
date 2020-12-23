@@ -9,8 +9,7 @@ import Link from 'sly/common/components/atoms/Link';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Grid from 'sly/common/components/atoms/Grid';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
-
-
+import { startingWith } from 'sly/common/components/helpers/media';
 
 const mostSearchedCities = [{
   to: '/assisted-living/california/los-angeles',
@@ -198,16 +197,28 @@ const CommunitiesByCity = (onLocationSearch) => {
           </CityTile>
         ))}
       </Grid>
-      <Block display="flex" alignItems="center" flexDirection="column" padding="xLarge" paddingBottom="xxxLarge">
+      <Block
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        padding="xLarge"
+        paddingBottom="xxxLarge"
+      >
         <Heading size="title" level="subtitle">Find communities in your area.</Heading>
-        <SearchBoxContainer
-          layout="homeHero"
-          onLocationSearch={(e) => {
-            onLocationSearch(e, true);
+        <Block
+          width="100%"
+          startingWithTablet={{
+            maxWidth: '360px',
           }}
-        />
+        >
+          <SearchBoxContainer
+            layout="homeHero"
+            onLocationSearch={(e) => {
+              onLocationSearch(e, true);
+            }}
+          />
+        </Block>
       </Block>
-
     </Block>
   );
 };
