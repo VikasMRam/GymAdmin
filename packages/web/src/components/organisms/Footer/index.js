@@ -186,7 +186,7 @@ const Footer = () => (
 
     <Bottom>
       <div className="left">
-        <Link to="/"><Icon icon="logo" size={32} /></Link>
+        <Link to="/"><Icon icon="logo" size={32} marginTop="-4px" /></Link>
         <Span font="body-small">
           &copy; 
           Seniorly {currentYear} 
