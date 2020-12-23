@@ -3,20 +3,18 @@ import styled, { css } from 'styled-components';
 import { func, string, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/common/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Button } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 
 export const Wrapper = styled.section`
+background-color: ${palette('white', 'background')};    
+
   margin: auto;
   display: grid;
   ${ifProp('hasSecondColumn', css`
     grid-gap: ${size('layout.gutter')};
   `)}
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col5')} ${ifProp('hasSecondColumn', css`${size('layout.col3')}`)};
-  }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-template-columns: ${size('layout.col5')} ${ifProp('hasSecondColumn', css`${size('layout.col3')}`)};

@@ -100,7 +100,7 @@ const FamilyHomePage = ({
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&
             <HeadingBoxSection maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city},${state}`} >
-              <CommunityAgentSectionContainer agent={agent} pad="xLarge" />
+              <CommunityAgentSectionContainer layout="homeBase" agent={agent} pad="xLarge" />
               <Button onClick={openAskAgentQuestionModal}> Ask {agent.name} a question</Button>
             </HeadingBoxSection>
             }

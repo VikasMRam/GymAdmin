@@ -16,7 +16,7 @@ const Intro = ({
           <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
             {title}
           </Heading>
-          {description !== '' && <Block>{description}</Block>}
+          {description !== '' && <Block pad="xLarge">{description}</Block>}
         </Block>
         <Field
           name="whatToDoNext"

@@ -58,7 +58,7 @@ const AdvisorHelpPopup = ({ onButtonClick }) => {
     <div>
       <TopSection>
         <div>
-          <SubHeading weight="medium">Here are the top 4 benefits to work with our Seniorly Local Advisorss:</SubHeading>
+          <SubHeading weight="medium">Here are the top 4 benefits to work with our Seniorly Local Advisors:</SubHeading>
           <List>{iconListItemsComponent}</List>
         </div>
         <div>

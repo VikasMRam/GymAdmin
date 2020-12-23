@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { string } from 'prop-types';
 
 import { size, getKey } from 'sly/common/components/themes';
 import agentPropType from 'sly/common/propTypes/agent';
@@ -17,7 +18,7 @@ const Description = styled(Grid)`
 `;
 
 const CommunityAgentSection = ({
-  agent, ...props
+  agent, layout, ...props
 }) => {
   const {
     gallery,
@@ -32,6 +33,10 @@ const CommunityAgentSection = ({
   if (gallery && gallery.images && gallery.images.length > 0) {
     imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
   }
+  let dimensions = ['max-content', 'max-content'];
+  if (layout === 'homeBase') {
+    dimensions = ['min-content', 'min-content'];
+  }
 
   return (
     <Block {...props}>
@@ -44,17 +49,17 @@ const CommunityAgentSection = ({
         <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl } }} />
         <Block textAlign="left">
           <Block weight="medium" palette="slate">{displayName}</Block>
-          <Block palette="grey">Seniorly Local Advisors</Block>
+          <Block palette="grey">Seniorly Local Advisor</Block>
         </Block>
       </Grid>
-      <Description pad="xLarge" dimensions={['max-content', 'max-content']} gap="xxLarge">
+      <Description pad="xLarge" dimensions={dimensions} gap="xxLarge">
         <IconItem icon="verified" iconPalette="slate">Trusted Partner</IconItem>
         <IconItem icon="favourite-light" iconPalette="slate">{recentFamiliesHelped} families helped</IconItem>
         {experience && <IconItem icon="favourite-light" iconPalette="slate">{experience} years of experience</IconItem>}
       </Description>
-      <Heading size="body">What is a Seniorly Local Advisors?</Heading>
+      <Heading size="body">What is a Seniorly Local Advisor?</Heading>
       <Block>
-        Our Seniorly Local Advisorss specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
+        Our Seniorly Local Advisor specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
       </Block>
     </Block>
   );
@@ -62,6 +67,10 @@ const CommunityAgentSection = ({
 
 CommunityAgentSection.propTypes = {
   agent: agentPropType.isRequired,
+  layout: string,
+};
+CommunityAgentSection.defaultProps = {
+  layout: 'community',
 };
 
 export default CommunityAgentSection;

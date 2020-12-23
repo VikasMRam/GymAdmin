@@ -58,7 +58,7 @@ const CommunityPWEstimatedPricingForm = ({
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">
-      Our Seniorly Local Advisors will provide you {type} for {communityName}. Please help by answering these three questions:
+      Our Seniorly Local Advisor will provide you {type} for {communityName}. Please help by answering these three questions:
     </HeadingSection>
     <StyledBlock size="caption">
       What is your timeline to move in?

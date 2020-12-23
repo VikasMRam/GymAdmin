@@ -30,7 +30,6 @@ const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }
       position="relative"
       maxWidth="358px"
       height="100%"
-      startingWithLaptop={{ width: '358px' }}
     >
       <Wrapper
         flow={layout}

@@ -587,7 +587,7 @@ describe('Community survey', () => {
         });
       }
 
-      waitForHydration(cy.contains('You\'re all set! One of our Seniorly Local Advisorss will reach out shortly to assist you with pricing for AlmaVia of San Francisco.', { timeout: 30000 }));
+      waitForHydration(cy.contains('You\'re all set! One of our Seniorly Local Advisors will reach out shortly to assist you with pricing for AlmaVia of San Francisco.', { timeout: 30000 }));
       waitForHydration(cy.get('div[class*=PostConversionGreetingForm__BoxWrapper]').contains('Return to Profile')).click();
       cy.url().should('have.string', `/assisted-living/california/san-francisco/${TEST_COMMUNITY}`);
 

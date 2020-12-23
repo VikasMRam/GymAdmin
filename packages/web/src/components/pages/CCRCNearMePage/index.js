@@ -425,7 +425,7 @@ const CCRCNearMePage = ({
       </StyledArticle>
       <StyledArticle>
         <Heading level="title" size="title" >
-          What Is A Seniorly Local Advisors?
+          What Is A Seniorly Local Advisor?
         </Heading>
         <WhatIsPartnerAgent toc="CCRC" agents={agents}/>
       </StyledArticle>
@@ -784,7 +784,7 @@ const CCRCNearMePage = ({
           If you think a continuing care retirement community is a good option for you or your loved one,
           compile the names of the CCRCs you’re interested in, and then set up tours yourself or with a{' '}
           <Link href="https://www.seniorly.com/agents">
-            Seniorly Local Advisors
+            Seniorly Local Advisor
           </Link>
           .  Begin comparing communities against each other to find the one
           that best fits your needs.

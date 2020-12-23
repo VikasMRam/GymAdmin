@@ -18,7 +18,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Heading').contains('Are you interested in working with a Seniorly Local Advisors? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Are you interested in working with a Seniorly Local Advisor? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(1);
   });
@@ -28,7 +28,7 @@ describe('Wizards|assessment - Steps|Feeling', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('Heading').contains('Are you interested in working with a Seniorly Local Advisors? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Are you interested in working with a Seniorly Local Advisor? They can help you find senior living options that fit your budget and care needs.')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(0);
   });

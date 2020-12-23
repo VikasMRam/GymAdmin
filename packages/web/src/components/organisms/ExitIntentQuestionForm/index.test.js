@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import ExitIntentQuestionForm from '.';
 
 const handleSubmit = jest.fn();
-const title = 'Wait! Get support from a Seniorly Local Advisors. This is a free service.';
+const title = 'Wait! Get support from a Seniorly Local Advisor. This is a free service.';
 const error = 'Error message';
 
 const wrap = (props = {}) => shallow(<ExitIntentQuestionForm handleSubmit={handleSubmit} {...props} />);

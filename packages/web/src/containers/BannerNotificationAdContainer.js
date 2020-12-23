@@ -44,7 +44,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
     isModalOpen: false,
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
-    modalHeading: 'Our Seniorly Local Advisorss can help you with your search.',
+    modalHeading: 'Our Seniorly Local Advisors can help you with your search.',
     showBanner: true,
   };
 
@@ -118,7 +118,7 @@ export default class BannerNotificationAdContainer extends PureComponent {
       category: 'BannerNotificationAd',
     });
     this.setState({
-      modalHeading: 'Our Seniorly Local Advisors will contact you as soon as possible with updated admissions policies.',
+      modalHeading: 'Our Seniorly Local Advisor will contact you as soon as possible with updated admissions policies.',
     });
   };
 

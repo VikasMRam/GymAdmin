@@ -68,7 +68,7 @@ export default class TalkToAgentForm extends Component {
   };
 
   static defaultProps = {
-    heading: 'Talk to a Seniorly Local Advisors',
+    heading: 'Talk to a Seniorly Local Advisor',
     agentFirstName: 'we',
     messagePrompt: '',
     buttonKind: 'jumbo',
