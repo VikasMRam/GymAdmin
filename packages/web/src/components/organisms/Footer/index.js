@@ -8,35 +8,35 @@ import { Icon, Block, Hr, Link, Heading } from 'sly/common/components/atoms';
 
 const currentYear = (new Date()).getFullYear();
 
-const aboutUs = { 
-  'Our story': '/about', 
-  'Contact us': '/contact', 
-  'Press and media': '/about#/#press', 
-  'Careers': 'https://angel.co/company/seniorly/jobs', 
+const aboutUs = {
+  'Our story': '/about',
+  'Contact us': '/contact',
+  'Press and media': '/about#/#press',
+  'Careers': 'https://angel.co/company/seniorly/jobs',
 };
 
 const typesOf = {
-  'Assisted living': '/assisted-living', 
-  'Independent living': '/independent-living', 
-  'Board and care homes': '/board-and-care-home', 
-  'Memory care': '/memory-care', 
-  'Home care': '/in-home-care', 
-  'Respite care': '/respite-care', 
-  'Continuing care retirement communities (CCRC)': '/continuing-care-retirement-community', 
-  'Skilled nursing facilities': '/skilled-nursing-facility', 
-  'Senior living overview': '/senior-living', 
+  'Assisted living': '/assisted-living',
+  'Independent living': '/independent-living',
+  'Board and care homes': '/board-and-care-home',
+  'Memory care': '/memory-care',
+  'Home care': '/in-home-care',
+  'Respite care': '/respite-care',
+  'Continuing care retirement communities (CCRC)': '/continuing-care-retirement-community',
+  'Skilled nursing facilities': '/skilled-nursing-facility',
+  'Senior living overview': '/senior-living',
 };
 
 const forFamilies = {
-  'Senior living resources': '/resources', 
-  'How it works': '/how-it-works', 
-  'Seniorly Local Advisors': '/agents', 
-  'Veteran\'s benefits': '/veterans-benefit-assisted-living', 
+  'Senior living resources': '/resources',
+  'How it works': '/how-it-works',
+  'Seniorly Local Advisors': '/agents',
+  'Veteran\'s benefits': '/veterans-benefit-assisted-living',
 };
 
 const forPartners = {
-  'Partner agents': '/partners/agents', 
-  'Partner communities': '/partners/communities', 
+  'Partner agents': '/partners/agents',
+  'Partner communities': '/partners/communities',
 };
 
 const Body = styled.div`
@@ -102,12 +102,16 @@ const Links = ({ items }) => (
         margin-bottom: 12px;
         padding-right: 16px;
 
-        @media screen and (min-width: ${size('breakpoint.tablet')}) {            
-          width: calc(100%/3); 
+        @media screen and (min-width: ${size('breakpoint.tablet')}) {
+          width: calc(100%/3);
         }
 
         @media screen and (min-width: ${size('breakpoint.laptop')}) {
           width: 100%;
+        }
+        &:hover {
+        color: ${palette('slate', 'darker-30')};
+        text-decoration: underline;
         }
       }
 
@@ -116,7 +120,7 @@ const Links = ({ items }) => (
     {Object.entries(items).map(([name, url]) => (
       <Link
         palette="slate"
-        font="body-small" 
+        font="body-small"
         to={url}
       >
         {name}
@@ -190,9 +194,9 @@ const Footer = () => (
       <div className="left">
         <Link to="/"><Icon icon="logo" size={32} marginTop="-4px" /></Link>
         <Span font="body-small">
-          &copy; 
-          Seniorly {currentYear} 
-          <Span palette="slate.lighter-30">{config.version}</Span> 
+          &copy;
+          Seniorly {currentYear}
+          <Span palette="slate.lighter-30">{config.version}</Span>
           {' '}· <Link to="/privacy">Privacy</Link>
           {' '}· <Link to="/tos">Terms</Link>
           {' '}· <Link to="/sitemap">Sitemap</Link>
@@ -206,6 +210,6 @@ const Footer = () => (
       </div>
     </Bottom>
   </Block>
-); 
+);
 
 export default Footer;
