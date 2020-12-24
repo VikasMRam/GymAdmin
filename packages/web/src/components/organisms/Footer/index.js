@@ -57,6 +57,8 @@ const Body = styled.div`
     border-bottom: 1px solid ${palette('slate.lighter-90')};
     padding-bottom: 0px;
     margin-bottom: 24px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 `;
 
@@ -193,7 +195,7 @@ const Footer = () => (
           <Span palette="slate.lighter-30">{config.version}</Span> 
           {' '}· <Link to="/privacy">Privacy</Link>
           {' '}· <Link to="/tos">Terms</Link>
-          {/* {' '}· <Link to="/sitemap">Sitemap</Link> */}
+          {' '}· <Link to="/sitemap">Sitemap</Link>
         </Span>
       </div>
       <div className="right">

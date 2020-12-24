@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo, useCallback, useState, useEffect } from 'react';
 import { string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
 import { gridColumns } from 'sly/web/components/themes';
@@ -253,7 +253,10 @@ const CommunitiesByCity = (onLocationSearch) => {
       </Body>
 
       <Block position="relative">
-        <Grid ref={ref} gap="large" padding="xLarge xLarge 0px" overflow="auto" dimensions={['repeat(15,240px)']}>
+        <Grid ref={ref} gap="large" padding="xLarge xLarge 0px" dimensions={['repeat(15,240px)']} css={css`
+          overflow: auto;
+          ${startingWith('laptop', css({ overflow: 'hidden' }))}
+        `}>
           {mostSearchedCities.map(mostSearchedCity => (
             <CityTile key={mostSearchedCity.subtitle} {...mostSearchedCity}>
               <Heading size="subtitle" palette="white">{mostSearchedCity.subtitle}</Heading>
