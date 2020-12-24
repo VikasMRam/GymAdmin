@@ -8,7 +8,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { getSearchParams } from 'sly/web/components/search/helpers';
 import { getQueryParamsSetter } from 'sly/web/services/helpers/queryParams';
 import ModalController from 'sly/web/controllers/ModalController';
-import HomePage from 'sly/web/components/pages/HomePage';
+import HomePage from 'sly/web/components/homepage/HomePage';
 
 @withRedirectTo
 

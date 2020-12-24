@@ -2,33 +2,34 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
+import { PageWrapper, Wrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Form, Block } from 'sly/common/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const Intro = ({
   title, description, handleSubmit, showSkipOption, skipOptionText,
 }) => (
-  <Wrapper>
-    <Box>
-      <Form onSubmit={handleSubmit}>
-        <Block align="center" display="flex" direction="column">
-          <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
-            {title}
-          </Heading>
-          {description !== '' && <Block pad="xLarge">{description}</Block>}
-        </Block>
-        <Field
-          name="whatToDoNext"
-          type="button"
-          buttonType="submit"
-          component={ReduxField}
-          inputValue="start"
-          pad={showSkipOption ? undefined : '0'}
-        >
-          Start
-        </Field>
-        {showSkipOption &&
+  <PageWrapper>
+    <Wrapper>
+      <Box>
+        <Form onSubmit={handleSubmit}>
+          <Block align="center" display="flex" direction="column">
+            <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
+              {title}
+            </Heading>
+            {description !== '' && <Block pad="xLarge">{description}</Block>}
+          </Block>
+          <Field
+            name="whatToDoNext"
+            type="button"
+            buttonType="submit"
+            component={ReduxField}
+            inputValue="start"
+            pad={showSkipOption ? undefined : '0'}
+          >
+            Start
+          </Field>
+          {showSkipOption &&
           <Field
             name="whatToDoNext"
             type="button"
@@ -41,9 +42,10 @@ const Intro = ({
             {skipOptionText}
           </Field>
         }
-      </Form>
-    </Box>
-  </Wrapper>
+        </Form>
+      </Box>
+    </Wrapper>
+  </PageWrapper>
 );
 
 Intro.propTypes = {

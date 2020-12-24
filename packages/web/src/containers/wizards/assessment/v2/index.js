@@ -32,7 +32,7 @@ import {
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
 import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
-import { Wrapper } from 'sly/web/components/wizards/assessment/Template';
+import { Wrapper, PageWrapper, ProgressBarWrapper } from 'sly/web/components/wizards/assessment/Template';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 
 @withWS
@@ -83,6 +83,10 @@ export default class AssessmentWizardV2 extends Component {
     // Add entry modal for homepage
     if (community && community.name) {
       qp.communityName = community.name;
+      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
+    }
+    if (!this.skipped) {
+      localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
     }
     const redirectPath = `${FAMILY_DASHBOARD_HOME_PATH}?${objectToURLQueryParams(qp)}`;
     return redirectTo(redirectPath);
@@ -90,14 +94,6 @@ export default class AssessmentWizardV2 extends Component {
 
   onNoAgentMatch = () => {
     const { community } = this.props;
-
-    if (!this.skipped) {
-      localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
-    }
-    if (community) {
-      recordEntityCta(ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES, community.id);
-    }
-
     this.setState({
       hasNoAgent: true,
     });
@@ -125,7 +121,7 @@ export default class AssessmentWizardV2 extends Component {
       return goto('Auth');
     }
 
-    if (currentStep === 'LocalExpert') {
+    if (currentStep === 'Auth') {
       this.waitForAgentMatched();
     }
 
@@ -216,9 +212,9 @@ export default class AssessmentWizardV2 extends Component {
           return (
             <section className={className}>
               {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
-                <Wrapper>
-                  <ProgressBar label pad="xLarge" totalSteps={hadNoLocation ? 9 : 8} currentStep={props.currentStepIndex} />
-                </Wrapper>
+                <ProgressBarWrapper>
+                  <ProgressBar marginBottom="xLarge" totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
+                </ProgressBarWrapper>
               }
               <WizardSteps {...props}>
                 {!skipIntro && <WizardStep

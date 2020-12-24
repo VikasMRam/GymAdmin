@@ -4,13 +4,17 @@ import styled from 'styled-components';
 
 import Root from './Root';
 
-const getPad = (size) => {
-  switch (size) {
-    case 'hero': return 'xxLarge';
-    case 'title': return 'xLarge';
-    case 'subtitle': return 'large';
-    default: return 'large';
+const getPad = (size, font) => {
+  if (size) {
+    switch (size) {
+      case 'hero': return 'xxLarge';
+      case 'title': return 'xLarge';
+      case 'subtitle': return 'large';
+      default: return 'large';
+    }
   }
+
+  return null;
 };
 
 const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
@@ -19,7 +23,7 @@ const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
     size={size || level}
     // used only to force different h{level} than default
     level={level}
-    pad={getPad(size || level)}
+    pad={getPad(size || level, props.font)}
     {...props}
   />
 ))``;

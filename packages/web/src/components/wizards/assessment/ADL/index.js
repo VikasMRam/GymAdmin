@@ -3,7 +3,7 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { ADL_OPTIONS, COEXISTING_ADL_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
@@ -36,19 +36,20 @@ const ADL = ({
   }
 
   return (
-    <Wrapper hasSecondColumn={hasTip}>
-      <Box>
-        <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading>
-        <Block pad="xLarge">Please select all that apply.</Block>
-        <form onSubmit={handleSubmit}>
-          <Field
-            multiChoice
-            options={opts}
-            name="adl"
-            type="boxChoice"
-            align="left"
-            component={ReduxField}
-            onChange={(event, newValue, previousValue, name) => {
+    <PageWrapper hasSecondColumn={hasTip}>
+      <Wrapper>
+        <Box>
+          <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading>
+          <Block pad="xLarge">Please select all that apply.</Block>
+          <form onSubmit={handleSubmit}>
+            <Field
+              multiChoice
+              options={opts}
+              name="adl"
+              type="boxChoice"
+              align="left"
+              component={ReduxField}
+              onChange={(event, newValue, previousValue, name) => {
               // we know that last element is the newly added value
               const newlyAddedValue = newValue[newValue.length - 1];
               const valuesThatCanExist = COEXISTING_ADL_OPTIONS[newlyAddedValue];
@@ -58,16 +59,19 @@ const ADL = ({
               // delay this update to next tick so that it's always applied at last
               setTimeout(() => change(name, newValue));
             }}
-          />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
+            />
+            <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+          </form>
+        </Box>
+      </Wrapper>
       {hasTip &&
-        <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
+      <TipBoxWrapper>
+        <TipBox heading="WHY THIS IS IMPORTANT:">
           Knowing more about you will help us narrow down our recommendations to only those communities that can support your care needs.
         </TipBox>
+      </TipBoxWrapper>
       }
-    </Wrapper>
+    </PageWrapper>
   );
 };
 

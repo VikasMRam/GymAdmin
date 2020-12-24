@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
-import {
-  withDisplay,
-} from 'sly/common/components/helpers';
 import { host } from 'sly/web/config';
 import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
 import Block from 'sly/common/components/atoms/Block';
@@ -14,11 +11,11 @@ import Button from 'sly/common/components/atoms/Button';
 import Link from 'sly/common/components/atoms/Link';
 import Icon from 'sly/common/components/atoms/Icon';
 
-const Body = styled.main`
+import Section from './Section';
+
+const Body = styled(Section)`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
   padding: 48px 24px;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -27,8 +24,7 @@ const Body = styled.main`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     flex-direction: row;
-    width: ${size('layout.col12')};
-    padding: 84px 0;
+    padding: 80px 0;
     & > * {
       width: calc(50% - 24px)
     }
@@ -42,27 +38,27 @@ const guides = [
   {
     to: '/assisted-living',
     alt: 'assisted living senior living seniorly',
-    title: 'Assisted Living',
+    title: 'Assisted Living Guide',
   },
   {
     to: '/memory-care',
     alt: 'memory care senior living seniorly',
-    title: 'Memory Care',
+    title: 'Memory Care Guide',
   },
   {
     to: '/independent-living',
     alt: 'independent living senior living seniorly',
-    title: 'Independent Living',
+    title: 'Independent Living Guide',
   },
   {
     to: '/continuing-care-retirement-community',
     alt: 'ccrc senior living seniorly',
-    title: 'CCRC / Life Plan',
+    title: 'Continuing Care Retirement Community Guide',
   },
   {
     to: '/in-home-care',
     alt: 'in home care',
-    title: 'Home care guide',
+    title: 'Home Care Guide',
   },
 ];
 
@@ -86,11 +82,11 @@ const Guides = (props) => {
           <Heading font="title-xlarge" pad="xLarge">
             Resources and Helpful Guides
           </Heading>
-          <Paragraph pad="xLarge">
-            When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.  
-          </Paragraph>
+          <Block font="body-large" pad="xLarge">
+            When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.
+          </Block>
           <Button {...resources}>{resources.title}</Button>
-        </Block> 
+        </Block>
 
         <Block>
           {guides.map((guide) => (

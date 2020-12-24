@@ -10,7 +10,7 @@ const makeFont = (() => {
     }
     return fontText(sizes, weight);
   }
-})(); 
+})();
 
 const theme = {};
 
@@ -201,15 +201,18 @@ theme.sizes = {
 
   lineHeight: {
     nano     : '0.8',
-    micro    : '1.2',    // 12px / 10px
-    tiny     : '1.167',  // 14px / 12px
-    caption  : '1.429',  // 20px / 14px
-    body     : '1.5',    // 24px / 16px
-    subtitle : '1.3',    // 26px / 20px
-    title    : '1.29',   // 36px / 28px
-    hero     : '1.33',   // 48px / 36px
-    superHero:'1.33',    // 64px / 48px
-    xxLarge  : '1.0',    // 72px / 72px
+    micro    : '1.2',      // 12px / 10px
+    tiny     : '1.167',    // 14px / 12px
+    caption  : '1.429',    // 20px / 14px
+    body     : '1.5',      // 24px / 16px
+    subtitle : '1.5',      // 32px / 20px
+    displayS : '1.2',      // 24px
+    title    : '1.29',     // 36px / 28px
+    display  : '1.33',     // 32px
+    hero     : '1.33',     // 48px / 36px
+    displayL : '1.25',     // 40px
+    superHero:'1.25',      // 60px / 48px
+    xxLarge  : '1.0',      // 72px / 72px
   },
 
   weight: {

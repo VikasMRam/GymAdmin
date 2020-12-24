@@ -6,7 +6,7 @@ import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import { stateAbbr } from  'sly/web/services/helpers/url';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -36,28 +36,32 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 const Budget = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
 }) => (
-  <Wrapper hasSecondColumn={hasTip}>
-    <Box>
-      <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp, amount, city, state)}</Heading>
-      <Block pad="xLarge">Please select all that apply.</Block>
-      <form onSubmit={handleSubmit}>
-        <Field
-          multiChoice
-          options={BUDGET_OPTIONS}
-          name="budget"
-          type="boxChoice"
-          align="left"
-          component={ReduxField}
-        />
-        <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-      </form>
-    </Box>
+  <PageWrapper hasSecondColumn={hasTip}>
+    <Wrapper>
+      <Box>
+        <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp, amount, city, state)}</Heading>
+        <Block pad="xLarge">Please select all that apply.</Block>
+        <form onSubmit={handleSubmit}>
+          <Field
+            multiChoice
+            options={BUDGET_OPTIONS}
+            name="budget"
+            type="boxChoice"
+            align="left"
+            component={ReduxField}
+          />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+        </form>
+      </Box>
+    </Wrapper>
     {hasTip &&
+    <TipBoxWrapper>
       <TipBox heading="DID YOU KNOW?" height="fit-content">
         <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
       </TipBox>
+    </TipBoxWrapper>
     }
-  </Wrapper>
+  </PageWrapper>
 );
 
 Budget.propTypes = {

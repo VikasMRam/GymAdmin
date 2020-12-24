@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Icon from 'sly/common/components/atoms/Icon';
-import IconButton from 'sly/common/components/molecules/IconButton'
 import Block from 'sly/common/components/atoms/Block';
 import Heading from 'sly/common/components/atoms/Heading';
 import Paragraph from 'sly/common/components/atoms/Paragraph';
@@ -19,13 +18,13 @@ import {
 } from 'sly/common/components/helpers/index';
 
 const quotes = [
-  { id: '1', author: 'Annie', text: 'This whole experience has changed our viewpoint of senior living. We thank Seniorly for the immediate, thorough, and compassionate care you provided.' },
-  { id: '2', author: 'Sheryl', text: 'How could I give anything but a 10/10? Mom is moving to a great home with wonderful women- and she\'s stunned she has this opportunity.' },
-  { id: '3', author: 'Amy', text: 'Sandy was really helpful, He didn\'t tell me what I wanted or hoped to hear, but told me what I needed to know, which was even better!' },
-  { id: '4', author: 'Cindy', text: 'Rachelle responded promptly and got right to work sending us recommendations. After we found a spot she checked back in to see if we needed any help or any other assistance. Polite, respectful and very professional.' },
-  { id: '5', author: 'Ronna', text: 'Donlyn was so helpful and very quilckly contacted several homes for us to tour. We found a perfect fit fpr my mom and could not be happier. Thank you, Donlyn and Seniorly. It was wonderful to know that I am not on this journey alone.' },
-  { id: '6', author: 'Gretchen', text: 'Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
-  { id: '7', author: 'Pam', text: 'Kriste Kidd was amazing. I truely believe that she was an angel sent to help me. She was caring, knowledgable and honest. I am so blessed to have her as my advisor! I plan on contacting her again for help placing my mom in a home in the spring.' },
+  { id: '1', author: 'Annie S.', text: 'This whole experience has changed our viewpoint of senior living. We thank Seniorly for the immediate, thorough, and compassionate care you provided.' },
+  { id: '2', author: 'Sheryl O.', text: 'How could I give anything but a 10/10? Mom is moving to a great home with wonderful women- and she\'s stunned she has this opportunity.' },
+  { id: '3', author: 'Amy B.', text: 'Sandy was really helpful, He didn\'t tell me what I wanted or hoped to hear, but told me what I needed to know, which was even better!' },
+  { id: '4', author: 'Cindy H.', text: 'Rachelle responded promptly and got right to work sending us recommendations. After we found a spot she checked back in to see if we needed any help or any other assistance. Polite, respectful and very professional.' },
+  { id: '5', author: 'Ronna S.', text: 'Donlyn was so helpful and very quilckly contacted several homes for us to tour. We found a perfect fit fpr my mom and could not be happier. Thank you, Donlyn and Seniorly. It was wonderful to know that I am not on this journey alone.' },
+  { id: '6', author: 'Gretchen H.', text: 'Lisa called me and was very encouraging. At the end of our conversation I felt more peaceful and less anxious. Thankful for all you folks who care and advise during life\'s inevitable difficult seasons.' },
+  { id: '7', author: 'Pam E.', text: 'Kriste Kidd was amazing. I truely believe that she was an angel sent to help me. She was caring, knowledgable and honest. I am so blessed to have her as my advisor! I plan on contacting her again for help placing my mom in a home in the spring.' },
 ];
 
 function mod(n, m) {
@@ -124,7 +123,7 @@ export default function QuotesCarroussel ({
         margin="0 auto"
         maxWidth={450}
       >
-        Families love the Seniorly experience.
+        Families love the <br/> Seniorly experience.
       </Heading>
       <Wrapper pad="xLarge">
         {quotes.map(({ id, author, text }, index) => {
