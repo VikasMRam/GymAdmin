@@ -97,6 +97,10 @@ const Guides = (props) => {
               borderRadius="regular"
               padding="xLarge"
               pad="large"
+              shadowOnHoverBlur="large"
+              shadowOnHoverVOffset="small"
+              shadowOnHoverPalette="black.base"
+              shadowOnHoverPaletteOpacity="10"
               css={css`
                 display: flex;
                 align-items: center;
