@@ -172,6 +172,7 @@ const GridButton = forwardRef(({ direction, ...props }, ref) => {
     position: 'absolute',
     top: 160,
     [direction]: 24,
+    cursor: 'pointer',
   };
   return (
     <CarrousselButton
@@ -184,7 +185,7 @@ const GridButton = forwardRef(({ direction, ...props }, ref) => {
       {...props}
     />
   );
-}); 
+});
 
 const Bottom = styled.div`
   position: absolute;
@@ -251,7 +252,7 @@ const CommunitiesByCity = (onLocationSearch) => {
         padding="xLarge"
         paddingBottom="xxxLarge"
       >
-        <Heading size="title" level="subtitle">Find communities in your area.</Heading>
+        <Heading size="subtitle" level="subtitle">Find communities in your area.</Heading>
         <Block
           width="100%"
           startingWithTablet={{

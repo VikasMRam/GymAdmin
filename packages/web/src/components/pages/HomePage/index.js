@@ -99,7 +99,7 @@ const HomePage = ({
               <Heading size="superHero" pad="xLarge">
                 Find a senior living community you’ll love
               </Heading>
-              <Block size="displayS" pad="xLarge">
+              <Block size="subtitle" lineHeight='1.6' pad="xLarge">
                 Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
               </Block>
               <Button
@@ -243,12 +243,8 @@ const HomePage = ({
           as="section"
           display="grid"
           css={{
-            marginBottom: `calc(2 * ${getKey('sizes.spacing.xMassive')})`,
-            gridGap: `calc(2 * ${getKey('sizes.spacing.xMassive')})`,
-          }}
-          upToLaptop={{
-            marginBottom: `${getKey('sizes.spacing.xMassive')}!important`,
-            gridGap: `${getKey('sizes.spacing.xMassive')}!important`,
+            marginBottom: `${getKey('sizes.spacing.xMassive')}`,
+            gridGap: `${getKey('sizes.spacing.xMassive')}`,
           }}
         >
           <Grid
@@ -264,7 +260,7 @@ const HomePage = ({
               path="react-assets/home/smarter-way.png"
               alt="smarter-way"
               css={{
-                maxWidth: '100%',
+                width: '100%',
               }}
             />
             <div>
@@ -305,7 +301,7 @@ const HomePage = ({
               path="react-assets/home/local-advisor.png"
               alt="local-advisor"
               css={{
-                maxWidth: '100%',
+                width: '100%',
               }}
             />
             <Block startingWithLaptop={{
@@ -343,7 +339,7 @@ const HomePage = ({
               path="react-assets/home/homebase.png"
               alt="smarter-way"
               css={{
-                maxWidth: '100%',
+                width: '100%',
               }}
             />
             <div>
@@ -372,9 +368,9 @@ const HomePage = ({
         </Block>
 
         <StyledSection title="Explore communities by city.">
-          <Paragraph>
+          <Block size="subtitle">
             See our exclusive photos, monthly pricing, and expert insights for each community. You can learn more about the places you like or speak with a Seniorly Local Advisor in that city.
-          </Paragraph>
+          </Block>
         </StyledSection>
       </TemplateContent>
 

@@ -42,27 +42,27 @@ const guides = [
   {
     to: '/assisted-living',
     alt: 'assisted living senior living seniorly',
-    title: 'Assisted Living',
+    title: 'Assisted Living Guide',
   },
   {
     to: '/memory-care',
     alt: 'memory care senior living seniorly',
-    title: 'Memory Care',
+    title: 'Memory Care Guide',
   },
   {
     to: '/independent-living',
     alt: 'independent living senior living seniorly',
-    title: 'Independent Living',
+    title: 'Independent Living Guide',
   },
   {
     to: '/continuing-care-retirement-community',
     alt: 'ccrc senior living seniorly',
-    title: 'CCRC / Life Plan',
+    title: 'Continuing Care Retirement Community Guide',
   },
   {
     to: '/in-home-care',
     alt: 'in home care',
-    title: 'Home care guide',
+    title: 'Home Care Guide',
   },
 ];
 
@@ -86,11 +86,11 @@ const Guides = (props) => {
           <Heading font="title-xlarge" pad="xLarge">
             Resources and Helpful Guides
           </Heading>
-          <Paragraph pad="xLarge">
-            When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.  
-          </Paragraph>
+          <Block size="subtitle" pad="xLarge">
+            When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.
+          </Block>
           <Button {...resources}>{resources.title}</Button>
-        </Block> 
+        </Block>
 
         <Block>
           {guides.map((guide) => (
