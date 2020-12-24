@@ -2,7 +2,7 @@ import React, { forwardRef, useMemo, useCallback, useState, useEffect } from 're
 import { string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { gridColumns } from 'sly/web/components/themes';
 import Heading from 'sly/common/components/atoms/Heading';
 import Block from 'sly/common/components/atoms/Block';
@@ -212,9 +212,15 @@ const CityTile = styled(({
   border-radius: ${size('spacing.regular')};
   .legend {
     position: absolute;
-    bottom: 0; 
-    left: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
     padding: 12px;
+    padding-top: 96px;
+    background-color: ${palette('black', 'base')}10;
+    &:hover {
+      background-color: ${palette('black', 'base')}20;
+    }
   }
 `;
 
@@ -246,7 +252,6 @@ const CommunitiesByCity = (onLocationSearch) => {
         <Heading font="title-xlarge" pad="large">
           Explore communities by city.
         </Heading>
-
         <Block font="body-large">
           See our exclusive photos, monthly pricing, and expert insights for each community. You can learn more about the places you like or speak with a Seniorly Local Advisor in that city.
         </Block>
@@ -259,7 +264,7 @@ const CommunitiesByCity = (onLocationSearch) => {
         `}>
           {mostSearchedCities.map(mostSearchedCity => (
             <CityTile key={mostSearchedCity.subtitle} {...mostSearchedCity}>
-              <Heading size="subtitle" palette="white">{mostSearchedCity.subtitle}</Heading>
+              <Heading size="subtitle" palette="white" pad="0">{mostSearchedCity.subtitle}</Heading>
               <Block size="caption" palette="white">Explore now <Icon icon="chevron" size="caption" /></Block>
             </CityTile>
           ))}
