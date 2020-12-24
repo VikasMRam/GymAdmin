@@ -220,7 +220,7 @@ const Header = React.memo(({
             <Logo />
           </Link>
         </SeniorlyLogoWrapper>
-        <OnlyInSmallScreen display="flex" verticalAlign="center" marginRight="large" palette="primary">
+        <OnlyInSmallScreen display="flex" alignItems="center" marginRight="large" palette="primary">
           {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
             <Icon
               onClick={onMenuIconClick}
