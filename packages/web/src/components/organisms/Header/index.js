@@ -222,6 +222,8 @@ const Header = React.memo(({
             <Logo />
           </Link>
         </SeniorlyLogoWrapper>
+        {template !== 'wizard'
+        &&
         <OnlyInSmallScreen display="flex" verticalAlign="center" marginRight="large" palette="primary">
           {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
             <Icon
@@ -236,6 +238,7 @@ const Header = React.memo(({
           )}
           <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInSmallScreen>
+        }
         {hasSearchBox && (
           <StyledSearchBoxContainer
             onCurrentLocation={onCurrentLocation}

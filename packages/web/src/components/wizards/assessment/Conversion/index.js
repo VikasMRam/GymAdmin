@@ -3,7 +3,7 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { ADL_OPTIONS, COEXISTING_ADL_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box, Block } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import IconItem from 'sly/web/components/molecules/IconItem';
@@ -40,24 +40,27 @@ const Conversion = ({
   // }
 
   return (
-    <Wrapper hasSecondColumn={hasTip}>
-
-      <Block>
-        {/* <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading> */}
-        <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
-        <Block pad="xLarge">{description}</Block>
-        {/* FIXME: auth container is being called from conversion component */ }
-        <Block width="fit-content"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} /></Block>
-      </Block>
+    <PageWrapper hasSecondColumn={hasTip}>
+      <Wrapper>
+        <Block>
+          {/* <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading> */}
+          <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
+          <Block pad="xLarge">{description}</Block>
+          {/* FIXME: auth container is being called from conversion component */ }
+          <Block width="fit-content"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} /></Block>
+        </Block>
+      </Wrapper>
       {hasTip &&
+      <TipBoxWrapper>
         <TipBox heading="BENEFITS OF CREATING A FREE ACCOUNT:" height="fit-content">
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get your own Seniorly Home Base for tracking your options</IconItem>
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">See your recommended communities in one place</IconItem>
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get a dedicated Seniorly Local Advisor</IconItem>
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">See other resources and services you may need</IconItem>
         </TipBox>
+      </TipBoxWrapper>
       }
-    </Wrapper>
+    </PageWrapper>
   );
 };
 

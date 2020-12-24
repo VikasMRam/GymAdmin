@@ -3,7 +3,7 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { MEDICAID_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading, Box } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -31,29 +31,33 @@ const generateHeading = (whoNeedsHelp) => {
 const Medicaid = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip,
 }) => (
-  <Wrapper hasSecondColumn={hasTip}>
-    <Box>
-      <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
-      <form onSubmit={handleSubmit}>
-        <Field
-          options={MEDICAID_OPTIONS}
-          name="medicaid"
-          type="boxChoice"
-          align="left"
-          component={ReduxField}
-        />
-        <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-      </form>
-    </Box>
+  <PageWrapper hasSecondColumn={hasTip}>
+    <Wrapper>
+      <Box>
+        <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
+        <form onSubmit={handleSubmit}>
+          <Field
+            options={MEDICAID_OPTIONS}
+            name="medicaid"
+            type="boxChoice"
+            align="left"
+            component={ReduxField}
+          />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+        </form>
+      </Box>
+    </Wrapper>
     {hasTip &&
-      <TipBox heading="YOU TYPICALLY QUALIFY IF:" height="fit-content">
-        <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
-        <IconItem icon="warning" iconPalette="slate" iconVariation="base" pad="large">
-          Asset limit in most states is $1,600 to $15,750.
-        </IconItem>
-      </TipBox>
+      <TipBoxWrapper>
+        <TipBox heading="YOU TYPICALLY QUALIFY IF:" height="fit-content">
+          <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
+          <IconItem icon="warning" iconPalette="slate" iconVariation="base" pad="large">
+            Asset limit in most states is $1,600 to $15,750.
+          </IconItem>
+        </TipBox>
+      </TipBoxWrapper>
     }
-  </Wrapper>
+  </PageWrapper>
 );
 
 Medicaid.propTypes = {
