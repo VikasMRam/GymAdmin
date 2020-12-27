@@ -116,7 +116,7 @@ export default class GetAssessmentBoxContainer extends Component {
     let buttonProps = {
       to: sl,
       buttonTo: sl,
-      onClick: this.startAssessmentFlow(),
+      onClick: this.startAssessmentFlow,
     };
 
 
