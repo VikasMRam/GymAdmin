@@ -29,6 +29,7 @@ PageWrapper.propTypes = {
 // Step component wrapper
 export const Wrapper = styled.section`
   background-color: ${palette('white', 'background')};    
+  border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.large')};
   margin: auto;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
