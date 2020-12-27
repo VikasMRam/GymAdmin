@@ -42,13 +42,13 @@ const Conversion = ({
   return (
     <PageWrapper hasSecondColumn={hasTip}>
       <Wrapper>
-        <Block>
+        <Box>
           {/* <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading> */}
           <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
           <Block pad="xLarge">{description}</Block>
           {/* FIXME: auth container is being called from conversion component */ }
           <Block width="fit-content"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} /></Block>
-        </Block>
+        </Box>
       </Wrapper>
       {hasTip &&
       <TipBoxWrapper>

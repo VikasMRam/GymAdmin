@@ -213,7 +213,7 @@ export default class AssessmentWizardV2 extends Component {
             <section className={className}>
               {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
                 <ProgressBarWrapper>
-                  <ProgressBar marginBottom="xLarge" totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
+                  <ProgressBar totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
                 </ProgressBarWrapper>
               }
               <WizardSteps {...props}>

@@ -10,30 +10,16 @@ import IconButton from 'sly/common/components/molecules/IconButton';
 export const PageWrapper = styled.section`
 // background-color: ${palette('white', 'background')};    
   background-color: ${palette('harvest', 'background')};  
-  // padding: ${size('spacing.xxxLarge')};
+  padding: ${size('spacing.xxxLarge')} 0;
   width: 100%;
-  > * {
-    margin: auto;
-  }
-  // margin: auto;
   display: flex;
-  flex-direction: row;  
-  justify-content:${ifProp('hasSecondColumn', 'space-around', 'center')};
-  align-items:${ifProp('hasSecondColumn', 'flex-start', 'center')};
-  // ${ifProp('hasSecondColumn', css`
-  //   justify-content:space-around;   
-  // `)}
+  flex-direction: column;  
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    // grid-auto-flow: column;
-    // ${ifProp('hasSecondColumn', css`
-    //   grid-template-columns: auto auto;
-    // `)}
+    flex-direction: row;
+    justify-content: space-between;
+    padding: ${size('spacing.xxxLarge')};
   }
-
-  // @media screen and (min-width: ${size('breakpoint.laptop')}) {
-  //   grid-template-columns: ${size('layout.col6')} ${ifProp('hasSecondColumn', css`${size('layout.col4')}`)};
-  // }
 `;
 
 PageWrapper.propTypes = {
@@ -42,22 +28,13 @@ PageWrapper.propTypes = {
 
 // Step component wrapper
 export const Wrapper = styled.section`
-background-color: ${palette('white', 'background')};    
-
+  background-color: ${palette('white', 'background')};    
+  border-radius: ${size('border.xxLarge')};
+  padding: ${size('spacing.large')};
   margin: auto;
-  // display: grid;
-  // ${ifProp('hasSecondColumn', css`
-  //   grid-gap: ${size('layout.gutter')};
-  // `)}
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     max-width: 50%;
-    // grid-template-columns: ${size('layout.col5')} ${ifProp('hasSecondColumn', css`${size('layout.col3')}`)};
   }
-
-  // @media screen and (min-width: ${size('breakpoint.laptop')}) {
-  //   grid-template-columns: ${size('layout.col6')} ${ifProp('hasSecondColumn', css`${size('layout.col4')}`)};
-  // }
 `;
 
 Wrapper.propTypes = {

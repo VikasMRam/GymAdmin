@@ -9,11 +9,12 @@ import AssessmentWizard from 'sly/web/containers/wizards/assessment';
 
 const StyledTemplateContent = styled(TemplateContent)`
   // background-color: ${palette('harvest', 'background')};  
-  // padding: ${size('spacing.xxxLarge')};
-  // width: 100%;
-> * {
-    margin: auto;
-  }
+  padding: 0;
+  width: 100% !important;
+
+// > * {
+//     margin: auto;
+//   }
 
   // ${startingWith('laptop', css`
   //   > * {

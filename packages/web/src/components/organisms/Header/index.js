@@ -29,10 +29,9 @@ const HeaderBar = styled(Block)`
   `)}
 `;
 
-const SeniorlyLogoWrapper = styled(Block)`
-  display: none;
-
-  ${startingWith('laptop', 'display: block;')}
+const SeniorlyLogoWrapper = styled(Block)`  
+display: ${ifProp({ template: 'wizard' }, 'block', 'none')} ;
+${startingWith('laptop', 'display: block;')}
 `;
 
 const HeaderMenu = styled.div`
@@ -217,11 +216,19 @@ const Header = React.memo(({
         justifyContent={template === 'wizard' ? 'center' : 'inherit'}
         padding={[0, 'large']}
       >
-        <SeniorlyLogoWrapper onClick={onLogoClick} marginRight="xxLarge">
-          <Link to="/" display="block" lineHeight="0" >
-            <Logo />
-          </Link>
-        </SeniorlyLogoWrapper>
+        {template !== 'wizard' &&
+          <SeniorlyLogoWrapper onClick={onLogoClick} startingWithLaptop={{ marginRight: size('spacing.xxLarge') }}>
+            <Link to="/" display="block" lineHeight="0" >
+              <Logo />
+            </Link>
+          </SeniorlyLogoWrapper>
+        }
+
+        {template === 'wizard' &&
+        <Link to="/" display="block" lineHeight="0" >
+          <Logo />
+        </Link>
+        }
         {template !== 'wizard'
         &&
         <OnlyInSmallScreen display="flex" alignItems="center" marginRight="large" palette="primary">
