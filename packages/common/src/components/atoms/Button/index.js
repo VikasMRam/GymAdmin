@@ -113,7 +113,7 @@ export default class Button extends Component {
     if (kind === 'jumbo') {
       props.size = 'body';
       props.lineHeight = 'body';
-      props.padding = ['large', 'xxLarge'];
+      props.padding = ['large', 'xxxLarge'];
     } else if (kind === 'tab') {
       props.lineHeight = 'caption';
       props.padding = ['regular', 'large'];

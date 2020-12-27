@@ -1,12 +1,13 @@
 import React, { forwardRef, useMemo, useCallback, useState, useEffect } from 'react';
 import { string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { size } from 'sly/common/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { gridColumns } from 'sly/web/components/themes';
 import Heading from 'sly/common/components/atoms/Heading';
 import Block from 'sly/common/components/atoms/Block';
 import Link from 'sly/common/components/atoms/Link';
+import Icon from 'sly/common/components/atoms/Icon';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import Grid from 'sly/common/components/atoms/Grid';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
@@ -14,6 +15,7 @@ import { startingWith } from 'sly/common/components/helpers/media';
 import useScrollObserver from 'sly/common/components/helpers/useScrollObserver';
 
 import CarrousselButton from './CarrousselButton'
+import Section from './Section';
 
 const mostSearchedCities = [{
   to: '/assisted-living/california/los-angeles',
@@ -167,11 +169,20 @@ const mostSearchedCities = [{
   subtitle: 'Raleigh, NC',
 }];
 
+const Body = styled(Section)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 24px;
+  text-align: center;
+`;
+
 const GridButton = forwardRef(({ direction, ...props }, ref) => {
   const css = {
     position: 'absolute',
     top: 160,
     [direction]: 24,
+    cursor: 'pointer',
   };
   return (
     <CarrousselButton
@@ -184,35 +195,40 @@ const GridButton = forwardRef(({ direction, ...props }, ref) => {
       {...props}
     />
   );
-}); 
-
-const Bottom = styled.div`
-  position: absolute;
-  bottom: 0; 
-  left: 0;
-  padding: ${size('spacing.regular')};
-`;
+});
 
 const CityTile = styled(({
   title, to, alt, image, children, ...props
 }) => (
   <Link key={title} to={to} {...props}>
     <ResponsiveImage path={image} alt={alt} aspectRatio="3:2">
-      <Bottom>
+      <div className="legend">
         {children}
-      </Bottom>
+      </div>
     </ResponsiveImage>
   </Link>
 ))`
   overflow: hidden;
   border-radius: ${size('spacing.regular')};
+  .legend {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    padding: 12px;
+    padding-top: 96px;
+    background-color: ${palette('black', 'base')}10;
+    &:hover {
+      background-color: ${palette('black', 'base')}33;
+    }
+  }
 `;
 
 const CommunitiesByCity = (onLocationSearch) => {
   const [ref, dimensions] = useScrollObserver();
   const [max, step] = useMemo(() => {
     return [
-      (dimensions.scrollX + 24) / (240 + 16),
+      (dimensions.scrollX + 48) / (240 + 16),
       Math.floor(dimensions.clientWidth / (240 + 16))
     ];
   }, [dimensions]) || 0;
@@ -231,42 +247,60 @@ const CommunitiesByCity = (onLocationSearch) => {
   }, [position]);
 
   return (
-    <Block position="relative">
-      <Grid ref={ref} gap="large" padding="large" overflow="auto" dimensions={['repeat(15,240px)']}>
-        {mostSearchedCities.map(mostSearchedCity => (
-          <CityTile key={mostSearchedCity.subtitle} size="body" {...mostSearchedCity}>
-            <Heading palette="white" size="subtitle" level="subtitle" pad="0">{mostSearchedCity.subtitle}</Heading>
-            <Block palette="white">Explore now ></Block>
-          </CityTile>
-        ))}
-      </Grid>
+    <>
+      <Body>
+        <Heading font="title-xlarge" pad="large">
+          Explore communities by city.
+        </Heading>
+        <Block font="body-large">
+          See our exclusive photos, monthly pricing, and expert insights for each community. You can learn more about the places you like or speak with a Seniorly Local Advisor in that city.
+        </Block>
+      </Body>
 
-      <GridButton direction="left" onClick={() => move(-1)} />
-      <GridButton direction="right" onClick={() => move(+1)} />
+      <Block position="relative">
+        <Grid ref={ref} gap="large" padding="xLarge xLarge 0px" dimensions={['repeat(15,240px)']} css={css`
+          overflow: auto;
+          ${startingWith('laptop', css({ overflow: 'hidden' }))}
+        `}>
+          {mostSearchedCities.map(mostSearchedCity => (
+            <CityTile key={mostSearchedCity.subtitle} {...mostSearchedCity}>
+              <Heading size="subtitle" palette="white" pad="0">{mostSearchedCity.subtitle}</Heading>
+              <Block size="caption" palette="white">Explore now <Icon icon="chevron" size="caption" /></Block>
+            </CityTile>
+          ))}
+        </Grid>
+
+        <GridButton direction="left" onClick={() => move(-1)} />
+        <GridButton direction="right" onClick={() => move(+1)} />
+      </Block>
 
       <Block
         display="flex"
         alignItems="center"
         flexDirection="column"
         padding="xLarge"
-        paddingBottom="xxxLarge"
+        paddingBottom="48px"
+        startingWithTablet={{ paddingBottom: 64 }}
+        startingWithLaptop={{ paddingBottom: 80 }}
       >
-        <Heading size="title" level="subtitle">Find communities in your area.</Heading>
-        <Block
+        <Heading
+         font="title-large"
+         pad="large"
+        >
+          Find communities in your area.
+        </Heading>
+        <SearchBoxContainer
+          layout="homeHero"
           width="100%"
           startingWithTablet={{
             maxWidth: '360px',
           }}
-        >
-          <SearchBoxContainer
-            layout="homeHero"
-            onLocationSearch={(e) => {
-              onLocationSearch(e, true);
-            }}
-          />
-        </Block>
+          onLocationSearch={(e) => {
+            onLocationSearch(e, true);
+          }}
+        />
       </Block>
-    </Block>
+    </>
   );
 };
 
