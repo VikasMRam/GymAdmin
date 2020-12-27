@@ -219,7 +219,7 @@ const CityTile = styled(({
     padding-top: 96px;
     background-color: ${palette('black', 'base')}10;
     &:hover {
-      background-color: ${palette('black', 'base')}20;
+      background-color: ${palette('black', 'base')}33;
     }
   }
 `;

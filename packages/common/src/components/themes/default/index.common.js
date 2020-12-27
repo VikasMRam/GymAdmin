@@ -205,7 +205,7 @@ theme.sizes = {
     tiny     : '1.167',    // 14px / 12px
     caption  : '1.429',    // 20px / 14px
     body     : '1.5',      // 24px / 16px
-    subtitle : '1.5',      // 32px / 20px
+    subtitle : '1.6',      // 32px / 20px
     displayS : '1.2',      // 24px
     title    : '1.29',     // 36px / 28px
     display  : '1.33',     // 32px

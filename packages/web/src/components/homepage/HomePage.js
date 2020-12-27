@@ -84,7 +84,7 @@ const HomePage = ({
             ${startingWith('laptop', css({ marginRight: '64px', marginBottom: '0px' }))}
           `}>
             <Heading font="title-xxlarge" pad="large">
-              Find a senior living community you’ll love
+              Find a senior living community you’ll love.
             </Heading>
             <Block font="body-large" css={css`
               margin-bottom: 48px;
@@ -146,17 +146,17 @@ const HomePage = ({
             </Grid>
           </Grid>
         </Section>
-          
+
       </Block>
 
       <Question
         showModal={showModal}
         hideModal={hideModal}
-        onLocationSearch={onLocationSearch} 
+        onLocationSearch={onLocationSearch}
         css={blockPad}
       />
       <Separator />
-      
+
       <Reasons />
 
       <Separator />
