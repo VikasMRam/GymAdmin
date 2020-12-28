@@ -110,7 +110,7 @@ const Links = ({ items }) => (
           width: 100%;
         }
         &:hover {
-          color: ${palette('slate', 'darker-30')};
+          color: ${palette('primary', 'base')};
           text-decoration: underline;
         }
       }

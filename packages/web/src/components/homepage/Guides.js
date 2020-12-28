@@ -79,7 +79,7 @@ const Guides = (props) => {
       {header}
       <Body>
         <Block pad="xLarge" flexGrow="0">
-          <Heading font="title-xlarge" pad="xLarge">
+          <Heading font="title-xlarge" pad="large">
             Resources and Helpful Guides
           </Heading>
           <Block font="body-large" pad="xLarge">
