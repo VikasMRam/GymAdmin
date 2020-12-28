@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga';
 import { Cookies } from 'react-cookie';
-import { stringify } from 'query-string';
+import { stringify, parse } from 'query-string';
 import { v4 } from 'uuid';
 
 import { randomHexNumber } from './utils';
@@ -27,6 +27,16 @@ const getReferrer = () => {
   return referrer;
 };
 
+const getLocation = () => {
+  const location = document.location;
+  cookie.set('location', location, { domain, path: '/', maxAge: 27000000 });
+  const params = parse(location.search);
+  if (params['gclid']) {
+    cookie.set('adwords', params['gclid'], { domain, path: '/', maxAge: 27000000 });
+  }
+  return location;
+};
+
 export default class SlyEvent {
   static seInstance = null;
 
@@ -48,6 +58,7 @@ export default class SlyEvent {
   slyUuid = cookie.get('sly_uuid') || getUUID();
   sid = cookie.get('sly_sid') || getSID();
   referrer = cookie.get('referrer') || getReferrer();
+  location = cookie.get('location') || getLocation();
   ga = null;
 
   sendPageView(path, search = '') {
