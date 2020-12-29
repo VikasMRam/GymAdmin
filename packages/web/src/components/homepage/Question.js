@@ -46,14 +46,14 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
       {...props}
     >
       <Heading
-        font="title-xlarge" 
+        font="title-xlarge"
         css={{
           textAlign: 'center',
           maxWidth: '680px',
           margin: '0px auto 24px',
         }}
       >
-        Why do 3.5 million families use Seniorly every year?
+        Why do millions of families use Seniorly every year?
       </Heading>
 
       <Grid
