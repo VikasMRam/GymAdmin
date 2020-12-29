@@ -30,7 +30,6 @@ const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) 
         border="regular"
         borderPalette="slate.stroke"
         marginBottom="large"
-        gap="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
         upToTablet={{

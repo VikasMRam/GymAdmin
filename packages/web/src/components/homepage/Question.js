@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Section from './Section';
+
 import { assetPath } from 'sly/web/components/themes';
 import HomeCTABox from 'sly/web/components/organisms/HomeCTABox';
 import { getKey } from 'sly/common/components/themes';
 import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
 import SlyEvent from 'sly/web/services/helpers/events';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
-import Section from './Section';
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -67,7 +68,7 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
           heading="Your Own Advisor"
           buttonText="Speak with an expert"
           buttonProps={{
-            to: '/wizards/assessment?cta=generalOptions&entry=homepage',
+            to: '/wizards/assessment?cta=speakExpert&entry=homepage',
           }}
         >
           We connect you with a Seniorly Local Advisor, our trusted partner who knows the communities in your area. Rely on your advisor as much or as little as you need to find a new home you&apos;ll love.
@@ -78,7 +79,7 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
           buttonText="Take our quiz"
           buttonPalette="primary"
           buttonProps={{
-            to: '/wizards/assessment?cta=speakExpert&entry=homepage',
+            to: '/wizards/assessment?cta=generalOptions&entry=homepage',
           }}
         >
           Take our short quiz to set your personal preferences, then see the communities we recommend for you. Seniorly Smart Search helps you make sense of your options and choose wisely.
@@ -97,6 +98,6 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
       </Grid>
     </Section>
   );
-}
+};
 
 export default Question;

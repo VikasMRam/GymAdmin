@@ -96,7 +96,7 @@ const FamilyHomePage = ({
       {!isLoading &&
       <div>
         {showBanner && <WelcomeBanner onClose={onBannerClose} {...welcomeBannerContent} /> }
-        <Grid dimensions={['33%', '67%']} upToTablet={{ gridTemplateColumns: 'auto !important' }} gap="large">
+        <Grid dimensions={['30%', 'calc(70% - 1rem)']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&
             <HeadingBoxSection maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city},${state}`} >
@@ -115,7 +115,7 @@ const FamilyHomePage = ({
               </Grid>
             </HeadingBoxSection>
             <HeadingBoxSection overflow="auto" heading="Services to help you with your transition">
-              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
+              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(5,288px)']} overflow="auto">
                 {marketplaceOfferTiles}
               </Grid>
             </HeadingBoxSection>

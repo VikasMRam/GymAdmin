@@ -39,17 +39,17 @@ const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }
         marginBottom="large"
         dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
         // no column layout support below tablet
-        upToTablet={{
-          gridTemplateRows: 'min-content 1fr',
-          gridTemplateColumns: 'auto!important',
-          padding: '0',
-          height: 'inherit',
+        css={{
+        gridTemplateRows: 'min-content 1fr',
+        gridTemplateColumns: 'auto!important',
+        padding: '0',
+        height: 'inherit',
         }}
       >
         <ResponsiveImage
           src={imageUrl}
           // height={imgHeight}
-          aspectRatio="3:2"
+          aspectRatio="1:1"
           layout={layout}
           sizes={mediaSizes}
           upToTablet={{

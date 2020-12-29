@@ -8,15 +8,17 @@ import { Button } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 
 export const PageWrapper = styled.section`
-// background-color: ${palette('white', 'background')};    
+
   background-color: ${palette('harvest', 'background')};  
   padding: ${size('spacing.xxxLarge')} ${size('spacing.xLarge')};
   width: 100%;
-  // height: calc(100vh - 60px);
+  
   display: grid;
-
-  ${ifProp('hasTwoButtons', css`
-    justify-content: space-between;
+  justify-items: center;
+  grid-gap: ${size('spacing.xLarge')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    ${ifProp('hasSecondColumn', css`
+    justify-content: center;
     grid-template-columns: min-content min-content;
     grid-template-rows: min-content min-content;
     grid-gap: ${size('spacing.regular')};
@@ -24,24 +26,10 @@ export const PageWrapper = styled.section`
   grid-template-columns: 100%;
   grid-gap: ${size('spacing.xLarge')};
   `)}
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-  //   ${ifProp('hasTwoButtons', css`
-  //   justify-content: space-between;
-  //   grid-template-columns: min-content min-content;
-  //   grid-gap: ${size('spacing.regular')};
-  // `, css`
-  // grid-template-columns: min-content;
-  // grid-gap: ${size('spacing.regular')};
-  // `)}
-  //   grid-template-columns: 40% 20% 40%;
-    // justify-content: space-between;
     padding: ${size('spacing.xxxLarge')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    // grid-template-columns: 50% 20% 30%;
-    // justify-content: space-between;
     padding: ${size('spacing.xxxLarge')};
   }
 
@@ -62,7 +50,7 @@ PageWrapper.propTypes = {
 export const Wrapper = styled.section`
   background-color: ${palette('white', 'background')};    
   border-radius: ${size('border.xxLarge')};
-  padding: ${size('spacing.large')};
+  padding: ${size('spacing.xLarge')};
   height: fit-content;
   width: 360px;
   

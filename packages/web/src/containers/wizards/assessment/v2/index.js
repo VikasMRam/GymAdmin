@@ -8,7 +8,7 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import withWS from 'sly/web/services/ws/withWS';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
-import { getWizardContentFromEntry, getModalFromEntry  } from 'sly/web/services/helpers/wizard';
+import { getWizardContentFromCta, getModalFromEntry  } from 'sly/web/services/helpers/wizard';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import { FAMILY_DASHBOARD_HOME_PATH } from 'sly/web/constants/dashboardAppPaths';
 import {
@@ -44,6 +44,7 @@ export default class AssessmentWizardV2 extends Component {
   static propTypes = {
     skipIntro: bool,
     entry: string,
+    cta: string,
     ws: object,
     getAgent: func.isRequired,
     community: communityPropType,
@@ -182,21 +183,21 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   render() {
-    const { community, hasTip, className, toc, skipIntro, entry } = this.props;
+    const { community, hasTip, className, toc, skipIntro, cta, entry } = this.props;
     let { city, state } = this.props;
     let amount = 4000;
     let skipOptionText = 'No thanks, connect me to an expert now.';
     // const showSkipOption = true;
     const { agent, hasNoAgent } = this.state;
     // Add agent presence
-    const conversionInfo = { toc, entry, agent, hasNoAgent };
+    const conversionInfo = { toc, cta, entry, agent, hasNoAgent };
     // console.log('toc and agent and hasNoAgent', agent, hasNoAgent, toc);
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
       skipOptionText = 'No thanks, I just want to see pricing.';
     }
     const hadNoLocation = !city || !state || city === 'undefined' || state === 'undefined';
-    const { intro = {} }  = getWizardContentFromEntry(entry);
+    const { intro = {} }  = getWizardContentFromCta(cta);
     return (
       <WizardController
         formName="assessmentWizard"

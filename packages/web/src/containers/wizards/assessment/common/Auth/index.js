@@ -19,13 +19,14 @@ export default class Auth extends Component {
     user: userPropType,
     community: communityPropType,
     signUpHeading: string,
+    submitButtonText: string,
     onAuthSuccess: func,
     location: object.isRequired,
     stepName: string.isRequired,
   };
 
   static defaultProps = {
-    stepName: 'step-11:Auth',
+    stepName: 'step-7:Auth',
   };
 
   componentDidMount() {
@@ -86,7 +87,7 @@ export default class Auth extends Component {
   };
 
   render() {
-    const { user, signUpHeading } = this.props;
+    const { user, signUpHeading, submitButtonText } = this.props;
 
     if (user) {
       return <div />;
@@ -100,7 +101,7 @@ export default class Auth extends Component {
         signUpHeading={signUpHeading}
         initialStep="Signup"
         formName="AssessmentWizardAuthForm"
-        signUpSubmitButtonText="Get Pricing"
+        signUpSubmitButtonText={submitButtonText}
         signUpHasPassword={false}
         hasProviderSignup={false}
       />

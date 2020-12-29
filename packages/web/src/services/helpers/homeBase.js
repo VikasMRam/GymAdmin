@@ -1,9 +1,6 @@
-import user from 'sly/common/propTypes/user';
 
 export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
   const { modal = '', communityName = 'your requested community' } = qp;
-  // console.log('seeing homeBase', homebase);
-  // console.log('seeing entry', entry);
   let key =  'communityPricing';
   let userName = 'there';
   if (homebase && homebase.user && homebase.user.name) {
@@ -29,8 +26,8 @@ export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
       },
     },
     communityRecommendations: {
-      banner: { title: 'We need to ask a few quick questions to understand your needs',
-        description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
+      banner: { title: `Hi ${userName}, welcome to your Home Base!`,
+        description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more.' },
       modal: {
         matched: { heading: 'We\'ve sent your request!',
           caption: 'What happens next?',
@@ -43,8 +40,8 @@ export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
       },
     },
     generalRecommendations: {
-      banner: { title: 'We need to ask a few quick questions to understand your needs',
-        description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
+      banner: { title: `Hi ${userName}, welcome to your Home Base!`,
+        description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more.' },
       modal: {
         matched: { heading: 'We\'ve sent your request!',
           caption: 'What happens next?',
@@ -57,8 +54,8 @@ export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
       },
     },
     speakExpert: {
-      banner: { title: 'We need to ask a few quick questions to understand your needs',
-        description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
+      banner: { title: `Hi ${userName}, welcome to your Home Base!`,
+        description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more.' },
       modal: {
         matched: { heading: 'We\'ve sent your request!',
           caption: 'What happens next?',

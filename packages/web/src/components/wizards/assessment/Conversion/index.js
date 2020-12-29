@@ -13,7 +13,7 @@ import { Auth }  from 'sly/web/containers/wizards/assessment/common';
 
 
 const Conversion = ({
-  onConversionSuccess, heading, description, onBackClick, onSkipClick, whoNeedsHelp, hasTip,
+  onConversionSuccess, heading, description, submitButtonText, whoNeedsHelp, hasTip,
 }) => {
   // const opts = ADL_OPTIONS;
   // if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
@@ -29,7 +29,7 @@ const Conversion = ({
         <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
         <Block pad="xLarge">{description}</Block>
         {/* FIXME: auth container is being called from conversion component */ }
-        <Block width="fit-content"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} /></Block>
+        <Block maxWidth="inherit"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} submitButtonText={submitButtonText} /></Block>
       </Wrapper>
       {hasTip &&
       <TipBoxWrapper>
@@ -49,6 +49,7 @@ Conversion.propTypes = {
   onConversionSuccess: func.isRequired,
   heading: string.isRequired,
   description: string.isRequired,
+  submitButtonText: string.isRequired,
   whoNeedsHelp: string,
   onSkipClick: func,
   onBackClick: func,

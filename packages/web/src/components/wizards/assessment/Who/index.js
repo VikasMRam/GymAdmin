@@ -12,8 +12,8 @@ import ReduxField from 'sly/common/components/organisms/ReduxField';
 const Who = ({
   handleSubmit, invalid, submitting, hasTip, onSkipClick, onBackClick,
 }) => (
-  <PageWrapper>
-    <Wrapper hasSecondColumn={hasTip}>
+  <PageWrapper hasSecondColumn={hasTip}>
+    <Wrapper>
       <Heading level="subtitle" weight="medium" pad="xLarge">Are you looking for yourself or someone else?</Heading>
       <form onSubmit={handleSubmit}>
         <Field

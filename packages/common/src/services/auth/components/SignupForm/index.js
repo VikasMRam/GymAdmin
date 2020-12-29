@@ -2,7 +2,9 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
+import { size } from 'sly/common/components/themes';
 import { Block, Button, Form, Grid } from 'sly/common/components/atoms';
+import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 
@@ -10,8 +12,8 @@ const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
   hasPreference, hasProviderSignup,
 }) => (
-  <Form onSubmit={handleSubmit}>
-    <Grid gap="regular">
+  <Form width="max-content" onSubmit={handleSubmit}>
+    <Grid gap="small">
       <Field
         name="firstName"
         label="First Name"
@@ -56,13 +58,12 @@ const SignupForm = ({
     />
 
     }
-    <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
-      {submitButtonText}
-    </Button>
-    {/* TODO: this should reuse Tos and privacy molecule after Link is migrated for mobile */}
-    <Block align="center" pad="large" size="tiny" palette="slate" variation="filler">
-      By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.
+    <Block marginBottom={size('spacing.large')}>
+      <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
+        {submitButtonText}
+      </Button>
     </Block>
+    <Block marginBottom={size('spacing.xLarge')}> <TosAndPrivacy  /> </Block>
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <Grid flow="row" gap="large" verticalAlign="middle">
       <Block display="flex" align="center" direction="row" size="caption">

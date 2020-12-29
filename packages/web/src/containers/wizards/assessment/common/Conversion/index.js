@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { getWizardContentFromEntry } from 'sly/web/services/helpers/wizard';
+import { getWizardContentFromCta } from 'sly/web/services/helpers/wizard';
 import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
 import { Conversion } from 'sly/web/components/wizards/assessment';
@@ -51,8 +51,8 @@ export default class ConversionContainer extends Component {
 
   render() {
     const { conversionInfo = {} } = this.props;
-    const { entry } = conversionInfo;
-    const { signup } = getWizardContentFromEntry(entry);
+    const { cta } = conversionInfo;
+    const { signup } = getWizardContentFromCta(cta);
     return (
       <Conversion
         {...this.props}

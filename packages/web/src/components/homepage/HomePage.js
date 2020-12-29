@@ -2,6 +2,13 @@ import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { func, string, object } from 'prop-types';
 
+import QuotesCarroussel from './QuotesCarroussel';
+import CommunitiesByCity from './CommunitiesByCity';
+import Reasons from './Reasons';
+import Question from './Question';
+import Guides from './Guides';
+import Section from './Section';
+
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
@@ -13,12 +20,6 @@ import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/Co
 import { startingWith } from 'sly/common/components/helpers/media';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
-import QuotesCarroussel from './QuotesCarroussel';
-import CommunitiesByCity from './CommunitiesByCity';
-import Reasons from './Reasons';
-import Question from './Question';
-import Guides from './Guides';
-import Section from './Section';
 
 const blockPad = css`
   margin-bottom: 48px;
@@ -77,19 +78,24 @@ const HomePage = ({
           position: relative;
           z-index: 100;
           ${startingWith('laptop', css({ flexDirection: 'row', alignItems: 'center' }))}
-        `}>
+        `}
+        >
           <Block css={css`
             margin-bottom: 48px;
             ${startingWith('tablet', css({ marginBottom: '64px' }))}
             ${startingWith('laptop', css({ marginRight: '64px', marginBottom: '0px' }))}
-          `}>
+          `}
+          >
             <Heading font="title-xxlarge" pad="large">
               Find a senior living community you’ll love.
             </Heading>
-            <Block font="body-large" css={css`
+            <Block
+              font="body-large"
+              css={css`
               margin-bottom: 48px;
               ${startingWith('tablet', css({ marginBottom: '24px' }))}
-            `}>
+            `}
+            >
               Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
             </Block>
             <Button
@@ -161,7 +167,7 @@ const HomePage = ({
 
       <Separator />
 
-      <CommunitiesByCity onLocationSearch={onLocationSearch}/>
+      <CommunitiesByCity onLocationSearch={onLocationSearch} />
 
       <Guides css={blockPad} />
 

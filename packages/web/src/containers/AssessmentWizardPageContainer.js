@@ -54,9 +54,6 @@ export default class AssessmentWizardPageContainer extends Component {
     if (qp.layout) {
       entry = qp.layout;
     }
-    if (qp.cta) {
-      entry = qp.cta;
-    }
     if (qp.entry) {
       entry = qp.entry;
     }
@@ -77,6 +74,7 @@ export default class AssessmentWizardPageContainer extends Component {
         toc={toc}
         version={qp.version}
         entry={entry}
+        cta={qp.cta}
       />
     );
   }

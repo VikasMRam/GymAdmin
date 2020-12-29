@@ -37,6 +37,7 @@ const Body = styled.main`
 
   ${startingWith('desktop', css`
     height: 100%;
+
   `)}
 
   ${ifProp('hasStickyFooter', css`
@@ -84,8 +85,9 @@ const DashboardPage = styled.div`
     grid-template-rows: max-content auto;
     grid-template-areas:
       "header header"
-      "sidebar body";
+      "sidebar body";  
   `)}
+  
 `;
 
 const DashboardPageTemplate = ({

@@ -12,9 +12,9 @@ const StyledTemplateContent = styled(TemplateContent)`
   padding: 0;
   width: 100% !important;
   height: calc(100vh - 60px);
-// > * {
-//     margin: auto;
-//   }
+  > * {
+    margin: auto;
+  }
 
   // ${startingWith('laptop', css`
   //   > * {
