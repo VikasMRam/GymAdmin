@@ -68,6 +68,7 @@ export default class GetAssessmentBoxContainer extends Component {
     if (completedAssessment || completedPricing) {
       this.toggleModal();
     }
+
     // const { modalOpened } = this.state;
     // this.setState({
     //   modalOpened: !modalOpened,

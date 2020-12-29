@@ -19,7 +19,7 @@ TipBox.propTypes = {
 
 TipBox.defaultProps = {
   palette: 'grey',
-  background: 'slate.lighter-90',
+  background: 'white',
 };
 
 export default TipBox;

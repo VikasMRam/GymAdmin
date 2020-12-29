@@ -11,7 +11,7 @@ const StyledTemplateContent = styled(TemplateContent)`
   // background-color: ${palette('harvest', 'background')};  
   padding: 0;
   width: 100% !important;
-
+  height: calc(100vh - 60px);
 // > * {
 //     margin: auto;
 //   }
@@ -21,6 +21,14 @@ const StyledTemplateContent = styled(TemplateContent)`
   //     width: fit-content;
   //   }
   // `)}
+  ${startingWith('desktop', css`
+    > * {
+      max-width: ${size('breakpoint.desktop')};
+      margin: auto;
+    }
+  `)}
+
+
 `;
 
 const AssessmentWizardPage = props => (

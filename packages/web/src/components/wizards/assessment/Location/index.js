@@ -13,25 +13,21 @@ const Location = ({
 }) => (
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
-      <Box>
-        <Heading pad="xLarge" level="subtitle" weight="medium">Where are you looking for care?</Heading>
-        <form onSubmit={handleSubmit}>
-          <Field
-            name="location"
-            type="locationSearch"
-            component={ReduxField}
-            required
-          />
-          <Footer invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
+      <Heading pad="xLarge" level="subtitle" weight="medium">Where are you looking for care?</Heading>
+      <form onSubmit={handleSubmit}>
+        <Field
+          name="location"
+          type="locationSearch"
+          component={ReduxField}
+          required
+        />
+        <Footer invalid={invalid} submitting={submitting} />
+      </form>
     </Wrapper>
     {hasTip &&
     <TipBoxWrapper>
       <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base">
-          This will let us narrow down your options to your desired location and help us get you the correct pricing and availability.
-        </IconItem>
+        Our platform has a network of over 40,000 of the best senior living communities and hundreds of agents across the US.
       </TipBox>
     </TipBoxWrapper>
     }

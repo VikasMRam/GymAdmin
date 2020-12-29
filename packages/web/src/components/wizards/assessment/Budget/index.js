@@ -7,7 +7,7 @@ import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import { stateAbbr } from  'sly/web/services/helpers/url';
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box, Block } from 'sly/web/components/atoms';
+import { Heading, Block } from 'sly/web/components/atoms';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
@@ -17,19 +17,19 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
   state = stateAbbr[capitalize(state)];
   switch (whoNeedsHelp) {
     case 'parents':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Does your parent have access to any of these benefits?';
     case 'myself-and-spouse':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do you and your spouse have access to any of these benefits?`;
     case 'myself':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do you have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?';
     case 'spouse':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your spouse have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Does your spouse or partner have access to any of these benefits?';
     case 'friend':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your friend(s) have access to any of these benefits?`;
     case 'other-relatives':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your relative(s) have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?';
     default:
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?';
   }
 };
 
@@ -38,21 +38,21 @@ const Budget = ({
 }) => (
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
-      <Box>
-        <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp, amount, city, state)}</Heading>
-        <Block pad="xLarge">Please select all that apply.</Block>
-        <form onSubmit={handleSubmit}>
-          <Field
-            multiChoice
-            options={BUDGET_OPTIONS}
-            name="budget"
-            type="boxChoice"
-            align="left"
-            component={ReduxField}
-          />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
+
+      <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp, amount, city, state)}</Heading>
+      <Block pad="xLarge">Please select all that apply.</Block>
+      <form onSubmit={handleSubmit}>
+        <Field
+          multiChoice
+          options={BUDGET_OPTIONS}
+          name="budget"
+          type="boxChoice"
+          align="left"
+          component={ReduxField}
+        />
+        <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+      </form>
+
     </Wrapper>
     {hasTip &&
     <TipBoxWrapper>

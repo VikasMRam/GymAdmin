@@ -62,9 +62,11 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   componentDidMount() {
+    const { entry } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
       action: 'open',
+      label: entry,
     });
   }
 
@@ -230,7 +232,6 @@ export default class AssessmentWizardV2 extends Component {
                   hasTip={hasTip}
                 />
                 }
-
                 <WizardStep
                   component={Who}
                   name="Who"
@@ -242,6 +243,8 @@ export default class AssessmentWizardV2 extends Component {
                   component={Timing}
                   name="Timing"
                   hasTip={hasTip}
+                  onBackClick={previous}
+                  onSkipClick={next}
                 />
                 <WizardStep
                   component={ADL}

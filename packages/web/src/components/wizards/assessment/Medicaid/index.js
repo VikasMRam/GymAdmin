@@ -12,7 +12,7 @@ import ReduxField from 'sly/common/components/organisms/ReduxField';
 const generateHeading = (whoNeedsHelp) => {
   switch (whoNeedsHelp) {
     case 'parents':
-      return 'Do your parents qualify for Medicaid?';
+      return 'Does your parent qualify for Medicaid?';
     case 'myself-and-spouse':
       return 'Do you or your spouse qualify for Medicaid?';
     case 'myself':
@@ -33,23 +33,23 @@ const Medicaid = ({
 }) => (
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
-      <Box>
-        <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
-        <form onSubmit={handleSubmit}>
-          <Field
-            options={MEDICAID_OPTIONS}
-            name="medicaid"
-            type="boxChoice"
-            align="left"
-            component={ReduxField}
-          />
-          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-        </form>
-      </Box>
+
+      <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
+      <form onSubmit={handleSubmit}>
+        <Field
+          options={MEDICAID_OPTIONS}
+          name="medicaid"
+          type="boxChoice"
+          align="left"
+          component={ReduxField}
+        />
+        <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+      </form>
+
     </Wrapper>
     {hasTip &&
       <TipBoxWrapper>
-        <TipBox heading="YOU TYPICALLY QUALIFY IF:" height="fit-content">
+        <TipBox heading="TYPICAL MEDICAID QUALIFICATIONS:" height="fit-content">
           <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
           <IconItem icon="warning" iconPalette="slate" iconVariation="base" pad="large">
             Asset limit in most states is $1,600 to $15,750.

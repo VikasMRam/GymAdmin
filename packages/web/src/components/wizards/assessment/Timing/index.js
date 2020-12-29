@@ -14,24 +14,24 @@ const Timing = ({
   <div>
     <PageWrapper hasSecondColumn={hasTip}>
       <Wrapper>
-        <Box>
-          <Heading level="subtitle" weight="medium" padding="large">Where are you in your senior living search?</Heading>
-          <form onSubmit={handleSubmit}>
-            <Field
-              singleChoice
-              options={TIMING_OPTIONS}
-              name="timing"
-              type="boxChoice"
-              align="left"
-              component={ReduxField}
-            />
-            <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
-          </form>
-        </Box>
+
+        <Heading level="subtitle" weight="medium" padding="large">What’s your timeframe?</Heading>
+        <form onSubmit={handleSubmit}>
+          <Field
+            singleChoice
+            options={TIMING_OPTIONS}
+            name="timing"
+            type="boxChoice"
+            align="left"
+            component={ReduxField}
+          />
+          <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
+        </form>
+
       </Wrapper>
       {hasTip &&
         <TipBoxWrapper>
-          <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
+          <TipBox heading="DID YOU KNOW?" height="fit-content">
             Whether you need to find options immediate or are planning ahead - we got you.
           </TipBox>
         </TipBoxWrapper>

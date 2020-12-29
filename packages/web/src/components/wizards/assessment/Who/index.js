@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import { WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
+import { Heading } from 'sly/web/components/atoms';
 // import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
@@ -14,21 +14,17 @@ const Who = ({
 }) => (
   <PageWrapper>
     <Wrapper hasSecondColumn={hasTip}>
-      <Box>
-        <Heading level="subtitle" weight="medium" pad="xLarge">Who are you looking for?</Heading>
-        <form onSubmit={handleSubmit}>
-          <Field
-            name="lookingFor"
-            type="select"
-            component={ReduxField}
-            required
-          >
-            <option value="">Select a person</option>
-            {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
-          </Field>
-          <Footer invalid={invalid} submitting={submitting} onSkipClick={onSkipClick} onBackClick={onBackClick} />
-        </form>
-      </Box>
+      <Heading level="subtitle" weight="medium" pad="xLarge">Are you looking for yourself or someone else?</Heading>
+      <form onSubmit={handleSubmit}>
+        <Field
+          name="lookingFor"
+          type="boxChoice"
+          component={ReduxField}
+          required
+          options={WHO_PERSON_OPTIONS}
+        />
+        <Footer invalid={invalid} submitting={submitting} onSkipClick={onSkipClick} onBackClick={onBackClick} />
+      </form>
     </Wrapper>
     {hasTip &&
     <TipBoxWrapper>

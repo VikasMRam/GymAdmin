@@ -409,6 +409,7 @@ export default class CommunityDetailPage extends Component {
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                   community={community}
+                  mode={{ cta: 'options', entry: 'profileSection' }}
                 />
                 }
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (

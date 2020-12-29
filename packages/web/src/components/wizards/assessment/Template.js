@@ -10,30 +10,64 @@ import IconButton from 'sly/common/components/molecules/IconButton';
 export const PageWrapper = styled.section`
 // background-color: ${palette('white', 'background')};    
   background-color: ${palette('harvest', 'background')};  
-  padding: ${size('spacing.xxxLarge')} 0;
+  padding: ${size('spacing.xxxLarge')} ${size('spacing.xLarge')};
   width: 100%;
-  display: flex;
-  flex-direction: column;  
+  // height: calc(100vh - 60px);
+  display: grid;
+
+  ${ifProp('hasTwoButtons', css`
+    justify-content: space-between;
+    grid-template-columns: min-content min-content;
+    grid-template-rows: min-content min-content;
+    grid-gap: ${size('spacing.regular')};
+  `, css`
+  grid-template-columns: 100%;
+  grid-gap: ${size('spacing.xLarge')};
+  `)}
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-direction: row;
-    justify-content: space-between;
+  //   ${ifProp('hasTwoButtons', css`
+  //   justify-content: space-between;
+  //   grid-template-columns: min-content min-content;
+  //   grid-gap: ${size('spacing.regular')};
+  // `, css`
+  // grid-template-columns: min-content;
+  // grid-gap: ${size('spacing.regular')};
+  // `)}
+  //   grid-template-columns: 40% 20% 40%;
+    // justify-content: space-between;
     padding: ${size('spacing.xxxLarge')};
   }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    // grid-template-columns: 50% 20% 30%;
+    // justify-content: space-between;
+    padding: ${size('spacing.xxxLarge')};
+  }
+
 `;
 
 PageWrapper.propTypes = {
   hasSecondColumn: bool,
 };
-
+// //   Main: 504px
+// Tip: 328px
+// Tablet
+// Main: 504px
+// Tip: 504px
+// Mobile
+// Main: 360px
+// Tip: 360px
 // Step component wrapper
 export const Wrapper = styled.section`
   background-color: ${palette('white', 'background')};    
   border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.large')};
-  margin: auto;
+  height: fit-content;
+  width: 360px;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    max-width: 50%;
+    width: 504px;
   }
 `;
 
@@ -47,10 +81,12 @@ export const ProgressBarWrapper = styled.div`
 
 export const TipBoxWrapper = styled.div`
   height:fit-content;
-
+  width: 360px;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    max-width: 50%;
-    // grid-template-columns: ${size('layout.col5')} ${ifProp('hasSecondColumn', css`${size('layout.col3')}`)};
+    width: 504px;
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 328px;
   }
 `;
 
