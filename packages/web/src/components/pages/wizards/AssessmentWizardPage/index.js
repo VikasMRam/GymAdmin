@@ -8,10 +8,10 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import AssessmentWizard from 'sly/web/containers/wizards/assessment';
 
 const StyledTemplateContent = styled(TemplateContent)`
-  // background-color: ${palette('harvest', 'background')};  
+  background-color: ${palette('harvest', 'background')};  
   padding: 0;
   width: 100% !important;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 80px);
   > * {
     margin: auto;
   }

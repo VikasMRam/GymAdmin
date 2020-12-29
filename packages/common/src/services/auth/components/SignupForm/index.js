@@ -12,7 +12,7 @@ const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
   hasPreference, hasProviderSignup,
 }) => (
-  <Form width="max-content" onSubmit={handleSubmit}>
+  <Form onSubmit={handleSubmit}>
     <Grid gap="small">
       <Field
         name="firstName"
@@ -58,12 +58,12 @@ const SignupForm = ({
     />
 
     }
-    <Block marginBottom={size('spacing.large')}>
+    <Block marginBottom="large">
       <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
         {submitButtonText}
       </Button>
     </Block>
-    <Block marginBottom={size('spacing.xLarge')}> <TosAndPrivacy  /> </Block>
+    <Block marginBottom="xLarge"> <TosAndPrivacy  /> </Block>
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <Grid flow="row" gap="large" verticalAlign="middle">
       <Block display="flex" align="center" direction="row" size="caption">
