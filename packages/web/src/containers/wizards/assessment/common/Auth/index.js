@@ -38,7 +38,7 @@ export default class Auth extends Component {
   }
 
   handleAuthSuccess = () => {
-    const { createAction, location: { pathname }, community, user, onAuthSuccess, stepName } = this.props;
+    const { createAction, location: { pathname }, community, user, onAuthSuccess, stepName, data = {} } = this.props;
     const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
@@ -70,20 +70,7 @@ export default class Auth extends Component {
         actionPage: pathname,
         actionInfo,
       },
-    })
-      .then(() => createAction({
-        type: 'UUIDAction',
-        attributes: {
-          actionType: WIZARD_STEP_COMPLETED,
-          actionPage: pathname,
-          actionInfo: {
-            stepName,
-            wizardName: 'assessmentWizard',
-            data: actionInfo,
-          },
-        },
-      }))
-      .then(onAuthSuccess);
+    }).then(onAuthSuccess);
   };
 
   render() {

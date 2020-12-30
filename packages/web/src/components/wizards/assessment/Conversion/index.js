@@ -8,7 +8,7 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import { Auth }  from 'sly/web/containers/wizards/assessment/common';
 
 const Conversion = ({
-  onConversionSuccess, heading, description, submitButtonText, hasTip,
+  onConversionSuccess, heading, description, submitButtonText, hasTip, ...props
 }) => {
   return (
     <PageWrapper hasSecondColumn={hasTip}>
@@ -17,12 +17,12 @@ const Conversion = ({
         {/* <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading> */}
         <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
         <Block pad="xLarge">{description}</Block>
-        <Block maxWidth="inherit"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} submitButtonText={submitButtonText} /></Block>
+        <Block maxWidth="inherit"><Auth {...props} signupHeading={heading} onAuthSuccess={onConversionSuccess} submitButtonText={submitButtonText} /></Block>
       </Wrapper>
       {hasTip &&
       <TipBoxWrapper>
         <TipBox heading="BENEFITS OF CREATING A FREE ACCOUNT:" height="fit-content">
-          <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get your own Seniorly Home Base for tracking your options</IconItem>
+          <IconItem marginBottom="large" icon="check" iconPalette="harvest" iconVariation="base">Get your own Seniorly Home Base for tracking your options</IconItem>
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">See your recommended communities in one place</IconItem>
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get a dedicated Seniorly Local Advisor</IconItem>
           <IconItem icon="check" iconPalette="harvest" iconVariation="base">See other resources and services you may need</IconItem>

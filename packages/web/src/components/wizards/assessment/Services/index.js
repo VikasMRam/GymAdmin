@@ -32,7 +32,7 @@ const Services = ({
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
 
-      <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
+      <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading>
       <Block pad="xLarge">Please select all that apply.</Block>
       <form onSubmit={handleSubmit}>
         <Field

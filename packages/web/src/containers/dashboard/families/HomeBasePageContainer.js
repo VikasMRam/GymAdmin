@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { arrayOf, object, func } from 'prop-types';
+import { object, func } from 'prop-types';
 import { stringify } from 'query-string';
 
+import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
 import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
+// import withWS from 'sly/web/services/ws/withWS';
 import { prefetch, query, withAuth } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { parseURLQueryParams, removeQueryParamFromURL } from 'sly/web/services/helpers/url';
 import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
 import { shouldShowModal, getWelcomeContent } from 'sly/web/services/helpers/homeBase';
 import withModal from 'sly/web/controllers/withModal';
-import withNotification from 'sly/web/controllers/withNotification';
 import AskQuestionToAgentFormContainer from 'sly/web/containers/AskQuestionToAgentFormContainer';
 import FamilyHomePage from 'sly/web/components/pages/familyDashboard/Home';
 import EntryModal from 'sly/web/components/organisms/homeBase/EntryModal';
@@ -18,11 +19,12 @@ import EntryModal from 'sly/web/components/organisms/homeBase/EntryModal';
 @prefetch('homeBase', 'getHomeBase', req => req({ id: 'me' }))
 @query('updateUuidAux', 'updateUuidAux')
 @withModal
-@withNotification
 @withAuth
+// @withWS
 export default class HomeBasePageContainer extends Component {
   static propTypes = {
     uuidAux: object,
+    ws: object,
     homeBase: object,
     status: object,
     location: object,
@@ -38,7 +40,28 @@ export default class HomeBasePageContainer extends Component {
 
   state = {
     showBanner: true,
+    hasAgent: false,
   };
+
+  waitForAgentMatched = () => {
+    const { ws = { dummy: true } } = this.props;
+    if (ws.dummy) {
+      return;
+    }
+    ws.setup(true);
+    this.agentMatchTimeout = setTimeout(this.onNoAgentMatch, NOTIFY_AGENT_MATCHED_TIMEOUT);
+    ws.pubsub.on(NOTIFY_AGENT_MATCHED, this.onAgentMatch, { capture: true });
+  };
+  onNoAgentMatch = (data) => {
+    console.log('Confirmed no agent!', data);
+  }
+  onAgentMatch = (data) => {
+    clearTimeout(this.agentMatchTimeout);
+    console.log('matched agent', data);
+    this.setState({
+      hasAgent: true,
+    });
+  }
 
   handleOnGallerySlideChange = (userSaveId, i) => {
     const { currentGalleryImage } = this.state;
@@ -100,17 +123,22 @@ export default class HomeBasePageContainer extends Component {
 
   render() {
     const { location: { search }, status, homeBase, uuidAux } = this.props;
-    const { currentGalleryImage, showBanner } = this.state;
+    const { showBanner, hasAgent } = this.state;
     const qp = parseURLQueryParams(search);
     const bannerSeen = retrieveLocalStorage('welcomeBannerSeen');
-
+    // this.waitForAgentMatched();
     if (status.homeBase && status.homeBase.error) {
       return <RefreshRedirect to="/" />;
     }
-    const wc = getWelcomeContent(homeBase, qp, 'modal');
-    let mc = wc.noAgent;
-    if (homeBase && homeBase.hasAreaAgent) {
-      mc = wc.matched;
+    const wmc = getWelcomeContent(homeBase, qp, 'modal');
+    let mc = wmc.noAgent;
+    if ((homeBase && homeBase.hasAreaAgent) || hasAgent) {
+      mc = wmc.matched;
+    }
+    const wbc = getWelcomeContent(homeBase, qp.modal, 'banner');
+    let bc = wbc.noAgent;
+    if ((homeBase && homeBase.hasAreaAgent) || hasAgent) {
+      bc = wbc.matched;
     }
 
     return (
@@ -122,15 +150,14 @@ export default class HomeBasePageContainer extends Component {
           onBannerClose={this.handleBannerClose}
           onGallerySlideChange={this.handleOnGallerySlideChange}
           toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-          currentGalleryImage={currentGalleryImage}
           onLocationSearch={this.handleOnLocationSearch}
           onUnfavouriteClick={this.handleUnfavouriteClick}
           onMarketplaceTileClick={this.handleMarketplaceTileClick}
           openAskAgentQuestionModal={this.openAskAgentQuestionModal}
           isLoading={!status.homeBase.hasFinished}
-          // showBanner={showBanner && !bannerSeen}
-          showBanner={showBanner}
-          welcomeBannerContent={getWelcomeContent(homeBase, qp.modal, 'banner')}
+          showBanner={showBanner && !bannerSeen}
+          // showBanner={showBanner}
+          welcomeBannerContent={bc}
         />
       </div>
     );

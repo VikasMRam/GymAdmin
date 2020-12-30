@@ -13,6 +13,7 @@ export const FLOOR_PLAN_REQUESTED = 'floorPlanRequested';
 export const HOME_CARE_REQUESTED = 'homeCareRequested';
 export const CURTIANUP_SUBSCRIBE = 'curtainupSubscribe';
 export const WIZARD_STEP_COMPLETED = 'wizardStepCompleted';
+export const WIZARD_POSTCONVERSION_INFO = 'wizardPostConversionInfo';
 export const EXTERNAL_LINK_CLICK = 'externalLinkClicked';
 export const SEARCH_PAGE_VIEWED = 'searchPageViewed';
 

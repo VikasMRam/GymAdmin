@@ -32,7 +32,7 @@ const Timing = ({
       {hasTip &&
         <TipBoxWrapper>
           <TipBox heading="DID YOU KNOW?" height="fit-content">
-            Whether you need to find options immediate or are planning ahead - we got you.
+            Whether you need to find options immediately or are planning ahead - we got you.
           </TipBox>
         </TipBoxWrapper>
       }

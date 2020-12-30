@@ -44,7 +44,7 @@ const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }
         <ResponsiveImage
           src={imageUrl}
           // height={imgHeight}
-          aspectRatio="1:1"
+          aspectRatio="3:2"
           layout={layout}
           sizes={mediaSizes}
           upToTablet={{

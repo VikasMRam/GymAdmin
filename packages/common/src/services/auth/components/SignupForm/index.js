@@ -62,7 +62,7 @@ const SignupForm = ({
         {submitButtonText}
       </Button>
     </Block>
-    <Block marginBottom="xLarge"> <TosAndPrivacy  /> </Block>
+    <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <Grid flow="row" gap="large" verticalAlign="middle">
       <Block display="flex" align="center" direction="row" size="caption">

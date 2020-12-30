@@ -13,7 +13,14 @@ export const getWelcomeContent = (homebase = {}, qp = {}, step) => {
   const welcomeText = {
     communityPricing: {
       banner: { title: `Hi ${userName}, welcome to your Home Base!`,
-        description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more.' },
+        description: 'Here you can find information about your local advisor, community recommendations, helpful articles, personalized services and offers and much more.',
+        matched: { title: `Hi ${userName}, welcome to your Home Base!`,
+          description: 'In this private and secure space, you’ll find all of the information related to your senior living journey—our community recommendations, your local expert, helpful resources, and special offers for other products and services.',
+        },
+        noAgent: { title: `Hi ${userName}, welcome to your Home Base!`,
+          description: 'In this private and secure space, you’ll find all of the information related to your senior living journey—our community recommendations, helpful resources, and special offers for other products and services.',
+        },
+      },
       modal: {
         matched: { heading: 'We\'ve sent your request!',
           caption: 'What happens next?',
@@ -86,13 +93,13 @@ export const shouldShowModal = (modal) => {
 };
 
 export const getChecklistItems = (homeBase, uuidAux) => {
-  const itemList = [{ checked: false, text: 'Finish your senior living quiz' }, { checked: true, text: 'Connect with your Advisor' },
+  const itemList = [{ checked: false, text: 'Finish your senior living quiz' }, { checked: false, text: 'Connect with your Advisor' },
     { checked: false, text: 'Evaluate Options' }, { checked: false, text: 'Prepare to move' }, { checked: false, text: 'Move to your new home' }];
   const stepsCompleted = [0, 0, 0, 0, 0];
   const { conversionInfo } = uuidAux;
   if (conversionInfo) {
     const wizardActions = conversionInfo.filter((e) => { return e.page.indexOf('wizard') > -1; });
-    if (wizardActions.length > 0) {
+    if (wizardActions && (wizardActions.length > 0)) {
       stepsCompleted[0] = 1;
     }
   }

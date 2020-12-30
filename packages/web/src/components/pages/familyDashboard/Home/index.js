@@ -61,7 +61,7 @@ const FamilyHomePage = ({
     const mplaceOffers = mplaceResources.filter((mplaceResource) => {
       return mplaceResource.type === MPLACE_RESOURCE_OFFER;
     });
-    if (resourceArticles.length > 0) {
+    if (resourceArticles && resourceArticles.length > 0) {
       resourceArticleTiles = resourceArticles.map((ra) => {
         return (
           <MarketplaceResourceContentTile
@@ -122,7 +122,7 @@ const FamilyHomePage = ({
               </Grid>
             </HeadingBoxSection>
             <HeadingBoxSection overflow="auto" heading="Senior living articles recommended for you">
-              <Grid gap="large" startingWithTablet={{ gridTemplateColumns: 'repeat(2,40%) !important' }} dimensions={['repeat(4,288px)']}overflow="auto">
+              <Grid gap="large" dimensions={['repeat(4,288px)']}overflow="auto">
                 {resourceArticleTiles}
               </Grid>
             </HeadingBoxSection>

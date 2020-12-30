@@ -29,7 +29,7 @@ const Who = ({
     {hasTip &&
     <TipBoxWrapper>
       <TipBox heading="DID YOU KNOW?" height="fit-content">
-        Thousands of families trust and use Seniorly every year. We work hard to make sure you find the right senior living and care options.
+        Millions of families trust and use Seniorly every year. We work hard to make sure you find the right senior living and care options.
       </TipBox>
     </TipBoxWrapper>
     }

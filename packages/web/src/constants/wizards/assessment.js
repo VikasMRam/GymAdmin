@@ -115,11 +115,11 @@ export const ADL_OPTIONS = [
 ];
 
 export const COEXISTING_ADL_OPTIONS = {
-  'memory-care': ['memory-care', 'adl-general', 'medication-management'],
-  'adl-general': ['memory-care', 'adl-general', 'medication-management'],
-  'medication-management': ['memory-care', 'adl-general', 'medication-management'],
+  'memory-care': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
+  'adl-general': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
+  'medication-management': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
   none: ['none'],
-  'im-not-sure': ['im-not-sure'],
+  'im-not-sure': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
 };
 
 export const DEMENTIA_FORGETFUL_OPTIONS = {

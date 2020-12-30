@@ -7,7 +7,7 @@ import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 
 const ChecklistTile = ({ layout, itemList }) => {
   const numSteps = itemList.length;
-  let numChecked = -1;
+  let numChecked = 0;
   const items = itemList.map((e, i) => {
     if (e.checked && e.checked === true) {
       numChecked = i + 1;

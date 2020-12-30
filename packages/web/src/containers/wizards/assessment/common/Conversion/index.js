@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import { getWizardContentFromCta } from 'sly/web/services/helpers/wizard';
 import { query } from 'sly/web/services/api';
-import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
+import { WIZARD_STEP_COMPLETED, WIZARD_POSTCONVERSION_INFO } from 'sly/web/services/api/constants';
 import { Conversion } from 'sly/web/components/wizards/assessment';
 // import { createValidator, required } from 'sly/web/services/validation';
 
@@ -28,19 +28,19 @@ export default class ConversionContainer extends Component {
     location: object.isRequired,
     onSubmit: func.isRequired,
     conversionInfo: object.isRequired,
+    data: object,
   };
 
-  postSubmit = (data) => {
-    const { createAction, location: { pathname }, onSubmit } = this.props;
-
-    // onSubmit();
+  postSubmit = () => {
+    const { createAction, location: { pathname }, onSubmit, data } = this.props;
     return createAction({
       type: 'UUIDAction',
       attributes: {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-9:Conversion',
+          wizardPostConversionInfo: WIZARD_POSTCONVERSION_INFO,
+          stepName: 'step-8:Conversion',
           wizardName: 'assessmentWizard',
           data,
         },

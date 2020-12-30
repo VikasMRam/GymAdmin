@@ -27,7 +27,7 @@ import {
   ADL,
   Budget,
   Conversion,
-
+  End,
 } from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
@@ -165,7 +165,7 @@ export default class AssessmentWizardV2 extends Component {
     if (from === 'LocalExpert') {
       this.waitForAgentMatched();
     }
-    if (from === 'Auth') {
+    if (from === 'End') {
       this.handleComplete(data);
     }
     this.scrollToTop();
@@ -288,12 +288,21 @@ export default class AssessmentWizardV2 extends Component {
                     'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                     : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                   onAuthSuccess={next}
+                  onSubmit={next}
                   onSkipClick={next}
                   onBackClick={previous}
                   whoNeedsHelp={data.lookingFor}
+                  data={data}
                   community={community}
                   entry={entry}
                   conversionInfo={conversionInfo}
+                />
+                <WizardStep
+                  component={End}
+                  name="End"
+                  onComplete={next}
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
                 />
               </WizardSteps>
             </section>
