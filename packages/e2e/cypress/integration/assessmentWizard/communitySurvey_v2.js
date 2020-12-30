@@ -2,7 +2,7 @@ import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
-import { LOCAL_EXPERT_OPTIONS, LIVE_SEARCH_STATE, PRODUCTS_OPTIONS, SERVICES_OPTIONS, AGE_OPTIONS, WORKING_WITH_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS }
+import { SERVICES_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS }
   from 'sly/web/constants/wizards/assessment';
 
 Cypress.on('uncaught:exception', () => {
@@ -153,24 +153,24 @@ describe('Community survey', () => {
     });
   }
 
-  function verifyResidentDetails(stepname, data) {
-    cy.wait('@postUuidActions').then((xhr) => {
-      const request = xhr.requestBody;
-      const attrs = request.data.attributes;
-      expect(attrs.actionInfo.data).to.include(data);
-      expect(request.data).to.have.property('type', 'UUIDAction');
-      expect(attrs.actionInfo).to.have.property('stepName', stepname);
-      expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
-      expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
-      expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
-    });
-  }
+  // function verifyResidentDetails(stepname, data) {
+  //   cy.wait('@postUuidActions').then((xhr) => {
+  //     const request = xhr.requestBody;
+  //     const attrs = request.data.attributes;
+  //     expect(attrs.actionInfo.data).to.include(data);
+  //     expect(request.data).to.have.property('type', 'UUIDAction');
+  //     expect(attrs.actionInfo).to.have.property('stepName', stepname);
+  //     expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+  //     expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+  //     expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
+  //   });
+  // }
 
 
-  function fillinresidentDetails(id1, id2, firstName, lastName) {
-    waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName);
-    waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName);
-  }
+  // function fillinresidentDetails(id1, id2, firstName, lastName) {
+  //   waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName);
+  //   waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName);
+  // }
 
   function getTitle(istitleNested, i) {
     if (!istitleNested) { return WizardConfiguration[wizardVersion][i].title; }
