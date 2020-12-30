@@ -79,6 +79,7 @@ export const ProgressBarWrapper = styled.div`
 export const TipBoxWrapper = styled.div`
   height:fit-content;
   width: 360px;
+  border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.xLarge')};
   background-color: ${palette('white', 'background')};  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

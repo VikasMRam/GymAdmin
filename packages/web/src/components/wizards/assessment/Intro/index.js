@@ -7,7 +7,7 @@ import { Heading, Form, Block } from 'sly/common/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const Intro = ({
-  title, description, handleSubmit, showSkipOption, skipOptionText,
+  title, description, startButtonText, handleSubmit, showSkipOption, skipOptionText,
 }) => (
   <PageWrapper>
     <Wrapper>
@@ -27,7 +27,7 @@ const Intro = ({
           inputValue="start"
           pad={showSkipOption ? undefined : '0'}
         >
-          Start
+          {startButtonText}
         </Field>
         {showSkipOption &&
           <Field

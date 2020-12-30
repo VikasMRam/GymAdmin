@@ -23,6 +23,7 @@ export const getWizardContentFromCta = (entry) => {
     case 'pricingTable':
       return  {
         intro: { showSkipOption: true,
+          startButtonText: 'Let\'s get started',
           title: 'We need to ask a few quick questions to understand your needs.',
           description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
         signup: { heading: 'Thanks! Your information helps us understand your needs and make personalized recommendations.',
@@ -37,7 +38,7 @@ export const getWizardContentFromCta = (entry) => {
         intro: { showSkipOption: false,
           title: 'We need to ask a few quick questions so we can make the best recommendations for your location, needs, and budget.',
           description: '',
-          buttonText: 'Let\'s get started',
+          startButtonText: 'Let\'s get started',
         },
         signup: { heading: 'Thanks! Your preferences inform our Smart Search so we can recommend the right communities for you.',
           description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
@@ -48,7 +49,7 @@ export const getWizardContentFromCta = (entry) => {
         intro: { showSkipOption: false,
           title: 'We need to ask a few quick questions to help our Seniorly Local Advisor understand your timing, needs, and budget.',
           description: '',
-          buttonText: 'Let\'s get started' },
+          startButtonText: 'Let\'s get started' },
         signup: { heading: 'Thanks! Your information helps our Seniorly Local Advisor understand your timing, needs, and budget.',
           description: 'We’ll send your request and connect you with one of our local experts who can answer your questions about senior living communities in your area.',
           submitButtonText: 'Sign up to submit your request'  },
@@ -56,6 +57,7 @@ export const getWizardContentFromCta = (entry) => {
     default:
       return  {
         intro: { showSkipOption: false,
+          startButtonText: 'Let\'s get started',
           title: 'We need to ask a few quick questions to understand your needs',
           description: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.' },
         signup: { heading: 'Since pricing can vary depending on your preferences and care needs, you’ll get more accurate, up-to-date information working with a Seniorly Local Advisor.',

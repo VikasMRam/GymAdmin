@@ -99,7 +99,7 @@ const HomePage = ({
               Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
             </Block>
             <Button
-              to="/wizards/assessment?cta=generalOptions&entry=homepage"
+              to="/wizards/assessment?cta=speakExpert&entry=homepage"
               kind="jumbo"
               upToTablet={{
                 width: '100%',
@@ -207,7 +207,7 @@ const HomePage = ({
               background="primary"
               palette="white"
               borderPalette="white"
-              to="/wizards/assessment?cta=generalOptions&entry=homepage"
+              to="/wizards/assessment?cta=speakExpert&entry=homepage"
               kind="jumbo"
               upToTablet={{
                 width: '100%',
