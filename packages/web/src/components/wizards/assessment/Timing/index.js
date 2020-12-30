@@ -15,7 +15,7 @@ const Timing = ({
     <PageWrapper hasSecondColumn={hasTip}>
       <Wrapper>
 
-        <Heading level="subtitle" weight="medium" padding="large">What’s your timeframe?</Heading>
+        <Heading level="subtitle" weight="medium" pad="xLarge">What’s your timeframe?</Heading>
         <form onSubmit={handleSubmit}>
           <Field
             singleChoice

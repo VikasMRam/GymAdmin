@@ -13,7 +13,7 @@ const Location = ({
 }) => (
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
-      <Heading pad="xLarge" level="subtitle" weight="medium">Where are you looking for care?</Heading>
+      <Heading pad="xLarge" level="subtitle" weight="medium">Where are you looking for senior living options?</Heading>
       <form onSubmit={handleSubmit}>
         <Field
           name="location"
@@ -26,7 +26,7 @@ const Location = ({
     </Wrapper>
     {hasTip &&
     <TipBoxWrapper>
-      <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
+      <TipBox heading="DID YOU KNOW?" height="fit-content">
         Our platform has a network of over 40,000 of the best senior living communities and hundreds of agents across the US.
       </TipBox>
     </TipBoxWrapper>

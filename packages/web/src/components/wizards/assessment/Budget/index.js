@@ -2,7 +2,7 @@ import React from 'react';
 import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import { stateAbbr } from  'sly/web/services/helpers/url';
@@ -34,7 +34,7 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip, change,
 }) => (
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
@@ -49,6 +49,16 @@ const Budget = ({
           type="boxChoice"
           align="left"
           component={ReduxField}
+          onChange={(event, newValue, previousValue, name) => {
+            // we know that last element is the newly added value
+            const newlyAddedValue = newValue[newValue.length - 1];
+            const valuesThatCanExist = COEXISTING_BUDGET_OPTIONS[newlyAddedValue];
+            if (valuesThatCanExist) {
+              newValue = newValue.filter(v => valuesThatCanExist.includes(v));
+            }
+            // delay this update to next tick so that it's always applied at last
+            setTimeout(() => change(name, newValue));
+          }}
         />
         <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
@@ -57,7 +67,7 @@ const Budget = ({
     {hasTip &&
     <TipBoxWrapper>
       <TipBox heading="DID YOU KNOW?" height="fit-content">
-        <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
+        <Block>Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</Block>
       </TipBox>
     </TipBoxWrapper>
     }

@@ -46,6 +46,7 @@ const ADL = ({
             name="adl"
             type="boxChoice"
             align="left"
+            multiChoice
             component={ReduxField}
             onChange={(event, newValue, previousValue, name) => {
               // we know that last element is the newly added value

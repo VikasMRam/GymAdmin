@@ -19,9 +19,9 @@ export const PageWrapper = styled.section`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${ifProp('hasSecondColumn', css`
     justify-content: center;
-    grid-template-columns: min-content min-content;
-    grid-template-rows: min-content min-content;
-    grid-gap: ${size('spacing.regular')};
+    grid-template-columns: min-content;
+    grid-template-rows: min-content;
+    grid-gap: ${size('spacing.xLarge')};
   `, css`
   grid-template-columns: 100%;
   grid-gap: ${size('spacing.xLarge')};
@@ -30,6 +30,15 @@ export const PageWrapper = styled.section`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    ${ifProp('hasSecondColumn', css`
+    justify-content: center;
+    grid-template-columns: min-content min-content;
+    grid-template-rows: min-content min-content;
+    grid-gap: ${size('spacing.xLarge')};
+  `, css`
+  grid-template-columns: 100%;
+  grid-gap: ${size('spacing.xLarge')};
+  `)}
     padding: ${size('spacing.xxxLarge')};
   }
 
@@ -70,6 +79,8 @@ export const ProgressBarWrapper = styled.div`
 export const TipBoxWrapper = styled.div`
   height:fit-content;
   width: 360px;
+  padding: ${size('spacing.xLarge')};
+  background-color: ${palette('white', 'background')};  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: 504px;
   }

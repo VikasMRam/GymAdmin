@@ -21,6 +21,7 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
+
 const FamilyHomePage = ({
   homeBase, uuidAux, onBannerClose,  showBanner, onMarketplaceTileClick, isLoading, openAskAgentQuestionModal,
   welcomeBannerContent,
@@ -99,7 +100,7 @@ const FamilyHomePage = ({
         <Grid dimensions={['30%', 'calc(70% - 1rem)']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&
-            <HeadingBoxSection maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city},${state}`} >
+            <HeadingBoxSection hasNoBodyPadding maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city},${state}`} >
               <CommunityAgentSectionContainer layout="homeBase" agent={agent} pad="xLarge" />
               <Button onClick={openAskAgentQuestionModal}> Ask {agent.name} a question</Button>
             </HeadingBoxSection>
@@ -109,13 +110,14 @@ const FamilyHomePage = ({
             </HeadingBoxSection>
           </Grid>
           <Grid gap="large" flow="row">
-            <HeadingBoxSection overflow="auto" heading="Explore communities recommended just for you">
+            <HeadingBoxSection heading="Explore communities recommended just for you">
               <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
                 {communityTiles}
               </Grid>
             </HeadingBoxSection>
+
             <HeadingBoxSection overflow="auto" heading="Services to help you with your transition">
-              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(5,288px)']} overflow="auto">
+              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(6,288px)']} overflow="auto">
                 {marketplaceOfferTiles}
               </Grid>
             </HeadingBoxSection>

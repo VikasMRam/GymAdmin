@@ -1,18 +1,13 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { oneOf, object, func } from 'prop-types';
-import { ifProp, prop } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
-import { getTrustScoreType } from 'sly/web/services/helpers/community';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
-import { Block, Grid, Button, Link } from 'sly/common/components/atoms';
+import { Block, Grid, Link } from 'sly/common/components/atoms';
 import { Tag } from 'sly/web/components/atoms';
-// import Tag from 'sly/web/components/atoms';
-import { community as communityPropType } from 'sly/common/propTypes/community';
-import IconItem from 'sly/web/components/molecules/IconItem';
-import { assetPath } from 'sly/web/components/themes';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import { getKey, getSize, size } from 'sly/common/components/themes';
+import { getKey, size } from 'sly/common/components/themes';
 
 
 const Wrapper = styled(Grid)`
@@ -22,7 +17,7 @@ const Wrapper = styled(Grid)`
 const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }) => {
   const { title, description, ctaUrl, imageUrl, info: { tags = ['Article'] } } = marketplaceResource;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
-  const imgHeight = layout === 'column' ? 172 : 216;
+  // const imgHeight = layout === 'column' ? 172 : 216;
   const dTags = tags.map(t => <Tag outline marginRight="regular" palette="green">{t}</Tag>);
   return (
     <Block

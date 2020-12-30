@@ -2,7 +2,7 @@ import React from 'react';
 import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { SERVICES_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { SERVICES_OPTIONS, COEXISTING_SERVICES_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Block, Heading, Box } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -27,13 +27,13 @@ const generateHeading = (whoNeedsHelp) => {
   }
 };
 const Services = ({
-  handleSubmit, invalid, submitting, hasTip, whoNeedsHelp,  onSkipClick, onBackClick,
+  handleSubmit, invalid, submitting, hasTip, whoNeedsHelp,  onSkipClick, onBackClick, change,
 }) => (
   <PageWrapper hasSecondColumn={hasTip}>
     <Wrapper>
 
       <Heading level="subtitle" weight="medium" pad="xLarge">{generateHeading(whoNeedsHelp)}</Heading>
-      <Block pad="large">Please select all that apply.</Block>
+      <Block pad="xLarge">Please select all that apply.</Block>
       <form onSubmit={handleSubmit}>
         <Field
           name="services"
@@ -43,6 +43,16 @@ const Services = ({
           multiChoice
           options={SERVICES_OPTIONS}
           required
+          onChange={(event, newValue, previousValue, name) => {
+            // we know that last element is the newly added value
+            const newlyAddedValue = newValue[newValue.length - 1];
+            const valuesThatCanExist = COEXISTING_SERVICES_OPTIONS[newlyAddedValue];
+            if (valuesThatCanExist) {
+              newValue = newValue.filter(v => valuesThatCanExist.includes(v));
+            }
+            // delay this update to next tick so that it's always applied at last
+            setTimeout(() => change(name, newValue));
+          }}
         />
         <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
@@ -60,6 +70,7 @@ const Services = ({
 
 Services.propTypes = {
   handleSubmit: func.isRequired,
+  change: func,
   invalid: bool,
   submitting: bool,
   hasTip: bool,

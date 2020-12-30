@@ -28,7 +28,6 @@ const Conversion = ({
         {/* <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp)}</Heading> */}
         <Heading level="subtitle" weight="medium" pad="large">{heading}</Heading>
         <Block pad="xLarge">{description}</Block>
-        {/* FIXME: auth container is being called from conversion component */ }
         <Block maxWidth="inherit"><Auth signupHeading={heading} onAuthSuccess={onConversionSuccess} submitButtonText={submitButtonText} /></Block>
       </Wrapper>
       {hasTip &&

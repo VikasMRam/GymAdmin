@@ -4,8 +4,7 @@ import { Field } from 'redux-form';
 
 import { MEDICAID_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
+import { Block, Heading } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -18,7 +17,7 @@ const generateHeading = (whoNeedsHelp) => {
     case 'myself':
       return 'Do you qualify for Medicaid?';
     case 'spouse':
-      return 'Does your spouse qualify for Medicaid?';
+      return 'Does your spouse or partner qualify for Medicaid?';
     case 'friend':
       return 'Does your friend(s) qualify for Medicaid?';
     case 'other-relatives':
@@ -50,10 +49,11 @@ const Medicaid = ({
     {hasTip &&
       <TipBoxWrapper>
         <TipBox heading="TYPICAL MEDICAID QUALIFICATIONS:" height="fit-content">
-          <IconItem icon="warning" iconPalette="slate" iconVariation="base">Income limit is typically less than $2,360 per month (FBR).</IconItem>
-          <IconItem icon="warning" iconPalette="slate" iconVariation="base" pad="large">
+          <Block>Income limit is typically less than $2,360 per month (FBR).</Block>
+          <br />
+          <Block>
             Asset limit in most states is $1,600 to $15,750.
-          </IconItem>
+          </Block>
         </TipBox>
       </TipBoxWrapper>
     }
