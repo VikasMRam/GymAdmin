@@ -4,12 +4,12 @@ import { makeColor, makeColorTable } from 'sly/common/components/themes/color';
 
 const makeFont = (() => {
   const fontText = (size, weight) => `${weight} ${size} Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif`;
-  return (sizes, weight=500) => {
+  return (sizes, weight = 500) => {
     if (Array.isArray(sizes)) {
-      return sizes.map((size) => fontText(size, weight));
+      return sizes.map(size => fontText(size, weight));
     }
     return fontText(sizes, weight);
-  }
+  };
 })();
 
 const theme = {};
@@ -180,7 +180,7 @@ theme.sizes = {
     'body-large': makeFont(['20px/32px', '18px/28px'], 400),
     'body-regular': makeFont('16px/24px', 400),
     'body-small': makeFont('14px/20px', 400),
-    'label': makeFont('12px/16px', 700),
+    label: makeFont('12px/16px', 700),
   },
 
   // old way

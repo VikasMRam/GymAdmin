@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { withAuth } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
-import { Box, Block } from 'sly/common/components/atoms';
+import { Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import { Wrapper } from 'sly/common/services/auth/components/Template';
 import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';

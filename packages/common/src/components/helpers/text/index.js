@@ -1,9 +1,10 @@
 import { css } from 'styled-components';
 import { ifProp, ifNotProp, withProp } from 'styled-tools';
 
-import { getFont, getSize as getThemeSize } from 'sly/common/components/themes';
 import { getWeight, getSize } from './helpers';
-import { startingWith } from '../media';
+
+import { getFont, getSize as getThemeSize } from 'sly/common/components/themes';
+
 
 const validLineHeightValues = ['0', 'normal'];
 

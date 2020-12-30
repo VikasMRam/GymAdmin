@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Root from './Root';
 
-const getPad = (size, font) => {
+const getPad = (size) => {
   if (size) {
     switch (size) {
       case 'hero': return 'xxLarge';

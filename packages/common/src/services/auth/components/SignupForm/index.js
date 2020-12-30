@@ -2,7 +2,6 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/common/components/themes';
 import { Block, Button, Form, Grid } from 'sly/common/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
