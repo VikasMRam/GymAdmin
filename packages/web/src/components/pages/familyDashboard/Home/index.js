@@ -110,7 +110,7 @@ const FamilyHomePage = ({
             </HeadingBoxSection>
           </Grid>
           <Grid gap="large" flow="row">
-            <HeadingBoxSection heading="Explore communities recommended just for you">
+            <HeadingBoxSection overflow="auto" heading="Explore communities recommended just for you">
               <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
                 {communityTiles}
               </Grid>
