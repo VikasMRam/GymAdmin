@@ -3,10 +3,9 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
+import { Heading } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import IconItem from 'sly/web/components/molecules/IconItem';
 
 const Location = ({
   handleSubmit, invalid, submitting, hasTip,

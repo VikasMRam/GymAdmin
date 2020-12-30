@@ -1,26 +1,15 @@
 import React from 'react';
 import { func, string, bool } from 'prop-types';
-import { Field } from 'redux-form';
 
-// import { ADL_OPTIONS, COEXISTING_ADL_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
+import { PageWrapper, Wrapper, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
 import { Heading,  Block } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import IconItem from 'sly/web/components/molecules/IconItem';
-// import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { Auth }  from 'sly/web/containers/wizards/assessment/common';
-// import Auth from 'sly/common/services/auth/containers/AuthContainer';
-
 
 const Conversion = ({
-  onConversionSuccess, heading, description, submitButtonText, whoNeedsHelp, hasTip,
+  onConversionSuccess, heading, description, submitButtonText, hasTip,
 }) => {
-  // const opts = ADL_OPTIONS;
-  // if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
-  //   opts = opts.filter(e => !e.value.match(/memory-care/));
-  //   onSkipClick(); // Skip step and move ahead. ?
-  // }
-
   return (
     <PageWrapper hasSecondColumn={hasTip}>
       <Wrapper>

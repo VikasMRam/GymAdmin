@@ -32,7 +32,7 @@ import {
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
 import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
-import { Wrapper, PageWrapper, ProgressBarWrapper } from 'sly/web/components/wizards/assessment/Template';
+import { ProgressBarWrapper } from 'sly/web/components/wizards/assessment/Template';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 
 @withWS
@@ -96,7 +96,6 @@ export default class AssessmentWizardV2 extends Component {
   };
 
   onNoAgentMatch = () => {
-    const { community } = this.props;
     this.setState({
       hasNoAgent: true,
     });

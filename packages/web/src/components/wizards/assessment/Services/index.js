@@ -1,10 +1,10 @@
 import React from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { SERVICES_OPTIONS, COEXISTING_SERVICES_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
-import { Block, Heading, Box } from 'sly/web/components/atoms';
+import { Block, Heading } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -74,6 +74,7 @@ Services.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  whoNeedsHelp: string,
   onSkipClick: func,
   onBackClick: func,
 };
