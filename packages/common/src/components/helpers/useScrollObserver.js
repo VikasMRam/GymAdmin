@@ -41,6 +41,7 @@ function useScrollObserver() {
     const debounced = debounce(onScroll);
 
     ref.current.addEventListener('scroll', debounced);
+    // eslint-disable-next-line consistent-return
     return function cleanup() {
       ref.current.removeEventListener('scroll', debounced);
     };
