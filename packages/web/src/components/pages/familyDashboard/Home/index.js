@@ -27,7 +27,7 @@ const FamilyHomePage = ({
   welcomeBannerContent,
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
-    resourceArticleTiles; let itemList; let agent; ; let state;
+    resourceArticleTiles; let itemList; let agent;
   let agentDisplayName = 'your advisor';
   let city = 'your area';
   let state = ' ';
