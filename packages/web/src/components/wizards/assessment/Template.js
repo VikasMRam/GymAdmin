@@ -78,6 +78,7 @@ export const ProgressBarWrapper = styled.div`
 
 export const TipBoxWrapper = styled.div`
   height:fit-content;
+  max-width: 100% !important;
   width: 360px;
   border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.xLarge')};

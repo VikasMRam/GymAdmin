@@ -12,7 +12,7 @@ export default class EndContainer extends Component {
   }
   submit= () => {
     const { onComplete } = this.props;
-    setTimeout(onComplete, 10000);
+    setTimeout(onComplete, 4000);
   }
   render() {
     this.submit();

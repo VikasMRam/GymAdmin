@@ -29,12 +29,16 @@ const FamilyHomePage = ({
   let communityTiles; let marketplaceOfferTiles; let
     resourceArticleTiles; let itemList; let agent;
   let agentDisplayName = 'your advisor';
+  let agentSectionHeading = 'Your Seniorly Local Advisor';
   let city = 'your area';
   let state = ' ';
   if (!isLoading) {
     const { uuidInfo: { locationInfo } } = uuidAux;
     city = locationInfo.city;
     state  = locationInfo.state;
+    if (!!city && !!state) {
+      agentSectionHeading = `Your Seniorly Local Advisor in ${city}, ${state}`;
+    }
     const { recommendedCommunities } = homeBase;
     communityTiles =
       recommendedCommunities.map((community) => {
@@ -107,7 +111,7 @@ const FamilyHomePage = ({
         <Grid dimensions={['30%', 'calc(70% - 1rem)']} upToDesktop={{ gridTemplateColumns: 'auto !important' }} gap="large">
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&
-            <HeadingBoxSection hasNoBodyPadding maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city}, ${state}`} >
+            <HeadingBoxSection hasNoBodyPadding maxHeight="100%" heading={agentSectionHeading} >
               <CommunityAgentSectionContainer layout="homeBase" agent={agent} pad="xLarge" />
               <Button onClick={openAskAgentQuestionModal}> Ask {agentDisplayName} a question</Button>
             </HeadingBoxSection>

@@ -17,7 +17,6 @@ const End = () => (
         <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
           Sending your request...
         </Heading>
-        {/* <ResponsiveImage src={assetPath('vectors/zillow.svg')} /> */}
         <ResponsiveImage loading="lazy" src={assetPath('images/homebase/loader.svg')} />
       </Block>
       <LoadingContainer />
