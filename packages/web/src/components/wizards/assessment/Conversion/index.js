@@ -23,9 +23,9 @@ const Conversion = ({
       <TipBoxWrapper>
         <TipBox heading="BENEFITS OF CREATING A FREE ACCOUNT:" height="fit-content">
           <IconItem marginBottom="large" icon="check" iconPalette="harvest" iconVariation="base">Get your own Seniorly Home Base for tracking your options</IconItem>
-          <IconItem icon="check" iconPalette="harvest" iconVariation="base">See your recommended communities in one place</IconItem>
-          <IconItem icon="check" iconPalette="harvest" iconVariation="base">Get a dedicated Seniorly Local Advisor</IconItem>
-          <IconItem icon="check" iconPalette="harvest" iconVariation="base">See other resources and services you may need</IconItem>
+          <IconItem marginBottom="large" icon="check" iconPalette="harvest" iconVariation="base">See your recommended communities in one place</IconItem>
+          <IconItem marginBottom="large" icon="check" iconPalette="harvest" iconVariation="base">Get a dedicated Seniorly Local Advisor</IconItem>
+          <IconItem marginBottom="large" icon="check" iconPalette="harvest" iconVariation="base">See other resources and services you may need</IconItem>
         </TipBox>
       </TipBoxWrapper>
       }
