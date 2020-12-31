@@ -154,7 +154,7 @@ export default class HomeBasePageContainer extends Component {
           onUnfavouriteClick={this.handleUnfavouriteClick}
           onMarketplaceTileClick={this.handleMarketplaceTileClick}
           openAskAgentQuestionModal={this.openAskAgentQuestionModal}
-          isLoading={!status.homeBase.hasFinished}
+          isLoading={!status.homeBase.hasFinished || !status.uuidAux.hasFinished}
           showBanner={showBanner && !bannerSeen}
           // showBanner={showBanner}
           welcomeBannerContent={bc}

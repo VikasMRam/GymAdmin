@@ -96,7 +96,7 @@ export const getChecklistItems = (homeBase, uuidAux) => {
   const itemList = [{ checked: false, text: 'Finish your senior living quiz' }, { checked: false, text: 'Connect with your Advisor' },
     { checked: false, text: 'Evaluate Options' }, { checked: false, text: 'Prepare to move' }, { checked: false, text: 'Move to your new home' }];
   const stepsCompleted = [0, 0, 0, 0, 0];
-  const { conversionInfo } = uuidAux;
+  const { uuidInfo: { conversionInfo } } = uuidAux;
   if (conversionInfo) {
     const wizardActions = conversionInfo.filter((e) => { return e.page.indexOf('wizard') > -1; });
     if (wizardActions && (wizardActions.length > 0)) {
