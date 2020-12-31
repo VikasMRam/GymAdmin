@@ -28,7 +28,7 @@ const FamilyHomePage = ({
 }) => {
   let communityTiles; let marketplaceOfferTiles; let
     resourceArticleTiles; let itemList; let agent; let city; let state;
-
+  let agentDisplayName = 'your advisor';
   if (!isLoading) {
     const { uuidInfo: { locationInfo } } = uuidAux;
     city = locationInfo.city;
@@ -50,6 +50,11 @@ const FamilyHomePage = ({
       });
     // Get Agent
     agent = homeBase.agent;
+    if (agent) {
+      const { info: { displayName } } = agent;
+      agentDisplayName = displayName;
+    }
+
     // Create checklist
     itemList = getChecklistItems(homeBase, uuidAux);
 
@@ -102,7 +107,7 @@ const FamilyHomePage = ({
             {agent &&
             <HeadingBoxSection hasNoBodyPadding maxHeight="100%" heading={`Your Seniorly Local Advisor in ${city},${state}`} >
               <CommunityAgentSectionContainer layout="homeBase" agent={agent} pad="xLarge" />
-              <Button onClick={openAskAgentQuestionModal}> Ask {agent.name} a question</Button>
+              <Button onClick={openAskAgentQuestionModal}> Ask {agentDisplayName} a question</Button>
             </HeadingBoxSection>
             }
             <HeadingBoxSection maxHeight="100%"  heading="Your senior living checklist">
