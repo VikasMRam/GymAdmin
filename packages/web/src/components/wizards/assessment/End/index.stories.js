@@ -9,12 +9,18 @@ import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 import { withPreventDefault } from 'sly/common/services/helpers/forms';
 
-const EndContainer = reduxForm({
-  form: 'End',
-})(End);
+// const EndContainer = reduxForm({
+//   form: 'End',
+// })(End);
 
 storiesOf('Wizards|assessment/Steps/End', module)
-  .add('default', () => <EndContainer community={RhodaGoldmanPlaza} handleSubmit={withPreventDefault(action('form submitted'))} />)
-  .add('without community', () => <EndContainer city="San Fransisco" handleSubmit={withPreventDefault(action('form submitted'))} />)
-  .add('with agent', () => <EndContainer community={RhodaGoldmanPlaza} agent={LindaIwamota} handleSubmit={withPreventDefault(action('form submitted'))} />)
-  .add('with hasNoAgent', () => <EndContainer hasNoAgent community={RhodaGoldmanPlaza} handleSubmit={withPreventDefault(action('form submitted'))} />);
+  .add('default', () => <End />);
+// .add('without community', () => <EndContainer city="San Fransisco" handleSubmit={withPreventDefault(action('form submitted'))} />)
+// .add('with agent', () => <EndContainer community={RhodaGoldmanPlaza} agent={LindaIwamota} handleSubmit={withPreventDefault(action('form submitted'))} />)
+// .add('with hasNoAgent', () => <EndContainer hasNoAgent community={RhodaGoldmanPlaza} handleSubmit={withPreventDefault(action('form submitted'))} />);
+
+// storiesOf('Wizards|assessment/Steps/End', module)
+//   .add('default', () => <EndContainer community={RhodaGoldmanPlaza} handleSubmit={withPreventDefault(action('form submitted'))} />)
+//   .add('without community', () => <EndContainer city="San Fransisco" handleSubmit={withPreventDefault(action('form submitted'))} />)
+//   .add('with agent', () => <EndContainer community={RhodaGoldmanPlaza} agent={LindaIwamota} handleSubmit={withPreventDefault(action('form submitted'))} />)
+//   .add('with hasNoAgent', () => <EndContainer hasNoAgent community={RhodaGoldmanPlaza} handleSubmit={withPreventDefault(action('form submitted'))} />);

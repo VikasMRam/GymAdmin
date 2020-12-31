@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { string } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size, getKey } from 'sly/common/components/themes';
 import agentPropType from 'sly/common/propTypes/agent';
@@ -11,6 +12,12 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import { getImagePath } from 'sly/web/services/images';
 
 const Description = styled(Grid)`
+  ${ifProp({ layout: 'homebase' }, css`
+    // justify-content: center;
+    grid-template-columns: none;
+    grid-gap: ${size('spacing.regular')};
+  `)} 
+
   ${upTo('tablet', css`
     grid-template-columns: none;
     grid-gap: ${size('spacing.regular')};
