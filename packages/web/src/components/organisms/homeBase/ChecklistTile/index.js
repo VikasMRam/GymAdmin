@@ -21,7 +21,6 @@ const ChecklistTile = ({ layout, itemList }) => {
       position="relative"
     >
       <Grid
-        padding="large"
         flow={layout}
         gap="large"
         clamped
