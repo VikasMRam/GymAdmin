@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { assetPath } from 'sly/web/components/themes';
 import { size } from 'sly/common/components/themes';
-import { Block, ResponsiveImage } from 'sly/web/components/atoms';
+import { Heading, Block, ResponsiveImage } from 'sly/web/components/atoms';
 import { PageWrapper, Wrapper } from 'sly/web/components/wizards/assessment/Template';
 
 const LoadingContainer = styled.div`
@@ -12,8 +13,11 @@ const LoadingContainer = styled.div`
 const End = () => (
   <PageWrapper>
     <Wrapper >
-      <Block >
-        Sending your request...
+      <Block align="center" display="flex" direction="column">
+        <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
+          Sending your request...
+        </Heading>
+        <ResponsiveImage src={assetPath('images/homebase/loader.svg')}/>
       </Block>
       <LoadingContainer />
     </Wrapper>

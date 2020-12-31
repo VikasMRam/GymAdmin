@@ -11,7 +11,6 @@ const Intro = ({
 }) => (
   <PageWrapper>
     <Wrapper>
-
       <Form onSubmit={handleSubmit}>
         <Block align="center" display="flex" direction="column">
           <Heading level="subtitle" weight="medium" pad="xLarge" align="center">
