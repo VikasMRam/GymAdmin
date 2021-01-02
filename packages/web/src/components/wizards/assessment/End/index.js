@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { assetPath } from 'sly/web/components/themes';
-import { size } from 'sly/common/components/themes';
 import { Heading, Block, ResponsiveImage } from 'sly/web/components/atoms';
 import { PageWrapper, Wrapper } from 'sly/web/components/wizards/assessment/Template';
 

@@ -50,6 +50,7 @@ const Intro = ({
 Intro.propTypes = {
   title: string,
   description: string,
+  startButtonText: string,
   handleSubmit: func.isRequired,
   showSkipOption: bool,
   skipOptionText: string.isRequired,

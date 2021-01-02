@@ -1,11 +1,10 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { string } from 'prop-types';
-import { ifProp } from 'styled-tools';
+// import { ifProp } from 'styled-tools';
 
 import { size, getKey } from 'sly/common/components/themes';
 import agentPropType from 'sly/common/propTypes/agent';
-import { upTo } from 'sly/common/components/helpers';
 import { Block, Heading, Grid } from 'sly/common/components/atoms';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import IconItem from 'sly/web/components/molecules/IconItem';

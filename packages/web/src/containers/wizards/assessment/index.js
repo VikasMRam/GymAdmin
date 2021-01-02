@@ -14,6 +14,9 @@ const AssessmentWizard = ({ version, ...props }) => {
   if (version === 'v1a') {
     WizardComponent = AssessmentWizardV11a;
   }
+  if (version === 'v11') {
+    WizardComponent = AssessmentWizardV11;
+  }
   if (version === 'v2') {
     WizardComponent = AssessmentWizardV2;
   }
