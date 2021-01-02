@@ -12,16 +12,8 @@ import IconItem from 'sly/web/components/molecules/IconItem';
 import { getImagePath } from 'sly/web/services/images';
 
 const Description = styled(Grid)`
-  ${ifProp({ layout: 'homebase' }, css`
-    // justify-content: center;
-    grid-template-columns: none;
-    grid-gap: ${size('spacing.regular')};
-  `)} 
-
-  ${upTo('tablet', css`
-    grid-template-columns: none;
-    grid-gap: ${size('spacing.regular')};
-  `)}
+  grid-template-columns: none;
+  grid-gap: ${size('spacing.regular')};
 `;
 
 const CommunityAgentSection = ({

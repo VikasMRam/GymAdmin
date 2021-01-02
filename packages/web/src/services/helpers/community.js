@@ -82,11 +82,18 @@ export const getFafNumber = (communityPhone = '')  => {
   return fafn;
 };
 
-const getStateLink = (addressState, licenseNumber) => {
+const getStateLink = (addressState, licenseNumber, rgsInfo) => {
   if (addressState === 'CA' && licenseNumber !== '') {
     return `https://www.ccld.dss.ca.gov/carefacilitysearch/FacDetail/${licenseNumber}`;
   } else if (addressState === 'CA') {
     return 'https://www.cdss.ca.gov/inforesources/community-care-licensing';
+  } else if (addressState === 'FL') {
+    const { scoreParams = { detailUrl: '' } } = rgsInfo;
+    const { detailUrl } = scoreParams;
+    if (detailUrl !== '') {
+      return detailUrl;
+    }
+    return 'https://www.floridahealthfinder.gov/facilitylocator/facloc.aspx';
   }
   return 'https://www.ahcancal.org/Assisted-Living/Policy/Pages/state-regulations.aspx';
 };
@@ -101,14 +108,16 @@ export const getTrustScoreType = (community, scoreType) => {
   const lid = formatDate(scoreParams.lastInspectionDate);
   const lastInspectionDate = ld.match(/invalid/) ? 'unknown date' : lid;
   const fullStateName = stateNames[state];
-  const licensingUrl = getStateLink(state, licenseNumber);
+  const licensingUrl = getStateLink(state, licenseNumber, rgsInfo);
   const linkText = `To learn more, visit the state licensing authority for ${name}`;
-  const prop1 = `Licensed since ${lastLicensedDate}`;
-  const prop2 = `Most recent inspection on ${lastInspectionDate}`;
+  const { value1 = '', value2 = '', value3 = '' } = scoreParams;
+  const prop1 = value1 === '' ? `Licensed since ${lastLicensedDate}` : value1;
+  const prop2 = value2 === '' ? `Most recent inspection on ${lastInspectionDate}`  : value2;
   let prop3 = `Has fewer complaints relative to communities in ${fullStateName}`;
   if (trustScore < 71) {
     prop3 = `Has more complaints relative to communities in ${fullStateName}`;
   }
+  prop3 = value3 === '' ? prop3 : value3;
   let valueText = 'Excellent';
   if (trustScore > 70 && trustScore < 81) {
     valueText = 'Good';
@@ -117,7 +126,6 @@ export const getTrustScoreType = (community, scoreType) => {
   } else if (trustScore < 51) {
     valueText = 'Poor';
   }
-
   const moreInfoText = 'Our Trust Score gives you an easy tool for evaluating assisted living options. When building a Trust Score, ' +
     'we look at each community\'s compliance with state regulations (information that can be hard to access) and other key factors that ' +
     'indicate overall quality and responsible management. ';
