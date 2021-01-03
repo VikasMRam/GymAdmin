@@ -33,7 +33,7 @@ const submitTillContactStep = (data) => {
   // wait till step is progressed
 
   // cy.contains('Your estimated pricing');
-  cy.contains('One of our Local Senior Living Experts will reach out shortly to assist you with pricing', { timeout: 30000 });
+  cy.contains('One of our Seniorly Local Advisors will reach out shortly to assist you with pricing', { timeout: 30000 });
 };
 
 export const doCustomPricingTalkToAdvisorFlow = (cy, data) => {

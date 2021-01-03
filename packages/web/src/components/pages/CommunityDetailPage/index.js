@@ -176,7 +176,7 @@ const makeBanner = (profileContacted) => {
 
   return `We have your ${requests.join(
     '',
-  )} request. Your Seniorly Local Expert is checking with this community and will get back to you shortly.`;
+  )} request. Your Seniorly Local Advisor is checking with this community and will get back to you shortly.`;
 };
 
 export default class CommunityDetailPage extends Component {
@@ -326,6 +326,7 @@ export default class CommunityDetailPage extends Component {
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="pricing-table"
+                    mode={{ cta: 'pricing', entry: 'pricingTable' }}
                     extraProps={{
                       pricesList,
                       estimatedPriceList,
@@ -387,7 +388,7 @@ export default class CommunityDetailPage extends Component {
                 </StyledHeadingBoxSection>
                 }
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Local Senior Living Expert in ${address.city}, ${address.state}`}>
+                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
                     <AskAgentQuestionButtonContainer
                       width="100%"
@@ -408,6 +409,7 @@ export default class CommunityDetailPage extends Component {
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                   community={community}
+                  mode={{ cta: 'generalOptions', entry: 'profileSection' }}
                 />
                 }
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
@@ -502,6 +504,7 @@ export default class CommunityDetailPage extends Component {
                 <GetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}`}
                   community={community}
+                  mode={{ cta: 'pricing', entry: 'communityFooter' }}
                   layout="footer"
                 />
                 {/* {isActiveAdult && */}
@@ -518,6 +521,7 @@ export default class CommunityDetailPage extends Component {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
+                    mode={{ cta: 'pricing', entry: 'communitySidebar' }}
                     layout="sidebar"
                   />
 

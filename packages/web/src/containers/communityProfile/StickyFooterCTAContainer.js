@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bool, object, func } from 'prop-types';
-
 import { withRouter } from 'react-router';
+
 import communityPropType from 'sly/common/propTypes/community';
 import { isBrowser } from 'sly/web/config';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
@@ -69,6 +69,7 @@ export default class StickyFooterCTAContainer extends Component {
       isActiveAdult={isActiveAdult}
       isZillowAd={showZillowProfileAd}
       {...buttonProps}
+      {...this.props}
     />);
   }
 }

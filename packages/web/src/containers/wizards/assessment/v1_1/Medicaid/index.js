@@ -52,7 +52,7 @@ export default class MedicaidFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-10:Medicaid',
+          stepName: 'step-6:Medicaid',
           wizardName: 'assessmentWizard',
           data,
         },

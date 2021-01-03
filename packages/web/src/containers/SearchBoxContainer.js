@@ -94,9 +94,16 @@ export default class SearchBoxContainer extends Component {
     }
   };
 
-  handleTextboxFocus = () => {
+  handleTextboxFocus = (e) => {
+    let { suggestions, selectedSuggestion } = this.state;
+    e.target.value = '';
+    suggestions = [];
+    selectedSuggestion = undefined;
     this.setState({
       isTextboxInFocus: true,
+      textValue: '',
+      suggestions,
+      selectedSuggestion,
     });
   };
 

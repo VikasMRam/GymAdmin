@@ -471,14 +471,14 @@ const SeniorLivingNearMePage = ({
           <Paragraph>
             To learn about all the assisted living communities in a specific city, let us connect you to a{' '}
             <Link href="https://www.seniorly.com/agents">
-              Local Senior Living Expert in that city.
+              Seniorly Local Advisor in that city.
             </Link>
             {' '}These senior living advisors know all the communities and
             can share costs, availability, features and so much more at no cost to you. To connect to one of our
             approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
           </Paragraph>
           <Heading level="subtitle" size="subtitle" >
-            What Is A Local Senior Living Expert?
+            What Is A Seniorly Local Advisor?
           </Heading>
           <WhatIsPartnerAgent toc="senior living" agents={agents}/>
           <Link
@@ -507,7 +507,7 @@ const SeniorLivingNearMePage = ({
             residents enjoy plenty of personal contact.
           </Paragraph>
           <Paragraph>
-            A Local Senior Living Expert in the city of your choice can share the details about all the
+            A Seniorly Local Advisor in the city of your choice can share the details about all the
             memory care communities. They can set up tours and often help negotiate fees on your behalf.
             To connect to one of our approved senior living advisors, email us now at ask@seniorly.com or call (855) 866-4515.
           </Paragraph>

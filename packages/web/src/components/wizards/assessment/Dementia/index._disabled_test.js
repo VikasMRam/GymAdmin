@@ -51,14 +51,6 @@ describe('Wizards|assessment - Steps|Dementia', () => {
     expect(wrapper.find('Heading').contains('Are you forgetful?')).toBeTruthy();
   });
 
-  it('renders correct heading for other options', () => {
-    const wrapper = wrap({
-      whoNeedsHelp: 'friend',
-    });
-
-    expect(wrapper.find('Heading').contains('Is your friend(s) forgetful?')).toBeTruthy();
-  });
-
   it('handles submit', () => {
     const wrapper = wrap();
 

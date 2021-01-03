@@ -30,7 +30,7 @@ export default class BudgetFormContainer extends Component {
   };
 
   static defaultProps = {
-    stepName: 'step-9:Budget',
+    stepName: 'step-5:Budget',
   };
 
   handleSubmit = (data) => {

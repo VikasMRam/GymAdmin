@@ -30,7 +30,13 @@ export default class LocationFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit } = this.props;
-
+    if (data.location) {
+      data.name = data.location.name;
+      if (data.location.searchParams) {
+        data.city = data.location.searchParams.city;
+        data.state = data.location.searchParams.state;
+      }
+    }
     return createAction({
       type: 'UUIDAction',
       attributes: {

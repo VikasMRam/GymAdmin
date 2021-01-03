@@ -3,33 +3,93 @@ import styled, { css } from 'styled-components';
 import { func, string, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/common/components/themes';
+import { size, palette } from 'sly/common/components/themes';
 import { Button } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 
-export const Wrapper = styled.section`
-  margin: auto;
+export const PageWrapper = styled.section`
+
+  background-color: ${palette('harvest', 'background')};  
+  padding: ${size('spacing.xxxLarge')} ${size('spacing.xLarge')};
+  width: 100%;
+  
   display: grid;
-  ${ifProp('hasSecondColumn', css`
-    grid-gap: ${size('layout.gutter')};
+  justify-items: center;
+  grid-gap: ${size('spacing.xLarge')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    ${ifProp('hasSecondColumn', css`
+    justify-content: center;
+    grid-template-columns: min-content;
+    grid-template-rows: min-content;
+    grid-gap: ${size('spacing.xLarge')};
+  `, css`
+  grid-template-columns: 100%;
+  grid-gap: ${size('spacing.xLarge')};
   `)}
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col5')} ${ifProp('hasSecondColumn', css`${size('layout.col3')}`)};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: ${size('layout.col5')} ${ifProp('hasSecondColumn', css`${size('layout.col3')}`)};
+    padding: ${size('spacing.xxxLarge')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: ${size('layout.col6')} ${ifProp('hasSecondColumn', css`${size('layout.col4')}`)};
+    ${ifProp('hasSecondColumn', css`
+    justify-content: center;
+    grid-template-columns: min-content min-content;
+    grid-template-rows: min-content min-content;
+    grid-gap: ${size('spacing.xLarge')};
+  `, css`
+  grid-template-columns: 100%;
+  grid-gap: ${size('spacing.xLarge')};
+  `)}
+    padding: ${size('spacing.xxxLarge')};
+  }
+
+`;
+
+PageWrapper.propTypes = {
+  hasSecondColumn: bool,
+};
+// //   Main: 504px
+// Tip: 328px
+// Tablet
+// Main: 504px
+// Tip: 504px
+// Mobile
+// Main: 360px
+// Tip: 360px
+// Step component wrapper
+export const Wrapper = styled.section`
+  background-color: ${palette('white', 'background')};    
+  border-radius: ${size('border.xxLarge')};
+  padding: ${size('spacing.xLarge')};
+  height: fit-content;
+  width: 360px;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: 504px;
   }
 `;
 
 Wrapper.propTypes = {
   hasSecondColumn: bool,
 };
+
+export const ProgressBarWrapper = styled.div`
+  width:100%;
+`;
+
+export const TipBoxWrapper = styled.div`
+  height:fit-content;
+  max-width: 100% !important;
+  width: 360px;
+  border-radius: ${size('border.xxLarge')};
+  padding: ${size('spacing.xLarge')};
+  background-color: ${palette('white', 'background')};  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: 504px;
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 328px;
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;

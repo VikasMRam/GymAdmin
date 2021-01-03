@@ -22,17 +22,22 @@ const getSID = () => {
 };
 
 const getReferrer = () => {
-  const referrer = document.referrer;
+  const { referrer } = document;
   cookie.set('referrer', referrer, { domain, path: '/', maxAge: 27000000 });
   return referrer;
 };
 
+
+export const objectToEventLabel = (obj) => {
+  return stringify(obj, ';', ':');
+};
+
 const getLocation = () => {
-  const location = document.location;
+  const { location } = document;
   cookie.set('location', location, { domain, path: '/', maxAge: 27000000 });
   const params = parse(location.search);
-  if (params['gclid']) {
-    cookie.set('adwords', params['gclid'], { domain, path: '/', maxAge: 27000000 });
+  if (params.gclid) {
+    cookie.set('adwords', params.gclid, { domain, path: '/', maxAge: 27000000 });
   }
   return location;
 };

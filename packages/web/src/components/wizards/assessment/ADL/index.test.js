@@ -11,6 +11,7 @@ const defaultProps = {
   whoNeedsHelp,
   change,
 };
+const expHeading = 'Does your parent need help with any of the following?';
 const wrap = (props = {}) => shallow(<ADL {...defaultProps} {...props} />);
 
 describe('Wizards|assessment - Steps|ADL', () => {
@@ -22,7 +23,7 @@ describe('Wizards|assessment - Steps|ADL', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Heading').contains('Which activities does your parent(s) need help with?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(1);
   });
@@ -32,17 +33,17 @@ describe('Wizards|assessment - Steps|ADL', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('Heading').contains('Which activities does your parent(s) need help with?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 
-  it('renders correct heading for myself-and-spouse', () => {
+  it('renders correct heading for spouse', () => {
     const wrapper = wrap({
-      whoNeedsHelp: 'myself-and-spouse',
+      whoNeedsHelp: 'spouse',
     });
 
-    expect(wrapper.find('Heading').contains('Which activities do you and your spouse need help with?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Does your spouse or partner need help with any of the following?')).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -50,14 +51,14 @@ describe('Wizards|assessment - Steps|ADL', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('Heading').contains('Which activities do you need help with?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Do you need help with any of the following?')).toBeTruthy();
   });
 
   it('renders correct heading for other options', () => {
     const wrapper = wrap({
-      whoNeedsHelp: 'myself',
+      whoNeedsHelp: 'other',
     });
-    expect(wrapper.find('Heading').contains('Which activities do you need help with?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Do you need help with any of the following?')).toBeTruthy();
   });
 
   it('handles submit', () => {

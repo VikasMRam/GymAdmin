@@ -2,13 +2,12 @@ import React from 'react';
 import { func, string, number, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
+import { BUDGET_OPTIONS, COEXISTING_BUDGET_OPTIONS } from 'sly/web/constants/wizards/assessment';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import { stateAbbr } from  'sly/web/services/helpers/url';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box, Block } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
+import { Heading, Block } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -17,27 +16,28 @@ const generateHeading = (whoNeedsHelp, amount, city, state) => {
   state = stateAbbr[capitalize(state)];
   switch (whoNeedsHelp) {
     case 'parents':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Does your parent have access to any of these benefits?';
     case 'myself-and-spouse':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do you and your spouse have access to any of these benefits?`;
     case 'myself':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Do you have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?';
     case 'spouse':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your spouse have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Does your spouse or partner have access to any of these benefits?';
     case 'friend':
       return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your friend(s) have access to any of these benefits?`;
     case 'other-relatives':
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does your relative(s) have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?';
     default:
-      return `The average monthly cost of senior living in ${city}, ${state} is ${formatMoney(amount)}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`;
+      return 'Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?';
   }
 };
 
 const Budget = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, amount, city, state, invalid, submitting, hasTip, change,
 }) => (
-  <Wrapper hasSecondColumn={hasTip}>
-    <Box>
+  <PageWrapper hasSecondColumn={hasTip}>
+    <Wrapper>
+
       <Heading level="subtitle" weight="medium" pad="large">{generateHeading(whoNeedsHelp, amount, city, state)}</Heading>
       <Block pad="xLarge">Please select all that apply.</Block>
       <form onSubmit={handleSubmit}>
@@ -48,19 +48,29 @@ const Budget = ({
           type="boxChoice"
           align="left"
           component={ReduxField}
+          onChange={(event, newValue, previousValue, name) => {
+            // we know that last element is the newly added value
+            const newlyAddedValue = newValue[newValue.length - 1];
+            const valuesThatCanExist = COEXISTING_BUDGET_OPTIONS[newlyAddedValue];
+            if (valuesThatCanExist) {
+              newValue = newValue.filter(v => valuesThatCanExist.includes(v));
+            }
+            // delay this update to next tick so that it's always applied at last
+            setTimeout(() => change(name, newValue));
+          }}
         />
         <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
       </form>
-    </Box>
+
+    </Wrapper>
     {hasTip &&
+    <TipBoxWrapper>
       <TipBox heading="DID YOU KNOW?" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base" pad="large">
-          Senior living communities typically include an apartment or room, care and/or supervision, and 3-meals per day.
-        </IconItem>
-        <IconItem icon="payment" iconPalette="slate" iconVariation="base">Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</IconItem>
+        <Block>Although senior living is usually paid out of pocket, we are here to help you understand all of your options.</Block>
       </TipBox>
+    </TipBoxWrapper>
     }
-  </Wrapper>
+  </PageWrapper>
 );
 
 Budget.propTypes = {
@@ -74,6 +84,7 @@ Budget.propTypes = {
   invalid: bool,
   submitting: bool,
   hasTip: bool,
+  change: func,
 };
 
 Budget.defaultProps = {
