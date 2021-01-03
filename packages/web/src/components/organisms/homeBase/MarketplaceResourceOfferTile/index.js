@@ -15,9 +15,8 @@ const Wrapper = styled(Grid)`
 `;
 
 const MarketplaceResourceOfferTile = ({ layout, marketplaceResource, onClick }) => {
-  const { title, description, ctaUrl, imageUrl, tag = 'Article' } = marketplaceResource;
+  const { title, description, ctaUrl, imageUrl } = marketplaceResource;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
-  const imgHeight = layout === 'column' ? 172 : 216;
   return (
     <Block
       as="article"
