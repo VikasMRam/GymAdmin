@@ -33,7 +33,7 @@ const mostSearchedCities = [{
   alt: 'New York assisted living seniorly',
   subtitle: 'New York, NY',
 },{
-  to: '/assisted-living/california/san-Diego',
+  to: '/assisted-living/california/san-diego',
   image: 'react-assets/home/cities/SanDiego.jpg',
   alt: 'San Diego assisted living seniorly',
   subtitle: 'San Diego, CA',
@@ -48,7 +48,7 @@ const mostSearchedCities = [{
   alt: 'Chicago assisted living seniorly',
   subtitle: 'Chicago, IL',
 },{
-  to: '/assisted-living/georgia/Atlanta',
+  to: '/assisted-living/georgia/atlanta',
   image: 'react-assets/home/cities/Atlanta.jpg',
   alt: 'Atlanta assisted living seniorly',
   subtitle: 'Atlanta, GA',
@@ -58,7 +58,7 @@ const mostSearchedCities = [{
   alt: 'san jose assisted living seniorly',
   subtitle: 'San Jose, CA',
 },{
-  to: '/assisted-living/texas/Dallas',
+  to: '/assisted-living/texas/dallas',
   image: 'react-assets/home/cities/Dallas.jpg',
   alt: 'Dallas assisted living seniorly',
   subtitle: 'Dallas, TX',
@@ -138,7 +138,7 @@ const mostSearchedCities = [{
   alt: 'Austin assisted living seniorly',
   subtitle: 'Austin. TX',
 },{
-  to: '/assisted-living/pennsylvania/Pittsburgh',
+  to: '/assisted-living/pennsylvania/pittsburgh',
   image: 'react-assets/home/cities/Pittsburgh.jpg',
   alt: 'Pittsburgh assisted living seniorly',
   subtitle: 'Pittsburgh, PA',
@@ -153,7 +153,7 @@ const mostSearchedCities = [{
   alt: 'Madison assisted living seniorly',
   subtitle: 'Madison, WI',
 },{
-  to: '/assisted-living/michigan/Detroit',
+  to: '/assisted-living/michigan/detroit',
   image: 'react-assets/home/cities/Detroit.jpg',
   alt: 'Detroit assisted living seniorly',
   subtitle: 'Detroit, MI',
