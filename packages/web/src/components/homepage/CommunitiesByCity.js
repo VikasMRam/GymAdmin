@@ -98,7 +98,7 @@ const mostSearchedCities = [{
   alt: 'Oakland assisted living seniorly',
   subtitle: 'Oakland, CA',
 },{
-  to: '/assisted-living/colarado/denver',
+  to: '/assisted-living/colorado/denver',
   image: 'react-assets/home/cities/Denver.jpg',
   alt: 'Denver assisted living seniorly',
   subtitle: 'Denver, CO',
@@ -163,7 +163,7 @@ const mostSearchedCities = [{
   alt: 'Scottsdale assisted living seniorly',
   subtitle: 'Scottsdale, AZ',
 },{
-  to: '/assisted-living/north-carloina/raleigh',
+  to: '/assisted-living/north-carolina/raleigh',
   image: 'react-assets/home/cities/Raleigh.jpg',
   alt: 'Raleigh assisted living seniorly',
   subtitle: 'Raleigh, NC',
