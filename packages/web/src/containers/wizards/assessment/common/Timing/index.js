@@ -30,7 +30,7 @@ export default class TimingFormContainer extends Component {
   };
 
   static defaultProps = {
-    stepName: 'step-1:Timing',
+    stepName: 'step-3:Timing',
   };
 
   handleSubmit = (data) => {

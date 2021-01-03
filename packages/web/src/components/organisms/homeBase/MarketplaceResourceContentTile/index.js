@@ -18,7 +18,8 @@ const MarketplaceResourceContentTile = ({ layout, marketplaceResource, onClick }
   const { title, description, ctaUrl, imageUrl, info: { tags = ['Article'] } } = marketplaceResource;
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   // const imgHeight = layout === 'column' ? 172 : 216;
-  const dTags = tags.map(t => <Tag outline marginRight="regular" palette="green">{t}</Tag>);
+  // eslint-disable-next-line react/no-array-index-key
+  const dTags = tags.map((t, i) => <Tag key={`tag-${i}`} outline marginRight="regular" palette="green">{t}</Tag>);
   return (
     <Block
       as="article"

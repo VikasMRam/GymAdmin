@@ -1,5 +1,8 @@
 {
   "id": "al-article-1",
+  "info" : {
+    "tags": ["Some"]
+  },
   "title":       "AL ARTICLE READ ",
   "description": "Read all about it. Relatively long descriptions, Read all about it. Relatively long descriptions, Read all about it. Relatively long descriptions",
   "ctaUrl":      "http://www.lvh.me?p=3",

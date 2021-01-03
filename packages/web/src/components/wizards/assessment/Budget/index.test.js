@@ -5,13 +5,13 @@ import Budget from '.';
 
 const handleSubmit = jest.fn();
 const change = jest.fn();
-const whoNeedsHelp = 'mom';
+const whoNeedsHelp = 'parents';
 const city = 'city-name';
 const state = 'California';
-const cityFormatted = 'City Name';
-const stateFormatted = 'CA';
+// const cityFormatted = 'City Name';
+// const stateFormatted = 'CA';
 const amount = 2000;
-const formattedAmount = '$2,000';
+// const formattedAmount = '$2,000';
 const defaultProps = {
   handleSubmit,
   change,
@@ -20,6 +20,7 @@ const defaultProps = {
   state,
   amount,
 };
+const expHeading = 'Some families have benefits to help cover senior living costs. Does your parent have access to any of these benefits?';
 const wrap = (props = {}) => shallow(<Budget {...defaultProps} {...props} />);
 
 describe('Wizards|assessment - Steps|Budget', () => {
@@ -30,7 +31,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(1);
   });
@@ -40,7 +41,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Does the person you are looking for have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(0);
   });
@@ -50,7 +51,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       whoNeedsHelp: 'parents',
     });
 
-    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do your parents have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
   });
 
   it('renders correct heading for myself-and-spouse', () => {
@@ -58,7 +59,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       whoNeedsHelp: 'myself-and-spouse',
     });
 
-    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do you and your spouse have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
   });
 
   it('renders correct heading for myself', () => {
@@ -66,7 +67,7 @@ describe('Wizards|assessment - Steps|Budget', () => {
       whoNeedsHelp: 'myself',
     });
 
-    expect(wrapper.find('Heading').contains(`The average monthly cost of senior living in ${cityFormatted}, ${stateFormatted} is ${formattedAmount}. Some families have benefits to help cover costs. Do you have access to any of these benefits?`)).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Some families have benefits to help cover senior living costs. Do you have access to any of these benefits?')).toBeTruthy();
   });
 
   it('handles submit', () => {

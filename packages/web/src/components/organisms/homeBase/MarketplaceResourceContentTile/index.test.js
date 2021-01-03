@@ -12,7 +12,7 @@ const wrap = (props = {}) => shallow(<MarketplaceResourceTile marketplaceResourc
 describe('ALArticle', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('Image')).toHaveLength(1);
-    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('ResponsiveImage')).toHaveLength(1);
+    expect(wrapper.find('Link')).toHaveLength(1);
   });
 });

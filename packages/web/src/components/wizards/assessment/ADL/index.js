@@ -23,7 +23,7 @@ const generateHeading = (whoNeedsHelp) => {
     case 'friend':
       return 'Which activities does your friend(s) need help with?';
     default:
-      return 'Which activities below does the person you are looking for need help with?';
+      return 'Do you need help with any of the following?';
   }
 };
 

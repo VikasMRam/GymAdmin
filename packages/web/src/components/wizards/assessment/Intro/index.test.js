@@ -19,7 +19,6 @@ describe('Wizards|assessment - Steps|Intro', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Icon')).toHaveLength(1);
     expect(wrapper.find('Heading')).toHaveLength(1);
     expect(wrapper.find('Field').filter({ type: 'button' })).toHaveLength(2);
   });
