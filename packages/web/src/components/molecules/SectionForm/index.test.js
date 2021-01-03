@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import SectionForm from 'sly/web/components/molecules/SectionForm';
 
-const heading = 'My Profie';
+const heading = 'My Profile';
 
 const wrap = (props = {}) => shallow(<SectionForm heading={heading} {...props}>test</SectionForm>);
 
