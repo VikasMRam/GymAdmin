@@ -54,14 +54,6 @@ describe('Wizards|assessment - Steps|Budget', () => {
     expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
   });
 
-  it('renders correct heading for myself-and-spouse', () => {
-    const wrapper = wrap({
-      whoNeedsHelp: 'myself-and-spouse',
-    });
-
-    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
-  });
-
   it('renders correct heading for myself', () => {
     const wrapper = wrap({
       whoNeedsHelp: 'myself',
