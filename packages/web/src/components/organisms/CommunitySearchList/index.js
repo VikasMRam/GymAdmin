@@ -177,18 +177,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           }
         </Fragment>
       ))}
-      {communityList.length < 1 &&
-        <>
-          <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
-          <MSCColumnWrapper>
-            {mostSearchedCitiesComponents}
-          </MSCColumnWrapper>
-          <StyledHeading size="subtitle">Learn more about senior care</StyledHeading>
-          <MSCColumnWrapper>
-            {usefulInformationTilesComponents}
-          </MSCColumnWrapper>
-        </>
-      }
       <PaginationText>
         {`Showing ${start} to ${end} of ${count}`}
       </PaginationText>
