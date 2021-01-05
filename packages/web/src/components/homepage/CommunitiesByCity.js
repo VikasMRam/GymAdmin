@@ -201,7 +201,7 @@ const CityTile = styled(({
   title, to, alt, image, children, ...props
 }) => (
   <Link key={title} to={to} {...props}>
-    <ResponsiveImage path={image} alt={alt} aspectRatio="3:2">
+    <ResponsiveImage path={image} alt={alt} sources={[240, 480]} sizes="240px" aspectRatio="3:2">
       <div className="legend">
         {children}
       </div>

@@ -70,6 +70,8 @@ const HomePage = ({
             left: 0;
             z-index: 0;
           `}
+          sources={[120, 240, 480]}
+          sizes="calc(100vw / 3)"
         />
         {/* <BannerNotificationAdContainer type="wizardHome" noMarginBottom /> */}
         <Section css={css`
@@ -125,14 +127,18 @@ const HomePage = ({
               dimensions={['1fr', '1fr']}
             >
               <ResponsiveImage
-                path="react-assets/home/hero-1.png"
+                path="react-assets/home/hero-1.webp"
                 alt="face1"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
               <ResponsiveImage
-                path="react-assets/home/hero-2.png"
+                path="react-assets/home/hero-2.webp"
                 alt="face2"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
             </Grid>
             <Grid
@@ -140,14 +146,18 @@ const HomePage = ({
               dimensions={['1fr', '1fr']}
             >
               <ResponsiveImage
-                path="react-assets/home/hero-3.png"
+                path="react-assets/home/hero-3.webp"
                 alt="face3"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
               <ResponsiveImage
-                path="react-assets/home/hero-4.png"
+                path="react-assets/home/hero-4.webp"
                 alt="face4"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
             </Grid>
           </Grid>
