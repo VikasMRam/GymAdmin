@@ -9,14 +9,9 @@ import Question from './Question';
 import Guides from './Guides';
 import Section from './Section';
 
-import { size, getKey } from 'sly/common/components/themes';
-import { assetPath } from 'sly/web/components/themes';
-import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
-import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
+import { Heading, Block, Button, Hr, Grid, ResponsiveImage } from 'sly/common/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import { startingWith } from 'sly/common/components/helpers/media';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
