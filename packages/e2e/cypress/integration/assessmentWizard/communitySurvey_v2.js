@@ -74,7 +74,6 @@ describe('Community survey', () => {
             multipleselectionAllowed: true,
             istitleNested: true,
           },
-
           { name: 'step-6:Medicaid',
             title: {
               spouse: 'Does your spouse or partner qualify for Medicaid?',
@@ -92,14 +91,13 @@ describe('Community survey', () => {
             multipleselectionAllowed: false,
             istitleNested: true,
           },
-
           { name: 'step-7:Services',
-          title: {
-            spouse: 'Would your spouse or partner be interested in any of these other services?',
-            myself: 'Would you be interested in any of these other services?',
-            parents: 'Would your parent be interested in any of these other services?',
-            other: 'Would you be interested in any of these other services?',
-          },
+            title: {
+              spouse: 'Would your spouse or partner be interested in any of these other services?',
+              myself: 'Would you be interested in any of these other services?',
+              parents: 'Would your parent be interested in any of these other services?',
+              other: 'Would you be interested in any of these other services?',
+            },
             Options: SERVICES_OPTIONS,
             maxSelect: 5,
             optionsId: 'services',
@@ -158,11 +156,11 @@ describe('Community survey', () => {
   }
 
   function verifywizardStep(i) {
-    const { name, Options, maxSelect, submitText, optionsId, isSelect, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
+    const { name, Options, maxSelect, submitText, optionsId, multipleselectionAllowed, istitleNested } = WizardConfiguration[wizardVersion][i];
     it(`${name}`, () => {
       const title = getTitle(istitleNested, i);
       waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
-      
+
       const minSelect = getminIndex(name);
       if (!multipleselectionAllowed) {
         const rand = getuniqueRandoms(1, minSelect, maxSelect);
@@ -243,7 +241,7 @@ describe('Community survey', () => {
         expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
         expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
       });
-      waitForHydration(cy.contains(`We've sent your request!`, { timeout: 30000 }));
+      waitForHydration(cy.contains('We\'ve sent your request!', { timeout: 30000 }));
     });
   });
 });
