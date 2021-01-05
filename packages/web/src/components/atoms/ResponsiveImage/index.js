@@ -70,7 +70,7 @@ const makeSizes = (sizes) => {
 
     return acc;
   }, []).join(', ');
-}
+};
 
 export default class ResponsiveImage extends React.Component {
   static propTypes = {
