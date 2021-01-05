@@ -16,8 +16,8 @@ describe('Community survey', () => {
   const wizardSteps = 6;
   const WizardConfiguration = {
     Wizard_V1:
-          [{ name: 'step-3:Who',
-            title: 'Who are you looking for?',
+          [{ name: 'step-2:Who',
+            title: 'Are you looking for yourself or someone else?',
             Options: WHO_PERSON_OPTIONS,
             maxSelect: 4,
             optionsId: 'lookingFor',
@@ -28,8 +28,8 @@ describe('Community survey', () => {
             multipleselectionAllowed: false,
             istitleNested: false,
           },
-          { name: 'step-1:Timing',
-            title: 'Where are you in your senior living search?',
+          { name: 'step-3:Timing',
+            title: 'What’s your timeframe?',
             Options: TIMING_OPTIONS,
             maxSelect: 3,
             skipAllowed: false,
@@ -40,15 +40,15 @@ describe('Community survey', () => {
             multipleselectionAllowed: false,
             istitleNested: false,
           },
-          { name: 'step-8:ADL',
+          { name: 'step-4:ADL',
             title: {
-              spouse: 'Which activities does your spouse need help with?',
-              myself: 'Which activities do you need help with?',
-              parents: 'Which activities does your parent(s) need help with?',
-              other: 'Which activities below does the person you are looking for need help with?',
+              spouse: 'Does your spouse or partner need help with any of the following?',
+              myself: 'Do you need help with any of the following?',
+              parents: 'Does your parent need help with any of the following?',
+              other: 'Do you need help with any of the following?',
             },
             Options: ADL_OPTIONS,
-            maxSelect: 3,
+            maxSelect: 4,
             optionsId: 'adl',
             skipAllowed: true,
             backAllowed: true,
@@ -57,15 +57,15 @@ describe('Community survey', () => {
             multipleselectionAllowed: true,
             istitleNested: true,
           },
-          { name: 'step-9:Budget',
+          { name: 'step-5:Budget',
             title: {
-              spouse: 'Does your spouse have access to any of these benefits?',
+              spouse: 'Does your spouse or partner have access to any of these benefits?',
               myself: 'Do you have access to any of these benefits?',
-              parents: 'Do your parents have access to any of these benefits?',
-              other: 'Does the person you are looking for have access to any of these benefits?',
+              parents: 'Does your parent have access to any of these benefits?',
+              other: 'Do you have access to any of these benefits?',
             },
             Options: BUDGET_OPTIONS,
-            maxSelect: 4,
+            maxSelect: 5,
             optionsId: 'budget',
             skipAllowed: true,
             backAllowed: true,
@@ -75,11 +75,11 @@ describe('Community survey', () => {
             istitleNested: true,
           },
 
-          { name: 'step-10:Medicaid',
+          { name: 'step-6:Medicaid',
             title: {
-              spouse: 'Does your spouse qualify for Medicaid?',
+              spouse: 'Does your spouse or partner qualify for Medicaid?',
               myself: 'Do you qualify for Medicaid?',
-              parents: 'Do your parents qualify for Medicaid?',
+              parents: 'Does your parent qualify for Medicaid?',
               other: 'Does the person you are looking for qualify for Medicaid?',
             },
             Options: MEDICAID_OPTIONS,
@@ -93,17 +93,22 @@ describe('Community survey', () => {
             istitleNested: true,
           },
 
-          { name: 'post-auth-step-6:Services',
-            title: 'Please tell us if you are interested in these other services:',
+          { name: 'step-7:Services',
+          title: {
+            spouse: 'Would your spouse or partner be interested in any of these other services?',
+            myself: 'Would you be interested in any of these other services?',
+            parents: 'Would your parent be interested in any of these other services?',
+            other: 'Would you be interested in any of these other services?',
+          },
             Options: SERVICES_OPTIONS,
-            maxSelect: 6,
+            maxSelect: 5,
             optionsId: 'services',
             skipAllowed: true,
             backAllowed: true,
             submitText: 'Continue',
             isSelect: false,
             multipleselectionAllowed: true,
-            istitleNested: false,
+            istitleNested: true,
           },
           ],
   };
@@ -120,15 +125,9 @@ describe('Community survey', () => {
     return arr;
   }
 
-  function makeSelection(isSelect, optionsId, label) {
-    if (isSelect) {
-      waitForHydration(cy.get(`select[id*=${optionsId}]`).select(label));
-    } else { waitForHydration(cy.get(`div[id*=${optionsId}]`).contains(label)).click(); }
-  }
-
-  // Do not include memory care for 'myself' and 'myself-and-spouse'
+  // Do not include memory care for 'myself'
   function getminIndex(name) {
-    if (name === 'step-8:ADL' && (lookingFor === 'myself' || lookingFor === 'myself-and-spouse')) { return 1; }
+    if (name === 'step-4:ADL' && (lookingFor === 'myself')) { return 1; }
     return 0;
   }
 
@@ -153,25 +152,6 @@ describe('Community survey', () => {
     });
   }
 
-  // function verifyResidentDetails(stepname, data) {
-  //   cy.wait('@postUuidActions').then((xhr) => {
-  //     const request = xhr.requestBody;
-  //     const attrs = request.data.attributes;
-  //     expect(attrs.actionInfo.data).to.include(data);
-  //     expect(request.data).to.have.property('type', 'UUIDAction');
-  //     expect(attrs.actionInfo).to.have.property('stepName', stepname);
-  //     expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
-  //     expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
-  //     expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
-  //   });
-  // }
-
-
-  // function fillinresidentDetails(id1, id2, firstName, lastName) {
-  //   waitForHydration(cy.get(`input[id*=${id1}]`).should('exist')).type(firstName);
-  //   waitForHydration(cy.get(`input[id*=${id2}]`).should('exist')).type(lastName);
-  // }
-
   function getTitle(istitleNested, i) {
     if (!istitleNested) { return WizardConfiguration[wizardVersion][i].title; }
     return WizardConfiguration[wizardVersion][i].title[getlookingFor()];
@@ -182,13 +162,13 @@ describe('Community survey', () => {
     it(`${name}`, () => {
       const title = getTitle(istitleNested, i);
       waitForHydration(cy.get('main[class*=AssessmentWizardPage]').find('h3').contains(title)).should('exist');
-
+      
       const minSelect = getminIndex(name);
       if (!multipleselectionAllowed) {
         const rand = getuniqueRandoms(1, minSelect, maxSelect);
         const { label, value } = Options[rand];
-        if (name === 'step-3:Who') setlookingFor(value);
-        makeSelection(isSelect, optionsId, label);
+        if (name === 'step-2:Who') setlookingFor(value);
+        waitForHydration(cy.get(`div[id*=${optionsId}]`).contains(label)).click();
         waitForHydration(cy.get('button').contains(submitText)).click();
         verifypostUuidActions(name, optionsId, value);
       } else {
@@ -199,7 +179,7 @@ describe('Community survey', () => {
         for (let i = 0; i < arr.length; i++) {
           const { label, value } = Options[arr[i]];
           valueArr.push(value);
-          makeSelection(isSelect, optionsId, label);
+          waitForHydration(cy.get(`div[id*=${optionsId}]`).contains(label)).click();
         }
         waitForHydration(cy.get('button').contains(submitText)).click();
         verifypostUuidActions(name, optionsId, valueArr);
@@ -234,6 +214,7 @@ describe('Community survey', () => {
     for (let i = 0; i < wizardSteps; i++) {
       verifywizardStep(i);
     }
+
     it('Submit wizard form', () => {
       const { name, phone, email } = randomUser();
       const [fname, lname] = name.split(' ');
@@ -241,24 +222,28 @@ describe('Community survey', () => {
       waitForHydration(cy.get('form input[id=lastName]')).type(lname);
       waitForHydration(cy.get('form input[id=email]').first()).type(email);
       waitForHydration(cy.get('form input[id=phone_number]')).type(phone);
-      waitForHydration(cy.get('form button[type=submit]').contains('Get Pricing')).click({ force: true });
+      waitForHydration(cy.get('form button[type=submit]').contains('Sign up to submit your request')).click({ force: true });
 
       cy.wait('@postUuidActions').then(async (xhr) => {
         const request = xhr.requestBody;
         const attrs = request.data.attributes;
-        expect(attrs.actionInfo).to.deep.equal({ email,  name,  phone });
+        const contactType = 'pricingRequest';
+        const slug = community.id;
+        expect(attrs.actionInfo).to.deep.equal({ contactType, email,  name,  phone, slug });
         expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
-        expect(attrs).to.have.property('actionType', 'consultationRequested');
+        expect(attrs).to.have.property('actionType', 'profileContacted');
       });
 
       cy.wait('@postUuidActions').then((xhr) => {
         const request = xhr.requestBody;
         const attrs = request.data.attributes;
-        expect(attrs.actionInfo).to.have.property('stepName', 'step-11:Auth');
-        expect(attrs.actionInfo.data).to.deep.equal({ email,  name,  phone });
+        expect(attrs.actionInfo).to.have.property('stepName', 'step-8:Conversion');
+        expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+        expect(attrs.actionInfo).to.have.property('wizardPostConversionInfo', 'wizardPostConversionInfo');
         expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
         expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
       });
+      waitForHydration(cy.contains(`We've sent your request!`, { timeout: 30000 }));
     });
   });
 });
