@@ -14,7 +14,7 @@ export const  shouldShowZillowProfileAd = (community) => {
   // S1303 : Zillow Ad Tiles on CCRC Do Not Send List
   // https://airtable.com/tblt2MRAZThT31Ee9/viwlPQXuHxbH2unIj/recfsTZBjUSGl0TUe?blocks=hide
   const specialSlugs = ['moosehaven', 'san-francisco-towers-san-francisco', 'sequoias-san-francisco-the',
-    'the-village-at-orchard-ridge-winchester', 'westminister-at-lake-ridge', 'towers-at-laguna-woods-village',
+    'the-village-at-orchard-ridge-winchester', 'westminister-at-lake-ridge',
     'falcons-landing', 'reata-glen', 'the-glen-at-scripps-ranch', 'la-costa-glen-carlsbad', 'penney-retirement-community',
     'smith-village', 'woodland-pond-at-new-paltz', 'lasell-village', 'sequoias-portola-valley-the'];
   if (!community || !community.care) {
