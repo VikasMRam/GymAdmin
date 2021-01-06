@@ -32,7 +32,7 @@ export default class ConversionContainer extends Component {
   };
 
   postSubmit = () => {
-    const { createAction, location: { pathname }, onSubmit, data } = this.props;
+    const { createAction, location: { pathname }, conversionInfo, onSubmit, data } = this.props;
     return createAction({
       type: 'UUIDAction',
       attributes: {
@@ -42,7 +42,10 @@ export default class ConversionContainer extends Component {
           wizardPostConversionInfo: WIZARD_POSTCONVERSION_INFO,
           stepName: 'step-8:Conversion',
           wizardName: 'assessmentWizard',
-          data,
+          data: {
+            ...data,
+            ...conversionInfo,
+          },
         },
       },
     })

@@ -57,7 +57,6 @@ export default class HomeBasePageContainer extends Component {
   }
   onAgentMatch = (data) => {
     clearTimeout(this.agentMatchTimeout);
-    console.log('matched agent', data);
     this.setState({
       hasAgent: true,
     });
@@ -88,7 +87,6 @@ export default class HomeBasePageContainer extends Component {
       action: 'click', category, label, value,
     };
     SlyEvent.getInstance().sendEvent(event);
-    console.log('Marketplace Offer was clicked');
   }
 
   closeAskAgentQuestionModal = () => {
@@ -148,10 +146,6 @@ export default class HomeBasePageContainer extends Component {
           homeBase={homeBase}
           uuidAux={uuidAux}
           onBannerClose={this.handleBannerClose}
-          onGallerySlideChange={this.handleOnGallerySlideChange}
-          toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-          onLocationSearch={this.handleOnLocationSearch}
-          onUnfavouriteClick={this.handleUnfavouriteClick}
           onMarketplaceTileClick={this.handleMarketplaceTileClick}
           openAskAgentQuestionModal={this.openAskAgentQuestionModal}
           isLoading={!status.homeBase.hasFinished || !status.uuidAux.hasFinished}

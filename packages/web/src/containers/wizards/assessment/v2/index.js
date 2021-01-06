@@ -187,9 +187,9 @@ export default class AssessmentWizardV2 extends Component {
     let amount = 4000;
     let skipOptionText = 'No thanks, connect me to an expert now.';
     // const showSkipOption = true;
-    const { agent, hasNoAgent } = this.state;
+    const { hasNoAgent } = this.state;
     // Add agent presence
-    const conversionInfo = { toc, cta, entry, agent, hasNoAgent };
+    const conversionInfo = { toc, cta, entry, hasNoAgent };
     // console.log('toc and agent and hasNoAgent', agent, hasNoAgent, toc);
     if (community) {
       ({ address: { city, state }, startingRate: amount = 4000 } = community);
