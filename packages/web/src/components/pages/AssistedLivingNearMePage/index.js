@@ -904,13 +904,13 @@ const NearMePage = ({
             </Column>
             <Body>
               {SEOContentAL()}
-              {!isFetchingResults &&
+              {!isFetchingResults && communityList && communityList.length > 0 &&
                 <Heading level="title" size="title">
                   {heading}
                 </Heading>
               }
               {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-              {!isFetchingResults && (
+              {!isFetchingResults && communityList && communityList.length > 0 && (
                 <CommunitySearchList
                   communityList={communityList}
                   searchParams={searchParams}

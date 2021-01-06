@@ -883,7 +883,7 @@ const SeniorLivingNearMePage = ({
               </Paragraph>
             </StyledArticle>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && (
+            {!isFetchingResults && communityList && communityList.length > 0 &&(
               <CommunitySearchList
                 communityList={communityList}
                 searchParams={searchParams}
