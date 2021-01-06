@@ -121,22 +121,26 @@ const FamilyHomePage = ({
             </HeadingBoxSection>
           </Grid>
           <Grid gap="large" flow="row">
+            { communityTiles && communityTiles.length > 0 &&
             <HeadingBoxSection overflow="auto" heading="Explore communities recommended just for you">
               <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(3,288px)']} overflow="auto">
                 {communityTiles}
               </Grid>
-            </HeadingBoxSection>
-
-            <HeadingBoxSection overflow="auto" heading="Services to help you with your transition">
-              <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(6,288px)']} overflow="auto">
-                {marketplaceOfferTiles}
-              </Grid>
-            </HeadingBoxSection>
-            <HeadingBoxSection overflow="auto" heading="Senior living articles recommended for you">
-              <Grid gap="large" dimensions={['repeat(4,288px)']}overflow="auto">
-                {resourceArticleTiles}
-              </Grid>
-            </HeadingBoxSection>
+            </HeadingBoxSection> }
+            { marketplaceOfferTiles && marketplaceOfferTiles.length > 0 &&
+              <HeadingBoxSection overflow="auto" heading="Services to help you with your transition">
+                <Grid startingWithTablet={{ gridTemplateColumns: 'auto!important' }} gap="large" dimensions={['repeat(6,288px)']} overflow="auto">
+                  {marketplaceOfferTiles}
+                </Grid>
+              </HeadingBoxSection>
+            }
+            {resourceArticleTiles && resourceArticleTiles.length > 0 &&
+              <HeadingBoxSection overflow="auto" heading="Senior living articles recommended for you">
+                <Grid gap="large" dimensions={['repeat(4,288px)']}overflow="auto">
+                  {resourceArticleTiles}
+                </Grid>
+              </HeadingBoxSection>
+            }
           </Grid>
         </Grid>
       </div>
