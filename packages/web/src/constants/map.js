@@ -130,5 +130,5 @@ export const STYLES = [
         visibility: 'off',
       },
     ],
-  }
+  },
 ];
