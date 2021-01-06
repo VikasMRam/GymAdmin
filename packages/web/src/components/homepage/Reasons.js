@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import IconItem from 'sly/web/components/molecules/IconItem';
 import { size, getKey } from 'sly/common/components/themes';
@@ -7,8 +7,18 @@ import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 
 import Section from './Section';
 
-const Reasons = () => {
+const ReasonImage = forwardRef((props, ref) => ( 
+  <ResponsiveImage
+    ref={ref}
+    css={{
+      width: '100%',
+    }}
+    sizes={['calc(100vw - 48px)', 240, 500]}
+    {...props}
+  />
+));
 
+const Reasons = () => {
   return (
     <Section
       display="grid"
@@ -37,12 +47,9 @@ const Reasons = () => {
           gridTemplateColumns: 'auto!important',
         }}
       >
-        <ResponsiveImage
-          path="react-assets/home/laptopA.png"
+        <ReasonImage
+          path="react-assets/home/laptopA.webp"
           alt="smarter-way"
-          css={{
-            width: '100%',
-          }}
         />
         <div>
           <Heading
@@ -80,12 +87,9 @@ const Reasons = () => {
           gridTemplateColumns: 'auto!important',
         }}
       >
-        <ResponsiveImage
-          path="react-assets/home/laptopB.png"
+        <ReasonImage
+          path="react-assets/home/laptopB.webp"
           alt="local-advisor"
-          css={{
-            width: '100%',
-          }}
         />
         <Block startingWithLaptop={{
           direction: 'ltr',
@@ -122,12 +126,9 @@ const Reasons = () => {
           gridTemplateColumns: 'auto!important',
         }}
       >
-        <ResponsiveImage
-          path="react-assets/home/laptopC.png"
+        <ReasonImage
+          path="react-assets/home/laptopC.webp"
           alt="smarter-way"
-          css={{
-            width: '100%',
-          }}
         />
         <div>
           <Heading

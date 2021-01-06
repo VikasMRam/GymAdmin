@@ -9,14 +9,9 @@ import Question from './Question';
 import Guides from './Guides';
 import Section from './Section';
 
-import { size, getKey } from 'sly/common/components/themes';
-import { assetPath } from 'sly/web/components/themes';
-import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
-import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
+import { Heading, Block, Button, Hr, Grid, ResponsiveImage } from 'sly/common/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import ContentOverImage, { MiddleContent } from 'sly/web/components/molecules/ContentOverImage';
 import { startingWith } from 'sly/common/components/helpers/media';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
@@ -70,6 +65,8 @@ const HomePage = ({
             left: 0;
             z-index: 0;
           `}
+          sources={[120, 240, 480]}
+          sizes="calc(100vw / 3)"
         />
         {/* <BannerNotificationAdContainer type="wizardHome" noMarginBottom /> */}
         <Section css={css`
@@ -125,14 +122,18 @@ const HomePage = ({
               dimensions={['1fr', '1fr']}
             >
               <ResponsiveImage
-                path="react-assets/home/hero-1.png"
+                path="react-assets/home/hero-1.webp"
                 alt="face1"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
               <ResponsiveImage
-                path="react-assets/home/hero-2.png"
+                path="react-assets/home/hero-2.webp"
                 alt="face2"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
             </Grid>
             <Grid
@@ -140,14 +141,18 @@ const HomePage = ({
               dimensions={['1fr', '1fr']}
             >
               <ResponsiveImage
-                path="react-assets/home/hero-3.png"
+                path="react-assets/home/hero-3.webp"
                 alt="face3"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
               <ResponsiveImage
-                path="react-assets/home/hero-4.png"
+                path="react-assets/home/hero-4.webp"
                 alt="face4"
                 aspectRatio="1:1"
+                sources={[150, 180, 300, 360]}
+                sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
             </Grid>
           </Grid>
