@@ -10,7 +10,8 @@ import Guides from './Guides';
 import Section from './Section';
 
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import { Heading, Block, Button, Hr, Grid, ResponsiveImage } from 'sly/common/components/atoms';
+import { Heading, Block, Button, Hr, Grid } from 'sly/common/components/atoms';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import { startingWith } from 'sly/common/components/helpers/media';
 import ModalContainer from 'sly/web/containers/ModalContainer';
