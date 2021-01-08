@@ -53,7 +53,7 @@ export default class Chatbox extends Component {
 
     if (eventName) {
       console.log('Loading chat bot: ', eventName);
-      window.RokoInstabot.trigger(eventName);
+      // window.RokoInstabot.trigger(eventName);
     }
   };
 
