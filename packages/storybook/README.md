@@ -15,3 +15,13 @@ Run ```npm test``` command in this folder to run all available unit tests for th
 ## Linting
 
 Run ```npm run lint``` command in this folder to do linting in this package.
+
+
+Fonz:
+
+Currently disabled the following packages because of their locked peer dependencies would not let you do a npm install
+```
+  "@storybook/react-native": "6.0.0-alpha.0",
+  "@storybook/react-native-server": "5.3.23",
+  "@storybook/addon-ondevice-actions": "5.3.23",
+```

@@ -6,8 +6,9 @@ import { ifProp } from 'styled-tools';
 import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { startingWith, upTo } from 'sly/common/components/helpers';
-import { Icon, Button, Logo, Hr, Link, Block } from 'sly/common/components/atoms';
+import { Icon, Button, Hr, Link, Block } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import Logo from 'sly/common/components/atoms/Logo';
 
 const Wrapper = styled(Block)`
   // To remove blue line caused by tabIndex
