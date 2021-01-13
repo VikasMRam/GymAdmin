@@ -4,7 +4,8 @@ import { func } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size, palette } from 'sly/common/components/themes';
-import { Block, Logo, Button } from 'sly/web/components/atoms';
+import { Block, Button } from 'sly/web/components/atoms';
+import Logo from 'sly/common/components/atoms/Logo';
 
 const getBackground = ({ type }) => palette(type, 'base');
 

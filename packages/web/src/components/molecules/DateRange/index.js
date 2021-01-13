@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { func, string, array } from 'prop-types';
 import loadable from '@loadable/component';
-import Helmet from 'react-helmet';
 
 import { size } from 'sly/common/components/themes';
 import { Input } from 'sly/web/components/atoms';
-import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 
-const DatePicker = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
+const DatePicker = loadable(() => import(/* webpackChunkName: "chunkDatePicker" */'sly/web/components/molecules/DatePicker'));
 
 const getDateFromValue = (value, pos) => value && Array.isArray(value)
   ? value[pos]
@@ -59,10 +57,6 @@ export default class DateRange extends Component {
     const customInput = <Input size={size} />;
     return (
       <Wrapper>
-        <Helmet>
-          <style type="text/css">{DatepickerStyles}</style>
-        </Helmet>
-
         <DatePicker
           selected={startDate}
           onChange={this.setStartDate}

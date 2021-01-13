@@ -1,7 +1,4 @@
-import React from 'react';
-import { string } from 'prop-types';
 import loadable from '@loadable/component';
-import Helmet from 'react-helmet';
 
 import { Button } from 'sly/common/components/atoms';
 import { Input } from 'sly/web/components/atoms';
@@ -20,28 +17,12 @@ import OrganizationAutoComplete from 'sly/web/components/molecules/OrganizationA
 import NumberInput from 'sly/web/components/molecules/NumberInput';
 import Autocomplete from 'sly/web/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
-import LocationSearch from 'sly/web/components/molecules/LocationSearch';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
-import DatepickerStyles from 'sly/web/components/themes/DatepickerStyles';
 
+const DatePicker = loadable(() => import(/* webpackChunkName: "chunkDatePicker" */'sly/web/components/molecules/DatePicker'));
+const LocationSearch = loadable(() => import(/* webpackChunkName: "chunkLocationSearch" */'sly/web/components/molecules/LocationSearch'));
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
 const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/web/components/atoms/RichTextArea'));
-const DatePickerLoadable = loadable(() => import(/* webpackChunkName: "chunkReactDatePicker" */'react-datepicker'));
-const DatePicker = props => (
-  <>
-    <Helmet>
-      <style type="text/css">{DatepickerStyles}</style>
-    </Helmet>
-    <DatePickerLoadable
-      {...props}
-      customInput={<Input size={props.size} autocomplete="off" />}
-    />
-  </>
-);
-
-DatePicker.propTypes = {
-  size: string,
-};
 
 const getInputComponent = (type) => {
   switch (type) {

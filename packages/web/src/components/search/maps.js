@@ -9,6 +9,9 @@ export const DEFAULT_ZOOM = 13;
 
 export const HOVER_DISTANCE = 20;
 
+export const MAP = 'MAP';
+export const COMPONENT_STATE = 'STATE';
+export const NONE = 'NONE';
 
 const TILE_SIZE = 256;
 
@@ -321,3 +324,31 @@ export const slyToApiPoint = point => ({
   lat: parseFloat(point?.latitude) || 0,
   lng: parseFloat(point?.longitude) || 0,
 });
+
+export const coordsFromGeoFilter = (geo) => {
+  if (!geo) {
+    return {
+      zoom: DEFAULT_ZOOM,
+      controlled: NONE,
+    };
+  }
+
+  const coords = geo.split(',').map(Number);
+  if (coords.length === 4) {
+    const [nwlat, nwlng, selat, selng] = coords;
+    return {
+      lat: (nwlat + selat) / 2,
+      lng: (nwlng + selng) / 2,
+      zoom: DEFAULT_ZOOM,
+      controlled: MAP,
+    };
+  }
+
+  const [lat, lng] = coords;
+  return {
+    lat,
+    lng,
+    zoom: DEFAULT_ZOOM,
+    controlled: NONE,
+  };
+};

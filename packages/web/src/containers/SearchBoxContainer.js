@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { string, func, shape } from 'prop-types';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import { LOCATION_CURRENT_LATITUDE, LOCATION_CURRENT_LONGITUDE } from 'sly/web/constants/location';
 import SlyEvent from 'sly/web/services/helpers/events';
