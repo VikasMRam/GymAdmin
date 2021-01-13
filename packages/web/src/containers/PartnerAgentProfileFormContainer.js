@@ -70,7 +70,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.timeZone', values.timeZone)
       .set('attributes.info.smsFormat', values.smsFormat)
       .set('attributes.info.slyScore', parseFloat(values.slyScore))
-      .set('attributes.info.experience', parseInt(values.experience));
+      .set('attributes.info.experience', parseInt(values.experience))
+      .set('attributes.info.contract', parseInt(values.contract));
 
     if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
       agent = agent.set('attributes.info.vacationStart', values.vacation[0])
@@ -112,7 +113,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
         label: org.name,
       };
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, experience, isPro, canReceiveReferrals, cellPhone, email, timeZone, smsFormat } = info;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, experience, isPro, canReceiveReferrals, cellPhone, email, timeZone, smsFormat, contract } = info;
       let zipcodesServed = null;
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
@@ -122,7 +123,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
       const initialValues = { name, organization, bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
-        zipcodesServed, status, adminNotes, slyScore, experience, isPro: [isPro], canReceiveReferrals: [canReceiveReferrals], cellPhone, email, timeZone, smsFormat };
+        zipcodesServed, status, adminNotes, slyScore, experience, isPro: [isPro], canReceiveReferrals: [canReceiveReferrals], cellPhone, email, timeZone, smsFormat, contract };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm
