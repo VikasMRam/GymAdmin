@@ -484,6 +484,7 @@ export default class CommunityDetailPage extends Component {
                   id={community.id}
                   city={address.city}
                   name={name}
+                  agent={partnerAgent}
                 />
                 <StyledHeadingBoxSection
                   heading={`Similar ${typeOfCare} Communities`}
