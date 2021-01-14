@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool } from 'prop-types';
+import { string, bool, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
@@ -16,7 +16,7 @@ const StyledBox = styled(Box)`
 `;
 
 const CommunityDisclaimerSection = ({
-  title, id, name, city, phone, isClaimed,
+  title, id, name, city, phone, isClaimed, agent,
 }) => {
   let description = ' The information above has not been verified or approved by the owner or operator. ';
   if (isClaimed) {
@@ -28,11 +28,15 @@ const CommunityDisclaimerSection = ({
         <DescriptionWrapper>
           Seniorly is not affiliated with the owner or operator(s) of {name}.
           {description}
-          For exact details, connect to a Seniorly Local Advisor in {city} by calling&nbsp;
-          <Link href={`tel:${phone}`}>
-            {phoneFormatter(phone, true)}
-          </Link>
-          . There is no cost for this service. We are compensated by the community you select.
+          {agent &&
+          <>
+            For exact details, connect to a Seniorly Local Advisor in {city} by calling&nbsp;
+            <Link href={`tel:${phone}`}>
+              {phoneFormatter(phone, true)}
+            </Link>
+            . There is no cost for this service. We are compensated by the community you select.
+          </>
+          }
         </DescriptionWrapper>
         {!isClaimed &&
         <>
@@ -56,6 +60,7 @@ CommunityDisclaimerSection.propTypes = {
   city: string,
   isClaimed: bool,
   phone: string,
+  agent: object,
 };
 
 CommunityDisclaimerSection.defaultProps = {
