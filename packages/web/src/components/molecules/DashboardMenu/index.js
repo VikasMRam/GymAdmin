@@ -12,6 +12,7 @@ import {
   AGENT_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_TASKS_PATH,
   DASHBOARD_ACCOUNT_PATH, DASHBOARD_COMMUNITIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
+  FAMILY_DASHBOARD_HOME_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import {
   AGENT_ADMIN_ROLE,
@@ -46,6 +47,7 @@ export const menuItems = [
   { label: 'Contacts', icon: 'contacts', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
   { label: 'Calls', icon: 'phone', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Messages', icon: 'message', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Home Base', icon: 'house', href: FAMILY_DASHBOARD_HOME_PATH, role: CUSTOMER_ROLE },
   { label: 'Favorites', icon: 'favourite-light', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
   { label: 'Profile', icon: 'user', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
   { label: 'Account', icon: 'settings', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },

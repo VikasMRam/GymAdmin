@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/common/constants/roles';
 import rolePropType from 'sly/common/propTypes/role';
-import { Heading, Block, Button, Form } from 'sly/common/components/atoms';
+import { Block, Button, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -12,7 +12,6 @@ const LoginForm = ({
   handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick, role,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading pad="xLarge" size="subtitle">{role === AGENT_ND_ROLE ? 'Seniorly Partner Agent Log in' : 'Log in'}</Heading>
     <Field
       name="email"
       label="Email"

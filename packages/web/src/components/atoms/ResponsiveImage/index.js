@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, array, oneOf, any, func, number } from 'prop-types';
+import { string, array, oneOfType, oneOf, any, func, number } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -48,8 +48,30 @@ const getAlt = (src) => {
   return decodeURIComponent(srcParts.pop());
 };
 
-// TODO: a note for the future if we do the resampling of the images with lambda,
-// <Image /> should accept formatting props so we can manipulate the url to get the right size.
+const sizeNames = ['mobile', 'tablet', 'laptop', 'desktop'];
+const makeSizes = (sizes) => {
+  if (!Array.isArray(sizes)) {
+    return sizes;
+  }
+
+  return sizes.reduce((acc, size, i) => {
+    if (!size) {
+      return acc;
+    }
+
+    const sizepx = typeof size === 'number'
+      ? `${size}px`
+      : size;
+    if (i === 0) {
+      acc.push(sizepx);
+    } else {
+      acc.splice(acc.length - 1, 0, `(min-width: ${getKey(`sizes.breakpoint.${sizeNames[i]}`)}) ${sizepx}`);
+    }
+
+    return acc;
+  }, []).join(', ');
+};
+
 export default class ResponsiveImage extends React.Component {
   static propTypes = {
     className: string,
@@ -62,7 +84,7 @@ export default class ResponsiveImage extends React.Component {
     // use height to force a height for all sources like in a hero banner
     height: number,
     alt: string,
-    sizes: string,
+    sizes: oneOfType([array, string]),
     sources: array,
     children: any,
     onLoadFailed: func,
@@ -152,8 +174,8 @@ export default class ResponsiveImage extends React.Component {
 
       sourceSets = (
         <>
-          <source type="image/webp" {...webpSourceProps} sizes={sizes} />
-          <source type="image/jpeg" {...jpegSourceProps} sizes={sizes} />
+          <source type="image/webp" {...webpSourceProps} sizes={makeSizes(sizes)} />
+          <source type="image/jpeg" {...jpegSourceProps} sizes={makeSizes(sizes)} />
         </>
       );
     }

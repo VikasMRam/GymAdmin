@@ -2,6 +2,16 @@
 import { isBrowser, isDev } from 'sly/web/config';
 import { makeColor, makeColorTable } from 'sly/common/components/themes/color';
 
+const makeFont = (() => {
+  const fontText = (size, weight) => `${weight} ${size} Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif`;
+  return (sizes, weight = 500) => {
+    if (Array.isArray(sizes)) {
+      return sizes.map(size => fontText(size, weight));
+    }
+    return fontText(sizes, weight);
+  };
+})();
+
 const theme = {};
 
 // Color variations are:
@@ -160,6 +170,20 @@ theme.sizes = {
     xMassive: '5.000rem',   // 80px
   },
 
+  // new ways...
+  font: {
+    'title-xxlarge': makeFont(['48px/60px', '36px/44px']),
+    'title-xlarge': makeFont(['40px/48px', '28px/36px']),
+    'title-large': makeFont(['32px/44px', '24px/28px']),
+    'title-medium': makeFont(['24px/36px', '20px/28px']),
+    'title-small': makeFont(['20px/32px', '18px/28px']),
+    'body-large': makeFont(['20px/32px', '18px/28px'], 400),
+    'body-regular': makeFont('16px/24px', 400),
+    'body-small': makeFont('14px/20px', 400),
+    label: makeFont('12px/16px', 700),
+  },
+
+  // old way
   text: {
     micro     : '0.625rem',   // 10px
     tiny      : '0.750rem',   // 12px
@@ -177,15 +201,18 @@ theme.sizes = {
 
   lineHeight: {
     nano     : '0.8',
-    micro    : '1.2',    // 12px / 10px
-    tiny     : '1.167',  // 14px / 12px
-    caption  : '1.429',  // 20px / 14px
-    body     : '1.5',    // 24px / 16px
-    subtitle : '1.3',    // 26px / 20px
-    title    : '1.29',   // 36px / 28px
-    hero     : '1.33',   // 48px / 36px
-    superHero:'1.33',    // 64px / 48px
-    xxLarge  : '1.0',    // 72px / 72px
+    micro    : '1.2',      // 12px / 10px
+    tiny     : '1.167',    // 14px / 12px
+    caption  : '1.429',    // 20px / 14px
+    body     : '1.5',      // 24px / 16px
+    subtitle : '1.6',      // 32px / 20px
+    displayS : '1.2',      // 24px
+    title    : '1.29',     // 36px / 28px
+    display  : '1.33',     // 32px
+    hero     : '1.33',     // 48px / 36px
+    displayL : '1.25',     // 40px
+    superHero:'1.25',      // 60px / 48px
+    xxLarge  : '1.0',      // 72px / 72px
   },
 
   weight: {

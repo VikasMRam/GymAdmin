@@ -25,7 +25,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 export default class CarePageAdTileContainer extends Component {
   static propTypes = {
     notifyInfo: func.isRequired,
-    type: oneOf(['askAgent', 'getOffer','homeCare']).isRequired,
+    type: oneOf(['askAgent', 'getOffer', 'homeCare']).isRequired,
     city: string,
     locationLabel: string,
     tocLabel: string,
@@ -39,7 +39,7 @@ export default class CarePageAdTileContainer extends Component {
     isModalOpen: false,
     modalAction: CONSULTATION_REQUESTED,
     modalMessagePrompt: 'What can we help you with?',
-    modalHeading: 'Our Local Senior Living Experts can help you with your search.',
+    modalHeading: 'Our Seniorly Local Advisors can help you with your search.',
   };
 
   componentDidMount() {
@@ -103,12 +103,12 @@ export default class CarePageAdTileContainer extends Component {
   render() {
     const { type, locationLabel } = this.props;
     const { isModalOpen, modalHeading, modalMessagePrompt, modalAction, modalMessagePlaceholder } = this.state;
-    const isHCA = hcaAdEnabled({ cityState:locationLabel });
+    const isHCA = hcaAdEnabled({ cityState: locationLabel });
     const hcaAdTitle = `Home Care Assistance in ${locationLabel}`;
     return (
       <>
         {type === 'askAgent' &&
-          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick}/>
+          <ExperimentalAdTileContainer {...this.props} handleClick={this.handleAskExpertQuestionClick} />
         }
         {type === 'getOffer' &&
           <AdTile
@@ -134,7 +134,7 @@ export default class CarePageAdTileContainer extends Component {
             image={assetPath('images/homecare-2.png')}
             buttonProps={{ onClick: this.handleUseHomecareClick }}
             showSecondary
-            linkProps={{href:"tel:+18558668719"}}
+            linkProps={{ href: 'tel:+18558668719' }}
             linkText="(855) 866-8719"
             {...this.props}
           >

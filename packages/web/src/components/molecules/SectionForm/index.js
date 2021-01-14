@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, node, func, bool } from 'prop-types';
 
-import { size } from 'sly/common/components/themes';
+import { getKey, size } from 'sly/common/components/themes';
 import { Block, Hr, Button } from 'sly/common/components/atoms';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
@@ -12,9 +12,9 @@ const BottomWrapper = styled.div`
   text-align: right;
 `;
 
-const BottomButton = styled(Button)`
-  margin-right: ${size('spacing.xLarge')};
-`;
+// const BottomButton = styled(Button)`
+//   margin-right: ${size('spacing.xLarge')};
+// `;
 
 const SectionForm = ({
   heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,
@@ -27,7 +27,7 @@ const SectionForm = ({
       {buttonText &&
         <BottomWrapper>
           <Hr />
-          <BottomButton type="submit" disabled={invalid || pristine || submitting}>{buttonText}</BottomButton>
+          <Button css={{ marginRight: getKey('sizes.spacing.') }} type="submit" disabled={invalid || pristine || submitting}>{buttonText}</Button>
         </BottomWrapper>
       }
     </HeadingBoxSection>

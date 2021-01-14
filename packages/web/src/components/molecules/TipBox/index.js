@@ -1,15 +1,15 @@
 import React from 'react';
 import { node, string } from 'prop-types';
 
-import { Box, Block } from 'sly/web/components/atoms';
+import { Block } from 'sly/web/components/atoms';
 
 const TipBox = ({
   heading, children, ...props
 }) => (
-  <Box {...props}>
+  <Block {...props}>
     <Block pad="large" weight="bold" size="tiny" palette="primary" variation="base">{heading}</Block>
     {children}
-  </Box>
+  </Block>
 );
 
 TipBox.propTypes = {
@@ -19,7 +19,7 @@ TipBox.propTypes = {
 
 TipBox.defaultProps = {
   palette: 'grey',
-  background: 'slate.lighter-90',
+  background: 'white',
 };
 
 export default TipBox;

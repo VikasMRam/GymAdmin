@@ -103,14 +103,14 @@ const CommunityAbout = ({
     {!isActiveAdult &&
       <StyledArticle>
         <StyledHeading level="subtitle" size="body">
-          What is a Local Senior Living Expert in {city}, {state}?
+          What is a Seniorly Local Advisor in {city}, {state}?
         </StyledHeading>
         <Paragraph>
           A senior living expert is a professional who knows
           the {city}, {state} communities and specializes in helping you find the right fit for your
           unique budget, location, care, social and other needs. This is a free service. To learn more,&nbsp;
           <Link href="https://www.seniorly.com/agents?sly_category=summary&sly_action=cta_link&sly_label=agent_link" target="_blank">
-            click here to visit our Seniorly Local Experts page.
+            click here to visit our Seniorly Local Advisors page.
           </Link>
         </Paragraph>
       </StyledArticle>

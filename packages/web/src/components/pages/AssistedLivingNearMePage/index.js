@@ -524,7 +524,7 @@ const NearMePage = ({
         </StyledArticle>
         <StyledArticle>
           <Heading level="title" size="title" >
-            What Is A Local Senior Living Expert?
+            What Is A Seniorly Local Advisor?
           </Heading>
           <WhatIsPartnerAgent toc="assisted living" agents={agents} />
         </StyledArticle>
@@ -904,13 +904,13 @@ const NearMePage = ({
             </Column>
             <Body>
               {SEOContentAL()}
-              {!isFetchingResults &&
+              {!isFetchingResults && communityList && communityList.length > 0 &&
                 <Heading level="title" size="title">
                   {heading}
                 </Heading>
               }
               {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-              {!isFetchingResults && (
+              {!isFetchingResults && communityList && communityList.length > 0 && (
                 <CommunitySearchList
                   communityList={communityList}
                   searchParams={searchParams}

@@ -26,8 +26,7 @@ function ExploreContainer({ filters }) {
 
   const geoGuide = geoGuides ? geoGuides[0] : {};
   const tocLabel = getTocSeoLabel(filters.toc);
-  const guideContent = geoGuide && geoGuide.guideContent;
-
+  const seoLinks = geoGuide && geoGuide.guideContent && geoGuide.guideContent.seoLinks;
   const title = filters.city ? `${titleize(filters.city)}, ${titleize(filters.state)}` : titleize(filters.state);
 
   return (
@@ -42,10 +41,10 @@ function ExploreContainer({ filters }) {
         paddingBottom: getKey('sizes.spacing.xxLarge'),
       }}
     >
-      {guideContent.seoLinks && (
+      {seoLinks && (
         <SeoLinks
           title={`${tocLabel} near ${title}`}
-          links={guideContent.seoLinks}
+          links={seoLinks}
         />
       )}
       <SearchExploreTypes title={`Explore other types of communities in  ${title}`} city={filters.city} state={filters.state}/>

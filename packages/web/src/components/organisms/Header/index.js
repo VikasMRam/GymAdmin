@@ -6,8 +6,9 @@ import { ifProp } from 'styled-tools';
 import { size, palette, key } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { startingWith, upTo } from 'sly/common/components/helpers';
-import { Icon, Button, Logo, Hr, Link, Block } from 'sly/common/components/atoms';
+import { Icon, Button, Hr, Link, Block } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import Logo from 'sly/common/components/atoms/Logo';
 
 const Wrapper = styled(Block)`
   // To remove blue line caused by tabIndex
@@ -29,10 +30,9 @@ const HeaderBar = styled(Block)`
   `)}
 `;
 
-const SeniorlyLogoWrapper = styled(Block)`
-  display: none;
-
-  ${startingWith('laptop', 'display: block;')}
+const SeniorlyLogoWrapper = styled(Block)`  
+display: ${ifProp({ template: 'wizard' }, 'block', 'none')} ;
+${startingWith('laptop', 'display: block;')}
 `;
 
 const HeaderMenu = styled.div`
@@ -150,7 +150,7 @@ const mapItem = (item, i, arr, menuOpen) => item.isButton ? (
 
 const Header = React.memo(({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
-  onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen,
+  onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen, template,
 }) => {
   const headerItemComponents = headerItems.map((...args) => mapItem(...args, menuOpen));
   menuItems = menuItems.sort((a, b) => a.section - b.section);
@@ -213,14 +213,26 @@ const Header = React.memo(({
         borderBottom="regular"
         borderPalette="slate"
         borderVariation="lighter-90"
+        horizontalAlign={template === 'wizard' ? 'center' : 'inherit'}
+        justifyContent={template === 'wizard' ? 'center' : 'inherit'}
         padding={[0, 'large']}
       >
-        <SeniorlyLogoWrapper onClick={onLogoClick} marginRight="xxLarge">
-          <Link to="/" display="block" lineHeight="0" >
-            <Logo />
-          </Link>
-        </SeniorlyLogoWrapper>
-        <OnlyInSmallScreen display="flex" verticalAlign="center" marginRight="large" palette="primary">
+        {template !== 'wizard' &&
+          <SeniorlyLogoWrapper onClick={onLogoClick} startingWithLaptop={{ marginRight: size('spacing.xxLarge') }}>
+            <Link to="/" display="block" lineHeight="0" >
+              <Logo />
+            </Link>
+          </SeniorlyLogoWrapper>
+        }
+
+        {template === 'wizard' &&
+        <Link to="/" display="block" lineHeight="0" >
+          <Logo />
+        </Link>
+        }
+        {template !== 'wizard'
+        &&
+        <OnlyInSmallScreen display="flex" alignItems="center" marginRight="large" palette="primary">
           {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
             <Icon
               onClick={onMenuIconClick}
@@ -234,6 +246,7 @@ const Header = React.memo(({
           )}
           <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInSmallScreen>
+        }
         {hasSearchBox && (
           <StyledSearchBoxContainer
             onCurrentLocation={onCurrentLocation}
@@ -246,9 +259,11 @@ const Header = React.memo(({
             placeholder="Search by city, zip, community name"
           />
         )}
+        {template !== 'wizard'
+        &&
         <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
           {headerItemComponents}
-        </HeaderItems>
+        </HeaderItems>}
       </HeaderBar>
       {menuOpen &&
         <HeaderMenu ref={headerMenuRef} onClick={onMenuItemClick}>
@@ -299,12 +314,14 @@ Header.propTypes = {
   className: string,
   hasSearchBox: bool,
   hideMenuItemsInSmallScreen: bool,
+  template: oneOf(['home', 'dashboard', 'wizard']),
 };
 
 Header.defaultProps = {
   menuItems: [],
   smallScreenMenuItems: [],
   hideMenuItemsInSmallScreen: true,
+  template: 'home',
 };
 
 export default Header;

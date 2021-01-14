@@ -18,7 +18,7 @@ const Hr = styled(({
 
 Hr.defaultProps = {
   palette: 'slate',
-  variation: 'stroke',
+  variation: 'lighter-90',
   size: 'xLarge',
   border: 'regular',
 };

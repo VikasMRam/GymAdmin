@@ -26,19 +26,6 @@ describe('LoginForm|Web', () => {
     expect(wrapper.find('Block[direction="row"]')).toHaveLength(1);
   });
 
-  it('renders correct heading for CUSTOMER_ROLE', () => {
-    const wrapper = wrap();
-
-    expect(wrapper.find('Heading').contains('Log in')).toBeTruthy();
-  });
-
-  it('renders correct heading for AGENT_ND_ROLE', () => {
-    const wrapper = wrap({
-      role: AGENT_ND_ROLE,
-    });
-
-    expect(wrapper.find('Heading').contains('Seniorly Partner Agent Log in')).toBeTruthy();
-  });
 
   it('renders error', () => {
     const error = 'error';

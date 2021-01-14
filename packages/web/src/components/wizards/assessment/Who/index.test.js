@@ -19,7 +19,7 @@ describe('Wizards|assessment - Steps|Who', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('Heading')).toHaveLength(1);
-    expect(wrapper.find('Field').filter({ type: 'select' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(1);
   });
 
@@ -29,7 +29,7 @@ describe('Wizards|assessment - Steps|Who', () => {
     });
 
     expect(wrapper.find('Heading')).toHaveLength(1);
-    expect(wrapper.find('Field').filter({ type: 'select' })).toHaveLength(1);
+    expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(0);
   });
 

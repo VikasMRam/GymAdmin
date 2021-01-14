@@ -2,18 +2,17 @@ import React from 'react';
 import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
+import { Heading } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import IconItem from 'sly/web/components/molecules/IconItem';
 
 const Location = ({
   handleSubmit, invalid, submitting, hasTip,
 }) => (
-  <Wrapper hasSecondColumn={hasTip}>
-    <Box>
-      <Heading pad="xLarge" level="subtitle" weight="medium">Where are you looking for care?</Heading>
+  <PageWrapper hasSecondColumn={hasTip}>
+    <Wrapper>
+      <Heading pad="xLarge" level="subtitle" weight="medium">Where are you looking for senior living options?</Heading>
       <form onSubmit={handleSubmit}>
         <Field
           name="location"
@@ -23,15 +22,15 @@ const Location = ({
         />
         <Footer invalid={invalid} submitting={submitting} />
       </form>
-    </Box>
+    </Wrapper>
     {hasTip &&
-      <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base">
-          This will let us narrow down your options to your desired location and help us get you the correct pricing and availability.
-        </IconItem>
+    <TipBoxWrapper>
+      <TipBox heading="DID YOU KNOW?" height="fit-content">
+        Our platform has a network of over 40,000 of the best senior living communities and hundreds of agents across the US.
       </TipBox>
+    </TipBoxWrapper>
     }
-  </Wrapper>
+  </PageWrapper>
 );
 
 Location.propTypes = {

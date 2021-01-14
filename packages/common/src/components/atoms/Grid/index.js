@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { oneOf, node, arrayOf, oneOfType, string, number } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -33,7 +33,7 @@ const StyledBlock = styled(Block)`
   `)}
 `;
 
-const Grid = props => <StyledBlock {...props} />;
+const Grid = forwardRef((props, ref) => <StyledBlock ref={ref} {...props} />);
 
 Grid.propTypes = {
   flow: oneOf(['row', 'column']).isRequired,

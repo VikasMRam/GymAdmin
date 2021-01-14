@@ -6,7 +6,9 @@ import { ifProp } from 'styled-tools';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { isReactNative } from 'sly/common/constants/utils';
 import { upTo } from 'sly/common/components/helpers';
-import { Icon, Button, Block } from 'sly/common/components/atoms';
+import Button from 'sly/common/components/atoms/Button';
+import Icon from 'sly/common/components/atoms/Icon';
+import Block from 'sly/common/components/atoms/Block';
 
 const StyledIcon = styled(Icon)`
   ${ifProp('hideTextInMobile', css`

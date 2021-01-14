@@ -8,4 +8,5 @@ export Feeling from './Feeling';
 export ResidentName from './ResidentName';
 export Timing from './Timing';
 export Who from './Who';
+export Conversion from './Conversion';
 export Location from './Location';

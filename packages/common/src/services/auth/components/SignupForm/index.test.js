@@ -24,15 +24,14 @@ describe('SignupForm|Web', () => {
 
   it('renders without provider signup', () => {
     const wrapper = wrap({ hasProviderSignup: false });
-    const blocks = wrapper.find('Grid').find('Block');
-
-    expect(blocks).toHaveLength(1);
+    // const blocks = wrapper.find('Grid').find('Block');
+    expect(wrapper.find('Field')).toHaveLength(5);
   });
 
   it('render error when error is passed', () => {
     const error = 'Blah';
     const wrapper = wrap({ error });
-    const errors = wrapper.find('Block').at(1);
+    const errors = wrapper.find('Block').at(2);
 
     expect(wrapper.find('Button')).toHaveLength(1);
     expect(errors.contains(error)).toBeTruthy();

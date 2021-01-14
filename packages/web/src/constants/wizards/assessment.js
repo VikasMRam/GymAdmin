@@ -1,12 +1,17 @@
 export const WHO_PERSON_OPTIONS = [
-  // v2 OPTIONS BELOW:
-  { label: 'Parents', value: 'parents' },
+  // v2 OPTIONS BELOW
+  { label: 'Parent', value: 'parents' },
+  { label: 'Spouse or partner', value: 'spouse' },
   { label: 'Myself', value: 'myself' },
-  { label: 'Spouse', value: 'spouse' },
-  { label: 'Myself and spouse', value: 'myself-and-spouse' },
-  { label: 'Other Relative(s)', value: 'other-relatives' },
-  { label: 'Friend(s)', value: 'friend' },
-  { label: 'Other', value: 'other' },
+  { label: 'Someone else', value: 'other' },
+  // v11 OPTIONS BELOW:
+  // { label: 'Parents', value: 'parents' },
+  // { label: 'Myself', value: 'myself' },
+  // { label: 'Spouse', value: 'spouse' },
+  // { label: 'Myself and spouse', value: 'myself-and-spouse' },
+  // { label: 'Other Relative(s)', value: 'other-relatives' },
+  // { label: 'Friend(s)', value: 'friend' },
+  // { label: 'Other', value: 'other' },
   // v1 OPTIONS BELOW:
   // { label: 'Parent(s)', value: 'parents' },
   // { label: 'Mom', value: 'mom' },
@@ -49,14 +54,30 @@ export const LOCAL_EXPERT_OPTIONS = [
 ];
 
 export const SERVICES_OPTIONS = [
-  { label: 'Power of Attorney, wills, or other legal help', value: 'legal' },
+  // v2 SERVICES
   { label: 'Moving, packing, and/or estate sales', value: 'moving' },
   { label: 'Private caregiving services at home', value: 'private-caregiving' },
-  { label: 'Making an existing home more accessible', value: 'home-accessibility' },
   { label: 'Selling an existing home', value: 'home-sale' },
-  { label: 'Reverse mortgages on an existing home', value: 'reverse-mortgage' },
+  { label: 'Cell phone or tablet designed for seniors', value: 'celltab-seniors' },
+  { label: 'Subscription for Life Alert monitoring', value: 'subscriptions-lifealert' },
   { label: 'Not interested in any of these services at this time', value: 'none' },
+  // v1_1 SERVICES
+  // { label: 'Power of Attorney, wills, or other legal help', value: 'legal' },
+  // { label: 'Moving, packing, and/or estate sales', value: 'moving' },
+  // { label: 'Private caregiving services at home', value: 'private-caregiving' },
+  // { label: 'Making an existing home more accessible', value: 'home-accessibility' },
+  // { label: 'Selling an existing home', value: 'home-sale' },
+  // { label: 'Reverse mortgages on an existing home', value: 'reverse-mortgage' },
+  // { label: 'Not interested in any of these services at this time', value: 'none' },
 ];
+export const COEXISTING_SERVICES_OPTIONS = {
+  moving: ['moving', 'private-caregiving', 'home-sale', 'celltab-seniors', 'subscriptions-lifealert'],
+  'private-caregiving': ['moving', 'private-caregiving', 'home-sale', 'celltab-seniors', 'subscriptions-lifealert'],
+  'home-sale': ['moving', 'private-caregiving', 'home-sale', 'celltab-seniors', 'subscriptions-lifealert'],
+  'celltab-seniors': ['moving', 'private-caregiving', 'home-sale', 'celltab-seniors', 'subscriptions-lifealert'],
+  'subscriptions-lifealert': ['moving', 'private-caregiving', 'home-sale', 'celltab-seniors', 'subscriptions-lifealert'],
+  none: ['none'],
+};
 
 export const PRODUCTS_OPTIONS = [
   { label: 'Furniture packages for your new apartment', value: 'furniture' },
@@ -75,28 +96,30 @@ export const FEELING_OPTIONS = [
 ];
 
 export const ADL_OPTIONS = [
-  { label: 'Memory care', value: 'memory-care' },
-  { label: 'Bathing', value: 'bathing' },
-  { label: 'Dressing', value: 'dressing' },
-  { label: 'Transferring', value: 'transferring' },
-  { label: 'Toileting', value: 'toileting' },
-  { label: 'Eating', value: 'eating' },
+  // version 2 options
+  { label: 'Memory care (wandering risk, increased confusion, etc.)', value: 'memory-care' },
+  { label: 'Activities of daily living (bathing, dressing, eating, etc.)', value: 'adl-general' },
   { label: 'Medication management', value: 'medication-management' },
-  { label: 'Other', value: 'other' },
-  { label: 'None', value: 'none' },
   { label: "I'm not sure", value: 'im-not-sure' },
+  // version 1 options
+  // { label: 'Memory care', value: 'memory-care' },
+  // { label: 'Bathing', value: 'bathing' },
+  // { label: 'Dressing', value: 'dressing' },
+  // { label: 'Transferring', value: 'transferring' },
+  // { label: 'Toileting', value: 'toileting' },
+  // { label: 'Eating', value: 'eating' },
+  // { label: 'Medication management', value: 'medication-management' },
+  // { label: 'Other', value: 'other' },
+  // { label: 'None', value: 'none' },
+  // { label: "I'm not sure", value: 'im-not-sure' },
 ];
 
 export const COEXISTING_ADL_OPTIONS = {
-  'memory-care': ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
-  bathing: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
-  dressing: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
-  transferring: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
-  toileting: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
-  eating: ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
-  'medication-management': ['memory-care', 'bathing', 'dressing', 'transferring', 'toileting', 'eating', 'medication-management', 'other'],
+  'memory-care': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
+  'adl-general': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
+  'medication-management': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
   none: ['none'],
-  'im-not-sure': ['im-not-sure'],
+  'im-not-sure': ['memory-care', 'adl-general', 'medication-management', 'im-not-sure'],
 };
 
 export const DEMENTIA_FORGETFUL_OPTIONS = {
@@ -166,7 +189,7 @@ export const DEMENTIA_FORGETFUL_DEFAULT_OPTIONS = {
 };
 
 export const TIMING_OPTIONS = [
-  // v2 options below
+  // v1 options below
   // { label: 'Just starting to research communities', value: 'starting' },
   // { label: 'Working with a senior living advisor', value: 'working' },
   // { label: 'Inquired directly to communities', value: 'inquired' },
@@ -174,8 +197,8 @@ export const TIMING_OPTIONS = [
   // { label: 'Already chosen a community and am just comparing', value: 'already-chosen' },
   // v2 options below
   { label: 'Need to find a community as soon as possible', value: 'asap' },
-  { label: 'Just starting to research communities', value: 'researching' },
-  { label: 'I\'m in the process of planning for the future', value: 'planning' },
+  { label: 'Exploring options for the near future', value: 'researching' },
+  { label: 'No rush, I’m planning ahead for the next few years', value: 'planning' },
 ];
 
 export const WORKING_WITH_OPTIONS = [
@@ -223,7 +246,13 @@ export const BUDGET_OPTIONS = [
   { label: "I'm not sure", value: 'not-sure' },
 ];
 
+
 export const COEXISTING_BUDGET_OPTIONS = {
+  veterans: ['veterans', 'long-term-care-insurance', 'life-insurance', 'equity-home', 'pension-plan'],
+  'long-term-care-insurance': ['veterans', 'long-term-care-insurance', 'life-insurance', 'equity-home', 'pension-plan'],
+  'life-insurance': ['veterans', 'long-term-care-insurance', 'life-insurance', 'equity-home', 'pension-plan'],
+  'equity-home': ['veterans', 'long-term-care-insurance', 'life-insurance', 'equity-home', 'pension-plan'],
+  'pension-plan': ['veterans', 'long-term-care-insurance', 'life-insurance', 'equity-home', 'pension-plan'],
   'dont-have': ['dont-have', 'not-sure'],
 };
 
@@ -243,4 +272,4 @@ export const ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES = 'assesmentWizardCompleted
 export const ASSESSMENT_WIZARD_BANNER_DISMISSED = 'assesmentWizardBannerDismissed';
 
 export const ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS =
-  ['Intro', 'ResidentName', 'Auth', 'LocalExpert', 'Services', 'Products', 'End'];
+  ['Intro', 'ResidentName', 'Auth', 'LocalExpert', 'Products', 'End'];

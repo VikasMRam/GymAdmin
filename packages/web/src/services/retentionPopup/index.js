@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { func, object, string, bool } from 'prop-types';
+import loadable from '@loadable/component';
 
 import { withRouter } from 'react-router';
 import { host, isServer, isBrowser } from 'sly/web/config';
@@ -17,9 +18,10 @@ import {
   RETENTION_POPUP_FOCUS_TIMEOUT,
 } from 'sly/web/constants/retentionPopup';
 import withModal from 'sly/web/controllers/withModal';
-import EbookFormContainer from 'sly/web/containers/EbookFormContainer';
-import ExitIntentQuestionFormContainer from 'sly/web/containers/ExitIntentQuestionFormContainer';
-import SimilarCommunitiesPopupContainer from 'sly/web/containers/SimilarCommunitiesPopupContainer';
+
+const EbookFormContainer = loadable(() => import(/* webpackChunkName: "chunkEbookFormContainer" */'sly/web/containers/EbookFormContainer'));
+const ExitIntentQuestionFormContainer = loadable(() => import(/* webpackChunkName: "chunkExitIntentQuestionFormContainer" */'sly/web/containers/ExitIntentQuestionFormContainer'));
+const SimilarCommunitiesPopupContainer = loadable(() => import(/* webpackChunkName: "chunkSimilarCommunitiesPopupContainer" */'sly/web/containers/SimilarCommunitiesPopupContainer'));
 
 @withUser
 @withModal

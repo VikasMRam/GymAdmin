@@ -2,7 +2,8 @@ import useResizeObserver from 'use-resize-observer';
 import { useState, useRef, useMemo } from 'react';
 import debounce from 'lodash/debounce';
 
-function getDimensionObject(rect) {
+function getDimensionObject(el) {
+  const rect = el.getBoundingClientRect();
   const x = 'x' in rect ? rect.x : rect.left;
   const y = 'y' in rect ? rect.y : rect.top;
 
@@ -15,6 +16,8 @@ function getDimensionObject(rect) {
     y,
     right: rect.right,
     bottom: rect.bottom,
+    clientWidth: el.clientWidth,
+    clientHeight: el.clientHeight,
   };
 }
 
@@ -25,8 +28,7 @@ function useDimensions() {
 
   const onResize = useMemo(() => debounce(() => {
     if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setDimensions(getDimensionObject(rect));
+      setDimensions(getDimensionObject(ref.current));
     }
   }, 150), [ref]);
 

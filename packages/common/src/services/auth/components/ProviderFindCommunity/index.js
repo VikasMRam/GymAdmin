@@ -2,7 +2,7 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
+import { Button, Block, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import Field from 'sly/common/components/molecules/Field';
 
@@ -10,7 +10,6 @@ const ProviderFindCommunity = ({
   handleSubmit, submitting, invalid, error, onNotFound, onSelectChange, community,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading pad="xLarge" size="subtitle">What is the name of the community you want to manage?</Heading>
     <Field
       name="community"
       label="Community Name"
