@@ -26,6 +26,7 @@ export const FAMILY_STATUS_ARCHIVED = 'Archived';
 export const FAMILY_STATUS_LONG_TERM = 'Long Term';
 export const FAMILY_STATUS_DELETED = 'Deleted';
 export const FAMILY_STATUS_TEST = 'Test';
+export const FAMILY_STATUS_DUPLICATE = 'Duplicate';
 
 export const ESTIMATED_MOVE_IN = 'estimated-move-in';
 export const WAITLISTED = 'waitlisted';
