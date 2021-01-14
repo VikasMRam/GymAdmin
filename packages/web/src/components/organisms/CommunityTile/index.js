@@ -134,10 +134,10 @@ const CommunityTile = ({
         }
         <Block
           overflow="hidden"
-          padding={layout === 'row' ? ['0', spacing, spacing, spacing] : spacing}
+          padding={layout === 'row' ? ['regular', spacing, spacing, spacing] : ['large' , spacing]}
           upToTablet={type === 'map' ? null : {
             padding: size('spacing', spacing),
-            paddingTop: 0,
+            paddingTop: size('spacing', 'regular'),
           }}
         >
           <CommunityInfo

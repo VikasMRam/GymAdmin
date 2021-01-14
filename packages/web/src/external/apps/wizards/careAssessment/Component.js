@@ -5,8 +5,9 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { Button, Hr, Heading, Image, Logo } from 'sly/web/components/atoms';
+import { Button, Hr, Heading, Image } from 'sly/web/components/atoms';
 import { getStepComponent } from 'sly/web/external/apps/wizards/careAssessment/steps';
+import Logo from 'sly/common/components/atoms/Logo';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
