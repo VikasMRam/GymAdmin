@@ -8,7 +8,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { getSearchParams } from 'sly/web/components/search/helpers';
 import { getQueryParamsSetter } from 'sly/web/services/helpers/queryParams';
 import ModalController from 'sly/web/controllers/ModalController';
-import HomePage from 'sly/web/components/pages/HomePage';
+import HomePage from 'sly/web/components/homepage/HomePage';
 
 @withRedirectTo
 
@@ -44,7 +44,7 @@ class HomePageContainer extends Component {
     const { redirectTo } = this.props;
 
     if (addresses.length) {
-      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`;  //?geo=${latitude},${longitude},10`;
+      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`;  // ?geo=${latitude},${longitude},10`;
 
       redirectTo(path);
     }

@@ -32,19 +32,6 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const MSCColumnWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  ${gridColumns(1, size('spacing.xLarge'))};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    ${gridColumns(2, size('spacing.xLarge'))};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${gridColumns(3, size('spacing.xLarge'))};
-  }
-`;
-
 const PaginationText = pad('div');
 const PaddedPagination = pad(Pagination, 'small');
 
@@ -165,7 +152,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
               layout="column"
               noGallery
               lazyLoadImage={index !== 0}
-              index={index+1}
+              index={index + 1}
               event={{
                 category: 'SearchPage',
                 action: 'communityClick',
@@ -180,6 +167,7 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
                 completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
                 agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
                 startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                mode={{ cta: 'generalOptions', entry: 'searchList' }}
               />
             </>
           }
@@ -189,18 +177,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
           }
         </Fragment>
       ))}
-      {communityList.length < 1 &&
-        <>
-          <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
-          <MSCColumnWrapper>
-            {mostSearchedCitiesComponents}
-          </MSCColumnWrapper>
-          <StyledHeading size="subtitle">Learn more about senior care</StyledHeading>
-          <MSCColumnWrapper>
-            {usefulInformationTilesComponents}
-          </MSCColumnWrapper>
-        </>
-      }
       <PaginationText>
         {`Showing ${start} to ${end} of ${count}`}
       </PaginationText>

@@ -3,12 +3,13 @@
 const path = require('path');
 const fs = require('fs');
 
+const webpack = require('webpack');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const nodeExternals = require('webpack-node-externals');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
-const webpack = require('webpack');
+const BundleAnalyzerModule = require('webpack-bundle-analyzer');
 const {
   match,
   babel,
@@ -22,6 +23,7 @@ const {
   sourceMaps,
   devServer,
   when,
+  optimization,
 } = require('webpack-blocks');
 
 const {
@@ -48,6 +50,8 @@ const {
   ENABLE_EXPERIMENT_DEBUGGER,
   DISABLE_EXPERIMENTS,
 } = require('./env');
+
+const { BundleAnalyzerPlugin } = BundleAnalyzerModule;
 
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 
@@ -219,6 +223,7 @@ const externalWidget = group([
   ]),
 ]);
 
+const profiling = process.env.PROFILING;
 const client = (target, entries) => {
   const isWeb = target === 'public';
   return createConfig([
@@ -238,23 +243,17 @@ const client = (target, entries) => {
 
     entryPoint(entries),
 
-    // when(isWeb, [
-    //   optimization({
-    //     // concatenateModules: false,
-    //     splitChunks: {
-    //       chunks: 'all',
-    //     },
-    //   }),
-    // ]),
-
-    /*
-    addPlugins([
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled',
-        generateStatsFile: 'true',
+    when(profiling && isWeb, [
+      addPlugins([
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'disabled',
+          generateStatsFile: 'true',
+        }),
+      ]),
+      optimization({
+        concatenateModules: false,
       }),
     ]),
-    */
 
     // eslint-disable-next-line no-prototype-builtins
     when(entries.hasOwnProperty('external'), [externalWidget]),

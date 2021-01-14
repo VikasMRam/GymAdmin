@@ -10,7 +10,6 @@ import {
   PAGE_SIZE,
   STATE, TOC,
 } from 'sly/web/components/search/Filters';
-import { DEFAULT_ZOOM } from 'sly/web/components/search/maps';
 
 export const getRadiusFromMapBounds = (bounds) => {
   const center = bounds.getCenter();
@@ -371,36 +370,3 @@ export const getPagination = (requestMeta, location, currentFilters) => {
     basePath,
   };
 };
-
-export const MAP = 'MAP';
-export const COMPONENT_STATE = 'STATE';
-export const NONE = 'NONE';
-
-export const coordsFromGeoFilter = (geo) => {
-  if (!geo) {
-    return {
-      zoom: DEFAULT_ZOOM,
-      controlled: NONE,
-    };
-  }
-
-  const coords = geo.split(',').map(Number);
-  if (coords.length === 4) {
-    const [nwlat, nwlng, selat, selng] = coords;
-    return {
-      lat: (nwlat + selat) / 2,
-      lng: (nwlng + selng) / 2,
-      zoom: DEFAULT_ZOOM,
-      controlled: MAP,
-    };
-  }
-
-  const [lat, lng] = coords;
-  return {
-    lat,
-    lng,
-    zoom: DEFAULT_ZOOM,
-    controlled: NONE,
-  };
-};
-

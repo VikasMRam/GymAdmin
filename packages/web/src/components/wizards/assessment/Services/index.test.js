@@ -10,7 +10,7 @@ const defaultProps = {
   whoNeedsHelp,
 };
 const wrap = (props = {}) => shallow(<Services {...defaultProps} {...props} />);
-
+const expHeading = 'Would your parent be interested in any of these other services?';
 describe('Wizards|assessment - Steps|Services', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
@@ -20,7 +20,7 @@ describe('Wizards|assessment - Steps|Services', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Heading').contains('Please tell us if you are interested in these other services:')).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(1);
   });
@@ -30,7 +30,7 @@ describe('Wizards|assessment - Steps|Services', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('Heading').contains('Please tell us if you are interested in these other services:')).toBeTruthy();
+    expect(wrapper.find('Heading').contains(expHeading)).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(0);
   });

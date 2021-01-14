@@ -71,7 +71,7 @@ const CommunityPricingTable = ({
   } else if (hasSNF) {
     locTrack = 'snf-pricing-table';
   } else if (isActiveAdult) {
-    locTrack = 'active-adult'
+    locTrack = 'active-adult';
   }
 
   return (
@@ -146,7 +146,7 @@ const CommunityPricingTable = ({
         )}
         {!hasCCRC && !isActiveAdult && !hasSNF && (pricesList.length > 0 || estimatedPriceList.length > 0) &&
           <Paragraph>
-            *Monthly price in assisted living communities can vary depending on additional community fees and care services. Click the button below to connect with your Local Senior Living Expert for more accurate pricing.
+            *Monthly price in assisted living communities can vary depending on additional community fees and care services. Click the button below to connect with your Seniorly Local Advisor for more accurate pricing.
           </Paragraph>
         }
         <StyledGetPricingButton
@@ -154,7 +154,7 @@ const CommunityPricingTable = ({
           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
           locTrack={locTrack}
           community={community}
-          ctaText={'Get Pricing and Availability'}
+          ctaText="Get Pricing and Availability"
         />
       </Block>
     </>

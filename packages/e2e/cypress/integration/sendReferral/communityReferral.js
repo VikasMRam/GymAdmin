@@ -39,8 +39,8 @@ function addfamilyContact() {
   waitForHydration(cy.get('form input[label*=\'Contact name\']')).type(name);
   waitForHydration(cy.get('form input[id*=email]').last()).type(email);
   waitForHydration(cy.get('form input[id*=phone]')).type(phone);
-  waitForHydration(cy.get('form input[placeholder*="Search by city, state, zip"]')).type('San Francisco{enter}');
-  cy.get('div[class*=SearchBox__Suggestion]').contains('San Francisco')
+  waitForHydration(cy.get('form input[placeholder*="Search by city, state, zip"]')).type(community.city);
+  cy.get('div[class*=SearchBox__Suggestion]').contains(community.city)
     .click();
   waitForHydration(cy.get('form select[id*=source]')).select('Voicemail');
 }
@@ -60,9 +60,6 @@ describe('Sending Referral to Community', () => {
       cy.clearCookie('sly_uuid');
       cy.clearCookie('sly-session');
       cy.reload();
-      // cy.getCookie('sly_sid').should('not.exist');
-      // cy.getCookie('sly_uuid').should('not.exist');
-      // cy.getCookie('sly-session').should('not.exist');
       Cypress.Commands.add('login', () => {
         cy.get('button').then(($a) => {
           if ($a.text().includes('Log In')) {

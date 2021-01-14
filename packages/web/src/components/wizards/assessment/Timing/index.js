@@ -3,8 +3,8 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { TIMING_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
+import { Heading } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
@@ -12,9 +12,10 @@ const Timing = ({
   handleSubmit, onBackClick, onSkipClick, invalid, submitting, hasTip,
 }) => (
   <div>
-    <Wrapper hasSecondColumn={hasTip}>
-      <Box>
-        <Heading level="subtitle" weight="medium" padding="large">Where are you in your senior living search?</Heading>
+    <PageWrapper hasSecondColumn={hasTip}>
+      <Wrapper>
+
+        <Heading level="subtitle" weight="medium" pad="xLarge">What’s your timeframe?</Heading>
         <form onSubmit={handleSubmit}>
           <Field
             singleChoice
@@ -26,13 +27,16 @@ const Timing = ({
           />
           <Footer onBackClick={onBackClick} onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
         </form>
-      </Box>
+
+      </Wrapper>
       {hasTip &&
-        <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-          This will help us understand and support you wherever you are in your search.
-        </TipBox>
+        <TipBoxWrapper>
+          <TipBox heading="DID YOU KNOW?" height="fit-content">
+            Whether you need to find options immediately or are planning ahead - we got you.
+          </TipBox>
+        </TipBoxWrapper>
       }
-    </Wrapper>
+    </PageWrapper>
   </div>
 );
 

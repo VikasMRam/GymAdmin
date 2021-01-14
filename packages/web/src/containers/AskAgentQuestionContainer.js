@@ -84,10 +84,6 @@ export default class AskAgentQuestionContainer extends Component {
     };
 
     if (type === 'how-it-works-banner-notification' || type === 'side-column-get-help-now') {
-      // const postSubmit = () => {
-      //   notifyInfo('Question sent successfully');
-      //   toggleAskAgentQuestionModal();
-      // };
       let initialValues = {};
       if (type === 'how-it-works-banner-notification') {
         initialValues = {

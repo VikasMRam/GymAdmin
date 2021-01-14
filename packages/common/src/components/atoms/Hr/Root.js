@@ -14,6 +14,7 @@ import {
   withClamping,
   withCursor,
   withWidth,
+  withMedia,
 } from 'sly/common/components/helpers';
 
 const Hr = styled.hr`
@@ -27,6 +28,7 @@ const Hr = styled.hr`
   ${withDisplay}
   ${withCursor}
   ${withText}
+  ${withMedia}
 
   border-bottom: 0;
   border-left: 0;

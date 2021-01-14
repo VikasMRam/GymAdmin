@@ -41,7 +41,7 @@ const getDefaultHeaderItems = (layout, isInternationalPage) => {
     }];
   }
 
-  if (layout !== 'wizards') {
+  if (layout !== 'wizard') {
     items = [
       { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
       { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
@@ -184,7 +184,7 @@ export default class HeaderContainer extends PureComponent {
     const { redirectTo } = this.props;
 
     if (addresses.length) {
-      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; //?geo=${latitude},${longitude},10`;
+      const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; // ?geo=${latitude},${longitude},10`;
 
       redirectTo(path);
     }
@@ -292,12 +292,13 @@ export default class HeaderContainer extends PureComponent {
                     onHeaderBlur={this.toggleDropdown}
                     onLogoClick={this.onLogoClick}
                     headerItems={headerItems}
-                    hideMenuItemsInSmallScreen={layout !== 'wizards'}
+                    hideMenuItemsInSmallScreen={layout !== 'wizard'}
                     menuItems={menuItems}
                     smallScreenMenuItems={smallScreenMenuItems}
                     className={className}
                     onCurrentLocation={this.handleCurrentLocation}
-                    hasSearchBox={layout !== 'wizards'}
+                    hasSearchBox={layout !== 'wizard'}
+                    template={layout}
                   />
                   <AuthContainer />
                   <Notifications messages={messages} dismiss={dismiss} />

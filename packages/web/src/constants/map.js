@@ -122,4 +122,13 @@ export const STYLES = [
       },
     ],
   },
+  {
+    featureType: 'water',
+    elementType: 'labels.text',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
 ];

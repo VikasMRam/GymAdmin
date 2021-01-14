@@ -20,7 +20,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Heading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Does your parent qualify for Medicaid?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(1);
   });
@@ -30,7 +30,7 @@ describe('Wizards|assessment - Steps|Medicaid', () => {
       hasTip: false,
     });
 
-    expect(wrapper.find('Heading').contains('Do your parents qualify for Medicaid?')).toBeTruthy();
+    expect(wrapper.find('Heading').contains('Does your parent qualify for Medicaid?')).toBeTruthy();
     expect(wrapper.find('Field').filter({ type: 'boxChoice' })).toHaveLength(1);
     expect(wrapper.find('TipBox')).toHaveLength(0);
   });

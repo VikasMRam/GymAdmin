@@ -48,7 +48,7 @@ describe('Ask Question Community', () => {
     const questionText = `my comments ${randHash()}`;
     let questionId;
 
-    // portal('h3').contains(`Ask your Local Senior Living Expert about services provided at ${community.name}`).should('exist');
+    // portal('h3').contains(`Ask your Seniorly Local Advisor about services provided at ${community.name}`).should('exist');
     portal('h3').contains(`Ask our experts about ${community.name}`).should('exist');
     portal('textarea[name="question"]').type(questionText);
     portal('input[name="name"]').type('Fonz');

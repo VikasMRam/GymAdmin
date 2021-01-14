@@ -3,42 +3,37 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
 import { WHO_PERSON_OPTIONS } from 'sly/web/constants/wizards/assessment';
-import { Wrapper, Footer } from 'sly/web/components/wizards/assessment/Template';
-import { Heading, Box } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
+import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/components/wizards/assessment/Template';
+import { Heading } from 'sly/web/components/atoms';
+// import IconItem from 'sly/web/components/molecules/IconItem';
 import TipBox from 'sly/web/components/molecules/TipBox';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const Who = ({
   handleSubmit, invalid, submitting, hasTip, onSkipClick, onBackClick,
 }) => (
-  <Wrapper hasSecondColumn={hasTip}>
-    <Box>
-      <Heading level="subtitle" weight="medium" pad="xLarge">Who are you looking for?</Heading>
+  <PageWrapper hasSecondColumn={hasTip}>
+    <Wrapper>
+      <Heading level="subtitle" weight="medium" pad="xLarge">Are you looking for yourself or someone else?</Heading>
       <form onSubmit={handleSubmit}>
         <Field
           name="lookingFor"
-          type="select"
+          type="boxChoice"
           component={ReduxField}
           required
-        >
-          <option value="">Select a person</option>
-          {WHO_PERSON_OPTIONS.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}
-        </Field>
+          options={WHO_PERSON_OPTIONS}
+        />
         <Footer invalid={invalid} submitting={submitting} onSkipClick={onSkipClick} onBackClick={onBackClick} />
       </form>
-    </Box>
+    </Wrapper>
     {hasTip &&
-      <TipBox heading="WHY THIS IS IMPORTANT:" height="fit-content">
-        <IconItem icon="favourite-light" iconPalette="slate" iconVariation="base" pad="large">
-          Getting to know you helps us personalize how we assist you.
-        </IconItem>
-        <IconItem icon="lock" iconPalette="slate" iconVariation="base">
-          Any information you share with us is private and secure.
-        </IconItem>
+    <TipBoxWrapper>
+      <TipBox heading="DID YOU KNOW?" height="fit-content">
+        Millions of families trust and use Seniorly every year. We work hard to make sure you find the right senior living and care options.
       </TipBox>
+    </TipBoxWrapper>
     }
-  </Wrapper>
+  </PageWrapper>
 );
 
 Who.propTypes = {

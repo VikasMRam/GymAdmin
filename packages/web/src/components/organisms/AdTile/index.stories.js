@@ -22,7 +22,7 @@ storiesOf('Organisms|AdTile', module)
       buttonProps={{ onClick: action('onButtonClick') }}
       image={assetPath('images/agents.png')}
     >
-      Our Local Senior Living Experts can help you with X
+      Our Seniorly Local Advisors can help you with X
     </AdTile>
   ))
   .add('row layout', () => (
@@ -33,7 +33,7 @@ storiesOf('Organisms|AdTile', module)
       image={assetPath('images/agents.png')}
       layout="row"
     >
-      Our Local Senior Living Experts can help you with X
+      Our Seniorly Local Advisors can help you with X
     </AdTile>
   ))
   .add('with illustration', () => (

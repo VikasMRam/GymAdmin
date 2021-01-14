@@ -1,13 +1,7 @@
 import { tocs } from 'sly/web/components/search/helpers';
 import { tocPaths, urlize } from 'sly/web/services/helpers/url';
-import { zillowIBuyerCities } from 'sly/web/services/helpers/zillow_cities';
 
-export const shouldShowZillowAd = (toc, city) => {
-  // return true;
-  const validTocs = tocs.filter(e =>
-    e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.value);
-  return validTocs.indexOf(toc) > -1 && zillowIBuyerCities.indexOf(city) > -1;
-};
+export const ccrcAdTileStates = ['AZ', 'CT', 'DC', 'DE', 'HI', 'ID', 'IN', 'KS', 'KY', 'LA', 'MN', 'NE', 'NH', 'OH', 'OK', 'RI', 'TX', 'UT', 'WA', 'WI', 'MO', 'NY', 'NC'];
 
 export const shouldShowZillowSearchAd = (toc) => {
   const validTocs = tocs.filter(e =>
@@ -20,39 +14,38 @@ export const  shouldShowZillowProfileAd = (community) => {
   // S1303 : Zillow Ad Tiles on CCRC Do Not Send List
   // https://airtable.com/tblt2MRAZThT31Ee9/viwlPQXuHxbH2unIj/recfsTZBjUSGl0TUe?blocks=hide
   const specialSlugs = ['moosehaven', 'san-francisco-towers-san-francisco', 'sequoias-san-francisco-the',
-    'the-village-at-orchard-ridge-winchester', 'westminister-at-lake-ridge', 'towers-at-laguna-woods-village',
+    'the-village-at-orchard-ridge-winchester', 'westminister-at-lake-ridge',
     'falcons-landing', 'reata-glen', 'the-glen-at-scripps-ranch', 'la-costa-glen-carlsbad', 'penney-retirement-community',
     'smith-village', 'woodland-pond-at-new-paltz', 'lasell-village', 'sequoias-portola-valley-the'];
-  if (!community || !community.propInfo || !community.propInfo.typeCare) {
+  if (!community || !community.care) {
     return false;
   }
-  const { id, propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
-  if (specialSlugs.indexOf(id) > -1) {
-    return true;
+  const { id, care, address: { state } } = community;
+  if ((specialSlugs.indexOf(id) > -1) || (care && care[0] === 'active-adult')) {
+    return true
   }
-  // S1482 : Remove Zillow Ads on Communities where we have contracts
-  if (careList && careList[0] === 'continuing-care-retirement-community') {
+
+  if (care && care[0] === 'continuing-care-retirement-community') {
     // eslint-disable-next-line camelcase
     const { rgsAux: { rgsInfo: { contract_info } } } = community;
     // eslint-disable-next-line camelcase
     if (contract_info && contract_info.hasContract) {
       return false;
     }
+
+    if (ccrcAdTileStates.indexOf(state) > -1) {
+      return true
+    }
   }
-  const { path: tocSegment = '' } = tocPaths(careList);
-  const toc = tocSegment.substr(1);
-  const city = urlize(cityLabel);
-  return shouldShowZillowAd(toc, city);
+  return false
 };
 
 export const shouldShowZillowPostConversionAd = (community) => {
-  if (!community || !community.propInfo || !community.propInfo.typeCare) {
+  if (!community || !community.care) {
     return false;
   }
-  const { propInfo: { typeCare: careList }, address: { city: cityLabel } } = community;
-  const toc = tocPaths(careList);
-  const city = urlize(cityLabel);
-  return shouldShowZillowAd(toc, city);
+  const {care} = community;
+  return (care && (care[0] === 'active-adult' || care[0] === 'continuing-care-retirement-community'));
 };
 
 

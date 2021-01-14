@@ -22,20 +22,18 @@ import {
   maps,
   DEFAULT_ZOOM,
   HOVER_DISTANCE,
+  COMPONENT_STATE,
+  MAP,
+  NONE,
   findOptimalZoomForBounds,
   getBoundsCenter,
   getBoundsForSearchResults,
   getGeographyFromMap,
   slyToApiPoint,
+  coordsFromGeoFilter,
 } from 'sly/web/components/search/maps';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import { PinDefs } from 'sly/web/components/search/Pin';
-import {
-  coordsFromGeoFilter,
-  COMPONENT_STATE,
-  MAP,
-  NONE,
-} from 'sly/web/components/search/helpers';
 import SlyEvent from 'sly/web/services/helpers/events';
 
 const eventCategory = 'search-map';

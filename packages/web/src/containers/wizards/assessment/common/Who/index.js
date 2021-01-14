@@ -30,7 +30,7 @@ export default class WhoFormContainer extends Component {
   };
 
   static defaultProps = {
-    stepName: 'step-3:Who',
+    stepName: 'step-2:Who',
   };
 
   handleSubmit = (data) => {

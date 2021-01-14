@@ -12,6 +12,7 @@ import GetAssessmentBox from 'sly/web/components/organisms/GetAssessmentBox';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
+
 const PaddedBlock = pad(Block, 'regular');
 
 @branch(
@@ -78,14 +79,14 @@ export default class GetAssessmentBoxContainer extends Component {
             <MatchedAgent
               hasBox={false}
               agent={agent}
-              heading={`Request sent! Your Local Senior Living Expert, ${agent.name} will get back to you with pricing information on this community.`}
+              heading={`Request sent! Your Seniorly Local Advisor, ${agent.name} will get back to you with pricing information on this community.`}
             />
             }
             {!agent &&
             <PostConversionGreetingForm
               hasBox={false}
               onReturnClick={this.toggleModal}
-              heading="Request sent! One of our Local Senior Living Experts will reach out to assist you."
+              heading="Request sent! One of our Seniorly Local Advisors will reach out to assist you."
               description="Questions? You can contact us by phone or email:"
             >
               <PaddedBlock>

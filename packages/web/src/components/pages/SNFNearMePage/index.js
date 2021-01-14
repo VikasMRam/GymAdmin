@@ -304,7 +304,7 @@ const NearMePage = ({
             Email us at{' '}
             <Link href="mailto:ask@seniorly.com">ask@seniorly.com</Link>
             {' '}or call us at (855) 866-4515 to connect to a{' '}
-            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
+            <Link href="https://www.seniorly.com/agents">Seniorly Local Advisor</Link>
             {' '}who specializes within the city you’re searching.
 
           </Paragraph>
@@ -329,7 +329,7 @@ const NearMePage = ({
             We can help you find the best memory care communities near you. Email us at{' '}
             <Link href="mailto:ask@seniorly.com">ask@seniorly.com</Link>
             {' '}or call us at (855) 866-4515 to connect to a{' '}
-            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
+            <Link href="https://www.seniorly.com/agents">Seniorly Local Advisor</Link>
             {' '}who specializes within the city you’re searching.
           </Paragraph>
 
@@ -567,7 +567,7 @@ const NearMePage = ({
               ask@seniorly.com
             </Link>
             {' '}or call us at (855) 866-4515 to speak with a{' '}
-            <Link href="https://www.seniorly.com/agents">Local Senior Living Expert</Link>
+            <Link href="https://www.seniorly.com/agents">Seniorly Local Advisor</Link>
             , and we’ll connect you with the type of retirement living that’s right for you or your family.
 
           </Paragraph>
@@ -617,7 +617,7 @@ const NearMePage = ({
               {heading}
             </Heading>
             {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && (
+            {!isFetchingResults && communityList && communityList.length > 0 &&(
               <CommunitySearchList
                 communityList={communityList}
                 searchParams={searchParams}

@@ -2,15 +2,16 @@ import React from 'react';
 import { string, node, object } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { Box, Heading, Block, Button } from 'sly/common/components/atoms';
+import { Heading, Block, Button } from 'sly/common/components/atoms';
 import { Image } from 'sly/web/components/atoms';
 
 const HomeCTABox = ({ image, heading, children, buttonText, buttonPalette, buttonProps }) => (
-  <Box
+  <Block
     background="harvest.lighter-90"
     padding="xLarge"
     paddingTop="xxxLarge"
-  >
+    borderRadius="regular"
+>
     <Block textAlign="center" pad="xLarge">
       <Image src={image} />
     </Block>
@@ -31,7 +32,7 @@ const HomeCTABox = ({ image, heading, children, buttonText, buttonPalette, butto
         {buttonText}
       </Button>
     </Block>
-  </Box>
+  </Block>
 );
 
 HomeCTABox.propTypes = {

@@ -150,7 +150,7 @@ describe('Community survey', () => {
           },
           {
             name: 'step-13:LocalExpert',
-            title: 'Are you interested in working with a Local Senior Living Expert? They can help you find senior living options that fit your budget and care needs.',
+            title: 'Are you interested in working with a Seniorly Local Advisor? They can help you find senior living options that fit your budget and care needs.',
             Options: LOCAL_EXPERT_OPTIONS,
             maxSelect: 3,
             optionsId: 'localExpert',
@@ -371,7 +371,7 @@ describe('Community survey', () => {
     }
 
     it('Post Conversion step', () => {
-      waitForHydration(cy.contains('You\'re all set! One of our Local Senior Living Experts will reach out shortly to assist you with pricing for AlmaVia of San Francisco.', { timeout: 30000 }));
+      waitForHydration(cy.contains('You\'re all set! One of our Seniorly Local Advisors will reach out shortly to assist you with pricing for AlmaVia of San Francisco.', { timeout: 30000 }));
       waitForHydration(cy.get('div[class*=PostConversionGreetingForm]').contains('Return to Profile')).click();
       cy.url().should('have.string', `/assisted-living/california/san-francisco/${community.id}`);
     });
