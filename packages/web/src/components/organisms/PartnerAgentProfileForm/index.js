@@ -274,6 +274,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             <option value="" disabled>Select an option</option>
             {agentSmsFormatOptions}
           </Field>
+          <Field
+            name="contract"
+            label="contract"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
 
         </FormSection>
       )}
