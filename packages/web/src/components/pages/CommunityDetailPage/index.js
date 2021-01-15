@@ -232,11 +232,11 @@ export default class CommunityDetailPage extends Component {
     const typeOfCare = typeCares[0];
     const isActiveAdult = getIsActiveAdult(community);
 
-    if (!address.country || address.county === '' ) {
+    if (!address.country || address.country === '' ) {
       address.country = 'United States';
     }
 
-    const isInternational = address.county !== 'United States';
+    const isInternational = address.country !== 'United States';
 
     const bannerNotification = makeBanner(profileContacted);
     // FIXME: @fonz cleaning this up
