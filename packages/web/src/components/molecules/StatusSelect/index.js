@@ -12,11 +12,11 @@ import Field from 'sly/common/components/molecules/Field';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ARCHIVED,
-  //  FAMILY_STATUS_HOT,
   FAMILY_STATUS_DELETED,
   FAMILY_STATUS_LONG_TERM,
   FAMILY_STATUS_ON_PAUSE,
   FAMILY_STATUS_TEST,
+  FAMILY_STATUS_DUPLICATE,
 } from 'sly/web/constants/familyDetails';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { query } from 'sly/web/services/api';
@@ -25,10 +25,10 @@ import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog'
 
 const options = [
   { label: 'Active',    icon: 'active',     palette: 'green',  value: FAMILY_STATUS_ACTIVE, role: AGENT_ND_ROLE  },
-  // { label: 'Hot',       icon: 'hot',        palette: 'yellow', value: FAMILY_STATUS_HOT },
   { label: 'Long Term', icon: 'hourglass',  palette: 'magenta', value: FAMILY_STATUS_LONG_TERM, role: PLATFORM_ADMIN_ROLE },
   { label: 'On Pause',  icon: 'pause',      palette: 'danger', value: FAMILY_STATUS_ON_PAUSE, role: AGENT_ND_ROLE },
   { label: 'Archived',  icon: 'archived',   palette: 'slate',  value: FAMILY_STATUS_ARCHIVED, role: PLATFORM_ADMIN_ROLE  },
+  { label: 'Duplicate',   icon: 'trash-fill', palette: 'magenta',   value: FAMILY_STATUS_DUPLICATE, role: PLATFORM_ADMIN_ROLE },
   { label: 'Test',   icon: 'trash-fill', palette: 'slate',   value: FAMILY_STATUS_TEST, role: PLATFORM_ADMIN_ROLE },
   { label: 'Deleted',   icon: 'trash-fill', palette: 'grey',   value: FAMILY_STATUS_DELETED, role: PLATFORM_ADMIN_ROLE },
 ];
