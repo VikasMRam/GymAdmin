@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { string, object, bool } from 'prop-types';
+import { string, object, bool, func } from 'prop-types';
 import { branch } from 'recompose';
 
+import { recordEntityCta } from '../services/helpers/localStorage';
+
 import { isBrowser } from 'sly/web/config';
-import { prefetch } from 'sly/web/services/api';
+import { prefetch, query } from 'sly/web/services/api';
+import { PRICING_REQUEST } from 'sly/web/services/api/constants';
 import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent, { objectToEventLabel } from 'sly/web/services/helpers/events';
@@ -18,6 +21,7 @@ import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/Sticky
 import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
 
 
+@query('createAction', 'createUuidAction')
 @branch(
   ({ completedAssessment, agentId }) => completedAssessment && agentId,
   prefetch('agent', 'getAgent', (req, { agentId }) => req({
@@ -39,6 +43,7 @@ export default class GetAssessmentBoxContainer extends Component {
     completedPricing: bool,
     className: string,
     mode: object.isRequired,
+    createAction: func,
     extraProps: object.isRequired,
   };
   static defaultProps = {
@@ -57,7 +62,9 @@ export default class GetAssessmentBoxContainer extends Component {
     });
   }
   startAssessmentFlow = () => {
-    const { completedAssessment, completedPricing, mode } = this.props;
+    const { createAction, completedAssessment, completedPricing, mode, community } = this.props;
+    console.log('Assessment completed', completedAssessment);
+    console.log('Pricing completed', completedPricing);
     if (isBrowser) {
       SlyEvent.getInstance().sendEvent({
         category: 'assessmentWizard',
@@ -68,19 +75,23 @@ export default class GetAssessmentBoxContainer extends Component {
     if (completedAssessment || completedPricing) {
       this.toggleModal();
     }
+    if (!completedPricing && community) {
+      // send pricing request uuid action
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionType: PRICING_REQUEST,
+          actionInfo: {
+            data: {
 
-    // const { modalOpened } = this.state;
-    // this.setState({
-    //   modalOpened: !modalOpened,
-    // });
-    // const action = modalOpened ? 'open-modal' : 'close-modal';
-    // const { layout } = this.props;
-    // SlyEvent.getInstance().sendEvent({
-    //   category: 'assessmentWizard',
-    //   action,
-    //   label: layout,
-    // });
+            },
+          },
+        },
+      });
+      recordEntityCta;
+    }
   }
+
   toggleModal = () => {
     const { modalOpened } = this.state;
     this.setState({
@@ -121,7 +132,7 @@ export default class GetAssessmentBoxContainer extends Component {
     };
 
 
-    if (completedAssessment || completedPricing) {
+    if (completedAssessment) {
       buttonProps = {
         onClick: this.toggleModal,
       };
@@ -159,7 +170,7 @@ export default class GetAssessmentBoxContainer extends Component {
           />
         }
         <Modal isOpen={modalOpened} onClose={this.toggleModal}>
-          <HeaderWithClose onClose={this.toggleModal} />
+          <HeaderWithClose icon="check" onClose={this.toggleModal} marginBottom="large">Success!</HeaderWithClose>
           <PaddedHeaderWithCloseBody>
             {agent &&
               <MatchedAgent
