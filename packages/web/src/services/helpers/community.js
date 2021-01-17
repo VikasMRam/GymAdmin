@@ -111,13 +111,14 @@ export const getTrustScoreType = (community, scoreType) => {
   const licensingUrl = getStateLink(state, licenseNumber, rgsInfo);
   const linkText = `To learn more, visit the state licensing authority for ${name}`;
   const { value1 = '', value2 = '', value3 = '' } = scoreParams;
+  // FIXME: Api has a bug where it switches value2 inplace of value3.
   const prop1 = value1 === '' ? `Licensed since ${lastLicensedDate}` : value1;
-  const prop2 = value2 === '' ? `Most recent inspection on ${lastInspectionDate}`  : value2;
+  const prop2 = value3 === '' ? `Most recent inspection on ${lastInspectionDate}`  : value3;
   let prop3 = `Has fewer complaints relative to communities in ${fullStateName}`;
   if (trustScore < 71) {
     prop3 = `Has more complaints relative to communities in ${fullStateName}`;
   }
-  prop3 = value3 === '' ? prop3 : value3;
+  prop3 = value2 === '' ? prop3 : value2;
   let valueText = 'Excellent';
   if (trustScore > 70 && trustScore < 81) {
     valueText = 'Good';
