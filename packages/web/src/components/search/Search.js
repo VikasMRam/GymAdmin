@@ -137,7 +137,8 @@ const Search = ({
               }}
               css={{
               marginBottom: 'small',
-            }}>
+            }}
+            >
               {listSize} results
             </Block>
           }
@@ -202,7 +203,8 @@ const Search = ({
                   <GetAssessmentBoxContainer
                     completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
                     agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
-                    startLink={`/wizards/assessment/location/${state}/${city}?skipIntro=true`}
+                    mode={{ cta: 'generalOptions', entry: 'searchList' }}
+                    startLink={`/wizards/assessment/location/${state}/${city} `}
                   />
                 </Block>
               }

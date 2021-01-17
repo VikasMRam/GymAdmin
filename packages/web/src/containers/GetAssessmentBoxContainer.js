@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { string, object, bool, func } from 'prop-types';
 import { branch } from 'recompose';
 
-import { recordEntityCta } from '../services/helpers/localStorage';
-
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { isBrowser } from 'sly/web/config';
 import { prefetch, query } from 'sly/web/services/api';
 import { PRICING_REQUEST } from 'sly/web/services/api/constants';
@@ -29,6 +28,8 @@ import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
   })),
 )
 
+// TODO: Also has pricing request cta flow, de-couple or rename
+// State is in properties ( ? ) ( button text depends on pricing completion)
 export default class GetAssessmentBoxContainer extends Component {
   static typeHydrationId = 'GetAssessmentBoxContainer';
   static propTypes = {
@@ -62,9 +63,7 @@ export default class GetAssessmentBoxContainer extends Component {
     });
   }
   startAssessmentFlow = () => {
-    const { createAction, completedAssessment, completedPricing, mode, community } = this.props;
-    console.log('Assessment completed', completedAssessment);
-    console.log('Pricing completed', completedPricing);
+    const { mode } = this.props;
     if (isBrowser) {
       SlyEvent.getInstance().sendEvent({
         category: 'assessmentWizard',
@@ -72,23 +71,41 @@ export default class GetAssessmentBoxContainer extends Component {
         label: objectToEventLabel(mode),
       });
     }
-    if (completedAssessment || completedPricing) {
-      this.toggleModal();
+  }
+
+  completedAssessmentFlow = (evt) => {
+    const { createAction, completedPricing, mode, community } = this.props;
+    evt.preventDefault();
+    if (isBrowser) {
+      SlyEvent.getInstance().sendEvent({
+        category: 'assessmentWizard',
+        action: 'completedStart',
+        label: objectToEventLabel(mode),
+      });
     }
     if (!completedPricing && community) {
       // send pricing request uuid action
+      const tm = this.toggleModal;
       createAction({
         type: 'UUIDAction',
         attributes: {
           actionType: PRICING_REQUEST,
           actionInfo: {
             data: {
-
+              communityId: community.id,
             },
           },
         },
+      }).then(() => {
+        return recordEntityCta(PRICING_REQUEST, community.id);
+      }, (e) => {
+        // console.logError(e) : TODO
+        console.log(e);
+        return recordEntityCta(PRICING_REQUEST, community.id);
+      },
+      ).then(() => {
+        return tm();
       });
-      recordEntityCta;
     }
   }
 
@@ -97,7 +114,7 @@ export default class GetAssessmentBoxContainer extends Component {
     this.setState({
       modalOpened: !modalOpened,
     });
-    const action = modalOpened ? 'open-modal' : 'close-modal';
+    const action = modalOpened ? 'close-modal' : 'open-modal';
     const { layout } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
@@ -105,16 +122,6 @@ export default class GetAssessmentBoxContainer extends Component {
       label: layout,
     });
   };
-
-  // componentDidMount() {
-  //   const { layout } = this.props;
-  //   SlyEvent.getInstance().sendEvent({
-  //     category: 'assessmentWizard',
-  //     action: 'mounted',
-  //     label: layout,
-  //     nonInteraction: true,
-  //   });
-  // }
 
 
   render() {
@@ -134,7 +141,7 @@ export default class GetAssessmentBoxContainer extends Component {
 
     if (completedAssessment) {
       buttonProps = {
-        onClick: this.toggleModal,
+        onClick: this.completedAssessmentFlow,
       };
     }
     if (status.agent) {
