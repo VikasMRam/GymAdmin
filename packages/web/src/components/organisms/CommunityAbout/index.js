@@ -45,7 +45,7 @@ LegacyContent.defaultProps = {
 
 const CommunityAbout = ({
   id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription,
-  ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult, ...props
+  ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult, isInternational, ...props
 }) => (
   <CollapsibleBlock {...props} collapsedDefault={false}>
     {communityDescription && (
@@ -100,7 +100,7 @@ const CommunityAbout = ({
         </Paragraph>
       </StyledArticle>
     }
-    {!isActiveAdult &&
+    {!isActiveAdult && !isInternational &&
       <StyledArticle>
         <StyledHeading level="subtitle" size="body">
           What is a Seniorly Local Advisor in {city}, {state}?
@@ -159,6 +159,7 @@ CommunityAbout.propTypes = {
   twilioNumber: PropTypes.object,
   communityUser: PropTypes.object,
   isActiveAdult: PropTypes.bool,
+  isInternational: PropTypes.bool,
 };
 
 export default CommunityAbout;
