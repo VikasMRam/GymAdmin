@@ -1,4 +1,4 @@
-import { stateNames } from  'sly/web/services/helpers/url';
+import { stateNames } from  'sly/web/constants/geo';
 
 export const sortProperties = (obj) => {
   const sortable = [];

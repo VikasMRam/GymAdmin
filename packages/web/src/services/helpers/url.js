@@ -2,6 +2,7 @@ import { stringify, parse } from 'query-string';
 
 import { titleize } from 'sly/web/services/helpers/strings';
 import { communitySizeSearchParamMap } from 'sly/web/components/search/helpers';
+import { stateNames, stateAbbr, usStatePaths, caStatePaths } from 'sly/web/constants/geo';
 
 export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
@@ -26,6 +27,12 @@ export const tocPaths = (toc) => {
         return {
           path: '/board-and-care-home',
           label: 'Board and Care Home',
+        };
+      case 'Care Home':
+      case 'Care Home':
+        return {
+          path: '/care-home',
+          label: 'Care Home',
         };
       case 'Continuing Care Retirement Community(CCRC)':
       case 'Continuing Care Retirement Community':
@@ -86,122 +93,6 @@ const tocGuidePaths = (toc) => {
   }
 };
 
-export const stateNames = {
-  AL: 'Alabama',
-  AK: 'Alaska',
-  AZ: 'Arizona',
-  AR: 'Arkansas',
-  AS: 'American Samoa',
-  CA: 'California',
-  CO: 'Colorado',
-  CT: 'Connecticut',
-  DC: 'District Of Columbia',
-  DE: 'Delaware',
-  FL: 'Florida',
-  GA: 'Georgia',
-  GU: 'Guam',
-  HI: 'Hawaii',
-  ID: 'Idaho',
-  IL: 'Illinois',
-  IN: 'Indiana',
-  IA: 'Iowa',
-  KS: 'Kansas',
-  KY: 'Kentucky',
-  LA: 'Louisiana',
-  ME: 'Maine',
-  MD: 'Maryland',
-  MA: 'Massachusetts',
-  MI: 'Michigan',
-  MN: 'Minnesota',
-  MS: 'Mississippi',
-  MO: 'Missouri',
-  MT: 'Montana',
-  NE: 'Nebraska',
-  NV: 'Nevada',
-  NH: 'New Hampshire',
-  NJ: 'New Jersey',
-  NM: 'New Mexico',
-  NY: 'New York',
-  NC: 'North Carolina',
-  ND: 'North Dakota',
-  OH: 'Ohio',
-  OK: 'Oklahoma',
-  OR: 'Oregon',
-  PA: 'Pennsylvania',
-  PR: 'Puerto Rico',
-  RI: 'Rhode Island',
-  SC: 'South Carolina',
-  SD: 'South Dakota',
-  TN: 'Tennessee',
-  TX: 'Texas',
-  UT: 'Utah',
-  VT: 'Vermont',
-  VA: 'Virginia',
-  VI: 'U.S. Virgin Islands',
-  WA: 'Washington',
-  WV: 'West Virginia',
-  WI: 'Wisconsin',
-  WY: 'Wyoming',
-};
-
-export const stateAbbr = {
-  Alabama: 'AL',
-  Alaska: 'AK',
-  Arizona: 'AZ',
-  Arkansas: 'AR',
-  'American Samoa': 'AS',
-  California: 'CA',
-  Colorado: 'CO',
-  Connecticut: 'CT',
-  'District Of Columbia': 'DC',
-  Delaware: 'DE',
-  Florida: 'FL',
-  Georgia: 'GA',
-  Guam: 'GU',
-  Hawaii: 'HI',
-  Idaho: 'ID',
-  Illinois: 'IL',
-  Indiana: 'IN',
-  Iowa: 'IA',
-  Kansas: 'KS',
-  Kentucky: 'KY',
-  Louisiana: 'LA',
-  Maine: 'ME',
-  Maryland: 'MD',
-  Massachusetts: 'MA',
-  Michigan: 'MI',
-  Minnesota: 'MN',
-  Mississippi: 'MS',
-  Missouri: 'MO',
-  Montana: 'MT',
-  Nebraska: 'NE',
-  Nevada: 'NV',
-  'New Hampshire': 'NH',
-  'New Jersey': 'NJ',
-  'New Mexico': 'NM',
-  'New York': 'NY',
-  'North Carolina': 'NC',
-  'North Dakota': 'ND',
-  Ohio: 'OH',
-  Oklahoma: 'OK',
-  Oregon: 'OR',
-  Pennsylvania: 'PA',
-  'Puerto Rico': 'PR',
-  'Rhode Island': 'RI',
-  'South Carolina': 'SC',
-  'South Dakota': 'SD',
-  Tennessee: 'TN',
-  Texas: 'TX',
-  Utah: 'UT',
-  Vermont: 'VT',
-  Virginia: 'VA',
-  'U.S. Virgin Islands': 'VI',
-  Washington: 'WA',
-  'West Virginia': 'WV',
-  Wisconsin: 'WI',
-  Wyoming: 'WY',
-};
-
 const regionStateMap = {
   Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
   Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
@@ -228,7 +119,7 @@ export const urlize = inString =>
     .replace(/[\s-]+/g, ' ')
     .replace(/\s/g, '-');
 
-global.stateData = {
+  global.stateData = {
   names: stateNames,
   slugs: Object.entries(stateNames).reduce((res, [key, name]) => (res[key] = urlize(name), res), {}),
   stateRegionMap,
@@ -433,4 +324,28 @@ export const generateSearchUrl = (toc, address) => {
 
 export const generateCityPathSearchUrl = (address) => {
   return `${urlize(stateNames[address.state])}/${urlize(address.city)}`;
+};
+
+export const isInternationalPath = (path) => {
+  const pathParts = path.split('/');
+  //check if 1st part is care-home
+  if (pathParts.length > 1 && pathParts[1] === 'care-home') {
+    return true
+  }
+
+  if (pathParts.length > 2 && usStatePaths.indexOf(pathParts[2]) === -1) {
+    return true
+  }
+
+  return false
+};
+
+export const isCanadaPath = (path) => {
+  const pathParts = path.split('/');
+  //check if 1st part is care-home
+  if (pathParts.length > 2 && caStatePaths.indexOf(pathParts[2]) > -1) {
+    return true
+  }
+
+  return false
 };

@@ -105,6 +105,7 @@ const Filters = forwardRef(({
   onFilterChange,
   onClearFilters,
   currentFilters,
+  showTOC,
   children,
   ...props
 }, ref) => {
@@ -160,7 +161,7 @@ const Filters = forwardRef(({
 
   const totalNumberOfFilters = countFilters(currentFilters, ALL_FILTERS);
   const totalMoreFilters = countFilters(currentFilters, MORE_FILTERS);
-  const currentTocText = currentFilters[TOC] === 'nursing-homes'
+  const currentTocText = currentFilters[TOC] === 'nursing-homes' || currentFilters[TOC] === 'care-home'
     ? ''
     : TOCS[currentFilters[TOC]].label;
   const currentSizeText = SIZES[currentFilters[SIZE]]?.label;
@@ -180,6 +181,7 @@ const Filters = forwardRef(({
           </HeaderWithClose>
         )}
         <ModalBody padding="0 xLarge">
+          {showTOC &&
           <CollapsiblePopoverSwitch
             isPopOver={breakpoint?.atLeastTablet()}
             showIf={showIf(TOC)}
@@ -193,6 +195,8 @@ const Filters = forwardRef(({
               value={currentFilters[TOC]}
             />
           </CollapsiblePopoverSwitch>
+          }
+
           <CollapsiblePopoverSwitch
             isPopOver={!!popOverCss}
             showIf={showIf(SIZE)}
@@ -304,13 +308,15 @@ const Filters = forwardRef(({
         >
           Filters
         </FilterButton>
-        <FilterButton
-          startingWith="tablet"
-          onClick={() => openFilters(TOC)}
-          selected={Boolean(currentTocText)}
-        >
-          {currentTocText || 'Community type'}
-        </FilterButton>
+        {showTOC &&
+          <FilterButton
+            startingWith="tablet"
+            onClick={() => openFilters(TOC)}
+            selected={Boolean(currentTocText)}
+          >
+            {currentTocText || 'Community type'}
+          </FilterButton>
+        }
         <FilterButton
           ref={sizeButtonRef}
           startingWith="tablet"

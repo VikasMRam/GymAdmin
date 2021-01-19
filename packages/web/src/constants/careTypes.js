@@ -7,5 +7,6 @@ export default [
   'active-adult',
   'continuing-care-retirement-community',
   'skilled-nursing-facility',
+  'care-home',
 ];
 

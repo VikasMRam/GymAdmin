@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { object, number, array, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { stateNames, urlize, replaceLastSegment } from  'sly/web/services/helpers/url';
+import { urlize, replaceLastSegment } from  'sly/web/services/helpers/url';
+import { stateNames } from 'sly/web/constants/geo'
 import ErrorPage from 'sly/web/components/pages/Error';
 import StateSearchPage from 'sly/web/components/pages/StateSearchPage';
 import ModalController from 'sly/web/controllers/ModalController';

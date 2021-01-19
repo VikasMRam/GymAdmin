@@ -232,8 +232,11 @@ export default class CommunityDetailPage extends Component {
     const typeOfCare = typeCares[0];
     const isActiveAdult = getIsActiveAdult(community);
 
-    // TODO: mock as USA until country becomes available
-    address.country = 'USA';
+    if (!address.country || address.country === '' ) {
+      address.country = 'United States';
+    }
+
+    const isInternational = address.country !== 'United States';
 
     const bannerNotification = makeBanner(profileContacted);
     // FIXME: @fonz cleaning this up
@@ -266,7 +269,7 @@ export default class CommunityDetailPage extends Component {
 
     return (
       <>
-        <Chatbox community={community} />
+        {!isInternational && <Chatbox community={community} />}
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
@@ -317,7 +320,7 @@ export default class CommunityDetailPage extends Component {
                     </StyledHeadingBoxSection>
                   )}
 
-                {!isActiveAdult &&
+                {!isActiveAdult && !isInternational &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
@@ -334,7 +337,7 @@ export default class CommunityDetailPage extends Component {
                   />
                 </StyledHeadingBoxSection>
                 }
-                {!isActiveAdult && sortedEstimatedPrice.length > 0 && (
+                {!isActiveAdult && !isInternational && sortedEstimatedPrice.length > 0 && (
                   <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
                     <CommunityPricingComparison community={community} />
                   </StyledHeadingBoxSection>
@@ -399,13 +402,13 @@ export default class CommunityDetailPage extends Component {
                   </StyledHeadingBoxSection>
                 )}
 
-                {!isActiveAdult &&
+                {!isActiveAdult && !isInternational &&
                   <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </StyledHeadingBoxSection>
                 }
 
-                {!isActiveAdult &&
+                {!isActiveAdult && !isInternational &&
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                   community={community}
@@ -502,38 +505,25 @@ export default class CommunityDetailPage extends Component {
                     </Button>
                   </BackToSearch>
                 </StyledHeadingBoxSection>
-                <GetAssessmentBoxContainerHydrator
-                  startLink={`/wizards/assessment/community/${community.id}`}
-                  community={community}
-                  mode={{ cta: 'pricing', entry: 'communityFooter' }}
-                  layout="footer"
-                />
-                {/* {isActiveAdult && */}
-                {/* <CommunityStickyFooter */}
-                {/* community={community} */}
-                {/* locTrack="sticky-footer" */}
-                {/* isActiveAdult={true} */}
-                {/* /> */}
-                {/* } */}
-              </Body>
-              <Column>
-                <StickToTop>
-
+                {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
-                    mode={{ cta: 'pricing', entry: 'communitySidebar' }}
+                    mode={{cta: 'pricing', entry: 'communityFooter'}}
+                    layout="footer"
+                  />
+                }
+
+              </Body>
+              <Column>
+                <StickToTop>
+                  {!isInternational &&
+                  <GetAssessmentBoxContainerHydrator
+                    startLink={`/wizards/assessment/community/${community.id}`}
+                    community={community}
                     layout="sidebar"
                   />
-
-                  {/* {isActiveAdult && */}
-                  {/* <Box> */}
-                  {/* <Heading level="title" size="subtitle">Is selling your home part of your senior living plan?</Heading> */}
-                  {/* We can connect you with the top selling agents. */}
-                  {/* <StyledAskAgentButton ackCTA community={community} type="aa-sidebar" ctaText={"Request Info"} /> */}
-                  {/* </Box> */}
-                  {/* } */}
-
+                  }
                 </StickToTop>
               </Column>
             </TwoColumn>
