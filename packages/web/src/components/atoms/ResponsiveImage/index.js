@@ -195,6 +195,7 @@ export default class ResponsiveImage extends React.Component {
         <picture>
           {sourceSets}
           <img
+            key={`${src}_${path}`}
             loading={loading}
             alt={alt || getAlt(path)}
             className={imgClassName}
