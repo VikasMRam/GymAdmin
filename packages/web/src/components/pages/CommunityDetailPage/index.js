@@ -368,6 +368,7 @@ export default class CommunityDetailPage extends Component {
                       guideUrl={guideUrl}
                       communityUser={community.user}
                       isActiveAdult={isActiveAdult}
+                      isInternational={isInternational}
                       pad="large"
                     />
                     <Hr />

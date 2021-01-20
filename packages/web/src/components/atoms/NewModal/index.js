@@ -1,16 +1,17 @@
-import React, { Component, forwardRef } from 'react';
-import ReactDom from 'react-dom';
+import React, { Component, createContext, useContext, forwardRef, createRef } from 'react';
+import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 import { any, func, bool, element, string } from 'prop-types';
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import ScrollLock from 'react-scrolllock';
 
-import { isBrowser } from 'sly/web/config';
 import { size, palette, key } from 'sly/common/components/themes';
 import { withSpacing } from 'sly/common/components/helpers';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
+
+const ActiveModalContext = createContext(false);
 
 const Overlay = styled.div`
   display: ${ifProp('isOpen', 'flex', 'none')};
@@ -33,6 +34,7 @@ const Modal = styled.div`
   background-color: ${palette('white', 'base')};
   display: ${ifProp('isOpen', 'flex', 'none')};
   flex-direction: column;
+  overflow-y: auto;
 
   width: 100%;
   max-height: calc(100vh - 1rem);
@@ -102,9 +104,21 @@ HeaderWithClose.propTypes = {
   onClose: func,
 };
 
-export const ModalBody = styled(Block)`
-  overflow-y: auto;
-`;
+export const ModalBody = forwardRef((props, ref) => {
+  const isActive = useContext(ActiveModalContext);
+  return (
+    <ScrollLock isActive={isActive}>
+      <Block
+        ref={ref}
+        {...props}
+        css={{
+          overflowY: 'auto',
+        }}
+      />
+    </ScrollLock>
+  );
+});
+
 
 ModalBody.defaultProps = {
   padding: 'xLarge',
@@ -114,67 +128,48 @@ export const ModalActions = forwardRef((props, ref) => (
   <Block
     ref={ref}
     display="flex"
+    flexShrink="0"
     padding="large xLarge"
     borderTop="regular"
     {...props}
   />
 ));
 
+ModalActions.displayName = 'ModalActions';
+
 const PORTAL_ELEMENT_CLASS = 'modal-portal';
-let instanceNumber = 0;
 
 // TODO: @fonz todo a proper modal from this hack; animate entry and leave;
 export default class NewModal extends Component {
   static typeHydrationId = 'NewModal';
-  overlayRef = React.createRef();
+  static el = null;
+  static instanceNumber = 0;
 
-  constructor(props) {
-    super(props);
-
-    if (isBrowser) {
-      this.insertEl();
-    }
-  }
-
-  state = {
-    mounted: false,
-    instanceNumber: 0,
-  };
+  overlayRef = createRef();
+  modalRef = createRef();
+  state = { mounted: false };
 
   componentDidMount() {
-    instanceNumber++;
-
+    NewModal.instanceNumber++;
+    if (!NewModal.el) {
+      NewModal.el = document.createElement('div');
+      NewModal.el.setAttribute('class', PORTAL_ELEMENT_CLASS);
+      document.body.appendChild(NewModal.el);
+    }
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({
-      mounted: true,
-      instanceNumber,
-    });
+    this.setState({ mounted: true });
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.state.mounted && this.props.isOpen !== prevProps.isOpen) {
-      if (this.props.isOpen) {
-        disableBodyScroll(this.el);
-      } else {
-        enableBodyScroll(this.el);
-      }
+  componentDidUnmount() {
+    this;
+
+    NewModal.instanceNumber--;
+
+    if (NewModal.instanceNumber === 0) {
+      document.body.removeChild(NewModal.el);
+      NewModal.el = null;
     }
   }
-
-  componentWillUnmount() {
-    document.body.removeChild(this.el);
-    this.el = null;
-    instanceNumber--;
-    clearAllBodyScrollLocks();
-  }
-
-  insertEl = () => {
-    if (!this.el) {
-      this.el = document.createElement('div');
-      this.el.setAttribute('class', PORTAL_ELEMENT_CLASS);
-      document.body.appendChild(this.el);
-    }
-  };
 
   onClick = (e) => {
     const { onClose } = this.props;
@@ -187,17 +182,26 @@ export default class NewModal extends Component {
 
   render() {
     const { children, isOpen, transparent, ...props } = this.props;
-    const { mounted, instanceNumber } = this.state;
 
-    return mounted && ReactDom.createPortal(
-      (
-        <Overlay ref={this.overlayRef} transparent={transparent} onClick={this.onClick} isOpen={isOpen} instanceNumber={instanceNumber}>
-          <Modal isOpen={isOpen} {...props}>
+    return this.state.mounted && createPortal(
+      <Overlay
+        ref={this.overlayRef}
+        transparent={transparent}
+        onClick={this.onClick}
+        isOpen={isOpen}
+        instanceNumber={NewModal.instanceNumber}
+      >
+        <Modal
+          ref={this.modalRef}
+          isOpen={isOpen}
+          {...props}
+        >
+          <ActiveModalContext.Provider value={isOpen}>
             {children}
-          </Modal>
-        </Overlay>
-      ),
-      this.el,
+          </ActiveModalContext.Provider>
+        </Modal>
+      </Overlay>,
+      NewModal.el,
     );
   }
 }
