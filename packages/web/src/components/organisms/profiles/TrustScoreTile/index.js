@@ -4,6 +4,7 @@ import { oneOf, object } from 'prop-types';
 import { ifProp, prop } from 'styled-tools';
 
 import { getTrustScoreType } from 'sly/web/services/helpers/community';
+import SlyEvent from 'sly/web/services/helpers/events';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
@@ -20,6 +21,17 @@ const Wrapper = styled(Grid)`
 const RotatedBlock = styled(Block)`
   ${ifProp('rotate', css`transform: rotate(${prop('rotate')});`)}
 `;
+const trackSlyEvent = (community) => {
+  return () => {
+    const { id, address: { state } } = community;
+    const evt = { category: 'trustScore',
+      action: 'click',
+      label: id,
+      value: state,
+    };
+    SlyEvent.getInstance().sendEvent(evt);
+  };
+};
 
 const TrustScoreTile = ({ layout, community }) => {
   const { value, valueText, prop1, prop2, prop3, moreInfoText, licensingUrl } = getTrustScoreType(community, 'stateScore');
@@ -106,12 +118,14 @@ const TrustScoreTile = ({ layout, community }) => {
       </Block>
       <Block>
         {moreInfoText}
-        <Link
-          href={licensingUrl}
-          to={licensingUrl}
-        >
-          To learn more, visit the state licensing authority for {community.name}.
-        </Link>
+        <Block onclick={trackSlyEvent(community)}>
+          <Link
+            href={licensingUrl}
+            to={licensingUrl}
+          >
+            To learn more, visit the state licensing authority for {community.name}.
+          </Link>
+        </Block>
       </Block>
     </Block>
   );
