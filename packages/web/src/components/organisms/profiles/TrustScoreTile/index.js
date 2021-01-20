@@ -21,19 +21,8 @@ const Wrapper = styled(Grid)`
 const RotatedBlock = styled(Block)`
   ${ifProp('rotate', css`transform: rotate(${prop('rotate')});`)}
 `;
-const trackSlyEvent = (community) => {
-  return () => {
-    const { id, address: { state } } = community;
-    const evt = { category: 'trustScore',
-      action: 'click',
-      label: id,
-      value: state,
-    };
-    SlyEvent.getInstance().sendEvent(evt);
-  };
-};
 
-const TrustScoreTile = ({ layout, community }) => {
+const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
   const { value, valueText, prop1, prop2, prop3, moreInfoText, licensingUrl } = getTrustScoreType(community, 'stateScore');
   let imagePath = 'images/profiles/excellent-score.png';
   let icon = 'check';
@@ -118,14 +107,13 @@ const TrustScoreTile = ({ layout, community }) => {
       </Block>
       <Block>
         {moreInfoText}
-        <Block onclick={trackSlyEvent(community)}>
-          <Link
-            href={licensingUrl}
-            to={licensingUrl}
-          >
-            To learn more, visit the state licensing authority for {community.name}.
-          </Link>
-        </Block>
+        <Link
+          href={licensingUrl}
+          target="_blank"
+          onClick={externalClickEvt}
+        >
+          To learn more, visit the state licensing authority for {community.name}.
+        </Link>
       </Block>
     </Block>
   );

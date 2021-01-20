@@ -65,7 +65,8 @@ import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContaine
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 // import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
-import TrustScoreTile from 'sly/web/components/organisms/profiles/TrustScoreTile';
+import UnHydratedTrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
+// import TrustScoreTile from 'sly/web/components/organisms/profiles/TrustScoreTile';
 
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -86,6 +87,7 @@ const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 // const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
 // const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
+const TrustScoreTile = withHydration(UnHydratedTrustScoreContainer, { alwaysHydrate: true });
 const Chatbox = withHydration(UnhydratedChatbox, { alwaysHydrate: true });
 
 const BackToSearch = styled.div`
@@ -232,7 +234,7 @@ export default class CommunityDetailPage extends Component {
     const typeOfCare = typeCares[0];
     const isActiveAdult = getIsActiveAdult(community);
 
-    if (!address.country || address.country === '' ) {
+    if (!address.country || address.country === '') {
       address.country = 'United States';
     }
 
@@ -509,7 +511,7 @@ export default class CommunityDetailPage extends Component {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
-                    mode={{cta: 'pricing', entry: 'communityFooter'}}
+                    mode={{ cta: 'pricing', entry: 'communityFooter' }}
                     layout="footer"
                   />
                 }
