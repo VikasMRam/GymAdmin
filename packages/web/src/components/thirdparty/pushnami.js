@@ -25,7 +25,6 @@ export default class Pushnami extends Component {
                     .prompt({"delay":1500});
             };
             document.getElementsByTagName("head")[0].appendChild(script);
-            console.log('this is being run');
         })(document, window);
       }, 5000);
           ` }}
