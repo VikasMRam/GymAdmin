@@ -5,7 +5,6 @@ import parseUrl from 'parseurl';
 import pathToRegexp from 'path-to-regexp';
 import { ChunkExtractor } from '@loadable/server';
 
-import careTypes from 'sly/web/constants/careTypes';
 import { isDev, publicPath } from 'sly/web/config';
 
 
@@ -118,7 +117,6 @@ export function clientDevMiddleware() {
   compiler.hooks.watchRun.tap('SlyDev', invalid);
   compiler.hooks.invalid.tap('SlyDev', invalid);
   compiler.hooks.done.tap('SlyDev', done);
-  // compiler.hooks.done.tap('SlyDev', done);
 
   return (req, res, next) => {
     if (context.ready === null) {

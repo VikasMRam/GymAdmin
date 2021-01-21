@@ -89,7 +89,7 @@ app.use(async (req, res, next) => {
   try {
     const sheet = new ServerStyleSheet();
     const context = {};
-    const apiContext = {};
+    const apiContext = { promises: [] };
 
     const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>

@@ -1,5 +1,4 @@
 // defaults to dev env, otherwise specify with env vars
-
 const tryJson = (value) => {
   try {
     return JSON.parse(value);
@@ -9,18 +8,17 @@ const tryJson = (value) => {
 };
 
 const envPick = (value, otherwise = undefined) => {
-  return typeof value === 'string'
+  return typeof value !== 'undefined'
     ? tryJson(value)
     : otherwise;
 };
-
 
 module.exports.STORYBOOK_GIT_BRANCH = envPick(process.env.STORYBOOK_GIT_BRANCH);
 module.exports.NODE_ENV = envPick(process.env.NODE_ENV, 'development');
 module.exports.SLY_ENV = envPick(process.env.SLY_ENV, 'development');
 module.exports.GA_ENV = envPick(process.env.GA_ENV, 'development');
 module.exports.HOST = envPick(process.env.HOST, 'http://www.lvh.me');
-module.exports.PORT = process.env.PORT || 8000;
+module.exports.PORT = envPick(process.env.PORT, 8000);
 module.exports.DEV_PORT = envPick(process.env.DEV_PORT, +process.env.PORT + 1 || 8001);
 module.exports.ASSETS_URL = envPick(process.env.ASSETS_URL, 'https://d354o3y6yz93dt.cloudfront.net');
 module.exports.PUBLIC_PATH = '/react-assets';
