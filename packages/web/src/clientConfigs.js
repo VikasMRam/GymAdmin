@@ -5,6 +5,7 @@ import parseUrl from 'parseurl';
 import pathToRegexp from 'path-to-regexp';
 import { ChunkExtractor } from '@loadable/server';
 
+import careTypes from 'sly/web/constants/careTypes';
 import { isDev, publicPath } from 'sly/web/config';
 
 
