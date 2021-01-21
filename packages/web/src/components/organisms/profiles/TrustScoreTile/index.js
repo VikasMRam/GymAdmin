@@ -4,6 +4,7 @@ import { oneOf, object } from 'prop-types';
 import { ifProp, prop } from 'styled-tools';
 
 import { getTrustScoreType } from 'sly/web/services/helpers/community';
+import SlyEvent from 'sly/web/services/helpers/events';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
@@ -21,7 +22,7 @@ const RotatedBlock = styled(Block)`
   ${ifProp('rotate', css`transform: rotate(${prop('rotate')});`)}
 `;
 
-const TrustScoreTile = ({ layout, community }) => {
+const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
   const { value, valueText, prop1, prop2, prop3, moreInfoText, licensingUrl } = getTrustScoreType(community, 'stateScore');
   let imagePath = 'images/profiles/excellent-score.png';
   let icon = 'check';
@@ -108,7 +109,8 @@ const TrustScoreTile = ({ layout, community }) => {
         {moreInfoText}
         <Link
           href={licensingUrl}
-          to={licensingUrl}
+          target="_blank"
+          onClick={externalClickEvt}
         >
           To learn more, visit the state licensing authority for {community.name}.
         </Link>
