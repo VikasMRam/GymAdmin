@@ -32,6 +32,7 @@ import BannerNotificationAdContainer from 'sly/web/containers/BannerNotification
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import GetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import Chatbox from 'sly/web/components/pages/CommunityDetailPage/Chatbox';
+import TrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
 import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
 import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
 
@@ -73,6 +74,7 @@ partiallyHydrateClient(
     SidebarCTAContainer,
     StickyFooterCTAContainer,
     Chatbox,
+    TrustScoreContainer,
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,
