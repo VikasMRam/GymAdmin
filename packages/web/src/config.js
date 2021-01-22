@@ -56,7 +56,6 @@ const config = {
     olarkSiteId: '9319-500-10-7635',
     muteReduxLogger: true,
     hideChatbox: false,
-    // loadAutoComplete: !OFFLINE_MODE,
     disableExperiments: DISABLE_EXPERIMENTS,
     enableExperimentsDebugger: ENABLE_EXPERIMENT_DEBUGGER,
     tinyMCEApiKey: 'zalf4x4cr6354ko1klhtu90vmtbee1qw9r4j1qy1dpm3xabb',
@@ -81,7 +80,6 @@ const config = {
   development: {
     muteReduxLogger: MUTE_REDUX_LOGGER,
     hideChatbox: HIDE_CHATBOX,
-    // loadAutoComplete: !OFFLINE_MODE,
   },
 
   staging: {

@@ -118,7 +118,6 @@ export function clientDevMiddleware() {
   compiler.hooks.watchRun.tap('SlyDev', invalid);
   compiler.hooks.invalid.tap('SlyDev', invalid);
   compiler.hooks.done.tap('SlyDev', done);
-  // compiler.hooks.done.tap('SlyDev', done);
 
   return (req, res, next) => {
     if (context.ready === null) {
