@@ -328,8 +328,17 @@ export const generateCityPathSearchUrl = (address) => {
 
 export const isInternationalPath = (path) => {
   const pathParts = path.split('/');
+  if (pathParts.length > 1 && pathParts[1] === 'dashboard') {
+    return false
+  }
+  if (pathParts.length > 1 && pathParts[1] === 'partners') {
+    return false
+  }
+  if (pathParts.length > 1 && pathParts[1] === 'agents') {
+    return false
+  }
   //check if 1st part is care-home
-  if (pathParts.length > 1 && pathParts[1] === 'care-home') {
+  if (pathParts.length > 2 && pathParts[1] === 'care-home') {
     return true
   }
 
