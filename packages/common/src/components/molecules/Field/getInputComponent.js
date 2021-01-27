@@ -18,11 +18,11 @@ import NumberInput from 'sly/web/components/molecules/NumberInput';
 import Autocomplete from 'sly/web/components/molecules/Autocomplete';
 import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
+import LocationSearch from 'sly/web/components/molecules/LocationSearch';
+import RichTextArea from 'sly/web/components/atoms/RichTextArea';
 
 const DatePicker = loadable(() => import(/* webpackChunkName: "chunkDatePicker" */'sly/web/components/molecules/DatePicker'));
-const LocationSearch = loadable(() => import(/* webpackChunkName: "chunkLocationSearch" */'sly/web/components/molecules/LocationSearch'));
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
-const RichTextArea = loadable(() => import(/* webpackChunkName: "chunkAtomRichTextArea" */'sly/web/components/atoms/RichTextArea'));
 
 const getInputComponent = (type) => {
   switch (type) {

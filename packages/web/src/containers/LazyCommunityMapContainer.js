@@ -6,9 +6,7 @@ import { withRouter } from 'react-router';
 import { prefetch } from 'sly/web/services/api';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 
-const CommunityMap = loadable(() =>
-  import(/* webpackChunkName: "chunkCommunityMap" */ 'sly/web/components/organisms/CommunityMap'),
-);
+const CommunityMap = loadable(() => import(/* webpackChunkName: "chunkCommunityMap" */ 'sly/web/components/organisms/CommunityMap'));
 
 class LazyCommunityMapContainer extends Component {
   state = { mounted: false };
