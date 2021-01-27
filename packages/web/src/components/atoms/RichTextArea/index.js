@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { string, bool, func } from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { tinyMCEApiKey } from 'sly/web/config';
 
-class RichTextArea extends React.Component {
+class RichTextArea extends Component {
   render() {
     const { value, disabled, onChange } = this.props;
     return (

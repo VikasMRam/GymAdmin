@@ -45,7 +45,7 @@ const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHisto
 const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/web/components/pages/LegalPolicyPage'));
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/web/components/pages/PartnersPage'));
 const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/web/containers/CommunityPartnersPageContainer'));
-const SearchContainer = loadable(() => import(/* webpackChunkname: "chunkSearchContainer" */ 'sly/web/components/search/SearchContainer'));
+const SearchContainer = loadable(() => import(/* webpackChunkName: "chunkSearchContainer" */ 'sly/web/components/search/SearchContainer'));
 const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/web/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/web/containers/HomePageContainer'));
 const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NearMePageContainer'));

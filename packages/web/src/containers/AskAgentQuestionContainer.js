@@ -12,9 +12,7 @@ import withNotification from 'sly/web/controllers/withNotification';
 import { prefetch } from 'sly/web/services/api';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 
-const AskQuestionToAgentFormContainer = loadable(() =>
-  import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */ 'sly/web/containers/AskQuestionToAgentFormContainer'),
-);
+const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */'sly/web/containers/AskQuestionToAgentFormContainer'));
 
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) =>

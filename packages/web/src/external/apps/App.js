@@ -11,10 +11,8 @@ import { WIZARD_PATH, SEARCH_PATH } from 'sly/web/external/constants/paths';
 import ErrorPage from 'sly/web/external/apps/ErrorPage';
 import ExternalGlobalStyles from 'sly/web/external/apps/ExternalGlobalStyles';
 
-const CareAssessmentControllerPage = loadable(() =>
-  import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/web/external/apps/wizards/careAssessment/Controller'));
-const SearchContainerPage = loadable(() =>
-  import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/web/external/apps/search/Container'));
+const CareAssessmentControllerPage = loadable(() => import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/web/external/apps/wizards/careAssessment/Controller'));
+const SearchContainerPage = loadable(() => import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/web/external/apps/search/Container'));
 
 export default class App extends Component {
   static childContextTypes = {

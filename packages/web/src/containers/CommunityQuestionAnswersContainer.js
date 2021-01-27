@@ -14,8 +14,7 @@ import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/web/containers/CommunityLeaveAnAnswerFormContainer'));
-const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkName:
- "chunkAskQuestionToAgentFormContainer" */'sly/web/containers/AskQuestionToAgentFormContainer'));
+const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */'sly/web/containers/AskQuestionToAgentFormContainer'));
 
 @withRouter
 @prefetch('community', 'getCommunity', (req, { match }) => req({
