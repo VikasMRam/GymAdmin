@@ -71,7 +71,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.smsFormat', values.smsFormat)
       .set('attributes.info.slyScore', parseFloat(values.slyScore))
       .set('attributes.info.experience', parseInt(values.experience))
-      .set('attributes.info.contract', parseInt(values.contract));
+      .set('attributes.info.contract', values.contract);
 
     if (values.vacation && values.vacation[0].getTime() !== 0 && values.vacation[1].getTime() !== 0) {
       agent = agent.set('attributes.info.vacationStart', values.vacation[0])

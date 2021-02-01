@@ -276,9 +276,9 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           </Field>
           <Field
             name="contract"
-            label="contract"
+            label="Contract"
             type="text"
-            placeholder=""
+            placeholder="contract url"
             component={ReduxField}
             wideWidth
           />
