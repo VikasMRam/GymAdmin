@@ -282,6 +282,18 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             component={ReduxField}
             wideWidth
           />
+          <Field
+            label="Contract Status"
+            name="contractStatus"
+            type="select"
+            component={ReduxField}
+            wideWidth
+          >
+            <option value="" disabled>Select an option</option>
+            <option value="No contract">No Contract</option>
+            <option value="Pending">Pending</option>
+            <option value="Signed">Signed</option>
+          </Field>
 
         </FormSection>
       )}

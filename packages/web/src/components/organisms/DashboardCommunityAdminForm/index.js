@@ -155,6 +155,17 @@ export default class DashboardCommunityAdminForm extends Component {
                 type="textarea"
                 readOnly={!canEdit}
               />
+              <EditField
+                label="Contract Status"
+                name="rgsAux.rgsInfo.contract_info.contractStatus"
+                type="select"
+                readOnly={!canEdit}Only={!canEdit}
+              >
+                <option value="" disabled>Select an option</option>
+                <option value="No contract">No contract</option>
+                <option value="Pending">Pending</option>
+                <option value="Signed">Signed</option>
+              </EditField>
             </>
           )}
         </SectionForm>
