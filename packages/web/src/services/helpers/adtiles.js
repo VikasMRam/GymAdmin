@@ -16,7 +16,9 @@ export const  shouldShowZillowProfileAd = (community) => {
   const specialSlugs = ['moosehaven', 'san-francisco-towers-san-francisco', 'sequoias-san-francisco-the',
     'the-village-at-orchard-ridge-winchester', 'westminister-at-lake-ridge',
     'falcons-landing', 'reata-glen', 'the-glen-at-scripps-ranch', 'la-costa-glen-carlsbad', 'penney-retirement-community',
-    'smith-village', 'woodland-pond-at-new-paltz', 'lasell-village', 'sequoias-portola-valley-the'];
+    'smith-village', 'woodland-pond-at-new-paltz', 'lasell-village', 'sequoias-portola-valley-the', 'acacia-creek', 'san-rafael/aldersly-garden-retirement-community',
+    'grand-lake-gardens', 'lake-park', 'cardinal-point-at-mariner-square', 'st-anne-s-home-for-the-aged', 'st-paul-s-towers', 'the-redwoods-a-community-of-seniors',
+    'tamalpais', 'villa-marin'];
   if (!community || !community.care) {
     return false;
   }
