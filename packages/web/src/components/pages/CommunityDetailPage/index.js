@@ -524,6 +524,7 @@ export default class CommunityDetailPage extends Component {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
+                    mode={{ cta: 'pricing', entry: 'communitySidebar' }}
                     layout="sidebar"
                   />
                   }
