@@ -5,20 +5,27 @@ const black = Color('black');
 
 const gradients = [
   { percentage: 0.15, tint: black, variant: 'dark' },
-  { percentage: 0.00, tint: white, variant: 'base' },
   { percentage: 0.67, tint: white, variant: 'filler' },
   { percentage: 0.85, tint: white, variant: 'stroke' },
   { percentage: 0.92, tint: white, variant: 'background' },
 
-  // new colors
   { percentage: 0.30, tint: black, variant: 'darker-30' },
   { percentage: 0.15, tint: black, variant: 'darker-15' },
-  { percentage: 0.00, tint: white, variant: 'base' },
   { percentage: 0.30, tint: white, variant: 'lighter-30' },
+
+  // new colors
+
+  { percentage: 0.40, tint: black, variant: 'darker-40' },
+  { percentage: 0.20, tint: black, variant: 'darker-20' },
+  { percentage: 0.00, tint: white, variant: 'base' },
+  { percentage: 0.20, tint: white, variant: 'lighter-20' },
+  { percentage: 0.40, tint: white, variant: 'lighter-40' },
   { percentage: 0.60, tint: white, variant: 'lighter-60' },
+  { percentage: 0.80, tint: white, variant: 'lighter-80' },
   { percentage: 0.90, tint: white, variant: 'lighter-90' },
   { percentage: 0.95, tint: white, variant: 'lighter-95' },
 ];
+
 const clear = color => color || '';
 const variants = gradients.map(({ variant }) => variant);
 

@@ -156,6 +156,7 @@ theme.sizes = {
   },
 
   spacing: {
+    // old way
     nano    : '0.062rem',   //  1px
     tiny    : '0.125rem',   //  2px
     small   : '0.250rem',   //  4px
@@ -168,6 +169,16 @@ theme.sizes = {
     huge    : '4.000rem',   // 64px
     massive : '4.500rem',   // 72px
     xMassive: '5.000rem',   // 80px
+
+    // new way
+    xxs     : '0.250rem',   // 4px
+    xs      : '0.500rem',   // 8px
+    s       : '0.750rem',   // 12px
+    m       : '1.000rem',   // 16px
+    l       : '1.500rem',   // 24px
+    xl      : '2.000rem',   // 32px
+    xxl     : '3.000rem',   // 48px
+    xxxl    : '5.000rem',   // 80px
   },
 
   // new ways...

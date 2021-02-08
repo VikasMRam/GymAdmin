@@ -70,6 +70,7 @@ Block.propTypesList = [
   'lineHeight',
   'textDecoration',
   'textTransform',
+  'font',
   // element
   'elementSize',
   // color
