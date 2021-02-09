@@ -1,11 +1,12 @@
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { TEST_COMMUNITY } from '../../constants/community';
+import { TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
 
 const randHash = () => Math.random().toString(36).substring(7);
+
 
 export const buildEstimatedPriceList = (community) => {
   const {
@@ -105,29 +106,62 @@ describe('Community Profile Sections', () => {
     });
 
 
-    it.skip('should show care services section', () => {
+    it('should show care services section', () => {
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
+      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+        waitForHydration(cy.get('div').contains('Care services').parent())
+          .within(() => {
+            cy.wrap(community.propInfo.careServices).each((service) => {
+              if (ServicesAmenitiesFilters.careServices.includes(service.toLowerCase())) {
+                waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+              }
+            });
+          });
+      });
+    });
+
+    it('should show non-care services section', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
 
-      cy.get('h3').contains('Amenities and Services').parent().within(() => {
-        cy.wrap(community.propInfo.careServices).each((service) => {
-          cy.get('> h3 + div > div > div > div > div + div').contains(service).should('exist');
+      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+        waitForHydration(cy.get('div').contains('Non-care services').parent()).within(() => {
+          cy.wrap(community.propInfo.nonCareServices).each((service) => {
+            if (ServicesAmenitiesFilters.nonCareServices.includes(service.toLowerCase())) {
+              waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+            }
+          });
         });
       });
     });
 
-
-    it.skip('should show Amenities and Services section', () => {
+    it('Should show room amenities', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
 
-      const careContent = select('h3').contains('Amenities and Services').parent().within(() => {
-        [
-          ...community.propInfo.careServices,
-          ...community.propInfo.personalSpace,
-          ...community.propInfo.nonCareServices,
-        ].forEach((service) => {
-          careContent.get('div').contains(service).should('exist');
+      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+        waitForHydration(cy.get('div').contains('Room amenities').parent()).within(() => {
+          cy.wrap(community.propInfo.personalSpace).each((service) => {
+            if (ServicesAmenitiesFilters.personalSpace.includes(service.toLowerCase())) {
+              waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+            }
+          });
+        });
+      });
+    });
+
+    it.skip('Should show community amenities', () => {
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions');
+
+      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+        waitForHydration(cy.get('div').contains('Community amenities').parent()).within(() => {
+          cy.wrap(community.propInfo.communitySpace).each((service) => {
+            if (ServicesAmenitiesFilters.communitySpace.includes(service.toLowerCase())) {
+              waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+            }
+          });
         });
       });
     });
