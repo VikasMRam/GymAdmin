@@ -190,12 +190,13 @@ export default class ReferralSearchContainer extends Component {
   doAgentSearch = ({ name, geo }) => {
     const { getAgents } = this.props;
     const filters = {};
-    if (geo) {
-      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
-    }
     if (name) {
       filters['filter[name]'] = name;
     }
+    else if (geo) {
+      filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
+    }
+
     return getAgents(filters).then((resp) => {
       const allAgents = normJsonApi(resp);
       const agents = allAgents.filter(e => !e.info.excludeFromMap);
