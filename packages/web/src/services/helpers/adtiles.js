@@ -23,11 +23,11 @@ export const  shouldShowZillowProfileAd = (community) => {
     return false;
   }
   const { id, care, address: { state } } = community;
-  if ((specialSlugs.indexOf(id) > -1) || (care && care[0] === 'active-adult')) {
+  if ((specialSlugs.indexOf(id) > -1) || (care && care[0] === 'Active Adult Communities (55+)')) {
     return true
   }
 
-  if (care && care[0] === 'continuing-care-retirement-community') {
+  if (care && care[0] === 'Continuing Care Retirement Community(CCRC)') {
     // eslint-disable-next-line camelcase
     const { rgsAux: { rgsInfo: { contract_info } } } = community;
     // eslint-disable-next-line camelcase
@@ -47,7 +47,7 @@ export const shouldShowZillowPostConversionAd = (community) => {
     return false;
   }
   const {care} = community;
-  return (care && (care[0] === 'active-adult' || care[0] === 'continuing-care-retirement-community'));
+  return (care && (care[0] === 'Active Adult Communities (55+)' || care[0] === 'Continuing Care Retirement Community(CCRC)'));
 };
 
 
