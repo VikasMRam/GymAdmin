@@ -29,6 +29,7 @@ const Block = styled(forwardRef(({ showIf, ...props }, ref) => {
   }
   return <Root ref={ref} {...props} />;
 }))`
+  ${withMedia}
   ${withSpacing}
   ${withText}
   ${withElementSize}
@@ -46,41 +47,26 @@ const Block = styled(forwardRef(({ showIf, ...props }, ref) => {
   // put withDisplay after other styles for applied display styles to have more priority
   ${withDisplay}
   // put withMedia first for media query styles to have first priority
-  ${withMedia}
 `;
 
 Block.propTypesList = [
   // spacing
-  'padding',
-  'paddingTop',
-  'paddingRight',
-  'paddingBottom',
-  'paddingLeft',
-  'margin',
-  'marginTop',
-  'marginRight',
-  'marginBottom',
-  'marginLeft',
-  'pad',
   'horizontalGutter',
   'verticalGutter',
+
   // text
   'size',
   'weight',
   'lineHeight',
   'textDecoration',
   'textTransform',
-  'font',
   // element
   'elementSize',
+
   // color
-  'palette',
   'variation',
-  'background',
   'backgroundVariation',
-  'border',
-  'borderPalette',
-  'borderVariation',
+
   // border
   'border',
   'borderTop',
@@ -105,7 +91,6 @@ Block.propTypesList = [
   'shadowOnHoverBlur',
   'shadowOnHoverSpread',
   'shadowOnHoverPalette',
-  'css',
   // display
   'display',
   'block',
@@ -119,6 +104,37 @@ Block.propTypesList = [
   'flexWrap',
   'order',
   'visibility',
+  // misc
+  '_css',
+  'className',
+  'clamped',
+  'cursor',
+
+  /** *********
+   *
+   * whitelist
+   *
+   *********** */
+
+  // color
+  'palette',
+  'background',
+  // spacing
+  'pad', // marginBottom shorthand
+  'padding',
+  'paddingTop',
+  'paddingRight',
+  'paddingBottom',
+  'paddingLeft',
+  'margin',
+  'marginTop',
+  'marginRight',
+  'marginBottom',
+  'marginLeft',
+
+  // text
+  'font',
+
   // media
   'upTo',
   'upToMobile',
@@ -128,11 +144,8 @@ Block.propTypesList = [
   'startingWithMobile',
   'startingWithTablet',
   'startingWithLapTop',
+
   // misc
-  '_css',
-  'className',
-  'clamped',
-  'cursor',
   'overflow',
   'width',
   'height',

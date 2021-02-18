@@ -160,7 +160,7 @@ const Search = ({
           >
 
             <FilterButton
-              upTo="laptop"
+              startingWithLaptop={{ display: 'none' }}
               marginLeft="auto"
               onClick={toggleShow}
             >

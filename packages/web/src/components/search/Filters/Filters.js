@@ -302,7 +302,7 @@ const Filters = forwardRef(({
         {...props}
       >
         <FilterButton
-          upTo="tablet"
+          startingWithTablet={{ display: 'none' }}
           onClick={() => openFilters(ALL_FILTERS)}
           number={totalNumberOfFilters}
         >
