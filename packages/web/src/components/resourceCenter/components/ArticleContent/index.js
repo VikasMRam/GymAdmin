@@ -12,10 +12,10 @@ import redirectTo from 'sly/common/services/redirectTo/redirectTo';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import FAQItem from "sly/web/components/resourceCenter/components/FAQItem";
 import EditorValueWrapper from "sly/web/components/resourceCenter/components/EditorValueWrapper";
-import {Icon, Link} from "sly/common/components/atoms";
+import { Icon, Link } from "sly/common/components/atoms";
 import ResponsiveImage from "sly/web/components/atoms/ResponsiveImage";
-import {host} from "sly/web/config";
-import {RESOURCE_CENTER_PATH} from "sly/web/constants/dashboardAppPaths";
+import { host } from "sly/web/config";
+import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
 
 const articleDZComponentsNames = {
   subtitle: 'subtitle',
@@ -254,8 +254,7 @@ const ArticleContent = ({ content }) => {
                 >
                   <ResponsiveImage
                     css={{ width: '100%', height: 'auto' }}
-                    // TODO: fix when the CMS starts giving the correct path
-                    src={`http://localhost:1337${rest.image.url}`}
+                    src={rest.image.url}
                     alt={rest.image.alternativeText}
                   />
                 </Block>

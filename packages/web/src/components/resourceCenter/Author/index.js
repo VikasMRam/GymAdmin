@@ -96,8 +96,7 @@ const Author = ({ match, redirectTo }) => {
           >
             <ResponsiveImage
               css={{ objectFit: 'cover', width: '100%', height: '100%' }}
-              // TODO: fix when the CMS starts giving the correct path
-              src={`http://localhost:1337${requestInfo?.result?.[0]?.img?.url}`}
+              src={requestInfo?.result?.[0]?.img?.url}
               alt={requestInfo?.result?.[0]?.img?.alternativeText}
             />
           </ImgWrapper>

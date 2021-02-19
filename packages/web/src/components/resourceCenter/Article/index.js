@@ -123,8 +123,7 @@ const ArticlePage = ({ match, redirectTo }) => {
         >
           <ResponsiveImage
             css={{ width: '100%', height: 'auto' }}
-            // TODO: fix when the CMS starts giving the correct path
-            src={`http://localhost:1337${requestInfo?.result?.[0]?.mainImg?.url}`}
+            src={requestInfo?.result?.[0]?.mainImg?.url}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
           />
         </Block>

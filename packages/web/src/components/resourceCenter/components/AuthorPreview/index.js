@@ -67,8 +67,7 @@ const AuthorPreview = ({
             width: '100%',
             height: '100%',
           }}
-          // TODO: fix when the CMS starts giving the correct path
-          src={`http://localhost:1337${url}`}
+          src={url}
           alt={alternativeText}
         />
       </ImgWrapper>
