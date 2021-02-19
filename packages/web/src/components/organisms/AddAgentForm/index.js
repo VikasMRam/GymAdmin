@@ -9,7 +9,7 @@ import { Block, Button } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { usStates } from 'sly/web/constants/geo';
 
-const statesOptions = usStates.map(s => <option key={s} value={s}>{s}</option>);
+const statesOptions = usStates.map(s => <option key={s.abbr} value={s.abbr}>{s.name}</option>);
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';

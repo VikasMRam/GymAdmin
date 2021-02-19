@@ -1,28 +1,84 @@
 export const TEST_COMMUNITY = 'almavia-of-san-francisco';
 
-// single value: Mom, Dad, Parents, Myself and spouse, Wife, Husband, Grandmother, Grandfather, Mother-in-law, Father-in-law, Aunt, Uncle, Brother, Sister, Friend, Client, Patient, Myself
-export const LOOKING_FOR = 'Parents';
-
-// single value: 'I\'m feeling excited about it', 'I have mixed feelings about it', 'I\'m feeling anxious about it'
-export const SEARCH_FEELING = 'I have mixed feelings about it';
-
-// multiple: Bathing, Dressing, Transferring, Toileting, Eating, Medication management
-// (included in test: None, I'm not sure)
-export const HELP_REQUIRED = ['Bathing', 'Eating', 'Medication management'];
-
-// multiple: risk-of-wandering, forget-names, forget-to-do-things, no, iam-not-sure
-export const FORGETFULNESS = ['forget-names', 'forget-to-do-things', 'risk-of-wandering'];
-
-// multiple: starting, working, inquired, toured, already-chosen
-export const SEARCH_TIMING = ['inquired', 'toured'];
-
-// single value: waiting, home, another-community, other, not-sure
-// parents or myself-and-spouse : home-with-child
-// others : home-with-spouse-or-child
-export const CURRENT_LIVING = 'home-with-child';
-
-// multiple: veterans, long-term-care-insurance, life-insurance, equity-home, pension-plan, dont-have, not-sure
-export const BUDGET_PLAN = ['veterans', 'long-term-care-insurance'];
-
-// single value: yes, no, not-sure
-export const MEDICAID_ALLOWANCE = 'yes';
+export const ServicesAmenitiesFilters = {
+  careServices: [
+    'activities of daily living assistance',
+    'assistance with dressing',
+    'medication management',
+    'transportation arrangement (medical)',
+    'coordination with health care providers',
+    '24-hour supervision',
+    'special dietary restrictions',
+    'diabetes care',
+    '24-hour nursing',
+    "parkinson's care",
+    'rehabilitation program',
+    'mild cognitive impairment',
+    'specialized memory care programming',
+    'hospice waiver',
+    'same day assessments',
+    'assistance with bathing',
+    'assistance with transfers',
+    'meal preparation and service',
+    'transportation to doctors appointment',
+    '24-hour call system',
+    'physical therapy',
+    'diabetes diet',
+    'administer insulin injections',
+    '12-16 hour nursing',
+    'care with behavioral issues',
+    'mental wellness program',
+    'dementia waiver',
+    'respite program',
+    'accept incoming residents on hospice',
+    'preventative health screenings',
+  ],
+  personalSpace: [
+    'cable',
+    'internet',
+    'private bathrooms',
+    'kitchenettes',
+    'wifi',
+    'telephone',
+    'air-conditioning',
+    'air conditioning',
+    'fully furnished',
+  ],
+  communitySpace: [
+    'dining room',
+    'family private dining rooms',
+    'organic food and ingredients',
+    'outdoor space',
+    'garden',
+    'gaming room',
+    'fitness room',
+    'spa',
+    'wellness center',
+    'located close to shopping centers',
+    'pet friendly',
+    'restaurant-style dining',
+    'cafe',
+    'on-site market',
+    'outdoor patio',
+    'small library',
+    'computer center',
+    'swimming pool',
+    'beauty salon',
+    'religious/meditation center',
+    'located close to restaurants',
+  ],
+  nonCareServices: [
+    'housekeeping and linen services',
+    'community operated transportation',
+    'concierge services',
+    'community-sponsored activities',
+    'planned day trips',
+    'continuing learning programs',
+    'transportation arrangement (non-medical)',
+    'fitness programs',
+    'scheduled daily activities',
+    'resident-run activities',
+    'move-in coordination',
+    'family education and support services',
+  ],
+};
