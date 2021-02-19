@@ -7,15 +7,18 @@ import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import { withBorder, startingWith } from 'sly/common/components/helpers';
-import { Block } from 'sly/common/components/atoms';
-import { size } from 'sly/common/components/themes';
+import { withDisplay, withBorder, startingWith } from 'sly/common/components/helpers';
+import { getKey, size } from 'sly/common/components/themes';
 import Paragraph from 'sly/common/components/atoms/Paragraph';
 import Heading from 'sly/common/components/atoms/Heading';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
-import ErrorPage from 'sly/web/components/pages/Error';
 import Header from 'sly/web/components/resourceCenter/Header';
+import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import { Hr, Link, Block } from 'sly/common/components/atoms';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
+import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
+import { assetPath } from "sly/web/components/themes";
 
 const headingStyles = css`
   line-height: ${size('lineHeight.displayS')};
@@ -24,6 +27,8 @@ const headingStyles = css`
   ${startingWith('laptop', css({ marginTop: 0 }))}
 `;
 
+const LoaderWrapper = styled(Block)(withDisplay);
+
 const ImgWrapper = styled(Block)(withBorder);
 
 const paragraphStyles = css`
@@ -31,12 +36,26 @@ const paragraphStyles = css`
   line-height: 1.78;
 `;
 
-const Author = ({ match }) => {
-  const { fullName } = match.params;
+const Author = ({ match, redirectTo }) => {
+  const { slug } = match.params;
 
-  const { requestInfo } = usePrefetch('getAuthor', req => req({ fullName: fullName.replace(/-/g, ' ') }));
+  const { requestInfo } = usePrefetch('getAuthor', req => req({ slug: slug.replace(/\+/g, '%2b') }));
 
-  if (!requestInfo?.result?.length) return <ErrorPage errorCode={404} />;
+  if (requestInfo.hasFinished && !requestInfo?.result?.length) {
+    redirectTo(RESOURCE_CENTER_PATH);
+    return null;
+  }
+
+  if (!requestInfo.hasFinished) return (
+    <LoaderWrapper
+      height="100vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <ResponsiveImage src={assetPath('images/homebase/loader.svg')} />
+    </LoaderWrapper>
+  );
 
   return (
     <>
@@ -87,9 +106,54 @@ const Author = ({ match }) => {
               {requestInfo?.result?.[0]?.fullName}
             </Heading>
             <Paragraph css={paragraphStyles}>
-              {requestInfo?.result?.[0]?.about}
+              {requestInfo?.result?.[0]?.fullDescription}
             </Paragraph>
           </div>
+        </Block>
+      </Block>
+
+      <Block marginY="xxl" startingWithTablet={{ marginY: 'xxxl' }}>
+        <Hr size="large" />
+      </Block>
+
+      <Block
+        marginX="m"
+        startingWithTablet={{
+          width: size('layout.col8'),
+          marginY: 'xxl',
+          marginX: 'auto',
+        }}
+        startingWithLaptop={{ width: size('layout.col12') }}
+      >
+        <Heading size="title" font="title-large">
+          {`${requestInfo?.result?.[0]?.firstName}'s article${requestInfo?.result?.[0]?.articles?.length > 1 ? 's' : ''}`}
+        </Heading>
+
+        <Block
+          marginY="l"
+          marginX="auto"
+          startingWithTablet={{
+            display: 'grid',
+            gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
+            columnGap: size('spacing.l'),
+            rowGap: size('spacing.l'),
+          }}
+          startingWithLaptop={{
+            gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
+          }}
+        >
+          {requestInfo?.result?.[0]?.articles?.map(({
+              title,
+              shortDescription,
+              mainImg: { url, alternativeText },
+              slug,
+              topic,
+              id,
+            }) => (
+              <Link to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`} key={id}>
+                <ArticlePreview{...{ alternativeText, title, shortDescription, url, topic }} />
+              </Link>
+            ))}
         </Block>
       </Block>
 
@@ -101,6 +165,7 @@ const Author = ({ match }) => {
 Author.displayName = 'Author';
 Author.propTypes = {
   match: object,
+  location: object,
 };
 
-export default Author;
+export default withRedirectTo(Author);
