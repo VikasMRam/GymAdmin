@@ -10,7 +10,6 @@ import { getKey, size } from 'sly/common/components/themes';
 import { startingWith, upTo, withDisplay } from 'sly/common/components/helpers';
 import Link from "sly/common/components/atoms/Link";
 
-
 const ArticlesWrapper = styled(Block)(
   withDisplay,
   css`

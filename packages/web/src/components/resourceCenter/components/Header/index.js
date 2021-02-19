@@ -10,8 +10,8 @@ import {
 } from 'sly/common/components/helpers';
 import { Icon, Link } from 'sly/common/components/atoms';
 import { getKey, palette, size } from 'sly/common/components/themes';
-import SearchContainer from 'sly/web/components/resourceCenter/Search';
-import HeaderMenuList from 'sly/web/components/resourceCenter/Header/HeaderMenuList';
+import SearchContainer from 'sly/web/components/resourceCenter/components/Search';
+import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
 import { topics } from 'sly/web/components/resourceCenter/helper';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 

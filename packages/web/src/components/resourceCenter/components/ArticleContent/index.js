@@ -38,21 +38,18 @@ const LinkBlockText = styled(Block)(withDisplay);
 const LinkBlockWrapper = styled(Block)(withBorder, withDisplay);
 
 const QuoteTitle = styled(Block)(
-  false,
   css`
     text-align: center;
   `,
 );
 
 const AlternativeText = styled(Block)(
-  false,
   css`
     text-align: center;
   `,
 );
 
 const QuoteDescription = styled(Block)(
-  false,
   css`
     text-align: center;
     font-weight: normal;
@@ -66,7 +63,6 @@ const QuoteDescription = styled(Block)(
 );
 
 const ListInTwoColumnsWrapper = styled(Block)(
-  false,
   css`
     & * {
       font-size: ${size('font.')};

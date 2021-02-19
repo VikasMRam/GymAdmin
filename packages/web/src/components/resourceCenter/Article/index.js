@@ -14,7 +14,7 @@ import Heading from 'sly/common/components/atoms/Heading';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import { formatDate } from 'sly/web/services/helpers/date';
-import Header from 'sly/web/components/resourceCenter/Header';
+import Header from 'sly/web/components/resourceCenter/components/Header';
 import Hr from 'sly/common/components/atoms/Hr';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';

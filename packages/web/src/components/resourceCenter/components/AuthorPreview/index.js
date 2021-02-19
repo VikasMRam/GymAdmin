@@ -110,12 +110,3 @@ AuthorPreview.propTypes = {
 };
 
 export default AuthorPreview;
-//
-// <Block
-//   upToTablet={{}}
-//   startingWithTablet={{}}
-//   startingWithLapTop={{}}
-// >
-//   <Block></Block>
-//   <Block></Block>
-// </Block>

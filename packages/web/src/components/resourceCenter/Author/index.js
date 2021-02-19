@@ -13,7 +13,7 @@ import Paragraph from 'sly/common/components/atoms/Paragraph';
 import Heading from 'sly/common/components/atoms/Heading';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
-import Header from 'sly/web/components/resourceCenter/Header';
+import Header from 'sly/web/components/resourceCenter/components/Header';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { Hr, Link, Block } from 'sly/common/components/atoms';
 import { withRedirectTo } from 'sly/common/services/redirectTo';

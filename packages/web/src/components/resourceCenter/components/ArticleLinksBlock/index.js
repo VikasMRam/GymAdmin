@@ -6,8 +6,7 @@ import { Block, Link } from 'sly/common/components/atoms';
 import { withBorder } from 'sly/common/components/helpers';
 import { size } from 'sly/common/components/themes';
 import { host } from 'sly/web/config';
-import {RESOURCE_CENTER_PATH} from "sly/web/constants/dashboardAppPaths";
-
+import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
 
 const Wrapper = styled(Block)(withBorder);
 const Title = styled(Block)(
