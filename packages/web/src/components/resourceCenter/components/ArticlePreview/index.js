@@ -50,7 +50,7 @@ const ArticlePreview = ({
     >
       <ResponsiveImage
         css={{ objectFit: 'cover', width: '100%', height: '100%' }}
-        src={`http://localhost:1337${url}`}
+        src={url}
         alt={alternativeText}
       />
     </Block>

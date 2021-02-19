@@ -42,8 +42,6 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
     id_ne,
   }));
 
-  console.log('RelatedPopularArticles requestInfo', requestInfo);
-
   if ((requestInfo.hasFinished && !requestInfo?.result?.length) || !requestInfo.hasFinished) return null;
 
   return (
