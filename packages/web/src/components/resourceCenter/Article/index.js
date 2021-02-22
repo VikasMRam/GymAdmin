@@ -117,24 +117,6 @@ const ArticlePage = ({ match, redirectTo }) => {
             <AddThis />
           </Block>
 
-          {/*<div className="addthis_sharing_toolbox">*/}
-          {/*  <a className="addthis_button_facebook">*/}
-          {/*    <Icon icon="facebook" />*/}
-          {/*  </a>*/}
-
-          {/*  <a className="addthis_button_twitter">*/}
-          {/*    <Icon icon="twitter" />*/}
-          {/*  </a>*/}
-
-          {/*  <a className="addthis_button_linkedin">*/}
-          {/*    <Icon icon="linkedin" />*/}
-          {/*  </a>*/}
-
-          {/*  <a className="addthis_button_email">*/}
-          {/*    <Icon icon="email" />*/}
-          {/*  </a>*/}
-          {/*</div>*/}
-
         </Block>
 
         <Block
