@@ -1,3 +1,5 @@
+import { startCase } from 'lodash';
+
 import { urlize, stateRegionMap, getStateAbbr, objectToURLQueryParams } from 'sly/web/services/helpers/url';
 
 const validNumber = x => typeof x === 'number' || x === undefined;
@@ -53,4 +55,13 @@ export const isOnVacation = (agent) => {
   } catch (e) {
     return false;
   }
+};
+
+export const getAgentFirstName = (agent) => {
+  if (agent && agent.info && agent.info.displayName && agent.info.displayName !== '') {
+    const fname = agent.info.displayText.split(' ')[0];
+    return startCase(fname);
+  }
+  // if empty return generic term
+  return 'Advisor';
 };

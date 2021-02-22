@@ -20,6 +20,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
+import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
@@ -351,7 +352,7 @@ export default class CommunityDetailPage extends Component {
                       width="100%"
                       community={community}
                       type="expert"
-                      ctaText="Get help from an Expert"
+                      ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
                     />
                   </StyledHeadingBoxSection>
                 )}
