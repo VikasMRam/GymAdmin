@@ -25,6 +25,7 @@ import Link from 'sly/common/components/atoms/Link';
 import { topics } from 'sly/web/components/resourceCenter/helper';
 import withRedirectTo from 'sly/common/services/redirectTo/withRedirectTo';
 import TopicTag from 'sly/web/components/resourceCenter/components/TopicTag';
+import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import { assetPath } from 'sly/web/components/themes';
 
 const ArticleWrapper = styled(Block)(withDisplay);
@@ -112,6 +113,28 @@ const ArticlePage = ({ match, redirectTo }) => {
             {`By ${requestInfo?.result?.[0]?.author?.fullName} ·  Updated ${formatDate(requestInfo?.result?.[0]?.updated_at, 'long')}`}
           </Block>
 
+          <Block marginBottom="l" startingWithTablet={{ marginBottom: 'xl' }}>
+            <AddThis />
+          </Block>
+
+          {/*<div className="addthis_sharing_toolbox">*/}
+          {/*  <a className="addthis_button_facebook">*/}
+          {/*    <Icon icon="facebook" />*/}
+          {/*  </a>*/}
+
+          {/*  <a className="addthis_button_twitter">*/}
+          {/*    <Icon icon="twitter" />*/}
+          {/*  </a>*/}
+
+          {/*  <a className="addthis_button_linkedin">*/}
+          {/*    <Icon icon="linkedin" />*/}
+          {/*  </a>*/}
+
+          {/*  <a className="addthis_button_email">*/}
+          {/*    <Icon icon="email" />*/}
+          {/*  </a>*/}
+          {/*</div>*/}
+
         </Block>
 
         <Block
@@ -146,6 +169,15 @@ const ArticlePage = ({ match, redirectTo }) => {
           />
         </Block>
       }
+
+      <Block
+        marginBottom="l"
+        marginX="m"
+        startingWithTablet={{ marginBottom: 'xl', marginX: 'auto', width: size('layout.col6') }}
+      >
+        <Block marginBottom="m">Share this article</Block>
+        <AddThis />
+      </Block>
 
       <Block
         marginX="m"
