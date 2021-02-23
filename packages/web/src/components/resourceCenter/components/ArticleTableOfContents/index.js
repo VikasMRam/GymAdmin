@@ -3,7 +3,7 @@ import { array } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import Block from 'sly/common/components/atoms/Block';
-import { Link } from 'sly/common/components/atoms';
+import Link from 'sly/common/components/atoms/Link';
 import { getKey, size } from 'sly/common/components/themes';
 import { withBorder } from 'sly/common/components/helpers';
 

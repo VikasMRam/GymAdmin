@@ -2,17 +2,19 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { string } from 'prop-types';
 
-import Block from 'sly/common/components/atoms/Block';
 import { getKey, size } from 'sly/common/components/themes';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import { Icon, Link } from 'sly/common/components/atoms';
 import { startingWith, withBorder, withDisplay } from 'sly/common/components/helpers';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import Icon from 'sly/common/components/atoms/Icon';
+import Link from 'sly/common/components/atoms/Link';
+import Block from 'sly/common/components/atoms/Block';
 
 const AuthorFullName = styled(Block)(
   css`
     white-space: nowrap;
   `,
 );
+
 const WrittenBy = styled(Block)(
   false, // ????
   css`
@@ -22,11 +24,12 @@ const WrittenBy = styled(Block)(
     ${startingWith(
     'tablet',
     css`
-          margin: 0;
-        `,
+      margin: 0;
+    `,
   )}
   `,
 );
+
 const WithDisplay = styled(Block)(withDisplay);
 
 const ImgWrapper = styled(Block)(withBorder);

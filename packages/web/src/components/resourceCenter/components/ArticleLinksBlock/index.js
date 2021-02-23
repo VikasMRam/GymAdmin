@@ -2,11 +2,12 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { array, string } from 'prop-types';
 
-import { Block, Link } from 'sly/common/components/atoms';
 import { withBorder } from 'sly/common/components/helpers';
 import { size } from 'sly/common/components/themes';
 import { host } from 'sly/web/config';
 import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
+import Block from 'sly/common/components/atoms/Block';
+import Link from 'sly/common/components/atoms/Link';
 
 const Wrapper = styled(Block)(withBorder);
 const Title = styled(Block)(

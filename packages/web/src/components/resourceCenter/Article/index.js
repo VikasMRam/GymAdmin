@@ -2,31 +2,31 @@
 
 import React, { useRef } from 'react';
 import Helmet from 'react-helmet';
+import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
-import { func, object } from 'prop-types';
+import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { startingWith, withDisplay } from 'sly/common/components/helpers';
-import { Block } from 'sly/common/components/atoms';
 import { getKey, size } from 'sly/common/components/themes';
+import { formatDate } from 'sly/web/services/helpers/date';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { topics } from 'sly/web/components/resourceCenter/helper';
+import { assetPath } from 'sly/web/components/themes';
+import Block from 'sly/common/components/atoms/Block';
 import Heading from 'sly/common/components/atoms/Heading';
+import Hr from 'sly/common/components/atoms/Hr';
+import Link from 'sly/common/components/atoms/Link';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
-import { formatDate } from 'sly/web/services/helpers/date';
 import Header from 'sly/web/components/resourceCenter/components/Header';
-import Hr from 'sly/common/components/atoms/Hr';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
 import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 import RelatedPopularArticles from 'sly/web/components/resourceCenter/components/RelatedPopularArticles';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import Link from 'sly/common/components/atoms/Link';
-import { topics } from 'sly/web/components/resourceCenter/helper';
-import withRedirectTo from 'sly/common/services/redirectTo/withRedirectTo';
 import TopicTag from 'sly/web/components/resourceCenter/components/TopicTag';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
-import { assetPath } from 'sly/web/components/themes';
 
 const ArticleWrapper = styled(Block)(withDisplay);
 
@@ -34,7 +34,7 @@ const BreadCrumbsTitle = styled(Block)(withDisplay);
 
 const LoaderWrapper = styled(Block)(withDisplay);
 
-const ArticlePage = ({ match, redirectTo }) => {
+const ArticlePage = ({ match }) => {
   const articleRef = useRef(null);
 
   const { slug, topic } = match.params;
@@ -44,8 +44,7 @@ const ArticlePage = ({ match, redirectTo }) => {
     req => req({ slug_eq: slug, topic_eq: topics.find(({ value }) => value.replace(/\s/g, '-').toLowerCase() === topic)?.label || '' }));
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
-    redirectTo(RESOURCE_CENTER_PATH);
-    return null;
+    return <Redirect to={RESOURCE_CENTER_PATH} />;
   }
 
   if (!requestInfo.hasFinished) {
@@ -215,7 +214,6 @@ ArticlePage.displayName = 'ResourceCenterArticlePage';
 
 ArticlePage.propTypes = {
   match: object,
-  redirectTo: func,
 };
 
-export default withRedirectTo(ArticlePage);
+export default ArticlePage;

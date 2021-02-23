@@ -1,21 +1,22 @@
-import React, { createRef, useState, useEffect, Fragment } from 'react';
+import React, { createRef, useRef, useEffect, useState, useMemo, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { array } from 'prop-types';
 
-import Heading from 'sly/common/components/atoms/Heading';
-import Block from 'sly/common/components/atoms/Block';
-import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
 import { getKey, size } from 'sly/common/components/themes';
 import { withBorder, startingWith, withDisplay, upTo } from 'sly/common/components/helpers';
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
-import redirectTo from 'sly/common/services/redirectTo/redirectTo';
-import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
-import FAQItem from "sly/web/components/resourceCenter/components/FAQItem";
-import EditorValueWrapper from "sly/web/components/resourceCenter/components/EditorValueWrapper";
-import { Icon, Link } from "sly/common/components/atoms";
-import ResponsiveImage from "sly/web/components/atoms/ResponsiveImage";
 import { host } from "sly/web/config";
 import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
+import Heading from 'sly/common/components/atoms/Heading';
+import Block from 'sly/common/components/atoms/Block';
+import redirectTo from 'sly/common/services/redirectTo/redirectTo';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
+import Link from "sly/common/components/atoms/Link";
+import Icon from "sly/common/components/atoms/Icon";
+import ResponsiveImage from "sly/web/components/atoms/ResponsiveImage";
+import FAQItem from "sly/web/components/resourceCenter/components/FAQItem";
+import EditorValueWrapper from "sly/web/components/resourceCenter/components/EditorValueWrapper";
+import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
 
 const articleDZComponentsNames = {
   subtitle: 'subtitle',
@@ -95,23 +96,22 @@ const subtitleStyles = css`
   ${startingWith('laptop', css({ width: size('layout.col8') }))}
 `;
 
-const onCurrentLocation = redirectTo => (addresses) => {
+const onCurrentLocation = (addresses) => {
   if (addresses?.length) {
-    const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; // ?geo=${latitude},${longitude},10`;
+    const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`;
 
     redirectTo(path);
   }
 };
 
 const ArticleContent = ({ content }) => {
-  const [subtitlesData, setSubtitlesData] = useState([]);
-
-  useEffect(() => {
+  const subtitlesData = useMemo(() => {
     const subtitlesArr = content?.filter(item => item.subtitle).map(({ subtitle }) => {
       const ref = createRef();
       return { ref, subtitle };
     });
-    if (subtitlesArr?.length) setSubtitlesData(subtitlesArr);
+    if (subtitlesArr?.length) return subtitlesArr;
+    return [];
   }, [content]);
 
   return (
@@ -150,7 +150,7 @@ const ArticleContent = ({ content }) => {
                   Find assisted living communities near you
                 </Block>
                 <SearchBoxContainer
-                  onCurrentLocation={onCurrentLocation(redirectTo)}
+                  onCurrentLocation={onCurrentLocation}
                   layout="header"
                   width="100%"
                   height={size('element.large')}

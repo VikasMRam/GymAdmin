@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
+import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -15,8 +16,9 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
-import { Hr, Link, Block } from 'sly/common/components/atoms';
-import { withRedirectTo } from 'sly/common/services/redirectTo';
+import Hr from 'sly/common/components/atoms/Hr';
+import Link from 'sly/common/components/atoms/Link';
+import Block from 'sly/common/components/atoms/Block';
 import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
 import { assetPath } from "sly/web/components/themes";
 
@@ -36,14 +38,13 @@ const paragraphStyles = css`
   line-height: 1.78;
 `;
 
-const Author = ({ match, redirectTo }) => {
+const Author = ({ match }) => {
   const { slug } = match.params;
 
   const { requestInfo } = usePrefetch('getAuthor', req => req({ slug: slug.replace(/\+/g, '%2b') }));
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
-    redirectTo(RESOURCE_CENTER_PATH);
-    return null;
+    return <Redirect to={RESOURCE_CENTER_PATH} />;
   }
 
   if (!requestInfo.hasFinished) return (
@@ -167,4 +168,4 @@ Author.propTypes = {
   location: object,
 };
 
-export default withRedirectTo(Author);
+export default Author;
