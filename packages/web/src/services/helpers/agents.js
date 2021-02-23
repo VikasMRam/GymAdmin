@@ -59,7 +59,7 @@ export const isOnVacation = (agent) => {
 
 export const getAgentFirstName = (agent) => {
   if (agent && agent.info && agent.info.displayName && agent.info.displayName !== '') {
-    const fname = agent.info.displayText.split(' ')[0];
+    const fname = agent.info.displayName.split(' ')[0];
     return startCase(fname);
   }
   // if empty return generic term
