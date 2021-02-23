@@ -20,6 +20,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
+import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
@@ -344,6 +345,17 @@ export default class CommunityDetailPage extends Component {
                     <CommunityPricingComparison community={community} />
                   </StyledHeadingBoxSection>
                 )}
+                {partnerAgent && (
+                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
+                    <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
+                    <AskAgentQuestionButtonContainer
+                      width="100%"
+                      community={community}
+                      type="expert"
+                      ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
+                    />
+                  </StyledHeadingBoxSection>
+                )}
 
                 {/* Disable home care AD and availability only */}
                 {/* <AdWrapper> */}
@@ -388,27 +400,15 @@ export default class CommunityDetailPage extends Component {
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
-                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
-                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
-                  <TrustScoreTile community={community} />
-                </StyledHeadingBoxSection>
-                }
-                {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
-                    <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
-                    <AskAgentQuestionButtonContainer
-                      width="100%"
-                      community={community}
-                      type="expert"
-                      ctaText="Get help from an Expert"
-                    />
-                  </StyledHeadingBoxSection>
-                )}
-
                 {!isActiveAdult && !isInternational &&
                   <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </StyledHeadingBoxSection>
+                }
+                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
+                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
                 }
 
                 {!isActiveAdult && !isInternational &&
