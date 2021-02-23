@@ -114,4 +114,5 @@ export default {
   getEmails: { method: get, path: '/platform/emails' },
 
   getAuthor: { method: get, path: '/authors', type: 'cms' },
+  getArticle: { method: get, path: '/articles', type: 'cms' },
 };

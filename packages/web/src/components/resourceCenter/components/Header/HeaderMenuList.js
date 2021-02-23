@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import Block from 'sly/common/components/atoms/Block';
 import { size, palette } from 'sly/common/components/themes';
 import { upTo, withDisplay } from 'sly/common/components/helpers';
-import Header from 'sly/web/components/resourceCenter/Header';
+import Header from 'sly/web/components/resourceCenter/components/Header';
 
 const Wrapper = styled(Block)(
   withDisplay,

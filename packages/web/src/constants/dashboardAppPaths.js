@@ -72,4 +72,7 @@ export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;
 
-export const RESOURCE_CENTER_AUTHOR_PATH = '/resources/author/:fullName';
+export const RESOURCE_CENTER_PATH = '/resources';
+export const RESOURCE_CENTER_AUTHOR_PATH = '/resources/author/:slug';
+export const RESOURCE_CENTER_ARTICLE_PATH = '/resources/articles/:topic/:slug';
+export const RESOURCE_CENTER_TOPIC_PATH = '/resources/topic/:topic';

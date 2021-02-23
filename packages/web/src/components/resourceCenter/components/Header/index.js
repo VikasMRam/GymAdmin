@@ -10,11 +10,13 @@ import {
 } from 'sly/common/components/helpers';
 import { Icon, Link } from 'sly/common/components/atoms';
 import { getKey, palette, size } from 'sly/common/components/themes';
-import SearchContainer from 'sly/web/components/resourceCenter/Search';
-import HeaderMenuList from 'sly/web/components/resourceCenter/Header/HeaderMenuList';
+import SearchContainer from 'sly/web/components/resourceCenter/components/Search';
+import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
+import { topics } from 'sly/web/components/resourceCenter/helper';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 
 const backToSeniorlyItem = {
-  name: 'Back to Seniorly.com',
+  value: 'Back to Seniorly.com',
   iconBack: true,
   palette: 'primary',
   to: '/',
@@ -22,10 +24,7 @@ const backToSeniorlyItem = {
 };
 
 const headerMenuItems = [
-  { name: 'Senior Living Guides', to: '/resources/topic/senior-living-guides' },
-  { name: 'Health and Lifestyle', to: '/resources/topic/health-and-lifestyle' },
-  { name: 'Voices', to: '/resources/topic/voices' },
-  { name: 'Caregivers', to: '/resources/topic/caregivers' },
+  ...topics,
   backToSeniorlyItem,
 ];
 
@@ -105,16 +104,16 @@ const RightMenuWrapper = styled(Block)`
 
 const getMenuItem = item => item.hideInBigScreen
   ? (
-    <Block key={item.name} startingWithLaptop={{ display: 'none' }}>
+    <Block key={item.value} startingWithLaptop={{ display: 'none' }}>
       <Link to={item.to}>
-        {item.name}
+        {item.value}
         {item.iconBack && <Icon icon="chevron" />}
       </Link>
     </Block>
   )
   : (
-    <Link key={item.name} to={item.to}>
-      {item.name}
+    <Link key={item.value} to={item.to}>
+      {item.value}
       {item.iconBack && <Icon icon="chevron" />}
     </Link>
   );
@@ -162,7 +161,7 @@ const Header = () => {
           css={{ display: 'flex', alignItems: 'center' }}
           palette="primary"
           variation="base"
-          to="/resources"
+          to={RESOURCE_CENTER_PATH}
         >
           <Icon icon="logo" fontSize={14} />
           <Text
