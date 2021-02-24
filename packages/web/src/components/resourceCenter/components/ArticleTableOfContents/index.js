@@ -16,7 +16,7 @@ const Item = styled(Link)(
   `,
 );
 
-const TableOfContents = ({ subtitlesData, initialSubtitles }) => (
+const TableOfContents = ({ subtitlesData }) => (
   <Wrapper
     border="regular"
     borderRadius="small"
@@ -37,11 +37,12 @@ const TableOfContents = ({ subtitlesData, initialSubtitles }) => (
     >
       Table of Contents
     </Block>
-    {(subtitlesData.length ? subtitlesData : initialSubtitles)?.map((item, index) => (
+    {subtitlesData.map((item, index) => (
       <Item
+        // eslint-disable-next-line react/no-array-index-key
         key={`${item.subtitle}-${index}`}
         display="block"
-        marginBottom={(subtitlesData.length ? subtitlesData : initialSubtitles).length - 1 !== index && getKey('sizes.spacing.m')}
+        marginBottom={subtitlesData.length - 1 !== index && getKey('sizes.spacing.m')}
         onClick={() => item.ref.current.scrollIntoView({ behavior: 'smooth' })}
       >
         {item.subtitle}
@@ -51,7 +52,6 @@ const TableOfContents = ({ subtitlesData, initialSubtitles }) => (
 );
 
 TableOfContents.propTypes = {
-  initialSubtitles: array,
   subtitlesData: array,
 };
 

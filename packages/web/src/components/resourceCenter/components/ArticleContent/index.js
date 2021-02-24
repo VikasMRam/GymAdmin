@@ -1,21 +1,21 @@
-import React, { createRef, useRef, useEffect, useState, useMemo, Fragment } from 'react';
+import React, { Fragment, useMemo, createRef } from 'react';
 import styled, { css } from 'styled-components';
 import { array } from 'prop-types';
 
 import { getKey, size } from 'sly/common/components/themes';
 import { withBorder, startingWith, withDisplay, upTo } from 'sly/common/components/helpers';
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
-import { host } from "sly/web/config";
-import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
+import { host } from 'sly/web/config';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Heading from 'sly/common/components/atoms/Heading';
 import Block from 'sly/common/components/atoms/Block';
 import redirectTo from 'sly/common/services/redirectTo/redirectTo';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
-import Link from "sly/common/components/atoms/Link";
-import Icon from "sly/common/components/atoms/Icon";
-import ResponsiveImage from "sly/web/components/atoms/ResponsiveImage";
-import FAQItem from "sly/web/components/resourceCenter/components/FAQItem";
-import EditorValueWrapper from "sly/web/components/resourceCenter/components/EditorValueWrapper";
+import Link from 'sly/common/components/atoms/Link';
+import Icon from 'sly/common/components/atoms/Icon';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import FAQItem from 'sly/web/components/resourceCenter/components/FAQItem';
+import EditorValueWrapper from 'sly/web/components/resourceCenter/components/EditorValueWrapper';
 import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
 
 const articleDZComponentsNames = {
@@ -106,30 +106,28 @@ const onCurrentLocation = (addresses) => {
 
 const ArticleContent = ({ content }) => {
   const subtitlesData = useMemo(() => {
-    const subtitlesArr = content?.filter(item => item.subtitle).map(({ subtitle }) => {
-      const ref = createRef();
-      return { ref, subtitle };
+    return content.map(({ subtitle, ...rest }) => {
+      if (subtitle) {
+        const link = createRef();
+        return { ref: link, subtitle, ...rest };
+      }
+      return rest;
     });
-    if (subtitlesArr?.length) return subtitlesArr;
-    return [];
   }, [content]);
 
   return (
     <>
-      {!!content?.filter(({ subtitle }) => subtitle).length &&
-        <TableOfContents
-          subtitlesData={subtitlesData}
-          initialSubtitles={content?.filter(({ subtitle }) => subtitle)}
-        />
-      }
+      {!!subtitlesData?.filter(({ subtitle }) => subtitle).length && (
+        <TableOfContents subtitlesData={subtitlesData.filter(({ subtitle }) => subtitle)} />
+      )}
       <ContentWrapper
         display="flex"
         alignItems="center"
         flexWrap="wrap"
         flexDirection="column"
       >
-        {content?.map(({ __component, ...rest }, index) => {
-          if (__component.includes(articleDZComponentsNames.search)) {
+        {subtitlesData?.map(({ __component, ...rest }, index) => {
+          if (__component.includes(articleDZComponentsNames.search))
             return (
               <SearchCommunityWrapper
                 key={index}
@@ -161,11 +159,9 @@ const ArticleContent = ({ content }) => {
                 />
               </SearchCommunityWrapper>
             );
-            }
           if (__component.includes(articleDZComponentsNames.editor)) return <EditorValueWrapper key={index} value={rest.value}/>;
           if (__component.includes(articleDZComponentsNames.subtitle)) {
-            const item = subtitlesData.find(item => item?.subtitle === rest.value);
-            return <Heading key={index} font="title-large" ref={item?.ref} css={subtitleStyles}>{rest.value}</Heading>;
+            return <Heading key={index} font="title-large" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
           }
           if (__component.includes(articleDZComponentsNames.listInTwoColumns)) return (
             <ListInTwoColumnsWrapper
@@ -222,7 +218,7 @@ const ArticleContent = ({ content }) => {
                   <Icon icon="loyalty" palette="viridian.base" fontSize={14} />
                 </Block>
                 <Block marginLeft="m">
-                  <LinkBlockText font="body-regular" display="inline" paddin>{rest.description}: </LinkBlockText>
+                  <LinkBlockText font="body-regular" display="inline">{rest.description}: </LinkBlockText>
                   <Link
                     font="body-regular"
                     {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? rest.to.replace(host, '') : rest.to}}
@@ -270,7 +266,6 @@ const ArticleContent = ({ content }) => {
               </>
             )
           }
-
           return '';
         })}
       </ContentWrapper>
