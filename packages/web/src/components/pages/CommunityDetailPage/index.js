@@ -34,10 +34,8 @@ import {
   makeTwoColumn,
   makeWrapper,
 } from 'sly/web/components/templates/CommunityDetailPageTemplate';
-// import UnhydratedCommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import Section from 'sly/web/components/molecules/Section';
 import CommunityAbout from 'sly/web/components/organisms/CommunityAbout';
-import CommunityPricingComparison from 'sly/web/components/organisms/CommunityPricingComparison';
 import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
 import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
@@ -60,14 +58,9 @@ import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/Tra
 import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
-// import UnhydratedCommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
-// import UnhydratedCommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
-// import UnhydratedBannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
-// import UnhydratedCommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnHydratedTrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
-// import TrustScoreTile from 'sly/web/components/organisms/profiles/TrustScoreTile';
 
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -80,13 +73,8 @@ const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContai
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
-// const CommunityStickyFooter = withHydration(UnhydratedCommunityStickyFooter, { alwaysHydrate: true });
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
-// const CommunityDetailsPageColumnContainer = withHydration(UnhydratedCommunityDetailsPageColumnContainer);
-// const CommunityProfileAdTileContainer = withHydration(UnhydratedCommunityProfileAdTileContainer, { alwaysHydrate: true });
-// const BannerNotificationAdContainer = withHydration(UnhydratedBannerNotificationAdContainer);
-// const CommunityPricingTable = withHydration(UnhydratedCommunityPricingTable, { alwaysHydrate: true });
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
 const TrustScoreTile = withHydration(UnHydratedTrustScoreContainer, { alwaysHydrate: true });
 const Chatbox = withHydration(UnhydratedChatbox, { alwaysHydrate: true });
@@ -340,11 +328,6 @@ export default class CommunityDetailPage extends Component {
                   />
                 </StyledHeadingBoxSection>
                 }
-                {!isActiveAdult && !isInternational && sortedEstimatedPrice.length > 0 && (
-                  <StyledHeadingBoxSection heading={`Compare Costs for ${name}`}>
-                    <CommunityPricingComparison community={community} />
-                  </StyledHeadingBoxSection>
-                )}
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
