@@ -49,8 +49,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
     } = this.props;
     const { id } = rawAgent;
     // FIXME: Checkbox issues: the true value comes along in the second element sometimes (browser specific? )
-    const isProVal = ( values.isPro.length > 0 ? values.isPro[0] || values.isPro[1] : false);
-    const canReceiveReferrals = ( values.canReceiveReferrals.length > 0 ? values.canReceiveReferrals[0] || values.canReceiveReferrals[1] : false);
+    const isProVal = (values.isPro.length > 0 ? values.isPro[0] || values.isPro[1] : false);
+    const canReceiveReferrals = (values.canReceiveReferrals.length > 0 ? values.canReceiveReferrals[0] || values.canReceiveReferrals[1] : false);
     let agent = immutable.wrap(pick(rawAgent, ['id', 'type', 'attributes.status', 'attributes.name', 'attributes.info', 'attributes.info.serviceArea']))
       .set('attributes.name', values.name)
       .set('attributes.info.bio', values.bio)
@@ -66,6 +66,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.isPro', isProVal)
       .set('attributes.info.canReceiveReferrals', canReceiveReferrals)
       .set('attributes.info.cellPhone', phoneParser(values.cellPhone))
+      .set('attributes.info.slackChannel', values.slackChannel)
       .set('attributes.info.email', values.email)
       .set('attributes.info.timeZone', values.timeZone)
       .set('attributes.info.smsFormat', values.smsFormat)
@@ -79,12 +80,10 @@ export default class PartnerAgentProfileFormContainer extends Component {
         .set('attributes.info.vacationEnd', values.vacation[1]);
     }
     if (values.organization && values.organization.value) {
-
       agent.set('relationships.organization.data', {
         type: ORGANIZATION_RESOURCE_TYPE,
         id: values.organization.value,
       });
-
     }
     agent = agent.value();
 
@@ -107,14 +106,14 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (!agent) {
         return <div>Partner Agent Record Not Found...</div>;
       }
-      const { info, status, name, organization:org } = agent;
+      const { info, status, name, organization: org } = agent;
 
       const organization = {
         value: org.id,
         label: org.name,
       };
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, experience, isPro, canReceiveReferrals, cellPhone, email, timeZone, smsFormat, contract, contractStatus } = info;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, experience, isPro, canReceiveReferrals, cellPhone, slackChannel, email, timeZone, smsFormat, contract, contractStatus } = info;
       let zipcodesServed = null;
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
@@ -123,8 +122,30 @@ export default class PartnerAgentProfileFormContainer extends Component {
       if (vacationStart && vacationEnd) {
         vacation = [new Date(vacationStart), new Date(vacationEnd)];
       }
-      const initialValues = { name, organization, bio, parentCompany, displayName, cv, imageCaption, chosenReview, vacation, adminRegion,
-        zipcodesServed, status, adminNotes, slyScore, experience, isPro: [isPro], canReceiveReferrals: [canReceiveReferrals], cellPhone, email, timeZone, smsFormat, contract, contractStatus };
+      const initialValues = { name,
+        organization,
+        bio,
+        parentCompany,
+        displayName,
+        cv,
+        imageCaption,
+        chosenReview,
+        vacation,
+        adminRegion,
+        zipcodesServed,
+        status,
+        adminNotes,
+        slyScore,
+        experience,
+        isPro: [isPro],
+        canReceiveReferrals: [canReceiveReferrals],
+        cellPhone,
+        email,
+        slackChannel,
+        timeZone,
+        smsFormat,
+        contract,
+        contractStatus };
       const isSlyAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
       return (
         <ReduxForm

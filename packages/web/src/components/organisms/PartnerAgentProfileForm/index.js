@@ -254,6 +254,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             wideWidth
           />
           <Field
+            name="slackChannel"
+            label="Slack Channel"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
             name="timeZone"
             label="Time Zone"
             type="select"
