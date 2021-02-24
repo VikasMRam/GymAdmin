@@ -73,10 +73,7 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
         hideLastChildOnTablet={requestInfo.result?.length > 2}
       >
         {requestInfo.result?.map(({
-          mainImg: {
-            url,
-            alternativeText,
-          },
+          mainImg,
           title,
           shortDescription,
           slug,
@@ -87,8 +84,8 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
             <ArticlePreview {...{
               smallSizeOnPhone: true,
               topic,
-              url,
-              alternativeText,
+              url: mainImg?.url,
+              alternativeText: mainImg?.alternativeText,
               title,
               shortDescription,
             }}

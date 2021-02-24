@@ -167,7 +167,6 @@ const ArticleContent = ({ content }) => {
             const item = subtitlesData.find(item => item?.subtitle === rest.value);
             return <Heading key={index} font="title-large" ref={item?.ref} css={subtitleStyles}>{rest.value}</Heading>;
           }
-
           if (__component.includes(articleDZComponentsNames.listInTwoColumns)) return (
             <ListInTwoColumnsWrapper
               key={index}
@@ -235,17 +234,16 @@ const ArticleContent = ({ content }) => {
               </LinkBlockWrapper>
             );
           }
-
           if (__component.includes(articleDZComponentsNames.image)) {
             return (
               <>
                 <Block
-                  marginBottom={rest.image.alternativeText ? 'xs' : 'xl'}
+                  marginBottom={rest.image?.alternativeText ? 'xs' : 'xl'}
                   marginTop="xs"
                   width={(rest.size === 'large' && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && `calc(100% - ${getKey('sizes.spacing.m')} * 2)`)}
                   startingWithTablet={{
                     width: size(`layout.${(rest.size === 'middle' && 'col8') || (rest.size === 'small' && 'col6')}`),
-                    marginBottom: rest.image.alternativeText ? 'm' : 'xxl',
+                    marginBottom: rest.image?.alternativeText ? 'm' : 'xxl',
                     marginTop: 'm',
                   }}
                   startingWithLaptop={{
@@ -254,11 +252,11 @@ const ArticleContent = ({ content }) => {
                 >
                   <ResponsiveImage
                     css={{ width: '100%', height: 'auto' }}
-                    src={rest.image.url}
-                    alt={rest.image.alternativeText}
+                    src={rest.image?.url}
+                    alt={rest.image?.alternativeText}
                   />
                 </Block>
-                {rest.image.alternativeText && (
+                {rest.image?.alternativeText && (
                   <AlternativeText
                     marginBottom="xl"
                     width={`calc(100% - ${getKey('sizes.spacing.m')} * 2)`}
@@ -266,7 +264,7 @@ const ArticleContent = ({ content }) => {
                     startingWithLaptop={{ width: size('layout.col8') }}
                     font="body-small"
                   >
-                    {rest.image.alternativeText}
+                    {rest.image?.alternativeText}
                   </AlternativeText>
                 )}
               </>

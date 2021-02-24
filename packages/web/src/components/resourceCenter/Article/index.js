@@ -184,9 +184,9 @@ const ArticlePage = ({ match }) => {
         startingWithLaptop={{ width: size('layout.col8') }}
       >
         <AuthorPreview
-          url={requestInfo?.result?.[0]?.author.img.url}
+          url={requestInfo?.result?.[0]?.author.img?.url}
           shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
-          alternativeText={requestInfo?.result?.[0]?.author.img.alternativeText}
+          alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
           fullName={requestInfo?.result?.[0]?.author.fullName}
           firstName={requestInfo?.result?.[0]?.author.firstName}
           slug={requestInfo?.result?.[0]?.author.slug}

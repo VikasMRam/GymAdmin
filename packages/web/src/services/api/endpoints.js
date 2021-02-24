@@ -115,4 +115,5 @@ export default {
 
   getAuthor: { method: get, path: '/authors', type: 'cms' },
   getArticle: { method: get, path: '/articles', type: 'cms' },
+  getArticlesCount: { method: get, path: '/articles/count', type: 'cms' },
 };
