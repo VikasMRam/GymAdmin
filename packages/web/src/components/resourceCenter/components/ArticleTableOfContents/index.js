@@ -40,12 +40,12 @@ const TableOfContents = ({ subtitlesData }) => (
     {subtitlesData.map((item, index) => (
       <Item
         // eslint-disable-next-line react/no-array-index-key
-        key={`${item.subtitle}-${index}`}
+        key={`${item.value}-${index}`}
         display="block"
         marginBottom={subtitlesData.length - 1 !== index && getKey('sizes.spacing.m')}
         onClick={() => item.ref.current.scrollIntoView({ behavior: 'smooth' })}
       >
-        {item.subtitle}
+        {item.value}
       </Item>
       ))}
   </Wrapper>

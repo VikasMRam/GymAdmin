@@ -42,9 +42,10 @@ const LinksBlock = ({ title, description, links }) => {
       </Title>
       {links?.map(({ to, title, id }) => {
         const isResourceCenterRoute = to.includes(`${host}${RESOURCE_CENTER_PATH}`);
+        const splitPath = to.split(host);
         return <LinkItem
           key={id}
-          {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? to.replace(host, '') : to}}
+          {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : to}}
         >
           {title}
         </LinkItem>

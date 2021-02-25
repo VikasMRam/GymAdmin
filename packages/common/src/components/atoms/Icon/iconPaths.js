@@ -66,6 +66,7 @@ export default {
   'mobile-dark': require('./icons/mobile-dark-regular.svg'),
   money: require('./icons/money-regular.svg'),
   move: require('./icons/move-regular.svg'),
+  minus: require('./icons/minus-regular.svg'),
   note: require('./icons/note-regular.svg'),
   pause: require('./icons/pause-regular.svg'),
   payment: require('./icons/payment-regular.svg'),

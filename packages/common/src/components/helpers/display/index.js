@@ -17,6 +17,8 @@ export const withDisplay = ({
   gridTemplateRows,
   gridTemplateAreas,
   gridArea,
+  columnGap,
+  rowGap,
 }) => css({
   display: block === true ? 'block' : display,
   justifyContent,
@@ -33,5 +35,7 @@ export const withDisplay = ({
   gridTemplateRows,
   gridTemplateAreas,
   gridArea,
+  columnGap,
+  rowGap,
 });
 

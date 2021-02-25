@@ -155,6 +155,7 @@ const ArticlePage = ({ match }) => {
         marginBottom="l"
         marginX="m"
         startingWithTablet={{ marginBottom: 'xl', marginX: 'auto', width: size('layout.col6') }}
+        startingWithLaptop={{ width: size('layout.col8') }}
       >
         <Block marginBottom="m">Share this article</Block>
         <AddThis />

@@ -51,7 +51,7 @@ const tableStyles = css`
 `;
 
 const DynamicItemWrapper = styled(Block)(
-  false,
+  false, // without it styles does not work
   css`
     & * {
       font-size: 1.125rem;
@@ -80,12 +80,13 @@ const DynamicItemWrapper = styled(Block)(
   `,
 );
 
-const EditorValueWrapper = ({ value }) => (
+const EditorValueWrapper = ({ value, ...rest }) => (
   <DynamicItemWrapper
     dangerouslySetInnerHTML={{ __html: value }}
     width={`calc(100% - ${getKey('sizes.spacing.m')} * 2)`}
     startingWithTablet={{ width: size('layout.col6') }}
     startingWithLaptop={{ width: size('layout.col8') }}
+    {...rest}
   />
 );
 
