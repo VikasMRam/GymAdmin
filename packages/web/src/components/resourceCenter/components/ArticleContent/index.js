@@ -290,7 +290,7 @@ const ArticleContent = ({ content }) => {
                     marginBottom="xs"
                     startingWithTablet={{ marginBottom: '0' }}
                   >
-                    <Icon icon={icon} css={{ paddingTop: getKey('sizes.spacing.xxs') }} />
+                    <Icon icon={icon.replace(/_/g, '-')} css={{ paddingTop: getKey('sizes.spacing.xxs') }} />
                     <EditorValueWrapper
                       value={value}
                       startingWithTablet={{ width: '100%' }}

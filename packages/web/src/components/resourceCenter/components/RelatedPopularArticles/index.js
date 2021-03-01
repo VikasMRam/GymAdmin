@@ -10,22 +10,17 @@ import { getKey, size } from 'sly/common/components/themes';
 import { startingWith, upTo, withDisplay } from 'sly/common/components/helpers';
 import Link from "sly/common/components/atoms/Link";
 
-const ArticlesWrapper = styled(Block)(
-  withDisplay,
-  css`
-    ${startingWith('tablet', css`
-      & > a:last-child {
-        display: ${({ hideLastChildOnTablet }) => hideLastChildOnTablet && 'none'};
-      }
-    `)}
-    
-    ${startingWith('laptop', css`
-      & > a:last-child {
-        display: flex;
-      }
-    `)}
-  `,
-);
+const ArticlePreviewWrapper = styled(Link)`
+  ${startingWith('tablet', css`
+    display: ${({ hideOnTablet }) => hideOnTablet && 'none'};
+  `)}
+
+  ${startingWith('laptop', css`
+    display: flex;
+  `)}
+`;
+
+const ArticlesWrapper = styled(Block)(withDisplay);
 
 const subtitleStyles = css`
   margin: 0 auto ${getKey('sizes.spacing.l')};
@@ -60,7 +55,7 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
         paddingX="m"
         // startingWithTablet cannot replace main styles
         upToTablet={{
-          gridTemplateColumns: '17.5rem 17.5rem 17.5rem',
+          gridTemplateColumns: '17.5rem 17.5rem 17.5rem 1px',
           columnGap: size('spacing.m'),
         }}
         startingWithTablet={{
@@ -70,7 +65,6 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
           columnGap: size('spacing.l'),
         }}
         startingWithLaptop={{ gridTemplateColumns: '20.5rem 20.5rem 20.5rem' }}
-        hideLastChildOnTablet={requestInfo.result?.length > 2}
       >
         {requestInfo.result?.map(({
           mainImg,
@@ -78,9 +72,14 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
           shortDescription,
           slug,
           topic,
+          tagsList,
           id,
-        }) => (
-          <Link to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`} key={id}>
+        }, index) => (
+          <ArticlePreviewWrapper
+            to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`}
+            key={id}
+            hideOnTablet={index > 1}
+          >
             <ArticlePreview {...{
               smallSizeOnPhone: true,
               topic,
@@ -88,10 +87,12 @@ const RelatedPopularArticles = ({ limit: _limit, topic, id: id_ne }) => {
               alternativeText: mainImg?.alternativeText,
               title,
               shortDescription,
+              tagsList,
             }}
             />
-          </Link>
+          </ArticlePreviewWrapper>
         ))}
+        <Block startingWithTablet={{ display: 'none' }} />
       </ArticlesWrapper>
     </Block>
   );

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, string } from 'prop-types';
+import { array, bool, string } from 'prop-types';
 
 import Block from 'sly/common/components/atoms/Block';
 import { withBorder, withDisplay } from 'sly/common/components/helpers';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Heading from 'sly/common/components/atoms/Heading';
 import { getKey, size } from 'sly/common/components/themes';
-import TopicTag from 'sly/web/components/resourceCenter/components/TopicTag';
+import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 
 const getStylesForEllipsisText = (maxRowQty, styles = {}) => ({
   display: '-webkit-box',
@@ -27,6 +27,7 @@ const ArticlePreview = ({
   alternativeText,
   title,
   topic,
+  tagsList,
   shortDescription,
 }) => (
   <Wrapper
@@ -72,7 +73,7 @@ const ArticlePreview = ({
         {shortDescription}
       </Block>
 
-      <TopicTag topic={topic} />
+      <ArticleTags topic={topic} tagsList={tagsList} />
     </TextWrapper>
 
   </Wrapper>
@@ -85,6 +86,7 @@ ArticlePreview.propTypes = {
   alternativeText: string,
   title: string,
   topic: string,
+  tagsList: array,
   shortDescription: string,
 };
 

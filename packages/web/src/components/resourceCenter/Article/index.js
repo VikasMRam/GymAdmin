@@ -25,7 +25,7 @@ import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPr
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
 import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 import RelatedPopularArticles from 'sly/web/components/resourceCenter/components/RelatedPopularArticles';
-import TopicTag from 'sly/web/components/resourceCenter/components/TopicTag';
+import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 
 const ArticleWrapper = styled(Block)(withDisplay);
@@ -168,7 +168,7 @@ const ArticlePage = ({ match }) => {
         startingWithLaptop={{ width: size('layout.col8') }}
       >
         <Block marginBottom="m">Tags</Block>
-        <TopicTag topic={requestInfo?.result?.[0]?.topic} />
+        <ArticleTags topic={requestInfo?.result?.[0]?.topic} tagsList={requestInfo?.result?.[0]?.tagsList} />
       </Block>
 
       <Block
