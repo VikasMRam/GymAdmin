@@ -4,12 +4,15 @@ import { arrayOf, shape, string, object } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
 import { text as textPropType } from 'sly/common/propTypes/text';
+import { withPad } from 'sly/common/components/helpers';
 import { Link, Block } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 
 const getSize = p => size('text', p.size);
 
 const Wrapper = styled(Block)`
+  ${withPad}
+
   ol {
     display: block;
     list-style-type: none;
