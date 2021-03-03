@@ -88,10 +88,11 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
             mainImg,
             slug,
             topic,
+            tagsList,
             id,
           }) => (
             <Link to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`} key={id}>
-              <ArticlePreview{...{ alternativeText: mainImg?.alternativeText, title, shortDescription, url: mainImg?.url, topic }} />
+              <ArticlePreview{...{ alternativeText: mainImg?.alternativeText, title, shortDescription, url: mainImg?.url, topic, tagsList }} />
             </Link>
           ))}
          </Block>
