@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import { query, getRelationship, invalidateRequests, withUser } from 'sly/web/services/api';
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import {
   FAMILY_STATUS_ACTIVE,
   FAMILY_STATUS_ON_PAUSE,
@@ -21,7 +21,7 @@ import {
 } from 'sly/web/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/web/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
-import { PROVIDER_ENTITY_TYPE_ORGANIZATION, PROVIDER_ENTITY_TYPE_COMMUNITY } from 'sly/web/constants/provider';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { createValidator, required, float } from 'sly/web/services/validation';
 import { isBoolean } from 'sly/common/services/helpers/utils';
 import { getStageDetails } from 'sly/web/services/helpers/stage';
