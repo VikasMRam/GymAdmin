@@ -11,6 +11,7 @@ const Wrapper = styled(Block)(
   withDisplay,
   css`
     background: ${palette('white', 'base')};
+    z-index: 2;
     
     & a {
       display: flex;

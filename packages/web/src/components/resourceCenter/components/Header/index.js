@@ -2,18 +2,20 @@ import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import Block from 'sly/common/components/atoms/Block';
 import {
   withBorder,
   startingWith,
-  withDisplay, upTo,
+  withDisplay,
+  upTo,
 } from 'sly/common/components/helpers';
-import { Icon, Link } from 'sly/common/components/atoms';
 import { getKey, palette, size } from 'sly/common/components/themes';
-import SearchContainer from 'sly/web/components/resourceCenter/components/Search';
-import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
 import { topics } from 'sly/web/components/resourceCenter/helper';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import Icon from 'sly/common/components/atoms/Icon';
+import Link from 'sly/common/components/atoms/Link';
+import Block from 'sly/common/components/atoms/Block';
+import SearchContainer from 'sly/web/components/resourceCenter/components/Search';
+import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
 
 const backToSeniorlyItem = {
   value: 'Back to Seniorly.com',
@@ -34,12 +36,14 @@ const Wrapper = styled(Block)(
   css`
     padding: ${size('spacing.m')};
     outline: none;
+    background: ${palette('white', 'base')};
     
     ${upTo('laptop', css`
-      ${ifProp('isMenuOpen', `
+      ${ifProp('menuIsOpen', `
         position: fixed;
-        height: 100%;
-        overflow: auto;
+        border-radius: 0;
+        width: 100%;
+        z-index: 1;
       `)}
     `)}
     
@@ -102,9 +106,9 @@ const RightMenuWrapper = styled(Block)`
     }
   `;
 
-const getMenuItem = item => item.hideInBigScreen
+const getMenuItem = (item, setMenuIsOpen) => item.hideInBigScreen
   ? (
-    <Block key={item.value} startingWithLaptop={{ display: 'none' }}>
+    <Block onClick={() => setMenuIsOpen(false)} key={item.value} startingWithLaptop={{ display: 'none' }}>
       <Link to={item.to}>
         {item.value}
         {item.iconBack && <Icon icon="chevron" />}
@@ -112,13 +116,13 @@ const getMenuItem = item => item.hideInBigScreen
     </Block>
   )
   : (
-    <Link key={item.value} to={item.to}>
+    <Link onClick={() => setMenuIsOpen(false)} key={item.value} to={item.to}>
       {item.value}
       {item.iconBack && <Icon icon="chevron" />}
     </Link>
   );
 
-const getMenuItems = menuItems => menuItems.map(item => getMenuItem(item));
+const getMenuItems = (menuItems, setMenuIsOpen) => menuItems.map(item => getMenuItem(item, setMenuIsOpen));
 
 const Header = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -151,6 +155,7 @@ const Header = () => {
       borderRadius="small"
       borderPalette="slate"
       borderVariation="lighter-90"
+      menuIsOpen={menuIsOpen}
       onBlur={handleHeaderMenuBlur}
     >
       <LogoWrapper
@@ -227,8 +232,9 @@ const Header = () => {
 
       {menuIsOpen && (
         <HeaderMenuList
-          listItems={getMenuItems(headerMenuItems)}
+          listItems={getMenuItems(headerMenuItems, setMenuIsOpen)}
           headerRef={headerMenuRef}
+          menuIsOpen={menuIsOpen}
         />
       )}
     </Wrapper>
