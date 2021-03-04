@@ -1,18 +1,25 @@
 import { css } from 'styled-components';
-import { withProp } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
 import { upTo, startingWith } from './funcs';
+import iterateDevices from './iterateDevices';
 
 export { upTo, startingWith };
 
-export const withMedia = () => css`
-  ${withProp('upToDesktop', upToDesktop => upTo('desktop', upToDesktop))}
-  ${withProp('upToLaptop', upToLaptop => upTo('laptop', upToLaptop))}
-  ${withProp('upToTablet', upToTablet => upTo('tablet', upToTablet))}
-  ${withProp('upToMobile', upToMobile => upTo('mobile', upToMobile))}
+export const withMedia = ({ upTo: upToDevice, startingWith: startingWithDevice }) => css`
+  ${iterateDevices}
 
-  ${withProp('startingWith', startingWithStyles => startingWith(null, startingWithStyles))}
-  ${withProp('startingWithMobile', startingWithMobile => startingWith('mobile', startingWithMobile))}
-  ${withProp('startingWithTablet', startingWithTablet => startingWith('tablet', startingWithTablet))}
-  ${withProp('startingWithLaptop', startingWithLaptop => startingWith('laptop', startingWithLaptop))}
+  ${ifProp('upTo', css`
+    display: none;
+    ${upTo(upToDevice, css`
+      display: inherit;
+    `)}
+  `)}
+
+  ${ifProp('startingWith', css`
+    display: none;
+    ${startingWith(startingWithDevice, css`
+      display: inherit;
+    `)}
+  `)}
 `;
