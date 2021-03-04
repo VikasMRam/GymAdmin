@@ -21,10 +21,11 @@ const TagsWrap = styled(Block)(withDisplay);
 
 const ArticleTags = ({ topic, tagsList }) => (
   <>
-    {tagsList.length ? (
+    {tagsList?.filter(({ value }) => value).length ? (
       <TagsWrap display="flex" flexWrap="wrap" flexGrow={1} alignItems="flex-end" alignContent="flex-end">
-        {tagsList.map(({ value }) => (
+        {tagsList.map(({ value, id }) => (
           <Tag
+            key={id}
             display="inline-block"
             width="max-content"
             font="label"
@@ -37,7 +38,6 @@ const ArticleTags = ({ topic, tagsList }) => (
             background="viridian.base"
             palette="white"
           >
-
             {value.replace(/_/g, ' ')}
           </Tag>
         ))}

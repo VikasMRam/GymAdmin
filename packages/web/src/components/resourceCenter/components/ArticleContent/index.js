@@ -132,6 +132,7 @@ const ArticleContent = ({ content }) => {
         alignItems="center"
         flexWrap="wrap"
         flexDirection="column"
+        width="100%"
       >
         {subtitlesData?.map(({ __component, ...rest }, index) => {
           if (__component.includes(articleDZComponentsNames.search))
@@ -282,8 +283,9 @@ const ArticleContent = ({ content }) => {
                 startingWithTablet={{ width: size('layout.col6') }}
                 startingWithLaptop={{ width: size('layout.col8') }}
               >
-                {rest.value?.map(({ icon, value }) => (
+                {rest.value?.map(({ icon, value }, index) => (
                   <ItemWithIcon
+                    key={`${value}-${index}`}
                     display="grid"
                     gridTemplateColumns={`${getKey('sizes.element.tag')} calc(100% - ${getKey('sizes.element.tag')} - ${getKey('sizes.spacing.l')})`}
                     columnGap={getKey('sizes.spacing.m')}

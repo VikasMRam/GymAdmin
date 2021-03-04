@@ -10,34 +10,13 @@ import Link from 'sly/common/components/atoms/Link';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import Heading from 'sly/common/components/atoms/Heading';
 import Pagination from 'sly/web/components/molecules/Pagination';
-
-const ARTICLES_RANGE = 18;
+import { getTextForPagination, ARTICLES_RANGE_FOR_PAGINATION } from "sly/web/components/resourceCenter/helper";
 
 const PaginationText = styled(Block)(
   css`
     text-align: center;
   `,
 );
-
-const getTextForPagination = (pageNumber, articlesCount) => {
-  let start;
-  let end;
-
-  if (pageNumber) {
-    start = pageNumber * ARTICLES_RANGE + 1;
-  } else start = 1;
-  if ((articlesCount < ARTICLES_RANGE) || (pageNumber * ARTICLES_RANGE) + ARTICLES_RANGE >= articlesCount) {
-    end = articlesCount;
-  }
-  if ((pageNumber * ARTICLES_RANGE) + ARTICLES_RANGE < articlesCount) {
-    end = (pageNumber * ARTICLES_RANGE) + ARTICLES_RANGE;
-  }
-  if ((ARTICLES_RANGE < articlesCount) && !pageNumber) {
-    end = ARTICLES_RANGE;
-  }
-
-  return `${start} – ${end} of ${articlesCount} results`;
-};
 
 const AuthorArticles = ({ slug, firstName, pageNumber }) => {
   const { requestInfo: { result: articlesCount } } = usePrefetch(
@@ -49,8 +28,8 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
     'getArticle',
     req => req({
       'author.slug': slug.replace(/\+/g, '%2b'),
-      _start: pageNumber ? pageNumber * ARTICLES_RANGE : 0,
-      _limit: ARTICLES_RANGE,
+      _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
+      _limit: ARTICLES_RANGE_FOR_PAGINATION,
     }),
   );
 
@@ -102,9 +81,9 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
         <Pagination
           basePath={`${RESOURCE_CENTER_PATH}/author/${slug}`}
           pageParam="page-number"
-          total={articlesCount / ARTICLES_RANGE}
+          total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
           current={+pageNumber || 0}
-          range={ARTICLES_RANGE}
+          range={ARTICLES_RANGE_FOR_PAGINATION}
         />
 
         <PaginationText marginTop="m">
