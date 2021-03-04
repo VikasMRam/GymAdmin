@@ -1,6 +1,7 @@
 /* eslint-disable key-spacing,no-multi-spaces */
 import { isBrowser, isDev } from 'sly/web/config';
 import { makeColor, makeColorTable } from 'sly/common/components/themes/color';
+import { capitalize } from 'sly/web/services/helpers/utils';
 
 const makeFont = (() => {
   const fontText = (size, weight) => `${weight} ${size} Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif`;
@@ -22,21 +23,25 @@ const theme = {};
 // see below comments or in storybook
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate      : makeColor('#253348'),
-  primary    : makeColor('#1a7473'),
+  // old ways
   secondary  : makeColor('#56c4c2'),
   white      : makeColor('#ffffff'),
   danger     : makeColor('#dc3133'),
   warning    : makeColor('#f3c150'),
-  green      : makeColor('#4fb75f'),
   grey       : makeColor('#70767E'),
-  yellow     : makeColor('#f3c150'),
   magenta    : makeColor('#6d27ca'),
   orange     : makeColor('#F99106'),
   razzmatazz : makeColor('#F40767'),
-  blue       : makeColor('#186DC5'),
   black      : makeColor('#000000'),
-  harvest    : makeColor('#9F8352'),
+  // new ways
+  slate      : makeColor('#121c2b'),
+  primary    : makeColor('#1a7473'),
+  viridian   : makeColor('#1a7473'),
+  red        : makeColor('#d22626'),
+  green      : makeColor('#008815'),
+  yellow     : makeColor('#f1ab31'),
+  blue       : makeColor('#186dc5'),
+  harvest    : makeColor('#9f8352'),
 };
 
 if (isBrowser && isDev) {
@@ -57,8 +62,9 @@ theme.sizes = {
   // tablet: 768 to 1080
   // desktop: 1080 onwards
   breakpoint: {
-    mobile           : '416px',
-    tablet           : '768px',
+    base             : '0px',
+    mobile           : '360px',
+    tablet           : '728px',
     laptop           : '1080px',
     desktop          : '1280px',
   },
@@ -66,6 +72,7 @@ theme.sizes = {
   // only for tablet and wider
   layout: {
     gutter:      '1.500rem', // 24px
+    mobileGutter: '1.000rem', // 16px
 
     col1:        '4.000rem', // 64px
     col2:        '9.500rem', // 152px
@@ -323,5 +330,18 @@ theme.sizes = {
     actionFooterBottomMargin: '3.0rem',
   },
 };
+
+
+const createMediaQuery = (n, bound = 'min') => `@media screen and (${bound}-width: ${n})`;
+
+theme.media = Object.entries(theme.sizes.breakpoint).reduce((acc, [name, value]) => {
+  const key = capitalize(name);
+  acc.startingWith[key] = createMediaQuery(value);
+  acc.upTo[key] = createMediaQuery(`calc(${value} - 1px)`, 'max');
+  return acc;
+}, {
+  startingWith: {},
+  upTo: {},
+});
 
 export default theme;
