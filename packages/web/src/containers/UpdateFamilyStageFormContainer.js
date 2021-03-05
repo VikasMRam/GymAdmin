@@ -21,12 +21,12 @@ import {
 } from 'sly/web/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/web/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
-import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION, PROVIDER_ENTITY_TYPE_COMMUNITY } from 'sly/web/constants/provider';
 import { createValidator, required, float } from 'sly/web/services/validation';
 import { isBoolean } from 'sly/common/services/helpers/utils';
 import { getStageDetails } from 'sly/web/services/helpers/stage';
 import { selectFormData } from 'sly/common/services/helpers/forms';
-import { userIs, userExact } from 'sly/web/services/helpers/role';
+import { userIs } from 'sly/web/services/helpers/role';
 import UpdateFamilyStageForm from 'sly/web/components/organisms/UpdateFamilyStageForm';
 import SlyEvent from 'sly/web/services/helpers/events';
 
