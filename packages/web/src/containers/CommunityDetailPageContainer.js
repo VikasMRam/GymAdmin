@@ -59,13 +59,11 @@ export default class CommunityDetailPageContainer extends React.PureComponent {
 
     if (status.community.status === 301) {
       const newSlug = getLastSegment(status.community.headers.location);
-      console.log('seeing ', status.community);
-      // return <Redirect to={replaceLastSegment(location.pathname, newSlug)} />;
+      return <Redirect to={replaceLastSegment(location.pathname, newSlug)} />;
     }
 
     if (status.community.status === 404) {
-      console.log('seeing status ', status.community);
-      // return <Redirect to={replaceLastSegment(location.pathname)} />;
+      return <Redirect to={replaceLastSegment(location.pathname)} />;
     }
 
     if (!community) {
