@@ -160,7 +160,7 @@ export default class NewModal extends Component {
     this.setState({ mounted: true });
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this;
 
     NewModal.instanceNumber--;
