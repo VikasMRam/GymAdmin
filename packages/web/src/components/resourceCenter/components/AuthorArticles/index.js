@@ -45,7 +45,7 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
         startingWithLaptop={{ width: size('layout.col12') }}
       >
         <Heading size="title" font="title-large">
-          {`${firstName}'s article${articlesCount > 1 ? 's' : ''}`}
+          {articlesCount ? `${firstName}'s article${articlesCount > 1 ? 's' : ''}` : `${firstName} has no articles yet`}
         </Heading>
 
          <Block
@@ -77,19 +77,23 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
          </Block>
       </Block>
 
-      <Block marginX="auto" marginBottom="xxl" width="max-content">
-        <Pagination
-          basePath={`${RESOURCE_CENTER_PATH}/author/${slug}`}
-          pageParam="page-number"
-          total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
-          current={+pageNumber || 0}
-          range={ARTICLES_RANGE_FOR_PAGINATION}
-        />
+      {articlesCount && (
+        <Block marginX="auto" marginBottom="xxl" width="max-content">
+          {articlesCount > ARTICLES_RANGE_FOR_PAGINATION && (
+            <Pagination
+              basePath={`${RESOURCE_CENTER_PATH}/author/${slug}`}
+              pageParam="page-number"
+              total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
+              current={+pageNumber || 0}
+              range={ARTICLES_RANGE_FOR_PAGINATION}
+            />
+          )}
 
-        <PaginationText marginTop="m">
-          {getTextForPagination(pageNumber, articlesCount)}
-        </PaginationText>
-      </Block>
+          <PaginationText marginTop="m">
+            {getTextForPagination(pageNumber, articlesCount)}
+          </PaginationText>
+        </Block>
+      )}
     </>
   );
 };

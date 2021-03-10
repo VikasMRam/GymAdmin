@@ -14,7 +14,7 @@ import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Icon from 'sly/common/components/atoms/Icon';
 import Link from 'sly/common/components/atoms/Link';
 import Block from 'sly/common/components/atoms/Block';
-import SearchContainer from 'sly/web/components/resourceCenter/components/Search';
+import SearchContainer from 'sly/web/components/resourceCenter/components/ArticlesSearchContainer';
 import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
 
 const backToSeniorlyItem = {
@@ -41,6 +41,7 @@ const Wrapper = styled(Block)(
     ${upTo('laptop', css`
       ${ifProp('menuIsOpen', `
         position: fixed;
+        top: 0;
         border-radius: 0;
         width: 100%;
         z-index: 3;

@@ -75,6 +75,10 @@ const DynamicItemWrapper = styled(Block)(
         margin-bottom: ${size('spacing.s')};
       }
     }
+
+    & a {
+      color: ${palette('viridian', 'base')};
+    }
     
     ${tableStyles}
   `,

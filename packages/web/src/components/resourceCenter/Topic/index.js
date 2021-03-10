@@ -299,13 +299,15 @@ const Topic = ({ match, location, history }) => {
 
       {articlesCount && (
         <Block marginX="auto" marginBottom="xxl" width="max-content">
-          <Pagination
-            basePath={`${RESOURCE_CENTER_PATH}/topic/${topic}${tagNameSearchItem}`}
-            pageParam="page-number"
-            total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
-            current={+pageNumber}
-            range={ARTICLES_RANGE_FOR_PAGINATION}
-          />
+          {articlesCount > ARTICLES_RANGE_FOR_PAGINATION && (
+            <Pagination
+              basePath={`${RESOURCE_CENTER_PATH}/topic/${topic}${tagNameSearchItem}`}
+              pageParam="page-number"
+              total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
+              current={+pageNumber}
+              range={ARTICLES_RANGE_FOR_PAGINATION}
+            />
+          )}
 
           <PaginationText marginTop="m">
             {getTextForPagination(pageNumber, articlesCount)}
