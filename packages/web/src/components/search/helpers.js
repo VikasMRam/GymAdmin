@@ -1,7 +1,7 @@
 import queryString, { stringify } from 'query-string';
 
 import { titleize } from 'sly/web/services/helpers/strings';
-import { urlize, getStateAbbr, objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { urlize, getStateAbbr, getCannonicalStatePath, objectToURLQueryParams, parseURLQueryParams } from 'sly/web/services/helpers/url';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import {
   CITY,
@@ -162,11 +162,21 @@ const findAFilter = (ary, filters='') => filters.split('/')
       }, cumul)
   }, undefined);
  */
+const standardizableParams = ['state'];// add
 
+// Attempt to standardize input geographical state values e.g: CA to california, fl to florida
+const standardizeSearchParam = (key, val) => {
+  if (standardizableParams.indexOf(key) > -1) {
+    if (key === 'state') {
+      val = getCannonicalStatePath(val);
+    }
+  }
+  return val;
+};
 export const filterSearchParams = params =>
   Object.keys(params).reduce((cumul, key) => {
     if (searchParamsWhitelist.includes(key) && params[key]) {
-      cumul[key] = params[key];
+      cumul[key] = standardizeSearchParam(key, params[key]);
     }
     if (key === 'budget' && params[key]) {
       cumul[key] = Math.floor(parseInt(params[key], 10));
@@ -294,10 +304,10 @@ export const getLocationLabel = (searchParams) => {
   const { city, state }  = searchParams;
   if (city && state) {
     return `${titleize(city)}, ${getStateAbbr(state)}`;
-  } else if (state){
+  } else if (state) {
     return titleize(`${state}`);
   }
-  return "Your Area"
+  return 'Your Area';
 };
 
 export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
@@ -353,8 +363,8 @@ export const getPagination = (requestMeta, location, currentFilters) => {
     start = present + 1;
     end = (present + requestMeta['page-size']  > count ? count : present + requestMeta['page-size']);
   }
-  const paginationFilters = {...currentFilters};
-  //remove city/state/toc/page-number from map
+  const paginationFilters = { ...currentFilters };
+  // remove city/state/toc/page-number from map
   ['toc', 'state', 'city', 'page-number'].forEach(e => delete paginationFilters[e]);
   const qs = queryString.stringify(paginationFilters);
   let basePath = location.pathname;
