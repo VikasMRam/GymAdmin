@@ -53,13 +53,11 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
     <Block
       width="auto"
       marginX="auto"
-      // marginBottom="xxl"
       startingWithTablet={{ width: size('layout.col8') }}
       startingWithLaptop={{ width: size('layout.col12') }}
     >
       <Block
         marginBottom="l"
-        // marginLeft="m"
         upToTablet={{ marginLeft: 'm' }}
         startingWithTablet={{
           display: 'flex',

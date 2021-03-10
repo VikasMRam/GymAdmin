@@ -89,7 +89,7 @@ const HomePage = () => {
       <Block marginBottom="xxl">
         <ArticlesList
           articlesTitle="Featured Articles"
-          articles={[...Object.values(requestInfo.result?.featuredArticles).filter(item => isObject(item))]}
+          articles={requestInfo.result?.featuredArticles}
         />
       </Block>
 
