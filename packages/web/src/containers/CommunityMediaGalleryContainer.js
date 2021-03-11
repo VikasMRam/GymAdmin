@@ -171,6 +171,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
       notifyInfo,
       notifyError,
       userSaves,
+      ensureAuthenticated,
     } = this.props;
 
     if (isCommunityAlreadySaved(community, userSaves)) {
@@ -185,6 +186,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
 
       this.sendEvent('click', 'unsaveCommunity');
     } else {
+      ensureAuthenticated().then(() =>
       showModal(
         <SaveCommunityContainer
           slug={community.id}
@@ -196,7 +198,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
         null,
         'letsmovetothismodaltypealltheothermodals',
         false,
-      );
+      ));
 
       this.sendEvent('click', 'saveCommunity');
     }
