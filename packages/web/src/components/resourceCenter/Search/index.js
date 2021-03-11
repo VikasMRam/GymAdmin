@@ -15,6 +15,7 @@ import { getKey, size } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { withDisplay } from 'sly/common/components/helpers';
+import { urlize } from 'sly/web/services/helpers/url';
 import Block from 'sly/web/components/atoms/Block';
 import Link from 'sly/common/components/atoms/Link';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
@@ -22,7 +23,6 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
-
 
 const LoaderWrapper = styled(Block)(withDisplay);
 
@@ -119,7 +119,7 @@ const Search = ({ match, location }) => {
                   mainImg,
                   slug,
                 }) => (
-                  <Link to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`} key={id}>
+                  <Link to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>
                     <ArticlePreview
                       {...{
                         alternativeText: mainImg?.alternativeText,

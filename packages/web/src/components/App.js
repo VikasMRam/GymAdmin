@@ -356,6 +356,11 @@ const routes = [
     exact: true,
   },
   {
+    path: RESOURCE_CENTER_SEARCH_PATH,
+    component: ResourceCenterSearchResultPage,
+    exact: true,
+  },
+  {
     path: RESOURCE_CENTER_TOPIC_PATH,
     component: ResourceCenterTopicPage,
     exact: true,
@@ -363,11 +368,6 @@ const routes = [
   {
     path: RESOURCE_CENTER_ARTICLE_PATH,
     component: ResourceCenterArticlePage,
-    exact: true,
-  },
-  {
-    path: RESOURCE_CENTER_SEARCH_PATH,
-    component: ResourceCenterSearchResultPage,
     exact: true,
   },
 ];

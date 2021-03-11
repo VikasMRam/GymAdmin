@@ -118,7 +118,7 @@ const PaginationText = styled(Block)(
 );
 
 const Topic = ({ match, location, history }) => {
-  const { slug: topicSlug } = match.params;
+  const { topic: topicSlug } = match.params;
   const { search } = location;
   const topicValue = useMemo(() => topics.find(({ label }) => label === toUppercaseAndSnakeCase(topicSlug))?.value, [topicSlug]);
   const tagsOptions = useMemo(() => getTagsOptionByTopic(topicSlug), [topicSlug]);
@@ -306,7 +306,7 @@ const Topic = ({ match, location, history }) => {
         <Block marginX="auto" marginBottom="xxl" width="max-content">
           {articlesCount > ARTICLES_RANGE_FOR_PAGINATION && (
             <Pagination
-              basePath={`${RESOURCE_CENTER_PATH}/topic/${topicSlug}${tagNameSearchItem}`}
+              basePath={`${RESOURCE_CENTER_PATH}/${topicSlug}${tagNameSearchItem}`}
               pageParam="page-number"
               total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
               current={+pageNumber}
