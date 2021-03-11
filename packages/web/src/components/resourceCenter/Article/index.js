@@ -12,6 +12,7 @@ import { startingWith, withDisplay } from 'sly/common/components/helpers';
 import { getKey, size } from 'sly/common/components/themes';
 import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { urlize } from 'sly/web/services/helpers/url';
 import { topics } from 'sly/web/components/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
 import Block from 'sly/common/components/atoms/Block';
@@ -41,7 +42,7 @@ const ArticlePage = ({ match }) => {
 
   const { requestInfo } = usePrefetch(
     'getArticle',
-    req => req({ slug_eq: slug, topic_eq: topics.find(({ value }) => value.replace(/\s/g, '-').toLowerCase() === topic)?.label || '' }));
+    req => req({ slug_eq: slug, topic_eq: topics.find(({ value }) => urlize(value) === topic)?.label || '' }));
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;

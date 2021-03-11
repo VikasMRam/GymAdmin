@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { object } from 'prop-types';
 import { Redirect } from 'react-router';
-import styled, { css } from 'styled-components';
+import Helmet from 'react-helmet';
 import { components } from 'react-select';
+import { bool, object } from 'prop-types';
+import styled, { css } from 'styled-components';
 
 import Block from 'sly/common/components/atoms/Block';
 import Select from 'sly/web/components/atoms/Select';
@@ -17,26 +18,30 @@ import {
   getSearchItem,
   getTagsSelectDefaultValue,
   getTagsOptionByTopic,
-  changeRegisterWithReplace,
+  toUppercaseAndSnakeCase,
   ARTICLES_RANGE_FOR_PAGINATION,
 } from 'sly/web/components/resourceCenter/helper';
-import { assetPath } from "sly/web/components/themes";
-import { withDisplay, withBorder } from "sly/common/components/helpers";
-import { getKey, palette, size } from "sly/common/components/themes";
+import { assetPath } from 'sly/web/components/themes';
+import { withDisplay, withBorder } from 'sly/common/components/helpers';
+import { getKey, palette, size } from 'sly/common/components/themes';
+import { urlize } from 'sly/web/services/helpers/url';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Pagination from 'sly/web/components/molecules/Pagination';
-import Link from "sly/common/components/atoms/Link";
-import ArticlePreview from "sly/web/components/resourceCenter/components/ArticlePreview";
-import Icon from "sly/common/components/atoms/Icon";
-import ResponsiveImage from "sly/web/components/atoms/ResponsiveImage";
-import Helmet from "react-helmet";
-import Hr from "sly/common/components/atoms/Hr";
+import Link from 'sly/common/components/atoms/Link';
+import Icon from 'sly/common/components/atoms/Icon';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import Hr from 'sly/common/components/atoms/Hr';
+import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
     <Icon icon="arrow-drop-down" flip={props.isFocused} palette="slate.base" />
   </components.DropdownIndicator>
 );
+
+DropdownIndicator.propTypes = {
+  isFocused: bool,
+};
 
 const Option = props => <components.Option {...props} />;
 
@@ -61,7 +66,7 @@ const TabsItem = styled(Block)(
   css`
     cursor: pointer;
     text-transform: uppercase;
-  `
+  `,
 );
 
 const wrapperCustomStyles = css`
@@ -113,37 +118,37 @@ const PaginationText = styled(Block)(
 );
 
 const Topic = ({ match, location, history }) => {
-  const { topic } = match.params;
+  const { slug: topicSlug } = match.params;
   const { search } = location;
-  const topicValue = useMemo(() => topics.find(({ label }) => label === changeRegisterWithReplace(topic, '-', '_'))?.value, [topic]);
-  const tagsOptions = useMemo(() => getTagsOptionByTopic(topic), [topic]);
+  const topicValue = useMemo(() => topics.find(({ label }) => label === toUppercaseAndSnakeCase(topicSlug))?.value, [topicSlug]);
+  const tagsOptions = useMemo(() => getTagsOptionByTopic(topicSlug), [topicSlug]);
   const pageNumber = useMemo(() => getSearchItem(search, 'page-number') || 0, [location]);
   const tagName = useMemo(() => getSearchItem(search, 'tag-name'), [location]);
   const tagNameSearchItem = useMemo(() => {
     const item = getSearchItem(search, 'tag-name', true);
-    return item ? '?' + item : ''
+    return item ? `?${item}` : '';
   }, [search]);
 
   const { requestInfo: { result: articlesCount, hasFinished: requestByCountHasFinished } } = usePrefetch(
     'getArticlesCount',
     req => req({
-      topic_eq: changeRegisterWithReplace(topic, '-', '_'),
-      ...(tagNameSearchItem && { tagsSlug_contains:  changeRegisterWithReplace(tagName, '-', '_') }),
+      topic_eq: toUppercaseAndSnakeCase(topicSlug),
+      ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
     }),
   );
 
   const { requestInfo: { result: articles, hasFinished: requestByArticlesHasFinished } } = usePrefetch(
     'getArticle',
     req => req({
-      topic_eq: changeRegisterWithReplace(topic, '-', '_'),
-      ...(tagNameSearchItem && { tagsSlug_contains:  changeRegisterWithReplace(tagName, '-', '_') }),
+      topic_eq: toUppercaseAndSnakeCase(topicSlug),
+      ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
       _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
       _limit: ARTICLES_RANGE_FOR_PAGINATION,
     }));
 
   if (
     !topicValue ||
-    (tagName && tagsOptions && !tagsOptions.find(({ value }) => value !== changeRegisterWithReplace(topicValue, '-', '_'))) ||
+    (tagName && tagsOptions && !tagsOptions.find(({ value }) => value !== toUppercaseAndSnakeCase(topicValue))) ||
     (tagName && !tagsOptions)
   ) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;
@@ -208,7 +213,7 @@ const Topic = ({ match, location, history }) => {
               size="large"
               wrapperCustomStyles={wrapperCustomStyles}
               components={{ DropdownIndicator, Option }}
-              defaultValue={getTagsSelectDefaultValue(search, topic)}
+              defaultValue={getTagsSelectDefaultValue(search, topicSlug)}
               onChange={onChangeTagsSelect(search, history)}
               options={tagsOptions}
             />
@@ -268,9 +273,9 @@ const Topic = ({ match, location, history }) => {
               tagsList,
               id,
             }) => (
-            <Link to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`} key={id}>
-              <ArticlePreview
-                {...{
+              <Link to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>
+                <ArticlePreview
+                  {...{
                   alternativeText: mainImg?.alternativeText,
                   title,
                   shortDescription,
@@ -278,8 +283,8 @@ const Topic = ({ match, location, history }) => {
                   topic,
                   tagsList,
                 }}
-              />
-            </Link>
+                />
+              </Link>
           ))}
         </Block>
       )}
@@ -300,7 +305,7 @@ const Topic = ({ match, location, history }) => {
       {articlesCount && (
         <Block marginX="auto" marginBottom="xxl" width="max-content">
           <Pagination
-            basePath={`${RESOURCE_CENTER_PATH}/topic/${topic}${tagNameSearchItem}`}
+            basePath={`${RESOURCE_CENTER_PATH}/topic/${topicSlug}${tagNameSearchItem}`}
             pageParam="page-number"
             total={articlesCount / ARTICLES_RANGE_FOR_PAGINATION}
             current={+pageNumber}
@@ -321,6 +326,7 @@ const Topic = ({ match, location, history }) => {
 Topic.propTypes = {
   match: object,
   location: object,
+  history: object,
 };
 
 export default Topic;

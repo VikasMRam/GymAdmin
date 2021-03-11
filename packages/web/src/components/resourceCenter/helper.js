@@ -1,4 +1,5 @@
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { urlize } from 'sly/web/services/helpers/url';
 
 export const SENIOR_LIVING_GUIDES_TOPIC = 'SENIOR_LIVING_GUIDES';
 export const HEALTH_AND_LIFESTYLE_TOPIC = 'HEALTH_AND_LIFESTYLE';
@@ -69,18 +70,18 @@ export const getSearchItem = (search, itemName, fullString) => {
   return null;
 };
 
-export const changeRegisterWithReplace = (value, searchValue, replaceValue, changeRegisterMethod = 'toUpperCase') =>
-  value?.[changeRegisterMethod]().replace(new RegExp(searchValue, 'g'), replaceValue);
+export const toUppercaseAndSnakeCase = value =>
+  value?.toUpperCase().replace(/-/g, '_');
 
 export const getTagsOptionByTopic = topic =>
-  (changeRegisterWithReplace(topic, '-', '_') === SENIOR_LIVING_GUIDES_TOPIC && seniorLivingGuidesTags) ||
-  (changeRegisterWithReplace(topic, '-', '_') === HEALTH_AND_LIFESTYLE_TOPIC && healthAndLifestyleTags);
+  (toUppercaseAndSnakeCase(topic) === SENIOR_LIVING_GUIDES_TOPIC && seniorLivingGuidesTags) ||
+  (toUppercaseAndSnakeCase(topic) === HEALTH_AND_LIFESTYLE_TOPIC && healthAndLifestyleTags);
 
 export const getTagsSelectDefaultValue = (search, topic) => {
   const tagName = getSearchItem(search, 'tag-name');
   if (tagName) {
     const tagList = getTagsOptionByTopic(topic);
-    const defaultValue = tagList.find(item => item.value === changeRegisterWithReplace(tagName, '-', '_'));
+    const defaultValue = tagList.find(item => item.value === toUppercaseAndSnakeCase(tagName));
     if (defaultValue) {
       return defaultValue;
     }
@@ -91,12 +92,12 @@ export const getTagsSelectDefaultValue = (search, topic) => {
 export const onChangeTagsSelect = (search, history) => ({ value }) => {
   let tagNameSearchItem = null;
   if (value !== selectAllArticlesItem.value) {
-    tagNameSearchItem = `?tag-name=${changeRegisterWithReplace(value, '_', '-', 'toLowerCase')}`;
+    tagNameSearchItem = `?tag-name=${urlize(value)}`;
   }
   history.push({ search: `${tagNameSearchItem || ''}` });
 };
 
 export const isActiveTab = (search, value) => {
   if (value === selectAllArticlesItem.value && !getSearchItem(search, 'tag-name')) return true;
-  return changeRegisterWithReplace(getSearchItem(search, 'tag-name'), '-', '_') === value;
+  return toUppercaseAndSnakeCase(getSearchItem(search, 'tag-name')) === value;
 };

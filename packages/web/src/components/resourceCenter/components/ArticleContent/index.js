@@ -214,6 +214,7 @@ const ArticleContent = ({ content }) => {
             const splitPath = rest.to.split(host);
             return (
               <LinkBlockWrapper
+                key={index}
                 width={`calc(100% - ${getKey('sizes.spacing.m')} * 2)`}
                 padding="l"
                 background="viridian.lighter-90"
@@ -241,7 +242,7 @@ const ArticleContent = ({ content }) => {
           }
           if (__component.includes(articleDZComponentsNames.image)) {
             return (
-              <>
+              <Fragment key={index}>
                 <Block
                   marginBottom={rest.image?.alternativeText ? 'xs' : 'xl'}
                   marginTop="xs"
@@ -272,12 +273,13 @@ const ArticleContent = ({ content }) => {
                     {rest.image?.alternativeText}
                   </AlternativeText>
                 )}
-              </>
+              </Fragment>
             )
           }
           if (__component.includes(articleDZComponentsNames.listWithIcons)) {
             return (
               <Block
+                key={index}
                 paddingTop="xs"
                 width={`calc(100% - ${getKey('sizes.spacing.m')} * 2)`}
                 startingWithTablet={{ width: size('layout.col6') }}

@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components';
 import { array, bool, string } from 'prop-types';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { getKey, size } from 'sly/common/components/themes';
+import { size } from 'sly/common/components/themes';
 import { startingWith, withDisplay } from 'sly/common/components/helpers';
-import { changeRegisterWithReplace, topics } from 'sly/web/components/resourceCenter/helper';
+import { urlize } from 'sly/web/services/helpers/url';
+import { topics } from 'sly/web/components/resourceCenter/helper';
 import Block from 'sly/common/components/atoms/Block';
 import Link from 'sly/common/components/atoms/Link';
 import Icon from 'sly/common/components/atoms/Icon';
@@ -42,11 +43,11 @@ const Title = styled(Block)(
 
 const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles }) => {
   const hrefToTopicPage = useMemo(() =>
-    `${RESOURCE_CENTER_PATH}/topic/${changeRegisterWithReplace(topic, '_', '-', 'toLowerCase')}`,
+    `${RESOURCE_CENTER_PATH}/topic/${urlize(topic)}`,
   [topic]);
 
   const getHrefToArticlePage = useCallback((slug, topic) =>
-    `/resources/articles/${changeRegisterWithReplace(topic, '_', '-', 'toLowerCase')}/${slug}`,
+    `${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`,
   []);
 
   return (
