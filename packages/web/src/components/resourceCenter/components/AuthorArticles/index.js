@@ -4,13 +4,14 @@ import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { getKey, size } from 'sly/common/components/themes';
+import { urlize } from 'sly/web/services/helpers/url';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { getTextForPagination, ARTICLES_RANGE_FOR_PAGINATION } from "sly/web/components/resourceCenter/helper";
 import Block from 'sly/common/components/atoms/Block';
 import Link from 'sly/common/components/atoms/Link';
-import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
-import Heading from 'sly/common/components/atoms/Heading';
 import Pagination from 'sly/web/components/molecules/Pagination';
-import { getTextForPagination, ARTICLES_RANGE_FOR_PAGINATION } from "sly/web/components/resourceCenter/helper";
+import Heading from 'sly/common/components/atoms/Heading';
+import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
 const PaginationText = styled(Block)(
   css`
@@ -70,7 +71,7 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
             tagsList,
             id,
           }) => (
-            <Link to={`/resources/articles/${topic.toLowerCase().replace(/_/g, '-')}/${slug}`} key={id}>
+            <Link to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>
               <ArticlePreview{...{ alternativeText: mainImg?.alternativeText, title, shortDescription, url: mainImg?.url, topic, tagsList }} />
             </Link>
           ))}

@@ -12,6 +12,7 @@ import { startingWith, withDisplay } from 'sly/common/components/helpers';
 import { getKey, size } from 'sly/common/components/themes';
 import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { urlize } from 'sly/web/services/helpers/url';
 import { topics } from 'sly/web/components/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
 import Block from 'sly/common/components/atoms/Block';
@@ -24,7 +25,7 @@ import Header from 'sly/web/components/resourceCenter/components/Header';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
 import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
-import RelatedPopularArticles from 'sly/web/components/resourceCenter/components/RelatedPopularArticles';
+import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 
@@ -41,7 +42,7 @@ const ArticlePage = ({ match }) => {
 
   const { requestInfo } = usePrefetch(
     'getArticle',
-    req => req({ slug_eq: slug, topic_eq: topics.find(({ value }) => value.replace(/\s/g, '-').toLowerCase() === topic)?.label || '' }));
+    req => req({ slug_eq: slug, topic_eq: topics.find(({ value }) => urlize(value) === topic)?.label || '' }));
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;
@@ -204,7 +205,14 @@ const ArticlePage = ({ match }) => {
         <Hr size="large" />
       </Block>
 
-      <RelatedPopularArticles limit={3} topic={requestInfo?.result?.[0]?.topic} id={requestInfo?.result?.[0]?.id} />
+      <Block marginBottom="xxl" startingWithTablet={{ marginBottom: 'xxxl' }}>
+        <ArticlesListByTopic
+          limit={3}
+          topic={requestInfo?.result?.[0]?.topic}
+          id={requestInfo?.result?.[0]?.id}
+          articlesTitle="You might also like"
+        />
+      </Block>
 
       <Footer />
     </>

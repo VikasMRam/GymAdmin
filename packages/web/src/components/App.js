@@ -356,8 +356,8 @@ const routes = [
     exact: true,
   },
   {
-    path: RESOURCE_CENTER_ARTICLE_PATH,
-    component: ResourceCenterArticlePage,
+    path: RESOURCE_CENTER_SEARCH_PATH,
+    component: ResourceCenterSearchResultPage,
     exact: true,
   },
   {
@@ -366,8 +366,8 @@ const routes = [
     exact: true,
   },
   {
-    path: RESOURCE_CENTER_SEARCH_PATH,
-    component: ResourceCenterSearchResultPage,
+    path: RESOURCE_CENTER_ARTICLE_PATH,
+    component: ResourceCenterArticlePage,
     exact: true,
   },
 ];

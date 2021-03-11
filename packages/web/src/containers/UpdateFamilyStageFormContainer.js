@@ -21,7 +21,7 @@ import {
 } from 'sly/web/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/web/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
-import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
+import { PROVIDER_ENTITY_TYPE_ORGANIZATION, PROVIDER_ENTITY_TYPE_COMMUNITY } from 'sly/web/constants/provider';
 import { createValidator, required, float } from 'sly/web/services/validation';
 import { isBoolean } from 'sly/common/services/helpers/utils';
 import { getStageDetails } from 'sly/web/services/helpers/stage';
@@ -380,6 +380,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentRejectReason={currentRejectReason}
         canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE) || userIsOwner}
         userIsOwner={userIsOwner}
+        isCommunityUser = {entityType === PROVIDER_ENTITY_TYPE_COMMUNITY }
       />
     );
   }

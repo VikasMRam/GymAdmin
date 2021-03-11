@@ -113,6 +113,7 @@ export default {
   getPerformers: { method: get, path: '/platform/performers' },
   getEmails: { method: get, path: '/platform/emails' },
 
+  getResourceCenterMainInfo: { method: get, path: '/home-page', type: 'cms' },
   getAuthor: { method: get, path: '/authors', type: 'cms' },
   getArticle: { method: get, path: '/articles', type: 'cms' },
   getArticlesCount: { method: get, path: '/articles/count', type: 'cms' },

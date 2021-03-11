@@ -74,6 +74,6 @@ export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH
 
 export const RESOURCE_CENTER_PATH = '/resources';
 export const RESOURCE_CENTER_AUTHOR_PATH = '/resources/author/:slug';
-export const RESOURCE_CENTER_ARTICLE_PATH = '/resources/articles/:topic/:slug';
-export const RESOURCE_CENTER_TOPIC_PATH = '/resources/topic/:topic';
+export const RESOURCE_CENTER_ARTICLE_PATH = '/resources/:topic/:slug';
+export const RESOURCE_CENTER_TOPIC_PATH = '/resources/:topic';
 export const RESOURCE_CENTER_SEARCH_PATH = '/resources/search/:searchBy';
