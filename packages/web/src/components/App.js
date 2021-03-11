@@ -356,13 +356,13 @@ const routes = [
     exact: true,
   },
   {
-    path: RESOURCE_CENTER_ARTICLE_PATH,
-    component: ResourceCenterArticlePage,
+    path: RESOURCE_CENTER_TOPIC_PATH,
+    component: ResourceCenterTopicPage,
     exact: true,
   },
   {
-    path: RESOURCE_CENTER_TOPIC_PATH,
-    component: ResourceCenterTopicPage,
+    path: RESOURCE_CENTER_ARTICLE_PATH,
+    component: ResourceCenterArticlePage,
     exact: true,
   },
   {
