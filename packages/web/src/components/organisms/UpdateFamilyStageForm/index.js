@@ -10,6 +10,7 @@ import {
   FAMILY_STAGE_LOST,
   FAMILY_STAGE_REJECTED,
   FAMILY_CLOSE_ORDERED,
+  FAMILY_CLOSE_COMMUNITY,
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
   FAMILY_STAGE_FAMILY_CHOSEN,
@@ -73,6 +74,7 @@ export default class UpdateFamilyStageForm extends Component {
     referralAgreementType: string,
     currentRejectReason: string,
     canUpdateStage: bool,
+    isCommunityUser: bool,
     initialValues: object,
   };
 
@@ -86,7 +88,7 @@ export default class UpdateFamilyStageForm extends Component {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
-      canUpdateStage, initialValues: { preferredLocation }, ...props
+      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, ...props
     } = this.props;
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
@@ -104,7 +106,12 @@ export default class UpdateFamilyStageForm extends Component {
       }
       return prev;
     }, []);
-    const NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_ORDERED };
+
+    let NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_ORDERED };
+    if (isCommunityUser) {
+      NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_COMMUNITY }
+    }
+
     const closeOptions = Object.keys(NEW_FAMILY_CLOSE_ORDERED).reduce((prev, sg) => {
       const closeReasons = NEW_FAMILY_CLOSE_ORDERED[sg].map(s => ({ value: s, label: s }));
 
