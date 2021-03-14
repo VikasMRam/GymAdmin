@@ -197,7 +197,7 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="communityName"
             label="Community name"
-            type="text"
+            type="community"
             required
             component={ReduxField}
           />
@@ -331,16 +331,16 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {isNext(FAMILY_STAGE_LOST) && !DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           !PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
-        <Field
-          type="textarea"
-          rows={3}
-          showCharacterCount
-          name={'rejectNote'}
-          label="Additional Note(optional)"
-          placeholder="Please leave a note on the reason for closing this lead..."
-          component={ReduxField}
-          maxLength={200}
-        />
+          <Field
+            type="textarea"
+            rows={3}
+            showCharacterCount
+            name="rejectNote"
+            label="Additional Note(optional)"
+            placeholder="Please leave a note on the reason for closing this lead..."
+            component={ReduxField}
+            maxLength={200}
+          />
         }
         {((isNext(FAMILY_STAGE_LOST) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason)) ||
           (isNext(FAMILY_STAGE_REJECTED) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason))) &&

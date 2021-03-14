@@ -73,13 +73,13 @@ const AGENT_STATUS_OPTIONS = [
   { value: 1, label: 'Live' },
 ];
 
-const AGENT_TIMEZONES = [{ value: 'America/New_York', label: 'New York' },
-  { value: 'America/Chicago', label: 'Chicago' },
-  { value: 'America/Denver', label: 'Denver' },
-  { value: 'America/Phoenix', label: 'Phoenix' },
-  { value: 'America/Los_Angeles', label: 'Los Angeles' },
-  { value: 'America/Anchorage', label: 'Anchorage' },
-  { value: 'Pacific/Honolulu', label: 'Honolulu' }];
+const AGENT_TIMEZONES = [{ value: 'America/New_York', label: 'EST' },
+  { value: 'America/Chicago', label: 'CST' },
+  { value: 'America/Denver', label: 'MST' },
+  // { value: 'America/Phoenix', label: 'MST' },
+  { value: 'America/Los_Angeles', label: 'PST' },
+  { value: 'America/Anchorage', label: 'AKST' },
+  { value: 'Pacific/Honolulu', label: 'HST' }];
 
 const AGENT_SMS_FORMATS = [{ value: 'plainText', label: 'Plain Text' }, { value: 'richText', label: 'Rich Text' }];
 
@@ -256,6 +256,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           <Field
             name="slackChannel"
             label="Slack Channel"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="appointmentLink"
+            label="Calendly Appointment Link"
             type="text"
             placeholder=""
             component={ReduxField}

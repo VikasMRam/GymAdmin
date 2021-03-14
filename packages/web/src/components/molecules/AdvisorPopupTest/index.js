@@ -42,12 +42,12 @@ const AdvisorPopupTest = ({ onButtonClick, agent }) => {
         <Block marginBottom="large">
           <Link href={`tel:${cellPhone}`} onClick={phoneClickEvt(agent)} >Click to call {displayName} at {phoneFormatter(cellPhone)} now</Link>
         </Block>
-        {appointmentLink && appointmentLink !== ''
-          &&
-          <Block marginBottom="large">
-            <Link href={appointmentLink} onClick={apptClickEvt(agent)} > Click to schedule a call for {displayName} </Link>
-          </Block>
-        }
+        {/* {appointmentLink && appointmentLink !== ''
+          && */}
+        <Block marginBottom="large">
+          <Link href={appointmentLink} onClick={apptClickEvt(agent)} > Click to schedule a call for {displayName} </Link>
+        </Block>
+        {/* } */}
       </Block>
       <GotItButton kind="jumbo" onClick={onButtonClick}>Back to Community</GotItButton>
     </div>
