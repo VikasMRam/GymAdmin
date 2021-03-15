@@ -72,8 +72,8 @@ export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;
 
-export const RESOURCE_CENTER_PATH = '/resources';
-export const RESOURCE_CENTER_AUTHOR_PATH = '/resources/author/:slug';
-export const RESOURCE_CENTER_ARTICLE_PATH = '/resources/:topic/:slug';
-export const RESOURCE_CENTER_TOPIC_PATH = '/resources/:topic';
-export const RESOURCE_CENTER_SEARCH_PATH = '/resources/search/:searchBy';
+export const RESOURCE_CENTER_PATH = '/resource-center';
+export const RESOURCE_CENTER_AUTHOR_PATH = `${RESOURCE_CENTER_PATH}/author/:slug`;
+export const RESOURCE_CENTER_ARTICLE_PATH = `${RESOURCE_CENTER_PATH}/:topic/:slug`;
+export const RESOURCE_CENTER_TOPIC_PATH = `${RESOURCE_CENTER_PATH}/:topic`;
+export const RESOURCE_CENTER_SEARCH_PATH = `${RESOURCE_CENTER_PATH}/search/:searchBy`;

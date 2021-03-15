@@ -4,6 +4,7 @@ import { string } from 'prop-types';
 
 import { getKey, size } from 'sly/common/components/themes';
 import { startingWith, withBorder, withDisplay } from 'sly/common/components/helpers';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Icon from 'sly/common/components/atoms/Icon';
 import Link from 'sly/common/components/atoms/Link';
@@ -94,7 +95,7 @@ const AuthorPreview = ({
       }}
     >
       <Block marginBottom="l" font="body-regular">{shortDescription}</Block>
-      <Link to={`/resources/author/${slug}`}>
+      <Link to={`${RESOURCE_CENTER_PATH}/author/${slug}`}>
         {`View other articles written by ${firstName}`}
         <Icon icon="chevron" />
       </Link>

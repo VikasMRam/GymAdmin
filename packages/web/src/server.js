@@ -63,10 +63,12 @@ function subscribe(req, res) {
     body: JSON.stringify({ email_address: email, status: 'subscribed' }),
   };
   request(options, (error, response) => {
-    if (response.statusCode === 200) {
-      res.status(response.statusCode).send({ title: 'Subscribed' });
-    } else {
-      res.status(response.statusCode).send({ title: JSON.parse(response.body).title });
+    if (response) {
+      if (response.statusCode === 200) {
+        res.status(response.statusCode).send({ title: 'Subscribed' });
+      } else {
+        res.status(response.statusCode).send({ title: JSON.parse(response && response.body).title });
+      }
     }
     if (error) res.status(500).send({ title: 'There are some issues on server, please try again' });
   });
