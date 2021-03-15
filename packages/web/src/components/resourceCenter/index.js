@@ -3,7 +3,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import styled, { css } from 'styled-components';
-import { isObject } from 'lodash';
 
 import { getKey, size } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';

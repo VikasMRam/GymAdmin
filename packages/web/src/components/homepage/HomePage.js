@@ -67,7 +67,7 @@ const HomePage = ({
             z-index: 0;
           `}
           sources={[120, 240, 480]}
-          sizes="calc(100vw / 3)"
+          sizes="30vw"
         />
         {/* <BannerNotificationAdContainer type="wizardHome" noMarginBottom /> */}
         <Section css={css`

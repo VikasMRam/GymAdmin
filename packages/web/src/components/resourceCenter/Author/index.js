@@ -19,6 +19,7 @@ import Header from 'sly/web/components/resourceCenter/components/Header';
 import Hr from 'sly/common/components/atoms/Hr';
 import Block from 'sly/common/components/atoms/Block';
 import AuthorArticles from 'sly/web/components/resourceCenter/components/AuthorArticles';
+import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 
 const headingStyles = css`
   line-height: ${size('lineHeight.displayS')};
@@ -123,6 +124,8 @@ const Author = ({ match, location }) => {
         firstName={requestInfo?.result?.[0]?.firstName}
         pageNumber={location.search.split('=')[1]}
       />
+
+      <SubscribeEmail />
 
       <Footer />
     </>

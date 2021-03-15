@@ -23,6 +23,7 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 
 const LoaderWrapper = styled(Block)(withDisplay);
 
@@ -153,6 +154,8 @@ const Search = ({ match, location }) => {
         )}
 
       </Block>
+
+      <SubscribeEmail />
 
       <Footer />
     </>

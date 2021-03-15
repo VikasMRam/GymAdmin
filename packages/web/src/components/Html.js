@@ -32,11 +32,12 @@ const Html = ({
         {styleElements}
         {linkElements}
         {helmet.link.toComponent()}
+        {helmet.style.toComponent()}
+        {helmet.script.toComponent()}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         {state.trim().length > 0 && <script type="text/javascript" dangerouslySetInnerHTML={{ __html: state }} />}
-        {helmet.script.toComponent()}
         {scriptElements}
         {/* eslint-disable */}
 
@@ -64,7 +65,6 @@ const Html = ({
         {/* eslint-enable */}
 
         {/*<script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} />*/}
-        {helmet.style.toComponent()}
       </body>
     </html>
   );

@@ -5,10 +5,6 @@ import { components } from 'react-select';
 import { bool, object } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import Block from 'sly/common/components/atoms/Block';
-import Select from 'sly/web/components/atoms/Select';
-import Header from 'sly/web/components/resourceCenter/components/Header';
-import Footer from 'sly/web/components/organisms/Footer';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import {
   topics,
@@ -26,12 +22,17 @@ import { withDisplay, withBorder } from 'sly/common/components/helpers';
 import { getKey, palette, size } from 'sly/common/components/themes';
 import { urlize } from 'sly/web/services/helpers/url';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import Footer from 'sly/web/components/organisms/Footer';
 import Pagination from 'sly/web/components/molecules/Pagination';
+import Block from 'sly/common/components/atoms/Block';
+import Select from 'sly/web/components/atoms/Select';
 import Link from 'sly/common/components/atoms/Link';
 import Icon from 'sly/common/components/atoms/Icon';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Hr from 'sly/common/components/atoms/Hr';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
+import Header from 'sly/web/components/resourceCenter/components/Header';
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
@@ -319,6 +320,8 @@ const Topic = ({ match, location, history }) => {
           </PaginationText>
         </Block>
       )}
+
+      <SubscribeEmail />
 
       <Footer />
     </>

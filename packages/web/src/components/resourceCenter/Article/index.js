@@ -28,6 +28,7 @@ import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLink
 import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
+import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 
 const ArticleWrapper = styled(Block)(withDisplay);
 
@@ -213,6 +214,8 @@ const ArticlePage = ({ match }) => {
           articlesTitle="You might also like"
         />
       </Block>
+
+      <SubscribeEmail />
 
       <Footer />
     </>

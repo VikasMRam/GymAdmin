@@ -38,3 +38,7 @@ module.exports.EXTERNAL_PATH = envPick(process.env.EXTERNAL_PATH, '/external');
 module.exports.EXTERNAL_ASSET_URL = `${process.env.PUBLIC_PATH}/external`;
 module.exports.EXTERNAL_URL = `${process.env.HOST}${process.env.EXTERNAL_PATH}`;
 module.exports.EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
+// mailchimp
+module.exports.MAILCHIMP_DATA_CENTER = process.env.MAILCHIMP_DATA_CENTER;
+module.exports.MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
+module.exports.MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID;
