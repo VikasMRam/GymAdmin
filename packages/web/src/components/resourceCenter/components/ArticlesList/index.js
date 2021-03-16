@@ -99,7 +99,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
         }}
         startingWithLaptop={{ gridTemplateColumns: '20.5rem 20.5rem 20.5rem' }}
       >
-        {articles.map((
+        {articles?.map((
           {
             mainImg,
             title,
