@@ -94,6 +94,7 @@ export default class ResponsiveImage extends React.Component {
   static defaultProps = {
     className: '',
     loading: 'eager',
+    sizes: '(max-width: 1079px) 100vw, 680px',
     onLoadFailed: () => {},
   };
 
