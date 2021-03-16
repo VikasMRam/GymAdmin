@@ -92,6 +92,9 @@ const getResourceCenterSitemapXML = (req, res) => {
         encoding: 'UTF-8',
       });
       root.att({ xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
+      const resourcesHomePageUrl = root.ele('url');
+      resourcesHomePageUrl.ele('loc', `${host}${RESOURCE_CENTER_PATH}`);
+      resourcesHomePageUrl.ele('priority', 0.9);
       topics.forEach(({ to }) => {
         const url = root.ele('url');
         url.ele('loc', `${host}${to}`);

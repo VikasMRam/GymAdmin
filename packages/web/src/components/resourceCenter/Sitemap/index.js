@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { host } from 'sly/web/config';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { topics } from 'sly/web/components/resourceCenter/helper';
 import { urlize } from 'sly/web/services/helpers/url';
@@ -79,6 +80,14 @@ const Sitemap = () => {
 
         <Block
           marginBottom="m"
+        >
+          <StyledLink to={`${host}${RESOURCE_CENTER_PATH}`} key="resource-center-home-page">
+            {`${getTitle()} home page`}
+          </StyledLink>
+        </Block>
+
+        <Block
+          marginBottom="m"
           startingWithTablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
         >
           {topics.map(({ to, value }) => <StyledLink to={to} key={value}>{value}</StyledLink>)}
@@ -88,7 +97,7 @@ const Sitemap = () => {
           marginBottom="m"
           startingWithTablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
         >
-          {requestInfo?.result.map(({ slug, id, title, topic }) => (
+          {requestInfo.result?.map(({ slug, id, title, topic }) => (
             <StyledLink to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>{title}</StyledLink>
           ))}
         </Block>
