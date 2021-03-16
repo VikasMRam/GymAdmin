@@ -41,6 +41,7 @@ import {
   RESOURCE_CENTER_ARTICLE_PATH,
   RESOURCE_CENTER_TOPIC_PATH,
   RESOURCE_CENTER_SEARCH_PATH,
+  RESOURCE_CENTER_SITEMAP_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
@@ -97,6 +98,7 @@ const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chu
 const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/components/resourceCenter/Article'));
 const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/components/resourceCenter/Topic'));
 const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/components/resourceCenter/Search'));
+const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/components/resourceCenter/Sitemap'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -343,6 +345,11 @@ const routes = [
   {
     path: '/',
     component: HomePageContainer,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_SITEMAP_PATH,
+    component: ResourceCenterSitemapPage,
     exact: true,
   },
   {
