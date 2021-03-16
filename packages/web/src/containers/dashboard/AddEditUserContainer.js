@@ -6,6 +6,7 @@ import { required, createValidator } from 'sly/web/services/validation';
 import { query, withUser } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import { USER_RESOURCE_TYPE, UUIDAUX_RESOURCE_TYPE, ORGANIZATION_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
+import withNotification from 'sly/web/controllers/withNotification';
 import AddEditUserForm from 'sly/web/components/organisms/AddEditUserForm';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 
