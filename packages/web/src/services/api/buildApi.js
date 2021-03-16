@@ -1,6 +1,7 @@
 import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
 import apiFetch from './apiFetch';
 
+import { cmsUrl } from 'sly/web/config';
 import makeApiCallAction from 'sly/web/services/api/makeApiCallAction';
 
 const defaultConfigure = options => options;
@@ -13,7 +14,7 @@ export default function buildApi(endpoints, config = {}) {
   } = config;
 
   // wrap config
-  const request = (path, placeholders, requestOptions) => {
+  const request = type => (path, placeholders, requestOptions) => {
     const augmentedOptions = {
       ...requestOptions,
       headers: configureHeaders({
@@ -24,14 +25,14 @@ export default function buildApi(endpoints, config = {}) {
     };
 
     return apiFetch(
-      baseUrl,
+      type === 'cms' ? cmsUrl : baseUrl,
       applyUrlWithPlaceholders(path, placeholders, requestOptions),
       configureOptions(augmentedOptions),
     );
   };
 
   return Object.keys(endpoints).reduce((acc, key) => {
-    const { path, required, method, ssrIgnore } = endpoints[key];
+    const { path, required, method, ssrIgnore, type } = endpoints[key];
 
     const requiredPlaceholders = required || [];
     const placeholderRegexp = /:([^\/$]+)/g;
@@ -59,16 +60,17 @@ export default function buildApi(endpoints, config = {}) {
 
     acc[key] = (...args) => {
       const { placeholders, options } = normalizeArguments(...args);
-      return request(path, placeholders, options);
+      return request(type)(path, placeholders, options);
     };
 
     acc[key].actionName = key;
     acc[key].method = method;
     acc[key].asAction = (...args) => {
       const { placeholders, options } = normalizeArguments(...args);
-      return makeApiCallAction(request, { placeholders, path, options, actionName: key });
+      return makeApiCallAction(request(type), { placeholders, path, options, actionName: key });
     };
     acc[key].ssrIgnore = ssrIgnore;
+    acc[key].type = type;
 
     return acc;
   }, {});

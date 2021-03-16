@@ -45,6 +45,7 @@ export function usePrefetch(apiCall, dispatcher = defaultDispatcher) {
   const requestInfo = useSelector(state => getMemoizedRequestInfo(
     state.api.requests?.[apiCall]?.[argsKey],
     state.api.entities,
+    api[apiCall].type === 'cms',
   ));
 
   const { hasStarted, isLoading, isInvalid } = requestInfo;
@@ -161,7 +162,7 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
       invalidate = () => {
         const { invalidate } = this.props;
         return invalidate(this.props);
-      }
+      };
 
       render() {
         const { requestInfo: request, status, ...props } = this.props;

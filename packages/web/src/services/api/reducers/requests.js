@@ -67,7 +67,9 @@ export default function reducer(state = initialState, action) {
 
       let normalizedData;
 
-      if (Array.isArray(data)) {
+      if (Array.isArray(action.payload.body) || (!data && !meta)) {
+        normalizedData = action.payload.body;
+      } else if (Array.isArray(data)) {
         normalizedData = data.map(record => ({ id: record.id, type: record.type }));
       } else if (data && data.id) {
         normalizedData = { id: data.id, type: data.type };

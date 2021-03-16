@@ -9,6 +9,7 @@ const {
   HOST,
   PORT,
   API_URL,
+  CMS_URL,
   DOMAIN,
   GOOGLE_MAPS_API_KEY,
   FB_CLIENT_ID,
@@ -17,6 +18,9 @@ const {
   HIDE_CHATBOX,
   ENABLE_EXPERIMENT_DEBUGGER,
   DISABLE_EXPERIMENTS,
+  MAILCHIMP_DATA_CENTER,
+  MAILCHIMP_API_KEY,
+  MAILCHIMP_LIST_ID,
 } = require('../env');
 
 const { VERSION } = process.env;
@@ -41,6 +45,7 @@ const config = {
     isBrowser: typeof window !== 'undefined',
     isServer: typeof window === 'undefined',
     apiUrl: API_URL,
+    cmsUrl: CMS_URL,
     gMapsApiKey: GOOGLE_MAPS_API_KEY,
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'http://localhost:8888/events/new',
@@ -65,6 +70,9 @@ const config = {
       resource: '3335478033',
       search: '2390417245',
     },
+    mailchimpDataCenter: MAILCHIMP_DATA_CENTER,
+    mailchimpApiKey: MAILCHIMP_API_KEY,
+    mailchimpListId: MAILCHIMP_LIST_ID,
   },
 
   test: {

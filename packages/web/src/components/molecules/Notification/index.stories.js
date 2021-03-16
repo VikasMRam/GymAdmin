@@ -11,7 +11,7 @@ storiesOf('Molecules|Notification', module)
     </Notification>
   ))
   .add('error status', () => (
-    <Notification onClose={action('closed')} isOpen status="error">
+    <Notification onClose={action('closed')} isOpen type="error">
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Notification>
   ));

@@ -1,7 +1,7 @@
 import React from 'react';
 import SyncSelect, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
-import { func, string, arrayOf, object, bool, node, oneOf, oneOfType } from 'prop-types';
+import { func, string, arrayOf, object, bool, node, oneOf, oneOfType, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -102,6 +102,8 @@ const Wrapper = styled(Block)`
     margin-top: 0px;
     min-width: max-content;
   }
+
+  ${({ wrapperCustomStyles }) => wrapperCustomStyles}
 `;
 
 const StyledIcon = styled(Icon)`
@@ -209,6 +211,7 @@ const Select = ({
   loadOptions,
   disabled,
   className,
+  wrapperCustomStyles,
   ...props
 }) => {
   const SelectComponent = async
@@ -241,6 +244,7 @@ const Select = ({
       textSize={textSize}
       size={size}
       className={className}
+      wrapperCustomStyles={wrapperCustomStyles}
     >
       <SelectComponent
         className="react-select-container"
@@ -271,6 +275,7 @@ Select.propTypes = {
   isSearchable: bool,
   isMulti: bool,
   disabled: bool,
+  wrapperCustomStyles: array,
 };
 
 Select.defaultProps = {

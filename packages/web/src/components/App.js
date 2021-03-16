@@ -36,6 +36,11 @@ import {
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  RESOURCE_CENTER_PATH,
+  RESOURCE_CENTER_AUTHOR_PATH,
+  RESOURCE_CENTER_ARTICLE_PATH,
+  RESOURCE_CENTER_TOPIC_PATH,
+  RESOURCE_CENTER_SEARCH_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
@@ -86,6 +91,12 @@ const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackCh
 
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
+
+const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/resourceCenter'));
+const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/components/resourceCenter/Author'));
+const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/components/resourceCenter/Article'));
+const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/components/resourceCenter/Topic'));
+const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/components/resourceCenter/Search'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -332,6 +343,31 @@ const routes = [
   {
     path: '/',
     component: HomePageContainer,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_PATH,
+    component: ResourceCenterHomePage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_AUTHOR_PATH,
+    component: ResourceCenterAuthorPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_SEARCH_PATH,
+    component: ResourceCenterSearchResultPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_TOPIC_PATH,
+    component: ResourceCenterTopicPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_ARTICLE_PATH,
+    component: ResourceCenterArticlePage,
     exact: true,
   },
 ];
