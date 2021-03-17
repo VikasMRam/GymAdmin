@@ -242,7 +242,7 @@ export default class CommunityDetailPage extends Component {
     const partnerAgent = getPartnerAgent(community);
     let agentCtaLink = '';
     if (partnerAgent && partnerAgent.info) {
-      agentCtaLink = `tel:${partnerAgent.info.cellPhone}`;
+      // agentCtaLink = `tel:${partnerAgent.info.cellPhone}`;
       agentCtaLink = `${partnerAgent.info.appointmentLink}`;
     }
     const { nearbyCities } = rgsAux;

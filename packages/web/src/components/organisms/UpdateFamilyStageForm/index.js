@@ -109,7 +109,7 @@ export default class UpdateFamilyStageForm extends Component {
 
     let NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_ORDERED };
     if (isCommunityUser) {
-      NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_COMMUNITY }
+      NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_COMMUNITY };
     }
 
     const closeOptions = Object.keys(NEW_FAMILY_CLOSE_ORDERED).reduce((prev, sg) => {
@@ -204,7 +204,7 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="communityName"
             label="Community name"
-            type="community"
+            type="text"
             required
             component={ReduxField}
           />
