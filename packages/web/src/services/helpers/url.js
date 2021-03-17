@@ -1,8 +1,9 @@
 import { stringify, parse } from 'query-string';
+import { toUpper } from 'lodash';
 
 import { titleize } from 'sly/web/services/helpers/strings';
 import { communitySizeSearchParamMap } from 'sly/web/components/search/helpers';
-import { stateNames, stateAbbr, usStatePaths, caStatePaths } from 'sly/web/constants/geo';
+import { stateNames, stateAbbr, usStatePaths, caStatePaths, usStates } from 'sly/web/constants/geo';
 
 export const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
@@ -119,7 +120,7 @@ export const urlize = inString =>
     .replace(/[\s-]+/g, ' ')
     .replace(/\s/g, '-');
 
-  global.stateData = {
+global.stateData = {
   names: stateNames,
   slugs: Object.entries(stateNames).reduce((res, [key, name]) => (res[key] = urlize(name), res), {}),
   stateRegionMap,
@@ -284,11 +285,32 @@ export const getOrigin = () => {
 export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj, { arrayFormat: 'comma' });
 
+// return the two or three letter upper cased abbreviation for passed in states,
+// if the value passed in is already an abbrevation, return the same
+// if state not found, return empty string
 export const getStateAbbr = (state) => {
   if (state) {
+    // stateNames is a constant Map that has abbreviation -> fullName for all supported states
+    const ucState = toUpper(state);
+    if (Object.prototype.hasOwnProperty.call(stateNames, ucState))  {
+      return ucState;
+    }
     const st = titleize(state);
     return stateAbbr[st];
   }
+  return '';
+};
+
+export const getCannonicalStatePath = (state) => {
+  if (state) {
+    // stateNames is a constant Map that has abbreviation -> fullName for all supported states
+    const ucState = toUpper(state);
+    if (Object.prototype.hasOwnProperty.call(stateNames, ucState))  {
+      return urlize(stateNames[ucState]);
+    }
+    return urlize(titleize(state));
+  }
+  return state;
 };
 
 export const removeQueryParamFromURL = (key, sourceURL) => {
@@ -329,32 +351,36 @@ export const generateCityPathSearchUrl = (address) => {
 export const isInternationalPath = (path) => {
   const pathParts = path.split('/');
   if (pathParts.length > 1 && pathParts[1] === 'dashboard') {
-    return false
+    return false;
   }
   if (pathParts.length > 1 && pathParts[1] === 'partners') {
-    return false
+    return false;
   }
   if (pathParts.length > 1 && pathParts[1] === 'agents') {
-    return false
+    return false;
   }
-  //check if 1st part is care-home
+  // check if 1st part is care-home
   if (pathParts.length > 2 && pathParts[1] === 'care-home') {
-    return true
+    return true;
+  }
+  // check if path is not us state path
+
+  if (pathParts.length > 2)  {
+    const statePart = pathParts[2].toLowerCase();
+    if (usStatePaths.indexOf(statePart) === -1 && (usStates.filter((e) => { return e.abbr.toLowerCase() === statePart || urlize(e.name.toLowerCase()) === statePart; }).length === 0)) {
+      return true;
+    }
   }
 
-  if (pathParts.length > 2 && usStatePaths.indexOf(pathParts[2]) === -1) {
-    return true
-  }
-
-  return false
+  return false;
 };
 
 export const isCanadaPath = (path) => {
   const pathParts = path.split('/');
-  //check if 1st part is care-home
+  // check if 1st part is care-home
   if (pathParts.length > 2 && caStatePaths.indexOf(pathParts[2]) > -1) {
-    return true
+    return true;
   }
 
-  return false
+  return false;
 };

@@ -240,6 +240,11 @@ export default class CommunityDetailPage extends Component {
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = getPartnerAgent(community);
+    let agentCtaLink = '';
+    if (partnerAgent && partnerAgent.info) {
+      // agentCtaLink = `tel:${partnerAgent.info.cellPhone}`;
+      agentCtaLink = `${partnerAgent.info.appointmentLink}`;
+    }
     const { nearbyCities } = rgsAux;
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
@@ -331,12 +336,16 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
-                    <AskAgentQuestionButtonContainer
+                    { partnerAgent.id !== 'seniorly-agent-emma-rodbro-'  && <AskAgentQuestionButtonContainer
+                      agent={partnerAgent}
                       width="100%"
                       community={community}
                       type="expert"
                       ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
-                    />
+                    />}
+                    {partnerAgent.id === 'seniorly-agent-emma-rodbro-'  &&
+                      <StyledButton palette="primary" background="primary" href={agentCtaLink} onClick={clickEventHandler('agent', partnerAgent.id)} target="_blank" ghost>Schedule a Call Now</StyledButton>
+                    }
                   </StyledHeadingBoxSection>
                 )}
 
@@ -379,7 +388,11 @@ export default class CommunityDetailPage extends Component {
                     />
                   </StyledHeadingBoxSection>
                 )}
-
+                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
+                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
+                }
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
@@ -388,12 +401,6 @@ export default class CommunityDetailPage extends Component {
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </StyledHeadingBoxSection>
                 }
-                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
-                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
-                  <TrustScoreTile community={community} />
-                </StyledHeadingBoxSection>
-                }
-
                 {!isActiveAdult && !isInternational &&
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}

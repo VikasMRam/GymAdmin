@@ -109,7 +109,7 @@ export default class UpdateFamilyStageForm extends Component {
 
     let NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_ORDERED };
     if (isCommunityUser) {
-      NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_COMMUNITY }
+      NEW_FAMILY_CLOSE_ORDERED = { ...FAMILY_CLOSE_COMMUNITY };
     }
 
     const closeOptions = Object.keys(NEW_FAMILY_CLOSE_ORDERED).reduce((prev, sg) => {
@@ -338,16 +338,16 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {isNext(FAMILY_STAGE_LOST) && !DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           !PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
-        <Field
-          type="textarea"
-          rows={3}
-          showCharacterCount
-          name={'rejectNote'}
-          label="Additional Note(optional)"
-          placeholder="Please leave a note on the reason for closing this lead..."
-          component={ReduxField}
-          maxLength={200}
-        />
+          <Field
+            type="textarea"
+            rows={3}
+            showCharacterCount
+            name="rejectNote"
+            label="Additional Note(optional)"
+            placeholder="Please leave a note on the reason for closing this lead..."
+            component={ReduxField}
+            maxLength={200}
+          />
         }
         {((isNext(FAMILY_STAGE_LOST) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason)) ||
           (isNext(FAMILY_STAGE_REJECTED) && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentRejectReason))) &&

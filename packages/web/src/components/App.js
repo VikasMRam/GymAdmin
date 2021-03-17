@@ -9,7 +9,6 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
-import Pushnami from 'sly/web/components/thirdparty/pushnami';
 import { hideChatbox } from 'sly/web/config';
 import theme from 'sly/common/components/themes/default';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
@@ -420,7 +419,6 @@ export default class App extends Component {
             </Switch>
           </Router>
           {!hideChatbox && <ChatBoxContainer />}
-          <Pushnami />
         </ThemeProvider>
       </>
     );

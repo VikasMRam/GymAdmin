@@ -113,7 +113,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
         label: org.name,
       };
       const { bio, parentCompany, displayName, cv, imageCaption, chosenReview, serviceArea } = info;
-      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, experience, isPro, canReceiveReferrals, cellPhone, slackChannel, email, timeZone, smsFormat, contract, contractStatus } = info;
+      const { adminRegion, vacationStart, vacationEnd, adminNotes, slyScore, experience, isPro, canReceiveReferrals, cellPhone, slackChannel, appointmentLink, email, timeZone, smsFormat, contract, contractStatus } = info;
       let zipcodesServed = null;
       if (serviceArea) {
         ({ zipcodesServed } = serviceArea);
@@ -142,6 +142,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
         cellPhone,
         email,
         slackChannel,
+        appointmentLink,
         timeZone,
         smsFormat,
         contract,

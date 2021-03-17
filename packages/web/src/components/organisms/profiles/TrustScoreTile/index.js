@@ -26,17 +26,14 @@ const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
   const { value, valueText, prop1, prop2, prop3, moreInfoText, licensingUrl } = getTrustScoreType(community, 'stateScore');
   let imagePath = 'images/profiles/excellent-score.png';
   let icon = 'check';
-  let iconP = 'primary';
   if (value > 70 && value < 81) {
     imagePath = 'images/profiles/good-score.png';
   } else if (value > 50 && value < 71) {
     imagePath = 'images/profiles/okay-score.png';
-    icon = 'close';
-    iconP = 'danger';
+    icon = 'unknown';
   } else if (value < 51) {
     imagePath = 'images/profiles/poor-score.png';
     icon = 'close';
-    iconP = 'danger';
   }
   return (
     <Block
@@ -79,7 +76,7 @@ const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
               {prop1}
             </IconItem>
             <IconItem
-              icon="check"
+              icon={icon}
               iconSize="body"
               size="body"
               pad="large"
@@ -91,7 +88,6 @@ const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
               iconSize="body"
               size="body"
               pad="large"
-              iconPalette={iconP}
             >
               {prop3}
             </IconItem>
