@@ -46,6 +46,15 @@ const tableStyles = css`
           border-bottom: none;
         }
       }
+
+      & figure.image {
+        line-height: normal;
+        height: ${size('spacing.l')};
+
+        & > img {
+          height: 100%;
+        }
+      }
     }
   }
 `;

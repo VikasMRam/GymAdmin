@@ -100,7 +100,7 @@ const getResourceCenterSitemapXML = (req, res) => {
         url.ele('loc', `${host}${to}`);
         url.ele('priority', 0.9);
       });
-      JSON.parse(response.body).forEach(({ slug, updated_at: updatedAt, topic }) => {
+      Array.isArray(response.body) && JSON.parse(response.body).forEach(({ slug, updated_at: updatedAt, topic }) => {
         const url = root.ele('url');
         url.ele('loc', `${host}${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`);
         url.ele('lastmod', updatedAt);
