@@ -111,7 +111,7 @@ const HomePage = () => {
         startingWithTablet={{ width: size('layout.col8'), marginX: 'auto' }}
         startingWithLaptop={{ width: size('layout.col12') }}
       >
-        Featured Articles
+        Explore Topics
       </Block>
 
       <Grid
