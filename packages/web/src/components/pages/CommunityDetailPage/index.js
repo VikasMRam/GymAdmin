@@ -333,14 +333,14 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
-                    { partnerAgent.id === 'seniorly-partner-agent-emma-rodbro-'  && <AskAgentQuestionButtonContainer
+                    { partnerAgent.id !== 'seniorly-partner-agent-emma-rodbro-'  && <AskAgentQuestionButtonContainer
                       agent={partnerAgent}
                       width="100%"
                       community={community}
                       type="expert"
                       ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
                     />}
-                    {partnerAgent.id !== 'seniorly-partner-agent-emma-rodbro-'  &&
+                    {partnerAgent.id === 'seniorly-partner-agent-emma-rodbro-'  &&
                       <AgentAppointmentContainer community={community} agent={partnerAgent} />
                     }
                   </StyledHeadingBoxSection>
