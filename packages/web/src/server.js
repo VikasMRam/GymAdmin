@@ -12,7 +12,7 @@ import { StaticRouter } from 'react-router';
 import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
-import request from 'request';
+import nodeFetch from 'node-fetch';
 import builder from 'xmlbuilder';
 
 import { cleanError } from 'sly/web/services/helpers/logging';
@@ -22,10 +22,8 @@ import Html from 'sly/web/components/Html';
 import Error from 'sly/web/components/Error';
 import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConfigs';
 import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
-import { urlize } from 'sly/web/services/helpers/url';
 import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { topics } from 'sly/web/components/resourceCenter/helper';
 
 const getErrorContent = (err) => {
   if (isDev) {
@@ -61,35 +59,40 @@ const app = express();
 
 const getResourceCenterSitemapXML = (req, res) => {
   const options = {
-    url: `${cmsUrl}${endpoints.getArticlesForSitemap.path}`,
     method: 'GET',
     headers: { 'content-type': 'application/json' },
   };
-  request(options, (error, response) => {
-    if (response) {
-      const root = builder.create('urlset', {
-        version: '1.0',
-        encoding: 'UTF-8',
-      });
-      root.att({ xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
-      const resourcesHomePageUrl = root.ele('url');
-      resourcesHomePageUrl.ele('loc', `${host}${RESOURCE_CENTER_PATH}`);
-      resourcesHomePageUrl.ele('priority', 0.9);
-      topics.forEach(({ to }) => {
-        const url = root.ele('url');
-        url.ele('loc', `${host}${to}`);
-        url.ele('priority', 0.9);
-      });
-      Array.isArray(response.body) && JSON.parse(response.body).forEach(({ slug, updated_at: updatedAt, topic }) => {
-        const url = root.ele('url');
-        url.ele('loc', `${host}${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`);
-        url.ele('lastmod', updatedAt);
-        url.ele('priority', 0.9);
-      });
-      res.end(root.end({ pretty: true }));
-    }
-    if (error) res.status(500).send({ title: 'There are some issues on server, please try again' });
-  });
+
+  nodeFetch(`${cmsUrl}${endpoints.getTopic.path}`, options)
+    .then(res => res.json())
+    .then((topics) => {
+      nodeFetch(`${cmsUrl}${endpoints.getArticlesForSitemap.path}`, options)
+        .then(res => console.log('First then') || res.json())
+        .then((data) => {
+          const root = builder.create('urlset', {
+            version: '1.0',
+            encoding: 'UTF-8',
+          });
+          root.att({ xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
+          const resourcesHomePageUrl = root.ele('url');
+          resourcesHomePageUrl.ele('loc', `${host}${RESOURCE_CENTER_PATH}`);
+          resourcesHomePageUrl.ele('priority', 0.9);
+          topics.forEach(({ slug }) => {
+            const url = root.ele('url');
+            url.ele('loc', `${host}${RESOURCE_CENTER_PATH}/${slug}`);
+            url.ele('priority', 0.9);
+          });
+          Array.isArray(data) && data.forEach(({ slug, updated_at: updatedAt, mainTopic }) => {
+            const url = root.ele('url');
+            url.ele('loc', `${host}${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`);
+            url.ele('lastmod', updatedAt);
+            url.ele('priority', 0.9);
+          });
+          res.end(root.end({ pretty: true }));
+        })
+        .catch(() => res.status(500).send({ title: 'There are some issues on server, please try again' }));
+    })
+    .catch(() => res.status(500).send({ title: 'There are some issues on server, please try again' }));
 };
 
 app.get('/sitemap/resource-center.xml', getResourceCenterSitemapXML);

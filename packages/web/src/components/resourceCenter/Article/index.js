@@ -12,8 +12,6 @@ import { startingWith, withDisplay } from 'sly/common/components/helpers';
 import { getKey, size } from 'sly/common/components/themes';
 import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { urlize } from 'sly/web/services/helpers/url';
-import { topics } from 'sly/web/components/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
 import Block from 'sly/common/components/atoms/Block';
 import Heading from 'sly/common/components/atoms/Heading';
@@ -41,9 +39,7 @@ const ArticlePage = ({ match }) => {
 
   const { slug, topic } = match.params;
 
-  const { requestInfo } = usePrefetch(
-    'getArticle',
-    req => req({ slug_eq: slug, topic_eq: topics.find(({ value }) => urlize(value) === topic)?.label || '' }));
+  const { requestInfo } = usePrefetch('getArticle', req => req({ slug_eq: slug, 'mainTopic.slug': topic }));
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;
@@ -81,15 +77,15 @@ const ArticlePage = ({ match }) => {
           startingWithTablet={{ width: size('layout.col6'), padding: 0 }}
           startingWithLaptop={{ width: size('layout.col8') }}
         >
-          {requestInfo?.result?.[0]?.topic && requestInfo?.result?.[0]?.title && (
+          {requestInfo?.result?.[0]?.mainTopic && requestInfo?.result?.[0]?.title && (
             <Block
               marginTop="l"
               marginBottom="xs"
             >
               <Link font="body-small" to={RESOURCE_CENTER_PATH}>Resource Center</Link>
               {' / '}
-              <Link font="body-small" to={topics.find(({ label }) => label === requestInfo.result[0].topic).to}>
-                {topics.find(({ label }) => label === requestInfo.result[0].topic)?.value}
+              <Link font="body-small" to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
+                {requestInfo.result[0].mainTopic.name}
               </Link>
               {' / '}
               <BreadCrumbsTitle display="inline" font="body-small">{requestInfo.result[0].title}</BreadCrumbsTitle>
@@ -117,7 +113,6 @@ const ArticlePage = ({ match }) => {
           <Block marginBottom="l" startingWithTablet={{ marginBottom: 'xl' }}>
             <AddThis />
           </Block>
-
         </Block>
 
         <Block
@@ -138,7 +133,7 @@ const ArticlePage = ({ match }) => {
 
       </ArticleWrapper>
 
-      {!!requestInfo?.result?.[0]?.linkBlockList?.length &&
+      {!!requestInfo?.result?.[0]?.linkBlockList?.length && (
         <Block
           marginY="l"
           marginX="m"
@@ -151,7 +146,7 @@ const ArticlePage = ({ match }) => {
             links={requestInfo?.result?.[0]?.linkBlockList}
           />
         </Block>
-      }
+      )}
 
       <Block
         marginBottom="l"
@@ -170,7 +165,7 @@ const ArticlePage = ({ match }) => {
         startingWithLaptop={{ width: size('layout.col8') }}
       >
         <Block marginBottom="m">Tags</Block>
-        <ArticleTags topic={requestInfo?.result?.[0]?.topic} tagsList={requestInfo?.result?.[0]?.tagsList} />
+        <ArticleTags topic={requestInfo?.result?.[0]?.mainTopic} tagsList={requestInfo?.result?.[0]?.tagsList} />
       </Block>
 
       <Block
@@ -209,8 +204,8 @@ const ArticlePage = ({ match }) => {
       <Block marginBottom="xxl" startingWithTablet={{ marginBottom: 'xxxl' }}>
         <ArticlesListByTopic
           limit={3}
-          topic={requestInfo?.result?.[0]?.topic}
-          id={requestInfo?.result?.[0]?.id}
+          topic={requestInfo.result?.[0]?.mainTopic.slug}
+          id={requestInfo.result?.[0]?.id}
           articlesTitle="You might also like"
         />
       </Block>

@@ -1,43 +1,31 @@
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { urlize } from 'sly/web/services/helpers/url';
-
-export const SENIOR_LIVING_GUIDES_TOPIC = 'SENIOR_LIVING_GUIDES';
-export const HEALTH_AND_LIFESTYLE_TOPIC = 'HEALTH_AND_LIFESTYLE';
+export const SENIOR_LIVING_GUIDES_TOPIC = 'senior-living-guides';
+export const HEALTH_AND_LIFESTYLE_TOPIC = 'health-and-lifestyle';
 
 export const ARTICLES_RANGE_FOR_PAGINATION = 18;
 
-export const topics = [
-  { label: SENIOR_LIVING_GUIDES_TOPIC, value: 'Senior Living Guides', to: `${RESOURCE_CENTER_PATH}/senior-living-guides` },
-  { label: 'CITY_GUIDES', value: 'City Guides', to: `${RESOURCE_CENTER_PATH}/city-guides` },
-  { label: HEALTH_AND_LIFESTYLE_TOPIC, value: 'Health and Lifestyle', to: `${RESOURCE_CENTER_PATH}/health-and-lifestyle` },
-  { label: 'CAREGIVERS', value: 'Caregivers', to: `${RESOURCE_CENTER_PATH}/caregivers` },
-  { label: 'VOICES', value: 'Voices', to: `${RESOURCE_CENTER_PATH}/voices` },
-  { label: 'SENIOR_NEWS_AND_ANNOUNCEMENTS', value: 'Senior news and Announcements', to: `${RESOURCE_CENTER_PATH}/senior-news-and-announcements` },
-];
-
-export const selectAllArticlesItem = { value: 'ALL_ARTICLES', label: 'All articles' };
+export const selectAllArticlesItem = { value: 'all-articles', label: 'All articles' };
 
 export const seniorLivingGuidesTags = [
   selectAllArticlesItem,
-  { value: 'ASSISTED_LIVING', label: 'Assisted living' },
-  { value: 'INDEPENDENT_LIVING', label: 'Independent living' },
-  { value: 'MEMORY_CARE', label: 'Memory care' },
-  { value: 'CCRC', label: 'CCRC' },
-  { value: 'HOME_CARE', label: 'Home care' },
-  { value: 'FINANCE', label: 'Finance' },
-  { value: 'LEGAL', label: 'Legal' },
-  { value: 'ADVISORS', label: 'Advisors' },
-  { value: 'CITY_GUIDES', label: 'City guides' },
+  { value: 'assisted-living', label: 'Assisted living' },
+  { value: 'independent-living', label: 'Independent living' },
+  { value: 'memory-care', label: 'Memory care' },
+  { value: 'ccrc', label: 'CCRC' },
+  { value: 'home-care', label: 'Home care' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'legal', label: 'Legal' },
+  { value: 'advisors', label: 'Advisors' },
+  { value: 'city-guides', label: 'City guides' },
 ];
 
 export const healthAndLifestyleTags = [
   selectAllArticlesItem,
-  { value: 'LIFESTYLE', label: 'Lifestyle' },
-  { value: 'HEALTH', label: 'Health' },
-  { value: 'TECHNOLOGY', label: 'Technology' },
-  { value: 'VETERANS', label: 'Veterans' },
-  { value: 'TRAVEL', label: 'Travel' },
-  { value: 'BUSINESS', label: 'Business' },
+  { value: 'lifestyle', label: 'Lifestyle' },
+  { value: 'health', label: 'Health' },
+  { value: 'technology', label: 'Technology' },
+  { value: 'veterans', label: 'Veterans' },
+  { value: 'travel', label: 'Travel' },
+  { value: 'business', label: 'Business' },
 ];
 
 export const getTextForPagination = (pageNumber, articlesCount) => {
@@ -74,14 +62,14 @@ export const toUppercaseAndSnakeCase = value =>
   value?.toUpperCase().replace(/-/g, '_');
 
 export const getTagsOptionByTopic = topic =>
-  (toUppercaseAndSnakeCase(topic) === SENIOR_LIVING_GUIDES_TOPIC && seniorLivingGuidesTags) ||
-  (toUppercaseAndSnakeCase(topic) === HEALTH_AND_LIFESTYLE_TOPIC && healthAndLifestyleTags);
+  (topic === SENIOR_LIVING_GUIDES_TOPIC && seniorLivingGuidesTags) ||
+  (topic === HEALTH_AND_LIFESTYLE_TOPIC && healthAndLifestyleTags);
 
 export const getTagsSelectDefaultValue = (search, topic) => {
   const tagName = getSearchItem(search, 'tag-name');
   if (tagName) {
     const tagList = getTagsOptionByTopic(topic);
-    const defaultValue = tagList.find(item => item.value === toUppercaseAndSnakeCase(tagName));
+    const defaultValue = tagList.find(item => item.value === tagName);
     if (defaultValue) {
       return defaultValue;
     }
@@ -92,12 +80,12 @@ export const getTagsSelectDefaultValue = (search, topic) => {
 export const onChangeTagsSelect = (search, history) => ({ value }) => {
   let tagNameSearchItem = null;
   if (value !== selectAllArticlesItem.value) {
-    tagNameSearchItem = `?tag-name=${urlize(value)}`;
+    tagNameSearchItem = `?tag-name=${value}`;
   }
   history.push({ search: `${tagNameSearchItem || ''}` });
 };
 
 export const isActiveTab = (search, value) => {
   if (value === selectAllArticlesItem.value && !getSearchItem(search, 'tag-name')) return true;
-  return toUppercaseAndSnakeCase(getSearchItem(search, 'tag-name')) === value;
+  return getSearchItem(search, 'tag-name') === value;
 };

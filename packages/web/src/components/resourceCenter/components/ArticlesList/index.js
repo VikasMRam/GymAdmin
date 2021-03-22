@@ -5,8 +5,6 @@ import { array, bool, string } from 'prop-types';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { size } from 'sly/common/components/themes';
 import { startingWith, withDisplay } from 'sly/common/components/helpers';
-import { urlize } from 'sly/web/services/helpers/url';
-import { topics } from 'sly/web/components/resourceCenter/helper';
 import Block from 'sly/common/components/atoms/Block';
 import Link from 'sly/common/components/atoms/Link';
 import Icon from 'sly/common/components/atoms/Icon';
@@ -43,11 +41,11 @@ const Title = styled(Block)(
 
 const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles }) => {
   const hrefToTopicPage = useMemo(() =>
-    `${RESOURCE_CENTER_PATH}/${urlize(topic)}`,
+    `${RESOURCE_CENTER_PATH}/${topic}}`,
   [topic]);
 
   const getHrefToArticlePage = useCallback((slug, topic) =>
-    `${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`,
+    `${RESOURCE_CENTER_PATH}/${topic}/${slug}`,
   []);
 
   return (
@@ -76,7 +74,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
         {withRedirectToTopicPage && (
           <RedirectToTopicLink to={hrefToTopicPage}>
             <span>
-              {`See all ${topics.find(({ label }) => label === topic).value} `}
+              {`See all ${articlesTitle} `}
               <IconWrapper><Icon icon="chevron" size="caption" /></IconWrapper>
             </span>
           </RedirectToTopicLink>
@@ -105,20 +103,20 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
             title,
             shortDescription,
             slug,
-            topic,
+            mainTopic,
             tagsList,
             id,
           },
           index,
         ) => (
           <ArticlePreviewWrapper
-            to={getHrefToArticlePage(slug, topic)}
+            to={getHrefToArticlePage(slug, mainTopic.slug)}
             key={id}
             hideOnTablet={index > 1}
           >
             <ArticlePreview {...{
               smallSizeOnPhone: true,
-              topic,
+              topic: mainTopic,
               url: mainImg?.url,
               alternativeText: mainImg?.alternativeText,
               title,
