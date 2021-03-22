@@ -18,9 +18,6 @@ const {
   HIDE_CHATBOX,
   ENABLE_EXPERIMENT_DEBUGGER,
   DISABLE_EXPERIMENTS,
-  MAILCHIMP_DATA_CENTER,
-  MAILCHIMP_API_KEY,
-  MAILCHIMP_LIST_ID,
 } = require('../env');
 
 const { VERSION } = process.env;
@@ -70,9 +67,6 @@ const config = {
       resource: '3335478033',
       search: '2390417245',
     },
-    mailchimpDataCenter: MAILCHIMP_DATA_CENTER,
-    mailchimpApiKey: MAILCHIMP_API_KEY,
-    mailchimpListId: MAILCHIMP_LIST_ID,
   },
 
   test: {

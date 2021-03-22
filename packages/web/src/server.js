@@ -16,7 +16,7 @@ import request from 'request';
 import builder from 'xmlbuilder';
 
 import { cleanError } from 'sly/web/services/helpers/logging';
-import { port, host, publicPath, isDev, mailchimpApiKey, mailchimpListId, mailchimpDataCenter, cmsUrl } from 'sly/web/config';
+import { port, host, publicPath, isDev, cmsUrl } from 'sly/web/config';
 import { configure as configureStore } from 'sly/web/store';
 import Html from 'sly/web/components/Html';
 import Error from 'sly/web/components/Error';
@@ -59,26 +59,6 @@ const renderHtml = ({
 
 const app = express();
 
-const subscribe = (req, res) => {
-  const { email } = req.body;
-  const options = {
-    url: `https://${mailchimpDataCenter}.api.mailchimp.com/3.0/lists/${mailchimpListId}/members`,
-    method: 'POST',
-    headers: { 'content-type': 'application/json', Authorization: `apikey ${mailchimpApiKey}` },
-    body: JSON.stringify({ email_address: email, status: 'subscribed' }),
-  };
-  request(options, (error, response) => {
-    if (response) {
-      if (response.statusCode === 200) {
-        res.status(response.statusCode).send({ title: 'Subscribed' });
-      } else {
-        res.status(response.statusCode).send({ title: JSON.parse(response && response.body).title });
-      }
-    }
-    if (error) res.status(500).send({ title: 'There are some issues on server, please try again' });
-  });
-};
-
 const getResourceCenterSitemapXML = (req, res) => {
   const options = {
     url: `${cmsUrl}${endpoints.getArticlesForSitemap.path}`,
@@ -112,8 +92,6 @@ const getResourceCenterSitemapXML = (req, res) => {
   });
 };
 
-app.use(express.json());
-app.post('/subscribe-mailchimp', subscribe);
 app.get('/sitemap/resource-center.xml', getResourceCenterSitemapXML);
 
 app.disable('x-powered-by');
