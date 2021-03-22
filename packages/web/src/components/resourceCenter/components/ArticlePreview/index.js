@@ -51,7 +51,7 @@ const ArticlePreview = ({
     <TextWrapper display="flex" flexDirection="column" flexGrow="1" padding="l">
       <Heading
         size="subtitle"
-        css={getStylesForEllipsisText(2, {
+        css={getStylesForEllipsisText(3, {
           fontSize: size('text.displayS'),
           lineHeight: size('lineHeight.title'),
         })}
