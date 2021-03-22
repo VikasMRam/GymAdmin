@@ -6,7 +6,7 @@ import ArticlesList from 'sly/web/components/resourceCenter/components/ArticlesL
 
 const ArticlesListByTopic = ({ limit: _limit, topic, id, withRedirectToTopicPage, articlesTitle }) => {
   const { requestInfo } = usePrefetch('getArticle', req => req({
-    topic,
+    'mainTopic.slug': topic,
     _sort: 'viewCount:DESC',
     _limit,
     ...(!withRedirectToTopicPage && { id_ne: id }),

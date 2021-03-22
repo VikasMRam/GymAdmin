@@ -67,12 +67,12 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
             shortDescription,
             mainImg,
             slug,
-            topic,
+            mainTopic,
             tagsList,
             id,
           }) => (
-            <Link to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>
-              <ArticlePreview{...{ alternativeText: mainImg?.alternativeText, title, shortDescription, url: mainImg?.url, topic, tagsList }} />
+            <Link to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>
+              <ArticlePreview{...{ alternativeText: mainImg?.alternativeText, title, shortDescription, url: mainImg?.url, topic: mainTopic, tagsList }} />
             </Link>
           ))}
          </Block>

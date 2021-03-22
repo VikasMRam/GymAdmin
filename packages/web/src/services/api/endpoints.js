@@ -118,4 +118,5 @@ export default {
   getArticle: { method: get, path: '/articles', type: 'cms' },
   getArticlesCount: { method: get, path: '/articles/count', type: 'cms' },
   getArticlesForSitemap: { method: get, path: '/articles/sitemap', type: 'cms' },
+  getTopic: { method: get, path: '/topics', type: 'cms' },
 };

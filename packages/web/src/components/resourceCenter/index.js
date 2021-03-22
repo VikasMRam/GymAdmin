@@ -4,11 +4,11 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled, { css } from 'styled-components';
 
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { getKey, size } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { withBorder, withDisplay } from 'sly/common/components/helpers';
 import { assetPath } from 'sly/web/components/themes';
-import { topics } from 'sly/web/components/resourceCenter/helper';
 import Block from 'sly/common/components/atoms/Block';
 import Link from 'sly/common/components/atoms/Link';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
@@ -35,6 +35,7 @@ const ExploreTopicInfo = styled(Block)(
     position: absolute;
     top: 0;
     left: 0;
+    border-radius: ${size('border.xxLarge')}
     overflow: hidden;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
   `,
@@ -43,7 +44,9 @@ const ExploreTopicInfo = styled(Block)(
 const HomePage = () => {
   const { requestInfo } = usePrefetch('getResourceCenterMainInfo');
 
-  if (!requestInfo.hasFinished) {
+  const { requestInfo: { result: topicRes, hasFinished: requestByTopicHasFinished } } = usePrefetch('getTopic');
+
+  if (!requestInfo.hasFinished || !requestByTopicHasFinished) {
     return (
       <LoaderWrapper
         height="100vh"
@@ -92,13 +95,14 @@ const HomePage = () => {
         />
       </Block>
 
-      {requestInfo.result?.mainTopics.map(({ value, id }) => (
+
+      {requestInfo.result?.mainTopics.map(({ slug, name, id }) => (
         <Block marginBottom="xxl" key={id}>
           <ArticlesListByTopic
             limit={3}
-            topic={value}
+            topic={slug}
             id={id}
-            articlesTitle={(topics.find(({ label }) => label === value)).value}
+            articlesTitle={name}
             withRedirectToTopicPage
           />
         </Block>
@@ -135,13 +139,12 @@ const HomePage = () => {
           gridTemplateColumns: `repeat(2, ${getKey('sizes.layout.col6')})`,
         }}
       >
-        {/* TODO: Add descriptions for topics */}
-        {topics.map(({ label, value, to, description = 'Housing for people with disabilities or for adults who cannot or choose not to live independently' }) => (
-          <Link key={label} to={to} css={{ position: 'relative' }}>
+        {topicRes.map(({ slug, name, description, img }) => (
+          <Link key={slug} to={`${RESOURCE_CENTER_PATH}/${slug}`} css={{ position: 'relative' }}>
             <ResponsiveImage
               css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
-              // src={} TODO: Pass image src
-              alt={`${value} img`}
+              src={img?.url}
+              alt={`${name} img`}
             />
             <ExploreTopicInfo
               display="flex"
@@ -153,7 +156,7 @@ const HomePage = () => {
               height="100%"
               padding="l"
             >
-              <Block font="title-medium" palette="white" marginBottom="s">{value}</Block>
+              <Block font="title-medium" palette="white" marginBottom="s">{name}</Block>
               <Block font="body-regular" palette="white">{description}</Block>
             </ExploreTopicInfo>
           </Link>

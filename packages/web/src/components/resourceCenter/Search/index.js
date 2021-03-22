@@ -113,21 +113,21 @@ const Search = ({ match, location }) => {
             >
               {articles.map(({
                   id,
-                  topic,
+                  mainTopic,
                   tagsList,
                   title,
                   shortDescription,
                   mainImg,
                   slug,
                 }) => (
-                  <Link to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>
+                  <Link to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>
                     <ArticlePreview
                       {...{
                         alternativeText: mainImg?.alternativeText,
                         title,
                         shortDescription,
                         url: mainImg?.url,
-                        topic,
+                        topic: mainTopic,
                         tagsList,
                       }}
                     />

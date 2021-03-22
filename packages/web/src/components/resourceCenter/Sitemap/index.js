@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 import { host } from 'sly/web/config';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import { topics } from 'sly/web/components/resourceCenter/helper';
-import { urlize } from 'sly/web/services/helpers/url';
 import { startingWith, withDisplay } from 'sly/common/components/helpers';
 import { assetPath } from 'sly/web/components/themes';
 import { getKey, size } from 'sly/common/components/themes';
@@ -37,9 +35,10 @@ const getTitle = () => {
 };
 
 const Sitemap = () => {
-  const { requestInfo } = usePrefetch('getArticlesForSitemap');
+  const { requestInfo: { result: topics, hasFinished: requestByTopicsHasFinished } } = usePrefetch('getTopic');
+  const { requestInfo: { result: articles, hasFinished: requestByArticlesHasFinished } } = usePrefetch('getArticlesForSitemap');
 
-  if (!requestInfo.hasFinished) {
+  if (!requestByArticlesHasFinished || !requestByTopicsHasFinished) {
     return (
       <LoaderWrapper
         height="100vh"
@@ -90,15 +89,18 @@ const Sitemap = () => {
           marginBottom="m"
           startingWithTablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
         >
-          {topics.map(({ to, value }) => <StyledLink to={to} key={value}>{value}</StyledLink>)}
+          {
+            topics?.map(({ slug, name }) =>
+              <StyledLink to={`${RESOURCE_CENTER_PATH}/${slug}`} key={slug}>{name}</StyledLink>)
+          }
         </Block>
 
         <Block
           marginBottom="m"
           startingWithTablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
         >
-          {requestInfo.result?.map(({ slug, id, title, topic }) => (
-            <StyledLink to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>{title}</StyledLink>
+          {articles?.map(({ slug, id, title, mainTopic }) => (
+            <StyledLink to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>{title}</StyledLink>
           ))}
         </Block>
 

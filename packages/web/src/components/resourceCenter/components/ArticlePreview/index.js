@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { array, bool, string } from 'prop-types';
+import { array, bool, object, string } from 'prop-types';
 
 import Block from 'sly/common/components/atoms/Block';
 import { withBorder, withDisplay } from 'sly/common/components/helpers';
@@ -85,7 +85,7 @@ ArticlePreview.propTypes = {
   url: string,
   alternativeText: string,
   title: string,
-  topic: string,
+  topic: object,
   tagsList: array,
   shortDescription: string,
 };

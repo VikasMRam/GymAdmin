@@ -7,7 +7,6 @@ import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import {
-  topics,
   isActiveTab,
   getTextForPagination,
   onChangeTagsSelect,
@@ -20,7 +19,6 @@ import {
 import { assetPath } from 'sly/web/components/themes';
 import { withDisplay, withBorder } from 'sly/common/components/helpers';
 import { getKey, palette, size } from 'sly/common/components/themes';
-import { urlize } from 'sly/web/services/helpers/url';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -121,7 +119,6 @@ const PaginationText = styled(Block)(
 const Topic = ({ match, location, history }) => {
   const { topic: topicSlug } = match.params;
   const { search } = location;
-  const topicValue = useMemo(() => topics.find(({ label }) => label === toUppercaseAndSnakeCase(topicSlug))?.value, [topicSlug]);
   const tagsOptions = useMemo(() => getTagsOptionByTopic(topicSlug), [topicSlug]);
   const pageNumber = useMemo(() => getSearchItem(search, 'page-number') || 0, [location]);
   const tagName = useMemo(() => getSearchItem(search, 'tag-name'), [location]);
@@ -130,10 +127,15 @@ const Topic = ({ match, location, history }) => {
     return item ? `?${item}` : '';
   }, [search]);
 
+  const { requestInfo: { result: topicRes , hasFinished: requestByTopicHasFinished } } = usePrefetch(
+    'getTopic',
+    req => req({ slug: topicSlug, }),
+  );
+
   const { requestInfo: { result: articlesCount, hasFinished: requestByCountHasFinished } } = usePrefetch(
     'getArticlesCount',
     req => req({
-      topic_eq: toUppercaseAndSnakeCase(topicSlug),
+      'mainTopic.slug': topicSlug,
       ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
     }),
   );
@@ -141,21 +143,21 @@ const Topic = ({ match, location, history }) => {
   const { requestInfo: { result: articles, hasFinished: requestByArticlesHasFinished } } = usePrefetch(
     'getArticle',
     req => req({
-      topic_eq: toUppercaseAndSnakeCase(topicSlug),
+      'mainTopic.slug': topicSlug,
       ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
       _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
       _limit: ARTICLES_RANGE_FOR_PAGINATION,
     }));
 
   if (
-    !topicValue ||
-    (tagName && tagsOptions && !tagsOptions.find(({ value }) => value !== toUppercaseAndSnakeCase(topicValue))) ||
+    (!topicRes?.[0] && requestByTopicHasFinished) ||
+    (tagName && tagsOptions && !(tagsOptions.filter(({ value }) => value === tagName).length)) ||
     (tagName && !tagsOptions)
   ) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;
   }
 
-  if (!requestByArticlesHasFinished || !requestByCountHasFinished) {
+  if (!requestByArticlesHasFinished || !requestByCountHasFinished || !requestByTopicHasFinished) {
     return (
       <LoaderWrapper
         height="100vh"
@@ -191,14 +193,15 @@ const Topic = ({ match, location, history }) => {
             marginBottom="l"
             palette="white"
           >
-            {topicValue}
+            {topicRes?.[0].name}
           </Block>
           <Block font="body-regular" palette="white">
-            Learn how to navigate senior living, from what to look for in a community, finance, move-in tips and more.
+            {topicRes?.[0].description}
           </Block>
         </MainTextWrapper>
         <ResponsiveImage
           css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+          src={topicRes?.[0].img?.url}
         />
       </MainBlockWrapper>
 
@@ -270,18 +273,18 @@ const Topic = ({ match, location, history }) => {
               shortDescription,
               mainImg,
               slug,
-              topic,
+              mainTopic,
               tagsList,
               id,
             }) => (
-              <Link to={`${RESOURCE_CENTER_PATH}/${urlize(topic)}/${slug}`} key={id}>
+              <Link to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>
                 <ArticlePreview
                   {...{
                   alternativeText: mainImg?.alternativeText,
                   title,
                   shortDescription,
                   url: mainImg?.url,
-                  topic,
+                  topic: mainTopic,
                   tagsList,
                 }}
                 />

@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 import {
   withBorder,
   startingWith,
@@ -9,7 +10,6 @@ import {
   upTo,
 } from 'sly/common/components/helpers';
 import { getKey, palette, size } from 'sly/common/components/themes';
-import { topics } from 'sly/web/components/resourceCenter/helper';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Icon from 'sly/common/components/atoms/Icon';
 import Link from 'sly/common/components/atoms/Link';
@@ -18,17 +18,12 @@ import SearchContainer from 'sly/web/components/resourceCenter/components/Articl
 import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
 
 const backToSeniorlyItem = {
-  value: 'Back to Seniorly.com',
+  label: 'Back to Seniorly.com',
   iconBack: true,
   palette: 'primary',
   to: '/',
   hideInBigScreen: true,
 };
-
-const headerMenuItems = [
-  ...topics,
-  backToSeniorlyItem,
-];
 
 const Wrapper = styled(Block)(
   withDisplay,
@@ -111,14 +106,14 @@ const getMenuItem = (item, setMenuIsOpen) => item.hideInBigScreen
   ? (
     <Block onClick={() => setMenuIsOpen(false)} key={item.value} startingWithLaptop={{ display: 'none' }}>
       <Link to={item.to}>
-        {item.value}
+        {item.label}
         {item.iconBack && <Icon icon="chevron" />}
       </Link>
     </Block>
   )
   : (
     <Link onClick={() => setMenuIsOpen(false)} key={item.value} to={item.to}>
-      {item.value}
+      {item.label}
       {item.iconBack && <Icon icon="chevron" />}
     </Link>
   );
@@ -126,6 +121,16 @@ const getMenuItem = (item, setMenuIsOpen) => item.hideInBigScreen
 const getMenuItems = (menuItems, setMenuIsOpen) => menuItems.map(item => getMenuItem(item, setMenuIsOpen));
 
 const Header = () => {
+  const { requestInfo: { result } } = usePrefetch('getTopic');
+
+  const headerMenuItems = useMemo(() =>
+    [
+      ...(result?.map(({ slug, name }) => ({ label: name, value: name, to: `${RESOURCE_CENTER_PATH}/${slug}` }))),
+      backToSeniorlyItem
+    ],
+    [result]
+  );
+
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const headerMenuRef = useRef(null);
@@ -191,13 +196,12 @@ const Header = () => {
       </Block>
 
       <Block
-        upToTablet={{ paddingTop: getKey('sizes.spacing.xs') }} // for some reason size('spacing.xs') || size('spacing.regular') does not work
+        upToTablet={{ paddingTop: getKey('sizes.spacing.xs') }}
         startingWithLaptop={{ display: 'none' }}
       >
         <MenuItemWrapper
           display="flex"
           alignItems="center"
-          // height={size('element.regular')}
           startingWithTablet={{ height: size('element.large') }}
         >
           <Icon

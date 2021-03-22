@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { array, string } from 'prop-types';
+import { array, object } from 'prop-types';
 
-import { topics } from 'sly/web/components/resourceCenter/helper';
 import Block from 'sly/common/components/atoms/Block';
 import { withBorder, withDisplay } from 'sly/common/components/helpers';
 
@@ -55,14 +54,14 @@ const ArticleTags = ({ topic, tagsList }) => (
         palette="white"
       >
 
-        {topics.find(({ label }) => label === topic)?.value}
+        {topic.name}
       </Tag>
     )}
   </>
 );
 
 ArticleTags.propTypes = {
-  topic: string,
+  topic: object,
   tagsList: array,
 };
 
