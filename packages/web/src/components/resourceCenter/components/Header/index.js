@@ -118,7 +118,7 @@ const getMenuItem = (item, setMenuIsOpen) => item.hideInBigScreen
     </Link>
   );
 
-const getMenuItems = (menuItems, setMenuIsOpen) => menuItems.map(item => getMenuItem(item, setMenuIsOpen));
+const getMenuItems = (menuItems, setMenuIsOpen) => menuItems?.map(item => getMenuItem(item, setMenuIsOpen));
 
 const Header = () => {
   const { requestInfo: { result } } = usePrefetch('getTopic');
