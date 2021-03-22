@@ -19,7 +19,9 @@ const iconSize = ({ size: s }) => {
     ? css`calc(${textSize} * ${lineHeight});`
     : s;
 };
-const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
+
+const getTransform = ({ rotate, flip }) => `${rotate ? `transform: rotate(${rotate * 90}deg)` : ''}; ${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
+
 
 /**
  * To make Icon compatible with text sizes, but backward compatible with the
