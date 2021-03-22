@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
-import { host } from 'sly/web/config';
+import { cmsUrl } from 'sly/web/config';
 import { startingWith } from 'sly/common/components/helpers';
 import { getKey, size } from 'sly/common/components/themes';
 import apiFetch from 'sly/web/services/api/apiFetch';
@@ -62,7 +62,7 @@ const SubscribeEmail = () => {
   const onSubmit = useCallback(() => {
     setIsLoading(true);
     apiFetch(
-      host,
+      cmsUrl,
       '/subscribe-mailchimp',
       {
         method: 'POST',
@@ -77,8 +77,8 @@ const SubscribeEmail = () => {
         setRequestRes({ status: res.status, title: res.body.title });
         setIsLoading(false);
       })
-      .catch((res) => {
-        setRequestRes({ status: res.status, title: res.body.title });
+      .catch((err) => {
+        setRequestRes({ status: err.body.statusCode, title: err.body.message });
         setIsLoading(false);
       });
   }, [value]);
@@ -107,7 +107,7 @@ const SubscribeEmail = () => {
             onChange={evt => setValue(evt.target.value)}
             placeholder="Your email address"
           />
-          <StyledButton disabled={isLoading} onClick={onSubmit}>Sign up</StyledButton>
+          <StyledButton disabled={isLoading || !value.trim()} onClick={onSubmit}>Sign up</StyledButton>
         </Block>
       </Block>
 
