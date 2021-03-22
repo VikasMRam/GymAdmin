@@ -125,7 +125,7 @@ const Header = () => {
 
   const headerMenuItems = useMemo(() =>
     [
-      ...(result?.map(({ slug, name }) => ({ label: name, value: name, to: `${RESOURCE_CENTER_PATH}/${slug}` }))),
+      ...(result?.map(({ slug, name }) => ({ label: name, value: name, to: `${RESOURCE_CENTER_PATH}/${slug}` })) || []),
       backToSeniorlyItem
     ],
     [result]

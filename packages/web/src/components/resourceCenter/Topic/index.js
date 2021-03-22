@@ -201,7 +201,7 @@ const Topic = ({ match, location, history }) => {
         </MainTextWrapper>
         <ResponsiveImage
           css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
-          src={topicRes?.[0].img?.url}
+          // src={topicRes?.[0].img?.url}
         />
       </MainBlockWrapper>
 
