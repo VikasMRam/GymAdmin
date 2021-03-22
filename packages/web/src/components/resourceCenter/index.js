@@ -35,7 +35,7 @@ const ExploreTopicInfo = styled(Block)(
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: ${size('border.xxLarge')}
+    border-radius: ${size('border.xxLarge')};
     overflow: hidden;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
   `,
@@ -96,7 +96,7 @@ const HomePage = () => {
       </Block>
 
 
-      {requestInfo.result?.mainTopics.map(({ slug, name, id }) => (
+      {requestInfo.result?.mainTopics?.map(({ slug, name, id }) => (
         <Block marginBottom="xxl" key={id}>
           <ArticlesListByTopic
             limit={3}
@@ -139,7 +139,7 @@ const HomePage = () => {
           gridTemplateColumns: `repeat(2, ${getKey('sizes.layout.col6')})`,
         }}
       >
-        {topicRes.map(({ slug, name, description, img }) => (
+        {topicRes?.map(({ slug, name, description, img }) => (
           <Link key={slug} to={`${RESOURCE_CENTER_PATH}/${slug}`} css={{ position: 'relative' }}>
             <ResponsiveImage
               css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
