@@ -20,7 +20,7 @@ const iconSize = ({ size: s }) => {
     : s;
 };
 
-const getTransform = ({ rotate, flip }) => `${rotate ? `transform: rotate(${rotate * 90}deg)` : ''}; ${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
+const getTransform = ({ rotate, flip }) => rotate || flip ? `transform: ${rotate ? `rotate(${rotate * 90}deg)` : ''} ${flip ? ' scaleX(-1) scaleY(-1)' : ''};` : '';
 
 
 /**
