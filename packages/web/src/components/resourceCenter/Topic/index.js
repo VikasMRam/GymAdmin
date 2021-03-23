@@ -24,7 +24,6 @@ import Footer from 'sly/web/components/organisms/Footer';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Block from 'sly/common/components/atoms/Block';
 import Select from 'sly/web/components/atoms/Select';
-import Link from 'sly/common/components/atoms/Link';
 import Icon from 'sly/common/components/atoms/Icon';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Hr from 'sly/common/components/atoms/Hr';
@@ -45,6 +44,8 @@ DropdownIndicator.propTypes = {
 const Option = props => <components.Option {...props} />;
 
 const LoaderWrapper = styled(Block)(withDisplay);
+
+const ArticlesWrapper = styled(Block)(withDisplay);
 
 const MainTextWrapper = styled(Block)(
   withDisplay,
@@ -253,13 +254,14 @@ const Topic = ({ match, location, history }) => {
       )}
 
       {articlesCount && (
-        <Block
+        <ArticlesWrapper
           marginTop="l"
           marginBottom="xxl"
           marginX="auto"
           width="max-content"
+          display="grid"
+          upToTablet={{ rowGap: size('spacing.m') }}
           startingWithTablet={{
-            display: 'grid',
             gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
             columnGap: size('spacing.l'),
             rowGap: size('spacing.l'),
@@ -277,20 +279,20 @@ const Topic = ({ match, location, history }) => {
               tagsList,
               id,
             }) => (
-              <Link to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>
-                <ArticlePreview
-                  {...{
+              <ArticlePreview
+                {...{
                   alternativeText: mainImg?.alternativeText,
                   title,
                   shortDescription,
                   url: mainImg?.url,
                   topic: mainTopic,
                   tagsList,
+                  to: `${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`,
+                  key: id,
                 }}
-                />
-              </Link>
+              />
           ))}
-        </Block>
+        </ArticlesWrapper>
       )}
 
       {!articlesCount && requestByCountHasFinished && (

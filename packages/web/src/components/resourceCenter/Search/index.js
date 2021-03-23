@@ -15,9 +15,7 @@ import { getKey, size } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { withDisplay } from 'sly/common/components/helpers';
-import { urlize } from 'sly/web/services/helpers/url';
 import Block from 'sly/web/components/atoms/Block';
-import Link from 'sly/common/components/atoms/Link';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Footer from 'sly/web/components/organisms/Footer';
@@ -26,6 +24,8 @@ import ArticlePreview from 'sly/web/components/resourceCenter/components/Article
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 
 const LoaderWrapper = styled(Block)(withDisplay);
+
+const ArticlesWrapper = styled(Block)(withDisplay);
 
 const PaginationText = styled(Block)(
   css`
@@ -98,10 +98,12 @@ const Search = ({ match, location }) => {
 
         {!!articles?.length && (
           <>
-            <Block
+            <ArticlesWrapper
               marginBottom="xxl"
+              display="grid"
+              justifyContent="center"
+              upToTablet={{ gridTemplateColumns: size(('layout.col4')), rowGap: size('spacing.m') }}
               startingWithTablet={{
-                display: 'grid',
                 gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
                 columnGap: size('spacing.l'),
                 rowGap: size('spacing.l'),
@@ -120,20 +122,20 @@ const Search = ({ match, location }) => {
                   mainImg,
                   slug,
                 }) => (
-                  <Link to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>
-                    <ArticlePreview
-                      {...{
-                        alternativeText: mainImg?.alternativeText,
-                        title,
-                        shortDescription,
-                        url: mainImg?.url,
-                        topic: mainTopic,
-                        tagsList,
-                      }}
-                    />
-                  </Link>
+                  <ArticlePreview
+                    {...{
+                      alternativeText: mainImg?.alternativeText,
+                      title,
+                      shortDescription,
+                      url: mainImg?.url,
+                      topic: mainTopic,
+                      tagsList,
+                      to: `${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`,
+                      key: id,
+                    }}
+                  />
               ))}
-            </Block>
+            </ArticlesWrapper>
 
             <Block marginX="auto" marginBottom="xxl" width="max-content">
               {articlesCount > ARTICLES_RANGE_FOR_PAGINATION && (

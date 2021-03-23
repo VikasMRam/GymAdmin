@@ -55,7 +55,7 @@ const smallScreenMenuItems = [
 const defaultMenuItems = () => {
   const menuItems = [
     {
-      name: 'Senior Living Resources', to: '/resources', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
+      name: 'Senior Living Resources', to: RESOURCE_CENTER_PATH, hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
     },
     {
       name: 'Assisted Living', to: '/assisted-living', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
