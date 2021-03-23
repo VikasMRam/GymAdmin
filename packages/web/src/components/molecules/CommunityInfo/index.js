@@ -144,7 +144,7 @@ export default class CommunityInfo extends Component {
               `)}
             ` : null}
           >
-            {capacity}
+            {`${capacity} resident capacity`}
           </IconItem>
           }
         </div>

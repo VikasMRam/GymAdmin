@@ -2,21 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, object, string } from 'prop-types';
 
-import Block from 'sly/common/components/atoms/Block';
 import { withBorder, withDisplay } from 'sly/common/components/helpers';
+import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
+import { getKey, size } from 'sly/common/components/themes';
+import Block from 'sly/common/components/atoms/Block';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Heading from 'sly/common/components/atoms/Heading';
-import { getKey, size } from 'sly/common/components/themes';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
-
-const getStylesForEllipsisText = (maxRowQty, styles = {}) => ({
-  display: '-webkit-box',
-  WebkitBoxOrient: 'vertical',
-  WebkitLineClamp: maxRowQty,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  ...styles,
-});
 
 const Wrapper = styled(Block)(withBorder, withDisplay);
 const TextWrapper = styled(Block)(withDisplay);

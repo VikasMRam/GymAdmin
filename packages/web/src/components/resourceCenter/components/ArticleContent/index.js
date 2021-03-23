@@ -17,6 +17,8 @@ import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import FAQItem from 'sly/web/components/resourceCenter/components/FAQItem';
 import EditorValueWrapper from 'sly/web/components/resourceCenter/components/EditorValueWrapper';
 import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
+import CommunityPreview from 'sly/web/components/resourceCenter/components/CommunityPreview';
+import AdvisorPreview from 'sly/web/components/resourceCenter/components/AdvisorPreview';
 
 const articleDZComponentsNames = {
   subtitle: 'subtitle',
@@ -29,17 +31,14 @@ const articleDZComponentsNames = {
   faq: 'faq',
   link: 'link',
   listWithIcons: 'list-with-icons',
+  advisors: 'advisors',
 };
 
-const ContentWrapper = styled(Block)(withDisplay);
+const WrapperWithDisplay = styled(Block)(withDisplay);
 
 const SearchCommunityWrapper = styled(Block)(withBorder);
 
-const LinkBlockText = styled(Block)(withDisplay);
-
 const LinkBlockWrapper = styled(Block)(withBorder, withDisplay);
-
-const ItemWithIcon = styled(Block)(withDisplay);
 
 const QuoteTitle = styled(Block)(
   css`
@@ -110,31 +109,31 @@ const onCurrentLocation = (addresses) => {
 
 const isSubtitle = ({ __component }) => __component?.includes(articleDZComponentsNames.subtitle);
 
-const ArticleContent = ({ content }) => {
-  const subtitlesData = useMemo(() => {
-    return content.map(item => {
+const ArticleContent = ({ content: data }) => {
+  const content = useMemo(() => {
+    return data.map(item => {
       if (isSubtitle(item)) {
         return { ref: createRef(), ...item };
       }
       return item;
     });
-  }, [content]);
+  }, [data]);
 
   return (
     <>
-      {!!subtitlesData?.filter(item => isSubtitle(item)).length && (
+      {!!content?.filter(item => isSubtitle(item)).length && (
         <TableOfContents
-          subtitlesData={subtitlesData.filter(item => isSubtitle(item))}
+          subtitlesData={content.filter(item => isSubtitle(item))}
         />
       )}
-      <ContentWrapper
+      <WrapperWithDisplay
         display="flex"
         alignItems="center"
         flexWrap="wrap"
         flexDirection="column"
         width="100%"
       >
-        {subtitlesData?.map(({ __component, ...rest }, index) => {
+        {content?.map(({ __component, ...rest }, index) => {
           if (__component.includes(articleDZComponentsNames.search))
             return (
               <SearchCommunityWrapper
@@ -228,7 +227,7 @@ const ArticleContent = ({ content }) => {
                   <Icon icon="loyalty" palette="viridian.base" fontSize={14} />
                 </Block>
                 <Block marginLeft="m">
-                  <LinkBlockText font="body-regular" display="inline">{rest.description}: </LinkBlockText>
+                  <WrapperWithDisplay font="body-regular" display="inline">{rest.description}: </WrapperWithDisplay>
                   <Link
                     font="body-regular"
                     {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : rest.to}}
@@ -286,7 +285,7 @@ const ArticleContent = ({ content }) => {
                 startingWithLaptop={{ width: size('layout.col8') }}
               >
                 {rest.value?.map(({ icon, value }, index) => (
-                  <ItemWithIcon
+                  <WrapperWithDisplay
                     key={`${value}-${index}`}
                     display="grid"
                     gridTemplateColumns={`${getKey('sizes.element.tag')} calc(100% - ${getKey('sizes.element.tag')} - ${getKey('sizes.spacing.l')})`}
@@ -300,14 +299,84 @@ const ArticleContent = ({ content }) => {
                       startingWithTablet={{ width: '100%' }}
                       startingWithLaptop={{ width: '100%' }}
                     />
-                  </ItemWithIcon>
+                  </WrapperWithDisplay>
                 ))}
               </Block>
             )
           }
+          if (__component.includes(articleDZComponentsNames.community)) {
+            return (
+              <WrapperWithDisplay
+                display="grid"
+                width="100%"
+                overflow="auto"
+                paddingX="m"
+                paddingTop="xs"
+                marginBottom="xl"
+                upToTablet={{
+                  gridTemplateColumns: `repeat(${rest.communities.length}, 18rem) 1px`,
+                  columnGap: size('spacing.m'),
+                  paddingTop: 'm',
+                  marginBottom: 'xxl',
+                }}
+                startingWithTablet={{
+                  width: size('layout.col8'),
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  gridTemplateColumns: '100%',
+                  gridTemplateRows: `repeat(${rest.communities.length}, 10.75rem)`,
+                  rowGap: size('spacing.m'),
+                  overflow: 'hidden',
+                }}
+              >
+                {rest.communities?.map((item, index) => console.log('item', item) || (
+                  <CommunityPreview
+                    key={item.id}
+                    {...{ ...item, index: index + 1 }}
+                  />
+                ))}
+                <Block startingWithTablet={{ display: 'none' }} />
+              </WrapperWithDisplay>
+            )
+          }
+          if (__component.includes(articleDZComponentsNames.advisors)) {
+            return (
+              <WrapperWithDisplay
+                display="grid"
+                width="100%"
+                overflow="auto"
+                paddingX="m"
+                paddingTop="xs"
+                marginBottom="xl"
+                upToTablet={{
+                  gridTemplateColumns: `repeat(${rest.advisors.length}, 18rem) 1px`,
+                  gridTemplateRows: '25rem',
+                  columnGap: size('spacing.m'),
+                  paddingTop: 'm',
+                  marginBottom: 'xxl',
+                }}
+                startingWithTablet={{
+                  width: size('layout.col8'),
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  gridTemplateColumns: '100%',
+                  rowGap: size('spacing.m'),
+                  overflow: 'hidden',
+                }}
+              >
+                {rest.advisors?.map((item, index) => (
+                  <AdvisorPreview
+                    key={item.id}
+                    {...{ ...item, index: index + 1 }}
+                  />
+                ))}
+                <Block startingWithTablet={{ display: 'none' }} />
+              </WrapperWithDisplay>
+            )
+          }
           return '';
         })}
-      </ContentWrapper>
+      </WrapperWithDisplay>
     </>
   );
 };

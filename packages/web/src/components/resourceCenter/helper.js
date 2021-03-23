@@ -89,3 +89,12 @@ export const isActiveTab = (search, value) => {
   if (value === selectAllArticlesItem.value && !getSearchItem(search, 'tag-name')) return true;
   return getSearchItem(search, 'tag-name') === value;
 };
+
+export const getStylesForEllipsisText = (maxRowQty, styles = {}) => ({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: maxRowQty,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  ...styles,
+});
