@@ -44,10 +44,10 @@ const CommunityPreview = ({
           index={index}
           community={{
             ...rest,
-            capacity,
+            capacity: capacity || '',
             startingRate,
             propRatings,
-            care: care && JSON.parse(`[${care?.replace(/^(.)|(.)$/g, '')}]` || typeCare),
+            care: care ? `[${care?.replace(/^(.)|(.)$/g, '')}]` : typeCare,
           }}
         />
       </Block>

@@ -15,6 +15,7 @@ const Tag = styled(Block)(
     max-width: max-content;
     white-space: nowrap;
     text-overflow: ellipsis;
+    cursor: pointer;
   `,
 );
 

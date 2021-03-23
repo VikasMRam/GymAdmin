@@ -1,5 +1,5 @@
 import React from 'react';
-import styled  from 'styled-components';
+import styled, { css } from 'styled-components';
 import { array, bool, object, string } from 'prop-types';
 
 import { withBorder, withDisplay } from 'sly/common/components/helpers';
@@ -30,6 +30,11 @@ const StyledLink = styled(Link)`
 const Wrapper = styled(Block)(withBorder, withDisplay);
 
 const TextWrapper = styled(Block)(withDisplay);
+
+const Description = styled(Block)(
+  false,
+  css(getStylesForEllipsisText(4)),
+);
 
 const ArticlePreview = ({
   smallSizeOnPhone,
@@ -80,11 +85,9 @@ const ArticlePreview = ({
           {title}
         </Heading>
 
-        <Block
-          css={getStylesForEllipsisText(4)}
-        >
+        <Description palette="slate.base">
           {shortDescription}
-        </Block>
+        </Description>
 
         <ArticleTags topic={topic} tagsList={tagsList} />
       </TextWrapper>
