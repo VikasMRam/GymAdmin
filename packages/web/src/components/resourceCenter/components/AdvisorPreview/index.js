@@ -24,54 +24,58 @@ const TitleAndLocation = styled(Block)(
   `,
 );
 
-const AdvisorPreview = ({ info: { profileImageUrl, bio, citiesServed, displayName } }) => (
-  <WrapperWithBorder
-    border="regular"
-    borderRadius="small"
-    borderPalette="slate"
-    borderVariation="lighter-90"
-    paddingY="l"
-    paddingX="m"
-    startingWithTablet={{ display: 'flex', padding: 'l', marginBottom: 0 }}
-  >
+const AdvisorPreview = ({ info }) => {
+  const { profileImageUrl, bio, citiesServed, displayName } = info || {};
+
+  return (
     <WrapperWithBorder
-      borderRadius="50%"
-      overflow="hidden"
-      height={size('element.xHuge')}
-      width={size('element.xHuge')}
-      marginX="auto"
-      upToTablet={{ marginBottom: 'm' }}
-      startingWithTablet={{
-        height: size('element.xxxLarge'),
-        width: size('element.xxxLarge'),
-        marginLeft: 0,
-        marginRight: 'l',
-        marginBottom: 0,
-      }}
+      border="regular"
+      borderRadius="small"
+      borderPalette="slate"
+      borderVariation="lighter-90"
+      paddingY="l"
+      paddingX="m"
+      startingWithTablet={{ display: 'flex', padding: 'l', marginBottom: 0 }}
     >
-      <ResponsiveImage
-        css={{
-          objectFit: 'cover',
-          width: '100%',
-          height: '100%',
+      <WrapperWithBorder
+        borderRadius="50%"
+        overflow="hidden"
+        height={size('element.xHuge')}
+        width={size('element.xHuge')}
+        marginX="auto"
+        upToTablet={{ marginBottom: 'm' }}
+        startingWithTablet={{
+          height: size('element.xxxLarge'),
+          width: size('element.xxxLarge'),
+          marginLeft: 0,
+          marginRight: 'l',
+          marginBottom: 0,
         }}
-        src={profileImageUrl}
-      />
+      >
+        <ResponsiveImage
+          css={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '100%',
+          }}
+          src={profileImageUrl}
+        />
+      </WrapperWithBorder>
+      <Block
+        startingWithTablet={{
+          width: `calc(100% - ${getKey('sizes.element.xxxLarge')} - ${getKey('sizes.spacing.l')})`,
+        }}
+      >
+        <TitleAndLocation marginBottom="m" font="body-large">
+          {`${displayName} - ${citiesServed?.[0]}`}
+        </TitleAndLocation>
+        <BioWrapper font="body-regular">
+          {bio}
+        </BioWrapper>
+      </Block>
     </WrapperWithBorder>
-    <Block
-      startingWithTablet={{
-        width: `calc(100% - ${getKey('sizes.element.xxxLarge')} - ${getKey('sizes.spacing.l')})`,
-      }}
-    >
-      <TitleAndLocation marginBottom="m" font="body-large">
-        {`${displayName} - ${citiesServed?.[0]}`}
-      </TitleAndLocation>
-      <BioWrapper font="body-regular">
-        {bio}
-      </BioWrapper>
-    </Block>
-  </WrapperWithBorder>
-);
+  );
+};
 
 
 AdvisorPreview.propTypes = {

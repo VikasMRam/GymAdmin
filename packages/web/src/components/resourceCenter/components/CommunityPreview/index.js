@@ -13,10 +13,12 @@ const CommunityPreview = ({
   starting_rate: startingRate,
   background_image: url,
   prop_stats: propRatings,
-  info: { capacity, typeCare },
+  info,
   care,
   ...rest
 }) => {
+  const { capacity, typeCare } = info || {};
+
   return (
     <Wrapper
       border="regular"
