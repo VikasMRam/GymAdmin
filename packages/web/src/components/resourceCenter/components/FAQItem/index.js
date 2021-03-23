@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { bool, string } from 'prop-types';
+import styled, { css } from 'styled-components';
 
 import { Block, Hr, Icon } from 'sly/common/components/atoms';
 import { getKey } from 'sly/common/components/themes';
 import EditorValueWrapper from 'sly/web/components/resourceCenter/components/EditorValueWrapper';
+
+const FAQHeader = styled(Block)(
+  false,
+  css({ cursor: 'pointer' }),
+);
 
 const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +32,7 @@ const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
         <Hr size="large" />
       </Block>
 
-      <Block display="flex" justifyContent="space-between">
+      <FAQHeader display="flex" justifyContent="space-between" onClick={() => setIsOpen(!isOpen)}>
         <Block
           palette="viridian.base"
           font="title-medium"
@@ -35,13 +41,11 @@ const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
           {title}
         </Block>
         <Icon
-          onClick={() => setIsOpen(!isOpen)}
-          css={{ cursor: 'pointer' }}
           palette="viridian.base"
           icon={isOpen ? 'minus' : 'plus'}
           size="title"
         />
-      </Block>
+      </FAQHeader>
 
       {isOpen && (
         <Block

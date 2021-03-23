@@ -4,14 +4,15 @@ import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { getKey, size } from 'sly/common/components/themes';
-import { urlize } from 'sly/web/services/helpers/url';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { getTextForPagination, ARTICLES_RANGE_FOR_PAGINATION } from "sly/web/components/resourceCenter/helper";
+import { withDisplay } from "sly/common/components/helpers";
 import Block from 'sly/common/components/atoms/Block';
-import Link from 'sly/common/components/atoms/Link';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Heading from 'sly/common/components/atoms/Heading';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+
+const ArticlesWrapper = styled(Block)(withDisplay);
 
 const PaginationText = styled(Block)(
   css`
@@ -49,19 +50,21 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
           {articlesCount ? `${firstName}'s article${articlesCount > 1 ? 's' : ''}` : `${firstName} has no articles yet`}
         </Heading>
 
-         <Block
+        <ArticlesWrapper
           marginY="l"
           marginX="auto"
+          display="grid"
+          justifyContent="center"
+          upToTablet={{ gridTemplateColumns: size(('layout.col4')), rowGap: size('spacing.m') }}
           startingWithTablet={{
-            display: 'grid',
-            gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
+            gridTemplateColumns: `repeat(2, ${getKey('sizes.layout.col4')})`,
             columnGap: size('spacing.l'),
             rowGap: size('spacing.l'),
           }}
           startingWithLaptop={{
-            gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
+            gridTemplateColumns: `repeat(3, ${getKey('sizes.layout.col4')})`,
           }}
-         >
+        >
           {articlesList?.map(({
             title,
             shortDescription,
@@ -71,11 +74,20 @@ const AuthorArticles = ({ slug, firstName, pageNumber }) => {
             tagsList,
             id,
           }) => (
-            <Link to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>
-              <ArticlePreview{...{ alternativeText: mainImg?.alternativeText, title, shortDescription, url: mainImg?.url, topic: mainTopic, tagsList }} />
-            </Link>
+            <ArticlePreview
+              {...{
+                alternativeText: mainImg?.alternativeText,
+                title,
+                shortDescription,
+                url: mainImg?.url,
+                topic: mainTopic,
+                tagsList,
+                to: `${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`,
+                key: id,
+              }}
+            />
           ))}
-         </Block>
+         </ArticlesWrapper>
       </Block>
 
       {articlesCount && (

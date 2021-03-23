@@ -10,9 +10,9 @@ import Link from 'sly/common/components/atoms/Link';
 import Icon from 'sly/common/components/atoms/Icon';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
-const ArticlePreviewWrapper = styled(Link)`
+const hideOnTabletStyles = css`
   ${startingWith('tablet', css`
-    display: ${({ hideOnTablet }) => hideOnTablet && 'none'};
+    display: none;
   `)}
 
   ${startingWith('laptop', css`
@@ -94,6 +94,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
           paddingRight: 0,
           gridTemplateColumns: '20.5rem 20.5rem',
           columnGap: size('spacing.l'),
+          overflow: 'unset',
         }}
         startingWithLaptop={{ gridTemplateColumns: '20.5rem 20.5rem 20.5rem' }}
       >
@@ -109,12 +110,8 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
           },
           index,
         ) => (
-          <ArticlePreviewWrapper
-            to={getHrefToArticlePage(slug, mainTopic.slug)}
-            key={id}
-            hideOnTablet={index > 1}
-          >
-            <ArticlePreview {...{
+          <ArticlePreview
+            {...{
               smallSizeOnPhone: true,
               topic: mainTopic,
               url: mainImg?.url,
@@ -122,9 +119,11 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
               title,
               shortDescription,
               tagsList,
+              to: getHrefToArticlePage(slug, mainTopic.slug),
+              key: id,
+              ...(index > 1 && { customStyles: hideOnTabletStyles }),
             }}
-            />
-          </ArticlePreviewWrapper>
+          />
         ))}
         <Block startingWithTablet={{ display: 'none' }} />
       </ArticlesWrapper>

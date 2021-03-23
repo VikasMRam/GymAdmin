@@ -79,8 +79,7 @@ const ArticlePage = ({ match }) => {
         >
           {requestInfo?.result?.[0]?.mainTopic && requestInfo?.result?.[0]?.title && (
             <Block
-              marginTop="l"
-              marginBottom="xs"
+              marginY="l"
             >
               <Link font="body-small" to={RESOURCE_CENTER_PATH}>Resource Center</Link>
               {' / '}
@@ -154,7 +153,7 @@ const ArticlePage = ({ match }) => {
         startingWithTablet={{ marginBottom: 'xl', marginX: 'auto', width: size('layout.col6') }}
         startingWithLaptop={{ width: size('layout.col8') }}
       >
-        <Block marginBottom="m">Share this article</Block>
+        <Block marginBottom="m" font="title-small">Share this article</Block>
         <AddThis />
       </Block>
 
@@ -164,7 +163,7 @@ const ArticlePage = ({ match }) => {
         startingWithTablet={{ marginX: 'auto', paddingBottom: 'm', width: size('layout.col6') }}
         startingWithLaptop={{ width: size('layout.col8') }}
       >
-        <Block marginBottom="m">Tags</Block>
+        <Block marginBottom="m" font="title-small">Tags</Block>
         <ArticleTags topic={requestInfo?.result?.[0]?.mainTopic} tagsList={requestInfo?.result?.[0]?.tagsList} />
       </Block>
 

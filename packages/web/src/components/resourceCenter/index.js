@@ -26,7 +26,7 @@ const Description = styled(Block)`
 
 const LoaderWrapper = styled(Block)(withDisplay);
 
-const Grid = styled(Block)(withDisplay);
+const TopicsWrapper = styled(Block)(withDisplay);
 
 const ExploreTopicInfo = styled(Block)(
   withDisplay,
@@ -118,7 +118,7 @@ const HomePage = () => {
         Explore Topics
       </Block>
 
-      <Grid
+      <TopicsWrapper
         display="grid"
         justifyContent="center"
         marginX="auto"
@@ -140,7 +140,11 @@ const HomePage = () => {
         }}
       >
         {topicRes?.map(({ slug, name, description, img }) => (
-          <Link key={slug} to={`${RESOURCE_CENTER_PATH}/${slug}`} css={{ position: 'relative' }}>
+          <Link
+            key={slug}
+            to={`${RESOURCE_CENTER_PATH}/${slug}`}
+            css={css({ position: 'relative', borderRadius: size('border.xxLarge'), overflow: 'hidden' })}
+          >
             <ResponsiveImage
               css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
               src={img?.url}
@@ -161,7 +165,7 @@ const HomePage = () => {
             </ExploreTopicInfo>
           </Link>
           ))}
-      </Grid>
+      </TopicsWrapper>
 
       <Footer />
     </>

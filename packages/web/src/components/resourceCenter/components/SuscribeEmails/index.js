@@ -49,6 +49,7 @@ const Description = styled(Block)`
 `;
 
 const NotificationWrapper = styled(Block)`
+  display: ${({ visible }) => visible ? 'block' : 'none'};
   position: fixed;
   top: 0;
   width: 100%;
@@ -113,7 +114,7 @@ const SubscribeEmail = () => {
 
       <Hr />
 
-      <NotificationWrapper>
+      <NotificationWrapper visible={requestRes}>
         <Notification {...(requestRes && {
           isOpen: true,
           type: requestRes?.status === 200 ? 'default' : 'error',
