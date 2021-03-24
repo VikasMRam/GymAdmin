@@ -17,6 +17,7 @@ import Footer from 'sly/web/components/organisms/Footer';
 import Heading from 'sly/common/components/atoms/Heading';
 import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticlesList from 'sly/web/components/resourceCenter/components/ArticlesList';
+import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 
 const Description = styled(Block)`
   max-width: ${size('layout.col8')};
@@ -166,6 +167,8 @@ const HomePage = () => {
           </Link>
           ))}
       </TopicsWrapper>
+
+      <SubscribeEmail />
 
       <Footer />
     </>

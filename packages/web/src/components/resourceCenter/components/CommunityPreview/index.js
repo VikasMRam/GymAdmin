@@ -1,6 +1,7 @@
 import React from 'react';
 import { number, object, string } from 'prop-types';
 import styled from 'styled-components';
+import { isString } from 'lodash';
 
 import Block from 'sly/common/components/atoms/Block';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
@@ -47,7 +48,7 @@ const CommunityPreview = ({
             capacity: capacity || '',
             startingRate,
             propRatings,
-            care: care ? `[${care?.replace(/^(.)|(.)$/g, '')}]` : typeCare,
+            care: (isString(care) && JSON.parse(`[${care?.replace(/^(.)|(.)$/g, '')}]`)) || typeCare || [],
           }}
         />
       </Block>
