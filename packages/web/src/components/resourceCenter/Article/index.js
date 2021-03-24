@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
@@ -13,6 +13,8 @@ import { getKey, size } from 'sly/common/components/themes';
 import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
+import { cmsUrl } from 'sly/web/config';
+import apiFetch from 'sly/web/services/api/apiFetch';
 import Block from 'sly/common/components/atoms/Block';
 import Heading from 'sly/common/components/atoms/Heading';
 import Hr from 'sly/common/components/atoms/Hr';
@@ -40,6 +42,25 @@ const ArticlePage = ({ match }) => {
   const { slug, topic } = match.params;
 
   const { requestInfo } = usePrefetch('getArticle', req => req({ slug_eq: slug, 'mainTopic.slug': topic }));
+
+  useEffect(() => {
+    apiFetch(
+      cmsUrl,
+      '/articles/view-count',
+      {
+        method: 'POST',
+        body: JSON.stringify({ slug }),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+      .catch(() => {
+        // TODO: add some behavior if error ??
+        console.log('Resource center Article page: cannot update count of views');
+      });
+  }, []);
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;

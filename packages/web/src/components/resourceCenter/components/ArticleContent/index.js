@@ -307,6 +307,7 @@ const ArticleContent = ({ content: data }) => {
           if (__component.includes(articleDZComponentsNames.community)) {
             return (
               <WrapperWithDisplay
+                key={index}
                 display="grid"
                 width="100%"
                 overflow="auto"
@@ -342,6 +343,7 @@ const ArticleContent = ({ content: data }) => {
           if (__component.includes(articleDZComponentsNames.advisors)) {
             return (
               <WrapperWithDisplay
+                key={index}
                 display="grid"
                 width="100%"
                 overflow="auto"
