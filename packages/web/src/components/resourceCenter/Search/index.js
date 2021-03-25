@@ -3,7 +3,6 @@
 import React, { useMemo } from 'react';
 import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
-import Helmet from 'react-helmet';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import {
@@ -22,6 +21,7 @@ import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
+import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const LoaderWrapper = styled(Block)(withDisplay);
 
@@ -68,12 +68,13 @@ const Search = ({ match, location }) => {
 
   return (
     <>
-      <Helmet>
-        /* todo: Unmock title */
-        <title>Title</title>
-        /* todo: Unmock description */
-        <meta name="description" content="Description" />
-      </Helmet>
+      <Helmet
+        path={`/search/${searchBy}`}
+        title={`Expert resources on ${searchBy}`}
+        shortDescription={
+          `Read articles written by industry experts on ${searchBy} , senior living,  assisted living, senior lifestyles and more on Seniorly.`
+        }
+      />
 
       <Header />
 

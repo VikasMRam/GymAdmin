@@ -41,7 +41,7 @@ const Title = styled(Block)(
 
 const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles }) => {
   const hrefToTopicPage = useMemo(() =>
-    `${RESOURCE_CENTER_PATH}/${topic}}`,
+    `${RESOURCE_CENTER_PATH}/${topic}`,
   [topic]);
 
   const getHrefToArticlePage = useCallback((slug, topic) =>

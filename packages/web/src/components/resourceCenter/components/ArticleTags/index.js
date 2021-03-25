@@ -54,8 +54,8 @@ const ArticleTags = ({ topic, tagsList }) => {
                 borderRadius="small"
                 background="viridian.base"
                 palette="white"
-                overflow={idx !== 0 && 'hidden'}
                 onClick={onClick(urlize(value))}
+                {...(idx !== 0 && { overflow: 'hidden' })}
               >
                 {value.replace(/_/g, ' ')}
               </Tag>

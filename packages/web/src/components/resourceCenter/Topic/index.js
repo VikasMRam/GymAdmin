@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { Redirect } from 'react-router';
-import Helmet from 'react-helmet';
 import { components } from 'react-select';
 import { bool, object } from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -30,6 +29,7 @@ import Hr from 'sly/common/components/atoms/Hr';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Header from 'sly/web/components/resourceCenter/components/Header';
+import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
@@ -173,12 +173,11 @@ const Topic = ({ match, location, history }) => {
 
   return (
     <>
-      <Helmet>
-        /* todo: Unmock title */
-        <title>Title</title>
-        /* todo: Unmock description */
-        <meta name="description" content="Description" />
-      </Helmet>
+      <Helmet
+        path={`/${topicRes?.slug}`}
+        title={`Expert resources on ${topicRes?.name}`}
+        shortDescription={topicRes?.description}
+      />
 
       <Header />
 
