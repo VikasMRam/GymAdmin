@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 
 import React from 'react';
-import Helmet from 'react-helmet';
 import styled, { css } from 'styled-components';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
@@ -18,6 +17,7 @@ import Heading from 'sly/common/components/atoms/Heading';
 import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticlesList from 'sly/web/components/resourceCenter/components/ArticlesList';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
+import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const Description = styled(Block)`
   max-width: ${size('layout.col8')};
@@ -62,12 +62,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Helmet>
-        /* todo: Unmock title */
-        <title>Title</title>
-        /* todo: Unmock description */
-        <meta name="description" content="Description" />
-      </Helmet>
+      <Helmet
+        title="Retirement Home Senior Living Resources & FAQs"
+        shortDescription="What to know when looking for a nursing home or retirement community. Visit Seniorly’s
+         education center for answers to questions about senior living."
+      />
 
       <Header />
 

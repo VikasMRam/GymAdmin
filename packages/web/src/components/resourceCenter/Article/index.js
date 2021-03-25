@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 
 import React, { useRef, useEffect } from 'react';
-import Helmet from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { object } from 'prop-types';
@@ -29,6 +28,7 @@ import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/Ar
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
+import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const ArticleWrapper = styled(Block)(withDisplay);
 
@@ -81,12 +81,11 @@ const ArticlePage = ({ match }) => {
 
   return (
     <>
-      <Helmet>
-        /* todo: Unmock title */
-        <title>Title</title>
-        /* todo: Unmock description */
-        <meta name="description" content="Description" />
-      </Helmet>
+      <Helmet
+        isArticlePage
+        path={`/${requestInfo?.result?.[0]?.mainTopic.slug}/${requestInfo?.result?.[0]?.slug}`}
+        {...requestInfo?.result?.[0]}
+      />
 
       <Header />
 

@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { object } from 'prop-types';
@@ -20,6 +19,7 @@ import Hr from 'sly/common/components/atoms/Hr';
 import Block from 'sly/common/components/atoms/Block';
 import AuthorArticles from 'sly/web/components/resourceCenter/components/AuthorArticles';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
+import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const headingStyles = css`
   line-height: ${size('lineHeight.displayS')};
@@ -63,12 +63,11 @@ const Author = ({ match, location }) => {
 
   return (
     <>
-      <Helmet>
-        /* todo: Unmock title */
-        <title>Title</title>
-        /* todo: Unmock description */
-        <meta name="description" content="Description" />
-      </Helmet>
+      <Helmet
+        path={`/author/${requestInfo?.result?.[0]?.slug}`}
+        title={requestInfo?.result?.[0].fullName}
+        shortDescription={requestInfo?.result?.[0].shortDescription}
+      />
 
       <Header />
 

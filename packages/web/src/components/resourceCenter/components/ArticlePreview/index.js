@@ -106,7 +106,7 @@ ArticlePreview.propTypes = {
   tagsList: array,
   shortDescription: string,
   to: string,
-  customStyles: string,
+  customStyles: array,
 };
 
 export default ArticlePreview;
