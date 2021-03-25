@@ -1,7 +1,7 @@
 import React from 'react';
 import { number, object, string } from 'prop-types';
 import styled from 'styled-components';
-import { isString } from 'lodash';
+import { isString, isArray } from 'lodash';
 
 import Block from 'sly/common/components/atoms/Block';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
@@ -48,7 +48,14 @@ const CommunityPreview = ({
             capacity: capacity || '',
             startingRate,
             propRatings,
-            care: (isString(care) && JSON.parse(`[${care?.replace(/^(.)|(.)$/g, '')}]`)) || typeCare || [],
+            // TODO: Should check if strapi does not change field type text[] to text, if not this
+            // <(isString(care) && JSON.parse(`[${care?.replace(/^(.)|(.)$/g, '')}]`)) || (isArray(care) && care)>
+            // can be replaced to <care>
+            care:
+              (isString(care) && JSON.parse(`[${care?.replace(/^(.)|(.)$/g, '')}]`))
+              || (isArray(care) && care)
+              || typeCare
+              || [],
           }}
         />
       </Block>
@@ -58,7 +65,7 @@ const CommunityPreview = ({
 
 CommunityPreview.propTypes = {
   index: number,
-  id: string,
+  id: number,
   starting_rate: number,
   background_image: string,
   care: string,
