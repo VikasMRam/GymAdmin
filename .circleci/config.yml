@@ -286,6 +286,15 @@ jobs:
           POSTGRES_PASSWORD: slydev
           POSTGRES_USER: slydev
           POSTGRES_DB: slydev
+      - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-worker:latest
+        environment:
+          SLY_DBHOST: localhost
+          SLY_DBNAME: slydev
+          SLY_DBUSER: slydev
+          SLY_DBPASSWORD: slydev
+          POSTGRES_PASSWORD: slydev
+          POSTGRES_USER: slydev
+          POSTGRES_DB: slydev
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-slyapi:latest
         aws_auth:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
@@ -345,11 +354,11 @@ jobs:
 
       - run:
           name: Waiting for Local Go to be up and running
-          command: npx wait-on -i 1000 -s 1 http-get://localhost:8080/v0/ping
+          command: npx wait-on -i 1000 -s 1 -t 60000 http-get://localhost:8080/v0/ping
 
       - run:
           name: Waiting for Local React to be up and running
-          command: npx wait-on http://localhost:8000
+          command: npx wait-on -i 1000 -s 1 -t 600000 -d 60000 http-get://localhost:8000/assisted-living/california/san-francisco/lmavia-of-san-francisco
 
       - run:
           name: Run Cypress tests
