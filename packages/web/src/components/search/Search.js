@@ -224,7 +224,7 @@ const Search = ({
             currentFilters={currentFilters}
             pagination={pagination}
           />
-          {!isInternationalPath &&
+          {!isInternational &&
           <ExploreContainer filters={currentFilters} />
           }
         </Block>

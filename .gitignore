@@ -3,6 +3,7 @@
 .happypack
 .idea
 .tern-port
+.env
 dist
 *.log
 node_modules

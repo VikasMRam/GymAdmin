@@ -6,7 +6,6 @@ import SlyEvent from 'sly/web/services/helpers/events';
 export default class TrustScoreContainer extends Component {
   static typeHydrationId = 'TrustScoreContainer';
   sendEvent = () => {
-    console.log('seeing stuff');
     const { community } = this.props;
     const { id, address: { state } } = community;
     const evt = { category: 'trustScore',

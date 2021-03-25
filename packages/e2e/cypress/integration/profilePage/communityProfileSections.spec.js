@@ -52,7 +52,19 @@ describe('Community Profile Sections', () => {
         }
       });
     });
+
+    Cypress.Commands.add('adminLogin', () => {
+      cy.get('button').then(($a) => {
+        if ($a.text().includes('Log In')) {
+          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
+          waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
+          waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
+          waitForHydration(cy.get('button').contains('Log in')).click({ force: true });
+        }
+      });
+    });
   });
+
 
   responsive(() => {
     it('Should see community details', () => {
@@ -236,5 +248,76 @@ describe('Community Profile Sections', () => {
 
       select('.CommunitySaved h3').should('not.exist');
     });
+
+
+    it('creates prospective lead when question is asked on community profile', () => {
+      cy.route('POST', '**/questions').as('postQuestions');
+      cy.route('POST', '**/auth/register').as('postRegister');
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      waitForHydration(cy.get('button').contains('Ask a Question')).click({ force: true });
+      select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
+
+      const firstName = `Lead${randHash()}`;
+      const lastName = 'Question';
+      const email = `dev${randHash()}@seniorly.com`;
+      const phone = '5555555555';
+      const formattedPhone = '(555) 555-5555';
+      const message = 'I have a question';
+
+      cy.get('form input[name="firstName"]').type(firstName);
+      cy.get('form input[name="lastName"]').type(lastName);
+      cy.get('form input[name="phone"]').type(phone);
+
+      cy.get('section > form > [type="email"]').type(email);
+      cy.get('form textarea[name="message"').type(message);
+
+      cy.get('button').contains('Send').click();
+
+      cy.wait('@postQuestions').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.requestBody).to.deep.equal({
+          data: {
+            communitySlug: community.id,
+            email,
+            name: `${firstName} ${lastName}`,
+            question: message,
+          },
+        });
+      });
+
+      cy.wait('@postUuidActions');
+
+      cy.wait('@postRegister').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.requestBody).to.deep.equal({
+          email,
+          name: `${firstName} ${lastName}`,
+          phone_number: phone,
+        });
+      });
+
+
+      waitForHydration(cy.contains('Finish').click());
+
+      cy.getCookie('sly-session').should('exist');
+      // cy.get('a').contains(firstName);
+      cy.clearCookie('sly-session');
+      cy.wait(5000);
+      cy.visit('/');
+      waitForHydration(cy.adminLogin());
+
+      cy.visit('/dashboard/agent/my-families/new');
+      waitForHydration(cy.get('tr').contains(`${firstName} ${lastName}`)).click();
+
+      cy.get('h1').contains(`${firstName} ${lastName}`);
+      cy.get('a').contains('See more family details').click();
+
+      cy.get('input[name="name"]').should('have.value', `${firstName} ${lastName}`);
+      cy.get('input[name="email"]').should('have.value', email);
+      cy.get('input[name="phone"]').should('have.value', formattedPhone);
+      cy.get('input[name="referralSource"]').should('have.value', 'Online');
+      cy.get('input[value="San Francisco, CA"]').should('exist');
+    });
   });
 });
+

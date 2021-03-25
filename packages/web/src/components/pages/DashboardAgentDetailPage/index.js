@@ -13,6 +13,7 @@ import {
   MESSAGES,
   PHOTOS,
   EMAILS,
+  USERS,
 } from 'sly/web/constants/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
@@ -31,6 +32,7 @@ import AgentSummary from 'sly/web/components/molecules/AgentSummary';
 import BackLink from 'sly/web/components/molecules/BackLink';
 import PartnerAgentProfileFormContainer from 'sly/web/containers/PartnerAgentProfileFormContainer';
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
+import DashboardUsersSectionContainer from 'sly/web/containers/dashboard/DashboardUsersSectionContainer';
 import DashboardMyFamilyStickyFooterContainer from 'sly/web/containers/DashboardMyFamilyStickyFooterContainer';
 import DashboardMessagesContainer from 'sly/web/containers/DashboardMessagesContainer';
 import DashboardAgentPhotosFormContainer from 'sly/web/containers/dashboard/agents/DashboardAgentPhotosFormContainer';
@@ -239,6 +241,7 @@ export default class DashboardAgentDetailPage extends Component {
     const agentDetailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const agentAdminPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     const contactsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: CONTACTS });
+    const usersPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: USERS });
     const messagesPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: MESSAGES });
     const photosPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: PHOTOS });
     const emailsPath = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: EMAILS });
@@ -251,6 +254,7 @@ export default class DashboardAgentDetailPage extends Component {
       messagesPath,
       photosPath,
       emailsPath,
+      usersPath,
     };
   };
 
@@ -264,6 +268,7 @@ export default class DashboardAgentDetailPage extends Component {
       messagesPath,
       photosPath,
       emailsPath,
+      usersPath,
     } = this.getTabPathsForUser();
 
     const summaryTab = (
@@ -284,6 +289,7 @@ export default class DashboardAgentDetailPage extends Component {
       { id: AGENT_DETAILS, to: agentDetailsPath, label: 'Agent Details' },
       { id: CONTACTS, to: contactsPath, label: 'Contacts' },
       { id: MESSAGES, to: messagesPath, label: 'Messages' },
+      { id: USERS, to: usersPath, label: 'Users' },
       { id: PHOTOS, to: photosPath, label: 'Photos' },
       { id: EMAILS, to: emailsPath, label: 'Emails' },
     ];
@@ -480,6 +486,13 @@ export default class DashboardAgentDetailPage extends Component {
                   entityName={name}
                 />
               </LargePaddingWrapper>
+            )}
+            {currentTab === USERS && (
+            <LargePaddingWrapper>
+              <DashboardUsersSectionContainer
+                id="users"
+              />
+            </LargePaddingWrapper>
             )}
             {currentTab === MESSAGES && (
               <>

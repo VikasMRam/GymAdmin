@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, bool, node } from 'prop-types';
 
 import communityPropType from 'sly/common/propTypes/community';
+import agentPropType from 'sly/common/propTypes/agent';
 import { isBrowser } from 'sly/web/config';
 import { Button } from 'sly/web/components/atoms';
 import { isCtaRecorded } from 'sly/web/services/helpers/localStorage';
@@ -11,6 +12,7 @@ export default class AskAgentQuestionButtonContainer extends Component {
   static typeHydrationId = 'AskAgentQuestionButtonContainer';
   static propTypes = {
     community: communityPropType,
+    agent: agentPropType,
     type: string,
     ctaText: string,
     ackCTA: bool,
@@ -33,7 +35,7 @@ export default class AskAgentQuestionButtonContainer extends Component {
     }
 
     return (
-      <AskAgentQuestionContainer type={type} entityId={community.id}>
+      <AskAgentQuestionContainer type={type} entityId={community.id} {...this.props} >
         {askAgent => (
           <Button {...this.props} onClick={askAgent} disabled={requestSent}>
             {ctaText || children}

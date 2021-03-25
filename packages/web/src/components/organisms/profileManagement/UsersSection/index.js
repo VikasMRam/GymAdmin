@@ -3,24 +3,25 @@ import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import { Route } from 'react-router';
 
+
 import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import SlyEvent from 'sly/web/services/helpers/events';
-import contactPropType from 'sly/common/propTypes/contact';
+import userPropType from 'sly/common/propTypes/user';
 import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Th from 'sly/web/components/molecules/Th';
-import ContactRowCard from 'sly/web/components/organisms/ContactRowCard';
 import Modal from 'sly/web/components/molecules/Modal';
-import AddOrEditContactFormContainer from 'sly/web/containers/AddOrEditContactFormContainer';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import UserRowCard from 'sly/web/components/organisms/UserRowCard';
+import AddEditUserContainer from 'sly/web/containers/dashboard/AddEditUserContainer';
 
-const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
+const TABLE_HEADINGS = [{ text: 'user name' }, { text: 'Organization' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 
 const Section = styled.section`
   background-color: ${palette('grey.background')};
@@ -88,17 +89,17 @@ const StyledSection = styled(Section)`
   border: none;
 `;
 
-export default class DashboardAgentContactsSection extends Component {
+export default class UsersSection extends Component {
   static propTypes = {
     datatable: object,
-    contacts: arrayOf(contactPropType),
-    contactsRaw: arrayOf(object),
+    users: arrayOf(userPropType),
+    usersRaw: arrayOf(object),
     pagination: object,
     paginationString: string,
     showPagination: bool,
     isPageLoading: bool,
     meta: object,
-    refetchContacts: func,
+    refetchusers: func,
     match: object,
     history: object,
     redirectTo: func.isRequired,
@@ -106,51 +107,41 @@ export default class DashboardAgentContactsSection extends Component {
     entityType: string.isRequired,
     entityId: string,
     entityName: string,
-    deleteContact: func,
+    deleteuser: func,
   };
 
-  handleAddContactClick = () => {
+  handleAdduserClick = () => {
     SlyEvent.getInstance().sendEvent({
-      category: 'AgentDashboardContacts',
+      category: 'AgentDashboardusers',
       action: 'click',
-      label: 'addContact',
+      label: 'adduser',
     });
   };
 
-  handleContactClick = () => {
+  handleUserClick = () => {
     SlyEvent.getInstance().sendEvent({
-      category: 'AgentDashboardContacts',
+      category: 'AgentDashboardusers',
       action: 'click',
-      label: 'viewContact',
+      label: 'viewuser',
     });
   };
-
-  getContactEntity = (contact, entityType) => {
-    for (let i = 0; i < contact.entities.length; i++) {
-      const e = contact.entities[i];
-      if (e.entityType === entityType)  {
-        return e;
-      }
-    }
-    return null;
-  }
 
   render() {
     const {
-      contacts,
+      users,
       pagination,
       isPageLoading,
       noBorder,
       meta,
       datatable,
-      refetchContacts,
+      refetchusers,
       match,
       history,
       redirectTo,
       entityId,
       entityType,
       entityName,
-      deleteContact,
+      deleteuser,
     } = this.props;
 
     const entityLabel = ENTITY_LABEL_MAP[entityType];
@@ -158,26 +149,26 @@ export default class DashboardAgentContactsSection extends Component {
     if (entityLabel) {
       TABLE_HEADINGS[1] =  { text: entityLabel };
     }
-    const actions = entityId && entityType && entityName && (
+    const actions = (
       <IconButton
         icon="plus"
         hideTextInMobile
         to={`${match.url}/new`}
-        onClick={this.handleAddContactClick}
+        onClick={this.handleAdduserClick}
       >
-        Add contact
+        Add user
       </IconButton>
     );
 
     return (
       <Section>
         <SectionHeader actions={actions}>
-          Contacts
+          Users
         </SectionHeader>
 
         <StyledTableHeaderButtons
           datatable={datatable}
-          modelConfig={{ name: 'Contact', defaultSearchField: 'name' }}
+          modelConfig={{ name: 'User', defaultSearchField: 'name' }}
           meta={meta}
         />
 
@@ -189,21 +180,19 @@ export default class DashboardAgentContactsSection extends Component {
                   <Tr>{TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}</Tr>
                 </THead>
                 <TBody>
-                  {contacts.map((contact) => {
-                    const entity = this.getContactEntity(contact, entityType);
-                    return (<ContactRowCard
-                      key={contact.id}
-                      contact={contact}
-                      entity={entity}
-                      editContactUrl={`${match.url}/edit/${contact.id}`}
-                      onContactClick={() => this.handleContactClick(contact)}
-                      deleteContact={deleteContact}
+                  {users.map((user) => {
+                    return (<UserRowCard
+                      key={user.id}
+                      user={user}
+                      editUserUrl={`${match.url}/edit/${user.id}`}
+                      onUserClick={() => this.handleUserClick()}
+                      deleteUser={deleteuser}
                     />);
                   })}
-                  {contacts.length === 0 && (
+                  {users.length === 0 && (
                     <Tr>
                       <Td colSpan={TABLE_HEADINGS.length} borderless={noBorder}>
-                        <NoResultMessage>You do not have any contacts to see here.</NoResultMessage>
+                        <NoResultMessage>There are no users associated with the organization!</NoResultMessage>
                       </Td>
                     </Tr>
                   )}
@@ -224,18 +213,18 @@ export default class DashboardAgentContactsSection extends Component {
         </StyledSection>
 
         {!isPageLoading &&
-          contacts.length > 0 && (
+          users.length > 0 && (
             <StyledFamiliesCountStatusBlock padding="regular" size="caption" snap="top">
               {pagination.text}
             </StyledFamiliesCountStatusBlock>
         )}
         {/* For this to work, the route must not have exact true in App.js */}
         {!isPageLoading && (
-          <Route path={`${match.url}/edit/:contactId`}>
+          <Route path={`${match.url}/edit/:userId`}>
             {({ match: routeMatch }) => {
-              const contact = routeMatch ? contacts.find(x => x.id === routeMatch.params.contactId) : null;
+              const user = routeMatch ? users.find(x => x.id === routeMatch.params.userId) : null;
 
-              if (routeMatch && !contact) {
+              if (routeMatch && !user) {
                 redirectTo(match.url, true);
               }
 
@@ -246,15 +235,6 @@ export default class DashboardAgentContactsSection extends Component {
                   redirectTo(match.url, true);
                 }
               };
-              let entityId = null;
-              let entityName = null;
-              if (contact) {
-                const entity = this.getContactEntity(contact, entityType);
-                if (entity) {
-                  entityId = entity.id;
-                  entityName = entity.label;
-                }
-              }
 
               return (
                 <Modal
@@ -263,9 +243,9 @@ export default class DashboardAgentContactsSection extends Component {
                   closeable
                   layout="noPadding"
                 >
-                  <AddOrEditContactFormContainer
-                    refetchContacts={refetchContacts}
-                    contact={contact}
+                  <AddEditUserContainer
+                    refetchusers={refetchusers}
+                    user={user}
                     onSuccess={closeModal}
                     onCancel={closeModal}
                     entityId={entityId}
@@ -295,8 +275,8 @@ export default class DashboardAgentContactsSection extends Component {
                   closeable
                   layout="noPadding"
                 >
-                  <AddOrEditContactFormContainer
-                    refetchContacts={refetchContacts}
+                  <AddEditUserContainer
+                    refetchusers={refetchusers}
                     onSuccess={closeModal}
                     onCancel={closeModal}
                     entityId={entityId}

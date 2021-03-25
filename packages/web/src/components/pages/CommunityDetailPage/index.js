@@ -61,6 +61,7 @@ import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContaine
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnHydratedTrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
+import UnHydratedAgentAppointmentContainer from 'sly/web/containers/communityProfile/AgentAppointmentContainer';
 
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -73,6 +74,7 @@ const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContai
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
+const AgentAppointmentContainer = withHydration(UnHydratedAgentAppointmentContainer);
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
@@ -331,12 +333,16 @@ export default class CommunityDetailPage extends Component {
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
                     <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
-                    <AskAgentQuestionButtonContainer
+                    { partnerAgent.id !== 'seniorly-partner-agent-emma-rodbro-'  && <AskAgentQuestionButtonContainer
+                      agent={partnerAgent}
                       width="100%"
                       community={community}
                       type="expert"
                       ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
-                    />
+                    />}
+                    {partnerAgent.id === 'seniorly-partner-agent-emma-rodbro-'  &&
+                      <AgentAppointmentContainer community={community} agent={partnerAgent} />
+                    }
                   </StyledHeadingBoxSection>
                 )}
 
@@ -379,7 +385,11 @@ export default class CommunityDetailPage extends Component {
                     />
                   </StyledHeadingBoxSection>
                 )}
-
+                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
+                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
+                  <TrustScoreTile community={community} />
+                </StyledHeadingBoxSection>
+                }
                 <StyledHeadingBoxSection heading="Services and Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
@@ -388,12 +398,6 @@ export default class CommunityDetailPage extends Component {
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
                   </StyledHeadingBoxSection>
                 }
-                {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
-                <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
-                  <TrustScoreTile community={community} />
-                </StyledHeadingBoxSection>
-                }
-
                 {!isActiveAdult && !isInternational &&
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}

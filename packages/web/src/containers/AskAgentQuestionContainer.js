@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
 import { AA_CONSULTATION_REQUESTED, AGENT_ASK_QUESTIONS, PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
+import AdvisorPopupTest from 'sly/web/components/molecules/AdvisorPopupTest';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -30,6 +31,7 @@ export default class AskAgentQuestionContainer extends Component {
   static propTypes = {
     type: string.isRequired,
     community: object.isRequired,
+    agent: object,
     notifyInfo: func.isRequired,
     showModal: func.isRequired,
     hideModal: func.isRequired,
@@ -57,7 +59,7 @@ export default class AskAgentQuestionContainer extends Component {
   };
 
   openAskAgentQuestionModal = (subType) => {
-    const { type, community, showModal, hideModal, notifyInfo } = this.props;
+    const { type, community, agent, showModal, hideModal, notifyInfo } = this.props;
 
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
@@ -135,7 +137,13 @@ export default class AskAgentQuestionContainer extends Component {
         actionType,
         postSubmit,
       };
+
+      // Test showing agent's phone number and appointment link instead of submission box;
+      // if (agent && agent.id === 'seniorly-agent-emma-rodbro-') {
+      // showModal(<AdvisorPopupTest agent={agent} onButtonClick={hideModal} />);
+      // } else {
       showModal(<AskQuestionToAgentFormContainer {...modalComponentProps} />, onClose);
+      // }
     }
 
     this.handleToggleAskAgentQuestionModal(false, subType);

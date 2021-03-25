@@ -35,6 +35,7 @@ import Chatbox from 'sly/web/components/pages/CommunityDetailPage/Chatbox';
 import TrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
 import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
 import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
+import AgentAppointmentContainer from 'sly/web/containers/communityProfile/AgentAppointmentContainer';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
@@ -75,6 +76,7 @@ partiallyHydrateClient(
     StickyFooterCTAContainer,
     Chatbox,
     TrustScoreContainer,
+    AgentAppointmentContainer,
   ],
   `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
   root,
