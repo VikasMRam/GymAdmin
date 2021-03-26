@@ -33,6 +33,7 @@ const AdvisorPreview = ({ info }) => {
       borderRadius="small"
       borderPalette="slate"
       borderVariation="lighter-90"
+      height="100%"
       paddingY="l"
       paddingX="m"
       startingWithTablet={{ display: 'flex', padding: 'l', marginBottom: 0 }}
@@ -66,10 +67,10 @@ const AdvisorPreview = ({ info }) => {
           width: `calc(100% - ${getKey('sizes.element.xxxLarge')} - ${getKey('sizes.spacing.l')})`,
         }}
       >
-        <TitleAndLocation marginBottom="m" font="body-large">
+        <TitleAndLocation marginBottom="m" font="body-large" palette="slate.base">
           {`${displayName} - ${citiesServed?.[0]}`}
         </TitleAndLocation>
-        <BioWrapper font="body-regular">
+        <BioWrapper font="body-regular" palette="slate.base">
           {bio}
         </BioWrapper>
       </Block>
