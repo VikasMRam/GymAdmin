@@ -29,6 +29,8 @@ const LoaderWrapper = styled(Block)(withDisplay);
 
 const TopicsWrapper = styled(Block)(withDisplay);
 
+const TopicWrapper = styled(Block)(withBorder);
+
 const ExploreTopicInfo = styled(Block)(
   withDisplay,
   withBorder,
@@ -41,6 +43,22 @@ const ExploreTopicInfo = styled(Block)(
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
   `,
 );
+
+const StyledLink = styled(Link)`
+  & {
+    position: relative;
+
+    &:hover::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 ${size('spacing.xxs')} ${size('spacing.m')} 0 rgba(0, 0, 0, 0.3);
+    }
+  }
+`;
 
 const HomePage = () => {
   const { requestInfo } = usePrefetch('getResourceCenterMainInfo');
@@ -141,30 +159,39 @@ const HomePage = () => {
         }}
       >
         {topicRes?.map(({ slug, name, description, img }) => (
-          <Link
+          <StyledLink
             key={slug}
             to={`${RESOURCE_CENTER_PATH}/${slug}`}
-            css={css({ position: 'relative', borderRadius: size('border.xxLarge'), overflow: 'hidden' })}
           >
-            <ResponsiveImage
-              css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
-              src={img?.url}
-              alt={`${name} img`}
-            />
-            <ExploreTopicInfo
-              display="flex"
-              flexDirection="column"
-              justifyContent="flex-end"
-              border="regular"
-              borderRadius="small"
-              width="100%"
-              height="100%"
-              padding="l"
-            >
-              <Block font="title-medium" palette="white" marginBottom="s">{name}</Block>
-              <Block font="body-regular" palette="white">{description}</Block>
-            </ExploreTopicInfo>
-          </Link>
+            <TopicWrapper borderRadius="small" overflow="hidden" height="100%">
+              <ResponsiveImage
+                css={css({
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '100%',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  borderRadius: size('border.xxLarge'),
+                })}
+                src={img?.url}
+                alt={`${name} img`}
+              />
+              <ExploreTopicInfo
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+                border="regular"
+                borderRadius="small"
+                width="100%"
+                height="100%"
+                padding="l"
+              >
+                <Block font="title-medium" palette="white" marginBottom="s">{name}</Block>
+                <Block font="body-regular" palette="white">{description}</Block>
+              </ExploreTopicInfo>
+            </TopicWrapper>
+          </StyledLink>
           ))}
       </TopicsWrapper>
 

@@ -40,6 +40,22 @@ const SearchCommunityWrapper = styled(Block)(withBorder);
 
 const LinkBlockWrapper = styled(Block)(withBorder, withDisplay);
 
+const CommunityAndAdvisorsWrapper = styled(Link)`
+  & {
+    position: relative;
+
+    &:hover::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 ${size('spacing.xxs')} ${size('spacing.m')} 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+`;
+
 const QuoteTitle = styled(Block)(
   css`
     text-align: center;
@@ -310,7 +326,6 @@ const ArticleContent = ({ content: data }) => {
                 key={index}
                 display="grid"
                 width="100%"
-                overflow="auto"
                 paddingX="m"
                 paddingTop="xs"
                 marginBottom="xl"
@@ -327,14 +342,12 @@ const ArticleContent = ({ content: data }) => {
                   gridTemplateColumns: '100%',
                   gridTemplateRows: `repeat(${rest.communities.length}, 10.75rem)`,
                   rowGap: size('spacing.m'),
-                  overflow: 'hidden',
                 }}
               >
                 {rest.communities?.map((item, index) => console.log('item', item) || (
-                  <CommunityPreview
-                    key={item.id}
-                    {...{ ...item, index: index + 1 }}
-                  />
+                  <CommunityAndAdvisorsWrapper key={item.slug} to={item.url}>
+                    <CommunityPreview {...{ ...item, index: index + 1 }} />
+                  </CommunityAndAdvisorsWrapper>
                 ))}
                 <Block startingWithTablet={{ display: 'none' }} />
               </WrapperWithDisplay>
@@ -346,7 +359,6 @@ const ArticleContent = ({ content: data }) => {
                 key={index}
                 display="grid"
                 width="100%"
-                overflow="auto"
                 paddingX="m"
                 paddingTop="xs"
                 marginBottom="xl"
@@ -363,14 +375,15 @@ const ArticleContent = ({ content: data }) => {
                   paddingRight: 0,
                   gridTemplateColumns: '100%',
                   rowGap: size('spacing.m'),
-                  overflow: 'hidden',
                 }}
               >
                 {rest.advisors?.map((item, index) => (
-                  <AdvisorPreview
-                    key={item.id}
-                    {...{ ...item, index: index + 1 }}
-                  />
+                  <CommunityAndAdvisorsWrapper key={item.slug}>
+                    <AdvisorPreview
+                      onClick={e => e.preventDefault()}// TODO: after adding attribute 'to' remove handler
+                      {...{ ...item, index: index + 1 }}
+                    />
+                  </CommunityAndAdvisorsWrapper>
                 ))}
                 <Block startingWithTablet={{ display: 'none' }} />
               </WrapperWithDisplay>
