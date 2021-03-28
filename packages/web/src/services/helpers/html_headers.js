@@ -563,15 +563,23 @@ export const getHelmetForCommunityPartnersPage = () => {
 
 export const getHelmetForAgentProfilePage = ({ agent }) => {
   const { info } = agent;
-  const { displayName, citiesServed } = info;
+  const { name, displayName, citiesServed } = info;
   const firstName = displayName.split(' ')[0];
   const firstThreeCities = citiesServed.slice(3).join(', ');
   const description = `Talk to expert senior living advisor ${info.displayName}. ${firstName} helps families find senior housing in ${firstThreeCities}& more locations!`;
   const title = `${info.displayName} Senior Living Advisor | Seniorly Partner Agents`;
+  let noindex = false;
+  if (name && name.include('CarePatrol')) {
+    noindex = true;
+  }
+
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {
+        noindex && <meta name="robots" content="noindex" />
+      }
     </Helmet>
   );
 };
