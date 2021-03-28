@@ -10,7 +10,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
 import { hideChatbox } from 'sly/web/config';
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
@@ -98,6 +98,9 @@ const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "ch
 const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/components/resourceCenter/Topic'));
 const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/components/resourceCenter/Search'));
 const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/components/resourceCenter/Sitemap'));
+
+// styleguide
+const StyleGuide = loadable(() => import(/* webpackChunkName: "chunkStyleGuide" */ 'sly/web/styleguide/StyleGuide'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -337,10 +340,10 @@ const routes = [
     component: AssessmentWizardPageContainer,
     exact: true,
   },
-  // {
-  //   path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
-  //   component: SearchContainer,
-  // },
+  {
+    path: '/styleguide/:section',
+    component: StyleGuide,
+  },
   {
     path: '/',
     component: HomePageContainer,
@@ -402,7 +405,7 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <Helmet titleTemplate="%s | Seniorly">
+        <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters={true}>
           <title>Find The Best Senior Living Options Near You</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />

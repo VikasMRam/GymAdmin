@@ -6,8 +6,9 @@ const baseColor = styles.palette.slate.base;
 export default `
   @font-face {
     font-display: swap;
-    font-family: 'Azo Sans';
-    src: url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2') format('woff2');
+    font-family: 'Tiempos Headline';
+    src: url('${publicPath}/fonts/TiemposHeadline-Medium.woff2') format('woff2'),
+         url('${publicPath}/fonts/TiemposHeadline-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
   }
@@ -15,16 +16,27 @@ export default `
   @font-face {
     font-display: swap;
     font-family: 'Azo Sans';
-    src: url('${publicPath}/fonts/azo/azosans-regular-webfont.woff2') format('woff2');
-    font-weight: 400;
+    src: url('${publicPath}/fonts/azo/azosans-bold-webfont.woff2') format('woff2'),
+         url('${publicPath}/fonts/azo/azosans-bold-webfont.woff') format('woff');
+    font-weight: 700;
     font-style: normal;
   }
 
   @font-face {
     font-display: swap;
     font-family: 'Azo Sans';
-    src: url('${publicPath}/fonts/azo/azosans-light-webfont.woff2') format('woff2');
-    font-weight: 300;
+    src: url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2') format('woff2'),
+         url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-display: swap;
+    font-family: 'Azo Sans';
+    src: url('${publicPath}/fonts/azo/azosans-regular-webfont.woff2') format('woff2'),
+         url('${publicPath}/fonts/azo/azosans-regular-webfont.woff') format('woff');
+    font-weight: 400;
     font-style: normal;
   }
 
@@ -39,12 +51,15 @@ export default `
   }
 
   html * {
-    font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
     box-sizing: border-box;
     margin: 0;
   }
 
-  html pre {
+  body {
+    font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
+  }
+
+  pre, code {
     font-family: Consolas, Liberation Mono, Menlo, Courier, monospace;
   }
 
@@ -61,5 +76,9 @@ export default `
     -moz-appearance: none;/* older firefox */
     -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
     appearance: none; /* rest */
+  }
+
+  svg[data-sly-svgs] {
+    display: none;
   }
 `;

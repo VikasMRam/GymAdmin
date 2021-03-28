@@ -43,11 +43,11 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
 
   return (
     <Section
-      headingMaxWidth={getKey('sizes.layout.col8')}
+      headingMaxWidth={getKey('layout.col8')}
       {...props}
     >
       <Heading
-        font="title-xlarge"
+        font="title-xl"
         css={{
           textAlign: 'center',
           maxWidth: '680px',

@@ -87,13 +87,19 @@ const mode = (context, { merge }) =>
     mode: NODE_ENV,
   });
 
+const iconsPath = path.join(rootPath, 'packages/common/src/icons');
 const assets = (context, { merge }) =>
   merge({
     module: {
       rules: [
         {
+          test: /\.svg$/,
+          use: ['@svgr/webpack'],
+          include: iconsPath,
+        },
+        {
           test: /\.(ico|png|jpe?g|svg|woff2?|ttf|eot)$/,
-          exclude: /node_modules/,
+          exclude: [/node_modules/, iconsPath],
           loader: 'url-loader?limit=8000',
         },
       ],
@@ -252,6 +258,12 @@ const client = (target, entries) => {
           generateStatsFile: 'true',
         }),
       ]),
+      optimization({
+        concatenateModules: false,
+      }),
+    ]),
+
+    when(isDev, [
       optimization({
         concatenateModules: false,
       }),

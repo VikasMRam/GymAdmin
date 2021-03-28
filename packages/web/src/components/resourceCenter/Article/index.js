@@ -7,18 +7,18 @@ import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import { startingWith, withDisplay } from 'sly/common/components/helpers';
-import { getKey, size } from 'sly/common/components/themes';
 import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
 import { cmsUrl } from 'sly/web/config';
 import apiFetch from 'sly/web/services/api/apiFetch';
-import Block from 'sly/common/components/atoms/Block';
-import Heading from 'sly/common/components/atoms/Heading';
-import Hr from 'sly/common/components/atoms/Hr';
-import Link from 'sly/common/components/atoms/Link';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import Block from 'sly/common/system/Block';
+import Flex from 'sly/common/system/Flex';
+import Heading from 'sly/common/system/Heading';
+import Span from 'sly/common/system/Span';
+import Hr from 'sly/common/system/Hr';
+import Link from 'sly/common/system/Link';
+import Image from 'sly/common/system/Image';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
@@ -30,11 +30,16 @@ import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
-const ArticleWrapper = styled(Block)(withDisplay);
-
-const BreadCrumbsTitle = styled(Block)(withDisplay);
-
-const LoaderWrapper = styled(Block)(withDisplay);
+const BlockHr = () => (
+  <Hr
+    marginX="m"
+    sx$tablet={{
+      margin: 'xl 0',
+      marginX: 'auto',
+      width: ['col6', 'col8'],
+    }}
+  />
+);
 
 const ArticlePage = ({ match }) => {
   const articleRef = useRef(null);
@@ -68,14 +73,13 @@ const ArticlePage = ({ match }) => {
 
   if (!requestInfo.hasFinished) {
     return (
-      <LoaderWrapper
+      <Flex
         height="100vh"
-        display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        <ResponsiveImage src={assetPath('images/homebase/loader.svg')} />
-      </LoaderWrapper>
+        <Image src={assetPath('images/homebase/loader.svg')} />
+      </Flex>
     );
   }
 
@@ -89,47 +93,37 @@ const ArticlePage = ({ match }) => {
 
       <Header />
 
-      <ArticleWrapper ref={articleRef} display="flex" alignItems="center" flexDirection="column">
-
+      <Flex ref={articleRef} alignItems="center" flexDirection="column">
         <Block
           width="100%"
           paddingX="m"
-          startingWithTablet={{ width: size('layout.col6'), padding: 0 }}
-          startingWithLaptop={{ width: size('layout.col8') }}
+          sx$tablet={{ width: 'col6', padding: 0 }}
+          sx$laptop={{ width: 'col8' }}
         >
           {requestInfo?.result?.[0]?.mainTopic && requestInfo?.result?.[0]?.title && (
-            <Block
-              marginY="l"
-            >
-              <Link font="body-small" to={RESOURCE_CENTER_PATH}>Resource Center</Link>
+            <Block marginY="l">
+              <Link font="body-s" to={RESOURCE_CENTER_PATH}>Resource Center</Link>
               {' / '}
-              <Link font="body-small" to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
+              <Link font="body-s" to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
                 {requestInfo.result[0].mainTopic.name}
               </Link>
               {' / '}
-              <BreadCrumbsTitle display="inline" font="body-small">{requestInfo.result[0].title}</BreadCrumbsTitle>
+              <Span font="body-s">{requestInfo.result[0].title}</Span>
             </Block>
           )}
-          <Heading
-            font="title-xxlarge"
-            css={`
-              margin-bottom: ${size('spacing.l')};
-              ${startingWith('laptop', css({ marginBottom: size('spacing.xl') }))}
-            `}
-            size="hero"
-          >
+          <Heading font="title-xxl" mb="l">
             {requestInfo?.result?.[0]?.title}
           </Heading>
 
-          <Block as="p" font="body-large" marginBottom="l">
+          <Block as="p" font="body-l" marginBottom="l">
             {requestInfo?.result?.[0]?.shortDescription}
           </Block>
 
-          <Block font="body-small" marginBottom="l" palette="grey">
+          <Block font="body-s" marginBottom="l" color="slate.lighter-60">
             {`By ${requestInfo?.result?.[0]?.author?.fullName} ·  Updated ${formatDate(requestInfo?.result?.[0]?.updated_at, 'long')}`}
           </Block>
 
-          <Block marginBottom="l" startingWithTablet={{ marginBottom: 'xl' }}>
+          <Block marginBottom="l" sx$tablet={{ marginBottom: 'xl' }}>
             <AddThis />
           </Block>
         </Block>
@@ -138,11 +132,11 @@ const ArticlePage = ({ match }) => {
           paddingX="m"
           marginBottom="l"
           width="100%"
-          startingWithTablet={{ width: size('layout.col8'), marginBottom: size('layout.xl'), padding: 0 }}
-          startingWithLaptop={{ width: size('layout.col10') }}
+          sx$tablet={{ width: 'col8', marginBottom: 'xl', padding: 0 }}
+          sx$laptop={{ width: 'col10' }}
         >
-          <ResponsiveImage
-            css={{ width: '100%', height: 'auto' }}
+          <Image
+            sx={{ width: '100%', height: 'auto' }}
             src={requestInfo?.result?.[0]?.mainImg?.url}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
           />
@@ -150,14 +144,14 @@ const ArticlePage = ({ match }) => {
 
         <ArticleContent content={requestInfo?.result?.[0]?.content} />
 
-      </ArticleWrapper>
+      </Flex>
 
       {!!requestInfo?.result?.[0]?.linkBlockList?.length && (
         <Block
           marginY="l"
           marginX="m"
-          startingWithTablet={{ marginY: 'xl', marginX: 'auto', width: size('layout.col6') }}
-          startingWithLaptop={{ width: size('layout.col8') }}
+          sx$tablet={{ marginY: 'xl', marginX: 'auto', width: 'col6' }}
+          sx$laptop={{ width: 'col8' }}
         >
           <LinksBlock
             title={requestInfo?.result?.[0]?.linkBlockTitle}
@@ -170,35 +164,29 @@ const ArticlePage = ({ match }) => {
       <Block
         marginBottom="l"
         marginX="m"
-        startingWithTablet={{ marginBottom: 'xl', marginX: 'auto', width: size('layout.col6') }}
-        startingWithLaptop={{ width: size('layout.col8') }}
+        sx$tablet={{ marginBottom: 'xl', marginX: 'auto', width: 'col6' }}
+        sx$laptop={{ width: 'col8' }}
       >
-        <Block marginBottom="m" font="title-small">Share this article</Block>
+        <Block marginBottom="m" font="title-s-azo">Share this article</Block>
         <AddThis />
       </Block>
 
       <Block
         marginX="m"
-        upToTablet={{ marginBottom: 'xl' }}
-        startingWithTablet={{ marginX: 'auto', paddingBottom: 'm', width: size('layout.col6') }}
-        startingWithLaptop={{ width: size('layout.col8') }}
+        marginBottom="xl"
+        sx$tablet={{ marginBottom: 0, marginX: 'auto', paddingBottom: 'm', width: 'col6' }}
+        sx$laptop={{ width: 'col8' }}
       >
-        <Block marginBottom="m" font="title-small">Tags</Block>
+        <Block marginBottom="m" font="title-s-azo">Tags</Block>
         <ArticleTags topic={requestInfo?.result?.[0]?.mainTopic} tagsList={requestInfo?.result?.[0]?.tagsList} />
       </Block>
 
-      <Block
-        upToTablet={{ display: 'none' }}
-        startingWithTablet={{ paddingY: 'xl', marginX: 'auto', width: size('layout.col6') }}
-        startingWithLaptop={{ width: size('layout.col8') }}
-      >
-        <Hr size="large" />
-      </Block>
+      <BlockHr />
 
       <Block
         marginX="m"
-        startingWithTablet={{ margin: '0 auto', width: size('layout.col6') }}
-        startingWithLaptop={{ width: size('layout.col8') }}
+        sx$tablet={{ margin: '0 auto', width: 'col6' }}
+        sx$laptop={{ width: 'col8' }}
       >
         <AuthorPreview
           url={requestInfo?.result?.[0]?.author.img?.url}
@@ -210,17 +198,9 @@ const ArticlePage = ({ match }) => {
         />
       </Block>
 
-      <Block
-        margin="xl"
-        marginX="auto"
-        width={`calc(100% - ${getKey('sizes.spacing.m')} * 2)`}
-        startingWithTablet={{ width: size('layout.col6'),  marginY: 'xxl', marginX: 'auto' }}
-        startingWithLaptop={{ width: size('layout.col8') }}
-      >
-        <Hr size="large" />
-      </Block>
+      <BlockHr />
 
-      <Block marginBottom="xxl" startingWithTablet={{ marginBottom: 'xxxl' }}>
+      <Block marginBottom="xxl" sx$tablet={{ marginBottom: 'xxxl' }}>
         <ArticlesListByTopic
           limit={3}
           topic={requestInfo.result?.[0]?.mainTopic.slug}

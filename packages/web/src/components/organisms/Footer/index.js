@@ -120,7 +120,7 @@ const Links = ({ items }) => (
     {Object.entries(items).map(([name, url]) => (
       <Link
         palette="slate"
-        font="body-small"
+        font="body-s"
         to={url}
       >
         {name}
@@ -193,7 +193,7 @@ const Footer = () => (
     <Bottom>
       <div className="left">
         <Link to="/"><Icon icon="logo" size={32} marginTop="-4px" /></Link>
-        <Span font="body-small">
+        <Span font="body-s">
           &copy;
           Seniorly {currentYear}
           <Span palette="slate.lighter-30">{config.version}</Span>

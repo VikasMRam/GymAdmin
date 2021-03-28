@@ -9,7 +9,7 @@
     </mask>
     <use id="Path" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
     <g id="color-/-slate-/-base" mask="url(#mask-2)" fill="currentColor" fill-rule="nonzero">
-      <rect id="color" x="0" y="0"></rect>
+      <rect id="color" x="0" y="0" width="24" height="24"></rect>
     </g>
   </g>
 </svg>

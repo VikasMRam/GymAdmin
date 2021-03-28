@@ -6,4 +6,4 @@ import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons'
 
 storiesOf('Molecules|TableHeaderButtons', module)
   .add('default', () => <TableHeaderButtons />)
-  .add('with sort, column and filter buttons', () => <TableHeaderButtons onColumnButtonClick={action('onColumnButtonClick')} onSortButtonClick={action('onSortButtonClick')} onFilterButtonClick={action('onFilterButtonClick')} />);
+  .add('with sort, column and filter buttons', () => <TableHeaderButtons onSortButtonClick={action('onSortButtonClick')} onFilterButtonClick={action('onFilterButtonClick')} />);

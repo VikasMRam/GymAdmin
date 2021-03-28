@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import path from 'path';
 import 'isomorphic-fetch';
-
 import express from 'express';
 import React from 'react';
 import serialize from 'serialize-javascript';
@@ -14,31 +13,33 @@ import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 import nodeFetch from 'node-fetch';
 import builder from 'xmlbuilder';
+import ConvertAnsi from 'ansi-to-html';
 
 import { cleanError } from 'sly/web/services/helpers/logging';
 import { port, host, publicPath, isDev, cmsUrl } from 'sly/web/config';
 import { configure as configureStore } from 'sly/web/store';
 import Html from 'sly/web/components/Html';
-import Error from 'sly/web/components/Error';
+import ErrorComponent from 'sly/web/components/Error';
 import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConfigs';
 import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 
+const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
     return <Redbox error={err} />;
   }
-  return <Error />;
+  return <ErrorComponent />;
 };
 
 const renderHtml = ({
-  initialState, content, sheet, extractor,
+  initialState, content, sheet, extractor, icons,
 }) => {
   const linkElements = (extractor && extractor.getLinkElements()) || [];
-  const styleElements = (sheet && sheet.getStyleElement()) || [];
   const scriptElements = (extractor && extractor.getScriptElements()) || [];
+  const styleElements = (sheet && sheet.getStyleElement()) || [];
 
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
@@ -50,6 +51,7 @@ const renderHtml = ({
     linkElements,
     styleElements,
     scriptElements,
+    icons,
   };
   const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
@@ -134,12 +136,13 @@ app.use(async (req, res, next) => {
     const sheet = new ServerStyleSheet();
     const context = {};
     const apiContext = { promises: [] };
+    const icons = {};
 
     const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ClientApp apiContext={apiContext} />
+            <ClientApp apiContext={apiContext} icons={icons} />
           </StaticRouter>
         </Provider>
       </CacheProvider>
@@ -166,6 +169,7 @@ app.use(async (req, res, next) => {
         content,
         sheet,
         extractor,
+        icons,
       }));
     }
   } catch (error) {
@@ -176,7 +180,14 @@ app.use(async (req, res, next) => {
 // render error
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
-  const errorContent = getErrorContent(err);
+  const htmlError = new Error();
+  for (var k in err) htmlError[k] = err[k];
+  htmlError.message = (
+    <pre style={{ background: 'pink' }}
+      dangerouslySetInnerHTML={{ __html: convertAnsi.toHtml(err.message) }}
+    />
+  );
+  const errorContent = getErrorContent(htmlError);
   const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
   const assets = [];
   res.status(500).send(renderHtml({ content, sheet, assets }));
@@ -186,13 +197,18 @@ app.use((err, req, res, next) => {
 // error log
 app.use((err, req, res, next) => {
   if (err) {
-    const errorObj = {
-      ts: new Date().toISOString(),
-      status: res.statusCode,
-      url: req.originalUrl,
-      error: cleanError(err),
-    };
-    console.error(errorObj);
+    if (!isDev) {
+      const errorObj = {
+        ts: new Date().toISOString(),
+        status: res.statusCode,
+        url: req.originalUrl,
+        error: cleanError(err),
+      };
+      console.error(errorObj);
+    } else {
+      err.message = `${res.statusCode} ${req.originalUrl} ${err.message}`;
+      console.error(err);
+    }
   }
   next();
 });

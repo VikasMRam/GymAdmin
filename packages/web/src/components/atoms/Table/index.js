@@ -3,11 +3,17 @@ import styled, { css } from 'styled-components';
 import { node, bool, string, arrayOf, oneOfType, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
+import Block from 'sly/common/system/Block';
+import Link from 'sly/common/system/Link';
+
 import { size, palette } from 'sly/common/components/themes';
-import Link from 'sly/common/components/atoms/Link';
-import Block from 'sly/common/components/atoms/Block';
+import { withSystem } from 'sly/common/system/Block';
+import Th from 'sly/web/components/molecules/Th';
+
+export { Th };
 
 const TableWrapper = styled.div`
+  ${withSystem}
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     ${ifProp('snap.left', css`border-left: none;`)};
@@ -127,6 +133,8 @@ export const Tr = styled.tr`
 `;
 
 export const Td = styled.td`
+  ${withSystem}
+
   display: block;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -162,10 +170,6 @@ const TextBlock = styled(Block)`
 TextBlock.propTypes = {
   size: string,
 };
-
-const LinkBlock = styled(Link)`
-  display: block;
-`;
 
 export const TextTd = ({
   children, disabled, borderless, ...props
@@ -207,9 +211,9 @@ export const LinkTd = ({
   to, children, disabled, borderless, ...props
 }) => (
   <Td disabled={disabled} borderless={borderless} {...props}>
-    <LinkBlock to={to} disabled={disabled}>
+    <Link to={to} display="block" disabled={disabled}>
       {children}
-    </LinkBlock>
+    </Link>
   </Td>
 );
 

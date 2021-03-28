@@ -6,7 +6,6 @@ export const withDisplay = ({
   flex,
   justifyContent,
   alignItems,
-  alignContent,
   flexDirection,
   flexGrow,
   flexShrink,
@@ -18,13 +17,10 @@ export const withDisplay = ({
   gridTemplateRows,
   gridTemplateAreas,
   gridArea,
-  columnGap,
-  rowGap,
 }) => css({
   display: block === true ? 'block' : display,
   justifyContent,
   alignItems,
-  alignContent,
   visibility,
   flexDirection,
   flexGrow,
@@ -37,7 +33,5 @@ export const withDisplay = ({
   gridTemplateRows,
   gridTemplateAreas,
   gridArea,
-  columnGap,
-  rowGap,
 });
 

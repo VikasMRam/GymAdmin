@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { object } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import {
@@ -10,12 +10,12 @@ import {
   getSearchItem,
   getTextForPagination,
 } from 'sly/web/components/resourceCenter/helper';
-import { getKey, size } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
-import { withDisplay } from 'sly/common/components/helpers';
-import Block from 'sly/web/components/atoms/Block';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import Image from 'sly/common/system/Image';
+import Flex from 'sly/common/system/Flex';
+import Block from 'sly/common/system/Block';
+import Grid from 'sly/common/system/Grid';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
@@ -23,15 +23,9 @@ import ArticlePreview from 'sly/web/components/resourceCenter/components/Article
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
-const LoaderWrapper = styled(Block)(withDisplay);
-
-const ArticlesWrapper = styled(Block)(withDisplay);
-
-const PaginationText = styled(Block)(
-  css`
-    text-align: center;
-  `,
-);
+const PaginationText = styled(Block)`
+  text-align: center;
+`;
 
 const Search = ({ match, location }) => {
   const { searchBy } = match.params;
@@ -55,14 +49,13 @@ const Search = ({ match, location }) => {
 
   if (!requestByArticlesHasFinished || !requestByCountHasFinished) {
     return (
-      <LoaderWrapper
+      <Flex
         height="100vh"
-        display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        <ResponsiveImage src={assetPath('images/homebase/loader.svg')} />
-      </LoaderWrapper>
+        <Image src={assetPath('images/homebase/loader.svg')} />
+      </Flex>
     );
   }
 
@@ -80,15 +73,15 @@ const Search = ({ match, location }) => {
 
       <Block
         marginX="m"
-        startingWithTablet={{ width: size('layout.col8'), marginX: 'auto' }}
-        startingWithLaptop={{ width: size('layout.col12') }}
+        sx$tablet={{ width: 'col8', marginX: 'auto' }}
+        sx$laptop={{ width: 'col12' }}
       >
         <Block
           marginTop="l"
           marginBottom={!articlesCount ? 'xxl' : 'l'}
-          font="title-large"
-          startingWithTablet={{ marginTop: 'xxl', marginBottom: !articlesCount ? 'xxxl' : 'xxl' }}
-          startingWithLaptop={{ marginBottom: !articlesCount && '15rem' }}
+          font="title-l"
+          sx$tablet={{ marginTop: 'xxl', marginBottom: !articlesCount ? 'xxxl' : 'xxl' }}
+          sx$laptop={{ marginBottom: !articlesCount && '15rem' }}
         >
           {
             articlesCount
@@ -99,19 +92,18 @@ const Search = ({ match, location }) => {
 
         {!!articles?.length && (
           <>
-            <ArticlesWrapper
+            <Grid
               marginBottom="xxl"
-              display="grid"
               justifyContent="center"
-              upToTablet={{ gridTemplateColumns: size(('layout.col4')), rowGap: size('spacing.m') }}
-              startingWithTablet={{
-                gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
-                columnGap: size('spacing.l'),
-                rowGap: size('spacing.l'),
+              gridTemplateColumns="col4"
+              gridRowGap="m"
+              sx$tablet={{
+                gridTemplateColumns: 'col4 col4',
+                gridColumnGap: 'l',
+                gridRowGap: 'l',
               }}
-              startingWithLaptop={{
-                gridTemplateColumns:
-                  `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
+              sx$laptop={{
+                gridTemplateColumns: 'col4 col4 col4',
               }}
             >
               {articles.map(({
@@ -136,7 +128,7 @@ const Search = ({ match, location }) => {
                     }}
                   />
               ))}
-            </ArticlesWrapper>
+            </Grid>
 
             <Block marginX="auto" marginBottom="xxl" width="max-content">
               {articlesCount > ARTICLES_RANGE_FOR_PAGINATION && (

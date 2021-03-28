@@ -44,7 +44,7 @@ export const Left = styled(({ children, heading, actions, ...props }) => (
   grid-area: left;
   display: grid;
 
-  ${withBorder}
+  // ${withBorder}
 `;
 
 Left.propTypes = {
@@ -112,12 +112,12 @@ Warning.defaultProps = {
   padding: 'large',
 };
 
+  // ${withBorder({ borderBottom: 'regular' })}
+    // ${withBorder({ borderBottom: 0 })};
 export const SummarySectionHeader = styled(Box)`
-  ${withBorder({ borderBottom: 'regular' })}
 
   ${startingWith('laptop', css`
     ${withText({ size: 'body' })};
-    ${withBorder({ borderBottom: 0 })};
   `)}
 `;
 

@@ -2,13 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { array, bool, object, string } from 'prop-types';
 
-import { withBorder, withDisplay } from 'sly/common/components/helpers';
-import { size } from 'sly/common/components/themes';
+import Block from 'sly/common/system/Block';
+import { space } from 'sly/common/system/sx';
+import Flex from 'sly/common/system/Flex';
+import Image from 'sly/common/system/Image';
+import Heading from 'sly/common/system/Heading';
+import Link from 'sly/common/system/Link';
 import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
-import Block from 'sly/common/components/atoms/Block';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import Heading from 'sly/common/components/atoms/Heading';
-import Link from 'sly/common/components/atoms/Link';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 
 const StyledLink = styled(Link)`
@@ -22,19 +22,10 @@ const StyledLink = styled(Link)`
       right: 0;
       width: 100%;
       height: 100%;
-      box-shadow: 0 ${size('spacing.xxs')} ${size('spacing.m')} 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
     }
   }
 `;
-
-const Wrapper = styled(Block)(withBorder, withDisplay);
-
-const TextWrapper = styled(Block)(withDisplay);
-
-const Description = styled(Block)(
-  false,
-  css(getStylesForEllipsisText(4)),
-);
 
 const ArticlePreview = ({
   smallSizeOnPhone,
@@ -47,53 +38,53 @@ const ArticlePreview = ({
   to,
   customStyles,
 }) => (
-  <StyledLink to={to} css={customStyles}>
-    <Wrapper
-      display="flex"
+    <Flex
+      as={StyledLink}
+      to={to} 
+      sx={customStyles}
       flexDirection="column"
-      border="regular"
-      borderRadius="small"
-      borderPalette="slate"
-      borderVariation="lighter-90"
+      border="box"
       width={smallSizeOnPhone ? '17.5rem' : '20.5rem'}
       height={smallSizeOnPhone ? '29.375rem' : '32.875rem'}
       overflow="hidden"
-      upToTablet={{ marginX: 'auto' }}
-      startingWithTablet={{ width: smallSizeOnPhone && '20.5rem', height: smallSizeOnPhone && '32.875rem' }}
+      marginX="auto"
+      sx$tablet={{ 
+        marginX: 0,
+        width: smallSizeOnPhone && '20.5rem', 
+        height: smallSizeOnPhone && '32.875rem',
+      }}
     >
       <Block
         height={smallSizeOnPhone ? '11.625rem' : '13.625rem'}
         width="100%"
         overflow="hidden"
-        startingWithTablet={{ height: smallSizeOnPhone && '13.625rem' }}
+        sx$tablet={{ height: smallSizeOnPhone && '13.625rem' }}
       >
-        <ResponsiveImage
+        <Image
           css={{ objectFit: 'cover', width: '100%', height: '100%' }}
           src={url}
           alt={alternativeText}
         />
       </Block>
 
-      <TextWrapper display="flex" flexDirection="column" flexGrow="1" padding="l">
+      <Block display="flex" flexDirection="column" flexGrow="1" padding="l">
         <Heading
-          size="subtitle"
-          css={getStylesForEllipsisText(3, {
-            fontSize: size('text.displayS'),
-            lineHeight: size('lineHeight.title'),
-          })}
+          font="title-m"
+          color="slate.base"
+          pad="m"
+          sx={getStylesForEllipsisText(3)}
         >
           {title}
         </Heading>
 
-        <Description palette="slate.base">
+        <Block color="slate.base" sx={getStylesForEllipsisText(4)}>
           {shortDescription}
-        </Description>
+        </Block>
 
         <ArticleTags topic={topic} tagsList={tagsList} />
-      </TextWrapper>
+      </Block>
 
-    </Wrapper>
-  </StyledLink>
+    </Flex>
 );
 
 ArticlePreview.displayName = 'ResourceCenterArticlePreview';

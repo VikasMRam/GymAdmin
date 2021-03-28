@@ -2,50 +2,41 @@ import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import { cmsUrl } from 'sly/web/config';
-import { startingWith } from 'sly/common/components/helpers';
-import { getKey, size } from 'sly/common/components/themes';
 import apiFetch from 'sly/web/services/api/apiFetch';
-import Block from 'sly/common/components/atoms/Block';
-import Button from 'sly/common/components/atoms/Button';
-import Hr from 'sly/common/components/atoms/Hr';
-import Input from 'sly/web/components/atoms/Input';
+import { sx, sx$tablet, space } from 'sly/common/system/sx';
+import Block from 'sly/common/system/Block';
+import Button from 'sly/common/system/Button';
+import Hr from 'sly/common/system/Hr';
+import Input from 'sly/common/system/Input';
 import Notification from 'sly/web/components/molecules/Notification';
 
 const StyledButton = styled(Button)`
   width: 100%;
-  padding: ${size('spacing.s')} ${size('spacing.l')};
-  margin-top: ${size('spacing.s')};
-  font-size: ${size('text.body')};
-  line-height: ${size('lineHeight.body')};
+  padding: ${space('s')} ${space('l')};
+  margin-top: ${space('s')};
+  ${sx({ font: 'body-m' })}
   border: none;
   overflow: visible;
 
-  ${startingWith(
-    'tablet',
-    css`
-      width: auto;
-      margin-top: 0;
-      margin-left: ${getKey('sizes.spacing.s')};
-    `,
-  )}
+  ${sx$tablet`
+    width: auto;
+    margin-top: 0;
+    margin-left: ${space('s')};
+  `}
 `;
 
 const Title = styled(Block)`
-  font-size: ${size('text.displayS')};
-  line-height: ${size('lineHeight.title')};
-
-  ${startingWith('tablet', css`
-    font-size: ${getKey('sizes.text.display')};
-    line-height: ${getKey('sizes.element.button')};
+  ${sx({ font: 'title-l' })}
+  ${sx$tablet`
     text-align: center;
-  `)}
+  `}
 `;
 
 const Description = styled(Block)`
-  font-size: 1.125rem;
-  line-height: ${size('lineHeight.display')};
-
-  ${startingWith('tablet', css({ textAlign: 'center' }))}
+  ${sx({ font: 'body-l' })}
+  ${sx$tablet`
+    text-align: center;
+  `}
 `;
 
 const NotificationWrapper = styled(Block)`
@@ -87,28 +78,27 @@ const SubscribeEmail = () => {
   return (
     <>
       <Block
-        paddingY="xxl"
-        paddingX="m"
+        padding="xxl m"
         background="harvest.lighter-90"
-        startingWithTablet={{ paddingY: 'xxxl', paddingX: 'auto' }}
+        sx$tablet={{ padding: 'xxxl auto' }}
       >
         <Title marginBottom="l">Sign up for our newsletter</Title>
 
-        <Description marginBottom="l" startingWithTablet={{ width: size('layout.col8'), marginX: 'auto' }}>
+        <Description marginBottom="l" sx$tablet={{ width: 'col8', marginX: 'auto' }}>
           Want to learn from leaders and innovators in our industry?
           Want to stay up on home care tips and tactics—and trends
           that affect your business? Give us your email, and we’ll
           keep you informed.
         </Description>
 
-        <Block startingWithTablet={{ display: 'flex', width: size('layout.col6'), marginX: 'auto' }}>
+        <Block sx$tablet={{ display: 'flex', width: 'col6', marginX: 'auto' }}>
           <Input
-            size="large"
             value={value}
             onChange={evt => setValue(evt.target.value)}
             placeholder="Your email address"
+            flexGrow="1"
           />
-          <StyledButton disabled={isLoading || !value.trim()} onClick={onSubmit}>Sign up</StyledButton>
+          <StyledButton flexGrow="0" disabled={isLoading || !value.trim()} onClick={onSubmit}>Sign up</StyledButton>
         </Block>
       </Block>
 

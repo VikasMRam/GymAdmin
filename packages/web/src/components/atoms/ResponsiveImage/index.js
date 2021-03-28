@@ -65,7 +65,7 @@ const makeSizes = (sizes) => {
     if (i === 0) {
       acc.push(sizepx);
     } else {
-      acc.splice(acc.length - 1, 0, `(min-width: ${getKey(`sizes.breakpoint.${sizeNames[i]}`)}) ${sizepx}`);
+      acc.splice(acc.length - 1, 0, `(min-width: ${getKey(`breakpoint.${sizeNames[i]}`)}) ${sizepx}`);
     }
 
     return acc;

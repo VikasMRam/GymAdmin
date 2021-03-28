@@ -2,55 +2,46 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { array, string } from 'prop-types';
 
-import { withBorder } from 'sly/common/components/helpers';
-import { size } from 'sly/common/components/themes';
 import { host } from 'sly/web/config';
 import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
-import Block from 'sly/common/components/atoms/Block';
-import Link from 'sly/common/components/atoms/Link';
+import { space } from 'sly/common/system/sx';
+import Block from 'sly/common/system/Block';
+import Heading from 'sly/common/system/Heading';
+import Link from 'sly/common/system/Link';
 
-const Wrapper = styled(Block)(withBorder);
-const Title = styled(Block)(
-  false,
-  css`
-    font-size: 1.125rem;
-    line-height: ${size('spacing.xl')};
-  `,
-);
 const LinkItem = styled(Link)`
   display: block;
-  margin-bottom: ${size('spacing.m')};
-  font-size: 1.125rem;
-  line-height: ${size('spacing.xl')};
+  margin-bottom: ${space('m')};
 `;
 
 const LinksBlock = ({ title, description, links }) => {
   return (
-    <Wrapper
+    <Block
       padding="l"
       background="viridian.lighter-90"
-      borderRadius="small"
-      startingWithTablet={{ padding: 'xl' }}
+      border="round"
+      sx$tablet={{ padding: 'xl' }}
     >
-      <Block font="title-large" marginBottom="xl">{title}</Block>
-      <Title
+      <Heading font="title-l" marginBottom="xl">{title}</Heading>
+      <Heading font="body-l"
         marginBottom="l"
-        startingWithTablet={{ marginBottom: 'xl' }}
-        startingWithLaptop={{ marginBottom: 'l' }}
+        sx$tablet={{ marginBottom: 'xl' }}
+        sx$laptop={{ marginBottom: 'l' }}
       >
         {description}
-      </Title>
+      </Heading>
       {links?.map(({ to, title, id }) => {
         const isResourceCenterRoute = to.includes(`${host}${RESOURCE_CENTER_PATH}`);
         const splitPath = to.split(host);
         return <LinkItem
           key={id}
+          font="body-l"
           {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : to}}
         >
           {title}
         </LinkItem>
       })}
-    </Wrapper>
+    </Block>
   );
 };
 

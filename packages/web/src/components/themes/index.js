@@ -2,8 +2,8 @@ import { css } from 'styled-components';
 
 import { publicPath } from 'sly/web/config';
 
-export const columnWidth = (parts, gutter) => css`
-  // WARNING: no semicolon here, keep it that way
+// WARNING: no semicolon here, keep it that way
+export const columnWidth = (parts, gutter) => `
   calc((100% + ${gutter}) / ${parts} - ${gutter})
 `;
 

@@ -1,39 +1,29 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { string } from 'prop-types';
 
-import { getKey, size } from 'sly/common/components/themes';
-import { startingWith, withBorder, withDisplay } from 'sly/common/components/helpers';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import Icon from 'sly/common/components/atoms/Icon';
-import Link from 'sly/common/components/atoms/Link';
-import Block from 'sly/common/components/atoms/Block';
+import Image from 'sly/common/system/Image';
+import Chevron from 'sly/common/icons/Chevron';
+import Link from 'sly/common/system/Link';
+import Block from 'sly/common/system/Block';
+import Heading from 'sly/common/system/Heading';
+import Flex from 'sly/common/system/Flex';
 
-const AuthorFullName = styled(Block)(
-  css`
-    white-space: nowrap;
-  `,
-);
-
-const WrittenBy = styled(Block)(
-  false, // ????
-  css`
-    letter-spacing: ${size('spacing.nano')};
-    text-transform: uppercase;
-    
-    ${startingWith(
-    'tablet',
-    css`
-      margin: 0;
-    `,
-  )}
-  `,
-);
-
-const WithDisplay = styled(Block)(withDisplay);
-
-const ImgWrapper = styled(Block)(withBorder);
+const WrittenBy = forwardRef((props, ref) => (
+  <Block
+    palette="slate.lighter-40"
+    font="label"
+    marginBottom="s"
+    width="100%"
+    letterSpacing="1px"
+    textTransform="uppercase"
+    sx$tablet={{
+      margin: 0,
+    }}
+    {...props}
+  />
+));
 
 const AuthorPreview = ({
   url,
@@ -44,60 +34,41 @@ const AuthorPreview = ({
   slug,
 }) => (
   <>
-    <WithDisplay display="flex" flexWrap="wrap">
-      <WrittenBy
-        palette="slate.lighter-40"
-        font="label"
-        marginBottom="s"
-        width="100%"
-        startingWithTablet={{ display: 'none' }}
-      >
+    <Flex flexWrap="wrap">
+      <WrittenBy display={['block', 'none']}>
         written by:
       </WrittenBy>
-      <ImgWrapper
-        width={size('element.xxxLarge')}
-        minWidth={size('element.xxxLarge')}
-        height={size('element.xxxLarge')}
-        minHeight={size('element.xxxLarge')}
+      <Block
+        size="5rem"
         borderRadius="50%"
         overflow="hidden"
         marginRight="s"
         marginBottom="s"
-        startingWithTablet={{ marginRight: 'l', marginBottom: '0' }}
+        sx$tablet={{ marginRight: 'l', marginBottom: '0' }}
       >
-        <ResponsiveImage
-          css={{
-            objectFit: 'cover',
-            width: '100%',
-            height: '100%',
-          }}
+        <Image
+          aspectRatio="1:1"
           src={url}
           alt={alternativeText}
         />
-      </ImgWrapper>
-      <WithDisplay display="flex" flexDirection="column">
-        <WrittenBy
-          palette="slate.lighter-40"
-          font="label"
-          marginBottom="s"
-          width="100%"
-          upToTablet={{ display: 'none' }}
-          startingWithTablet={{ display: 'block' }}
-        >
+      </Block>
+      <Flex flexDirection="column">
+        <WrittenBy display={['none', 'block']}>
           written by:
         </WrittenBy>
-        <AuthorFullName font="title-medium" margin="auto 0">{fullName}</AuthorFullName>
-      </WithDisplay>
-    </WithDisplay>
+        <Heading as="h3" margin="auto 0" whiteSpace="nowrap">{fullName}</Heading>
+      </Flex>
+    </Flex>
     <Block
-      startingWithTablet={{
-        marginLeft: `calc(${getKey('sizes.spacing.l')} + ${getKey('sizes.element.xxxLarge')})`,
+      sx$tablet={{
+        paddingLeft: 'l',
+        marginLeft: '5rem',
       }}
     >
-      <Block marginBottom="l" font="body-regular">{shortDescription}</Block>
+      <Block marginBottom="l" font="body-m">{shortDescription}</Block>
       <Link to={`${RESOURCE_CENTER_PATH}/author/${slug}`}>
         {`View other articles written by ${firstName}`}
-        <Icon icon="chevron" />
+        <Chevron rotation="90" />
       </Link>
     </Block>
   </>

@@ -43,14 +43,6 @@ const FilterButton = styled(IconButton)`
   }
 `;
 
-const ColumnsButton = styled(IconButton)`
-  display: none;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
-  }
-`;
-
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 // eslint-disable-next-line react/prop-types
@@ -99,7 +91,7 @@ const Filters = ({ datatable, meta = {} }) => { /* eslint-disable react/prop-typ
 const debouncedDatatableSearch = debounce((datatable, modelConfig, value) => datatable.doSearch(modelConfig.defaultSearchField, 'cs', value), 150);
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value, modelConfig,
+  onSearchTextKeyUp, onSortButtonClick, datatable, className, meta, value, modelConfig,
 }) => (
   <Wrapper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
@@ -118,14 +110,12 @@ const TableHeaderButtons = ({
     }
     {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
     {datatable && <Filters datatable={datatable} meta={meta} />}
-    {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
   </Wrapper>
 );
 
 TableHeaderButtons.propTypes = {
   meta: object,
   datatable: object,
-  onColumnButtonClick: func,
   className: string,
   onSortButtonClick: func,
   onSearchTextKeyUp: func,

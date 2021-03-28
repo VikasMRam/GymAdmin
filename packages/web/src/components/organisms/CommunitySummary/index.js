@@ -262,7 +262,7 @@ const CommunitySummary = ({
             </ListItem>
             }
             {numBaths &&
-            <ListItem icon="bath" iconPalette="grey" iconVariation="dark">
+            <ListItem icon="bathroom" iconPalette="grey" iconVariation="dark">
               <div>
                 <strong> No. of Baths </strong>
                 <br/>

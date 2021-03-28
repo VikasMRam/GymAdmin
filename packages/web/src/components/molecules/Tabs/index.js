@@ -3,7 +3,7 @@ import { instanceOf, string, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { Box } from 'sly/web/components/atoms';
-import { topSnap, upTo } from 'sly/common/components/helpers';
+import { upTo } from 'sly/common/components/helpers';
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -13,7 +13,6 @@ const Wrapper = styled(Box)`
   text-transform: uppercase;
 
   ${upTo('laptop', css`
-    ${topSnap}
     border-radius: 0;
   `)}
 `;
@@ -73,7 +72,12 @@ export default class Tabs extends Component {
     const { activeTab } = this.state;
 
     return (
-      <Wrapper {...props}>
+      <Wrapper
+        {...props}
+        upToLaptop={{
+          snap: 'top',
+        }}
+      >
         {children.map((child) => {
           const {
             id, onClick,

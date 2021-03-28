@@ -3,41 +3,24 @@ import styled, { css } from 'styled-components';
 import { array, bool, string } from 'prop-types';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { size } from 'sly/common/components/themes';
-import { startingWith, withDisplay } from 'sly/common/components/helpers';
-import Block from 'sly/common/components/atoms/Block';
-import Link from 'sly/common/components/atoms/Link';
-import Icon from 'sly/common/components/atoms/Icon';
+import { sx, sx$tablet } from 'sly/common/system/sx';
+import Block from 'sly/common/system/Block';
+import Heading from 'sly/common/system/Heading';
+import Grid from 'sly/common/system/Grid';
+import Link from 'sly/common/system/Link';
+import Chevron from 'sly/common/icons/Chevron';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
-const hideOnTabletStyles = css`
-  ${startingWith('tablet', css`
-    display: none;
-  `)}
-
-  ${startingWith('laptop', css`
-    display: flex;
-  `)}
-`;
-
-const ArticlesWrapper = styled(Block)(withDisplay);
+const hideOnTabletStyles = {
+  sx$tablet: { display: 'none' },
+  sx$laptop: { display: 'flex' },
+};
 
 const RedirectToTopicLink = styled(Link)`
   display: block;
-  font-size: 1.125rem;
-  line-height: ${size('lineHeight.subtitle')};
-  ${startingWith('tablet', css({ textAlign: 'end' }))}
+  ${sx({ font: 'body-l' })}
+  ${sx$tablet({ textAlign: 'end' })}
 `;
-
-const IconWrapper = styled.span`
-  vertical-align: sub;
-`;
-
-const Title = styled(Block)(
-  css`
-    max-width: max-content;
-  `,
-);
 
 const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles }) => {
   const hrefToTopicPage = useMemo(() =>
@@ -52,51 +35,47 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
     <Block
       width="auto"
       marginX="auto"
-      startingWithTablet={{ width: size('layout.col8') }}
-      startingWithLaptop={{ width: size('layout.col12') }}
+      sx$tablet={{ width: 'col8' }}
+      sx$laptop={{ width: 'col12' }}
     >
       <Block
         marginBottom="l"
-        upToTablet={{ marginLeft: 'm' }}
-        startingWithTablet={{
+        marginLeft="m"
+        sx$tablet={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
           marginLeft: 0,
         }}
       >
-        <Title
-          font="title-large"
-          upToTablet={{ marginBottom: withRedirectToTopicPage && 'xs' }}
+        <Heading
+          font="title-l"
+          maxWidth="max-content"
+          marginBottom={[withRedirectToTopicPage && 'xs', '0px']}
         >
           {articlesTitle}
-        </Title>
+        </Heading>
         {withRedirectToTopicPage && (
           <RedirectToTopicLink to={hrefToTopicPage}>
-            <span>
-              {`See all ${articlesTitle} `}
-              <IconWrapper><Icon icon="chevron" size="caption" /></IconWrapper>
-            </span>
+            See all {articlesTitle}
+            <Chevron verticalAlign="sub" rotation="90" />
           </RedirectToTopicLink>
         )}
       </Block>
-      <ArticlesWrapper
-        display="grid"
+      <Grid
         width="100%"
         overflow="auto"
         paddingX="m"
-        upToTablet={{
-          gridTemplateColumns: '17.5rem 17.5rem 17.5rem 1px',
-          columnGap: size('spacing.m'),
-        }}
-        startingWithTablet={{
+        gridTemplateColumns="17.5rem 17.5rem 17.5rem 1px"
+        gridColumnGap="m"
+        sx$tablet={{
           paddingLeft: 0,
           paddingRight: 0,
           gridTemplateColumns: '20.5rem 20.5rem',
-          columnGap: size('spacing.l'),
+          gridColumnGap: 'l',
           overflow: 'unset',
         }}
-        startingWithLaptop={{ gridTemplateColumns: '20.5rem 20.5rem 20.5rem' }}
+        sx$laptop={{ gridTemplateColumns: '20.5rem 20.5rem 20.5rem' }}
       >
         {articles?.map((
           {
@@ -125,8 +104,8 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
             }}
           />
         ))}
-        <Block startingWithTablet={{ display: 'none' }} />
-      </ArticlesWrapper>
+        <Block sx$tablet={{ display: 'none' }} />
+      </Grid>
     </Block>
   );
 };

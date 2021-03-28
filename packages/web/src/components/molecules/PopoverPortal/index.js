@@ -10,7 +10,7 @@ import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import theme from 'sly/common/components/themes/default';
 
-const gutter = parseFloat(theme.sizes.layout.gutter) * 16;
+const gutter = parseFloat(theme.layout.gutter) * 16;
 
 const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

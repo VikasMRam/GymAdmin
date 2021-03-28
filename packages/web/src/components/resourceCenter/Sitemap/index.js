@@ -3,30 +3,27 @@ import styled from 'styled-components';
 
 import { host } from 'sly/web/config';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import { startingWith, withDisplay } from 'sly/common/components/helpers';
 import { assetPath } from 'sly/web/components/themes';
-import { getKey, size } from 'sly/common/components/themes';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import Block from 'sly/common/components/atoms/Block';
-import Link from 'sly/common/components/atoms/Link';
+import { sx, sx$tablet, space, layout } from 'sly/common/system/sx';
+import Image from 'sly/common/system/Image';
+import Block from 'sly/common/system/Block';
+import Flex from 'sly/common/system/Block';
+import Link from 'sly/common/system/Link';
+import Heading from 'sly/common/system/Heading';
 import Header from 'sly/web/components/resourceCenter/components/Header';
-
-const LoaderWrapper = styled(Block)(withDisplay);
-
-const BreadCrumbsTitle = styled(Block)(withDisplay);
 
 const StyledLink = styled(Link)`
   display: block;
   word-break: break-word;
-  margin-bottom: ${size('spacing.xs')};
-  
+  margin-bottom: ${space('xs')};
+
   &:hover {
     text-decoration: underline;
   }
-  
-  ${startingWith('tablet', { width: `calc((100% - ${getKey('sizes.spacing.l')}) / 2)` })}
+
+  ${sx$tablet({ width: sx`calc((100% - ${space('l')}) / 2)` })}
 `;
 
 const getTitle = () => {
@@ -40,14 +37,13 @@ const Sitemap = () => {
 
   if (!requestByArticlesHasFinished || !requestByTopicsHasFinished) {
     return (
-      <LoaderWrapper
+      <Flex
         height="100vh"
-        display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        <ResponsiveImage src={assetPath('images/homebase/loader.svg')} />
-      </LoaderWrapper>
+        <Image src={assetPath('images/homebase/loader.svg')} />
+      </Flex>
     );
   }
 
@@ -56,26 +52,27 @@ const Sitemap = () => {
       <Header />
 
       <Block
-        width={`calc(100% - (${getKey('sizes.spacing.m')} * 2))`}
+        width={sx`calc(100% - (${space('m')} * 2))`}
         marginX="m"
-        startingWithTablet={{
-          width: size('layout.col8'), marginX: `calc((100% - ${getKey('sizes.layout.col8')}) / 2)`,
+        sx$tablet={{
+          width: 'col8', marginX: sx`calc((100% - ${layout('col8')}) / 2)`,
         }}
-        startingWithLaptop={{
-          width: size('layout.col12'), marginX: `calc((100% - ${getKey('sizes.layout.col12')}) / 2)`,
+        sx$laptop={{
+          width: 'col12', marginX: sx`calc((100% - ${layout('col12')}) / 2)`,
         }}
       >
         <Block
           marginTop="l"
+          font="body-m"
         >
-          <Link font="body-regular" to="/">Home</Link>
+          <Link to="/">Home</Link>
           {' / '}
-          <Link font="body-regular" to="/sitemap">Sitemap</Link>
+          <Link to="/sitemap">Sitemap</Link>
           {' / '}
-          <BreadCrumbsTitle display="inline" font="body-regular">{getTitle()}</BreadCrumbsTitle>
+          <span>{getTitle()}</span>
         </Block>
 
-        <Block font="title-xlarge" marginY="l">{getTitle()} links</Block>
+        <Heading font="title-xl" marginY="l">{getTitle()} links</Heading>
 
         <Block
           marginBottom="m"
@@ -87,7 +84,7 @@ const Sitemap = () => {
 
         <Block
           marginBottom="m"
-          startingWithTablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
+          sx$tablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
         >
           {
             topics?.map(({ slug, name }) =>
@@ -97,7 +94,7 @@ const Sitemap = () => {
 
         <Block
           marginBottom="m"
-          startingWithTablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
+          sx$tablet={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}
         >
           {articles?.map(({ slug, id, title, mainTopic }) => (
             <StyledLink to={`${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`} key={id}>{title}</StyledLink>

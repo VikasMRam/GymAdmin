@@ -3,28 +3,18 @@ import styled, { css } from 'styled-components';
 import { array, object } from 'prop-types';
 import { useHistory } from 'react-router';
 
-import Block from 'sly/common/components/atoms/Block';
-import { withBorder, withDisplay } from 'sly/common/components/helpers';
+import Block from 'sly/common/system/Block';
+import Flex from 'sly/common/system/Flex';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { urlize } from 'sly/web/services/helpers/url';
 
-const Tag = styled(Block)(
-  withBorder,
-  css`
-    text-transform: uppercase;
-    max-width: max-content;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-  `,
-);
-
-const TagsWrap = styled(Block)(
-  withDisplay,
-  css`
-    z-index: 1;
-  `,
-);
+const Tag = styled(Block)`
+  text-transform: uppercase;
+  max-width: max-content;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+`;
 
 const ArticleTags = ({ topic, tagsList }) => {
   const { push } = useHistory();
@@ -37,7 +27,15 @@ const ArticleTags = ({ topic, tagsList }) => {
   return (
     <>
       {tagsList?.filter(({ value }) => value).length ? (
-        <TagsWrap display="flex" flexWrap="nowrap" flexGrow={1} alignItems="flex-end" alignContent="flex-end">
+        <Flex 
+          sx={{
+            flexWrap: 'nowrap',
+            flexGrow: 1,
+            alignItems: 'flex-end',
+            alignContent: 'flex-end',
+            zIndex: 1,
+          }}
+        >
           {tagsList
             .sort(({ value: firstValue }, { value: secondValue }) => firstValue.length - secondValue.length)
             .map(({ value, id }, idx) => (
@@ -51,16 +49,16 @@ const ArticleTags = ({ topic, tagsList }) => {
                 height="max-content"
                 marginTop="xxs"
                 marginRight="xxs"
-                borderRadius="small"
+                border="round"
                 background="viridian.base"
-                palette="white"
+                color="white.base"
                 onClick={onClick(urlize(value))}
                 {...(idx !== 0 && { overflow: 'hidden' })}
               >
                 {value.replace(/_/g, ' ')}
               </Tag>
             ))}
-        </TagsWrap>
+        </Flex>
       ) : (
         <Tag
           display="inline-block"
@@ -69,9 +67,9 @@ const ArticleTags = ({ topic, tagsList }) => {
           paddingX="xs"
           paddingY="xxs"
           marginTop="auto"
-          borderRadius="small"
+          border="round"
           background="viridian.base"
-          palette="white"
+          color="white"
           onClick={onClick()}
         >
           {topic.name}

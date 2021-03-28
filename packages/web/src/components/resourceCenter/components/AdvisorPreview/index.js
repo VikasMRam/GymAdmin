@@ -2,50 +2,29 @@ import React from 'react';
 import { object } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import Block from 'sly/common/components/atoms/Block';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import { startingWith, withBorder } from 'sly/common/components/helpers';
+import Block from 'sly/common/system/Block';
+import Image from 'sly/common/system/Image';
 import { getKey, size } from 'sly/common/components/themes';
 import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
-
-const WrapperWithBorder = styled(Block)(withBorder);
-
-const BioWrapper = styled(Block)(
-  false,
-  css(getStylesForEllipsisText(6)),
-);
-
-const TitleAndLocation = styled(Block)(
-  false,
-  css`
-    text-align: center;
-    
-    ${startingWith('tablet', css({ textAlign: 'left' }))}
-  `,
-);
 
 const AdvisorPreview = ({ info }) => {
   const { profileImageUrl, bio, citiesServed, displayName } = info || {};
 
   return (
-    <WrapperWithBorder
-      border="regular"
-      borderRadius="small"
-      borderPalette="slate"
-      borderVariation="lighter-90"
+    <Block
+      border="box"
       height="100%"
-      paddingY="l"
-      paddingX="m"
-      startingWithTablet={{ display: 'flex', padding: 'l', marginBottom: 0 }}
+      padding="l m"
+      sx$tablet={{ display: 'flex', padding: 'l', marginBottom: 0 }}
     >
-      <WrapperWithBorder
+      <Block
         borderRadius="50%"
         overflow="hidden"
         height={size('element.xHuge')}
         width={size('element.xHuge')}
         marginX="auto"
-        upToTablet={{ marginBottom: 'm' }}
-        startingWithTablet={{
+        marginBottom="m"
+        sx$tablet={{
           height: size('element.xxxLarge'),
           width: size('element.xxxLarge'),
           marginLeft: 0,
@@ -53,7 +32,7 @@ const AdvisorPreview = ({ info }) => {
           marginBottom: 0,
         }}
       >
-        <ResponsiveImage
+        <Image
           css={{
             objectFit: 'cover',
             width: '100%',
@@ -61,20 +40,28 @@ const AdvisorPreview = ({ info }) => {
           }}
           src={profileImageUrl}
         />
-      </WrapperWithBorder>
+      </Block>
       <Block
-        startingWithTablet={{
+        color="slate.base"
+        sx$tablet={{
           width: `calc(100% - ${getKey('sizes.element.xxxLarge')} - ${getKey('sizes.spacing.l')})`,
         }}
       >
-        <TitleAndLocation marginBottom="m" font="body-large" palette="slate.base">
+        <Block
+          marginBottom="m"
+          font="title-s"
+          textAlign="center"
+          sx$tablet={{
+            textAlign: 'left',
+          }}
+        >
           {`${displayName} - ${citiesServed?.[0]}`}
-        </TitleAndLocation>
-        <BioWrapper font="body-regular" palette="slate.base">
+        </Block>
+        <Block font="body-m" color="slate.base" sx={getStylesForEllipsisText(6)}>
           {bio}
-        </BioWrapper>
+        </Block>
       </Block>
-    </WrapperWithBorder>
+    </Block>
   );
 };
 

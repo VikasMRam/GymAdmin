@@ -7,7 +7,7 @@ import {
 import { Switch, Route } from 'react-router-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import LoginScreen from 'sly/mobile/components/screens/LoginScreen';
 import DashboardScreen from 'sly/mobile/components/screens/DashboardScreen';

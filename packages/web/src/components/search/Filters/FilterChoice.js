@@ -3,7 +3,7 @@ import { oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { upTo, startingWith } from 'sly/common/components/helpers';
-import { withSpacing, withMedia, withDisplay, withColor, withElementSize, withText } from 'sly/common/components/helpers';
+import { withSpacing, withMedia, withColor, withElementSize, withText } from 'sly/common/components/helpers';
 import Radio from 'sly/web/components/molecules/Radio';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
 import { size, palette } from 'sly/common/components/themes';

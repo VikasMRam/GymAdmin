@@ -35,6 +35,7 @@
     "@babel/node": "7.12.1",
     "@loadable/babel-plugin": "5.12.0",
     "@loadable/webpack-plugin": "5.12.0",
+    "@svgr/webpack": "^5.5.0",
     "babel-loader": "8.1.0",
     "cssmin": "0.4.3",
     "eslint-import-resolver-webpack": "0.11.1",

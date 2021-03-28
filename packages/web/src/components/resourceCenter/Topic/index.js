@@ -16,16 +16,18 @@ import {
   ARTICLES_RANGE_FOR_PAGINATION,
 } from 'sly/web/components/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
-import { withDisplay, withBorder } from 'sly/common/components/helpers';
 import { getKey, palette, size } from 'sly/common/components/themes';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
 import Pagination from 'sly/web/components/molecules/Pagination';
-import Block from 'sly/common/components/atoms/Block';
+import { sx, space, border, color } from 'sly/common/system/sx';
+import Block from 'sly/common/system/Block';
+import Grid from 'sly/common/system/Grid';
+import Flex from 'sly/common/system/Flex';
+import Image from 'sly/common/system/Image';
+import Hr from 'sly/common/system/Hr';
 import Select from 'sly/web/components/atoms/Select';
-import Icon from 'sly/common/components/atoms/Icon';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
-import Hr from 'sly/common/components/atoms/Hr';
+import ArrowDrop from 'sly/common/icons/ArrowDrop';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Header from 'sly/web/components/resourceCenter/components/Header';
@@ -33,7 +35,7 @@ import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
-    <Icon icon="arrow-drop-down" flip={props.isFocused} palette="slate.base" />
+    <ArrowDrop rotation={props.isFocused ? '0' : '180'} color="slate.base" />
   </components.DropdownIndicator>
 );
 
@@ -43,79 +45,56 @@ DropdownIndicator.propTypes = {
 
 const Option = props => <components.Option {...props} />;
 
-const LoaderWrapper = styled(Block)(withDisplay);
-
-const ArticlesWrapper = styled(Block)(withDisplay);
-
-const MainTextWrapper = styled(Block)(
-  withDisplay,
-  css`
-    z-index: 1;
-    position: relative;
-  `,
-);
-
-const MainBlockWrapper = styled(Block)(
-  css`
-    position: relative;
-  `,
-);
-
-const TabsItem = styled(Block)(
-  withBorder,
-  css`
-    cursor: pointer;
-    text-transform: uppercase;
-  `,
-);
+const TabsItem = styled(Block)`
+  cursor: pointer;
+  text-transform: uppercase;
+`;
 
 const wrapperCustomStyles = css`
   .react-select__control {
-    border-bottom-left-radius: ${size('border.xxLarge')};
-    border-bottom-right-radius: ${size('border.xxLarge')};
+    border-bottom-left-radius: ${border('l')};
+    border-bottom-right-radius: ${border('l')};
   }
   .react-select__menu {
-    border-radius: ${size('border.xxLarge')};
+    border-radius: ${border('l')};
     overflow: hidden;
-    margin-top: ${size('spacing.xs')};
+    margin-top: ${space('xs')};
 
     &-list {
       max-height: max-content;
     }
   }
   .react-select__option {
-    padding: ${size('spacing.m')} 0 ${size('spacing.m')} ${size('spacing.l')};
+    padding: ${space('m')} 0 ${space('m')} ${space('l')};
 
     &:hover {
-      background: ${palette('viridian', 'lighter-90')};
+      background: ${color('viridian.lighter-90')};
     }
 
     &:active {
-      background: ${palette('viridian', 'base')};
+      background: ${color('viridian.base')};
     }
   }
   .react-select__value-container > .react-select__single-value {
-    color: ${palette('slate', 'base')};
+    color: ${color('slate.base')};
   }
   .react-select__option, .react-select__placeholder, .react-select__single-value {
-    font-size: ${size('text.body')};
+    ${sx({ font: 'body-m' })}
   }
   .react-select__option--is-selected {
     font-weight: 400;
-    background: ${palette('viridian', 'base')};
-    color: ${palette('white', 'base')};
+    background: ${color('viridian.base')};
+    color: ${color('white.base')};
 
     &:hover, &:active {
-      background: ${palette('viridian', 'base')};
+      background: ${color('viridian.base')};
     }
   }
 `;
 
-const PaginationText = styled(Block)(
-  css`
-    text-align: center;
-  `,
-);
+const PaginationText = styled(Block)`
+  text-align: center;
+`;
 
 const Topic = ({ match, location, history }) => {
   const { topic: topicSlug } = match.params;
@@ -160,14 +139,13 @@ const Topic = ({ match, location, history }) => {
 
   if (!requestByArticlesHasFinished || !requestByCountHasFinished || !requestByTopicHasFinished) {
     return (
-      <LoaderWrapper
+      <Flex
         height="100vh"
-        display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        <ResponsiveImage src={assetPath('images/homebase/loader.svg')} />
-      </LoaderWrapper>
+        <Image src={assetPath('images/homebase/loader.svg')} />
+      </Flex>
     );
   }
 
@@ -181,37 +159,40 @@ const Topic = ({ match, location, history }) => {
 
       <Header />
 
-      <MainBlockWrapper width="100%">
-        <MainTextWrapper
-          padding="3rem 1rem 2.5rem"
-          startingWithTablet={{ padding: '5rem 0', width: size('layout.col8'), marginX: 'auto' }}
-          startingWithLaptop={{ width: size('layout.col12') }}
+      <Block width="100%" position="relative">
+        <Block
+          sx={{
+            zIndex: 1,
+            position: 'relative',
+            padding: '3rem 1rem 2.5rem',
+            color: 'white.base',
+          }}
+          sx$tablet={{ padding: '5rem 0', width: 'col8', marginX: 'auto' }}
+          sx$laptop={{ width: 'col12' }}
         >
-          <Block font="body-regular" marginBottom="l" palette="white">Resource Center Home</Block>
+          <Block font="body-m" marginBottom="l">Resource Center Home</Block>
           <Block
-            font="title-xxlarge"
+            font="title-xxl"
             marginBottom="l"
-            palette="white"
           >
             {topicRes?.[0].name}
           </Block>
-          <Block font="body-regular" palette="white">
+          <Block font="body-m">
             {topicRes?.[0].description}
           </Block>
-        </MainTextWrapper>
-        <ResponsiveImage
+        </Block>
+        <Image
           css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
           // src={topicRes?.[0].img?.url}
         />
-      </MainBlockWrapper>
+      </Block>
 
       {tagsOptions && (
         <>
           <Block
-            marginX="m"
-            marginY="l"
-            startingWithTablet={{ marginX: 'auto', width: size('layout.col8') }}
-            startingWithLaptop={{ display: 'none' }}
+            margin="l m"
+            sx$tablet={{ marginX: 'auto', width: 'col8' }}
+            sx$laptop={{ display: 'none' }}
           >
             <Select
               size="large"
@@ -224,9 +205,9 @@ const Topic = ({ match, location, history }) => {
           </Block>
           <Block
             marginX="auto"
-            width={size('layout.col12')}
-            upToLaptop={{ display: 'none' }}
-            startingWithLaptop={{ display: 'flex' }}
+            width="col12"
+            display="none"
+            sx$laptop={{ display: 'flex' }}
           >
             {tagsOptions.map(({ value, label }, index) => (
               <TabsItem
@@ -235,38 +216,36 @@ const Topic = ({ match, location, history }) => {
                 paddingBottom={isActiveTab(search, value) ? 's' : 'm'}
                 marginRight={tagsOptions.length - 1 !== index && 'l'}
                 font="label"
-                palette={isActiveTab(search, value) ? 'viridian' : 'grey'}
+                color={isActiveTab(search, value) ? 'viridian.base' : 'slate.lighter-40'}
                 isActiveTab={isActiveTab(search, value)}
-                borderBottom={isActiveTab(search, value) && 'xxLarge'}
-                borderPalette={isActiveTab(search, value) && 'viridian'}
-                borderVariation={isActiveTab(search, value) && 'base'}
+                borderBottom={isActiveTab(search, value) && 'l'}
+                borderColor={isActiveTab(search, value) && 'viridian.base'}
                 onClick={() => onChangeTagsSelect(search, history)({ value })}
               >
                 {label}
               </TabsItem>
             ))}
           </Block>
-          <Block display="none" marginBottom="xxl" startingWithLaptop={{ display: 'block' }}>
-            <Hr size="large" />
+          <Block display="none" marginBottom="xxl" sx$laptop={{ display: 'block' }}>
+            <Hr />
           </Block>
         </>
       )}
 
       {articlesCount && (
-        <ArticlesWrapper
+        <Grid
           marginTop="l"
           marginBottom="xxl"
           marginX="auto"
           width="max-content"
-          display="grid"
-          upToTablet={{ rowGap: size('spacing.m') }}
-          startingWithTablet={{
-            gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
-            columnGap: size('spacing.l'),
-            rowGap: size('spacing.l'),
+          gridRowGap="m"
+          sx$tablet={{
+            gridTemplateColumns: 'col4 col4',
+            gridColumnGap: 'l',
+            gridRowGap: 'l',
           }}
-          startingWithLaptop={{
-            gridTemplateColumns: `${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')} ${getKey('sizes.layout.col4')}`,
+          sx$laptop={{
+            gridTemplateColumns: 'col4 col4 col4',
           }}
         >
           {articles?.map(({
@@ -291,17 +270,17 @@ const Topic = ({ match, location, history }) => {
                 }}
               />
           ))}
-        </ArticlesWrapper>
+        </Grid>
       )}
 
       {!articlesCount && requestByCountHasFinished && (
         <Block
-          font="body-large"
+          font="body-l"
           marginX="m"
           marginTop="xl"
           marginBottom="xxl"
-          startingWithTablet={{ width: size('layout.col8'), marginX: 'auto' }}
-          startingWithLaptop={{ width: size('layout.col12') }}
+          sx$tablet={{ width: 'col8', marginX: 'auto' }}
+          sx$laptop={{ width: 'col12' }}
         >
           There are no articles found by this request
         </Block>

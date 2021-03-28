@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl, gMapsApiKey } from 'sly/web/config';
+import {iconToComponent } from 'sly/common/system/Icon';
 
 const Html = ({
-  linkElements, styleElements, scriptElements, state, content,
+  linkElements, styleElements, scriptElements, icons, state, content,
 }) => {
   const helmet = Helmet.renderStatic();
   const htmlAttrs = helmet.htmlAttributes.toComponent();
@@ -26,17 +27,20 @@ const Html = ({
         <link rel="preconnect" href="https://event.seniorly.com" />
         <link rel="preconnect" href="https://apis.google.com" />
         <link rel="preconnect" href={assetsUrl} />
+
+        <link rel="preload" href={`${publicPath}/fonts/TiemposHeadline-Medium.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />
-        {styleElements}
         {linkElements}
+        {styleElements}
         {helmet.link.toComponent()}
         {helmet.style.toComponent()}
         {helmet.script.toComponent()}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
+        {iconToComponent(icons)}
         {state.trim().length > 0 && <script type="text/javascript" dangerouslySetInnerHTML={{ __html: state }} />}
         {scriptElements}
         {/* eslint-disable */}

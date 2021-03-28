@@ -3,14 +3,11 @@ import { number, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { isString, isArray } from 'lodash';
 
-import { size } from 'sly/common/components/themes';
-import { withBorder } from 'sly/common/components/helpers';
-import Block from 'sly/common/components/atoms/Block';
-import Link from 'sly/common/components/atoms/Link';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import { space } from 'sly/common/system/sx';
+import Block from 'sly/common/system/Block';
+import Link from 'sly/common/system/Link';
+import Image from 'sly/common/system/Image';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
-
-const Wrapper = styled(Block)(withBorder);
 
 const StyledLink = styled(Link)`
   & {
@@ -23,7 +20,7 @@ const StyledLink = styled(Link)`
       right: 0;
       width: 100%;
       height: 100%;
-      box-shadow: 0 ${size('spacing.xxs')} ${size('spacing.m')} 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
     }
   }
 `;
@@ -41,17 +38,14 @@ const CommunityPreview = ({
 
   return (
     <StyledLink to={rest.url}>
-      <Wrapper
-        border="regular"
-        borderRadius="small"
-        borderPalette="slate"
-        borderVariation="lighter-90"
+      <Block
+        border="box"
         overflow="hidden"
         height="100%"
-        startingWithTablet={{ display: 'flex', marginBottom: 0 }}
+        sx$tablet={{ display: 'flex', marginBottom: 0 }}
       >
-        <Block height="12rem" startingWithTablet={{ height: '100%', width: '16.125rem' }}>
-          <ResponsiveImage
+        <Block height="12rem" sx$tablet={{ height: '100%', width: '16.125rem' }}>
+          <Image
             css={{
               objectFit: 'cover',
               width: '100%',
@@ -60,7 +54,7 @@ const CommunityPreview = ({
             src={url}
           />
         </Block>
-        <Block padding="m" startingWithTablet={{ flexGrow: 1 }}>
+        <Block padding="m" sx$tablet={{ flexGrow: 1 }}>
           <CommunityInfo
             palette="viridian.base"
             index={index}
@@ -80,7 +74,7 @@ const CommunityPreview = ({
             }}
           />
         </Block>
-      </Wrapper>
+      </Block>
     </StyledLink>
   );
 };
