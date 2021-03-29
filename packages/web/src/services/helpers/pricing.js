@@ -174,13 +174,14 @@ export const calculatePricing = (community, estimatedPrice) => {
 
 export const priceParser = str => str.replace(/[^\d.]/g, '');
 export const priceFormatter = (value) => {
-  let decimal = '';
-  if (value?.toString().slice(-1) === '.') {
-    decimal = '.';
+  if (typeof value === 'number') {
+    return value.toLocaleString('en', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2 });
+  } else if (typeof value === 'string' && value.includes('.')) {
+    const decimal = `.${value.split('.')[1]}`;
+    return value ? parseFloat(value).toLocaleString('en', {
+      maximumFractionDigits: 0 }).toString().concat(decimal) : value;
   }
-  if (value?.toString().slice(-2) === '.0') {
-    decimal = '.0';
-  }
-  return value ? parseFloat(value).toLocaleString('en', {
-    maximumFractionDigits: 2 }).toString().concat(decimal) : value;
+  return value;
 };
