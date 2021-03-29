@@ -178,10 +178,10 @@ export const priceFormatter = (value) => {
     return value.toLocaleString('en', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2 });
-  } else if (typeof value === 'string' && value.includes('.')) {
-    const decimal = `.${value.split('.')[1]}`;
+  } else if (typeof value === 'string') {
+    const decimal = value.includes('.') ? `.${value.split('.')[1]}` : '';
     return value ? parseFloat(value).toLocaleString('en', {
-      maximumFractionDigits: 0 }).toString().concat(decimal) : value;
+      maximumFractionDigits: 0 }).toString().concat(decimal.substring(0, 3)) : value;
   }
   return value;
 };
