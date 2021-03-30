@@ -8,7 +8,7 @@ export const sortProperties = (obj) => {
   });
 
   // sort items by value
-  //sortable.sort((a, b) => a[1] - b[1]);
+  // sortable.sort((a, b) => a[1] - b[1]);
   // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
   return sortable;
 };
@@ -172,5 +172,16 @@ export const calculatePricing = (community, estimatedPrice) => {
   };
 };
 
-export const priceParser = str => str.replace(/[^\d]/g, '');
-export const priceFormatter = value => value ? parseFloat(value).toFixed(2).replace(/\.00$/, '').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') : value;
+export const priceParser = str => str.replace(/[^\d.]/g, '');
+export const priceFormatter = (value) => {
+  if (typeof value === 'number') {
+    return value.toLocaleString('en', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2 });
+  } else if (typeof value === 'string') {
+    const decimal = value.includes('.') ? `.${value.split('.')[1]}` : '';
+    return value ? parseFloat(value).toLocaleString('en', {
+      maximumFractionDigits: 0 }).toString().concat(decimal.substring(0, 3)) : value;
+  }
+  return value;
+};
