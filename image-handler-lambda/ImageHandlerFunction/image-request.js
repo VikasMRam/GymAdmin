@@ -26,9 +26,10 @@ class ImageRequest {
      * handler to perform image modifications.
      * @param {Object} event - Lambda request body.
      */
-  async setup(event, bucket) {
+  async setup(event) {
     try {
-      this.bucket = bucket;
+      this.bucket = event.stageVariables.bucket;
+      this.regional = event.stageVariables.regional;
       this.requestType = this.parseRequestType(event);
       this.outputFormat = this.requestType.ext;
       this.contentType = getContentType(this.outputFormat);
@@ -82,7 +83,9 @@ class ImageRequest {
   async getOriginalImage() {
     console.time('acquiring');
     const S3 = require('aws-sdk/clients/s3');
-    const s3 = new S3();
+    const s3 = new S3({
+      region: this.regional,
+    });
     for (let i = 0; i < extPriority.length; i++) {
       const ext = extPriority[i];
       const key = this.parseOriginalImageKey(this.requestType, { ext });
@@ -112,7 +115,9 @@ class ImageRequest {
     const key = this.parseDestImageKey(this.requestType);
 
     const S3 = require('aws-sdk/clients/s3');
-    const s3 = new S3();
+    const s3 = new S3({
+      region: this.regional,
+    });
 
     const params = {
       Bucket: this.bucket,
