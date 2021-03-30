@@ -4,8 +4,6 @@ import { node, bool, string, arrayOf, oneOfType } from 'prop-types';
 import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
 
-import { withSystem } from 'sly/common/system/Block';
-
 export const Table = forwardRef(({ children, ...props }, ref) => {
   return (
     <Block
@@ -121,10 +119,10 @@ export const Td = forwardRef(({ disabled, ...props }, ref) => (
         borderRight: 's',
         borderColor: 'slate.lighter-90',
         ':last-child': { borderRight: 0 },
-        ...(disabled && {
+        ...((disabled && {
           backgroundColor: 'slate.lighter-90',
           color: 'slate.lighter-40',
-        } || {})
+        }) || {}),
       },
     }}
     {...props}

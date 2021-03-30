@@ -139,6 +139,7 @@ CollapsibleSection.propTypes = {
   borderless: bool,
   id: string,
   forMobileOnly: bool,
+  showIf: bool,
 };
 
 CollapsibleSection.defaultProps = {

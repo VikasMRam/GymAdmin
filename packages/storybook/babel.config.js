@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = function (api) {
+module.exports = function babelConfig(api) {
   const commonConfig = require('../../babel.config.js')(api);
 
   // remove the config that's not allowed in extended files

@@ -25,7 +25,7 @@ const config = {
   alignSelf: true,
   order: true,
   position: true,
-}
+};
 
 const layout = system(config);
 

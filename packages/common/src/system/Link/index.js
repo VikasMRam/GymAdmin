@@ -3,7 +3,6 @@ import { string, object } from 'prop-types';
 import { Link as RRLink } from 'react-router-dom';
 
 import Block from 'sly/common/system/Block';
-
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor } from 'sly/common/components/helpers';

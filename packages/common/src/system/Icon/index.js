@@ -1,9 +1,7 @@
 import React, { forwardRef, createContext, useContext, useEffect } from 'react';
 import { string, node, object, oneOfType, number, bool } from 'prop-types';
-import styled from 'styled-components';
 
 import { isServer } from 'sly/web/config';
-import { combineStyles } from 'sly/common/system';
 import Block from 'sly/common/system/Block';
 
 export const IconContext = createContext(null);
@@ -14,7 +12,7 @@ const updateIcons = (iconContext) => {
   const svgs = defs.querySelectorAll(':scope > svg');
   const oldSvgs = Array.prototype.slice.call(svgs);
   let indexToKeep = null;
-  Object.entries(iconContext).forEach(([name, { svg, instances }]) => {
+  Object.entries(iconContext).forEach(([name, { svg }]) => {
     const id = `sly-svg-${name}`;
     // Remove a duplicate tag from domTagstoRemove, so it isn't cleared.
     if (
@@ -116,6 +114,8 @@ Icon.propTypes = {
   svg: node.isRequired,
   size: string,
   rotation: oneOfType([number, string]),
+  hoverColor: string,
+  name: string,
   active: bool,
 };
 

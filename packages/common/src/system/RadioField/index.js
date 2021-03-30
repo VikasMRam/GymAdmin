@@ -1,17 +1,9 @@
 import React, { forwardRef } from 'react';
 import { bool, string } from 'prop-types';
-import styled from 'styled-components';
 
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
-import { combineStyles, get } from 'sly/common/system';
 import RadioIcon from 'sly/common/icons/Radio';
-
-
-const defaultStyles = {
-  cursor: 'pointer',
-  marginRight: 's',
-};
 
 const RadioField = forwardRef(({ name, value, label, checked, iconPalette, ...props }, ref) => {
   const id = `radio-${name}-${value}`;
@@ -49,6 +41,7 @@ RadioField.propTypes = {
   value: string.isRequired,
   checked: bool,
   iconPalette: string,
+  label: string,
 };
 
 RadioField.defaultProps = {

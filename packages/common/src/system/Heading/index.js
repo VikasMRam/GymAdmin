@@ -23,6 +23,7 @@ const fonts = {
 
 const Heading = forwardRef(({ as: asProp, font, ...props }, ref) => (
   <Block
+    ref={ref}
     as={asProp || levels[font] || 'h2'}
     font={font || fonts[asProp] || 'title-l'}
     {...props}

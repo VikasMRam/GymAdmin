@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback } from 'react';
-import { bool, func, string } from 'prop-types';
+import { bool, func, string, node } from 'prop-types';
 
 import Flex from 'sly/common/system/Flex';
 import CheckBox from 'sly/common/icons/Checkbox';
@@ -29,7 +29,6 @@ const getColors = (disabled, value, palette, [defaultBackground, activeBackgroun
   }
 
   const baseColor = `${palette}.base`;
-  console.log('baseColor', value, baseColor);
   return {
     color: value ? baseColor : 'slate.base',
     background: value ? activeBackground : defaultBackground,
@@ -90,6 +89,7 @@ CheckboxButton.propTypes = {
   value: bool,
   disabled: bool,
   onChange: func,
+  children: node,
 };
 
 CheckboxButton.defaultProps = {

@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 
 import Icon from 'sly/common/system/Icon';
 
-const svg = require('!raw-loader!./svg/plus.svg').default
-// import PlusSvg from './svg/plus.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+const svg = require('!raw-loader!./svg/plus.svg').default;
 
 const Plus = forwardRef((props, ref) => <Icon ref={ref} name="plus" svg={svg} {...props} />);
 

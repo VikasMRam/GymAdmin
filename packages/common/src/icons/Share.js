@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 
 import Icon from 'sly/common/system/Icon';
 
-const svg = require('!raw-loader!./svg/share.svg').default
-// import ShareSvg from './svg/share.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+const svg = require('!raw-loader!./svg/share.svg').default;
 
 const Share = forwardRef((props, ref) => <Icon ref={ref} name="share" svg={svg} {...props} />);
 

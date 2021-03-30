@@ -1,5 +1,4 @@
-
-import { system, getCardinalValue } from 'sly/common/system'
+import { system } from 'sly/common/system';
 
 const config = {
   border: {

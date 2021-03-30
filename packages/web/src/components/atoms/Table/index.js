@@ -3,11 +3,9 @@ import styled, { css } from 'styled-components';
 import { node, bool, string, arrayOf, oneOfType, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
-
 import { size, palette } from 'sly/common/components/themes';
-import { withSystem } from 'sly/common/system/Block';
+import Block, { withSystem } from 'sly/common/system/Block';
 import Th from 'sly/web/components/molecules/Th';
 
 export { Th };

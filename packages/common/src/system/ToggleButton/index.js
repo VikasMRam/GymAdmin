@@ -17,16 +17,18 @@ const buttonBaseStyles = {
 };
 
 const getColors = (disabled, value, palette, [background, active]) => {
-  if (disabled) return {
-    color: 'slate.base',
-    background: `slate.lighter-90`,
-  };
+  if (disabled) {
+    return {
+      color: 'slate.base',
+      background: 'slate.lighter-90',
+    };
+  }
 
   const baseColor = `${palette}.base`;
   return {
     color: value ? baseColor : 'slate.base',
     background: value ? active : background,
-    borderColor: value ? baseColor: 'slate.lighter-90',
+    borderColor: value ? baseColor : 'slate.lighter-90',
     ':hover': {
       color: `${palette}.base`,
       borderColor: 'currentColor',
@@ -35,21 +37,21 @@ const getColors = (disabled, value, palette, [background, active]) => {
       color: `${palette}.base`,
       background: active,
     },
-  }
+  };
 };
 
 const getStyles = ({ palette, value, disabled }) => ({
   ...buttonBaseStyles,
   ...getColors(disabled, value, palette, [
-    `white.base`,
+    'white.base',
     `${palette}.lighter-90`,
-  ])
+  ]),
 });
 
 const ToggleButton = forwardRef((props, ref) => {
   const onChange = useCallback(
     () => props.onChange(!props.value),
-    [props.onChange, props.value]
+    [props.onChange, props.value],
   );
 
   return (

@@ -3,7 +3,6 @@ import { bool, string, oneOf, oneOfType, object, element } from 'prop-types';
 import { Link as RRLink } from 'react-router-dom';
 
 import Block from 'sly/common/system/Block';
-
 import { isReactNative } from 'sly/common/constants/utils';
 import { createRRAnchor } from 'sly/common/components/helpers';
 // todo: most probably should be common in future
@@ -23,9 +22,11 @@ const buttonBaseStyles = {
 };
 
 const getBackgrounds = (disabled, palette, [background, hover, active]) => {
-  if (disabled) return {
-    background: `${palette}.lighter-60`,
-  };
+  if (disabled) {
+    return {
+      background: `${palette}.lighter-60`,
+    };
+  }
 
   return {
     background,
@@ -35,11 +36,11 @@ const getBackgrounds = (disabled, palette, [background, hover, active]) => {
     ':active': {
       background: active,
     },
-  }
+  };
 };
 
 const getStyles = ({ variant, palette, disabled }) => {
-  switch(variant) {
+  switch (variant) {
     case 'primary': return {
       ...buttonBaseStyles,
       color: 'white.base',
@@ -48,7 +49,7 @@ const getStyles = ({ variant, palette, disabled }) => {
         `${palette}.base`,
         `${palette}.darker-20`,
         `${palette}.darker-40`,
-      ])
+      ]),
     };
     case 'secondary': return {
       ...buttonBaseStyles,
@@ -74,7 +75,8 @@ const getStyles = ({ variant, palette, disabled }) => {
       ':active': {
         background: 'slate.lighter-90',
       },
-    }
+    };
+    default: return null;
   }
 };
 

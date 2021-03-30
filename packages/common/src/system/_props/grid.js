@@ -30,7 +30,7 @@ const config = {
   },
   gridTemplateAreas: true,
   gridArea: true,
-}
+};
 
 const grid = system(config);
 

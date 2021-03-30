@@ -42,7 +42,7 @@ const css = {
       x: 'm',
     },
   },
-}
+};
 
 describe('system', () => {
   it('throws when there is no theme', () => {
@@ -58,7 +58,7 @@ describe('system', () => {
     expect(typeof sx).toBe('function');
     expect(sx(null)).toEqual(null);
     expect(sx('first', { first: 'f' })).toEqual('f');
-  })
+  });
 
   it('finds props', () => {
     const parse = system({
@@ -74,7 +74,7 @@ describe('system', () => {
     });
 
     expect(styles).toEqual({
-      prop: 'sx'
+      prop: 'sx',
     });
   });
 
@@ -133,7 +133,7 @@ describe('system', () => {
       x: 's',
       sx$mobile: {
         x: ['m', 'l'],
-      }
+      },
     });
 
     expect(styles).toEqual({
@@ -145,7 +145,7 @@ describe('system', () => {
         x: 'lx',
       },
     });
-  })
+  });
 
   it('passes down prop values not in theme', () => {
     const parse = system({
@@ -166,19 +166,19 @@ describe('system', () => {
   });
 
   it('passes down props without config only when they are in a sx object', () => {
-    const parse = system({})
+    const parse = system({});
 
     const styles = parse({
       theme: {},
       x: 'x',
       sx: {
-        y: 'y'
+        y: 'y',
       },
     });
 
     expect(styles).toEqual({
       y: 'y',
-    })
+    });
   });
 
   it('finds responsive prop and theme', () => {
@@ -266,7 +266,7 @@ describe('system', () => {
     })).toEqual({
       ':hover': {
         x: 'mx',
-      }
+      },
     });
 
     expect(parse({
@@ -277,7 +277,7 @@ describe('system', () => {
       '@media screen and (min-width: 300px)': {
         ':hover': {
           x: 'mx',
-        }
+        },
       },
     });
   });
@@ -304,7 +304,7 @@ describe('system', () => {
       '@media screen and (min-width: 600px)': {
         ':hover': {
           x: 'mx',
-        }
+        },
       },
     });
   });
@@ -326,11 +326,12 @@ describe('system', () => {
 
     expect(parse({
       theme,
+      // eslint-disable-next-line no-sparse-arrays
       option: [, , 'm'],
     })).toEqual({
       '@media screen and (min-width: 600px)': {
         option: 'b',
-      }
+      },
     });
   });
 
@@ -349,13 +350,14 @@ describe('system', () => {
       },
     };
 
-    expect(parse({
+    const props = {
       theme,
-      prop: (scale) => {
-        expect(scale).toBe(theme.prop);
-        return 'this'
+      prop: (p) => {
+        expect(p).toBe(props);
+        return 'this';
       },
-    })).toEqual({
+    };
+    expect(parse(props)).toEqual({
       prop: 'this',
     });
   });
@@ -380,12 +382,12 @@ describe('system', () => {
       sx: {
         pre: {
           prop: 'x',
-        }
+        },
       },
     })).toEqual({
       pre: {
         prop: 'y',
-      }
+      },
     });
   });
 
@@ -407,7 +409,7 @@ describe('system', () => {
     expect(parse({
       theme,
       sx: {
-        '--myVar-prop': 'x', 
+        '--myVar-prop': 'x',
       },
     })).toEqual({
       '--myVar-prop': 'y',

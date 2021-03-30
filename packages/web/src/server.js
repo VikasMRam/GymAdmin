@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import path from 'path';
+
 import 'isomorphic-fetch';
 import express from 'express';
 import React from 'react';
@@ -181,9 +182,11 @@ app.use(async (req, res, next) => {
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
   const htmlError = new Error();
-  for (var k in err) htmlError[k] = err[k];
+  // eslint-disable-next-line no-restricted-syntax, guard-for-in, vars-on-top
+  for (const k in err) htmlError[k] = err[k];
   htmlError.message = (
-    <pre style={{ background: 'pink' }}
+    <pre
+      style={{ background: 'pink' }}
       dangerouslySetInnerHTML={{ __html: convertAnsi.toHtml(err.message) }}
     />
   );

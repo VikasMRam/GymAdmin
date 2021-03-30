@@ -6,8 +6,9 @@ import _snap from './_props/snap';
 import _text from './_props/text';
 import _border from './_props/border';
 import _color from './_props/color';
-import { compose, get } from '.';
 import { template, makeMediaQueries } from './util';
+
+import { compose, get } from '.';
 
 export { template };
 
@@ -36,15 +37,16 @@ export const sx = (styles, ...keys) => {
 
 export const sx$tablet = (styles, ...keys) => {
   if (Array.isArray(styles)) {
-    const tmpl = template(styles, ...keys)
-    return props => {
+    const tmpl = template(styles, ...keys);
+    return (props) => {
+      // eslint-disable-next-line no-multi-assign
       const media = (cache.media = (cache.media || makeMediaQueries(props.theme.breakpoint)));
       return `
         ${media.queries[1]} {
           ${tmpl(props)}
         }
       `;
-    }
+    };
   }
   return props => withSystem({
     theme: props.theme,
@@ -54,21 +56,22 @@ export const sx$tablet = (styles, ...keys) => {
 
 export const sx$laptop = (styles, ...keys) => {
   if (Array.isArray(styles)) {
-    const tmpl = template(styles, ...keys)
-    return props => {
+    const tmpl = template(styles, ...keys);
+    return (props) => {
+      // eslint-disable-next-line no-multi-assign
       const media = (cache.media = (cache.media || makeMediaQueries(props.theme.breakpoint)));
       return `
         ${media.queries[2]} {
           ${tmpl(props)}
         }
       `;
-    }
+    };
   }
   return props => withSystem({
     theme: props.theme,
     sx$laptop: styles,
   });
-}
+};
 
 export const space = key => ({ theme }) => get(theme.space, key, key);
 export const layout = key => ({ theme }) => get(theme.layout, key, key);

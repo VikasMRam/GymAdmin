@@ -20,4 +20,5 @@ export default function ClientApp({ apiContext, icons }) {
 
 ClientApp.propTypes = {
   apiContext: object,
+  icons: object,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { system, get, getCardinalValue, compose } from 'sly/common/system';
 
 // eslint-disable-next-line no-restricted-globals
@@ -11,16 +12,16 @@ const getMarginValue = (scale, n, def) => {
       return Array.isArray(value)
         ? value.map(value => neg ? `-${value}` : value)
         : (neg ? `-${value}` : value);
-    } else {
-      return def;
     }
+
+    return def;
   }
 
   const isNegative = n < 0;
   const absolute = Math.abs(n);
   const value = get(scale, absolute, absolute);
   return value * (isNegative ? -1 : 1);
-}
+};
 
 export const getMargin = (n, scale, _props) => {
   if (typeof n === 'string' && n.indexOf(' ') !== -1) {
@@ -110,7 +111,7 @@ configs.padding = {
     properties: ['paddingLeft', 'paddingRight'],
     scale: 'space',
     transform: getCardinalValue,
-    alias: 'px'
+    alias: 'px',
   },
   paddingY: {
     properties: ['paddingTop', 'paddingBottom'],

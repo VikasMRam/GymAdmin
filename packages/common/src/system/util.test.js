@@ -37,8 +37,8 @@ describe('getCardinalValue', () => {
       a: 'x',
       b: 'y',
     };
-    const calc = template`calc(${'a'} + ${'b'})`;
-    expect(calc(null, scale)).toEqual('calc(x + y)');
+    const calc = template`calc(${p => p.a} + ${p => p.b})`;
+    expect(calc(scale)).toEqual('calc(x + y)');
   });
 
   it('can interpolate reponsive templates', () => {
@@ -46,10 +46,11 @@ describe('getCardinalValue', () => {
       a: 'x',
       b: ['bx', 'by'],
     };
-    const calc = template`calc(${'a'} + ${'b'})`;
-    expect(calc(null, scale)).toEqual([
+    const calc = template`calc(${p => p.a} + ${p => p.b})`;
+    expect(calc(scale)).toEqual([
       'calc(x + bx)',
       'calc(x + by)',
     ]);
   });
-})
+});
+

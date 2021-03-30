@@ -1,3 +1,4 @@
+/* eslint-disable */
 // const addIdToSVGElement = require('./svgoPlugins/addIdToSVGElement');
 const removeXLinks = require('./svgoPlugins/removeXLinks');
 

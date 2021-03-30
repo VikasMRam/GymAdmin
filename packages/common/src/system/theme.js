@@ -1,12 +1,11 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import theme from 'sly/common/components/themes/default';
-
 import { makeColor, makeFont, makeCols, fonts } from './util';
+
+import theme from 'sly/common/components/themes/default';
 
 // const theme = {};
 
 theme.breakpoint = {
-  //mobile           : '360px',
   tablet           : '728px',
   laptop           : '1080px',
   desktop          : '1280px',
@@ -84,9 +83,9 @@ theme.iconSize = {
 
 // FIXED: responsive values
 theme.layout = {
-  col1:         [makeCols(1/4, '1rem', 'vw'), '4.000rem'], // 64px
-  col2:         [makeCols(2/4, '1rem', 'vw'), '9.500rem'], // 152px
-  col3:         [makeCols(3/4, '1rem', 'vw'), '15.000rem'], // 240px
+  col1:         [makeCols(1 / 4, '1rem', 'vw'), '4.000rem'], // 64px
+  col2:         [makeCols(2 / 4, '1rem', 'vw'), '9.500rem'], // 152px
+  col3:         [makeCols(3 / 4, '1rem', 'vw'), '15.000rem'], // 240px
   // side column
   col4:         [makeCols(1, '1rem', 'vw'), '20.500rem'], // 328x
   col5:         '26.000rem', // 416px

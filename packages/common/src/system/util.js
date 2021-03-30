@@ -1,4 +1,4 @@
-import isPropValid from '@emotion/is-prop-valid'
+import isPropValid from '@emotion/is-prop-valid';
 import memoize from '@emotion/memoize';
 import Color from 'color';
 
@@ -18,9 +18,9 @@ export const get = (obj, key, def, p, undef) => {
 
 export const createMediaQuery = (n, bound = 'min') => `@media screen and (${bound}-width: ${n})`;
 
-export const makeMediaQueries = (breakpoints={}) => Object.entries(breakpoints)
+export const makeMediaQueries = (breakpoints = {}) => Object.entries(breakpoints)
   .reduce((acc, [name, value], i) => {
-    acc.queries.push(createMediaQuery(value))
+    acc.queries.push(createMediaQuery(value));
     acc.upTo.push(createMediaQuery(`calc(${value} - 1px)`, 'max'));
     acc.indexes[name] = i + 1;
     return acc;
@@ -41,9 +41,9 @@ export const makeMediaQueries = (breakpoints={}) => Object.entries(breakpoints)
  * @param {function} get Theme getter
  * @return {(string[][])} A matrix of strings for the responsive styles
  */
-export const expandToResponsiveMatrix = (keys, scale, kget=get) => {
+export const expandToResponsiveMatrix = (keys, scale, kget = get) => {
   let ySize = 1;
-  const cols = keys.map(k => {
+  const cols = keys.map((k) => {
     const kvals = typeof k === 'function'
       ? k(scale)
       : kget(scale, k, k);
@@ -55,7 +55,7 @@ export const expandToResponsiveMatrix = (keys, scale, kget=get) => {
 
   const matrix = [];
   for (let row = 0; row < ySize; row++) {
-    matrix.push(cols.map((col, i) => {
+    matrix.push(cols.map((col) => {
       if (!Array.isArray(col)) return col;
       const pick = Math.min(row, col.length - 1);
       return col[pick];
@@ -65,7 +65,7 @@ export const expandToResponsiveMatrix = (keys, scale, kget=get) => {
 };
 
 const interpolate = (strings, values) => {
-  let result = [strings[0]];
+  const result = [strings[0]];
   values.forEach((value, i) => {
     result.push(value, strings[i + 1]);
   });
@@ -110,28 +110,28 @@ export const template = (strings, ...keys) => (props) => {
  *    getCardinalValue(n, scale, {});
  *    // => ['1 a', '1 b'];
  */
-export const getCardinalValue = (n, scale, _props, getValue=get) => {
+export const getCardinalValue = (n, scale, _props, getValue = get) => {
   const keys = (typeof n === 'string')
     ? n.split(/\s+/)
     : [n];
   const result = expandToResponsiveMatrix(keys, scale, getValue)
-    .map(row => {
+    .map((row) => {
       if (row.length === 1) return row[0];
-      return row.join(' ')
+      return row.join(' ');
     });
   if (result.length === 1) {
     return result[0];
   }
   return result;
-}
+};
 
 const white = Color('white');
 const black = Color('black');
 
 const gradients = {
-  'darker-40' : { percentage: 0.40, tint: black },
-  'darker-20' : { percentage: 0.20, tint: black },
-  'base'      : { percentage: 0.00, tint: white },
+  'darker-40': { percentage: 0.40, tint: black },
+  'darker-20': { percentage: 0.20, tint: black },
+  base: { percentage: 0.00, tint: white },
   'lighter-20': { percentage: 0.20, tint: white },
   'lighter-40': { percentage: 0.40, tint: white },
   'lighter-60': { percentage: 0.60, tint: white },
@@ -156,13 +156,13 @@ export const fonts = {
 };
 
 const fontText = (size, weight, font) => `${weight} ${size} ${font}`;
-export const makeFont = (sizes, weight = 400, font=fonts.primary) => {
+export const makeFont = (sizes, weight = 400, font = fonts.primary) => {
   if (Array.isArray(sizes)) {
     return sizes.map(size => size && fontText(size, weight, font));
   }
   return fontText(sizes, weight, font);
 };
 
-const toFixed = n => typeof n === 'number' && n.toFixed(2) || `(${n})`;
+const toFixed = n => (typeof n === 'number' && n.toFixed(2)) || `(${n})`;
 export const makeCols = (cols, gutter = '0', unit = '%') => `calc(((100${unit} + ${gutter}) * ${toFixed(cols)}) - ${gutter})`;
 

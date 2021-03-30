@@ -1,4 +1,6 @@
 // @ts-nocheck
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-mixed-operators */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
@@ -29,7 +31,7 @@ const map = (style, properties) => {
 };
 
 const getQueryProp = (key) => {
-  return key.match(/(startingWith|_?sx\$?|\@)([^.]*$)/);
+  return key.match(/(startingWith|_?sx\$?|@)([^.]*$)/);
 };
 
 const getMediaStart = (match, media, def) => {
@@ -58,13 +60,13 @@ const mergeStyles = (styles, media, value, selectors) => {
 // check if key is a var
 const getConfig = (config, key, raw) => {
   if (typeof key === 'string' && typeof raw === 'string') {
-    const res = key.match(/^--.+-([^\-]+)$/);
+    const res = key.match(/^--.+-([^-]+)$/);
     if (res && typeof config[res[1]] === 'function') {
       const sx = config[res[1]];
       const cloned = sx.bind({});
       for (const i in sx) {
         cloned[i] = sx[i];
-      };
+      }
       cloned.properties = [key];
       return cloned;
     }
@@ -76,9 +78,10 @@ const createParser = (config) => {
   const cache = {};
   const parse = (props) => {
     if (typeof props.theme !== 'object') {
-      throw new Error ('There is no theme in props, perhaps you forgot to include in the context.');
+      throw new Error('There is no theme in props, perhaps you forgot to include in the context.');
     }
 
+    // eslint-disable-next-line no-multi-assign
     const media = (cache.media = (cache.media || makeMediaQueries(props.theme.breakpoint)));
 
     const styles = {};
@@ -97,13 +100,13 @@ const createParser = (config) => {
       let _isTheme = isTheme;
 
       if (typeof _value === 'function') {
-        _value = _value(props, scale, sx)
+        _value = _value(props, scale, sx);
         if (typeof _value === 'object') {
           _isTheme = true;
         }
       }
 
-      if(sx && typeof _value !== 'object') {
+      if (sx && typeof _value !== 'object') {
         _value = sx(_value, scale, props);
         if (typeof _value === 'object') {
           _isTheme = true;
@@ -134,6 +137,7 @@ const createParser = (config) => {
           let queryMatch;
           if (config[k]) {
             work.splice(i, 0, [k, _value[k], start, _isTheme, selectors]);
+            // eslint-disable-next-line no-cond-assign
           } else if (queryMatch = getQueryProp(k)) {
             work.splice(i, 0, [k, _value[k], getMediaStart(queryMatch, media, start), _isTheme, selectors]);
           } else if (key !== null) {
@@ -152,9 +156,9 @@ const createParser = (config) => {
         styles,
         media.queries[start],
         value,
-        selectors
+        selectors,
       );
-    } while(work.length);
+    } while (work.length);
 
     return styles;
   };
@@ -206,7 +210,7 @@ export const system = (args = {}) => {
       const aliases = Array.isArray(args[key].alias)
         ? args[key].alias
         : [args[key].alias];
-      aliases.forEach(a => config[a] = config[key]);
+      aliases.forEach((a) => { config[a] = config[key]; });
     }
   });
 

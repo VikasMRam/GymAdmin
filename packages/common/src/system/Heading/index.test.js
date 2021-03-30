@@ -22,12 +22,12 @@ describe('Heading|Web', () => {
   // });
 
   it('renders h1 for hero', () => {
-    const wrapper = wrap({ size: 'hero' });
+    const wrapper = wrap({ font: 'title-xl' });
     expect(wrapper.find('h1')).toHaveLength(1);
   });
 
   it('renders hLevel when size is passed in', () => {
-    const wrapper = wrap({ size: 'subtitle' });
+    const wrapper = wrap({ font: 'title-m' });
     expect(wrapper.find('h3')).toHaveLength(1);
   });
 });

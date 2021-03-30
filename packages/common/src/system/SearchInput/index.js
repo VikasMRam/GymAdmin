@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
-import { bool, string } from 'prop-types';
-import merge from 'lodash/merge';
+import { bool, string, func, object } from 'prop-types';
 
 import Flex from 'sly/common/system/Flex';
 import Search from 'sly/common/icons/Search';
@@ -29,11 +28,20 @@ const SearchInput = forwardRef(({ placeholder, type, value, name, onBlur, onChan
     >
       <Search color="white.base" />
     </Button>
-  </Flex>));
+  </Flex>
+));
 
 SearchInput.propTypes = {
   type: string,
   disabled: bool,
+  placeholder: string,
+  value: string,
+  name: string,
+  onBlur: func,
+  onChange: func,
+  onKeyDown: func,
+  onFocus: func,
+  inputStyles: object,
 };
 
 SearchInput.defaultProps = {

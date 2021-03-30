@@ -4,7 +4,7 @@ export const fonts = {
 };
 
 const fontText = (size, weight, font) => `${weight} ${size} ${font}`;
-export const makeFont = (sizes, weight = 400, font=fonts.primary) => {
+export const makeFont = (sizes, weight = 400, font = fonts.primary) => {
   if (Array.isArray(sizes)) {
     return sizes.map(size => size && fontText(size, weight, font));
   }

@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import { bool, string } from 'prop-types';
 
 import Block from 'sly/common/system/Block';
-import { combineStyles } from 'sly/common/system';
 
 const defaultStyles = {
   font: 'body-m',
@@ -20,10 +19,10 @@ const defaultStyles = {
   ':focus, :active': {
     outline: 'none',
     borderColor: 'viridian.base',
-  }
+  },
 };
 
-const getStyles = (props) => ({
+const getStyles = props => ({
   ...defaultStyles,
   backgroundColor: props.disabled
     ? 'slate.lighter-90'
@@ -34,11 +33,11 @@ const getStyles = (props) => ({
 });
 
 
-const Input = forwardRef(({ sx, ...props }, ref) => (
+const Input = forwardRef((props, ref) => (
   <Block
     ref={ref}
     as="input"
-    sx={combineStyles(sx, getStyles(props))}
+    _sx={getStyles(props)}
     {...props}
   />
 ));

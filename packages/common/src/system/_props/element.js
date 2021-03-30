@@ -1,8 +1,9 @@
+/* eslint-disable no-restricted-globals */
 import { system, get } from 'sly/common/system';
 
-const isNumber = n => typeof n === 'number' && !isNaN(n)
+const isNumber = n => typeof n === 'number' && !isNaN(n);
 const getWidth = (n, scale) =>
-  get(scale, n, !isNumber(n) || n > 1 ? n : n * 100 + '%')
+  get(scale, n, !isNumber(n) || n > 1 ? n : `${n * 100} %`);
 
 const config = {
   width: {
@@ -37,7 +38,7 @@ const config = {
   },
 
   iconSize: true,
-}
+};
 
 const element = system(config);
 

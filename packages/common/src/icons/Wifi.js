@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 
 import Icon from 'sly/common/system/Icon';
 
-const svg = require('!raw-loader!./svg/wifi.svg').default
-// import WifiSvg from './svg/wifi.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+const svg = require('!raw-loader!./svg/wifi.svg').default;
 
 const Wifi = forwardRef((props, ref) => <Icon ref={ref} name="wifi" svg={svg} {...props} />);
 
