@@ -1,120 +1,70 @@
-import React, { useState, useRef, useMemo } from 'react';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
+import React, { useState, useRef, useMemo, forwardRef } from 'react';
+
+
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import {
-  withBorder,
-  startingWith,
-  withDisplay,
-  upTo,
-} from 'sly/common/components/helpers';
-import { getKey, palette, size } from 'sly/common/components/themes';
+
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import Icon from 'sly/common/components/atoms/Icon';
-import Link from 'sly/common/components/atoms/Link';
-import Block from 'sly/common/components/atoms/Block';
+
+
+import Link from 'sly/common/system/Link';
+import {Logo, Menu, Chevron, ArrowDrop,Close} from 'sly/common/icons/index'
+import Block from 'sly/common/system/Block';
 import SearchContainer from 'sly/web/components/resourceCenter/components/ArticlesSearchContainer';
 import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
 
 const backToSeniorlyItem = {
   label: 'Back to Seniorly.com',
   iconBack: true,
-  palette: 'primary',
   to: '/',
   hideInBigScreen: true,
 };
 
-const Wrapper = styled(Block)(
-  withDisplay,
-  withBorder,
-  css`
-    padding: ${size('spacing.m')};
-    outline: none;
-    background: ${palette('white', 'base')};
-    
-    ${upTo('laptop', css`
-      ${ifProp('menuIsOpen', `
-        position: fixed;
-        top: 0;
-        border-radius: 0;
-        width: 100%;
-        z-index: 3;
-      `)}
-    `)}
-    
-    ${startingWith('laptop', css`
-      padding: 0 ${size('spacing.m')};
-    `)}
-  `,
-);
-
-const LogoWrapper = styled(Block)(
-  withBorder,
-  css`
-    & svg {
-      height: ${size('element.regular')};
-      min-width: ${size('element.regular')};
+const Wrapper = forwardRef(({children, menuIsOpen, ...props}, ref)=>
+  <Block 
+  ref={ref}
+  p="m"
+  background={'white.base'}
+  sx={{
+    outline:'none',
+    ... (menuIsOpen && {
+      position:'fixed',
+      top:0,
+      borderRadius:0,
+      width:'100%',
+      zIndex:3
+    }|| {}),
+    '@laptop':{
+      padding:'0 m',
+      ...(menuIsOpen && {
+        top:'initial',
+        position:'initial',
+        borderRadius:'initial',
+        width:'initial',
+        zIndex:'intial',
+      } || {})
     }
+  }}
+  {...props}
+  >
+    {children}
+  </Block>
+)
 
-    ${startingWith(
-    'tablet',
-    css`
-        & svg {
-          height: ${size('element.large')};
-        }
-      `,
-  )}
-    ${startingWith(
-    'laptop',
-    css`
-        & svg {
-          height: ${size('element.regular')};
-        }
-      `,
-  )}
-  `,
-);
-
-const MenuItemWrapper = styled(Block)(withDisplay);
-
-const Text = styled(Block)(
-  css`
-    white-space: nowrap;
-  `,
-);
-
-const RightMenuWrapper = styled(Block)`
-    & * {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    
-    & > div {
-      padding: ${size('spacing.m')} 0;
-      line-height: ${size('element.button')};
-      
-      &:hover {
-        border-bottom: ${size('border.xxLarge')} solid ${palette('primary', 'base')};
-        padding-bottom: calc(${size('spacing.m')} - ${size('border.xxLarge')});
-      }
-    }
-  `;
 
 const getMenuItem = (item, setMenuIsOpen) => item.hideInBigScreen
   ? (
-    <Block onClick={() => setMenuIsOpen(false)} key={item.value} startingWithLaptop={{ display: 'none' }}>
+    <Block onClick={() => setMenuIsOpen(false)} key={item.value} $laptop={{display:'none'}}>
       <Link to={item.to}>
         {item.label}
-        {item.iconBack && <Icon icon="chevron" />}
+        {item.iconBack && <Chevron rotation="90"/>}
       </Link>
     </Block>
   )
   : (
     <Link onClick={() => setMenuIsOpen(false)} key={item.value} to={item.to}>
       {item.label}
-      {item.iconBack && <Icon icon="chevron" />}
+      {item.iconBack && <Chevron rotation="90" />}
     </Link>
   );
 
@@ -157,91 +107,142 @@ const Header = () => {
       flexWrap="wrap"
       justifyContent="space-between"
       align-items="center"
-      borderBottom="regular"
-      borderRadius="small"
-      borderPalette="slate"
-      borderVariation="lighter-90"
+      borderBottom="1px solid"
+      borderRadius="4px"
+      borderColor="slate.lighter-90"
       menuIsOpen={menuIsOpen}
       onBlur={handleHeaderMenuBlur}
     >
-      <LogoWrapper
-        upToLaptop={{ marginBottom: 'm' }}
-        startingWithLaptop={{ margin: 'auto 0' }}
+      <Block
+        mb='m'
+        sx$tablet={{
+          '& svg':{
+            height:'m',
+            width:'m'
+          }
+        }}
+        sx$laptop={{
+          margin:'auto 0',
+          '& svg':{
+            height:'40px',
+            width:'40px',
+          }
+        }}
       >
         <Link
-          css={{ display: 'flex', alignItems: 'center' }}
-          palette="primary"
-          variation="base"
+          display='flex'
+          alignItems="center"
           to={RESOURCE_CENTER_PATH}
         >
-          <Icon icon="logo" fontSize={14} />
-          <Text
-            marginLeft="xxs"
-            palette="primary"
-            upToTablet={{ fontSize: size('text.body') }}
-            startingWithTablet={{ fontSize: size('text.subtitle') }}
+          <Logo size='xl'/>
+          <Block
+            whiteSpace='nowrap'
+            ml='xxs'
+            fontSize='body-m'
+            sx$tablet={{
+              fontSize:'20px'
+            }}
+           
           >
             <b>seniorly</b> resource center
-          </Text>
+          </Block>
         </Link>
-      </LogoWrapper>
+      </Block>
 
       <Block
-        height={size('element.button')}
-        upToLaptop={{ display: 'none' }}
-        startingWithLaptop={{ display: 'flex', flexGrow: 1 }}
+        height='44px'
+        display="none"
+        sx$laptop={{
+          display:'flex',
+          flexGrow:1
+        }}
         margin="auto 8.5% auto 6%"
       >
         <SearchContainer />
       </Block>
 
       <Block
-        upToTablet={{ paddingTop: getKey('sizes.spacing.xs') }}
-        startingWithLaptop={{ display: 'none' }}
+        pt="xs"
+        sx$laptop={{
+          display:'none'
+        }}
+       
       >
-        <MenuItemWrapper
+        <Block
           display="flex"
           alignItems="center"
-          startingWithTablet={{ height: size('element.large') }}
+          sx$tablet={{
+            height:'m'
+          }}
         >
-          <Icon
-            onClick={() => setMenuIsOpen(!menuIsOpen)}
-            cursor="pointer"
-            palette="primary"
-            variation="base"
-            data-testid="MenuIcon"
-            icon={!menuIsOpen ? 'menu' : 'close'}
-          />
-        </MenuItemWrapper>
+          {
+            menuIsOpen ?
+            <Close
+               onClick={() => setMenuIsOpen(!menuIsOpen)}
+               cursor="pointer"
+               data-testid="MenuIcon"
+             />:
+             <Menu 
+             cursor="pointer"
+             onClick={() => setMenuIsOpen(!menuIsOpen)}
+             data-testid="MenuIcon"
+             />
+             
+          }
+         
+        </Block>
       </Block>
 
-      <RightMenuWrapper
-        upToLaptop={{ display: 'none' }}
-        startingWithLaptop={{ display: 'flex' }}
+      <Block
+        display="none"
+        sx={{
+          '& *':{
+            display:'flex',
+            alignItems:'center',
+            cursor:'pointer'
+          },
+          '& > div':{
+            padding:'m 0',
+            lineHeight:'title-l',
+            '&:hover':{
+              borderBottom:'4px solid',
+              borderColor:'viridian.base',
+              paddingBottom:'12px'
+            }
+          }
+          
+        }}
+        sx$laptop={{
+          display:'flex'
+        }}
+      
       >
-        <Block marginRight="m" onClick={toggleDropdown}>
+        <Block mr="m" onClick={toggleDropdown}>
           Topics
-          <Icon icon="arrow-drop-down" flip={menuIsOpen} />
+          <ArrowDrop color="viridian.base" rotation={menuIsOpen ? null: "180"} />
         </Block>
         {getMenuItem(backToSeniorlyItem)}
-      </RightMenuWrapper>
+      </Block>
 
       <Block
-        upToLaptop={{ display: 'flex' }}
-        startingWithLaptop={{ display: 'none' }}
+        display='flex'
+        sx$laptop={{
+          display:'none'
+        }}
         width="100%"
-        height={size('element.large')}
+        height='m'
       >
         <SearchContainer />
       </Block>
 
       {menuIsOpen && (
-        <HeaderMenuList
-          listItems={getMenuItems(headerMenuItems, setMenuIsOpen)}
-          headerRef={headerMenuRef}
-          menuIsOpen={menuIsOpen}
-        />
+          <HeaderMenuList
+            listItems={getMenuItems(headerMenuItems, setMenuIsOpen)}
+            headerRef={headerMenuRef}
+            menuIsOpen={menuIsOpen}
+          />
       )}
+
     </Wrapper>
   );
 };

@@ -5,5 +5,5 @@ import Header from '.';
 
 storiesOf('Resource Center|Header', module)
   .add('default', () => (
-    <Header/>
+    <Header />
   ));

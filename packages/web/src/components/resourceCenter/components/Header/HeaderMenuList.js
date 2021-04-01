@@ -1,47 +1,47 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { array, instanceOf, oneOfType, shape, func } from 'prop-types';
-import styled, { css } from 'styled-components';
 
-import Block from 'sly/common/components/atoms/Block';
-import { size, palette } from 'sly/common/components/themes';
-import { upTo, withDisplay } from 'sly/common/components/helpers';
+import Block from 'sly/common/system/Block';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 
-const Wrapper = styled(Block)(
-  withDisplay,
-  css`
-    background: ${palette('white', 'base')};
-    z-index: 4;
-    
-    & a {
-      display: flex;
-      font-size: ${size('text.body')};
-      line-height: ${size('lineHeight.displayS')};
-      padding: ${size('spacing.m')};
-      
-      &:hover {
-        background: ${palette('viridian', 'lighter-90')};
-      }
-      
-      &:active {
-        background: ${palette('viridian', 'base')};
-        color: ${palette('white', 'base')};
-      }
-    }
-    
-    & > a {
-      ${upTo('laptop', { color: palette('slate', 'base') })}
-    }
-    
-    @media screen and (max-width: ${size('breakpoint.laptop')}) {
-      border-top: ${size('border.regular')} solid ${palette('slate', 'lighter-90')};
-    }
-    
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      box-shadow: 0 ${size('spacing.small')} ${size('spacing.large')} ${palette('slate', 'stroke')};
-    }
-  `,
+const Wrapper = forwardRef(({ children, ...props }, ref) =>
+  (<Block
+    ref={ref}
+    background="white.base"
+    zIndex="4"
+    sx={{
+      bottom: '0',
+      left: '0',
+      top: '4.5rem',
+      '& a': {
+        display: 'flex',
+        fontSize: 'body-m',
+        padding: 'm',
+        '&:hover': {
+          background: 'viridian.lighter-90',
+        },
+        '&:active': {
+          background: 'viridian.base',
+          color: 'white.base',
+        },
+      },
+      borderTop: '1px solid',
+      borderColor: 'slate.lighter-90',
+      '@laptop': {
+        '--box-shadow-color': 'slate.lighter-90',
+        border: 'none',
+        boxShadow: '0 4px 16px var(--box-shadow-color)',
+        '& a:last-of-type': {
+          display: 'none',
+        },
+      },
+    }}
+    {...props}
+  >
+    {children}
+  </Block>),
 );
+
 
 const HeaderMenuList = ({ listItems, headerRef }) => {
   return (
@@ -49,21 +49,17 @@ const HeaderMenuList = ({ listItems, headerRef }) => {
       display="flex"
       flexDirection="column"
       ref={headerRef}
-      upToTablet={{ top: '4.5rem' }}
-      upToLaptop={{
-        width: '100%',
-        position: 'fixed',
-        top: '5rem',
-        left: 0,
-        bottom: 0,
-      }}
-      startingWithLaptop={{
+      width="100%"
+      position="fixed"
+      sx$laptop={{
         width: '17rem',
         height: 'auto',
-        position: 'absolute',
+        posiiton: 'absolute',
         top: '5.375rem',
         right: '12.875rem',
-        borderRadius: size('border.xxLarge'),
+        borderRadius: '4px',
+        left: 'initial',
+        bottom: 'initial',
       }}
       overflow="hidden"
     >

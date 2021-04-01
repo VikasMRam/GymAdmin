@@ -42,3 +42,10 @@ names.forEach(([iconName, fileName]) => {
 
 fs.writeFileSync(`${iconsDir}/constants.js`, `/* eslint-disable */\nexport const ICONS = ${JSON.stringify(names, null, 2)}\n`);
 
+const fileExports = names.map(([iconName]) => {
+  return `export { default as ${iconName} } from './${iconName}';`;
+}).join('\n').concat('\n');
+
+
+fs.writeFileSync(`${iconsDir}/index.js`, fileExports);
+
