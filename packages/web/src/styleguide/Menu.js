@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from 'react-router-dom';
 
 import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
@@ -7,6 +7,7 @@ import Link from 'sly/common/system/Link';
 const href = path => `/styleguide/${path}`;
 const options = {
   Foundation: {
+    block: 'Block',
     colors: 'Colors',
     layout: 'Layout',
     typography: 'Typography',
@@ -19,7 +20,7 @@ const options = {
   },
 };
 
-const getLinkStyles = (match) => ({
+const getLinkStyles = match => ({
   display: 'block',
   color: match ? 'viridian.base' : 'slate.base',
   background: match ? 'viridian.lighter-90' : undefined,
@@ -28,7 +29,7 @@ const getLinkStyles = (match) => ({
   fontWeight: match ? 500 : 400,
 });
 
-const Menu = (props) => (
+const Menu = props => (
   <Block {...props}>
     {Object.entries(options).map(([section, links]) => (
       <div key={section}>

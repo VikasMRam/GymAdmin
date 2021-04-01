@@ -1,11 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Menu from './Menu';
+
 import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Span from 'sly/common/system/Span';
 import Logo from 'sly/common/icons/Logo';
-
 import Colors from 'sly/web/styleguide/pages/Colors';
 import Layout from 'sly/web/styleguide/pages/Layout';
 import Typography from 'sly/web/styleguide/pages/Typography';
@@ -13,8 +14,8 @@ import Icon from 'sly/web/styleguide/pages/Icon';
 import Button from 'sly/web/styleguide/pages/Button';
 import Input from 'sly/web/styleguide/pages/Input';
 import Table from 'sly/web/styleguide/pages/Table';
+import BlockPage from 'sly/web/styleguide/pages/Block';
 
-import Menu from './Menu';
 
 const StyleGuide = () => (
   <Grid
@@ -49,6 +50,9 @@ const StyleGuide = () => (
       }}
     />
     <Switch>
+      <Route path="/styleguide/block">
+        <BlockPage gridArea="content" />
+      </Route>
       <Route path="/styleguide/colors">
         <Colors gridArea="content" />
       </Route>

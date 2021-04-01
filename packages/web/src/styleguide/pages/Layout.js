@@ -1,12 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 import Block from 'sly/common/system/Block';
 import Heading from 'sly/common/system/Heading';
 import Paragraph from 'sly/common/system/Paragraph';
 import { Table, THead, TBody, Th, Tr, Td } from 'sly/web/components/atoms/Table';
-
 import theme from 'sly/common/components/themes/default';
-
 import Section from 'sly/web/styleguide/Section';
 import Example from 'sly/web/styleguide/Example';
 
@@ -35,6 +33,12 @@ const layout = [
   'col12',
 ];
 
+const elements = [
+  'all tokens and values from layout',
+  'm',
+  'l',
+];
+
 const layoutValues = (key) => {
   const value = theme.layout[key];
   if (Array.isArray(value)) {
@@ -44,6 +48,7 @@ const layoutValues = (key) => {
 };
 
 const spacing = [
+  'xxxs',
   'xxs',
   'xs',
   's',
@@ -54,7 +59,7 @@ const spacing = [
   'xxxl',
 ];
 
-const Layout = (props) => (
+const Layout = props => (
   <Section
     title="Layout"
     anchor="layout"
@@ -90,7 +95,7 @@ const Layout = (props) => (
         </Tr>
       </THead>
       <TBody>
-        {layout.map((key) => (
+        {layout.map(key => (
           <Tr>
             <Td>{key}</Td>
             <Td>{layoutValues(key)}</Td>
@@ -119,9 +124,35 @@ const Layout = (props) => (
         {spacing.map((key, i) => (
           <Tr>
             <Td>{key}</Td>
-            <Td>{theme.layout[key]}</Td>
-            <Td>{parseFloat(theme.layout[key]) * 16}px</Td>
-            <Td><Block height="s" width={key} background="viridian"></Block></Td>
+            <Td>{theme.space[key]}</Td>
+            <Td>{parseFloat(theme.space[key]) * 16}px</Td>
+            <Td>{`<Block height="s" width={${key}} background="viridian"></Block>`}</Td>
+          </Tr>
+        ))}
+      </TBody>
+    </Table>
+
+    <Heading
+      font="title-s-azo"
+      pad="m"
+    >
+      Element
+    </Heading>
+
+    <Table pad="m">
+      <THead>
+        <Tr>
+          <Th>Token</Th>
+          <Th>Value</Th>
+          <Th>px</Th>
+        </Tr>
+      </THead>
+      <TBody>
+        {elements.map((key, i) => (
+          <Tr>
+            <Td>{key}</Td>
+            <Td>{theme.element?.[key]}</Td>
+            <Td>{parseFloat(theme.element?.[key] || 0) * 16}px</Td>
           </Tr>
         ))}
       </TBody>
