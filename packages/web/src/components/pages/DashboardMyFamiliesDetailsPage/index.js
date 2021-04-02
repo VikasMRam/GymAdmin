@@ -691,6 +691,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <Role className="agentTab" is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
               <Section>
                 <ReferralSearchContainer
+                  radius={20}
                   notifyError={notifyError}
                   notifyInfo={notifyInfo}
                   parentClient={client}

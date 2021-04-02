@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { arrayOf, func, oneOf, object } from 'prop-types';
+import { arrayOf, func, oneOf, object, number } from 'prop-types';
 
 import { normalizeResponse, query } from 'sly/web/services/api';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
@@ -27,6 +27,7 @@ import { userIs } from 'sly/web/services/helpers/role';
 
 export default class ReferralSearchContainer extends Component {
   static propTypes = {
+    radius: number,
     notifyError: func,
     notifyInfo: func,
     communities: arrayOf(adminCommunityPropType),
@@ -47,6 +48,7 @@ export default class ReferralSearchContainer extends Component {
 
   static defaultProps = {
     referralMode: 'Community',
+    radius: 10,
   };
 
   state = {
@@ -159,12 +161,13 @@ export default class ReferralSearchContainer extends Component {
   };
 
   getGeoFromLocationValue = (value) => {
+    const { radius } = this.props;
     if (value && value.searchParams) {
       return value.searchParams.geo
     }
 
     if (value && value.info) {
-      return [value.info.geo.Latitude, value.info.geo.Longitude, 10].join(',');
+      return [value.info.geo.Latitude, value.info.geo.Longitude, radius].join(',');
     }
     return null;
   };
