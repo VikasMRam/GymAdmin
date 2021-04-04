@@ -47,54 +47,10 @@ class ImageHandler {
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
       const value = values[i];
-      if (key === 'overlayWith') {
-        const overlay = await this.getOverlayImage(value.bucket, value.key);
-        const params = [{ ...value.options, input: overlay }];
-        image.composite(params);
-      } else if (key === 'smartCrop') {
-        const options = value;
-        const imageBuffer = await image.toBuffer();
-        const metadata = await image.metadata();
-        // ----
-        const boundingBox = await this.getBoundingBox(imageBuffer, options.faceIndex);
-        const cropArea = await this.getCropArea(boundingBox, options, metadata);
-        try { image.extract(cropArea); } catch (err) {
-          throw ({
-            status: 400,
-            code: 'SmartCrop::PaddingOutOfBounds',
-            message: 'The padding value you provided exceeds the boundaries of the original image. Please try choosing a smaller value or applying padding via Sharp for greater specificity.',
-          });
-        }
-      } else {
-        image[key](value);
-      }
+      image[key](value);
     }
     // Return the modified image
     return image;
-  }
-
-  /**
-     * Gets an image to be used as an overlay to the primary image from an
-     * Amazon S3 bucket.
-     * @param {string} bucket - The name of the bucket containing the overlay.
-     * @param {string} key - The keyname corresponding to the overlay.
-     */
-  async getOverlayImage(bucket, key) {
-    const s3 = new AWS.S3();
-    const params = { Bucket: bucket, Key: key };
-    // Request
-    const request = s3.getObject(params).promise();
-    // Response handling
-    try {
-      const overlayImage = await request;
-      return Promise.resolve(overlayImage.Body);
-    } catch (err) {
-      return Promise.reject({
-        status: 500,
-        code: err.code,
-        message: err.message,
-      });
-    }
   }
 
   /**
