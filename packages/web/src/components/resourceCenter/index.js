@@ -74,12 +74,24 @@ const Topics = ({ topics, breakpoint }) => (
       gridTemplateColumns: sx`repeat(2, ${layout('col6')})`,
     }}
   >
-    {topics?.map(({ slug, name, description, img }) => (
+    {topics.map(({ slug, name, description, img }) => (
       <StyledLink
         key={slug}
         to={getLinkToTopic(slug)}
       >
         <Block border="round" overflow="hidden" height="100%" position="relative">
+          <ExploreTopicInfo
+            border="box"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end"
+            width="100%"
+            height="100%"
+            padding="l"
+          >
+            <Block font="title-m" color="white.base" marginBottom="s">{name}</Block>
+            <Block font="body-m" color="white.base">{description}</Block>
+          </ExploreTopicInfo>
           <Image
             css={{
               position: 'absolute',
@@ -98,18 +110,6 @@ const Topics = ({ topics, breakpoint }) => (
                 : { aspectRatio: breakpoint?.atLeastLaptop() ? '16:9' : '7:6' }
             )}
           />
-          <ExploreTopicInfo
-            border="box"
-            display="flex"
-            flexDirection="column"
-            justifyContent="flex-end"
-            width="100%"
-            height="100%"
-            padding="l"
-          >
-            <Block font="title-m" color="white.base" marginBottom="s">{name}</Block>
-            <Block font="body-m" color="white.base">{description}</Block>
-          </ExploreTopicInfo>
         </Block>
       </StyledLink>))}
   </Grid>
@@ -200,7 +200,7 @@ const HomePage = () => {
         Explore Topics
       </Block>
 
-      <TopicsWithBreakpoint topics={topicRes} />
+      {topicRes?.length && <TopicsWithBreakpoint topics={topicRes} />}
 
       <SubscribeEmail />
 
