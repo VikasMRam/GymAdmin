@@ -15,6 +15,7 @@ import Button from 'sly/web/styleguide/pages/Button';
 import Input from 'sly/web/styleguide/pages/Input';
 import Table from 'sly/web/styleguide/pages/Table';
 import BlockPage from 'sly/web/styleguide/pages/Block';
+import Border from 'sly/web/styleguide/pages/Border';
 
 
 const StyleGuide = () => (
@@ -50,7 +51,10 @@ const StyleGuide = () => (
       }}
     />
     <Switch>
-      <Route path="/styleguide/block">
+      <Route path="/styleguide/border">
+        <Border gridArea="content" />
+      </Route>
+      <Route path="/styleguide/Block">
         <BlockPage gridArea="content" />
       </Route>
       <Route path="/styleguide/colors">

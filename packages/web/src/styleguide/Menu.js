@@ -11,6 +11,8 @@ const options = {
     colors: 'Colors',
     layout: 'Layout',
     typography: 'Typography',
+    border: 'Border',
+
   },
   Components: {
     button: 'Button',
