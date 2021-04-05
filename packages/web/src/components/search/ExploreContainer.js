@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { object } from 'prop-types';
+import sanitizeHtml from 'sanitize-html';
 
 import { isBrowser } from 'sly/web/config';
 import { getKey } from 'sly/common/components/themes';
@@ -12,6 +13,8 @@ import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContai
 import SearchExploreTypes from 'sly/web/components/organisms/SearchExploreTypes';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/components/search/helpers';
+
+const citiesToShowGeoGuide = ['new-york', 'miami', 'las-vegas', 'san-francisco', 'madison', 'scottsdale', 'skokie', 'columbus', 'orlando', 'atlanta', 'san-jose', 'kendall'];
 
 
 function ExploreContainer({ filters }) {
@@ -27,6 +30,12 @@ function ExploreContainer({ filters }) {
   const geoGuide = geoGuides ? geoGuides[0] : {};
   const tocLabel = getTocSeoLabel(filters.toc);
   const seoLinks = geoGuide && geoGuide.guideContent && geoGuide.guideContent.seoLinks;
+
+  let guide;
+  if (filters?.city && citiesToShowGeoGuide.includes(filters.city) && geoGuide?.guideContent?.guide) {
+    guide = sanitizeHtml(geoGuide.guideContent.guide);
+  }
+
   const title = filters.city ? `${titleize(filters.city)}, ${titleize(filters.state)}` : titleize(filters.state);
 
   return (
@@ -41,13 +50,14 @@ function ExploreContainer({ filters }) {
         paddingBottom: getKey('sizes.spacing.xxLarge'),
       }}
     >
+      {guide && <div dangerouslySetInnerHTML={{ __html: guide }} />}
       {seoLinks && (
         <SeoLinks
           title={`${tocLabel} near ${title}`}
           links={seoLinks}
         />
       )}
-      <SearchExploreTypes title={`Explore other types of communities in  ${title}`} city={filters.city} state={filters.state}/>
+      <SearchExploreTypes title={`Explore other types of communities in  ${title}`} city={filters.city} state={filters.state} />
       { filters.city &&
       <GetAssessmentBoxContainer
         completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
