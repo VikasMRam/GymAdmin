@@ -118,7 +118,7 @@ export default function QuotesCarroussel ({
   return (
     <Block {...props}>
       <Heading
-        font="title-xlarge"
+        font="title-xl"
         textAlign="center"
         margin="0 auto"
         maxWidth={450}

@@ -23,6 +23,7 @@ module.exports.DEV_PORT = envPick(process.env.DEV_PORT, +process.env.PORT + 1 ||
 module.exports.ASSETS_URL = envPick(process.env.ASSETS_URL, 'https://d354o3y6yz93dt.cloudfront.net');
 module.exports.PUBLIC_PATH = '/react-assets';
 module.exports.API_URL = envPick(process.env.API_URL, 'http://www.lvh.me/v0');
+module.exports.CMS_URL = envPick(process.env.CMS_URL, 'http://localhost:1337');
 module.exports.DOMAIN = envPick(process.env.DOMAIN, 'lvh.me');
 module.exports.SOURCE = envPick(process.env.SOURCE, 'src');
 module.exports.FB_CLIENT_ID = envPick(process.env.FB_CLIENT_ID, '624602444328776');

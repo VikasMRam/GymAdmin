@@ -5,6 +5,7 @@ import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { generateSearchUrl, parseURLQueryParams, isInternationalPath } from 'sly/web/services/helpers/url';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { userIs } from 'sly/web/services/helpers/role';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
@@ -37,7 +38,7 @@ const getDefaultHeaderItems = (layout, isInternationalPage) => {
 
   if (layout !== 'wizard') {
     items = [
-      { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+      { name: 'Senior Living Resources', to: RESOURCE_CENTER_PATH, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
       { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
       ...items,
     ];
@@ -54,7 +55,7 @@ const smallScreenMenuItems = [
 const defaultMenuItems = () => {
   const menuItems = [
     {
-      name: 'Senior Living Resources', to: '/resources', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
+      name: 'Senior Living Resources', to: RESOURCE_CENTER_PATH, hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
     },
     {
       name: 'Assisted Living', to: '/assisted-living', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),

@@ -139,18 +139,16 @@ export default class FamilyDetailsForm extends Component {
 
         <Role is={PLATFORM_ADMIN_ROLE}>
           <SectionForm heading="Metadata">
-            <FieldRow
-              label={`${stage} details`}
-              showIf={showStageSummary}
-            >
-              <FamilyMetaDataSummaryBox client={client} onEditClick={onEditStageDetailsClick} />
-            </FieldRow>
-            <FieldRow
-              label={`${status} status details`}
-              showIf={showStatusSummary}
-            >
-              <FamilyMetaDataSummaryBox mode="status" client={client} onEditClick={onEditStatusDetailsClick} />
-            </FieldRow>
+            {showStageSummary && (
+              <FieldRow label={`${stage} details`}>
+                <FamilyMetaDataSummaryBox client={client} onEditClick={onEditStageDetailsClick} />
+              </FieldRow>
+            )}
+            {showStatusSummary && (
+              <FieldRow label={`${status} status details`}>
+                <FamilyMetaDataSummaryBox mode="status" client={client} onEditClick={onEditStatusDetailsClick} />
+              </FieldRow>
+            )}
             <Field
               name="assignedTo"
               label="Assigned to"

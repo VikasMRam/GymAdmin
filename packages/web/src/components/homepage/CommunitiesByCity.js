@@ -249,10 +249,10 @@ const CommunitiesByCity = (onLocationSearch) => {
   return (
     <>
       <Body>
-        <Heading font="title-xlarge" pad="large">
+        <Heading font="title-xl" pad="large">
           Explore communities by city.
         </Heading>
-        <Block font="body-large">
+        <Block font="body-l">
           See our exclusive photos, monthly pricing, and expert insights for each community. You can learn more about the places you like or speak with a Seniorly Local Advisor in that city.
         </Block>
       </Body>
@@ -284,7 +284,7 @@ const CommunitiesByCity = (onLocationSearch) => {
         startingWithLaptop={{ paddingBottom: 80 }}
       >
         <Heading
-         font="title-large"
+         font="title-l"
          pad="large"
         >
           Find communities in your area.

@@ -86,14 +86,13 @@ const CollapsibleSection = ({
     ? toggle
     : noop;
 
-  return (
+  return showIf && (
     <Section
       as={Block}
       collapsed={collapsed}
       borderless={borderless}
       borderBottom={borderBottom}
       ref={innerRef}
-      showIf={showIf}
       className={className}
     >
       <Block
@@ -139,8 +138,8 @@ CollapsibleSection.propTypes = {
   borderBottom: string,
   borderless: bool,
   id: string,
-  showIf: bool,
   forMobileOnly: bool,
+  showIf: bool,
 };
 
 CollapsibleSection.defaultProps = {

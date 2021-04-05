@@ -10,7 +10,7 @@ import Modal from 'react-modal';
 import { ThemeProvider } from 'styled-components';
 
 import configureStore from 'sly/web/store/configure';
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 import { hydrateComponents } from 'sly/web/services/partialHydration';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';

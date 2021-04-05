@@ -10,7 +10,7 @@ import utc from 'dayjs/plugin/utc';
 
 import { addAppWrapper } from './preview.common';
 
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 

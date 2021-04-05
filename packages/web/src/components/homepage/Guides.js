@@ -79,10 +79,10 @@ const Guides = (props) => {
       {header}
       <Body>
         <Block pad="xLarge" flexGrow="0">
-          <Heading font="title-xlarge" pad="large">
+          <Heading font="title-xl" pad="large">
             Resources and Helpful Guides
           </Heading>
-          <Block font="body-large" pad="xLarge">
+          <Block font="body-l" pad="xLarge">
             When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.
           </Block>
           <Button {...resources}>{resources.title}</Button>
@@ -92,7 +92,7 @@ const Guides = (props) => {
           {guides.map((guide) => (
             <Block
               as={Link}
-              font="title-medium"
+              font="title-m"
               background="white.base"
               borderRadius="regular"
               padding="xLarge"

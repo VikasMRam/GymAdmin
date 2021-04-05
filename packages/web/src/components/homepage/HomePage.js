@@ -84,11 +84,11 @@ const HomePage = ({
             ${startingWith('laptop', css({ marginRight: '64px', marginBottom: '0px' }))}
           `}
           >
-            <Heading font="title-xxlarge" pad="large">
+            <Heading font="title-xxl" pad="large">
               Find a senior living community you’ll love.
             </Heading>
             <Block
-              font="body-large"
+              font="body-l"
               css={css`
               margin-bottom: 48px;
               ${startingWith('tablet', css({ marginBottom: '24px' }))}

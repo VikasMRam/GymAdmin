@@ -67,7 +67,7 @@ const getCareTypes = (address, careTypes) => {
   careTypes.forEach((careType) => {
     const tocBc = tocPaths([careType]);
 
-    const availableTags = AVAILABLE_TAGS[country];
+    const availableTags = AVAILABLE_TAGS[country] || [];
 
 
     if (availableTags.includes(careType)) {
@@ -262,7 +262,7 @@ const CommunitySummary = ({
             </ListItem>
             }
             {numBaths &&
-            <ListItem icon="bath" iconPalette="grey" iconVariation="dark">
+            <ListItem icon="bathroom" iconPalette="grey" iconVariation="dark">
               <div>
                 <strong> No. of Baths </strong>
                 <br/>

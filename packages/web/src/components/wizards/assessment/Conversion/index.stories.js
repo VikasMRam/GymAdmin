@@ -11,7 +11,7 @@ const ADLContainer = reduxForm({
   form: 'ADL',
 })(ADL);
 
-storiesOf('Wizards|assessment/Steps/ADL', module)
+storiesOf('Wizards|assessment/Steps/Conversion', module)
   .add('default', () => (
     <ADLContainer
       handleSubmit={withPreventDefault(action('form submitted'))}

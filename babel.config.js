@@ -35,7 +35,6 @@ module.exports = function (api) {
       ['@babel/plugin-proposal-class-properties', { loose: true }],
 
       'transform-export-extensions',
-
       ['styled-components', {
         ssr: true,
       }],
@@ -46,15 +45,15 @@ module.exports = function (api) {
       }],
     ],
     env: {
-      development: {
-        plugins: [
-          ['styled-components', {
-            displayName: true,
-            minify: false,
-            transpileTemplateLiterals: false,
-          }],
-        ],
-      },
+      // development: {
+      //   plugins: [
+      //     ['styled-components', {
+      //       displayName: true,
+      //       minify: false,
+      //       transpileTemplateLiterals: false,
+      //     }],
+      //   ],
+      // },
       test: {
       // if a unique id is given babel will setup multiple instances of the plugin with all configs.
       // so the common config's presets will also be used.

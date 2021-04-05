@@ -37,11 +37,11 @@ const Reasons = () => {
       <Grid
         gap="large"
         startingWithTablet={{
-          gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr!important`,
+          gridTemplateColumns: `${getKey('layout.col3')} 1fr!important`,
           gridGap: `${getKey('sizes.spacing.xxLarge')}!important`,
         }}
         startingWithLaptop={{
-          gridTemplateColumns: `${getKey('sizes.layout.col6')} 1fr!important`,
+          gridTemplateColumns: `${getKey('layout.col6')} 1fr!important`,
         }}
         upToTablet={{
           gridTemplateColumns: 'auto!important',
@@ -57,7 +57,7 @@ const Reasons = () => {
             size="display"
             pad="xLarge"
             css={{
-              maxWidth: `calc(${getKey('sizes.layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
+              maxWidth: `calc(${getKey('layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
             }}
           >
             A Smarter Way to Find Your Next Home
@@ -76,11 +76,11 @@ const Reasons = () => {
       <Grid
         gap="large"
         startingWithTablet={{
-          gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr!important`,
+          gridTemplateColumns: `${getKey('layout.col3')} 1fr!important`,
           gridGap: `${getKey('sizes.spacing.xxLarge')}!important`,
         }}
         startingWithLaptop={{
-          gridTemplateColumns: `${getKey('sizes.layout.col6')} 1fr!important`,
+          gridTemplateColumns: `${getKey('layout.col6')} 1fr!important`,
           direction: 'rtl',
         }}
         upToTablet={{
@@ -116,11 +116,11 @@ const Reasons = () => {
       <Grid
         gap="large"
         startingWithTablet={{
-          gridTemplateColumns: `${getKey('sizes.layout.col3')} 1fr!important`,
+          gridTemplateColumns: `${getKey('layout.col3')} 1fr!important`,
           gridGap: `${getKey('sizes.spacing.xxLarge')}!important`,
         }}
         startingWithLaptop={{
-          gridTemplateColumns: `${getKey('sizes.layout.col6')} 1fr!important`,
+          gridTemplateColumns: `${getKey('layout.col6')} 1fr!important`,
         }}
         upToTablet={{
           gridTemplateColumns: 'auto!important',
@@ -136,7 +136,7 @@ const Reasons = () => {
             size="display"
             pad="xLarge"
             css={{
-              maxWidth: `calc(${getKey('sizes.layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
+              maxWidth: `calc(${getKey('layout.col4')} + ${getKey('sizes.spacing.xLarge')})`,
             }}
           >
             Your Home Base

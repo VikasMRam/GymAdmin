@@ -3,7 +3,7 @@ version: 2.1
 
 aliases:
   - &packages_node_modules_cache_dir packages-node_modules
-  - &cache_version v11
+  - &cache_version v15
 
 commands:
   prepare_workspace:
@@ -315,7 +315,7 @@ jobs:
     steps:
       - prepare_workspace:
           cache_prefix: e2e-
-          skip_deps: "{@sly-react/storybook,@sly-react/mobile}"
+          skip_deps: "{@sly-react/mobile}"
 
       # - run:
       #     name: Clone SlyApi
@@ -354,11 +354,11 @@ jobs:
 
       - run:
           name: Waiting for Local Go to be up and running
-          command: npx wait-on -i 1000 -s 1 -t 60000 http-get://localhost:8080/v0/ping
+          command: npx wait-on -i 1000 -s 1 -t 120000 http-get://localhost:8080/v0/ping
 
       - run:
           name: Waiting for Local React to be up and running
-          command: npx wait-on -i 1000 -s 1 -t 600000 -d 60000 http-get://localhost:8000/assisted-living/california/san-francisco/lmavia-of-san-francisco
+          command: npx wait-on -i 1000 -s 1 -t 120000 http-get://localhost:8000/ping
 
       - run:
           name: Run Cypress tests

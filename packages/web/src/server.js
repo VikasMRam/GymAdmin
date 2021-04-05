@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import path from 'path';
-import 'isomorphic-fetch';
 
+import 'isomorphic-fetch';
 import express from 'express';
 import React from 'react';
 import serialize from 'serialize-javascript';
@@ -12,29 +12,35 @@ import { StaticRouter } from 'react-router';
 import { cache } from 'emotion';
 import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
+import nodeFetch from 'node-fetch';
+import builder from 'xmlbuilder';
+import ConvertAnsi from 'ansi-to-html';
 
 import { cleanError } from 'sly/web/services/helpers/logging';
-import { port, host, publicPath, isDev } from 'sly/web/config';
+import { port, host, publicPath, isDev, cmsUrl } from 'sly/web/config';
 import { configure as configureStore } from 'sly/web/store';
 import Html from 'sly/web/components/Html';
-import Error from 'sly/web/components/Error';
+import ErrorComponent from 'sly/web/components/Error';
 import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConfigs';
 import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
+import endpoints from 'sly/web/services/api/endpoints';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 
+const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
     return <Redbox error={err} />;
   }
-  return <Error />;
+  return <ErrorComponent />;
 };
 
 const renderHtml = ({
-  initialState, content, sheet, extractor,
+  initialState, content, sheet, extractor, icons,
 }) => {
   const linkElements = (extractor && extractor.getLinkElements()) || [];
-  const styleElements = (sheet && sheet.getStyleElement()) || [];
   const scriptElements = (extractor && extractor.getScriptElements()) || [];
+  const styleElements = (sheet && sheet.getStyleElement()) || [];
 
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
@@ -46,12 +52,53 @@ const renderHtml = ({
     linkElements,
     styleElements,
     scriptElements,
+    icons,
   };
   const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
 };
 
 const app = express();
+
+const getResourceCenterSitemapXML = (req, res) => {
+  const options = {
+    method: 'GET',
+    headers: { 'content-type': 'application/json' },
+  };
+
+  nodeFetch(`${cmsUrl}${endpoints.getTopic.path}`, options)
+    .then(res => res.json())
+    .then((topics) => {
+      nodeFetch(`${cmsUrl}${endpoints.getArticlesForSitemap.path}`, options)
+        .then(res => console.log('First then') || res.json())
+        .then((data) => {
+          const root = builder.create('urlset', {
+            version: '1.0',
+            encoding: 'UTF-8',
+          });
+          root.att({ xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9' });
+          const resourcesHomePageUrl = root.ele('url');
+          resourcesHomePageUrl.ele('loc', `${host}${RESOURCE_CENTER_PATH}`);
+          resourcesHomePageUrl.ele('priority', 0.9);
+          topics.forEach(({ slug }) => {
+            const url = root.ele('url');
+            url.ele('loc', `${host}${RESOURCE_CENTER_PATH}/${slug}`);
+            url.ele('priority', 0.9);
+          });
+          Array.isArray(data) && data.forEach(({ slug, updated_at: updatedAt, mainTopic }) => {
+            const url = root.ele('url');
+            url.ele('loc', `${host}${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`);
+            url.ele('lastmod', updatedAt);
+            url.ele('priority', 0.9);
+          });
+          res.end(root.end({ pretty: true }));
+        })
+        .catch(() => res.status(500).send({ title: 'There are some issues on server, please try again' }));
+    })
+    .catch(() => res.status(500).send({ title: 'There are some issues on server, please try again' }));
+};
+
+app.get('/sitemap/resource-center.xml', getResourceCenterSitemapXML);
 
 app.disable('x-powered-by');
 
@@ -90,12 +137,13 @@ app.use(async (req, res, next) => {
     const sheet = new ServerStyleSheet();
     const context = {};
     const apiContext = { promises: [] };
+    const icons = {};
 
     const app = sheet.collectStyles(extractor.collectChunks((
       <CacheProvider value={cache}>
         <Provider store={store}>
           <StaticRouter context={context} location={req.url}>
-            <ClientApp apiContext={apiContext} />
+            <ClientApp apiContext={apiContext} icons={icons} />
           </StaticRouter>
         </Provider>
       </CacheProvider>
@@ -122,6 +170,7 @@ app.use(async (req, res, next) => {
         content,
         sheet,
         extractor,
+        icons,
       }));
     }
   } catch (error) {
@@ -132,7 +181,16 @@ app.use(async (req, res, next) => {
 // render error
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
-  const errorContent = getErrorContent(err);
+  const htmlError = new Error();
+  // eslint-disable-next-line no-restricted-syntax, guard-for-in, vars-on-top
+  for (const k in err) htmlError[k] = err[k];
+  htmlError.message = (
+    <pre
+      style={{ background: 'pink' }}
+      dangerouslySetInnerHTML={{ __html: convertAnsi.toHtml(err.message) }}
+    />
+  );
+  const errorContent = getErrorContent(htmlError);
   const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
   const assets = [];
   res.status(500).send(renderHtml({ content, sheet, assets }));
@@ -142,13 +200,18 @@ app.use((err, req, res, next) => {
 // error log
 app.use((err, req, res, next) => {
   if (err) {
-    const errorObj = {
-      ts: new Date().toISOString(),
-      status: res.statusCode,
-      url: req.originalUrl,
-      error: cleanError(err),
-    };
-    console.error(errorObj);
+    if (!isDev) {
+      const errorObj = {
+        ts: new Date().toISOString(),
+        status: res.statusCode,
+        url: req.originalUrl,
+        error: cleanError(err),
+      };
+      console.error(errorObj);
+    } else {
+      err.message = `${res.statusCode} ${req.originalUrl} ${err.message}`;
+      console.error(err);
+    }
   }
   next();
 });

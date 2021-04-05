@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
-import styled, { css } from 'styled-components';
 
 import config from 'sly/web/config';
-import { size, palette } from 'sly/common/components/themes';
-import Span from 'sly/web/components/atoms/Span';
-import { Icon, Block, Hr, Link, Heading } from 'sly/common/components/atoms';
+import { Logo, Linkedin, Twitter, Facebook } from 'sly/common/icons/index';
+import Heading from 'sly/common/system/Heading';
+import Block from 'sly/common/system/Block';
+import Link from 'sly/common/system/Link';
+import Span from 'sly/common/system/Span';
 
 const currentYear = (new Date()).getFullYear();
 
@@ -12,7 +13,7 @@ const aboutUs = {
   'Our story': '/about',
   'Contact us': '/contact',
   'Press and media': '/about#/#press',
-  'Careers': 'https://angel.co/company/seniorly/jobs',
+  Careers: 'https://angel.co/company/seniorly/jobs',
 };
 
 const typesOf = {
@@ -39,88 +40,85 @@ const forPartners = {
   'Partner communities': '/partners/communities',
 };
 
-const Body = styled.div`
-  width: 100%;
-  margin: 0 auto;
-  padding: 24px;
-  border-bottom: none;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-  }
+const Body = ({ children, ...props }) =>
+  (<Block
+    width="100%"
+    margin="0 auto"
+    padding="l"
+    sx$laptop={{
+    width: 'col12',
+    display: 'flex',
+    marginBottom: 'l',
+    paddingX: '0',
+    paddingBottom: '0',
+    '> *': {
+      flex: '1 1 0px',
+    },
+  }}
+  >
+    {children}
+  </Block>);
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-    display: flex;
-    > * {
-      flex: 1 1 0px;
-    }
-    border-bottom: 1px solid ${palette('slate.lighter-90')};
-    padding-bottom: 0px;
-    margin-bottom: 24px;
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-`;
 
-const FooterGroup = styled.div`
-  padding-top: 24px;
-  border-bottom: 1px solid ${palette('slate.lighter-90')};
+const FooterGroup = ({ children, ...props }) => (
+  <Block
+    borderBottom="1px solid"
+    borderColor="slate.lighter-90"
+    paddingTop="l"
+    {...props}
+  >{children}
+  </Block>);
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    border-bottom: none;
-  }
-`;
 
-const GroupHeading = styled(Heading)`
-  text-transform: uppercase;
-`;
+const GroupHeading = ({ children, ...props }) =>
+  (<Heading
+    {...props}
+  >{children}
+  </Heading>);
+
 
 GroupHeading.defaultProps = {
-  font: 'label',
-  palette: 'slate.lighter-30',
-  pad: 'xLarge',
+  font: 'body-xs',
+  color: 'slate.lighter-40',
+  marginBottom: 'l',
+  textTransform: 'uppercase',
 };
 
 const Links = ({ items }) => (
   <Block
-    css={css`
-      display: flex;
-      flex-direction: column;
-      padding-bottom: 12px;
-
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      @media screen and (min-width: ${size('breakpoint.laptop')}) {
-        flex-direction: column;
-      }
-
-      > a {
-        display: block;
-        margin-bottom: 12px;
-        padding-right: 16px;
-
-        @media screen and (min-width: ${size('breakpoint.tablet')}) {
-          width: calc(100%/3);
-        }
-
-        @media screen and (min-width: ${size('breakpoint.laptop')}) {
-          width: 100%;
-        }
-        &:hover {
-          color: ${palette('primary', 'base')};
-          text-decoration: underline;
-        }
-      }
-
-    `}
+    display="flex"
+    flexDirection="column"
+    paddingBottom="s"
+    sx$tablet={{
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    }}
+    sx$laptop={{
+      flexDirection: 'column',
+    }}
+    sx={{
+      '> a': {
+        display: 'block',
+        marginBottom: 's',
+        paddingRight: 'm',
+        '@tablet': {
+          width: 'calc(100%/3)',
+        },
+        '@laptop': {
+          width: '100%',
+        },
+        '&:hover': {
+          color: 'viridian.base',
+          textDecoration: 'underline',
+        },
+      },
+    }}
   >
     {Object.entries(items).map(([name, url]) => (
       <Link
-        palette="slate"
-        font="body-small"
+        color="slate.base"
+        fontSize="body-s"
         to={url}
       >
         {name}
@@ -129,45 +127,54 @@ const Links = ({ items }) => (
   </Block>
 );
 
-const Bottom = styled.div`
-  margin: 0 auto;
-  position: relative;
-  padding: 0px 24px 24px;
 
-  .left {
-    display: flex;
-    flex-direction: column;
-    ${Icon} {
-      margin-bottom: 24px;
-    }
-  }
-
-  .right {
-    position: absolute;
-    top: 0px;
-    right: 24px;
-    > a {
-      margin-left: 12px;
-      color: ${palette('slate.base')}
-    }
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    .left {
-      flex-direction: row;
-      align-items: center;
-      ${Icon} {
-        margin-bottom: 0px;
-        margin-right: 12px;
-      }
-    }
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-    display: flex;
-  }
-`;
+const Bottom = ({ children, ...props }) =>
+  (<Block
+    margin="0 auto"
+    position="relative"
+    paddingX="l"
+    paddingBottom="l"
+    sx={{
+  '.left': {
+    display: 'flex',
+    flexDirection: 'column',
+    svg: {
+      marginBottom: 'l',
+    },
+  },
+  '.right': {
+    position: 'absolute',
+    top: '0px',
+    right: '24px',
+    '> a': {
+      marginLeft: 's',
+      color: 'slate.base',
+    },
+  },
+  '@tablet': {
+    '.left': {
+      flexDirection: 'row',
+      alignItems: 'center',
+      svg: {
+        marginBottom: 'initial',
+        marginRight: 's',
+      },
+    },
+  },
+  '@laptop': {
+    width: 'col12',
+    display: 'flex',
+    '.left': {
+      svg: {
+        marginBottom: 'initial',
+        marginRight: 's',
+      },
+    },
+  },
+}}
+    {...props}
+  >{children}
+  </Block>);
 
 const Footer = () => (
   <Block as="footer" background="harvest.lighter-90">
@@ -192,21 +199,23 @@ const Footer = () => (
 
     <Bottom>
       <div className="left">
-        <Link to="/"><Icon icon="logo" size={32} marginTop="-4px" /></Link>
-        <Span font="body-small">
+        <Link to="/">
+          <Logo size="l" marginTop="-4px" />
+        </Link>
+        <Span fontSize="body-s">
           &copy;
           Seniorly {currentYear}
-          <Span palette="slate.lighter-30">{config.version}</Span>
-          {' '}· <Link to="/privacy">Privacy</Link>
-          {' '}· <Link to="/tos">Terms</Link>
-          {' '}· <Link to="/sitemap">Sitemap</Link>
+          <Span >{config.version}</Span>
+          {' '}· <Link color="slate.base" to="/privacy">Privacy</Link>
+          {' '}· <Link color="slate.base" to="/tos">Terms</Link>
+          {' '}· <Link color="slate.base" to="/sitemap">Sitemap</Link>
         </Span>
       </div>
       <div className="right">
-        <Link href="https://www.facebook.com/seniorly/posts"><Icon icon="facebook" /></Link>
-        <Link href="https://www.instagram.com/seniorlyinc"><Icon icon="instagram" /></Link>
-        <Link href="https://twitter.com/Seniorly"><Icon icon="twitter" /></Link>
-        <Link href="https://www.linkedin.com/company/seniorly"><Icon icon="linkedin" /></Link>
+        <Link href="https://www.facebook.com/seniorly/posts"><Facebook /></Link>
+        <Link href="https://www.instagram.com/seniorlyinc"><Facebook /></Link>
+        <Link href="https://twitter.com/Seniorly"><Twitter /></Link>
+        <Link href="https://www.linkedin.com/company/seniorly"><Linkedin /></Link>
       </div>
     </Bottom>
   </Block>

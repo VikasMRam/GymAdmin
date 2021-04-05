@@ -10,7 +10,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
 import { hideChatbox } from 'sly/web/config';
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
@@ -35,6 +35,12 @@ import {
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  RESOURCE_CENTER_PATH,
+  RESOURCE_CENTER_AUTHOR_PATH,
+  RESOURCE_CENTER_ARTICLE_PATH,
+  RESOURCE_CENTER_TOPIC_PATH,
+  RESOURCE_CENTER_SEARCH_PATH,
+  RESOURCE_CENTER_SITEMAP_PATH,
 } from 'sly/web/constants/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
@@ -85,6 +91,16 @@ const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackCh
 
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
+
+const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/resourceCenter'));
+const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/components/resourceCenter/Author'));
+const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/components/resourceCenter/Article'));
+const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/components/resourceCenter/Topic'));
+const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/components/resourceCenter/Search'));
+const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/components/resourceCenter/Sitemap'));
+
+// styleguide
+const StyleGuide = loadable(() => import(/* webpackChunkName: "chunkStyleGuide" */ 'sly/web/styleguide/StyleGuide'));
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -324,13 +340,43 @@ const routes = [
     component: AssessmentWizardPageContainer,
     exact: true,
   },
-  // {
-  //   path: `/nusearch/:toc(${careTypes.join('|')})/:state/:city`,
-  //   component: SearchContainer,
-  // },
+  {
+    path: '/styleguide/:section',
+    component: StyleGuide,
+  },
   {
     path: '/',
     component: HomePageContainer,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_SITEMAP_PATH,
+    component: ResourceCenterSitemapPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_PATH,
+    component: ResourceCenterHomePage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_AUTHOR_PATH,
+    component: ResourceCenterAuthorPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_SEARCH_PATH,
+    component: ResourceCenterSearchResultPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_TOPIC_PATH,
+    component: ResourceCenterTopicPage,
+    exact: true,
+  },
+  {
+    path: RESOURCE_CENTER_ARTICLE_PATH,
+    component: ResourceCenterArticlePage,
     exact: true,
   },
 ];
@@ -359,7 +405,7 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <Helmet titleTemplate="%s | Seniorly">
+        <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters={true}>
           <title>Find The Best Senior Living Options Near You</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />

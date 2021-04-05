@@ -6,9 +6,32 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach",
-            "port": 9229
+            "cwd": "${workspaceFolder}/packages/common",
+            "request": "launch",
+            "name": "React/common jest system/index",
+            "console": "integratedTerminal",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "args": [
+                "system/index"
+            ],
+        },
+        {
+            "type": "node",
+            "cwd": "${workspaceFolder}/packages/common",
+            "request": "launch",
+            "name": "React/common jest",
+            "console": "integratedTerminal",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "args": [
+                "${input:fileName}"
+            ],
+        },
+    ],
+    "inputs": [
+        {
+            "id": "fileName",
+            "type": "promptString",
+            "description": "File name or path"
         },
     ]
 }

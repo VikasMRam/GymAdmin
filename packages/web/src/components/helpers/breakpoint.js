@@ -8,13 +8,13 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import debounce from 'lodash/debounce';
 import { node } from 'prop-types';
 
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 
 export const MOBILE = 'mobile';
 export const TABLET = 'tablet';
 export const LAPTOP = 'laptop';
 
-const { breakpoint: breakpoints } = theme.sizes;
+const { breakpoint: breakpoints } = theme;
 
 const sizes = Object.keys(breakpoints).reduce((acc, key) => {
   acc[key] = parseInt(breakpoints[key], 10);
@@ -64,7 +64,7 @@ class Breakpoint {
 
   width = () => this.currentWidth;
 
-  isMobile = () => this.is(MOBILE);
+  isMobile = () => this.upTo(TABLET);
   isTablet = () => this.is(TABLET);
   isLaptop = () => this.is(LAPTOP);
 }

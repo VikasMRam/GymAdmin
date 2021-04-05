@@ -7,7 +7,7 @@ import { size } from 'sly/common/components/themes';
 import { withHydration } from 'sly/web/services/partialHydration';
 import BaseHeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import FooterOrganism from 'sly/web/components/organisms/Footer';
+import FooterOrganism from 'sly/web/components/organisms/Footer/communityFooter';
 import BaseModalContainer from 'sly/web/containers/ModalContainer';
 
 const HeaderContainer = withHydration(BaseHeaderContainer);

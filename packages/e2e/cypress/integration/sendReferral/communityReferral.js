@@ -36,12 +36,12 @@ function addtestCommunity() {
 
 function addfamilyContact() {
   const { name, phone, email } = randomUser();
-  waitForHydration(cy.get('form input[label*=\'Contact name\']')).type(name);
-  waitForHydration(cy.get('form input[id*=email]').last()).type(email);
-  waitForHydration(cy.get('form input[id*=phone]')).type(phone);
-  waitForHydration(cy.get('form input[placeholder*="Search by city, state, zip"]')).type(community.city);
+  waitForHydration(cy.get('form input[label*=\'Contact name\']')).type(name, { force: true });
+  waitForHydration(cy.get('form input[id*=email]').last()).type(email, { force: true });
+  waitForHydration(cy.get('form input[id*=phone]')).type(phone, { force: true });
+  waitForHydration(cy.get('form input[placeholder*="Search by city, state, zip"]')).type(community.city, { force: true });
   cy.get('div[class*=SearchBox__Suggestion]').contains(community.city)
-    .click();
+    .click({ force: true });
   waitForHydration(cy.get('form select[id*=source]')).select('Voicemail');
 }
 
@@ -98,7 +98,7 @@ describe('Sending Referral to Community', () => {
     it('Create lead', () => {
       cy.login();
       cy.visit('/dashboard/agent/my-families/new');
-      waitForHydration(cy.get('div [class*=DashboardAgentFamilyOverviewSection__TwoColumn]').contains('Add family')).click('right');
+      waitForHydration(cy.get('div [class*=DashboardAgentFamilyOverviewSection__TwoColumn]').contains('Add family')).click('right', { force: true });
       addfamilyContact();
       waitForHydration(cy.get('button').contains('Create')).click({ force: true });
       select('div[class*=Notifications]').contains('Family added successfully');

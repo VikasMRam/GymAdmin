@@ -9,7 +9,7 @@ import { loadStories } from './storyLoader';
 import './addons';
 
 import { addAppWrapper } from 'sly/storybook/preview.common';
-import theme from 'sly/common/components/themes/default';
+import theme from 'sly/common/system/theme';
 
 configure(() => {
   loadStories();

@@ -8,7 +8,7 @@ import PostConversionAskNotHelpModal from 'sly/web/components/organisms/PostConv
 const onDismiss = action('onDismiss');
 const onAccept = action('onAccept');
 
-storiesOf('Organisms|PostConversionAskNotHelpModal', module)
+storiesOf('Organisms|EntryModal', module)
   .add('default', () => (
     <PostConversionAskNotHelpModal onDismiss={onDismiss} onAccept={onAccept} community={RhodaGoldmanPlaza} />
   ));
