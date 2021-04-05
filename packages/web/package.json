@@ -105,6 +105,7 @@
     "use-resize-observer": "6.1.0",
     "uuid": "7.0.2",
     "validator": "13.0.0",
-    "yall-js": "3.1.7"
+    "yall-js": "3.1.7",
+    "sanitize-html":"2.3.3"
   }
 }
