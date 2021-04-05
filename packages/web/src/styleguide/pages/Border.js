@@ -43,7 +43,7 @@ const Border = props => (
     {...props}
   >
     <Paragraph pad="m">
-      These are values that can be used when adding border to elements along with any standard css values. See <Link to="/styleguide/block">Block Page</Link> for all available props that these border tokens and value can be used with.
+      These are values that can be used when adding border to elements along with any standard css values. See <Link to="/styleguide/block">Block Page</Link> for all available props that these border tokens can be used with.
     </Paragraph>
 
     <Example
