@@ -5,6 +5,7 @@ import { array } from 'prop-types';
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
 import { host } from 'sly/web/config';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { getKey } from 'sly/common/components/themes';
 import Heading from 'sly/common/system/Heading';
 import redirectTo from 'sly/common/services/redirectTo/redirectTo';
 
@@ -38,7 +39,7 @@ const articleDZComponentsNames = {
   link: 'link',
   listWithIcons: 'list-with-icons',
   advisors: 'advisors',
-}
+};
 
 const CommunityAndAdvisorsWrapper = styled(Link)`
   & {
@@ -207,12 +208,16 @@ const ArticleContent = ({ content: data }) => {
             );
           }
           if (__component.includes(articleDZComponentsNames.image)) {
+            const isFullSizeImage = rest.size === 'large';
+            const tabletWidth = getKey(`layout.col${(rest.size === 'middle' && 8) || (rest.size === 'small' && 6)}`);
+            const laptopWidth = getKey(`layout.col${(rest.size === 'middle' && 12) || (rest.size === 'small' && 8)}`);
+
             return (
               <Fragment key={index}>
                 <Block
                   marginBottom={rest.image?.alternativeText ? 'xs' : 'xl'}
                   marginTop="xs"
-                  width={(rest.size === 'large' && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && sx`calc(100% - ${space('m')} * 2)`)}
+                  width={(isFullSizeImage && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && sx`calc(100% - ${space('m')} * 2)`)}
                   sx$tablet={{
                     width: (rest.size === 'middle' && 'col8') || (rest.size === 'small' && 'col6'),
                     marginBottom: rest.image?.alternativeText ? 'm' : 'xxl',
@@ -223,9 +228,18 @@ const ArticleContent = ({ content: data }) => {
                   }}
                 >
                   <Image
-                    aspectRatio="16:9"
-                    src={rest.image?.url}
                     alt={rest.image?.alternativeText}
+                    aspectRatio="3:2"
+                    {...(!isFullSizeImage ? {
+                      path: rest.image?.path,
+                      sources: [
+                        288,
+                        393,
+                        tabletWidth?.slice(0, tabletWidth.length - 3) * 16,
+                        laptopWidth?.slice(0, laptopWidth.length - 3) * 16,
+                      ],
+                      sizes: `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}, ${laptopWidth}`,
+                    } : { src: rest.image?.url })}
                   />
                 </Block>
                 {rest.image?.alternativeText && (

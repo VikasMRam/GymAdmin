@@ -8,6 +8,7 @@ import { object } from 'prop-types';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
+import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Heading from 'sly/common/system/Heading';
@@ -75,9 +76,11 @@ const Author = ({ match, location }) => {
             sx$laptop={{ marginRight: '7.625rem' }}
           >
             <Image
-              css={{ objectFit: 'cover', width: '100%', height: '100%' }}
-              src={requestInfo?.result?.[0]?.img?.url}
+              path={requestInfo?.result?.[0]?.img?.path}
               alt={requestInfo?.result?.[0]?.img?.alternativeText}
+              aspectRatio="1:1"
+              sources={[160, 240]}
+              sizes="(max-width: 727px) 160px, 240px"
             />
           </Block>
           <div>
@@ -93,7 +96,7 @@ const Author = ({ match, location }) => {
               font="body-l"
               pad={['xxl', 'xxxl']}
               dangerouslySetInnerHTML={{
-                __html: requestInfo?.result?.[0]?.fullDescription
+                __html: requestInfo?.result?.[0]?.fullDescription,
               }}
             />
           </div>

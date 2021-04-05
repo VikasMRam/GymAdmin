@@ -1,12 +1,15 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 
-import React from 'react';
-import styled, { css } from 'styled-components';
+import React, { memo } from 'react';
+import styled  from 'styled-components';
+import { array, object } from 'prop-types';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { sx, layout, space } from 'sly/common/system/sx';
+import { getKey } from 'sly/common/components/themes';
+import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Flex from 'sly/common/system/Flex';
@@ -27,6 +30,7 @@ const ExploreTopicInfo = styled(Block)`
   left: 0;
   overflow: hidden;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
+  z-index: 1;
 `;
 
 const StyledLink = styled(Link)`
@@ -44,6 +48,82 @@ const StyledLink = styled(Link)`
     }
   }
 `;
+
+const getLinkToTopic = slug => `${RESOURCE_CENTER_PATH}/${slug}`;
+const getTopicImgAlt = name => `${name} image`;
+const topicSizes = `(max-width: 727px) 100vw, (max-width: 1079px) ${getKey('layout.col4')}, ${getKey('layout.col6')}`;
+
+const Topics = ({ topics, breakpoint }) => (
+  <Grid
+    sx={{
+      justifyContent: 'center',
+      marginX: 'auto',
+      marginBottom: 'xxl',
+      gridTemplateColumns: sx`calc(100% - ${space('m')} * 2)`,
+      gridTemplateRows: 'repeat(6, 17rem)',
+      gridRowGap: 'm',
+    }}
+    sx$tablet={{
+      gridTemplateColumns: sx`repeat(2, ${layout('col4')})`,
+      gridTemplateRows: 'repeat(3, 17.7rem)',
+      gridColumnGap: 'l',
+      gridRowGap: 'l',
+      marginBottom: 'xxxl',
+    }}
+    sx$laptop={{
+      gridTemplateColumns: sx`repeat(2, ${layout('col6')})`,
+    }}
+  >
+    {topics?.map(({ slug, name, description, img }) => (
+      <StyledLink
+        key={slug}
+        to={getLinkToTopic(slug)}
+      >
+        <Block border="round" overflow="hidden" height="100%" position="relative">
+          <Image
+            css={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              objectFit: 'cover',
+              width: '100%',
+              height: '100%',
+            }}
+            path={img?.path}
+            alt={getTopicImgAlt(name)}
+            sources={[328, 504, 695]}
+            sizes={topicSizes}
+            {...(breakpoint?.upToTablet()
+                ? { height: 272 }
+                : { aspectRatio: breakpoint?.atLeastLaptop() ? '16:9' : '7:6' }
+            )}
+          />
+          <ExploreTopicInfo
+            border="box"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end"
+            width="100%"
+            height="100%"
+            padding="l"
+          >
+            <Block font="title-m" color="white.base" marginBottom="s">{name}</Block>
+            <Block font="body-m" color="white.base">{description}</Block>
+          </ExploreTopicInfo>
+        </Block>
+      </StyledLink>))}
+  </Grid>
+);
+
+Topics.propTypes = {
+  topics: array,
+  breakpoint: object,
+};
+
+const TopicsWithBreakpoint = withBreakpoint(memo(Topics, (prevProps, nextProps) =>
+  prevProps.breakpoint?.upToTablet() === nextProps.breakpoint?.upToTablet() &&
+  prevProps.breakpoint?.atLeastLaptop() === nextProps.breakpoint?.atLeastLaptop(),
+));
 
 const HomePage = () => {
   const { requestInfo } = usePrefetch('getResourceCenterMainInfo');
@@ -120,60 +200,7 @@ const HomePage = () => {
         Explore Topics
       </Block>
 
-      <Grid
-        sx={{
-          justifyContent: 'center',
-          marginX: 'auto',
-          marginBottom: 'xxl',
-          gridTemplateColumns: sx`calc(100% - ${space('m')} * 2)`,
-          gridTemplateRows: 'repeat(6, 17rem)',
-          gridRowGap: 'm',
-        }}
-        sx$tablet={{
-          gridTemplateColumns: sx`repeat(2, ${layout('col4')})`,
-          gridTemplateRows: 'repeat(3, 17rem)',
-          gridColumnGap: 'l',
-          gridRowGap: 'l',
-          marginBottom: 'xxxl',
-        }}
-        sx$laptop={{
-          gridTemplateColumns: sx`repeat(2, ${layout('col6')})`,
-        }}
-      >
-        {topicRes?.map(({ slug, name, description, img }) => (
-          <StyledLink
-            key={slug}
-            to={`${RESOURCE_CENTER_PATH}/${slug}`}
-          >
-            <Block border="round" overflow="hidden" height="100%">
-              <Image
-                css={css({
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: '100%',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                })}
-                src={img?.url}
-                alt={`${name} img`}
-              />
-              <ExploreTopicInfo
-                border="box"
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end"
-                width="100%"
-                height="100%"
-                padding="l"
-              >
-                <Block font="title-m" color="white.base" marginBottom="s">{name}</Block>
-                <Block font="body-m" color="white.base">{description}</Block>
-              </ExploreTopicInfo>
-            </Block>
-          </StyledLink>
-          ))}
-      </Grid>
+      <TopicsWithBreakpoint topics={topicRes} />
 
       <SubscribeEmail />
 

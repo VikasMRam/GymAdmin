@@ -4,13 +4,13 @@ import React, { useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { object } from 'prop-types';
-import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
 import { cmsUrl } from 'sly/web/config';
+import { getKey } from 'sly/common/components/themes';
 import apiFetch from 'sly/web/services/api/apiFetch';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
@@ -136,9 +136,11 @@ const ArticlePage = ({ match }) => {
           sx$laptop={{ width: 'col10' }}
         >
           <Image
-            sx={{ width: '100%', height: 'auto' }}
-            src={requestInfo?.result?.[0]?.mainImg?.url}
+            path={requestInfo?.result?.[0]?.mainImg?.path}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
+            aspectRatio="3:2"
+            sources={[288, 393, 695, 856]}
+            sizes={`(max-width: 727px) 100vw, (max-width: 1079px) ${getKey('layout.col8')}, ${getKey('layout.col10')}`}
           />
         </Block>
 
@@ -189,7 +191,7 @@ const ArticlePage = ({ match }) => {
         sx$laptop={{ width: 'col8' }}
       >
         <AuthorPreview
-          url={requestInfo?.result?.[0]?.author.img?.url}
+          path={requestInfo?.result?.[0]?.author.img?.path}
           shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
           alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
           fullName={requestInfo?.result?.[0]?.author.fullName}
