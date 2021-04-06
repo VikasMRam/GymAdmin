@@ -380,7 +380,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentRejectReason={currentRejectReason}
         canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE) || userIsOwner}
         userIsOwner={userIsOwner}
-        isCommunityUser = {entityType === PROVIDER_ENTITY_TYPE_COMMUNITY }
+        isCommunityUser={entityType === PROVIDER_ENTITY_TYPE_COMMUNITY }
       />
     );
   }

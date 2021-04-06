@@ -340,11 +340,8 @@ const ArticleContent = ({ content: data }) => {
                 }}
               >
                 {rest.advisors?.map((item, index) => (
-                  <CommunityAndAdvisorsWrapper key={item.slug}>
-                    <AdvisorPreview
-                      onClick={e => e.preventDefault()}// TODO: after adding attribute 'to' remove handler
-                      {...{ ...item, index: index + 1 }}
-                    />
+                  <CommunityAndAdvisorsWrapper key={item.slug} to={item.info.url}>
+                    <AdvisorPreview {...{ ...item, index: index + 1 }} />
                   </CommunityAndAdvisorsWrapper>
                 ))}
                 <Block sx$tablet={{ display: 'none' }} />

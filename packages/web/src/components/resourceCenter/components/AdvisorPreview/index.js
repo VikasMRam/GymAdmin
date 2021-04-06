@@ -1,10 +1,10 @@
 import React from 'react';
 import { object } from 'prop-types';
 
-import Block from 'sly/common/system/Block';
-import Image from 'sly/common/system/Image';
 import { getKey, size } from 'sly/common/components/themes';
 import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
+import Block from 'sly/common/system/Block';
+import Image from 'sly/common/system/Image';
 
 const AdvisorPreview = ({ info }) => {
   const { profileImageUrl, bio, citiesServed, displayName } = info || {};

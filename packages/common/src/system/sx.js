@@ -7,8 +7,7 @@ import _text from './_props/text';
 import _border from './_props/border';
 import _color from './_props/color';
 import { template, makeMediaQueries } from './util';
-
-import { compose, get } from '.';
+import { compose, get } from './system';
 
 export { template };
 

@@ -40,6 +40,7 @@ export { default as Flower } from './Flower';
 export { default as Food } from './Food';
 export { default as Garage } from './Garage';
 export { default as Help } from './Help';
+export { default as Instagram } from './Instagram';
 export { default as Kitchen } from './Kitchen';
 export { default as Laundry } from './Laundry';
 export { default as Light } from './Light';
