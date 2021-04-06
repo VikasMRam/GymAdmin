@@ -169,6 +169,10 @@ export const ICONS = [
     "help"
   ],
   [
+    "Instagram",
+    "instagram"
+  ],
+  [
     "Kitchen",
     "kitchen"
   ],
