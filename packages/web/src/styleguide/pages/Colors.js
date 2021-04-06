@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { get } from 'sly/common/system';
+import { get } from 'sly/common/system/system';
 import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Heading from 'sly/common/system/Heading';
