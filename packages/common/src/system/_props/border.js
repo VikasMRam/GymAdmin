@@ -1,4 +1,4 @@
-import { system } from 'sly/common/system';
+import { system } from 'sly/common/system/system';
 
 const config = {
   border: {
