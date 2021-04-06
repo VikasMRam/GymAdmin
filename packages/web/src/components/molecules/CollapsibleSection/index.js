@@ -147,6 +147,7 @@ CollapsibleSection.defaultProps = {
   size: 'regular',
   headingWeight: 'medium',
   borderless: false,
+  showIf: true,
 };
 
 export default CollapsibleSection;
