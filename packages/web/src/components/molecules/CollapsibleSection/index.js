@@ -21,21 +21,36 @@ const Section = styled.section`
 `;
 
 const contentHeight = ({ collapsed, maxHeight }) => (!collapsed ? `${maxHeight}px` : 0);
-const Content = styled.div`
-  height: ${contentHeight};
-  transition: height ${key('transitions.default')};
-  ${ifProp('collapsed', css`
-    overflow: hidden;
-  `, css`
-    overflow: visible;
-    animation: 0.4s delay-overflow;
-  `)};
-  @keyframes delay-overflow {
-    from { overflow: hidden; }
-  }
+
+const ContentWrapper = styled.div`
+height: ${contentHeight};
+transition: height ${key('transitions.default')};
+${ifProp('collapsed', css`
+  overflow: hidden;
+`, css`
+  overflow: visible;
+  animation: 0.4s delay-overflow;
+`)};
+@keyframes delay-overflow {
+  from { overflow: hidden; }
+}
 `;
 
-Content.displayName = 'Content';
+// const Content = styled.div`
+//   height: ${contentHeight};
+//   transition: height ${key('transitions.default')};
+//   ${ifProp('collapsed', css`
+//     overflow: hidden;
+//   `, css`
+//     overflow: visible;
+//     animation: 0.4s delay-overflow;
+//   `)};
+//   @keyframes delay-overflow {
+//     from { overflow: hidden; }
+//   }
+// `;
+
+// Content.displayName = 'Content';
 
 const getHeadingSize = (size) => {
   switch (size) {
@@ -120,9 +135,12 @@ const CollapsibleSection = ({
           <Icon icon="chevron" palette="slate" flip={!collapsed} />
         )}
       </Block>
-      <Content ref={measureRef} maxHeight={maxHeight} collapsed={collapsed} {...props}>
-        {children}
-      </Content>
+      <ContentWrapper maxHeight={maxHeight} collapsed={collapsed} {...props}>
+        <div ref={measureRef}>
+          {children}
+        </div>
+      </ContentWrapper>
+
     </Section>
   );
 };
