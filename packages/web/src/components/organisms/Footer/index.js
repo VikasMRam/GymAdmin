@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import config from 'sly/web/config';
-import { Logo, Linkedin, Twitter, Facebook } from 'sly/common/icons/index';
+import { Logo, Linkedin, Twitter, Facebook, Instagram } from 'sly/common/icons/index';
 import Heading from 'sly/common/system/Heading';
 import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
@@ -213,7 +213,7 @@ const Footer = () => (
       </div>
       <div className="right">
         <Link href="https://www.facebook.com/seniorly/posts"><Facebook /></Link>
-        <Link href="https://www.instagram.com/seniorlyinc"><Facebook /></Link>
+        <Link href="https://www.instagram.com/seniorlyinc"><Instagram /></Link>
         <Link href="https://twitter.com/Seniorly"><Twitter /></Link>
         <Link href="https://www.linkedin.com/company/seniorly"><Linkedin /></Link>
       </div>
