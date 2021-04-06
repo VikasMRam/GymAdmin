@@ -1,4 +1,4 @@
-import { system } from '.';
+import { system } from './system';
 
 const breakpoint = {
   mobile: '300px',

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { system, get, getCardinalValue, compose } from 'sly/common/system';
+import { system, get, getCardinalValue, compose } from 'sly/common/system/system';
 
 // eslint-disable-next-line no-restricted-globals
 const isNumber = n => typeof n === 'number' && !isNaN(n);

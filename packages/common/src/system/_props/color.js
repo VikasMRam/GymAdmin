@@ -1,4 +1,4 @@
-import { system, get } from 'sly/common/system';
+import { system, get } from 'sly/common/system/system';
 
 export const getColor = (n, scale) => {
   return get(scale,
