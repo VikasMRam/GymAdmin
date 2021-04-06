@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { createShouldForwardProp } from 'sly/common/system';
+import { createShouldForwardProp } from 'sly/common/system/system';
 import { withSystem } from 'sly/common/system/sx';
 
 const shouldForwardProp = createShouldForwardProp(withSystem);

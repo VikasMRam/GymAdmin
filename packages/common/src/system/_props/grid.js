@@ -1,4 +1,4 @@
-import { system, getCardinalValue } from 'sly/common/system';
+import { system, getCardinalValue } from 'sly/common/system/system';
 
 const config = {
   gridGap: {
