@@ -116,7 +116,7 @@ const CollapsibleSection = ({
           {title}
         </Heading>
         {showResizeControls && (
-          <Icon icon="chevron" palette="slate" flip={!collapsed} />
+          <Icon rotate={1} icon="chevron" palette="slate" flip={!collapsed} />
         )}
       </Block>
       <ContentWrapper maxHeight={maxHeight} collapsed={collapsed} {...props}>
