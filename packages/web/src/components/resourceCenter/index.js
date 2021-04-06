@@ -7,7 +7,7 @@ import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { sx, layout, space } from 'sly/common/system/sx';
-import { getKey } from 'sly/common/components/themes';
+import theme from 'sly/common/system/theme';
 import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Flex from 'sly/common/system/Flex';
@@ -33,7 +33,6 @@ const ExploreTopicInfo = styled(Block)`
 
 const StyledLink = styled(Link)`
   & {
-    max-height: 17rem;
     position: relative;
 
     &:hover::before {
@@ -128,7 +127,8 @@ const HomePage = () => {
           justifyContent: 'center',
           marginX: 'auto',
           marginBottom: 'xxl',
-          gridTemplateColumns: sx`calc(100% - ${space('m')} * 2)`,
+          paddingX: 'm',
+          gridTemplateColumns: `minmax(auto, ${theme.layout.col4[1]})`,
           gridRowGap: 'm',
         }}
         sx$tablet={{
@@ -137,6 +137,7 @@ const HomePage = () => {
           gridColumnGap: 'l',
           gridRowGap: 'l',
           marginBottom: 'xxxl',
+          paddingX: 0,
         }}
         sx$laptop={{
           gridTemplateColumns: sx`repeat(2, ${layout('col6')})`,
@@ -149,11 +150,11 @@ const HomePage = () => {
           >
             <Block border="round" overflow="hidden" height="100%">
               <Image
-                sx$laptop={{ paddingTop: getKey('sizes.picture.ratios.16:9') }}
+                sx$laptop={{ paddingTop: '56.25%' }}
                 path={img?.path}
                 alt={`${name} image`}
-                sources={[328, 504, 695]}
-                sizes="(max-width: 727px) 100vw, (max-width: 1079px) 328px, 504px"
+                sources={[parseFloat(theme.layout.col4[1]), parseFloat(theme.layout.col6)]}
+                sizes={`(max-width: ${parseFloat(theme.breakpoint.laptop) - 1}px) ${theme.layout.col4[1]}, ${theme.layout.col6}`}
                 aspectRatio="7:6"
               />
               <ExploreTopicInfo

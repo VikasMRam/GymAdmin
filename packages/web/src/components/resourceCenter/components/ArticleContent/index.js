@@ -209,8 +209,8 @@ const ArticleContent = ({ content: data }) => {
           }
           if (__component.includes(articleDZComponentsNames.image)) {
             const isFullSizeImage = rest.size === 'large';
-            const tabletWidth = getKey(`layout.col${(rest.size === 'middle' && 8) || (rest.size === 'small' && 6)}`);
-            const laptopWidth = getKey(`layout.col${(rest.size === 'middle' && 12) || (rest.size === 'small' && 8)}`);
+            const tabletWidth = theme.layout[`col${(rest.size === 'middle' && 8) || (rest.size === 'small' && 6)}`];
+            const laptopWidth = theme.layout[`col${(rest.size === 'middle' && 12) || (rest.size === 'small' && 8)}`];
 
             return (
               <Fragment key={index}>
@@ -235,10 +235,10 @@ const ArticleContent = ({ content: data }) => {
                       sources: [
                         288,
                         393,
-                        tabletWidth?.slice(0, tabletWidth.length - 3) * 16,
-                        laptopWidth?.slice(0, laptopWidth.length - 3) * 16,
+                        parseFloat(tabletWidth) * 16,
+                        parseFloat(laptopWidth) * 16,
                       ],
-                      sizes: `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}, ${laptopWidth}`,
+                      sizes: `(max-width: ${parseFloat(theme.breakpoint.tablet) - 1}px) 100vw, (max-width: ${parseFloat(theme.breakpoint.laptop) - 1}px) ${tabletWidth}, ${laptopWidth}`,
                     } : { src: rest.image?.url })}
                   />
                 </Block>

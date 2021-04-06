@@ -1,6 +1,5 @@
 import React from 'react';
 import { object } from 'prop-types';
-import styled, { css } from 'styled-components';
 
 import Block from 'sly/common/system/Block';
 import Image from 'sly/common/system/Image';

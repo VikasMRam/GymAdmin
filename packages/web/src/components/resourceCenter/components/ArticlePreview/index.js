@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, bool, object, string } from 'prop-types';
 
-import Block from 'sly/common/system/Block';
+import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
 import { space } from 'sly/common/system/sx';
+import theme from 'sly/common/system/theme';
+import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
 import Heading from 'sly/common/system/Heading';
 import Link from 'sly/common/system/Link';
-import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 
 const StyledLink = styled(Link)`
@@ -67,7 +68,7 @@ const ArticlePreview = ({
         sources={[...(smallSizeOnPhone ? [280] : []), 328]}
         sizes={
           smallSizeOnPhone
-            ? '(max-width: 727px) 280px, 328px'
+            ? `(max-width: ${parseFloat(theme.breakpoint.tablet) - 1}px) 280px, 328px`
             : '328px'
         }
       />

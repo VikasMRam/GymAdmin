@@ -10,7 +10,7 @@ import { formatDate } from 'sly/web/services/helpers/date';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
 import { cmsUrl } from 'sly/web/config';
-import { getKey } from 'sly/common/components/themes';
+import theme from 'sly/common/system/theme';
 import apiFetch from 'sly/web/services/api/apiFetch';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
@@ -40,6 +40,8 @@ const BlockHr = () => (
     }}
   />
 );
+
+const getSourceForMobile = breakpoint => (breakpoint - 1) - (parseFloat(theme.space.m) * 2);
 
 const ArticlePage = ({ match }) => {
   const articleRef = useRef(null);
@@ -139,8 +141,13 @@ const ArticlePage = ({ match }) => {
             path={requestInfo?.result?.[0]?.mainImg?.path}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
             aspectRatio="3:2"
-            sources={[288, 393, 695, 856]}
-            sizes={`(max-width: 727px) 100vw, (max-width: 1079px) ${getKey('layout.col8')}, ${getKey('layout.col10')}`}
+            sources={[
+              288, // TODO: should add breakpoint for width 425px and 320px
+              393,
+              getSourceForMobile(parseFloat(theme.breakpoint.tablet)),
+              parseFloat(theme.layout.col8) * 16,
+            ]}
+            sizes={`(max-width: ${parseFloat(theme.breakpoint.tablet) - 1}px) 100vw, (max-width: ${parseFloat(theme.breakpoint.laptop) - 1}px) ${theme.layout.col8}, ${theme.layout.col}`}
           />
         </Block>
 
