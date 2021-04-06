@@ -5,7 +5,6 @@ import { array } from 'prop-types';
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
 import { host } from 'sly/web/config';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { getKey } from 'sly/common/components/themes';
 import Heading from 'sly/common/system/Heading';
 import redirectTo from 'sly/common/services/redirectTo/redirectTo';
 
