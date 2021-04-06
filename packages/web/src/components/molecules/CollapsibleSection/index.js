@@ -36,22 +36,6 @@ ${ifProp('collapsed', css`
 }
 `;
 
-// const Content = styled.div`
-//   height: ${contentHeight};
-//   transition: height ${key('transitions.default')};
-//   ${ifProp('collapsed', css`
-//     overflow: hidden;
-//   `, css`
-//     overflow: visible;
-//     animation: 0.4s delay-overflow;
-//   `)};
-//   @keyframes delay-overflow {
-//     from { overflow: hidden; }
-//   }
-// `;
-
-// Content.displayName = 'Content';
-
 const getHeadingSize = (size) => {
   switch (size) {
     case 'small':
