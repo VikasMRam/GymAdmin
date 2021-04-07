@@ -9,6 +9,7 @@ import Heading from 'sly/common/system/Heading';
 import redirectTo from 'sly/common/services/redirectTo/redirectTo';
 
 import { sx$tablet, sx$laptop, sx, space } from 'sly/common/system/sx';
+import theme from 'sly/common/system/theme';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Grid from 'sly/common/system/Grid';
@@ -21,6 +22,7 @@ import Image from 'sly/common/system/Image';
 import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
 import CommunityPreview from 'sly/web/components/resourceCenter/components/CommunityPreview';
 import AdvisorPreview from 'sly/web/components/resourceCenter/components/AdvisorPreview';
+import LinksBlock from "sly/web/components/resourceCenter/components/ArticleLinksBlock";
 
 import EditorValueWrapper from './EditorValueWrapper';
 import FAQItem from './FAQItem';
@@ -38,6 +40,7 @@ const articleDZComponentsNames = {
   link: 'link',
   listWithIcons: 'list-with-icons',
   advisors: 'advisors',
+  linksBlock: 'links-block',
 };
 
 const CommunityAndAdvisorsWrapper = styled(Link)`
@@ -135,12 +138,13 @@ const ArticleContent = ({ content: data }) => {
         width="100%"
       >
         {content?.map(({ __component, ...rest }, index) => {
-          if (__component.includes(articleDZComponentsNames.search)) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} />
-          if (__component.includes(articleDZComponentsNames.editor)) return <EditorValueWrapper key={index} value={rest.value}/>;
-          if (__component.includes(articleDZComponentsNames.subtitle)) {
+          const componentName = __component.split('.')[1];
+          if (componentName === articleDZComponentsNames.search) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} />
+          if (componentName === articleDZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
+          if (componentName === articleDZComponentsNames.subtitle) {
             return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
           }
-          if (__component.includes(articleDZComponentsNames.listInTwoColumns)) return (
+          if (componentName === articleDZComponentsNames.listInTwoColumns) return (
             <ListInTwoColumnsWrapper
               key={index}
               dangerouslySetInnerHTML={{ __html: rest.listInTwoColumnsValue }}
@@ -149,7 +153,7 @@ const ArticleContent = ({ content: data }) => {
               sx$laptop={{ width: 'col8' }}
             />
           );
-          if (__component.includes(articleDZComponentsNames.quote)) return (
+          if (componentName === articleDZComponentsNames.quote) return (
            <Fragment key={index}>
              <QuoteDescription
                as="blockquote"
@@ -170,7 +174,7 @@ const ArticleContent = ({ content: data }) => {
              />
            </Fragment>
           );
-          if (__component.includes(articleDZComponentsNames.faq))
+          if (componentName === articleDZComponentsNames.faq)
             return <FAQItem
               key={index}
               title={rest.title}
@@ -178,7 +182,7 @@ const ArticleContent = ({ content: data }) => {
               withMarginBottom={!content[index + 1]?.__component.includes(articleDZComponentsNames.faq)}
               withMarginTop={!content[index - 1]?.__component.includes(articleDZComponentsNames.faq)}
             />;
-          if (__component.includes(articleDZComponentsNames.link)) {
+          if (componentName === articleDZComponentsNames.link) {
             const isResourceCenterRoute = rest.to.includes(`${host}${RESOURCE_CENTER_PATH}`);
             const splitPath = rest.to.split(host);
             return (
@@ -206,7 +210,7 @@ const ArticleContent = ({ content: data }) => {
               </Flex>
             );
           }
-          if (__component.includes(articleDZComponentsNames.image)) {
+          if (componentName === articleDZComponentsNames.image) {
             const isFullSizeImage = rest.size === 'large';
             const tabletWidth = theme.layout[`col${(rest.size === 'middle' && 8) || (rest.size === 'small' && 6)}`];
             const laptopWidth = theme.layout[`col${(rest.size === 'middle' && 12) || (rest.size === 'small' && 8)}`];
@@ -256,7 +260,7 @@ const ArticleContent = ({ content: data }) => {
               </Fragment>
             )
           }
-          if (__component.includes(articleDZComponentsNames.listWithIcons)) {
+          if (componentName === articleDZComponentsNames.listWithIcons) {
             return (
               <Block
                 key={index}
@@ -283,7 +287,7 @@ const ArticleContent = ({ content: data }) => {
               </Block>
             )
           }
-          if (__component.includes(articleDZComponentsNames.community)) {
+          if (componentName === articleDZComponentsNames.community) {
             return (
               <Grid
                 key={index}
@@ -315,7 +319,7 @@ const ArticleContent = ({ content: data }) => {
               </Grid>
             )
           }
-          if (__component.includes(articleDZComponentsNames.advisors)) {
+          if (componentName === articleDZComponentsNames.advisors) {
             return (
               <Grid
                 key={index}
@@ -346,6 +350,24 @@ const ArticleContent = ({ content: data }) => {
                 ))}
                 <Block sx$tablet={{ display: 'none' }} />
               </Grid>
+            )
+          }
+          if (componentName === articleDZComponentsNames.linksBlock) {
+            return (
+              <Block
+                key={index}
+                marginBottom="l"
+                marginX="m"
+                width={sx`calc(100% - ${space('m')} * 2)`}
+                sx$tablet={{ marginBottom: 'xl', marginX: 'auto', width: 'col6' }}
+                sx$laptop={{ width: 'col8' }}
+              >
+                <LinksBlock
+                  title={rest.title}
+                  description={rest.description}
+                  links={rest.link}
+                />
+              </Block>
             )
           }
           return '';
