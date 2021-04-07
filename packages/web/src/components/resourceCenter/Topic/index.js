@@ -16,7 +16,6 @@ import {
   ARTICLES_RANGE_FOR_PAGINATION,
 } from 'sly/web/components/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
-import { getKey, palette, size } from 'sly/common/components/themes';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -262,7 +261,7 @@ const Topic = ({ match, location, history }) => {
                   alternativeText: mainImg?.alternativeText,
                   title,
                   shortDescription,
-                  url: mainImg?.url,
+                  path: mainImg?.path,
                   topic: mainTopic,
                   tagsList,
                   to: `${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`,

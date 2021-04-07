@@ -93,7 +93,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
             {...{
               smallSizeOnPhone: true,
               topic: mainTopic,
-              url: mainImg?.url,
+              path: mainImg?.path,
               alternativeText: mainImg?.alternativeText,
               title,
               shortDescription,

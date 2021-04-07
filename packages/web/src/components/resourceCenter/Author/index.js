@@ -75,9 +75,11 @@ const Author = ({ match, location }) => {
             sx$laptop={{ marginRight: '7.625rem' }}
           >
             <Image
-              css={{ objectFit: 'cover', width: '100%', height: '100%' }}
-              src={requestInfo?.result?.[0]?.img?.url}
+              path={requestInfo?.result?.[0]?.img?.path}
               alt={requestInfo?.result?.[0]?.img?.alternativeText}
+              aspectRatio="1:1"
+              sources={[160, 240]}
+              sizes="(max-width: 727px) 160px, 240px"
             />
           </Block>
           <div>
@@ -93,7 +95,7 @@ const Author = ({ match, location }) => {
               font="body-l"
               pad={['xxl', 'xxxl']}
               dangerouslySetInnerHTML={{
-                __html: requestInfo?.result?.[0]?.fullDescription
+                __html: requestInfo?.result?.[0]?.fullDescription,
               }}
             />
           </div>

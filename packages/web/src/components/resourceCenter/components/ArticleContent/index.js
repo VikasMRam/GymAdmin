@@ -210,12 +210,16 @@ const ArticleContent = ({ content: data }) => {
             );
           }
           if (componentName === articleDZComponentsNames.image) {
+            const isFullSizeImage = rest.size === 'large';
+            const tabletWidth = (rest.size === 'middle' && 680) || (rest.size === 'small' && 504);
+            const laptopWidth = (rest.size === 'middle' && 1032) || (rest.size === 'small' && 680);
+
             return (
               <Fragment key={index}>
                 <Block
                   marginBottom={rest.image?.alternativeText ? 'xs' : 'xl'}
                   marginTop="xs"
-                  width={(rest.size === 'large' && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && sx`calc(100% - ${space('m')} * 2)`)}
+                  width={(isFullSizeImage && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && sx`calc(100% - ${space('m')} * 2)`)}
                   sx$tablet={{
                     width: (rest.size === 'middle' && 'col8') || (rest.size === 'small' && 'col6'),
                     marginBottom: rest.image?.alternativeText ? 'm' : 'xxl',
@@ -226,9 +230,18 @@ const ArticleContent = ({ content: data }) => {
                   }}
                 >
                   <Image
-                    aspectRatio="16:9"
-                    src={rest.image?.url}
                     alt={rest.image?.alternativeText}
+                    aspectRatio="3:2"
+                    {...(!isFullSizeImage ? {
+                      path: rest.image?.path,
+                      sources: [
+                        288,
+                        393,
+                        tabletWidth,
+                        laptopWidth,
+                      ],
+                      sizes: `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}px, ${laptopWidth}px`,
+                    } : { src: rest.image?.url })}
                   />
                 </Block>
                 {rest.image?.alternativeText && (

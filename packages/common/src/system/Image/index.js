@@ -88,7 +88,7 @@ export default class Image extends React.Component {
     sources: array,
     children: any,
     onLoadFailed: func,
-    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
+    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '7:6', '1:1']),
   };
 
   static defaultProps = {

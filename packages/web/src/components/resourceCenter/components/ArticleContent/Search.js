@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { getKey, size } from 'sly/common/components/themes';
+import { size } from 'sly/common/components/themes';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import { sx, space } from 'sly/common/system/sx';
 import Block from 'sly/common/system/Block';

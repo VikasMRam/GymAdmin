@@ -4,7 +4,6 @@ import React, { useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
 import { object } from 'prop-types';
-import styled, { css } from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { formatDate } from 'sly/web/services/helpers/date';
@@ -135,9 +134,17 @@ const ArticlePage = ({ match }) => {
           sx$laptop={{ width: 'col10' }}
         >
           <Image
-            sx={{ width: '100%', height: 'auto' }}
-            src={requestInfo?.result?.[0]?.mainImg?.url}
+            path={requestInfo?.result?.[0]?.mainImg?.path}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
+            aspectRatio="3:2"
+            sources={[
+              288,
+              393,
+              680,
+              695,
+              856,
+            ]}
+            sizes="(max-width: 727px) 100vw, (max-width: 1079px) 680px, 856px"
           />
         </Block>
 
