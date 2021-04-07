@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 import { func, string, object } from 'prop-types';
 
 import QuotesCarroussel from './QuotesCarroussel';
@@ -10,7 +10,8 @@ import Guides from './Guides';
 import Section from './Section';
 
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import { Heading, Block, Button, Hr, Grid } from 'sly/common/components/atoms';
+import { Hr } from 'sly/common/components/atoms';
+import { Heading, Block, Button, Grid } from 'sly/common/system';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import { startingWith } from 'sly/common/components/helpers/media';
@@ -70,13 +71,17 @@ const HomePage = ({
           sizes="30vw"
         />
         {/* <BannerNotificationAdContainer type="wizardHome" noMarginBottom /> */}
-        <Section css={css`
-          display: flex;
-          flex-direction: column;
-          position: relative;
-          z-index: 100;
-          ${startingWith('laptop', css({ flexDirection: 'row', alignItems: 'center' }))}
-        `}
+        <Section
+          display="flex"
+          flexDirection="column"
+          position="relative"
+          sx={{
+            zIndex: 100,
+          }}
+          sx$laptop={{
+            flexDirection: 'row',
+            alginItems: 'center',
+          }}
         >
           <Block css={css`
             margin-bottom: 48px;
@@ -84,43 +89,43 @@ const HomePage = ({
             ${startingWith('laptop', css({ marginRight: '64px', marginBottom: '0px' }))}
           `}
           >
-            <Heading font="title-xxl" pad="large">
+            <Heading font="title-xxl" pad="l">
               Find a senior living community you’ll love.
             </Heading>
             <Block
               font="body-l"
-              css={css`
-              margin-bottom: 48px;
-              ${startingWith('tablet', css({ marginBottom: '24px' }))}
-            `}
+              pad="l"
             >
               Seniorly makes it easier to choose the right community for your needs and budget. And it’s free.
             </Block>
             <Button
               to="/wizards/assessment?cta=speakExpert&entry=homepage"
-              kind="jumbo"
-              upToTablet={{
-                width: '100%',
+              width="100%"
+              paddingY="m"
+              height="l"
+              sx$tablet={{
+                width: 'initial',
+                paddingX: 'xxl',
               }}
             >
               Get started
             </Button>
           </Block>
           <Grid
-            gap="large"
-            flow="row"
-            startingWithTablet={{
+            gridGap="m"
+            flexDirection="row"
+            sx$tablet={{
               gridTemplateColumns: '1fr 1fr!important',
             }}
-            startingWithLaptop={{
+            sx$laptop={{
               gridTemplateColumns: 'unset!important',
               width: 376,
               flexShrink: 0,
             }}
           >
             <Grid
-              gap="large"
-              dimensions={['1fr', '1fr']}
+              gridGap="m"
+              gridTemplateColumns="1fr 1fr"
             >
               <ResponsiveImage
                 path="react-assets/home/hero-1.webp"
@@ -138,8 +143,8 @@ const HomePage = ({
               />
             </Grid>
             <Grid
-              gap="large"
-              dimensions={['1fr', '1fr']}
+              gridGap="m"
+              gridTemplateColumns="1fr 1fr"
             >
               <ResponsiveImage
                 path="react-assets/home/hero-3.webp"
@@ -180,44 +185,53 @@ const HomePage = ({
       <QuotesCarroussel css={blockPad} />
 
       <Grid
-        upToTablet={{
-          display: 'flex!important',
-          flexDirection: 'column-reverse',
+        flexDirection="column-reverse"
+        display="flex"
+        gridTemplateColumns="50% 50%"
+        sx$tablet={{
+          display: 'grid',
+          flexDirection: 'row',
         }}
       >
         <Block
           background="primary"
-          padding="xLarge"
-          align="center"
-          verticalAlign="middle"
+          padding="l"
+          justifyContent="center"
+          alignItems="center"
           display="flex"
         >
           <Block
-            width="480px"
-            upToTablet={{
-              width: 'auto!important',
+            width="auto"
+            sx$tablet={{
+              width: '480px',
             }}
           >
             <Block
-              weight="medium"
-              size="displayS"
-              pad="xLarge"
-              palette="white"
-              upToTablet={{
-                textAlign: 'center',
+              font="title-m"
+              pad="l"
+              color="white"
+              textAlign="center"
+              sx$tablet={{
+                textAlign: 'initial',
               }}
             >
               See why thousands of families in your area trust Seniorly to find their next home.
             </Block>
             <Button
               background="primary"
-              palette="white"
+              palette="viridian"
               borderPalette="white"
-              to="/wizards/assessment?cta=speakExpert&entry=homepage"
-              kind="jumbo"
-              upToTablet={{
-                width: '100%',
+              border="m"
+              borderRadius="xxs"
+              borderColor="white"
+              width="100%"
+              paddingY="m"
+              height="l"
+              sx$tablet={{
+                width: 'initial',
+                paddingX: 'xxl',
               }}
+              to="/wizards/assessment?cta=speakExpert&entry=homepage"
             >
               Get started
             </Button>
