@@ -2,31 +2,28 @@ import React from 'react';
 import { string, node, object } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { Heading, Block, Button } from 'sly/common/components/atoms';
+import { Heading, Block, Button } from 'sly/common/system';
 import { Image } from 'sly/web/components/atoms';
 
 const HomeCTABox = ({ image, heading, children, buttonText, buttonPalette, buttonProps }) => (
   <Block
     background="harvest.lighter-90"
-    padding="xLarge"
-    paddingTop="xxxLarge"
-    borderRadius="regular"
->
-    <Block textAlign="center" pad="xLarge">
+    padding="l"
+    paddingTop="xxl"
+    borderRadius="xs"
+  >
+    <Block textAlign="center" pad="l">
       <Image src={image} />
     </Block>
-    <Heading pad="large" size="displayS" align="center">{heading}</Heading>
-    <Block size="subtitle" weight="regular" pad="xLarge" align="center">
+    <Heading pad="m" font="title-m" textAlign="center">{heading}</Heading>
+    <Block font="body-l" pad="l" textAlign="center">
       {children}
     </Block>
-    <Block align="center" display="flex">
+    <Block alignItems="center" display="flex">
       <Button
         width="100%"
         align="center"
-        background={buttonPalette}
-        startingWithTablet={{
-          maxWidth: '280px',
-        }}
+        palette={buttonPalette}
         {...buttonProps}
       >
         {buttonText}

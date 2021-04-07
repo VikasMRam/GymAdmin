@@ -92,7 +92,7 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
             onClick: onButtonClick,
           }}
         >
-          Want to explore communities on your own? No problem. We give you the tools to navigate through over 40,000 of the best communities—with access to monthly pricing and exclusive photos.
+          Want to explore communities on your own? No problem. We give you the tools to navigate through over 40,000 of the best communities—with access to pricing and exclusive photos.
         </HomeCTABox>
       </Grid>
     </Section>

@@ -80,7 +80,7 @@ const HomePage = ({
           }}
           sx$laptop={{
             flexDirection: 'row',
-            alginItems: 'center',
+            alignItems: 'center',
           }}
         >
           <Block css={css`
