@@ -4,7 +4,6 @@ import { array, bool, object, string } from 'prop-types';
 
 import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
 import { space } from 'sly/common/system/sx';
-import theme from 'sly/common/system/theme';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
@@ -68,7 +67,7 @@ const ArticlePreview = ({
         sources={[...(smallSizeOnPhone ? [280] : []), 328]}
         sizes={
           smallSizeOnPhone
-            ? `(max-width: ${parseFloat(theme.breakpoint.tablet) - 1}px) 280px, 328px`
+            ? '(max-width: 727px) 280px, 328px'
             : '328px'
         }
       />
@@ -90,7 +89,6 @@ const ArticlePreview = ({
 
       <ArticleTags topic={topic} tagsList={tagsList} />
     </Block>
-
   </Flex>
 );
 

@@ -7,7 +7,6 @@ import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { sx, layout, space } from 'sly/common/system/sx';
-import theme from 'sly/common/system/theme';
 import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Flex from 'sly/common/system/Flex';
@@ -128,7 +127,7 @@ const HomePage = () => {
           marginX: 'auto',
           marginBottom: 'xxl',
           paddingX: 'm',
-          gridTemplateColumns: `minmax(auto, ${theme.layout.col4[1]})`,
+          gridTemplateColumns: 'minmax(auto, 20.5rem)',
           gridRowGap: 'm',
         }}
         sx$tablet={{
@@ -153,8 +152,8 @@ const HomePage = () => {
                 sx$laptop={{ paddingTop: '56.25%' }}
                 path={img?.path}
                 alt={`${name} image`}
-                sources={[parseFloat(theme.layout.col4[1]), parseFloat(theme.layout.col6)]}
-                sizes={`(max-width: ${parseFloat(theme.breakpoint.laptop) - 1}px) ${theme.layout.col4[1]}, ${theme.layout.col6}`}
+                sources={[328, 504]}
+                sizes="(max-width: 1079px) 328px, 504px"
                 aspectRatio="7:6"
               />
               <ExploreTopicInfo

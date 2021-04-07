@@ -8,7 +8,6 @@ import { object } from 'prop-types';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
-import theme from 'sly/common/system/theme';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Heading from 'sly/common/system/Heading';
@@ -80,7 +79,7 @@ const Author = ({ match, location }) => {
               alt={requestInfo?.result?.[0]?.img?.alternativeText}
               aspectRatio="1:1"
               sources={[160, 240]}
-              sizes={`(max-width: ${parseFloat(theme.breakpoint.tablet) - 1}px) 10rem, ${theme.layout.col3[1]}`}
+              sizes="(max-width: 727px) 160px, 240px"
             />
           </Block>
           <div>

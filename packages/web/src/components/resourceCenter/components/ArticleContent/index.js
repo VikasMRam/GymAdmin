@@ -9,7 +9,6 @@ import Heading from 'sly/common/system/Heading';
 import redirectTo from 'sly/common/services/redirectTo/redirectTo';
 
 import { sx$tablet, sx$laptop, sx, space } from 'sly/common/system/sx';
-import theme from 'sly/common/system/theme';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Grid from 'sly/common/system/Grid';
@@ -212,8 +211,8 @@ const ArticleContent = ({ content: data }) => {
           }
           if (componentName === articleDZComponentsNames.image) {
             const isFullSizeImage = rest.size === 'large';
-            const tabletWidth = theme.layout[`col${(rest.size === 'middle' && 8) || (rest.size === 'small' && 6)}`];
-            const laptopWidth = theme.layout[`col${(rest.size === 'middle' && 12) || (rest.size === 'small' && 8)}`];
+            const tabletWidth = (rest.size === 'middle' && 680) || (rest.size === 'small' && 504);
+            const laptopWidth = (rest.size === 'middle' && 1032) || (rest.size === 'small' && 680);
 
             return (
               <Fragment key={index}>
@@ -238,10 +237,10 @@ const ArticleContent = ({ content: data }) => {
                       sources: [
                         288,
                         393,
-                        parseFloat(tabletWidth) * 16,
-                        parseFloat(laptopWidth) * 16,
+                        tabletWidth,
+                        laptopWidth,
                       ],
-                      sizes: `(max-width: ${parseFloat(theme.breakpoint.tablet) - 1}px) 100vw, (max-width: ${parseFloat(theme.breakpoint.laptop) - 1}px) ${tabletWidth}, ${laptopWidth}`,
+                      sizes: `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}px, ${laptopWidth}px`,
                     } : { src: rest.image?.url })}
                   />
                 </Block>
