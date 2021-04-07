@@ -23,7 +23,6 @@ import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
-import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
@@ -145,21 +144,6 @@ const ArticlePage = ({ match }) => {
         <ArticleContent content={requestInfo?.result?.[0]?.content} />
 
       </Flex>
-
-      {!!requestInfo?.result?.[0]?.linkBlockList?.length && (
-        <Block
-          marginY="l"
-          marginX="m"
-          sx$tablet={{ marginY: 'xl', marginX: 'auto', width: 'col6' }}
-          sx$laptop={{ width: 'col8' }}
-        >
-          <LinksBlock
-            title={requestInfo?.result?.[0]?.linkBlockTitle}
-            description={requestInfo?.result?.[0]?.linkBlockDescription}
-            links={requestInfo?.result?.[0]?.linkBlockList}
-          />
-        </Block>
-      )}
 
       <Block
         marginBottom="l"
