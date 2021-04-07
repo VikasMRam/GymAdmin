@@ -23,7 +23,6 @@ import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
-import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
@@ -146,21 +145,6 @@ const ArticlePage = ({ match }) => {
 
       </Flex>
 
-      {!!requestInfo?.result?.[0]?.linkBlockList?.length && (
-        <Block
-          marginY="l"
-          marginX="m"
-          sx$tablet={{ marginY: 'xl', marginX: 'auto', width: 'col6' }}
-          sx$laptop={{ width: 'col8' }}
-        >
-          <LinksBlock
-            title={requestInfo?.result?.[0]?.linkBlockTitle}
-            description={requestInfo?.result?.[0]?.linkBlockDescription}
-            links={requestInfo?.result?.[0]?.linkBlockList}
-          />
-        </Block>
-      )}
-
       <Block
         marginBottom="l"
         marginX="m"
@@ -183,20 +167,22 @@ const ArticlePage = ({ match }) => {
 
       <BlockHr />
 
-      <Block
-        marginX="m"
-        sx$tablet={{ margin: '0 auto', width: 'col6' }}
-        sx$laptop={{ width: 'col8' }}
-      >
-        <AuthorPreview
-          url={requestInfo?.result?.[0]?.author.img?.url}
-          shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
-          alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
-          fullName={requestInfo?.result?.[0]?.author.fullName}
-          firstName={requestInfo?.result?.[0]?.author.firstName}
-          slug={requestInfo?.result?.[0]?.author.slug}
-        />
-      </Block>
+      {requestInfo?.result?.[0]?.author && (
+        <Block
+          marginX="m"
+          sx$tablet={{ margin: '0 auto', width: 'col6' }}
+          sx$laptop={{ width: 'col8' }}
+        >
+          <AuthorPreview
+            url={requestInfo?.result?.[0]?.author.img?.url}
+            shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
+            alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
+            fullName={requestInfo?.result?.[0]?.author.fullName}
+            firstName={requestInfo?.result?.[0]?.author.firstName}
+            slug={requestInfo?.result?.[0]?.author.slug}
+          />
+        </Block>
+      )}
 
       <BlockHr />
 
