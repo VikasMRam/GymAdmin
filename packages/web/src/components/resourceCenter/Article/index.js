@@ -192,20 +192,22 @@ const ArticlePage = ({ match }) => {
 
       <BlockHr />
 
-      <Block
-        marginX="m"
-        sx$tablet={{ margin: '0 auto', width: 'col6' }}
-        sx$laptop={{ width: 'col8' }}
-      >
-        <AuthorPreview
-          path={requestInfo?.result?.[0]?.author.img?.path}
-          shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
-          alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
-          fullName={requestInfo?.result?.[0]?.author.fullName}
-          firstName={requestInfo?.result?.[0]?.author.firstName}
-          slug={requestInfo?.result?.[0]?.author.slug}
-        />
-      </Block>
+      {requestInfo?.result?.[0]?.author && (
+        <Block
+          marginX="m"
+          sx$tablet={{ margin: '0 auto', width: 'col6' }}
+          sx$laptop={{ width: 'col8' }}
+        >
+          <AuthorPreview
+            url={requestInfo?.result?.[0]?.author.img?.url}
+            shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
+            alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
+            fullName={requestInfo?.result?.[0]?.author.fullName}
+            firstName={requestInfo?.result?.[0]?.author.firstName}
+            slug={requestInfo?.result?.[0]?.author.slug}
+          />
+        </Block>
+      )}
 
       <BlockHr />
 
