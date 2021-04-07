@@ -12,7 +12,6 @@ export { default as Care } from './Care';
 export { default as Checkbox } from './Checkbox';
 export { default as CheckmarkCircle } from './CheckmarkCircle';
 export { default as Checkmark } from './Checkmark';
-export { default as ChevronRight } from './ChevronRight';
 export { default as Chevron } from './Chevron';
 export { default as CircleStroke } from './CircleStroke';
 export { default as Close2 } from './Close2';

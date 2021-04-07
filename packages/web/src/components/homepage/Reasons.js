@@ -50,7 +50,9 @@ const Reasons = () => {
           path="react-assets/home/laptopA.webp"
           alt="smarter-way"
         />
-        <div>
+        <Block
+          margin="auto 0"
+        >
           <Heading
             font="title-l"
             pad="m"
@@ -70,7 +72,7 @@ const Reasons = () => {
             <IconItem icon="security" iconPalette="harvest">Community pricing with full transparency</IconItem>
             <IconItem icon="star" iconPalette="harvest">Customers rate us 4 out of 5 stars</IconItem>
           </Grid>
-        </div>
+        </Block>
       </Grid>
       <Grid
         gridGap="m"
@@ -92,6 +94,7 @@ const Reasons = () => {
           sx$laptop={{
             direction: 'ltr',
           }}
+          margin="auto 0"
         >
           <Heading
             font="title-l"
@@ -129,7 +132,7 @@ const Reasons = () => {
           path="react-assets/home/laptopC.webp"
           alt="smarter-way"
         />
-        <div>
+        <Block margin="auto 0">
           <Heading
             font="title-l"
             pad="m"
@@ -150,7 +153,7 @@ const Reasons = () => {
             <IconItem icon="message" iconPalette="harvest">Stay in touch with your personal advisor</IconItem>
             <IconItem icon="baseline-loyalty" iconPalette="harvest">Get special offers for other products and services</IconItem>
           </Grid>
-        </div>
+        </Block>
       </Grid>
     </Section>
   );

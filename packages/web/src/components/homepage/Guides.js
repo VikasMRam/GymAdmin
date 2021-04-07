@@ -1,38 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Section from './Section';
+
 import { size } from 'sly/common/components/themes';
 import { host } from 'sly/web/config';
 import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
-import Block from 'sly/common/components/atoms/Block';
-import Heading from 'sly/common/components/atoms/Heading';
 import Paragraph from 'sly/common/components/atoms/Paragraph';
-import Button from 'sly/common/components/atoms/Button';
 import Link from 'sly/common/components/atoms/Link';
-import Icon from 'sly/common/components/atoms/Icon';
+import { Block, Button, Heading, sx$tablet, sx$laptop } from 'sly/common/system';
+import { Chevron } from 'sly/common/icons';
 
-import Section from './Section';
 
 const Body = styled(Section)`
   display: flex;
   flex-direction: column;
   padding: 48px 24px;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 64px 24px;
-  }
+  ${sx$tablet({
+    padding: '64px 24px',
+  })}
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    flex-direction: row;
-    padding: 80px 0;
-    & > * {
-      width: calc(50% - 24px)
-    }
-    & > :first-child {
-      margin-right: 48px;
-    }
-  }
+  ${sx$laptop({
+    flexDirection: 'row',
+    paddingY: 'xxxl',
+    '& > :first-child': {
+      marginRight: 'xxl',
+      flexShrink: 20,
+    },
+    '& > :last-child': {
+      width: 'col6',
+    },
+  })}
 `;
+
+// @media screen and (min-width: ${size('breakpoint.tablet')}) {
+//   padding: 64px 24px;
+// }
+
+// @media screen and (min-width: ${size('breakpoint.laptop')}) {
+//   flex-direction: row;
+//   padding: 80px 0;
+//   & > * {
+//     width: calc(50% - 24px)
+//   }
+//   & > :first-child {
+//     margin-right: 48px;
+//   }
+// }
 
 const guides = [
   {
@@ -78,49 +93,49 @@ const Guides = (props) => {
     <Block background="harvest.lighter-90" {...props}>
       {header}
       <Body>
-        <Block pad="xLarge" flexGrow="0">
-          <Heading font="title-xl" pad="large">
+        <Block pad="l" flexGrow="0">
+          <Heading font="title-xl" pad="m">
             Resources and Helpful Guides
           </Heading>
-          <Block font="body-l" pad="xLarge">
+          <Block font="body-l" pad="l" >
             When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.
           </Block>
-          <Button {...resources}>{resources.title}</Button>
+          <Button height="l"  {...resources}>{resources.title}</Button>
         </Block>
 
+
         <Block>
-          {guides.map((guide) => (
+          {guides.map(guide => (
             <Block
               as={Link}
-              font="title-m"
+              font="title-s-azo"
               background="white.base"
-              borderRadius="regular"
-              padding="xLarge"
-              pad="large"
-              shadowOnHoverBlur="large"
-              shadowOnHoverVOffset="small"
-              shadowOnHoverPalette="black.base"
-              shadowOnHoverPaletteOpacity="10"
-              css={css`
-                display: flex;
-                align-items: center;
-                & > :first-child {
-                  flex-grow: 1;
-                }
-                &:last-child {
-                  margin-bottom: 0px;
-                }
-              `}
+              borderRadius="xs"
+              padding="l"
+              pad="m"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                '& > :first-child': {
+                  flexGrow: 1,
+                },
+                '&:last-child': {
+                  marginBottom: '0px',
+                },
+                '&:hover': {
+                  boxShadow: 'rgb(0 0 0 / 6%) 0px 0.25rem 1rem',
+                },
+              }}
               {...guide}
             >
               <span>{guide.title}</span>
-              <Icon icon="chevron" size={32} />
+              <Chevron rotation="90" size="l" />
             </Block>
           ))}
         </Block>
       </Body>
     </Block>
   );
-}
+};
 
 export default Guides;

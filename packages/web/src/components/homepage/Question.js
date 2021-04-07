@@ -5,7 +5,6 @@ import Section from './Section';
 
 import { assetPath } from 'sly/web/components/themes';
 import HomeCTABox from 'sly/web/components/organisms/HomeCTABox';
-import { getKey } from 'sly/common/components/themes';
 import { Heading, Grid } from 'sly/common/system';
 import SlyEvent from 'sly/web/services/helpers/events';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
@@ -52,7 +51,7 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
         marginX="auto"
         marginBottom="l"
       >
-        Why do 3.5 million families use Seniorly every year?
+        Why do millions of families use Seniorly every year?
       </Heading>
 
       <Grid

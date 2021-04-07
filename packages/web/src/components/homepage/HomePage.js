@@ -10,8 +10,8 @@ import Guides from './Guides';
 import Section from './Section';
 
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
-import { Hr } from 'sly/common/components/atoms';
-import { Heading, Block, Button, Grid } from 'sly/common/system';
+// import { Hr } from 'sly/common/components/atoms';
+import { Hr, Heading, Block, Button, Grid  } from 'sly/common/system';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import Footer from 'sly/web/components/organisms/Footer';
 import { startingWith } from 'sly/common/components/helpers/media';
@@ -24,11 +24,22 @@ const blockPad = css`
   ${startingWith('laptop', css({ marginBottom: 80 }))}
 `;
 
+const blockPad2 = {
+  marginBottom: 'xxl',
+  '@tablet': {
+    marginBottom: '64px',
+  },
+  '@laptop': {
+    marginBottom: 'xxxl',
+  },
+};
+
+
 const Separator = forwardRef((props, ref) => (
   <Hr
     ref={ref}
-    margin="0px"
-    css={blockPad}
+    margin="0"
+    sx={blockPad2}
     {...props}
   />
 ));
@@ -45,13 +56,23 @@ const HomePage = ({
       <Block
         as="header"
         position="relative"
-        css={css`
-          padding: 48px 0px;
-          ${startingWith('tablet', css({ padding: '64px 0px' }))}
-          ${startingWith('laptop', css({ padding: '80px 0px' }))}
+        sx={{
+          paddingY: 'xxl',
+          '@tablet': {
+            paddingY: '64px',
+          },
+          '@laptop': {
+            padding: 'xxxl',
+          },
+          ...blockPad2,
+        }}
+        // css={css`
+        //   padding: 48px 0px;
+        //   ${startingWith('tablet', css({ padding: '64px 0px' }))}
+        //   ${startingWith('laptop', css({ padding: '80px 0px' }))}
 
-          ${blockPad}
-        `}
+        //   ${blockPad}
+        // `}
       >
         <ResponsiveImage
           path="react-assets/home/cover6.jpg"
@@ -170,7 +191,7 @@ const HomePage = ({
         showModal={showModal}
         hideModal={hideModal}
         onLocationSearch={onLocationSearch}
-        css={blockPad}
+        sx={blockPad2}
       />
       <Separator />
 
