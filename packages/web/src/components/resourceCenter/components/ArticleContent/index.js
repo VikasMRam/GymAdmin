@@ -344,6 +344,7 @@ const ArticleContent = ({ content: data }) => {
                 key={index}
                 marginBottom="l"
                 marginX="m"
+                width={sx`calc(100% - ${space('m')} * 2)`}
                 sx$tablet={{ marginBottom: 'xl', marginX: 'auto', width: 'col6' }}
                 sx$laptop={{ width: 'col8' }}
               >
