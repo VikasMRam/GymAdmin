@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
+import styled from 'styled-components';
 
 import Section from './Section';
 
-import IconItem from 'sly/web/components/molecules/IconItem';
 import { Heading, Block, Grid, layout, space, sx } from 'sly/common/system';
-// import { Search, Checkmark, Security, Star, Community, List, Messages, Offer  } from 'sly/common/icons/index';
+import { Search, Checkmark, Security, Star, Community, List, Messages, Offer  } from 'sly/common/icons/index';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 
 
@@ -18,6 +18,18 @@ const ReasonImage = forwardRef((props, ref) => (
     {...props}
   />
 ));
+
+
+const IconItem = styled(Block)`
+display:flex;
+flex-direction:row;
+align-items:baseline;
+& svg {
+  margin-right:${space('s')};
+  margin-top:auto;
+  margin-bottom:auto;
+}
+`;
 
 const Reasons = () => {
   return (
@@ -67,9 +79,9 @@ const Reasons = () => {
             &nbsp;advanced technology and network of knowledgeable local experts work together to guide you to the next home you&apos;ll love.
           </Block>
           <Grid flexDirection="row" gridGap="s">
-            <IconItem icon="search" iconPalette="harvest">Customized search with curated results</IconItem>
-            <IconItem icon="security" iconPalette="harvest">Community pricing with full transparency</IconItem>
-            <IconItem icon="star" iconPalette="harvest">Customers rate us 4 out of 5 stars</IconItem>
+            <IconItem><Search color="harvest" />Customized search with curated results</IconItem>
+            <IconItem><Security color="harvest" /> Community pricing with full transparency</IconItem>
+            <IconItem><Star color="harvest" active />Customers rate us 4 out of 5 stars</IconItem>
           </Grid>
         </Block>
       </Grid>
@@ -109,10 +121,10 @@ const Reasons = () => {
             &nbsp;, your own expert who guides from the first step of your senior living journey—to the day you settle in to your new home.
           </Block>
           <Grid flexDirection="row" gridGap="s">
-            <IconItem icon="tick" iconPalette="harvest">Answers all your questions</IconItem>
-            <IconItem icon="tick" iconPalette="harvest">Shares insights and knowledge </IconItem>
-            <IconItem icon="tick" iconPalette="harvest">Tours communities with you</IconItem>
-            <IconItem icon="tick" iconPalette="harvest">Helps you choose wisely</IconItem>
+            <IconItem><Checkmark color="harvest" /> Answers all your questions</IconItem>
+            <IconItem><Checkmark color="harvest" />Shares insights and knowledge </IconItem>
+            <IconItem><Checkmark color="harvest" />Tours communities with you</IconItem>
+            <IconItem><Checkmark color="harvest" />Helps you choose wisely</IconItem>
           </Grid>
         </Block>
       </Grid>
@@ -147,10 +159,10 @@ const Reasons = () => {
             &nbsp;to help you stay organized along the way. It’s easy to communicate with your advisor and change your preferences to explore different types of communities.
           </Block>
           <Grid flexDirection="row" gridGap="s">
-            <IconItem icon="community-size-small" iconPalette="harvest">See your recommended communities</IconItem>
-            <IconItem icon="list" iconPalette="harvest">Evaluate your options efficiently</IconItem>
-            <IconItem icon="message" iconPalette="harvest">Stay in touch with your personal advisor</IconItem>
-            <IconItem icon="baseline-loyalty" iconPalette="harvest">Get special offers for other products and services</IconItem>
+            <IconItem ><Community color="harvest" /> See your recommended communities</IconItem>
+            <IconItem><List color="harvest" /> Evaluate your options efficiently</IconItem>
+            <IconItem ><Messages color="harvest" /> Stay in touch with your personal advisor</IconItem>
+            <IconItem><Offer color="harvest" /> Get special offers for other products and services</IconItem>
           </Grid>
         </Block>
       </Grid>
