@@ -53,7 +53,8 @@ const Map = ({
   selectedCommunity,
   cursor,
   currentFilters,
-  ...props }) => {
+  ...props
+}) => {
   const breakpoint = useBreakpoint();
   const [mapRef, mapDimensions] = useDimensions();
   const [mapCenter, setMapCenter] = useState(coordsFromGeoFilter(currentFilters.geo));

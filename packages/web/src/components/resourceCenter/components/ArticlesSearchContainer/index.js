@@ -24,6 +24,9 @@ const ArticlesSearchContainer = () => {
       onKeyDown={evt => evt.keyCode === 13 && onSubmit()}
       sx={{
         width: '100%',
+        button: {
+          paddingX: 's',
+        },
       }}
       inputStyles={{ width: 'auto', flexGrow: 1 }}
     />
