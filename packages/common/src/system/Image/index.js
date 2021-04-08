@@ -41,7 +41,7 @@ const ResponsiveWrapper = styled(Block)`
 `;
 
 const getAlt = (src) => {
-  if (typeof src === 'undefined') {
+  if (!src) {
     return 'Seniorly Image';
   }
   const srcParts = src.split('/');
