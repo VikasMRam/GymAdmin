@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo, createRef } from 'react';
 import styled, { css } from 'styled-components';
-import { array } from 'prop-types';
+import { array, node, number } from 'prop-types';
 
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
 import { host } from 'sly/web/config';
@@ -21,7 +21,7 @@ import Image from 'sly/common/system/Image';
 import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
 import CommunityPreview from 'sly/web/components/resourceCenter/components/CommunityPreview';
 import AdvisorPreview from 'sly/web/components/resourceCenter/components/AdvisorPreview';
-import LinksBlock from "sly/web/components/resourceCenter/components/ArticleLinksBlock";
+import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 
 import EditorValueWrapper from './EditorValueWrapper';
 import FAQItem from './FAQItem';
@@ -42,19 +42,11 @@ const articleDZComponentsNames = {
   linksBlock: 'links-block',
 };
 
-const CommunityAndAdvisorsWrapper = styled(Link)`
-  & {
-    position: relative;
+const StyledLink = styled(Link)`
+  cursor: pointer;
 
-    &:hover::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
-    }
+  &:hover {
+    box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -96,6 +88,41 @@ const ListInTwoColumnsWrapper = styled(Block)`
   }
 `;
 
+const CommunityAndAdvisorsWrapper = ({ children, itemCount, key, ...rest }) => (
+  <Grid
+    key={key}
+    sx={{
+      width: '100%',
+      overflow: 'auto',
+      gridTemplateColumns: `repeat(${itemCount}, 18rem) 1px`,
+      gridColumnGap: 'm',
+      paddingY: 'xs',
+      paddingX: 'm',
+      marginBottom: 'l',
+    }}
+    sx$tablet={{
+      overflow: 'visible',
+      width: 'col8',
+      marginBottom: 'xxl',
+      paddingBottom: 0,
+      paddingX: 0,
+      gridTemplateColumns: '100%',
+      gridTemplateRows: 'auto',
+      gridRowGap: 'm',
+    }}
+    {...rest}
+  >
+    {children}
+    <Block sx$tablet={{ display: 'none' }} />
+  </Grid>
+);
+
+CommunityAndAdvisorsWrapper.propTypes = {
+  children: node,
+  itemCount: number,
+  key: number,
+};
+
 const subtitleStyles = css`
   margin-bottom: ${space('l')};
   width: calc(100% - ${space('m')} * 2);
@@ -115,7 +142,7 @@ const isSubtitle = ({ __component }) => __component?.includes(articleDZComponent
 
 const ArticleContent = ({ content: data }) => {
   const content = useMemo(() => {
-    return data.map(item => {
+    return data.map((item) => {
       if (isSubtitle(item)) {
         return { ref: createRef(), ...item };
       }
@@ -148,7 +175,7 @@ const ArticleContent = ({ content: data }) => {
               key={index}
               dangerouslySetInnerHTML={{ __html: rest.listInTwoColumnsValue }}
               width={sx`calc(100% - ${space('m')} * 2)`}
-              sx$tablet={{ width: 'col6' }}
+              sx$tablet={{ width: 'col6', pad: 'xs' }}
               sx$laptop={{ width: 'col8' }}
             />
           );
@@ -167,7 +194,7 @@ const ArticleContent = ({ content: data }) => {
                color="slate.lighter-60"
                font="body-m"
                marginBottom="xl"
-               width={`calc(100% - ${space('m')} * 2)`}
+               width={sx`calc(100% - ${space('m')} * 2)`}
                sx$tablet={{ width: 'col4', marginBottom: 'xxl' }}
                dangerouslySetInnerHTML={{ __html: rest.title }}
              />
@@ -279,6 +306,7 @@ const ArticleContent = ({ content: data }) => {
                     <Icon icon={icon.replace(/_/g, '-')} css={{ paddingTop: space('xxs') }} />
                     <EditorValueWrapper
                       value={value}
+                      width="100%"
                       sx$tablet={{ width: '100%' }}
                     />
                   </Grid>
@@ -288,68 +316,33 @@ const ArticleContent = ({ content: data }) => {
           }
           if (componentName === articleDZComponentsNames.community) {
             return (
-              <Grid
+              <CommunityAndAdvisorsWrapper
                 key={index}
-                width="100%"
-                padding="sx m xl m"
-                sx={{
-                  overflow: 'auto',
-                  gridTemplateColumns: `repeat(${rest.communities.length}, 18rem) 1px`,
-                  gridColumnGap: 'm',
-                  paddingTop: 'm',
-                  marginBottom: 'xxl',
-                  '@tablet': {
-                    width: 'col8',
-                    overflow: 'hidden',
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    gridTemplateColumns: '100%',
-                    gridTemplateRows: `repeat(${rest.communities.length}, 10.75rem)`,
-                    gridRowGap: 'm',
-                  }
-                }}
+                itemCount={rest.communities.length}
+                gridTemplateRows="21.75rem"
               >
-                {rest.communities?.map((item, index) => console.log('item', item) || (
-                  <CommunityAndAdvisorsWrapper key={item.slug} to={item.url}>
+                {rest.communities?.map((item, index) => (
+                  <StyledLink key={item.slug} to={item.url}>
                     <CommunityPreview {...{ ...item, index: index + 1 }} />
-                  </CommunityAndAdvisorsWrapper>
+                  </StyledLink>
                 ))}
-                <Block sx$tablet={{ display: 'none' }} />
-              </Grid>
-            )
+              </CommunityAndAdvisorsWrapper>
+            );
           }
           if (componentName === articleDZComponentsNames.advisors) {
             return (
-              <Grid
+              <CommunityAndAdvisorsWrapper
                 key={index}
-                sx={{
-                  overflow: 'auto',
-                  width: '100%',
-                  paddingX: 'm',
-                  gridTemplateColumns: `repeat(${rest.advisors.length}, 18rem) 1px`,
-                  gridTemplateRows: '25rem',
-                  gridColumnGap: 'm',
-                  paddingTop: 'm',
-                  marginBottom: 'xxl',
-                }}
-                sx$tablet={{
-                  overflow: 'hidden',
-                  width: 'col8',
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  gridTemplateColumns: '100%',
-                  gridTemplateRows: 'auto',
-                  gridRowGap: 'm',
-                }}
+                itemCount={rest.advisors.length}
+                gridTemplateRows="25rem"
               >
                 {rest.advisors?.map((item, index) => (
-                  <CommunityAndAdvisorsWrapper key={item.slug} to={item.info.url}>
+                  <StyledLink key={item.slug} to={item.info.url}>
                     <AdvisorPreview {...{ ...item, index: index + 1 }} />
-                  </CommunityAndAdvisorsWrapper>
+                  </StyledLink>
                 ))}
-                <Block sx$tablet={{ display: 'none' }} />
-              </Grid>
-            )
+              </CommunityAndAdvisorsWrapper>
+            );
           }
           if (componentName === articleDZComponentsNames.linksBlock) {
             return (

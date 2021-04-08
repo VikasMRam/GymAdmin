@@ -42,7 +42,7 @@ const AuthorPreview = ({
         borderRadius="50%"
         overflow="hidden"
         marginRight="s"
-        marginBottom="s"
+        marginBottom="l"
         sx$tablet={{ marginRight: 'l', marginBottom: '0' }}
       >
         <Image

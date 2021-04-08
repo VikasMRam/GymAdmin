@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
-import { object } from 'prop-types';
+import { bool, object } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { formatDate } from 'sly/web/services/helpers/date';
@@ -28,16 +28,23 @@ import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
-const BlockHr = () => (
+const BlockHr = ({ hideOnMobile }) => (
   <Hr
     marginX="m"
+    marginY="l"
+    display={hideOnMobile && 'none'}
     sx$tablet={{
+      display: hideOnMobile && 'block',
       margin: 'xl 0',
       marginX: 'auto',
       width: ['col6', 'col8'],
     }}
   />
 );
+
+BlockHr.propTypes = {
+  hideOnMobile: bool,
+};
 
 const ArticlePage = ({ match }) => {
   const articleRef = useRef(null);
@@ -172,7 +179,7 @@ const ArticlePage = ({ match }) => {
         <ArticleTags topic={requestInfo?.result?.[0]?.mainTopic} tagsList={requestInfo?.result?.[0]?.tagsList} />
       </Block>
 
-      <BlockHr />
+      <BlockHr hideOnMobile />
 
       {requestInfo?.result?.[0]?.author && (
         <Block
@@ -193,7 +200,7 @@ const ArticlePage = ({ match }) => {
 
       <BlockHr />
 
-      <Block marginBottom="xxl" sx$tablet={{ marginBottom: 'xxxl' }}>
+      <Block marginBottom="xxl" sx$tablet={{ marginBottom: 'xxxl', paddingTop: 'm' }}>
         <ArticlesListByTopic
           limit={3}
           topic={requestInfo.result?.[0]?.mainTopic.slug}

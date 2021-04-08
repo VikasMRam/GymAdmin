@@ -9,6 +9,7 @@ const TableOfContents = ({ subtitlesData }) => (
   <Block
     border="box"
     padding="l m l l"
+    pad="l"
     width={sx`calc(100% - ${space('gutter')} * 2)`}
     sx$tablet={{ padding: 'xl',  width: 'col6', marginBottom: 'xl' }}
     sx$laptop={{ width: 'col8' }}
@@ -21,15 +22,17 @@ const TableOfContents = ({ subtitlesData }) => (
       Table of Contents
     </Block>
     {subtitlesData.map((item, index) => (
+      // eslint-disable-next-line jsx-a11y/anchor-is-valid
       <Link
+        // eslint-disable-next-line react/no-array-index-key
         key={`${item.value}-${index}`}
         font="body-l"
         display="block"
         sx={{
           marginBottom: 'm',
-          ':last-item': {
+          ':last-child': {
             marginBottom: 0,
-          }
+          },
         }}
         onClick={() => item.ref.current.scrollIntoView({ behavior: 'smooth' })}
       >
