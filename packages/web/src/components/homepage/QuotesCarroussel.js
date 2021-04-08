@@ -1,13 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 
+import CarrousselButton from './CarrousselButton';
+
 import Icon from 'sly/common/components/atoms/Icon';
 import Block from 'sly/common/components/atoms/Block';
 import Heading from 'sly/common/components/atoms/Heading';
 import Paragraph from 'sly/common/components/atoms/Paragraph';
-
-import CarrousselButton from './CarrousselButton';
-
 import {
   withColor,
   withDisplay,
@@ -99,7 +98,7 @@ const Controls = styled.div`
   }
 `;
 
-export default function QuotesCarroussel ({
+export default function QuotesCarroussel({
   heading,
   ...props
 }) {
@@ -123,7 +122,7 @@ export default function QuotesCarroussel ({
         margin="0 auto"
         maxWidth={450}
       >
-        Families love the <br/> Seniorly experience.
+        Families love the <br /> Seniorly experience.
       </Heading>
       <Wrapper pad="xLarge">
         {quotes.map(({ id, author, text }, index) => {
@@ -160,11 +159,11 @@ export default function QuotesCarroussel ({
       </Wrapper>
       <Controls>
         <CarrousselButton
-          rotate={2}
+          rotation="270"
           onClick={() => move()}
         />
         <CarrousselButton
-          rotate={0}
+          rotation="90"
           onClick={() => move(true)}
         />
       </Controls>

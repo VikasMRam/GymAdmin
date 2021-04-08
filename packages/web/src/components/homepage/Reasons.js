@@ -3,7 +3,6 @@ import React, { forwardRef } from 'react';
 import Section from './Section';
 
 import IconItem from 'sly/web/components/molecules/IconItem';
-import { size, getKey } from 'sly/common/components/themes';
 import { Heading, Block, Grid, layout, space, sx } from 'sly/common/system';
 // import { Search, Checkmark, Security, Star, Community, List, Messages, Offer  } from 'sly/common/icons/index';
 import { Centered, ResponsiveImage } from 'sly/web/components/atoms';

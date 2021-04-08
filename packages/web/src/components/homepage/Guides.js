@@ -3,10 +3,8 @@ import styled from 'styled-components';
 
 import Section from './Section';
 
-import { size } from 'sly/common/components/themes';
 import { host } from 'sly/web/config';
 import { getHelmetForHomePage } from 'sly/web/services/helpers/html_headers';
-import Paragraph from 'sly/common/components/atoms/Paragraph';
 import Link from 'sly/common/components/atoms/Link';
 import { Block, Button, Heading, sx$tablet, sx$laptop } from 'sly/common/system';
 import { Chevron } from 'sly/common/icons';

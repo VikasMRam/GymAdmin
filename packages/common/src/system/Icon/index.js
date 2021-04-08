@@ -72,7 +72,7 @@ const useIconEffect = (name, svg) => {
   }
 };
 
-const Icon = forwardRef(({ sx, svg, active, hoverColor, rotation, name, size, ...props }, ref) => {
+const Icon = forwardRef(({ svg, active, hoverColor, rotation, name, size, ...props }, ref) => {
   useIconEffect(name, svg);
 
   const svgStates = {};

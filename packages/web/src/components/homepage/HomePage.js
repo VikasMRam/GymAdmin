@@ -201,7 +201,7 @@ const HomePage = ({
 
       <CommunitiesByCity onLocationSearch={onLocationSearch} />
 
-      <Guides css={blockPad} />
+      <Guides sx={blockPad2} />
 
       <QuotesCarroussel css={blockPad} />
 
