@@ -256,9 +256,8 @@ const Search = ({
       </Block>
       {/* SEARCH_END */}
       <Footer
-        upToLaptop={{
-          display: show === LIST ? 'block' : 'none',
-        }}
+        display={show === LIST ? 'block' : 'none'}
+        startingWithLaptop="block"
       />
     </>
   );
