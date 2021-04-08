@@ -3,13 +3,12 @@ import styled from 'styled-components';
 
 import Section from './Section';
 
-import { Heading, Block, Grid, layout, space, sx } from 'sly/common/system';
+import { Heading, Block, Grid, layout, space, sx, Image } from 'sly/common/system';
 import { Search, Checkmark, Security, Star, Community, List, Messages, Offer  } from 'sly/common/icons/index';
-import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 
 
 const ReasonImage = forwardRef((props, ref) => (
-  <ResponsiveImage
+  <Image
     ref={ref}
     css={{
       width: '100%',

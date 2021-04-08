@@ -2,8 +2,7 @@ import React from 'react';
 import { string, node, object } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { Heading, Block, Button } from 'sly/common/system';
-import { Image } from 'sly/web/components/atoms';
+import { Heading, Block, Button, Image } from 'sly/common/system';
 
 const HomeCTABox = ({ image, heading, children, buttonText, buttonPalette, buttonProps }) => (
   <Block

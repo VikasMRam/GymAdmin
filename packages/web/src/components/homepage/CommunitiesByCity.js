@@ -6,9 +6,8 @@ import CarrousselButton from './CarrousselButton';
 import Section from './Section';
 
 
-import { Heading, Block, Grid, space, color, Link } from 'sly/common/system';
+import { Heading, Block, Grid, space, color, Link, Image } from 'sly/common/system';
 import { Chevron } from 'sly/common/icons';
-import { Centered, ResponsiveImage } from 'sly/web/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import useScrollObserver from 'sly/common/components/helpers/useScrollObserver';
 
@@ -198,11 +197,11 @@ const CityTile = styled(({
   title, to, alt, image, children, ...props
 }) => (
   <Link key={title} to={to} {...props}>
-    <ResponsiveImage path={image} alt={alt} sources={[240, 480]} sizes="240px" aspectRatio="3:2">
+    <Image path={image} alt={alt} sources={[240, 480]} sizes="240px" aspectRatio="3:2">
       <div className="legend">
         {children}
       </div>
-    </ResponsiveImage>
+    </Image>
   </Link>
 ))`
   overflow: hidden;

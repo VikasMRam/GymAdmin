@@ -11,35 +11,24 @@ import Section from './Section';
 
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 // import { Hr } from 'sly/common/components/atoms';
-import { Hr, Heading, Block, Button, Grid  } from 'sly/common/system';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import { Hr, Heading, Block, Button, Grid, Image, sx$laptop, sx$tablet, space  } from 'sly/common/system';
 import Footer from 'sly/web/components/organisms/Footer';
 import { startingWith } from 'sly/common/components/helpers/media';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
 
 const blockPad = css`
-  margin-bottom: 48px;
-  ${startingWith('tablet', css({ marginBottom: 64 }))}
-  ${startingWith('laptop', css({ marginBottom: 80 }))}
+  margin-bottom: ${space('xxl')};
+  ${sx$tablet({ marginBottom: '64px' })}
+  ${sx$laptop({ marginBottom: 'xxxl' })}
 `;
-
-const blockPad2 = {
-  marginBottom: 'xxl',
-  '@tablet': {
-    marginBottom: '64px',
-  },
-  '@laptop': {
-    marginBottom: 'xxxl',
-  },
-};
 
 
 const Separator = forwardRef((props, ref) => (
   <Hr
     ref={ref}
     margin="0"
-    sx={blockPad2}
+    css={blockPad}
     {...props}
   />
 ));
@@ -56,25 +45,14 @@ const HomePage = ({
       <Block
         as="header"
         position="relative"
-        sx={{
-          paddingY: 'xxl',
-          '@tablet': {
-            paddingY: '64px',
-          },
-          '@laptop': {
-            padding: 'xxxl',
-          },
-          ...blockPad2,
-        }}
-        // css={css`
-        //   padding: 48px 0px;
-        //   ${startingWith('tablet', css({ padding: '64px 0px' }))}
-        //   ${startingWith('laptop', css({ padding: '80px 0px' }))}
-
-        //   ${blockPad}
-        // `}
+        css={css`
+          padding: ${space('xxl')} 0px;
+          ${sx$tablet({ padding: '64px 0px' })}
+          ${sx$laptop({ padding: ['xxxl', '0px'] })}
+          ${blockPad}
+        `}
       >
-        <ResponsiveImage
+        <Image
           path="react-assets/home/cover6.jpg"
           alt="A Home To Love"
           css={css`
@@ -148,14 +126,14 @@ const HomePage = ({
               gridGap="m"
               gridTemplateColumns="1fr 1fr"
             >
-              <ResponsiveImage
+              <Image
                 path="react-assets/home/hero-1.webp"
                 alt="face1"
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
                 sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
-              <ResponsiveImage
+              <Image
                 path="react-assets/home/hero-2.webp"
                 alt="face2"
                 aspectRatio="1:1"
@@ -167,14 +145,14 @@ const HomePage = ({
               gridGap="m"
               gridTemplateColumns="1fr 1fr"
             >
-              <ResponsiveImage
+              <Image
                 path="react-assets/home/hero-3.webp"
                 alt="face3"
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
                 sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
               />
-              <ResponsiveImage
+              <Image
                 path="react-assets/home/hero-4.webp"
                 alt="face4"
                 aspectRatio="1:1"
@@ -191,7 +169,7 @@ const HomePage = ({
         showModal={showModal}
         hideModal={hideModal}
         onLocationSearch={onLocationSearch}
-        sx={blockPad2}
+        css={blockPad}
       />
       <Separator />
 
@@ -201,7 +179,7 @@ const HomePage = ({
 
       <CommunitiesByCity onLocationSearch={onLocationSearch} />
 
-      <Guides sx={blockPad2} />
+      <Guides css={blockPad} />
 
       <QuotesCarroussel css={blockPad} />
 
@@ -258,16 +236,16 @@ const HomePage = ({
             </Button>
           </Block>
         </Block>
-        <ResponsiveImage
+        <Image
           path="react-assets/home/bottom-banner.jpg"
           alt="bottom-banner"
           aspectRatio="1:1"
-          paddingTop="396px!important"
-          upToLaptop={{
+          paddingTop="240px!important"
+          sx$tablet={{
             paddingTop: '388px!important',
           }}
-          upToTablet={{
-            paddingTop: '240px!important',
+          sx$laptop={{
+            paddingTop: '396px!important',
           }}
         />
       </Grid>
