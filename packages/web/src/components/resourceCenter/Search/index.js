@@ -120,7 +120,7 @@ const Search = ({ match, location }) => {
                       alternativeText: mainImg?.alternativeText,
                       title,
                       shortDescription,
-                      url: mainImg?.url,
+                      path: mainImg?.path,
                       topic: mainTopic,
                       tagsList,
                       to: `${RESOURCE_CENTER_PATH}/${mainTopic.slug}/${slug}`,

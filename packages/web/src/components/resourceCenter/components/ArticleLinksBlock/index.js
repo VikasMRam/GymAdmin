@@ -12,6 +12,10 @@ import Link from 'sly/common/system/Link';
 const LinkItem = styled(Link)`
   display: block;
   margin-bottom: ${space('m')};
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const LinksBlock = ({ title, description, links }) => {

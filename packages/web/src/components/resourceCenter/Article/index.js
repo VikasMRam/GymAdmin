@@ -3,8 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import 'isomorphic-fetch';
-import { object } from 'prop-types';
-import styled, { css } from 'styled-components';
+import { bool, object } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { formatDate } from 'sly/web/services/helpers/date';
@@ -23,23 +22,29 @@ import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
-import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
-const BlockHr = () => (
+const BlockHr = ({ hideOnMobile }) => (
   <Hr
     marginX="m"
+    marginY="l"
+    display={hideOnMobile && 'none'}
     sx$tablet={{
+      display: hideOnMobile && 'block',
       margin: 'xl 0',
       marginX: 'auto',
       width: ['col6', 'col8'],
     }}
   />
 );
+
+BlockHr.propTypes = {
+  hideOnMobile: bool,
+};
 
 const ArticlePage = ({ match }) => {
   const articleRef = useRef(null);
@@ -136,30 +141,23 @@ const ArticlePage = ({ match }) => {
           sx$laptop={{ width: 'col10' }}
         >
           <Image
-            sx={{ width: '100%', height: 'auto' }}
-            src={requestInfo?.result?.[0]?.mainImg?.url}
+            path={requestInfo?.result?.[0]?.mainImg?.path}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
+            aspectRatio="3:2"
+            sources={[
+              288,
+              393,
+              680,
+              695,
+              856,
+            ]}
+            sizes="(max-width: 727px) 100vw, (max-width: 1079px) 680px, 856px"
           />
         </Block>
 
         <ArticleContent content={requestInfo?.result?.[0]?.content} />
 
       </Flex>
-
-      {!!requestInfo?.result?.[0]?.linkBlockList?.length && (
-        <Block
-          marginY="l"
-          marginX="m"
-          sx$tablet={{ marginY: 'xl', marginX: 'auto', width: 'col6' }}
-          sx$laptop={{ width: 'col8' }}
-        >
-          <LinksBlock
-            title={requestInfo?.result?.[0]?.linkBlockTitle}
-            description={requestInfo?.result?.[0]?.linkBlockDescription}
-            links={requestInfo?.result?.[0]?.linkBlockList}
-          />
-        </Block>
-      )}
 
       <Block
         marginBottom="l"
@@ -181,7 +179,7 @@ const ArticlePage = ({ match }) => {
         <ArticleTags topic={requestInfo?.result?.[0]?.mainTopic} tagsList={requestInfo?.result?.[0]?.tagsList} />
       </Block>
 
-      <BlockHr />
+      <BlockHr hideOnMobile />
 
       {requestInfo?.result?.[0]?.author && (
         <Block
@@ -202,7 +200,7 @@ const ArticlePage = ({ match }) => {
 
       <BlockHr />
 
-      <Block marginBottom="xxl" sx$tablet={{ marginBottom: 'xxxl' }}>
+      <Block marginBottom="xxl" sx$tablet={{ marginBottom: 'xxxl', paddingTop: 'm' }}>
         <ArticlesListByTopic
           limit={3}
           topic={requestInfo.result?.[0]?.mainTopic.slug}
