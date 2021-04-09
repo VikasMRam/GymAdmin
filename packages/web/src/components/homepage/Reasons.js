@@ -40,8 +40,8 @@ const Reasons = () => {
         paddingBottom: 'xxxl',
       }}
       sx$tablet={{
-      paddingBottom: '64px',
-      gridGap: '72px',
+        paddingBottom: '64px',
+        gridGap: '72px',
       }}
     >
       <Grid

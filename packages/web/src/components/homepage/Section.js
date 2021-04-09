@@ -7,10 +7,11 @@ const Section = styled(Block)`
   margin: 0 auto;
   padding-left: 24px;
   padding-right: 24px;
- ${sx$tablet({
+  ${sx$tablet({
     width: 'col8',
-    paddingX: '0' })} 
- ${sx$laptop({ width: 'col12' })}) 
+    paddingX: '0',
+  })} 
+  ${sx$laptop({ width: 'col12' })}) 
 `;
 
 export default Section;

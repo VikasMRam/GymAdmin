@@ -18,9 +18,9 @@ import ModalContainer from 'sly/web/containers/ModalContainer';
 
 
 const blockPad = css`
-  margin-bottom: ${space('xxl')};
-  ${sx$tablet({ marginBottom: '64px' })}
-  ${sx$laptop({ marginBottom: 'xxxl' })}
+  margin-bottom: ${space('xxl')}!important;
+  ${sx$tablet({ marginBottom: '64px !important' })}
+  ${sx$laptop({ marginBottom: 'xxxl !important' })}
 `;
 
 

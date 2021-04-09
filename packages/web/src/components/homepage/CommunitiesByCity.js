@@ -266,7 +266,7 @@ const CommunitiesByCity = (onLocationSearch) => {
         >
           {mostSearchedCities.map(mostSearchedCity => (
             <CityTile key={mostSearchedCity.subtitle} {...mostSearchedCity}>
-              <Heading fontSize="20px" font="title-s-azo" color="white" pad="0">{mostSearchedCity.subtitle}</Heading>
+              <Heading font="title-s-azo" color="white" pad="0">{mostSearchedCity.subtitle}</Heading>
               <Block font="body-s" color="white">Explore now <Chevron rotation="90" size="s" /></Block>
             </CityTile>
           ))}
@@ -287,7 +287,7 @@ const CommunitiesByCity = (onLocationSearch) => {
         }}
       >
         <Heading
-          font="title-l"
+          font="title-m"
           pad="m"
         >
           Find communities in your area.

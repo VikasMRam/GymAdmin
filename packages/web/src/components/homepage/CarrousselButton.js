@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { Chevron } from 'sly/common/icons';
 import { Block } from 'sly/common/system';
 
-const Wrapper = styled(Block)` width: 48px;
+const Wrapper = styled(Block)`
+  width: 48px;
   height: 48px;
   display: flex;
   border-radius: 24px;
@@ -17,8 +18,8 @@ const CarrousselButton = ({ color, iconSize, rotation, ...props }) => (
   <Wrapper {...props}>
     <Chevron
       sx={{
-      margin: 'auto',
-      verticalAlign: 'unset',
+        margin: 'auto',
+        verticalAlign: 'unset',
       }}
       color={color}
       size={iconSize}
