@@ -27,7 +27,7 @@ align-items:baseline;
   margin-right:${space('s')};
   margin-top:auto;
   margin-bottom:auto;
-}
+  }
 `;
 
 const Reasons = () => {
