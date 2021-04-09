@@ -13,7 +13,6 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 // import { Hr } from 'sly/common/components/atoms';
 import { Hr, Heading, Block, Button, Grid, Image, sx$laptop, sx$tablet, space  } from 'sly/common/system';
 import Footer from 'sly/web/components/organisms/Footer';
-import { startingWith } from 'sly/common/components/helpers/media';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
 
@@ -48,7 +47,7 @@ const HomePage = ({
         css={css`
           padding: ${space('xxl')} 0px;
           ${sx$tablet({ padding: '64px 0px' })}
-          ${sx$laptop({ padding: ['xxxl', '0px'] })}
+          ${sx$laptop({ padding: 'xxxl 0px' })}
           ${blockPad}
         `}
       >
@@ -82,11 +81,15 @@ const HomePage = ({
             alignItems: 'center',
           }}
         >
-          <Block css={css`
-            margin-bottom: 48px;
-            ${startingWith('tablet', css({ marginBottom: '64px' }))}
-            ${startingWith('laptop', css({ marginRight: '64px', marginBottom: '0px' }))}
-          `}
+          <Block
+            marginBottom="xxl"
+            sx$tablet={{
+              marginBottom: '64px',
+            }}
+            sx$laptop={{
+              marginBottom: '0',
+              marginRight: '64px',
+            }}
           >
             <Heading font="title-xxl" pad="l">
               Find a senior living community you’ll love.
