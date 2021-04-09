@@ -267,7 +267,7 @@ const CommunitiesByCity = (onLocationSearch) => {
           {mostSearchedCities.map(mostSearchedCity => (
             <CityTile key={mostSearchedCity.subtitle} {...mostSearchedCity}>
               <Heading font="title-s-azo" color="white" pad="0">{mostSearchedCity.subtitle}</Heading>
-              <Block font="body-s" color="white">Explore now <Chevron rotation="90" size="s" /></Block>
+              <Block font="body-s" color="white">Explore now <Chevron color="white" rotation="90" size="s" /></Block>
             </CityTile>
           ))}
         </Grid>
