@@ -30,7 +30,7 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       shadowPalette="black.base"
       shadowPaletteOpacity="20"
       noGallery
-      startingWith={{
+      startingWithAll={{
         zIndex: 1000,
         position: 'absolute',
         transform: 'translate(-50%)',
