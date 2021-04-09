@@ -5,8 +5,7 @@ import Section from './Section';
 
 import { assetPath } from 'sly/web/components/themes';
 import HomeCTABox from 'sly/web/components/organisms/HomeCTABox';
-import { getKey } from 'sly/common/components/themes';
-import { Heading, Block, Button, Hr, Link, Paragraph, Grid } from 'sly/common/components/atoms';
+import { Heading, Grid } from 'sly/common/system';
 import SlyEvent from 'sly/web/services/helpers/events';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
@@ -21,7 +20,7 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
   const onButtonClick = () => {
     const modalContent = (
       <>
-        <Heading size="subtitle">Please enter a location:</Heading>
+        <Heading font="title-m">Please enter a location:</Heading>
         <SearchBoxContainer
           layout="homeHero"
           onLocationSearch={(e) => {
@@ -43,24 +42,23 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
 
   return (
     <Section
-      headingMaxWidth={getKey('layout.col8')}
       {...props}
     >
       <Heading
         font="title-xl"
-        css={{
-          textAlign: 'center',
-          maxWidth: '680px',
-          margin: '0px auto 24px',
-        }}
+        textAlign="center"
+        maxWidth="col8"
+        marginX="auto"
+        marginBottom="l"
       >
         Why do millions of families use Seniorly every year?
       </Heading>
 
       <Grid
-        gap="xLarge"
-        upToLaptop={{
-          gridTemplateColumns: 'auto!important',
+        gridGap="l"
+        gridTemplateColumns="auto"
+        sx$laptop={{
+          gridTemplateColumns: 'col4 col4 col4',
         }}
       >
         <HomeCTABox
@@ -93,7 +91,7 @@ const Question = ({ showModal, hideModal, onLocationSearch, ...props }) => {
             onClick: onButtonClick,
           }}
         >
-          Want to explore communities on your own? No problem. We give you the tools to navigate through over 40,000 of the best communities—with access to monthly pricing and exclusive photos.
+          Want to explore communities on your own? No problem. We give you the tools to navigate through over 40,000 of the best communities—with access to pricing and exclusive photos.
         </HomeCTABox>
       </Grid>
     </Section>
