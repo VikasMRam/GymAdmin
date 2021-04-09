@@ -52,6 +52,7 @@ export default class AssessmentWizardV2 extends Component {
     getAgent: func.isRequired,
     community: communityPropType,
     city: string,
+    zip: string,
     state: string,
     toc: string,
     redirectTo: func.isRequired,
