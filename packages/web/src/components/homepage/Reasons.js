@@ -24,9 +24,9 @@ display:flex;
 flex-direction:row;
 align-items:baseline;
 & svg {
-  margin-right:${space('s')};
-  margin-top:auto;
-  margin-bottom:auto;
+    margin-right:${space('s')};
+    margin-top:auto;
+    margin-bottom:auto;
   }
 `;
 
