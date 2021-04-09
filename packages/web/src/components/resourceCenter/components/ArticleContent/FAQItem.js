@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { bool, string } from 'prop-types';
 
+import EditorValueWrapper from './EditorValueWrapper';
+
 import Hr from 'sly/common/system/Hr';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import { sx, space } from 'sly/common/system/sx';
 import Minus from 'sly/common/icons/Minus';
 import Plus from 'sly/common/icons/Plus';
-
-
-import EditorValueWrapper from './EditorValueWrapper';
 
 const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +53,11 @@ const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
         </Block>
       )}
 
-      <Block my={['l', 'xl']}>
+      <Block
+        marginTop="l"
+        marginBottom={!withMarginBottom && 'l'}
+        sx$tablet={{ marginTop: 'xl', marginBottom: !withMarginBottom && 'xl' }}
+      >
         {withMarginBottom && <Hr />}
       </Block>
     </Block>

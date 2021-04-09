@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
@@ -27,6 +27,7 @@ const ExploreTopicInfo = styled(Block)`
   left: 0;
   overflow: hidden;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
+  z-index: 1;
 `;
 
 const StyledLink = styled(Link)`
@@ -125,8 +126,8 @@ const HomePage = () => {
           justifyContent: 'center',
           marginX: 'auto',
           marginBottom: 'xxl',
-          gridTemplateColumns: sx`calc(100% - ${space('m')} * 2)`,
-          gridTemplateRows: 'repeat(6, 17rem)',
+          paddingX: 'm',
+          gridTemplateColumns: 'minmax(auto, 20.5rem)',
           gridRowGap: 'm',
         }}
         sx$tablet={{
@@ -135,6 +136,7 @@ const HomePage = () => {
           gridColumnGap: 'l',
           gridRowGap: 'l',
           marginBottom: 'xxxl',
+          paddingX: 0,
         }}
         sx$laptop={{
           gridTemplateColumns: sx`repeat(2, ${layout('col6')})`,
@@ -147,16 +149,12 @@ const HomePage = () => {
           >
             <Block border="round" overflow="hidden" height="100%">
               <Image
-                css={css({
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: '100%',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                })}
-                src={img?.url}
-                alt={`${name} img`}
+                sx$laptop={{ paddingTop: '56.25%' }}
+                path={img?.path}
+                alt={`${name} image`}
+                sources={[328, 504]}
+                sizes="(max-width: 1079px) 328px, 504px"
+                aspectRatio="7:6"
               />
               <ExploreTopicInfo
                 border="box"

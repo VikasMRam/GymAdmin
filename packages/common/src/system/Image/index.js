@@ -41,7 +41,7 @@ const ResponsiveWrapper = styled(Block)`
 `;
 
 const getAlt = (src) => {
-  if (typeof src === 'undefined') {
+  if (!src) {
     return 'Seniorly Image';
   }
   const srcParts = src.split('/');
@@ -88,7 +88,7 @@ export default class Image extends React.Component {
     sources: array,
     children: any,
     onLoadFailed: func,
-    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
+    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '7:6', '1:1']),
   };
 
   static defaultProps = {

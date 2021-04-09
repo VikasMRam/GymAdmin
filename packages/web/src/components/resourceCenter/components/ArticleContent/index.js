@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo, createRef } from 'react';
 import styled, { css } from 'styled-components';
-import { array } from 'prop-types';
+import { array, node, number } from 'prop-types';
 
 import { generateSearchUrl } from 'sly/web/services/helpers/url';
 import { host } from 'sly/web/config';
@@ -21,6 +21,7 @@ import Image from 'sly/common/system/Image';
 import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
 import CommunityPreview from 'sly/web/components/resourceCenter/components/CommunityPreview';
 import AdvisorPreview from 'sly/web/components/resourceCenter/components/AdvisorPreview';
+import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 
 import EditorValueWrapper from './EditorValueWrapper';
 import FAQItem from './FAQItem';
@@ -38,21 +39,14 @@ const articleDZComponentsNames = {
   link: 'link',
   listWithIcons: 'list-with-icons',
   advisors: 'advisors',
-}
+  linksBlock: 'links-block',
+};
 
-const CommunityAndAdvisorsWrapper = styled(Link)`
-  & {
-    position: relative;
+const StyledLink = styled(Link)`
+  cursor: pointer;
 
-    &:hover::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
-    }
+  &:hover {
+    box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -94,6 +88,41 @@ const ListInTwoColumnsWrapper = styled(Block)`
   }
 `;
 
+const CommunityAndAdvisorsWrapper = ({ children, itemCount, key, ...rest }) => (
+  <Grid
+    key={key}
+    sx={{
+      width: '100%',
+      overflow: 'auto',
+      gridTemplateColumns: `repeat(${itemCount}, 18rem) 1px`,
+      gridColumnGap: 'm',
+      paddingY: 'xs',
+      paddingX: 'm',
+      marginBottom: 'l',
+    }}
+    sx$tablet={{
+      overflow: 'visible',
+      width: 'col8',
+      marginBottom: 'xxl',
+      paddingBottom: 0,
+      paddingX: 0,
+      gridTemplateColumns: '100%',
+      gridTemplateRows: 'auto',
+      gridRowGap: 'm',
+    }}
+    {...rest}
+  >
+    {children}
+    <Block sx$tablet={{ display: 'none' }} />
+  </Grid>
+);
+
+CommunityAndAdvisorsWrapper.propTypes = {
+  children: node,
+  itemCount: number,
+  key: number,
+};
+
 const subtitleStyles = css`
   margin-bottom: ${space('l')};
   width: calc(100% - ${space('m')} * 2);
@@ -113,7 +142,7 @@ const isSubtitle = ({ __component }) => __component?.includes(articleDZComponent
 
 const ArticleContent = ({ content: data }) => {
   const content = useMemo(() => {
-    return data.map(item => {
+    return data.map((item) => {
       if (isSubtitle(item)) {
         return { ref: createRef(), ...item };
       }
@@ -135,21 +164,22 @@ const ArticleContent = ({ content: data }) => {
         width="100%"
       >
         {content?.map(({ __component, ...rest }, index) => {
-          if (__component.includes(articleDZComponentsNames.search)) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} />
-          if (__component.includes(articleDZComponentsNames.editor)) return <EditorValueWrapper key={index} value={rest.value}/>;
-          if (__component.includes(articleDZComponentsNames.subtitle)) {
+          const componentName = __component.split('.')[1];
+          if (componentName === articleDZComponentsNames.search) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} />
+          if (componentName === articleDZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
+          if (componentName === articleDZComponentsNames.subtitle) {
             return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
           }
-          if (__component.includes(articleDZComponentsNames.listInTwoColumns)) return (
+          if (componentName === articleDZComponentsNames.listInTwoColumns) return (
             <ListInTwoColumnsWrapper
               key={index}
               dangerouslySetInnerHTML={{ __html: rest.listInTwoColumnsValue }}
               width={sx`calc(100% - ${space('m')} * 2)`}
-              sx$tablet={{ width: 'col6' }}
+              sx$tablet={{ width: 'col6', pad: 'xs' }}
               sx$laptop={{ width: 'col8' }}
             />
           );
-          if (__component.includes(articleDZComponentsNames.quote)) return (
+          if (componentName === articleDZComponentsNames.quote) return (
            <Fragment key={index}>
              <QuoteDescription
                as="blockquote"
@@ -164,13 +194,13 @@ const ArticleContent = ({ content: data }) => {
                color="slate.lighter-60"
                font="body-m"
                marginBottom="xl"
-               width={`calc(100% - ${space('m')} * 2)`}
+               width={sx`calc(100% - ${space('m')} * 2)`}
                sx$tablet={{ width: 'col4', marginBottom: 'xxl' }}
                dangerouslySetInnerHTML={{ __html: rest.title }}
              />
            </Fragment>
           );
-          if (__component.includes(articleDZComponentsNames.faq))
+          if (componentName === articleDZComponentsNames.faq)
             return <FAQItem
               key={index}
               title={rest.title}
@@ -178,7 +208,7 @@ const ArticleContent = ({ content: data }) => {
               withMarginBottom={!content[index + 1]?.__component.includes(articleDZComponentsNames.faq)}
               withMarginTop={!content[index - 1]?.__component.includes(articleDZComponentsNames.faq)}
             />;
-          if (__component.includes(articleDZComponentsNames.link)) {
+          if (componentName === articleDZComponentsNames.link) {
             const isResourceCenterRoute = rest.to.includes(`${host}${RESOURCE_CENTER_PATH}`);
             const splitPath = rest.to.split(host);
             return (
@@ -206,13 +236,17 @@ const ArticleContent = ({ content: data }) => {
               </Flex>
             );
           }
-          if (__component.includes(articleDZComponentsNames.image)) {
+          if (componentName === articleDZComponentsNames.image) {
+            const isFullSizeImage = rest.size === 'large';
+            const tabletWidth = (rest.size === 'middle' && 680) || (rest.size === 'small' && 504);
+            const laptopWidth = (rest.size === 'middle' && 1032) || (rest.size === 'small' && 680);
+
             return (
               <Fragment key={index}>
                 <Block
                   marginBottom={rest.image?.alternativeText ? 'xs' : 'xl'}
                   marginTop="xs"
-                  width={(rest.size === 'large' && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && sx`calc(100% - ${space('m')} * 2)`)}
+                  width={(isFullSizeImage && '100%') || ((rest.size === 'small' || (rest.size === 'middle')) && sx`calc(100% - ${space('m')} * 2)`)}
                   sx$tablet={{
                     width: (rest.size === 'middle' && 'col8') || (rest.size === 'small' && 'col6'),
                     marginBottom: rest.image?.alternativeText ? 'm' : 'xxl',
@@ -223,9 +257,18 @@ const ArticleContent = ({ content: data }) => {
                   }}
                 >
                   <Image
-                    aspectRatio="16:9"
-                    src={rest.image?.url}
                     alt={rest.image?.alternativeText}
+                    aspectRatio="3:2"
+                    {...(!isFullSizeImage ? {
+                      path: rest.image?.path,
+                      sources: [
+                        288,
+                        393,
+                        tabletWidth,
+                        laptopWidth,
+                      ],
+                      sizes: `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}px, ${laptopWidth}px`,
+                    } : { src: rest.image?.url })}
                   />
                 </Block>
                 {rest.image?.alternativeText && (
@@ -243,7 +286,7 @@ const ArticleContent = ({ content: data }) => {
               </Fragment>
             )
           }
-          if (__component.includes(articleDZComponentsNames.listWithIcons)) {
+          if (componentName === articleDZComponentsNames.listWithIcons) {
             return (
               <Block
                 key={index}
@@ -263,6 +306,7 @@ const ArticleContent = ({ content: data }) => {
                     <Icon icon={icon.replace(/_/g, '-')} css={{ paddingTop: space('xxs') }} />
                     <EditorValueWrapper
                       value={value}
+                      width="100%"
                       sx$tablet={{ width: '100%' }}
                     />
                   </Grid>
@@ -270,72 +314,52 @@ const ArticleContent = ({ content: data }) => {
               </Block>
             )
           }
-          if (__component.includes(articleDZComponentsNames.community)) {
+          if (componentName === articleDZComponentsNames.community) {
             return (
-              <Grid
+              <CommunityAndAdvisorsWrapper
                 key={index}
-                width="100%"
-                padding="sx m xl m"
-                sx={{
-                  overflow: 'auto',
-                  gridTemplateColumns: `repeat(${rest.communities.length}, 18rem) 1px`,
-                  gridColumnGap: 'm',
-                  paddingTop: 'm',
-                  marginBottom: 'xxl',
-                  '@tablet': {
-                    width: 'col8',
-                    overflow: 'hidden',
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    gridTemplateColumns: '100%',
-                    gridTemplateRows: `repeat(${rest.communities.length}, 10.75rem)`,
-                    gridRowGap: 'm',
-                  }
-                }}
+                itemCount={rest.communities.length}
+                gridTemplateRows="21.75rem"
               >
-                {rest.communities?.map((item, index) => console.log('item', item) || (
-                  <CommunityAndAdvisorsWrapper key={item.slug} to={item.url}>
+                {rest.communities?.map((item, index) => (
+                  <StyledLink key={item.slug} to={item.url}>
                     <CommunityPreview {...{ ...item, index: index + 1 }} />
-                  </CommunityAndAdvisorsWrapper>
+                  </StyledLink>
                 ))}
-                <Block sx$tablet={{ display: 'none' }} />
-              </Grid>
-            )
+              </CommunityAndAdvisorsWrapper>
+            );
           }
-          if (__component.includes(articleDZComponentsNames.advisors)) {
+          if (componentName === articleDZComponentsNames.advisors) {
             return (
-              <Grid
+              <CommunityAndAdvisorsWrapper
                 key={index}
-                sx={{
-                  overflow: 'auto',
-                  width: '100%',
-                  paddingX: 'm',
-                  gridTemplateColumns: `repeat(${rest.advisors.length}, 18rem) 1px`,
-                  gridTemplateRows: '25rem',
-                  gridColumnGap: 'm',
-                  paddingTop: 'm',
-                  marginBottom: 'xxl',
-                }}
-                sx$tablet={{
-                  overflow: 'hidden',
-                  width: 'col8',
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  gridTemplateColumns: '100%',
-                  gridTemplateRows: 'auto',
-                  gridRowGap: 'm',
-                }}
+                itemCount={rest.advisors.length}
+                gridTemplateRows="25rem"
               >
                 {rest.advisors?.map((item, index) => (
-                  <CommunityAndAdvisorsWrapper key={item.slug}>
-                    <AdvisorPreview
-                      onClick={e => e.preventDefault()}// TODO: after adding attribute 'to' remove handler
-                      {...{ ...item, index: index + 1 }}
-                    />
-                  </CommunityAndAdvisorsWrapper>
+                  <StyledLink key={item.slug} to={item.info.url}>
+                    <AdvisorPreview {...{ ...item, index: index + 1 }} />
+                  </StyledLink>
                 ))}
-                <Block sx$tablet={{ display: 'none' }} />
-              </Grid>
+              </CommunityAndAdvisorsWrapper>
+            );
+          }
+          if (componentName === articleDZComponentsNames.linksBlock) {
+            return (
+              <Block
+                key={index}
+                marginBottom="l"
+                marginX="m"
+                width={sx`calc(100% - ${space('m')} * 2)`}
+                sx$tablet={{ marginBottom: 'xl', marginX: 'auto', width: 'col6' }}
+                sx$laptop={{ width: 'col8' }}
+              >
+                <LinksBlock
+                  title={rest.title}
+                  description={rest.description}
+                  links={rest.link}
+                />
+              </Block>
             )
           }
           return '';

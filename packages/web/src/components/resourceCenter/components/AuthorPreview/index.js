@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-import styled, { css } from 'styled-components';
 import { string } from 'prop-types';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
@@ -26,7 +25,7 @@ const WrittenBy = forwardRef((props, ref) => (
 ));
 
 const AuthorPreview = ({
-  url,
+  path,
   alternativeText,
   firstName,
   fullName,
@@ -43,13 +42,15 @@ const AuthorPreview = ({
         borderRadius="50%"
         overflow="hidden"
         marginRight="s"
-        marginBottom="s"
+        marginBottom="l"
         sx$tablet={{ marginRight: 'l', marginBottom: '0' }}
       >
         <Image
-          aspectRatio="1:1"
-          src={url}
+          path={path}
           alt={alternativeText}
+          aspectRatio="1:1"
+          sources={[80]}
+          sizes="5rem"
         />
       </Block>
       <Flex flexDirection="column">
@@ -75,7 +76,7 @@ const AuthorPreview = ({
 );
 
 AuthorPreview.propTypes = {
-  url: string,
+  path: string,
   alternativeText: string,
   firstName: string,
   fullName: string,

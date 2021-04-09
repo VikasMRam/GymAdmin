@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import config from 'sly/web/config';
-import { Logo, Linkedin, Twitter, Facebook } from 'sly/common/icons/index';
+import { Logo, Linkedin, Twitter, Facebook, Instagram } from 'sly/common/icons/index';
 import Heading from 'sly/common/system/Heading';
 import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
@@ -127,57 +127,58 @@ const Links = ({ items }) => (
   </Block>
 );
 
-
-const Bottom = ({ children, ...props }) =>
-  (<Block
+const Bottom = ({ children, ...props }) => (
+  <Block
     margin="0 auto"
     position="relative"
     paddingX="l"
     paddingBottom="l"
     sx={{
-  '.left': {
-    display: 'flex',
-    flexDirection: 'column',
-    svg: {
-      marginBottom: 'l',
-    },
-  },
-  '.right': {
-    position: 'absolute',
-    top: '0px',
-    right: '24px',
-    '> a': {
-      marginLeft: 's',
-      color: 'slate.base',
-    },
-  },
-  '@tablet': {
-    '.left': {
-      flexDirection: 'row',
-      alignItems: 'center',
-      svg: {
-        marginBottom: 'initial',
-        marginRight: 's',
+      '.left': {
+        display: 'flex',
+        flexDirection: 'column',
+        svg: {
+          marginBottom: 'l',
+        },
       },
-    },
-  },
-  '@laptop': {
-    width: 'col12',
-    display: 'flex',
-    '.left': {
-      svg: {
-        marginBottom: 'initial',
-        marginRight: 's',
+      '.right': {
+        position: 'absolute',
+        top: '0px',
+        right: '24px',
+        '> a': {
+          marginLeft: 's',
+          color: 'slate.base',
+        },
       },
-    },
-  },
-}}
+      '@tablet': {
+        '.left': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          svg: {
+            marginBottom: 'initial',
+            marginRight: 's',
+          },
+        },
+      },
+      '@laptop': {
+        width: 'col12',
+        display: 'flex',
+        '.left': {
+          svg: {
+            marginBottom: 'initial',
+            marginRight: 's',
+          },
+        },
+      },
+    }}
     {...props}
-  >{children}
-  </Block>);
+  >
+    {children}
+  </Block>
+);
 
-const Footer = () => (
-  <Block as="footer" background="harvest.lighter-90">
+const Footer = (props) => (
+  <Block as="footer" background="harvest.lighter-90" {...props}>
     <Body>
       <FooterGroup>
         <GroupHeading>About us</GroupHeading>
@@ -213,7 +214,7 @@ const Footer = () => (
       </div>
       <div className="right">
         <Link href="https://www.facebook.com/seniorly/posts"><Facebook /></Link>
-        <Link href="https://www.instagram.com/seniorlyinc"><Facebook /></Link>
+        <Link href="https://www.instagram.com/seniorlyinc"><Instagram /></Link>
         <Link href="https://twitter.com/Seniorly"><Twitter /></Link>
         <Link href="https://www.linkedin.com/company/seniorly"><Linkedin /></Link>
       </div>
