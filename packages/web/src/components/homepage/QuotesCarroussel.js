@@ -1,20 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import styled, { css } from 'styled-components';
 
 import CarrousselButton from './CarrousselButton';
 
-import Icon from 'sly/common/components/atoms/Icon';
-import Block from 'sly/common/components/atoms/Block';
-import Heading from 'sly/common/components/atoms/Heading';
-import Paragraph from 'sly/common/components/atoms/Paragraph';
-import {
-  withColor,
-  withDisplay,
-  withBorder,
-  withSpacing,
-  startingWith,
-  withTransition,
-} from 'sly/common/components/helpers/index';
+import { QuoteRound } from 'sly/common/icons/index';
+import Heading from 'sly/common/system/Heading';
+import Block from 'sly/common/system/Block';
+import Flex from 'sly/common/system/Flex';
 
 const quotes = [
   { id: '1', author: 'Annie S.', text: 'This whole experience has changed our viewpoint of senior living. We thank Seniorly for the immediate, thorough, and compassionate care you provided.' },
@@ -30,78 +21,7 @@ function mod(n, m) {
   return ((n % m) + m) % m;
 }
 
-const Wrapper = styled.div(
-  withSpacing,
-  css`
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    height: 485px;
-    ${startingWith('tablet', css`
-      height: 520px;
-    `)} 
-  `,
-);
-
-const Card = styled.div(
-  withColor,
-  withSpacing,
-  withBorder,
-  withDisplay,
-  withTransition,
-  css`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    position: absolute;
-    opacity: calc(${({ position }) => 1 - 0.33 * Math.abs(position)});
-
-    top: calc(${({ position }) => 32 - 16 * Math.abs(position)}px);
-
-    left: calc(50% + ${({ position }) => (position * (264 + 16))}px - 132px);
-    width: 264px;
-    height: 452px;
-
-    svg {
-      width: 32px;
-      height: 32px;
-    }
-
-    p {
-      font-size: 20px;
-      line-height: 28px;
-    }
-
-    ${startingWith('tablet', css`
-      svg {
-        width: 48px;
-        height: 48px;
-      }
-      p {
-        font-size: 24px;
-        line-height: 36px;
-      }
-      left: calc(50% + ${({ position }) => (position * (378 + 24))}px - 189px);
-      width: 378px;
-      height: 487px;
-    `)}
-  `,
-);
-
-const Controls = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & > :first-child {
-    margin-right: 48px;
-  }
-`;
-
-export default function QuotesCarroussel({
-  heading,
-  ...props
-}) {
+export default function QuotesCarroussel(props) {
   const [below, above] = useMemo(() => {
     const above = Math.ceil(quotes.length / 2);
     const below = quotes.length - above;
@@ -124,7 +44,15 @@ export default function QuotesCarroussel({
       >
         Families love the <br /> Seniorly experience.
       </Heading>
-      <Wrapper pad="xLarge">
+      <Block
+        sx={{
+          mb: 'l',
+          overflow: 'hidden',
+          position: 'relative',
+          height: '485px',
+        }}
+        sx$tablet={{ height: '520px' }}
+      >
         {quotes.map(({ id, author, text }, index) => {
           const iCenter = mod(index + center, quotes.length);
           const isEdge = iCenter < above
@@ -134,39 +62,67 @@ export default function QuotesCarroussel({
             ? iCenter
             : iCenter - quotes.length;
           return (
-            <Card
+            <Flex
               key={id}
-              background="harvest.lighter-90"
-              borderRadius="regular"
-              padding="xLarge"
-              position={position}
-              transition={isEdge ? null : 'all'}
+              sx={{
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                background: 'harvest.lighter-90',
+                borderRadius: 'xs',
+                padding: 'l',
+                width: '264px',
+                height: '452px',
+                position: 'absolute',
+                opacity: 1 - (0.33 * Math.abs(position)),
+                top: `${32 - (16 * Math.abs(position))}px`,
+                left: `calc(50% + ${position * (264 + 16)}px - 132px)`,
+                transition: isEdge ? null : 'all 0.2s ease-out 0s',
+                svg: {
+                  width: '32px',
+                  height: '32px',
+                },
+                '& > p': {
+                  fontSize: '20px',
+                  lineHeight: '28px',
+                },
+              }}
+              sx$tablet={{
+                svg: {
+                  width: '48px',
+                  height: '48px',
+                },
+                '& > p': {
+                  fontSize: '24px',
+                  lineHeight: '36px',
+                },
+                left: `calc(50% + ${position * (378 + 24)}px - 189px)`,
+                width: '378px',
+                height: '487px',
+              }}
             >
-              <Icon
-                icon="quote-round"
-                palette="harvest"
-                pad="xLarge"
-              />
-              <Paragraph>
+              <QuoteRound color="harvest" pad="l" />
+              <Block as="p">
                 {text}
-              </Paragraph>
-              <Block marginTop="auto">
+              </Block>
+              <Block mt="auto">
                 {author}
               </Block>
-            </Card>
+            </Flex>
           );
         })}
-      </Wrapper>
-      <Controls>
-        <CarrousselButton
-          rotation="270"
-          onClick={() => move()}
-        />
-        <CarrousselButton
-          rotation="90"
-          onClick={() => move(true)}
-        />
-      </Controls>
+      </Block>
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          '& > :first-child': {
+            mr: 'xxl',
+          },
+        }}
+      >
+        <CarrousselButton rotation="-90" onClick={() => move()} />
+        <CarrousselButton rotation="90" onClick={() => move(true)} />
+      </Flex>
     </Block>
   );
 }

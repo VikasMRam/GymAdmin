@@ -68,6 +68,7 @@ export { default as Play } from './Play';
 export { default as Plus } from './Plus';
 export { default as Pool } from './Pool';
 export { default as QuickReply } from './QuickReply';
+export { default as QuoteRound } from './QuoteRound';
 export { default as Radio } from './Radio';
 export { default as Refresh } from './Refresh';
 export { default as RoomService } from './RoomService';
