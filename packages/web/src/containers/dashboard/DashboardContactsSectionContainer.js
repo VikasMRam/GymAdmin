@@ -81,10 +81,10 @@ export default class DashboardContactsSectionContainer extends Component {
     const { showModal, hideModal, notifyInfo, notifyError } = this.props;
 
     const doDelete = () => {
-      const { deleteContact, entityType } = this.props;
+      const { deleteContact, entityId, entityType } = this.props;
 
       const entity = this.getContactEntity(contact, entityType);
-      const payload = { id: contact.id, entityId: entity.id, entityType: entity.entityType };
+      const payload = { id: contact.id, entityId: entityId, entityType: entity.entityType };
       return deleteContact(payload)
         .then(this.refetchContacts)
         .then(hideModal)
