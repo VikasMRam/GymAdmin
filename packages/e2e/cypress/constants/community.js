@@ -1,4 +1,4 @@
-export const TEST_COMMUNITY = 'almavia-of-san-francisco';
+export const TEST_COMMUNITY = 'eskaton-village-placerville';
 
 export const ServicesAmenitiesFilters = {
   careServices: [
