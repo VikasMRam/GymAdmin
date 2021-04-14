@@ -120,6 +120,11 @@ const Links = ({ items }) => (
         color="slate.base"
         fontSize="body-s"
         to={url}
+        event={{
+          category: 'footer-link',
+          action: 'link-click',
+          label: name,
+        }}
       >
         {name}
       </Link>
@@ -177,7 +182,7 @@ const Bottom = ({ children, ...props }) => (
   </Block>
 );
 
-const Footer = (props) => (
+const Footer = props => (
   <Block as="footer" background="harvest.lighter-90" {...props}>
     <Body>
       <FooterGroup>
@@ -207,9 +212,36 @@ const Footer = (props) => (
           &copy;
           Seniorly {currentYear}
           <Span >{config.version}</Span>
-          {' '}· <Link color="slate.base" to="/privacy">Privacy</Link>
-          {' '}· <Link color="slate.base" to="/tos">Terms</Link>
-          {' '}· <Link color="slate.base" to="/sitemap">Sitemap</Link>
+          {' '}· <Link
+            event={{
+              category: 'footer-link',
+              action: 'link-click',
+              label: 'Privacy',
+             }}
+            color="slate.base"
+            to="/privacy"
+          >Privacy
+          </Link>
+          {' '}· <Link
+            event={{
+              category: 'footer-link',
+              action: 'link-click',
+              label: 'Terms',
+             }}
+            color="slate.base"
+            to="/tos"
+          >Terms
+          </Link>
+          {' '}· <Link
+            event={{
+              category: 'footer-link',
+              action: 'link-click',
+              label: 'Sitemap',
+             }}
+            color="slate.base"
+            to="/sitemap"
+          >Sitemap
+          </Link>
         </Span>
       </div>
       <div className="right">
