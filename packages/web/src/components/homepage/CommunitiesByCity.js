@@ -1,5 +1,5 @@
 import React, { forwardRef, useMemo, useCallback, useState, useEffect } from 'react';
-import { string } from 'prop-types';
+import { func } from 'prop-types';
 import styled from 'styled-components';
 
 import CarrousselButton from './CarrousselButton';
@@ -229,7 +229,8 @@ const CityTile = styled(({
   }
 `;
 
-const CommunitiesByCity = (onLocationSearch) => {
+
+const CommunitiesByCity = ({ onLocationSearch }) => {
   const [ref, dimensions] = useScrollObserver();
   const [max, step] = useMemo(() => {
     return [
@@ -307,13 +308,16 @@ const CommunitiesByCity = (onLocationSearch) => {
           startingWithTablet={{
             maxWidth: '360px',
           }}
-          onLocationSearch={(e) => {
-            onLocationSearch(e, true);
-          }}
+          onLocationSearch={onLocationSearch}
         />
       </Block>
     </>
   );
 };
 
+CommunitiesByCity.propTypes = {
+  onLocationSearch: func.isRequired,
+};
+
 export default CommunitiesByCity;
+
