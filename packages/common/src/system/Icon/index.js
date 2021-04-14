@@ -12,6 +12,7 @@ const updateIcons = (iconContext) => {
   const svgs = defs.querySelectorAll(':scope > svg');
   const oldSvgs = Array.prototype.slice.call(svgs);
   let indexToKeep = null;
+
   Object.entries(iconContext).forEach(([name, { svg }]) => {
     const id = `sly-svg-${name}`;
     // Remove a duplicate tag from domTagstoRemove, so it isn't cleared.
@@ -23,9 +24,10 @@ const updateIcons = (iconContext) => {
     ) {
       oldSvgs.splice(indexToKeep, 1);
     } else {
-      const newSvg = document.createElement('svg');
+      const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      newSvg.id = id;
+      newSvg.innerHTML = svg;
       defs.appendChild(newSvg);
-      newSvg.outerHTML = svg.replace('<svg ', `<svg id="${id}" `);
     }
   });
   oldSvgs.forEach(svg => svg.parentNode.removeChild(svg));
@@ -72,7 +74,7 @@ const useIconEffect = (name, svg) => {
   }
 };
 
-const Icon = forwardRef(({ sx, svg, active, hoverColor, rotation, name, size, ...props }, ref) => {
+const Icon = forwardRef(({ svg, active, hoverColor, rotation, name, size, ...props }, ref) => {
   useIconEffect(name, svg);
 
   const svgStates = {};

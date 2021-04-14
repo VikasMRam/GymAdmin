@@ -57,10 +57,6 @@ export const ICONS = [
     "checkmark"
   ],
   [
-    "ChevronRight",
-    "chevron-right"
-  ],
-  [
     "Chevron",
     "chevron"
   ],

@@ -127,57 +127,58 @@ const Links = ({ items }) => (
   </Block>
 );
 
-
-const Bottom = ({ children, ...props }) =>
-  (<Block
+const Bottom = ({ children, ...props }) => (
+  <Block
     margin="0 auto"
     position="relative"
     paddingX="l"
     paddingBottom="l"
     sx={{
-  '.left': {
-    display: 'flex',
-    flexDirection: 'column',
-    svg: {
-      marginBottom: 'l',
-    },
-  },
-  '.right': {
-    position: 'absolute',
-    top: '0px',
-    right: '24px',
-    '> a': {
-      marginLeft: 's',
-      color: 'slate.base',
-    },
-  },
-  '@tablet': {
-    '.left': {
-      flexDirection: 'row',
-      alignItems: 'center',
-      svg: {
-        marginBottom: 'initial',
-        marginRight: 's',
+      '.left': {
+        display: 'flex',
+        flexDirection: 'column',
+        svg: {
+          marginBottom: 'l',
+        },
       },
-    },
-  },
-  '@laptop': {
-    width: 'col12',
-    display: 'flex',
-    '.left': {
-      svg: {
-        marginBottom: 'initial',
-        marginRight: 's',
+      '.right': {
+        position: 'absolute',
+        top: '0px',
+        right: '24px',
+        '> a': {
+          marginLeft: 's',
+          color: 'slate.base',
+        },
       },
-    },
-  },
-}}
+      '@tablet': {
+        '.left': {
+          flexDirection: 'row',
+          alignItems: 'center',
+          svg: {
+            marginBottom: 'initial',
+            marginRight: 's',
+          },
+        },
+      },
+      '@laptop': {
+        width: 'col12',
+        display: 'flex',
+        '.left': {
+          svg: {
+            marginBottom: 'initial',
+            marginRight: 's',
+          },
+        },
+      },
+    }}
     {...props}
-  >{children}
-  </Block>);
+  >
+    {children}
+  </Block>
+);
 
-const Footer = () => (
-  <Block as="footer" background="harvest.lighter-90">
+const Footer = (props) => (
+  <Block as="footer" background="harvest.lighter-90" {...props}>
     <Body>
       <FooterGroup>
         <GroupHeading>About us</GroupHeading>

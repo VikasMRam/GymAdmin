@@ -1,17 +1,15 @@
 import React, { useState, useRef, useMemo, forwardRef } from 'react';
-
-
+import { bool, node } from 'prop-types';
+import styled from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-
-
 import Link from 'sly/common/system/Link';
-import {Logo, Menu, Chevron, ArrowDrop,Close} from 'sly/common/icons/index'
+import { Logo, Menu, Chevron, ArrowDrop, Close } from 'sly/common/icons/index';
 import Block from 'sly/common/system/Block';
 import SearchContainer from 'sly/web/components/resourceCenter/components/ArticlesSearchContainer';
 import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
+import { color, sx$laptop } from 'sly/common/system';
 
 const backToSeniorlyItem = {
   label: 'Back to Seniorly.com',
@@ -20,65 +18,72 @@ const backToSeniorlyItem = {
   hideInBigScreen: true,
 };
 
-const Wrapper = forwardRef(({children, menuIsOpen, ...props}, ref)=>
-  <Block 
-  ref={ref}
-  p="m"
-  background={'white.base'}
-  sx={{
-    outline:'none',
-    ... (menuIsOpen && {
-      position:'fixed',
-      top:0,
-      borderRadius:0,
-      width:'100%',
-      zIndex:3
-    }|| {}),
-    '@laptop':{
-      padding:'0 m',
-      ...(menuIsOpen && {
-        top:'initial',
-        position:'initial',
-        borderRadius:'initial',
-        width:'initial',
-        zIndex:'intial',
-      } || {})
-    }
+const Wrapper = forwardRef(({ children, menuIsOpen, ...props }, ref) => (
+  <Block
+    ref={ref}
+    p="m"
+    background="white.base"
+    sx={{
+    outline: 'none',
+    ...((menuIsOpen && {
+      position: 'fixed',
+      top: 0,
+      borderRadius: 0,
+      width: '100%',
+      zIndex: 3,
+    }) || {}),
+    '@laptop': {
+      padding: '0 m',
+      ...((menuIsOpen && {
+        top: 'initial',
+        position: 'initial',
+        borderRadius: 'initial',
+        width: 'initial',
+        zIndex: 'initial',
+      }) || {}),
+    },
   }}
-  {...props}
+    {...props}
   >
     {children}
-  </Block>
-)
+  </Block>),
+);
 
+Wrapper.propTypes = {
+  children: node,
+  menuIsOpen: bool,
+};
 
-const getMenuItem = (item, setMenuIsOpen) => item.hideInBigScreen
-  ? (
-    <Block onClick={() => setMenuIsOpen(false)} key={item.value} $laptop={{display:'none'}}>
-      <Link to={item.to}>
-        {item.label}
-        {item.iconBack && <Chevron rotation="90"/>}
-      </Link>
-    </Block>
-  )
-  : (
-    <Link onClick={() => setMenuIsOpen(false)} key={item.value} to={item.to}>
-      {item.label}
-      {item.iconBack && <Chevron rotation="90" />}
-    </Link>
-  );
+const StyledLink = styled(Link)`
+  &:not(:last-child) {
+    color: ${color('slate.base')};
+    ${sx$laptop({ color: color('viridian.base') })}
+  }
+`;
+
+const getMenuItem = (item, setMenuIsOpen) => (
+  <StyledLink
+    key={item.value}
+    to={item.to}
+    {...(setMenuIsOpen && { onClick: () => setMenuIsOpen(false) })}
+  >
+    {item.label}
+    {item.iconBack && <Chevron rotation="90" />}
+  </StyledLink>
+);
 
 const getMenuItems = (menuItems, setMenuIsOpen) => menuItems?.map(item => getMenuItem(item, setMenuIsOpen));
+const getRouteToRedirect = slug => `${RESOURCE_CENTER_PATH}/${slug}`;
 
 const Header = () => {
   const { requestInfo: { result } } = usePrefetch('getTopic');
 
   const headerMenuItems = useMemo(() =>
     [
-      ...(result?.map(({ slug, name }) => ({ label: name, value: name, to: `${RESOURCE_CENTER_PATH}/${slug}` })) || []),
-      backToSeniorlyItem
+      ...(result?.map(({ slug, name }) => ({ label: name, value: name, to: getRouteToRedirect(slug) })) || []),
+      backToSeniorlyItem,
     ],
-    [result]
+  [result],
   );
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -114,35 +119,34 @@ const Header = () => {
       onBlur={handleHeaderMenuBlur}
     >
       <Block
-        mb='m'
+        mb="m"
         sx$tablet={{
-          '& svg':{
-            height:'m',
-            width:'m'
-          }
+          '& svg': {
+            height: 'm',
+            width: 'm',
+          },
         }}
         sx$laptop={{
-          margin:'auto 0',
-          '& svg':{
-            height:'40px',
-            width:'40px',
-          }
+          margin: 'auto 0',
+          '& svg': {
+            height: '40px',
+            width: '40px',
+          },
         }}
       >
         <Link
-          display='flex'
+          display="flex"
           alignItems="center"
           to={RESOURCE_CENTER_PATH}
         >
-          <Logo size='xl'/>
+          <Logo size="xl" />
           <Block
-            whiteSpace='nowrap'
-            ml='xxs'
-            fontSize='body-m'
+            whiteSpace="nowrap"
+            ml="xxs"
+            fontSize="body-m"
             sx$tablet={{
-              fontSize:'20px'
+              fontSize: '20px',
             }}
-           
           >
             <b>seniorly</b> resource center
           </Block>
@@ -150,11 +154,11 @@ const Header = () => {
       </Block>
 
       <Block
-        height='44px'
+        height="44px"
         display="none"
         sx$laptop={{
-          display:'flex',
-          flexGrow:1
+          display: 'flex',
+          flexGrow: 1,
         }}
         margin="auto 8.5% auto 6%"
       >
@@ -163,84 +167,80 @@ const Header = () => {
 
       <Block
         pt="xs"
+        sx$tablet={{ pt: 0 }}
         sx$laptop={{
-          display:'none'
+          display: 'none',
         }}
-       
       >
         <Block
           display="flex"
           alignItems="center"
           sx$tablet={{
-            height:'m'
+            height: 'm',
           }}
         >
           {
             menuIsOpen ?
-            <Close
-               onClick={() => setMenuIsOpen(!menuIsOpen)}
-               cursor="pointer"
-               data-testid="MenuIcon"
-             />:
-             <Menu 
-             cursor="pointer"
-             onClick={() => setMenuIsOpen(!menuIsOpen)}
-             data-testid="MenuIcon"
-             />
-             
+              <Close
+                onClick={() => setMenuIsOpen(!menuIsOpen)}
+                cursor="pointer"
+                data-testid="MenuIcon"
+              /> :
+              <Menu
+                cursor="pointer"
+                onClick={() => setMenuIsOpen(!menuIsOpen)}
+                data-testid="MenuIcon"
+              />
           }
-         
         </Block>
       </Block>
 
       <Block
         display="none"
         sx={{
-          '& *':{
-            display:'flex',
-            alignItems:'center',
-            cursor:'pointer'
+          '& *': {
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
           },
-          '& > div':{
-            padding:'m 0',
-            lineHeight:'title-l',
-            '&:hover':{
-              borderBottom:'4px solid',
-              borderColor:'viridian.base',
-              paddingBottom:'12px'
-            }
-          }
-          
+          '& > div, & > a': {
+            padding: 'm 0',
+            lineHeight: 'title-l',
+            '&:hover': {
+              borderBottom: '4px solid',
+              borderColor: 'viridian.base',
+              paddingBottom: '12px',
+            },
+          },
         }}
         sx$laptop={{
-          display:'flex'
+          display: 'flex',
         }}
-      
       >
         <Block mr="m" onClick={toggleDropdown}>
           Topics
-          <ArrowDrop color="viridian.base" rotation={menuIsOpen ? null: "180"} />
+          <ArrowDrop color="viridian.base" rotation={menuIsOpen ? null : '180'} />
         </Block>
         {getMenuItem(backToSeniorlyItem)}
       </Block>
 
       <Block
-        display='flex'
+        display="flex"
         sx$laptop={{
-          display:'none'
+          display: 'none',
         }}
         width="100%"
-        height='m'
+        height="m"
       >
         <SearchContainer />
       </Block>
 
       {menuIsOpen && (
-          <HeaderMenuList
-            listItems={getMenuItems(headerMenuItems, setMenuIsOpen)}
-            headerRef={headerMenuRef}
-            menuIsOpen={menuIsOpen}
-          />
+        <HeaderMenuList
+          listItems={getMenuItems(headerMenuItems, setMenuIsOpen)}
+          headerRef={headerMenuRef}
+          menuIsOpen={menuIsOpen}
+        />
       )}
 
     </Wrapper>

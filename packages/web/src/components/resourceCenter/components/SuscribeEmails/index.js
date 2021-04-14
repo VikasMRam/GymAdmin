@@ -93,6 +93,8 @@ const SubscribeEmail = () => {
 
         <Block sx$tablet={{ display: 'flex', width: 'col6', marginX: 'auto' }}>
           <Input
+            sx={{ width: '100%' }}
+            sx$tablet={{ width: 'auto' }}
             value={value}
             onChange={evt => setValue(evt.target.value)}
             placeholder="Your email address"

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { array, bool, string } from 'prop-types';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
@@ -66,7 +66,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
         width="100%"
         overflow="auto"
         paddingX="m"
-        gridTemplateColumns="17.5rem 17.5rem 17.5rem 1px"
+        gridTemplateColumns={`repeat(${articles?.length}, 17.5rem) 1px`}
         gridColumnGap="m"
         sx$tablet={{
           paddingLeft: 0,
@@ -75,7 +75,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
           gridColumnGap: 'l',
           overflow: 'unset',
         }}
-        sx$laptop={{ gridTemplateColumns: '20.5rem 20.5rem 20.5rem' }}
+        sx$laptop={{ gridTemplateColumns: `repeat(${articles?.length}, 20.5rem)` }}
       >
         {articles?.map((
           {
@@ -104,7 +104,7 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
             }}
           />
         ))}
-        <Block sx$tablet={{ display: 'none' }} />
+        {articles?.length > 1 && <Block sx$tablet={{ display: 'none' }} />}
       </Grid>
     </Block>
   );

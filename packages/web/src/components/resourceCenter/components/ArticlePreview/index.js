@@ -12,18 +12,8 @@ import Link from 'sly/common/system/Link';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 
 const StyledLink = styled(Link)`
-  & {
-    position: relative;
-
-    &:hover::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
-    }
+  &:hover {
+    box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
   }
 `;
 
