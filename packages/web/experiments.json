@@ -3,5 +3,5 @@
   "SearchAdTile": ["Ask_Question", "Need_Live_Help","Custom_Options"],
   "MainProfileCTA": ["PricingWizard1","PricingWizard2","PricingWizard3","PricingWizard4","AssessmentWizard"],
   "StickyFooterCTA": ["SFPricingWizard1","SFPricingWizard2","SFPricingWizard3","SFPricingWizard4","SFAssessmentWizard"],
-  "DirectMarketWizard":["New_Stepds", "Reduced_Steps"]
+  "DirectMarketWizard":["New_Steps", "Reduced_Steps"]
 }
