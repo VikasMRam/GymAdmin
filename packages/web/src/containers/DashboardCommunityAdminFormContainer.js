@@ -58,21 +58,28 @@ export default class DashboardCommunityAdminFormContainer extends Component {
   handleSubmit = (values) => {
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
-    const { rgsAux, user, status, ...attributes } = values;
+    const { rgsAux, user, status, tags, ...attributes } = values;
 
     attributes.status = parseFloat(status);
 
+    const relationships = {
+      user: { data: {
+        type: 'User',
+          id: user.value,
+      } },
+      rgsAux: { data: {
+        attributes: rgsAux,
+      } },
+    };
+
+    if (tags) {
+      const jsonapiTags = tags.map(({ label, value }) => ({ type: 'Tag', id: value, attributes: { name: label } }));
+      relationships.tags = { data : jsonapiTags }
+    }
+
     return updateCommunity({ id }, {
       attributes,
-      relationships: {
-        user: { data: {
-          type: 'User',
-          id: user.value,
-        } },
-        rgsAux: { data: {
-          attributes: rgsAux,
-        } },
-      },
+      relationships,
     })
       .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
       .catch(() => notifyError(`Details for ${community.name} could not be saved`));
@@ -80,6 +87,9 @@ export default class DashboardCommunityAdminFormContainer extends Component {
 
   render() {
     const { community, rgsAux, communityUser, status, user, currentValues, currentEdit, ...props } = this.props;
+    const { tags: modelTags } = community;
+    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
+
 
     const canEdit = !currentEdit?.isPendingForAdmin
       && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
@@ -106,6 +116,7 @@ export default class DashboardCommunityAdminFormContainer extends Component {
         label: communityUser.attributes.name,
       },
       rgsAux: rgsAux.attributes,
+      tags,
     });
 
     patchFormInitialValues(initialValues, currentEdit);
