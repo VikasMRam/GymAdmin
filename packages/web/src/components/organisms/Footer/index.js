@@ -119,7 +119,7 @@ const Links = ({ items }) => (
       <Link
         color="slate.base"
         fontSize="body-s"
-        to={url}
+        href={url}
       >
         {name}
       </Link>
