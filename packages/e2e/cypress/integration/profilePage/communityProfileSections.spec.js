@@ -1,6 +1,6 @@
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
+import { PROFILE_TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
@@ -36,7 +36,7 @@ describe('Community Profile Sections', () => {
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
-    cy.getCommunity(TEST_COMMUNITY).then((response) => {
+    cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
       community = response;
     });
 

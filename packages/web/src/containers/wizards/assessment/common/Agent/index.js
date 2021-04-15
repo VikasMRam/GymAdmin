@@ -1,57 +1,42 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { func, object, string } from 'prop-types';
-import * as immutable from 'object-path-immutable';
 import { withRouter } from 'react-router';
 
-import { prefetch, query } from 'sly/web/services/api';
+import { query } from 'sly/web/services/api';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
-import { Medicaid } from 'sly/web/components/wizards/assessment';
+import { Agent } from 'sly/web/components/wizards/assessment';
 import { createValidator, required } from 'sly/web/services/validation';
 
 const validate = createValidator({
-  medicaid: [required],
+  agent: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'MedicaidForm',
+  form: 'AgentForm',
   destroyOnUnmount: false,
   validate,
-})(Medicaid);
+})(Agent);
 
 @withRouter
-@prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
-@query('updateUuidAux', 'updateUuidAux')
 
-export default class MedicaidFormContainer extends Component {
+export default class AgentFormContainer extends Component {
   static propTypes = {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
-    status: object,
-    stepName: string,
-    updateUuidAux: func,
+    stepName: string.isRequired,
   };
 
   static defaultProps = {
-    stepName: 'step-6:Medicaid',
-  };
-
-  updateFinancialInfo = (medicaidChoice) => {
-    const { updateUuidAux, status } = this.props;
-    if (medicaidChoice === 'yes') {
-      const { uuidAux: { result: rawUuidAux } } =  status;
-      const sendUuidAux = immutable.set(rawUuidAux, 'attributes.uuidInfo.financialInfo.medicaid', true);
-      return updateUuidAux({ id: sendUuidAux.id }, sendUuidAux);
-    }
-    return Promise.resolve();
+    stepName: 'step-3:Agent-New_Steps',
   };
 
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit, stepName } = this.props;
-    const { medicaid } = data;
-    return Promise.all([createAction({
+
+    return createAction({
       type: 'UUIDAction',
       attributes: {
         actionType: WIZARD_STEP_COMPLETED,
@@ -62,7 +47,7 @@ export default class MedicaidFormContainer extends Component {
           data,
         },
       },
-    }), this.updateFinancialInfo(medicaid)])
+    })
       .then(onSubmit);
   };
 

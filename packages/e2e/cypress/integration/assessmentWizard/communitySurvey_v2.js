@@ -201,7 +201,7 @@ describe('Community survey', () => {
 
   responsive(() => {
     it('Visit community page', () => {
-      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.visit(`/assisted-living/california/placerville/${community.id}`);
 
       waitForHydration(cy.get('div[data-testid*=GetAssessmentBox]')).within(() => {
         cy.get('h3').contains('Need help finding senior living options?').should('exist');

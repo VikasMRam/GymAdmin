@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { reduxForm } from 'redux-form';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { getWizardContentFromCta } from 'sly/web/services/helpers/wizard';
@@ -29,10 +29,16 @@ export default class ConversionContainer extends Component {
     onSubmit: func.isRequired,
     conversionInfo: object.isRequired,
     data: object,
+    experimentDescription: string,
+    stepName: string,
+  };
+
+  static defaultProps = {
+    stepName: 'step-8:Conversion',
   };
 
   postSubmit = () => {
-    const { createAction, location: { pathname }, conversionInfo, onSubmit, data } = this.props;
+    const { createAction, location: { pathname }, conversionInfo, onSubmit, data, stepName } = this.props;
     return createAction({
       type: 'UUIDAction',
       attributes: {
@@ -40,7 +46,7 @@ export default class ConversionContainer extends Component {
         actionPage: pathname,
         actionInfo: {
           wizardPostConversionInfo: WIZARD_POSTCONVERSION_INFO,
-          stepName: 'step-8:Conversion',
+          stepName,
           wizardName: 'assessmentWizard',
           data: {
             ...data,
@@ -53,9 +59,12 @@ export default class ConversionContainer extends Component {
   };
 
   render() {
-    const { conversionInfo = {} } = this.props;
+    const { conversionInfo = {}, experimentDescription } = this.props;
     const { cta } = conversionInfo;
     const { signup } = getWizardContentFromCta(cta);
+    if (experimentDescription) {
+      signup.description = experimentDescription;
+    }
     return (
       <Conversion
         {...this.props}
