@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func, bool, object } from 'prop-types';
 
+import { apiUrl } from 'sly/web/config';
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
 import { statuses } from 'sly/web/constants/communities';
@@ -14,6 +15,7 @@ import {
 } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
+const tagColumn = { typeInfo: { api: `${apiUrl}/platform/tags?filter[category]=Affinity,Activeness,Acuity&filter[name]=` }, value: 'tag.name' };
 
 export default class DashboardCommunityAdminForm extends Component {
   static propTypes = {
@@ -68,6 +70,14 @@ export default class DashboardCommunityAdminForm extends Component {
             <option>Select an option</option>
             {statusOptions}
           </EditField>
+          <EditField
+            name="tags"
+            label="Tags"
+            type="autocomplete"
+            readOnly={!canEdit}
+            column={tagColumn}
+            isMulti
+          />
         </SectionForm>
         <SectionForm heading="Community information">
           <EditField
