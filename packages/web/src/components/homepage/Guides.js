@@ -82,7 +82,7 @@ const resources = {
 };
 
 const significantLinks = guides.map(info => info.to);
-significantLinks.push(resources.href);
+significantLinks.push(resources.to);
 
 const header = getHelmetForHomePage({ canonicalUrl: host, significantLinks });
 
