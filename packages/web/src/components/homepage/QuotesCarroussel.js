@@ -3,9 +3,9 @@ import React, { useCallback, useMemo, useState } from 'react';
 import CarrousselButton from './CarrousselButton';
 
 import { QuoteRound } from 'sly/common/icons/index';
-import Heading from 'sly/common/system/Heading';
-import Block from 'sly/common/system/Block';
-import Flex from 'sly/common/system/Flex';
+import { Heading, Block, Flex } from 'sly/common/system';
+import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
+
 
 const quotes = [
   { id: '1', author: 'Annie S.', text: 'This whole experience has changed our viewpoint of senior living. We thank Seniorly for the immediate, thorough, and compassionate care you provided.' },
@@ -120,8 +120,20 @@ export default function QuotesCarroussel(props) {
           },
         }}
       >
-        <CarrousselButton rotation="-90" onClick={() => move()} />
-        <CarrousselButton rotation="90" onClick={() => move(true)} />
+        <CarrousselButton
+          rotation="-90"
+          onClick={() => {
+            clickEventHandler('homepage-testimonial-caroussel', 'left-arrow')();
+            move();
+          }}
+        />
+        <CarrousselButton
+          rotation="90"
+          onClick={() => {
+            clickEventHandler('homepage-testimonial-caroussel', 'right-arrow')();
+            move(true);
+          }}
+        />
       </Flex>
     </Block>
   );

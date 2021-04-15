@@ -2,10 +2,8 @@ import React, { PureComponent } from 'react';
 
 import config from 'sly/web/config';
 import { Logo, Linkedin, Twitter, Facebook, Instagram } from 'sly/common/icons/index';
-import Heading from 'sly/common/system/Heading';
-import Block from 'sly/common/system/Block';
-import Link from 'sly/common/system/Link';
-import Span from 'sly/common/system/Span';
+import { Heading, Block, Link, Span } from 'sly/common/system';
+import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 
 const currentYear = (new Date()).getFullYear();
 
@@ -245,10 +243,10 @@ const Footer = props => (
         </Span>
       </div>
       <div className="right">
-        <Link href="https://www.facebook.com/seniorly/posts"><Facebook /></Link>
-        <Link href="https://www.instagram.com/seniorlyinc"><Instagram /></Link>
-        <Link href="https://twitter.com/Seniorly"><Twitter /></Link>
-        <Link href="https://www.linkedin.com/company/seniorly"><Linkedin /></Link>
+        <Link onClick={clickEventHandler('footer-social-media', 'Facebook')}  href="https://www.facebook.com/seniorly/posts"><Facebook /></Link>
+        <Link onClick={clickEventHandler('footer-social-media', 'Instagram')} href="https://www.instagram.com/seniorlyinc"><Instagram /></Link>
+        <Link onClick={clickEventHandler('footer-social-media', 'Twitter')} href="https://twitter.com/Seniorly"><Twitter /></Link>
+        <Link onClick={clickEventHandler('footer-social-media', 'Linkedin')} href="https://www.linkedin.com/company/seniorly"><Linkedin /></Link>
       </div>
     </Bottom>
   </Block>
