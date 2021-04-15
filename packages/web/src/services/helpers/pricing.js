@@ -179,7 +179,7 @@ export const priceFormatter = (value) => {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2 });
   } else if (typeof value === 'string') {
-    const [int, decimal = ''] = value.includes('.') ? [value.split('.')[0], `.${value.split('.')[1]}`] : '';
+    const [int, decimal] = value.includes('.') ? [value.split('.')[0], `.${value.split('.')[1]}`] : '';
 
     if (int) {
       return parseFloat(int).toLocaleString('en', {
