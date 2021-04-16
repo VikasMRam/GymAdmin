@@ -116,7 +116,7 @@ export default class FamilyDetailsForm extends Component {
     const adls = careServices.map(i => ({ value: i, label: i }));
     const communityCareTypeOptions = communityTypes.map(i => ({ value: i, label: i }));
     const assignedToOptions = assignedTos.map(i => <option key={i.id} value={i.id}>{i.name}</option>);
-    const tagColumn = { typeInfo: { api: `${apiUrl}/platform/tags?filter[category]=Client&filter[name]=` }, value: 'tag.name' };
+    const tagColumn = { typeInfo: { api: `${apiUrl}/platform/tags?filter[category]=Clients&filter[name]=` }, value: 'tag.name' };
     const medicaidOptions = [{ label: '', value: true }];
     const sourceOptions = SOURCE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>);
     const showStageSummary = showSummaryStages.includes(stage);
