@@ -51,7 +51,6 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
           <Link
             display="block"
             font="body-l"
-            sx={{ '&:hover': { textDecoration: 'underline' } }}
             sx$tablet={{ textAlign: 'end' }}
             to={hrefToTopicPage}
           >

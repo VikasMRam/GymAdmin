@@ -175,12 +175,6 @@ const Topic = ({ match, location, history }) => {
             font="body-m"
             marginBottom="l"
             color="white.base"
-            sx={{
-              '&:hover': {
-                textDecoration: 'underline',
-                cursor: 'pointer',
-              }
-            }}
           >
             Resource Center Home
           </Link>

@@ -107,9 +107,9 @@ const ArticlePage = ({ match }) => {
         >
           {requestInfo?.result?.[0]?.mainTopic && requestInfo?.result?.[0]?.title && (
             <Block marginY="l">
-              <Link font="body-s" sx={{ '&:hover': { textDecoration: 'underline' } }} to={RESOURCE_CENTER_PATH}>Resource Center</Link>
+              <Link font="body-s" to={RESOURCE_CENTER_PATH}>Resource Center</Link>
               {' / '}
-              <Link font="body-s" sx={{ '&:hover': { textDecoration: 'underline' } }} to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
+              <Link font="body-s" to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
                 {requestInfo.result[0].mainTopic.name}
               </Link>
               {' / '}

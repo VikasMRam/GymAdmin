@@ -33,10 +33,6 @@ const TableOfContents = ({ subtitlesData }) => (
           ':last-child': {
             marginBottom: 0,
           },
-          '&:hover': {
-            cursor: 'pointer',
-            textDecoration: 'underline',
-          },
         }}
         onClick={() => item.ref.current.scrollIntoView({ behavior: 'smooth' })}
       >

@@ -231,7 +231,6 @@ const ArticleContent = ({ content: data }) => {
                 <Block marginLeft="m">
                   <Span>{rest.description}: </Span>
                   <Link
-                    sx={{ '&:hover': { textDecoration: 'underline' } }}
                     {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : rest.to}}
                   >
                     {rest.title}

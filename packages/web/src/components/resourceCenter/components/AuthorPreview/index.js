@@ -67,7 +67,7 @@ const AuthorPreview = ({
       }}
     >
       <Block marginBottom="l" font="body-m">{shortDescription}</Block>
-      <Link to={`${RESOURCE_CENTER_PATH}/author/${slug}`} sx={{ '&:hover': { textDecoration: 'underline' } }}>
+      <Link to={`${RESOURCE_CENTER_PATH}/author/${slug}`}>
         {`View other articles written by ${firstName}`}
         <Chevron rotation="90" />
       </Link>

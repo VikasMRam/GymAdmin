@@ -37,9 +37,6 @@ const LinksBlock = ({ title, description, links }) => {
               '&:last-child': {
                 mb: 0
               },
-              '&:hover': {
-                textDecoration: 'underline',
-              },
             }}
             {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : to}}
           >
