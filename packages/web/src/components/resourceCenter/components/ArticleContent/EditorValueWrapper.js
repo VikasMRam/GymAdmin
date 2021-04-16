@@ -4,7 +4,7 @@ import { key } from 'styled-theme';
 import { string } from 'prop-types';
 
 import Block from 'sly/common/system/Block';
-import { sx, space, sx$tablet } from 'sly/common/system/sx';
+import { sx, space, sx$tablet, color } from 'sly/common/system/sx';
 
 const tableStyles = css`
   & figure.table {
@@ -21,29 +21,30 @@ const tableStyles = css`
       & > thead,
       & > tbody {
         & > tr {
-          ${sx({
-            borderBottom: 's',
-            borderColor: 'slate.lighter-90',
-          })}
+          ${sx({ borderBottom: 's', borderColor: 'slate.lighter-90' })}
           
           & > th, & > td {
-            ${sx({
-              padding: 'm l',
-              font: 'body-m',
-              textAlign: 'left',
-            })}
+            ${sx({ padding: 'm l', textAlign: 'left' })}
           }
         }
       }
       
       & > thead > tr {
-        background: ${key('palette.slate.lighter-95')};
-        padding-right: ${key('space.m')};
+        background: ${color('slate.lighter-95')};
+        padding-right: ${space('m')};
+
+        th {
+          ${sx({ font: 'title-xs-azo' })}
+        }
       }
       
       & > tbody > tr {
         &:last-child {
           border-bottom: none;
+        }
+
+        td {
+          ${sx({ font: 'body-m' })}
         }
       }
 

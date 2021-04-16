@@ -107,9 +107,9 @@ const ArticlePage = ({ match }) => {
         >
           {requestInfo?.result?.[0]?.mainTopic && requestInfo?.result?.[0]?.title && (
             <Block marginY="l">
-              <Link font="body-s" to={RESOURCE_CENTER_PATH}>Resource Center</Link>
+              <Link font="body-s" sx={{ '&:hover': { textDecoration: 'underline' } }} to={RESOURCE_CENTER_PATH}>Resource Center</Link>
               {' / '}
-              <Link font="body-s" to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
+              <Link font="body-s" sx={{ '&:hover': { textDecoration: 'underline' } }} to={`${RESOURCE_CENTER_PATH}/${requestInfo.result[0].mainTopic.slug}`}>
                 {requestInfo.result[0].mainTopic.name}
               </Link>
               {' / '}
@@ -124,7 +124,7 @@ const ArticlePage = ({ match }) => {
             {requestInfo?.result?.[0]?.shortDescription}
           </Block>
 
-          <Block font="body-s" marginBottom="l" color="slate.lighter-60">
+          <Block font="body-s" marginBottom="l" color="slate.lighter-40">
             {`By ${requestInfo?.result?.[0]?.author?.fullName} ·  Updated ${formatDate(requestInfo?.result?.[0]?.updated_at, 'long')}`}
           </Block>
 
@@ -188,12 +188,12 @@ const ArticlePage = ({ match }) => {
           sx$laptop={{ width: 'col8' }}
         >
           <AuthorPreview
-            url={requestInfo?.result?.[0]?.author.img?.url}
-            shortDescription={requestInfo?.result?.[0]?.author.shortDescription}
-            alternativeText={requestInfo?.result?.[0]?.author.img?.alternativeText}
-            fullName={requestInfo?.result?.[0]?.author.fullName}
-            firstName={requestInfo?.result?.[0]?.author.firstName}
-            slug={requestInfo?.result?.[0]?.author.slug}
+            path={requestInfo.result?.[0]?.author?.img?.path}
+            shortDescription={requestInfo.result?.[0]?.author?.shortDescription}
+            alternativeText={requestInfo.result?.[0]?.author?.img?.alternativeText}
+            fullName={requestInfo.result?.[0]?.author?.fullName}
+            firstName={requestInfo.result?.[0]?.author?.firstName}
+            slug={requestInfo.result?.[0]?.author?.slug}
           />
         </Block>
       )}

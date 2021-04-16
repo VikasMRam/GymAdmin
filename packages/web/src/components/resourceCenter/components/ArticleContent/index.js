@@ -165,7 +165,7 @@ const ArticleContent = ({ content: data }) => {
       >
         {content?.map(({ __component, ...rest }, index) => {
           const componentName = __component.split('.')[1];
-          if (componentName === articleDZComponentsNames.search) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} />
+          if (componentName === articleDZComponentsNames.search) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} title={rest.title} />;
           if (componentName === articleDZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
           if (componentName === articleDZComponentsNames.subtitle) {
             return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
@@ -191,7 +191,7 @@ const ArticleContent = ({ content: data }) => {
                dangerouslySetInnerHTML={{ __html: rest.description }}
              />
              <QuoteTitle
-               color="slate.lighter-60"
+               color="slate.lighter-40"
                font="body-m"
                marginBottom="xl"
                width={sx`calc(100% - ${space('m')} * 2)`}
@@ -214,6 +214,7 @@ const ArticleContent = ({ content: data }) => {
             return (
               <Flex
                 key={index}
+                alignItems="center"
                 width={sx`calc(100% - ${space('m')} * 2)`}
                 padding="l"
                 font="body-m"
@@ -229,7 +230,10 @@ const ArticleContent = ({ content: data }) => {
                 </Block>
                 <Block marginLeft="m">
                   <Span>{rest.description}: </Span>
-                  <Link {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : rest.to}}>
+                  <Link
+                    sx={{ '&:hover': { textDecoration: 'underline' } }}
+                    {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : rest.to}}
+                  >
                     {rest.title}
                   </Link>
                 </Block>
@@ -257,18 +261,20 @@ const ArticleContent = ({ content: data }) => {
                   }}
                 >
                   <Image
+                    css={{ width: '100%' }}
                     alt={rest.image?.alternativeText}
-                    aspectRatio="3:2"
-                    {...(!isFullSizeImage ? {
-                      path: rest.image?.path,
-                      sources: [
-                        288,
-                        393,
-                        tabletWidth,
-                        laptopWidth,
-                      ],
-                      sizes: `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}px, ${laptopWidth}px`,
-                    } : { src: rest.image?.url })}
+                    path={rest.image?.path}
+                    sizes={
+                      isFullSizeImage
+                        ? '100vw'
+                        : `(max-width: 727px) 100vw, (max-width: 1079px) ${tabletWidth}px, ${laptopWidth}px`
+                    }
+                    sources={
+                      isFullSizeImage
+                        ? [320, 425, 728, 1080, 1200]
+                        : [288, 393, tabletWidth, laptopWidth]
+                    }
+                    {...(!isFullSizeImage && { aspectRatio: '3:2' })}
                   />
                 </Block>
                 {rest.image?.alternativeText && (

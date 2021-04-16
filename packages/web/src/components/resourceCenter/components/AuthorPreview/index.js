@@ -11,7 +11,7 @@ import Flex from 'sly/common/system/Flex';
 
 const WrittenBy = forwardRef((props, ref) => (
   <Block
-    palette="slate.lighter-40"
+    color="slate.lighter-40"
     font="label"
     marginBottom="s"
     width="100%"
@@ -67,7 +67,7 @@ const AuthorPreview = ({
       }}
     >
       <Block marginBottom="l" font="body-m">{shortDescription}</Block>
-      <Link to={`${RESOURCE_CENTER_PATH}/author/${slug}`}>
+      <Link to={`${RESOURCE_CENTER_PATH}/author/${slug}`} sx={{ '&:hover': { textDecoration: 'underline' } }}>
         {`View other articles written by ${firstName}`}
         <Chevron rotation="90" />
       </Link>
