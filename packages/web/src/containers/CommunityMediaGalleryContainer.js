@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { prefetch, query } from 'sly/web/services/api';
+import { prefetch } from 'sly/web/services/api';
 import { assetPath } from 'sly/web/components/themes';
 import withAuth from 'sly/web/services/api/withAuth';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -89,7 +89,6 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
     'filter[entity_slug]': match.params.communitySlug,
   })
 )
-@query('updateOldUserSave')
 export default class CommunityMediaGalleryContainer extends React.Component {
   static typeHydrationId = 'CommunityMediaGalleryContainer';
   static propTypes = {
@@ -158,13 +157,11 @@ export default class CommunityMediaGalleryContainer extends React.Component {
       label: this.props.community.id,
     });
 
-  authenticatedUpdateUserSave = (id, data) => {
-    const { ensureAuthenticated, updateOldUserSave } = this.props;
-    return ensureAuthenticated(
+  updateUserSave = (id, data) =>
+    this.props.ensureAuthenticated(
       'Sign up to add to your favorites list',
-      () => updateOldUserSave({ id }, data),
+      api.updateOldUserSave.asAction({ id }, data)
     );
-  };
 
   handleFavouriteClick = () => {
     const {
@@ -179,7 +176,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
 
     if (isCommunityAlreadySaved(community, userSaves)) {
       const userSaveToUpdate = getCommunityUserSave(community, userSaves);
-      this.authenticatedUpdateUserSave(userSaveToUpdate.id, {
+      this.updateUserSave(userSaveToUpdate.id, {
         status: USER_SAVE_DELETE_STATUS,
       })
         .then(() => notifyInfo(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS))
