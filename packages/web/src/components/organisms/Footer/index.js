@@ -117,7 +117,7 @@ const Links = ({ items }) => (
       <Link
         color="slate.base"
         fontSize="body-s"
-        to={url}
+        href={url}
         event={{
           category: 'footer-link',
           action: 'link-click',

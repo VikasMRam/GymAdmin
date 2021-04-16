@@ -20,3 +20,6 @@ export WorkingWith from './WorkingWith';
 /* End v1.1 steps */
 /* v2 steps */
 export Conversion from './Conversion';
+
+/* Experimental V2 steps */
+export Agent from './Agent';

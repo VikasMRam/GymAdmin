@@ -16,7 +16,7 @@ import {
   ASSESSMENT_WIZARD_COMPLETED,
   ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
   ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS,
-} from 'sly/web/constants/wizards/assessment';
+  WIZARD_EXPERIMENT_ZIP_CODES } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 /* Wizard Step Imports */
@@ -28,12 +28,15 @@ import {
   Budget,
   Conversion,
   End,
+  Agent,
 } from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
 import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
 import { ProgressBarWrapper } from 'sly/web/components/wizards/assessment/Template';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
+import { Experiment, Variant } from 'sly/web/services/experiments';
+
 
 @withWS
 @withRedirectTo
@@ -49,6 +52,7 @@ export default class AssessmentWizardV2 extends Component {
     getAgent: func.isRequired,
     community: communityPropType,
     city: string,
+    zip: string,
     state: string,
     toc: string,
     redirectTo: func.isRequired,
@@ -183,7 +187,7 @@ export default class AssessmentWizardV2 extends Component {
 
   render() {
     const { community, hasTip, className, toc, skipIntro, cta, entry } = this.props;
-    let { city, state } = this.props;
+    let { city, state, zip } = this.props;
     let amount = 4000;
     let skipOptionText = 'No thanks, connect me to an expert now.';
     // const showSkipOption = true;
@@ -195,7 +199,7 @@ export default class AssessmentWizardV2 extends Component {
     }
     // console.log('toc and agent and hasNoAgent', agent, hasNoAgent, toc);
     if (community) {
-      ({ address: { city, state }, startingRate: amount = 4000 } = community);
+      ({ address: { city, state, zip }, startingRate: amount = 4000 } = community);
       skipOptionText = 'No thanks, I just want to see pricing.';
     }
     const hadNoLocation = !city || !state || city === 'undefined' || state === 'undefined';
@@ -215,100 +219,218 @@ export default class AssessmentWizardV2 extends Component {
             [city, state] = data.location.displayText.split(', ');
           }
           return (
-            <section className={className}>
-              {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
+            community && WIZARD_EXPERIMENT_ZIP_CODES.includes(zip) ?
+              <Experiment name="DirectMarketWizard">
+                <Variant name="Reduced_Steps">
+                  <section className={className}>
+                    {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
+                    <ProgressBarWrapper>
+                      <ProgressBar totalSteps="3" currentStep={props.currentStepIndex} />
+                    </ProgressBarWrapper>
+                    }
+                    <WizardSteps {...props}>
+                      {!skipIntro && <WizardStep
+                        component={Intro}
+                        name="Intro"
+                        skipOptionText={skipOptionText}
+                        {...intro}
+                      />}
+                      <WizardStep
+                        component={ADL}
+                        name="ADL"
+                        stepName="step-2:ADL-Reduced_Steps"
+                        hasTip={hasTip}
+                        onSkipClick={next}
+                        onBackClick={previous}
+                      />
+
+                      <WizardStep
+                        component={Medicaid}
+                        name="Medicaid"
+                        stepName="step-3:Medicaid-Reduced_Steps"
+                        hasTip={hasTip}
+                        onSkipClick={next}
+                        onBackClick={previous}
+                      />
+
+                      <WizardStep
+                        component={Conversion}
+                        name="Auth"
+                        signUpHeading={data.whatToDoNext === 'start' ?
+                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                        stepName="step-4:Conversion-Reduced_Steps"
+                        onAuthSuccess={next}
+                        onSubmit={next}
+                        onSkipClick={next}
+                        onBackClick={previous}
+                        whoNeedsHelp={data.lookingFor}
+                        data={data}
+                        community={community}
+                        entry={entry}
+                        conversionInfo={conversionInfo}
+                      />
+                      <WizardStep
+                        component={End}
+                        name="End"
+                        onComplete={next}
+                        whoNeedsHelp={data.lookingFor}
+                        hasTip={hasTip}
+                      />
+                    </WizardSteps>
+                  </section>
+                </Variant>
+                <Variant name="New_Steps">
+                  <section className={className}>
+                    {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
+                    <ProgressBarWrapper>
+                      <ProgressBar totalSteps={3} currentStep={props.currentStepIndex} />
+                    </ProgressBarWrapper>
+                    }
+                    <WizardSteps {...props}>
+                      {!skipIntro && <WizardStep
+                        component={Intro}
+                        name="Intro"
+                        skipOptionText={skipOptionText}
+                        {...intro}
+                      />}
+                      <WizardStep
+                        component={ADL}
+                        name="ADL"
+                        stepName="step-2:ADL-New_Steps"
+                        hasTip={hasTip}
+                        onSkipClick={next}
+                        onBackClick={previous}
+                      />
+                      <WizardStep
+                        component={Agent}
+                        name="Agent"
+                        hasTip={hasTip}
+                        onSkipClick={next}
+                        onBackClick={previous}
+                      />
+                      <WizardStep
+                        component={Conversion}
+                        name="Auth"
+                        signUpHeading={data.whatToDoNext === 'start' ?
+                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                        experimentDescription={data.agent === 'no-agent' ? "We'll get back to you on your request soon." : null}
+                        stepName="step-4:Conversion:New_Steps"
+                        onAuthSuccess={next}
+                        onSubmit={next}
+                        onSkipClick={next}
+                        onBackClick={previous}
+                        data={data}
+                        community={community}
+                        entry={entry}
+                        conversionInfo={conversionInfo}
+                      />
+                      <WizardStep
+                        component={End}
+                        name="End"
+                        onComplete={next}
+                        hasTip={hasTip}
+                      />
+                    </WizardSteps>
+                  </section>
+                </Variant>
+              </Experiment>
+            :
+              <section className={className}>
+                {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
                 <ProgressBarWrapper>
                   <ProgressBar totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
                 </ProgressBarWrapper>
               }
-              <WizardSteps {...props}>
-                {!skipIntro && <WizardStep
-                  component={Intro}
-                  name="Intro"
-                  skipOptionText={skipOptionText}
-                  {...intro}
-                />}
-                {hadNoLocation &&
-                <WizardStep
-                  component={Location}
-                  name="Location"
-                  hasTip={hasTip}
-                />
-                }
-                <WizardStep
-                  component={Who}
-                  name="Who"
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Timing}
-                  name="Timing"
-                  hasTip={hasTip}
-                  onBackClick={previous}
-                  onSkipClick={next}
-                />
-                <WizardStep
-                  component={ADL}
-                  name="ADL"
-                  whoNeedsHelp={data.lookingFor}
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Budget}
-                  name="Budget"
-                  whoNeedsHelp={data.lookingFor}
-                  city={city}
-                  state={state}
-                  amount={amount}
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Medicaid}
-                  name="Medicaid"
-                  whoNeedsHelp={data.lookingFor}
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Services}
-                  name="Services"
-                  whoNeedsHelp={data.lookingFor}
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Conversion}
-                  name="Auth"
-                  signUpHeading={data.whatToDoNext === 'start' ?
+                <WizardSteps {...props}>
+                  {!skipIntro && <WizardStep
+                    component={Intro}
+                    name="Intro"
+                    skipOptionText={skipOptionText}
+                    {...intro}
+                  />}
+                  {hadNoLocation &&
+                  <WizardStep
+                    component={Location}
+                    name="Location"
+                    hasTip={hasTip}
+                  />
+                  }
+                  <WizardStep
+                    component={Who}
+                    name="Who"
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
+                  <WizardStep
+                    component={Timing}
+                    name="Timing"
+                    hasTip={hasTip}
+                    onBackClick={previous}
+                    onSkipClick={next}
+                  />
+                  <WizardStep
+                    component={ADL}
+                    name="ADL"
+                    whoNeedsHelp={data.lookingFor}
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
+                  <WizardStep
+                    component={Budget}
+                    name="Budget"
+                    whoNeedsHelp={data.lookingFor}
+                    city={city}
+                    state={state}
+                    amount={amount}
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
+                  <WizardStep
+                    component={Medicaid}
+                    name="Medicaid"
+                    whoNeedsHelp={data.lookingFor}
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
+                  <WizardStep
+                    component={Services}
+                    name="Services"
+                    whoNeedsHelp={data.lookingFor}
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
+                  <WizardStep
+                    component={Conversion}
+                    name="Auth"
+                    signUpHeading={data.whatToDoNext === 'start' ?
                     'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                     : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                  onAuthSuccess={next}
-                  onSubmit={next}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                  whoNeedsHelp={data.lookingFor}
-                  data={data}
-                  community={community}
-                  entry={entry}
-                  conversionInfo={conversionInfo}
-                />
-                <WizardStep
-                  component={End}
-                  name="End"
-                  onComplete={next}
-                  whoNeedsHelp={data.lookingFor}
-                  hasTip={hasTip}
-                />
-              </WizardSteps>
-            </section>
+                    onAuthSuccess={next}
+                    onSubmit={next}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                    whoNeedsHelp={data.lookingFor}
+                    data={data}
+                    community={community}
+                    entry={entry}
+                    conversionInfo={conversionInfo}
+                  />
+                  <WizardStep
+                    component={End}
+                    name="End"
+                    onComplete={next}
+                    whoNeedsHelp={data.lookingFor}
+                    hasTip={hasTip}
+                  />
+                </WizardSteps>
+              </section>
           );
         }}
       </WizardController>

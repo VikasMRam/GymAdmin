@@ -1,4 +1,5 @@
 export ADL from './ADL';
+export Agent from './Agent';
 export Auth from './Auth';
 export Budget from './Budget';
 export CurrentLiving from './CurrentLiving';

@@ -4,6 +4,7 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
+import { parse } from 'query-string';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
@@ -28,7 +29,6 @@ import DashboardMyFamiliesDetailsPage from 'sly/web/components/pages/DashboardMy
 import withNotification from 'sly/web/controllers/withNotification';
 import withModal from 'sly/web/controllers/withModal';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
-import { parse } from 'query-string';
 
 const mapStateToProps = (state, { conversations }) => ({
   selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
@@ -102,7 +102,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       this.checkDuplicatesInProgress = true;
       getClients(params)
         .then(resp => normJsonApi(resp))
-        .then(data => {
+        .then((data) => {
           this.setState({ clientsWithSameContacts: data });
           this.checkDuplicatesInProgress = false;
         });
@@ -339,7 +339,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         notesPagination={getDetailedPaginationData(status.notes, 'notes')}
         noteIsLoading={!status.notes.hasFinished}
         basePath={location.pathname}
-        isLoading={!clientHasFinished || !userHasFinished}
+        isLoading={!clientHasFinished || !userHasFinished || !client}
         goToFamilyDetails={this.goToFamilyDetails}
         goToMessagesTab={this.goToMessagesTab}
         refetchConversations={this.refetchConversations}

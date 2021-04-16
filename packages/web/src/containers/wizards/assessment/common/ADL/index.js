@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { query } from 'sly/web/services/api';
@@ -26,10 +26,15 @@ export default class ADLFormContainer extends Component {
     createAction: func.isRequired,
     location: object.isRequired,
     onSubmit: func.isRequired,
+    stepName: string,
+  };
+
+  static defaultProps = {
+    stepName: 'step-4:ADL',
   };
 
   handleSubmit = (data) => {
-    const { createAction, location: { pathname }, onSubmit } = this.props;
+    const { createAction, location: { pathname }, onSubmit, stepName } = this.props;
 
     return createAction({
       type: 'UUIDAction',
@@ -37,7 +42,7 @@ export default class ADLFormContainer extends Component {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
-          stepName: 'step-4:ADL',
+          stepName,
           wizardName: 'assessmentWizard',
           data,
         },
