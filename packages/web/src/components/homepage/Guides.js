@@ -98,7 +98,13 @@ const Guides = (props) => {
           <Block font="body-l" pad="l" >
             When you first begin to explore senior living, the information and options can be overwhelming—and stressful. We get it. That’s why we’ve done the basic research for you, creating a series of Seniorly Guides and reliable resources to inform you along your journey.
           </Block>
-          <Link href={resources.to}>
+          <Link href={resources.to}
+            event={{
+                category: 'homepage-guides',
+                action: 'link-click',
+                label: resources.title,
+              }}
+          >
             <Button height="l">{resources.title}</Button>
           </Link>
         </Block>
@@ -127,6 +133,12 @@ const Guides = (props) => {
                 },
               }}
               {...guide}
+              event={{
+                category: 'homepage-guides',
+                action: 'link-click',
+                label: guide.title,
+
+              }}
             >
               <span>{guide.title}</span>
               <Chevron rotation="90" size="l" />

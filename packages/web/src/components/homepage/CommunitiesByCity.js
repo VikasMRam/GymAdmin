@@ -196,7 +196,16 @@ const GridButton = forwardRef(({ direction, ...props }, ref) => {
 const CityTile = styled(({
   title, to, alt, image, children, ...props
 }) => (
-  <Link key={title} to={to} {...props}>
+  <Link
+    event={{
+    category: 'homepage-community-tiles',
+    action: 'link-click',
+    label: title,
+  }}
+    key={title}
+    to={to}
+    {...props}
+  >
     <Image path={image} alt={alt} sources={[240, 480]} sizes="240px" aspectRatio="3:2">
       <div className="legend">
         {children}
