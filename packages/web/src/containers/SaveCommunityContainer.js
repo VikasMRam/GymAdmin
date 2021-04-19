@@ -34,25 +34,35 @@ const mapStateToProps = (state, ownProps) => {
 
 // FIXME: hack because createUser is not JSON:API, should use @query
 const mapDispatchToProps = {
-  ensureAuthenticated,
+  createUserSave: data => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.createOldUserSave.asAction(data),
+  ),
+  updateUserSave: (id, data) => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.updateOldUserSave.asAction({ id }, data),
+  ),
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
 
 @withAuth
+
 @withRouter
+
 @prefetch('community', 'getCommunity', (req, { slug }) => req({
   id: slug,
   include: 'similar-communities,questions,agents',
 }))
+
 @prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[entity_slug]': getCommunitySlug(match),
 }))
+
 @query('createAction', 'createUuidAction')
-@query('createOldUserSave')
-@query('updateOldUserSave')
-@connect(mapStateToProps, { ensureAuthenticated })
+
+@connect(mapStateToProps, mapDispatchToProps)
 
 export default class SaveCommunityContainer extends Component {
   static propTypes = {
@@ -87,26 +97,10 @@ export default class SaveCommunityContainer extends Component {
     }
   }
 
-  authenticatedCreateUserSave = (data) => {
-    const { ensureAuthenticated, createOldUserSave } = this.props;
-    return ensureAuthenticated(
-      'Sign up to add to your favorites list',
-      () => createOldUserSave(data),
-    );
-  };
-
-  authenticatedUpdateUserSave = (id, data) => {
-    const { ensureAuthenticated, updateOldUserSave } = this.props;
-    return ensureAuthenticated(
-      'Sign up to add to your favorites list',
-      () => updateOldUserSave({ id }, data),
-    );
-  };
-
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, notifyInfo, notifyError, createAction, match, status,
+      community, createUserSave, notifyInfo, notifyError, createAction, match, status,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -117,8 +111,7 @@ export default class SaveCommunityContainer extends Component {
     this.setState({
       updatingUserSave: true,
     });
-
-    this.authenticatedCreateUserSave(payload)
+    createUserSave(payload)
       .then(({ body }) => createAction({
         type: 'UUIDAction',
         attributes: {
@@ -146,15 +139,14 @@ export default class SaveCommunityContainer extends Component {
   updateUserSave = (status) => {
     const { handleModalClose } = this;
     const {
-      userSave, notifyInfo, notifyError, createAction, community, match,
+      userSave, updateUserSave, notifyInfo, notifyError, createAction, community, match,
     } = this.props;
     const { id } = userSave;
 
     this.setState({
       updatingUserSave: true,
     });
-
-    this.authenticatedUpdateUserSave(id, {
+    updateUserSave(id, {
       status,
     })
       .then(({ body }) => createAction({
