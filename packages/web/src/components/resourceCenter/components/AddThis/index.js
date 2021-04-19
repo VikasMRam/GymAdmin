@@ -5,7 +5,7 @@ import { isBrowser } from 'sly/web/config';
 
 const AddThis = () => {
   useEffect(() => {
-    isBrowser && window.addthis?.layers?.refresh();
+    isBrowser && window.addthis?.layers?.refresh?.();
   }, []);
 
   return (
