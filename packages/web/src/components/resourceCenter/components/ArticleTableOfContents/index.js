@@ -28,8 +28,8 @@ const TableOfContents = ({ subtitlesData }) => (
         key={`${item.value}-${index}`}
         font="body-l"
         display="block"
+        mb="m"
         sx={{
-          marginBottom: 'm',
           ':last-child': {
             marginBottom: 0,
           },

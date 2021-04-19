@@ -1,21 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
 import { array, bool, object, string } from 'prop-types';
 
 import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
-import { space } from 'sly/common/system/sx';
+import { sx, space } from 'sly/common/system/sx';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
 import Heading from 'sly/common/system/Heading';
 import Link from 'sly/common/system/Link';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
-
-const StyledLink = styled(Link)`
-  &:hover {
-    box-shadow: 0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1);
-  }
-`;
 
 const ArticlePreview = ({
   smallSizeOnPhone,
@@ -29,9 +22,15 @@ const ArticlePreview = ({
   customStyles,
 }) => (
   <Flex
-    as={StyledLink}
+    as={Link}
     to={to}
-    sx={customStyles}
+    sx={{
+      '&:hover': {
+        textDecoration: 'none',
+        boxShadow: sx`0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1)`,
+      },
+      ...customStyles,
+    }}
     flexDirection="column"
     border="box"
     width={smallSizeOnPhone ? '17.5rem' : '20.5rem'}
@@ -93,6 +92,9 @@ ArticlePreview.propTypes = {
   shortDescription: string,
   to: string,
   customStyles: object,
+};
+ArticlePreview.defaultProps = {
+  customStyles: {},
 };
 
 export default ArticlePreview;
