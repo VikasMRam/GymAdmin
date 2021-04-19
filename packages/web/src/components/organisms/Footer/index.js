@@ -118,6 +118,9 @@ const Links = ({ items }) => (
         display: 'block',
         marginBottom: 's',
         paddingRight: 'm',
+        '&:hover': {
+          color: 'viridian.base',
+        },
         '@tablet': {
           width: 'calc(100%/3)',
         },

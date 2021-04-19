@@ -61,7 +61,7 @@ export default class Link extends Component {
         as="a"
         color="viridian.base"
         sx={{
-          '&:hover': { textDecoration: 'underline', cursor: 'pointer', color: 'viridian.base', ...hover },
+          '&:hover': { textDecoration: 'underline', cursor: 'pointer', ...hover },
           ...restSx,
         }}
         {...restProps}

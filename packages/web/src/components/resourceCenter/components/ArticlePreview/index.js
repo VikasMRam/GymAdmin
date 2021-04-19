@@ -26,7 +26,7 @@ const ArticlePreview = ({
     to={to}
     sx={{
       '&:hover': {
-        textDecoration: 'none',
+        textDecoration: 'none !important',
         boxShadow: sx`0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1)`,
       },
       ...customStyles,
