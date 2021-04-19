@@ -15,7 +15,6 @@ export const seniorLivingGuidesTags = [
   { value: 'finance', label: 'Finance' },
   { value: 'legal', label: 'Legal' },
   { value: 'advisors', label: 'Advisors' },
-  { value: 'city-guides', label: 'City guides' },
 ];
 
 export const healthAndLifestyleTags = [
