@@ -67,6 +67,7 @@ const getMenuItem = (item, setMenuIsOpen) => (
   <StyledLink
     key={item.value}
     to={item.to}
+    sx={{ '&:hover': { textDecoration: 'unset' } }}
     {...(setMenuIsOpen && { onClick: () => setMenuIsOpen(false) })}
   >
     {item.label}
@@ -138,6 +139,7 @@ const Header = () => {
         <Link
           display="flex"
           alignItems="center"
+          sx={{ '&:hover': { textDecoration: 'unset' } }}
           to={RESOURCE_CENTER_PATH}
         >
           <Logo size="xl" />
