@@ -12,19 +12,15 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
 const AuthorArticles = ({ slug, firstName, pageNumber }) => {
-  const { requestInfo: { result: articlesCount } } = usePrefetch(
-    'getArticlesCount',
-    req => req({ 'author.slug': slug.replace(/\+/g, '%2b') }),
-  );
+  const { requestInfo: { result: articlesCount } } = usePrefetch('getArticlesCount', {
+    'author.slug': slug.replace(/\+/g, '%2b'),
+  });
 
-  const { requestInfo: { result: articlesList } } = usePrefetch(
-    'getArticle',
-    req => req({
-      'author.slug': slug.replace(/\+/g, '%2b'),
-      _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
-      _limit: ARTICLES_RANGE_FOR_PAGINATION,
-    }),
-  );
+  const { requestInfo: { result: articlesList } } = usePrefetch('getArticle', {
+    'author.slug': slug.replace(/\+/g, '%2b'),
+    _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
+    _limit: ARTICLES_RANGE_FOR_PAGINATION,
+  });
 
   return (
     <>

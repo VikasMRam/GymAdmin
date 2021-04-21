@@ -23,7 +23,7 @@ export default function SearchContainer() {
   const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
 
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo: requestResult } = usePrefetch('getCommunitySearch', request => request(apiFilters));
+  const { requestInfo: requestResult } = usePrefetch('getCommunitySearch', apiFilters);
 
   // set the state to avoid blank page during fetch
   const [requestInfo, setRequestInfo] = useState(requestResult);

@@ -51,7 +51,7 @@ const ArticlePage = ({ match }) => {
 
   const { slug, topic } = match.params;
 
-  const { requestInfo } = usePrefetch('getArticle', req => req({ slug_eq: slug, 'mainTopic.slug': topic }));
+  const { requestInfo } = usePrefetch('getArticle', { slug_eq: slug, 'mainTopic.slug': topic });
 
   useEffect(() => {
     apiFetch(

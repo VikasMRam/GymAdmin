@@ -109,25 +109,26 @@ const Topic = ({ match, location, history }) => {
 
   const { requestInfo: { result: topicRes , hasFinished: requestByTopicHasFinished } } = usePrefetch(
     'getTopic',
-    req => req({ slug: topicSlug, }),
+    { slug: topicSlug, },
   );
 
   const { requestInfo: { result: articlesCount, hasFinished: requestByCountHasFinished } } = usePrefetch(
     'getArticlesCount',
-    req => req({
+    {
       'mainTopic.slug': topicSlug,
       ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
-    }),
+    },
   );
 
   const { requestInfo: { result: articles, hasFinished: requestByArticlesHasFinished } } = usePrefetch(
     'getArticle',
-    req => req({
+    {
       'mainTopic.slug': topicSlug,
       ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
       _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
       _limit: ARTICLES_RANGE_FOR_PAGINATION,
-    }));
+    }
+  );
 
   if (
     (!topicRes?.[0] && requestByTopicHasFinished) ||

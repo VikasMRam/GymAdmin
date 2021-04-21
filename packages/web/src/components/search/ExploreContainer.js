@@ -18,7 +18,7 @@ const citiesToShowGeoGuide = ['new-york', 'miami', 'las-vegas', 'san-francisco',
 
 
 function ExploreContainer({ filters }) {
-  const { requestInfo } = usePrefetch('getGeoGuides', request => request(filters, { encode: false }));
+  const { requestInfo } = usePrefetch('getGeoGuides', filters, { encode: false });
 
   const [geoGuides, setGeoGuides] = useState(requestInfo.normalized);
   useEffect(() => {

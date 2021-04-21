@@ -22,7 +22,7 @@ import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 const Author = ({ match, location }) => {
   const { slug } = match.params;
 
-  const { requestInfo } = usePrefetch('getAuthor', req => req({ slug: slug.replace(/\+/g, '%2b') }));
+  const { requestInfo } = usePrefetch('getAuthor', { slug: slug.replace(/\+/g, '%2b') });
 
   if (requestInfo.hasFinished && !requestInfo?.result?.length) {
     return <Redirect to={RESOURCE_CENTER_PATH} />;

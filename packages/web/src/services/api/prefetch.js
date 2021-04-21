@@ -24,9 +24,7 @@ function getDisplayName(WrappedComponent) {
       || 'Component';
 }
 
-export function usePrefetch(apiCall, dispatcher = defaultDispatcher) {
-  // capture dispatcher call args
-  const args = dispatcher((...args) => args);
+export function usePrefetch(apiCall, ...args) {
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
 
