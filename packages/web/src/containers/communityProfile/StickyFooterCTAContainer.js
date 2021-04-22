@@ -1,33 +1,26 @@
-import React, { Component } from 'react';
-import { bool, object, func } from 'prop-types';
-import { withRouter } from 'react-router';
+import React, { useCallback, useMemo } from 'react';
+import { bool, object } from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 import communityPropType from 'sly/common/propTypes/community';
-import { isBrowser } from 'sly/web/config';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
 import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
 import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { EXTERNAL_LINK_CLICK } from 'sly/web/services/api/constants';
-import { query } from 'sly/web/services/api';
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 
-@withRouter
-@query('createAction', 'createUuidAction')
-export default class StickyFooterCTAContainer extends Component {
-  static typeHydrationId = 'StickyCTAContainer';
-  static propTypes = {
-    community: communityPropType,
-    buttonProps: object,
-    completedCTA: bool,
-    createAction: func,
-  };
+const StickyFooterCTAContainer = (props) => {
+  const { requestInfo: { normalized: createAction } } = usePrefetch('createUuidAction');
 
-  handleZillowClick = () => {
-    const { createAction, community = {}, location: { pathname } } = this.props;
-    const action = 'click';
+  const { pathname } = useLocation();
+
+  const { community, buttonProps, completedCTA } = props;
+
+  const handleZillowClick = useCallback(() => {
     SlyEvent.getInstance().sendEvent({
       category: 'footer-ZillowAd',
-      action,
+      action: 'click',
       label: community.id,
     });
     return createAction({
@@ -42,34 +35,43 @@ export default class StickyFooterCTAContainer extends Component {
         },
       },
     });
-  };
+  }, [community, createAction, pathname]);
 
-  render() {
-    const { community = {}, completedCTA } = this.props;
-    let { buttonProps } = this.props;
-    if (!isBrowser) {
-    }
-    const showZillowProfileAd = shouldShowZillowProfileAd(community);
-    const isSellerAgentCtaCommunity = getIsActiveAdult(community);
+  const showZillowProfileAd = useMemo(() => shouldShowZillowProfileAd(community), [community]);
+  const isSellerAgentCtaCommunity = useMemo(() => getIsActiveAdult(community), [community]);
 
-    let isActiveAdult = false;
-    if (showZillowProfileAd) {
-      buttonProps = {
-        to: 'https://www.zillow.com/offers/?t=seniorly-0220',
-        buttonTo: 'https://www.zillow.com/offers/?t=seniorly-0220',
-        onClick: this.handleZillowClick,
-      };
-    } else if (isSellerAgentCtaCommunity) {
-      isActiveAdult = true;
-    }
-    return (<CommunityStickyFooter
+  return (
+    <CommunityStickyFooter
       community={community}
       locTrack="sticky-footer"
       isAlreadyPricingRequested={completedCTA}
-      isActiveAdult={isActiveAdult}
+      isActiveAdult={!showZillowProfileAd && isSellerAgentCtaCommunity}
       isZillowAd={showZillowProfileAd}
-      {...buttonProps}
-      {...this.props}
-    />);
-  }
-}
+      {...(
+        showZillowProfileAd
+          ? {
+            to: 'https://www.zillow.com/offers/?t=seniorly-0220',
+            buttonTo: 'https://www.zillow.com/offers/?t=seniorly-0220',
+            onClick: handleZillowClick,
+          }
+          : buttonProps
+      )}
+      {...props}
+    />
+  );
+};
+
+StickyFooterCTAContainer.typeHydrationId = 'StickyCTAContainer';
+
+StickyFooterCTAContainer.propTypes = {
+  community: communityPropType,
+  buttonProps: object,
+  completedCTA: bool,
+};
+
+StickyFooterCTAContainer.defaultProps = {
+  community: {},
+  buttonProps: {},
+};
+
+export default StickyFooterCTAContainer;
