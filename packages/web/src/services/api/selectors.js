@@ -1,7 +1,5 @@
 import build from 'redux-object';
 
-const getEntities = ({ api }) => api.entities;
-
 export function getEntity(entities, handle, isNormalized) {
   if (!handle) {
     return null;
@@ -33,13 +31,11 @@ export function getRelationship(state, entity, relationshipName, isNormalized) {
 
   const { data } = entity.relationships[relationshipName];
 
-  const entities = getEntities(state);
-
   if (Array.isArray(data)) {
-    return data.map(handle => getEntity(entities, handle, isNormalized));
+    return data.map(handle => getEntity(state.entities, handle, isNormalized));
   }
 
-  return getEntity(entities, data, isNormalized);
+  return getEntity(state.entities, data, isNormalized);
 }
 
 

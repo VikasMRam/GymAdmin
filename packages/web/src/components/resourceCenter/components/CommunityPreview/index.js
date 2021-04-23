@@ -1,6 +1,8 @@
 import React from 'react';
 import { number, object, string } from 'prop-types';
-import { isString, isArray } from 'lodash';
+import styled from 'styled-components';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
 
 import Block from 'sly/common/system/Block';
 import Image from 'sly/common/system/Image';

@@ -15,6 +15,7 @@ import DashboardCommunityAdminForm from 'sly/web/components/organisms/DashboardC
 import { patchFormInitialValues } from 'sly/web/services/edits';
 import { rgsAuxAttributes } from 'sly/common/propTypes/community';
 import defaultsDeep from 'lodash/defaultsDeep';
+import connectApi from '../services/api/connectApi';
 
 const formName = 'DashboardCommunityAdminForm';
 
@@ -23,8 +24,6 @@ const ReduxForm = reduxForm({
 })(DashboardCommunityAdminForm);
 
 const mapStateToProps = (state, { status }) => ({
-  rgsAux: getRelationship(state, status.community.result, 'rgsAux'),
-  communityUser: getRelationship(state, status.community.result, 'user'),
   currentValues: state.form[formName]?.values,
 });
 
@@ -36,6 +35,10 @@ const mapStateToProps = (state, { status }) => ({
   include: 'suggested-edits',
 }))
 @connect(mapStateToProps)
+@connectApi((state, { status }) => ({
+  rgsAux: getRelationship(state, status.community.result, 'rgsAux'),
+  communityUser: getRelationship(state, status.community.result, 'user'),
+}))
 
 export default class DashboardCommunityAdminFormContainer extends Component {
   static propTypes = {

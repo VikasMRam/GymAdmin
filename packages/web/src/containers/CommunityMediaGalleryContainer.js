@@ -78,7 +78,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
 @withAuth
 @withNotification
 @withModal
-
+@query('updateUserSave')
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.communitySlug,
   include: 'similar-communities,questions,agents',
@@ -192,18 +192,19 @@ export default class CommunityMediaGalleryContainer extends React.Component {
       this.sendEvent('click', 'unsaveCommunity');
     } else {
       ensureAuthenticated().then(() =>
-      showModal(
-        <SaveCommunityContainer
-          slug={community.id}
-          onCancelClick={hideModal}
-          onDoneButtonClick={hideModal}
-          notifyInfo={notifyInfo}
-          notifyError={notifyError}
-        />,
-        null,
-        'letsmovetothismodaltypealltheothermodals',
-        false,
-      ));
+        showModal(
+          <SaveCommunityContainer
+            slug={community.id}
+            onCancelClick={hideModal}
+            onDoneButtonClick={hideModal}
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+          />,
+          null,
+          'letsmovetothismodaltypealltheothermodals',
+          false,
+        )
+      );
 
       this.sendEvent('click', 'saveCommunity');
     }

@@ -12,7 +12,6 @@ import {
 } from 'sly/web/services/datatable/helpers';
 
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
-
 @withRouter
 
 export default class Datatable extends Component {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { func, object } from 'prop-types';
 import { generatePath } from 'react-router';
 
@@ -10,7 +9,7 @@ import {
   LinkCell,
 } from 'sly/web/components/atoms/TableCard';
 import { usDate } from 'sly/web/services/helpers/date';
-import { getRelationship } from 'sly/web/services/api';
+import { useSelector, getRelationship } from 'sly/web/services/api';
 import communityPropType from 'sly/common/propTypes/community';
 
 const CommunityEditRowCard = ({ community, suggestedEdit }) => {

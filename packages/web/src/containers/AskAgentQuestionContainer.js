@@ -38,6 +38,7 @@ export default class AskAgentQuestionContainer extends Component {
     children: func,
   };
 
+
   handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible, subType) => {
     const { community: { id }, type } = this.props;
     const action = isAskAgentQuestionModalVisible ? 'close-modal' : 'open-modal';

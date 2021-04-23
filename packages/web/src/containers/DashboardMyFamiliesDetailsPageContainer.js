@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { object, func, arrayOf, bool } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { connect } from 'react-redux';
 import { Redirect, generatePath } from 'react-router';
 import { parse } from 'query-string';
 
-import { withUser, prefetch, query, invalidateRequests } from 'sly/web/services/api';
+import { withUser, prefetch, query, invalidateRequests, connectApi } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import conversationPropType from 'sly/common/propTypes/conversation/conversation';
 import clientPropType from 'sly/common/propTypes/client';
@@ -50,7 +49,7 @@ const mapStateToProps = (state, { conversations }) => ({
 @withBreakpoint
 @withUser
 
-@connect(mapStateToProps, {
+@connectApi(mapStateToProps, {
   invalidateNotes:
     () => invalidateRequests('getNotes'),
   invalidateClients:
@@ -58,6 +57,7 @@ const mapStateToProps = (state, { conversations }) => ({
   invalidateConversations:
     () => invalidateRequests('getConversations'),
 })
+
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -316,6 +316,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: userHasFinished } = status.user;
+    console.log('loading', clientHasFinished, status.client);
     // since it's using conditional prefetch, in initial stage clients key won't be there
     return (
       <DashboardMyFamiliesDetailsPage

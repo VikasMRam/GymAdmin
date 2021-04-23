@@ -24,7 +24,6 @@ import PageViewActionContainer from 'sly/web/containers/PageViewActionContainer'
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import AskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/web/containers/AskAgentQuestionHowItWorksBannerNotificationContainer';
 import CommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
-import RetentionPopup from 'sly/web/services/retentionPopup';
 import Image from 'sly/web/components/atoms/Image';
 import careTypes from 'sly/web/constants/careTypes';
 import CommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
@@ -66,7 +65,6 @@ partiallyHydrateClient(
     CommunityMorePicturesContainer,
     LazyCommunityMapContainer,
     CommunityDetailsPageColumnContainer,
-    RetentionPopup,
     Image,
     CommunityProfileAdTileContainer,
     BannerNotificationAdContainer,

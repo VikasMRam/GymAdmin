@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { object, arrayOf, func } from 'prop-types';
-import { Redirect, generatePath, matchPath } from 'react-router';
+import { Redirect, generatePath, matchPath, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import diff from 'deep-diff';
 
-import { getRelationship, prefetch, withUser } from 'sly/web/services/api';
+import { getRelationship, prefetch, withUser, connectApi } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import communityPropType from 'sly/common/propTypes/community';
 import {
@@ -28,6 +28,7 @@ const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
   tab: PROFILE,
 });
 
+
 @withNotification
 @withModal
 @withUser
@@ -36,8 +37,8 @@ const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
   id: match.params.id,
   include: 'suggested-edits',
 }))
-@connect((state, { status }) => ({
-  suggestedEdits: (getRelationship(state, status.community.result, 'suggestedEdits') || []),
+@connectApi((state, { status }) => ({
+  suggestedEdits: getRelationship(state, status.community.result, 'suggestedEdits') || [],
 }))
 export default class DashboardCommunityDetailsPageContainer extends Component {
   static propTypes = {

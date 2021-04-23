@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
-import { connect } from 'react-redux';
 import { set } from 'object-path-immutable';
 
 import { withRouter } from 'react-router';
 import userPropType from 'sly/common/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
-import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import { query, prefetch, getRelationship, connectApi } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
@@ -47,14 +46,14 @@ const imageHasChanged = list => image => list.find(n => n.id === image.id && (
 
 const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.data';
 
-@query('updateCommunity')
 @withUser
 @withRouter
+@query('updateCommunity')
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
   include: 'suggested-edits',
 }))
-@connect((state, { status }) => {
+@connectApi((state, { status }) => {
   const gallery  = getRelationship(state, status.community.result, 'gallery');
   const images = getRelationship(state, gallery, 'images');
   return {

@@ -2,23 +2,20 @@ import React from 'react';
 import { object } from 'prop-types';
 
 import App from 'sly/web/components/App';
-import { ApiContext } from 'sly/web/services/api/context';
+import { ApiProvider } from 'sly/web/services/api';
 import { IconContext } from 'sly/common/system/Icon';
 
-export default function ClientApp({ apiContext, icons }) {
-  apiContext.promises = [];
-  apiContext.skipApiCalls = false;
-
+export default function ClientApp({ apiContext, iconsContext }) {
   return (
-    <IconContext.Provider value={icons} >
-      <ApiContext.Provider value={apiContext}>
+    <IconContext.Provider value={iconsContext} >
+      <ApiProvider value={apiContext}>
         <App />
-      </ApiContext.Provider>
+      </ApiProvider>
     </IconContext.Provider>
   );
 }
 
 ClientApp.propTypes = {
   apiContext: object,
-  icons: object,
+  iconsContext: object,
 };

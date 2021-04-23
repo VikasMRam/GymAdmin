@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import userProptype from 'sly/common/propTypes/user';
-import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import { query, prefetch, getRelationship, connectApi } from 'sly/web/services/api';
 import DashboardCommunityDetailsForm from 'sly/web/components/organisms/DashboardCommunityDetailsForm';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
@@ -26,10 +26,6 @@ const ReduxForm = reduxForm({
 })(DashboardCommunityDetailsForm);
 
 const formValue = formValueSelector(formName);
-const mapStateToProps = (state, { status }) => ({
-  respiteAllowed: formValue(state, 'attributes.propInfo.respiteAllowed'),
-  address: getRelationship(state, status.community.result, 'address'),
-});
 
 @query('updateCommunity', 'updateCommunity')
 @withUser
@@ -38,7 +34,12 @@ const mapStateToProps = (state, { status }) => ({
   id: match.params.id,
   include: 'suggested-edits',
 }))
-@connect(mapStateToProps)
+@connect((state, { status }) => ({
+  respiteAllowed: formValue(state, 'attributes.propInfo.respiteAllowed'),
+}))
+@connectApi((state, { status }) => ({
+  address: getRelationship(state, status.community.result, 'address'),
+}))
 export default class DashboardCommunityDetailsFormContainer extends Component {
   static propTypes = {
     updateCommunity: func.isRequired,

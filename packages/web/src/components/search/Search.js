@@ -97,7 +97,7 @@ const Search = ({
           width: '100%',
         }}
       >
-        <HeaderContainer />
+      <HeaderContainer />
         {/* <BannerNotificationAdContainer
             type="wizardSearch"
             {...currentFilters}

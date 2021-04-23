@@ -12,19 +12,16 @@ import {
   PROFILE,
 } from 'sly/web/constants/dashboardAppPaths';
 import withDatatable from 'sly/web/services/datatable/components/withDatatable';
-import { prefetch, withUser, withResourceBuffer } from 'sly/web/services/api';
+import { prefetch, withUser } from 'sly/web/services/api';
 import DashboardCommunityIndexPage from 'sly/web/components/pages/DashboardCommunityIndexPage';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
 import communityPropType from 'sly/common/propTypes/community';
 
-@withDatatable('communities')
 @withNotification
 @withModal
 @withUser
-@prefetch('communities', 'getCommunities', (req, { datatable }) => {
-  return req(datatable.query);
-})
-@withResourceBuffer('communities')
+@withDatatable('communities')
+@prefetch('communities', 'getCommunities', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardCommunityIndexPageContainer extends Component {
   static propTypes = {
@@ -73,8 +70,8 @@ export default class DashboardCommunityIndexPageContainer extends Component {
   };
 
   render() {
-    const { status, location, datatable, notifyInfo, notifyError, buffer, ...props } = this.props;
-    const { error, meta, hasFinished, normalized: communities } = buffer.communities;
+    const { status, location, datatable, notifyInfo, notifyError, ...props } = this.props;
+    const { error, meta, hasFinished, normalized: communities } = status.communities;
 
     if (error) {
       throw new Error(JSON.stringify(error));
