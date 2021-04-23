@@ -18,6 +18,8 @@
     "format": "prettier-eslint --print-width 120 --ignore **/node_modules/** \"$PWD/packages/*/src/**/*.js\"",
     "production": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "build:web:prod": "npm --prefix=packages/web run build:prod",
+    "start:e2e": "npm --prefix=packages/e2e run start",
+    "open:e2e": "npm --prefix=packages/e2e run open",
     "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "start:web:prod": "npm --prefix=packages/web run start:prod",
     "start:mobile": "npm --prefix=packages/mobile run ${PLATFORM:-ios}",

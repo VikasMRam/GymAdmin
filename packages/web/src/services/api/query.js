@@ -40,7 +40,11 @@ function query(propName, apiCall = propName) {
         const data = args.length >= 2 ? args[1] : args[0];
         const options = args.length === 3 ? args[2] : {};
 
-        return this.props.dispatch(call.asAction(placeholders, { data }, options));
+        const body = call.isJsonApi
+          ? { data }
+          : data;
+
+        return this.props.dispatch(call.asAction(placeholders, body, options));
       };
 
       render() {

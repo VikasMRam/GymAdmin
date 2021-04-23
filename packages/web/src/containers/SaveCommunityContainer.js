@@ -34,35 +34,25 @@ const mapStateToProps = (state, ownProps) => {
 
 // FIXME: hack because createUser is not JSON:API, should use @query
 const mapDispatchToProps = {
-  createUserSave: data => ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    api.createOldUserSave.asAction(data),
-  ),
-  updateUserSave: (id, data) => ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    api.updateOldUserSave.asAction({ id }, data),
-  ),
+  ensureAuthenticated,
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
 
 @withAuth
-
 @withRouter
-
 @prefetch('community', 'getCommunity', (req, { slug }) => req({
   id: slug,
   include: 'similar-communities,questions,agents',
 }))
-
 @prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[entity_slug]': getCommunitySlug(match),
 }))
-
 @query('createAction', 'createUuidAction')
-
-@connect(mapStateToProps, mapDispatchToProps)
+@query('createOldUserSave')
+@query('updateOldUserSave')
+@connect(mapStateToProps, { ensureAuthenticated, clearSubmitErrors })
 
 export default class SaveCommunityContainer extends Component {
   static propTypes = {
@@ -71,8 +61,8 @@ export default class SaveCommunityContainer extends Component {
     user: object,
     userSave: object,
     status: object.isRequired,
-    createUserSave: func,
-    updateUserSave: func,
+    createOldUserSave: func,
+    updateOldUserSave: func,
     createAction: func,
     community: communityPropType,
     notification: string,
@@ -97,10 +87,26 @@ export default class SaveCommunityContainer extends Component {
     }
   }
 
+  authenticatedCreateUserSave = (data) => {
+    const { ensureAuthenticated, createOldUserSave } = this.props;
+    return ensureAuthenticated(
+      'Sign up to add to your favorites list',
+      () => createOldUserSave(data),
+    );
+  };
+
+  authenticatedUpdateUserSave = (id, data) => {
+    const { ensureAuthenticated, updateOldUserSave } = this.props;
+    return ensureAuthenticated(
+      'Sign up to add to your favorites list',
+      () => updateOldUserSave({ id }, data),
+    );
+  };
+
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, createUserSave, notifyInfo, notifyError, createAction, match, status,
+      community, notifyInfo, notifyError, createAction, match, status,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -111,7 +117,8 @@ export default class SaveCommunityContainer extends Component {
     this.setState({
       updatingUserSave: true,
     });
-    createUserSave(payload)
+
+    this.authenticatedCreateUserSave(payload)
       .then(({ body }) => createAction({
         type: 'UUIDAction',
         attributes: {
@@ -139,14 +146,15 @@ export default class SaveCommunityContainer extends Component {
   updateUserSave = (status) => {
     const { handleModalClose } = this;
     const {
-      userSave, updateUserSave, notifyInfo, notifyError, createAction, community, match,
+      userSave, notifyInfo, notifyError, createAction, community, match, status: prefetchStatus,
     } = this.props;
     const { id } = userSave;
 
     this.setState({
       updatingUserSave: true,
     });
-    updateUserSave(id, {
+
+    this.authenticatedUpdateUserSave(id, {
       status,
     })
       .then(({ body }) => createAction({
@@ -161,6 +169,7 @@ export default class SaveCommunityContainer extends Component {
           actionType: USER_SAVE,
         },
       }))
+      .then(() => prefetchStatus.userSaves.refetch())
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -174,13 +183,13 @@ export default class SaveCommunityContainer extends Component {
 
   handleSubmitSaveCommunityForm = (data, next) => {
     const {
-      updateUserSave, userSave,
+      updateOldUserSave, userSave, clearSubmitErrors,
     } = this.props;
 
     const { id } = userSave;
 
     clearSubmitErrors();
-    return updateUserSave(id, {
+    return updateOldUserSave({ id }, {
       note: data.note,
     })
       .catch((r) => {

@@ -43,7 +43,7 @@ export function usePrefetch(apiCall, ...args) {
   const requestInfo = useSelector(state => getMemoizedRequestInfo(
     state.api.requests?.[apiCall]?.[argsKey],
     state.api.entities,
-    api[apiCall].type === 'cms',
+    api[apiCall].isJsonApi,
   ));
 
   const { hasStarted, isLoading, isInvalid } = requestInfo;
@@ -93,6 +93,7 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
       const requestInfo = getMemoizedRequestInfo(
         state.api.requests?.[apiCall]?.[JSON.stringify(placeholders)],
         state.api.entities,
+        api[apiCall].isJsonApi,
       );
 
       return {
