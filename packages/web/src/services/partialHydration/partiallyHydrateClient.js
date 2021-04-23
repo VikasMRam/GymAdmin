@@ -14,6 +14,7 @@ import theme from 'sly/common/system/theme';
 import { hydrateComponents } from 'sly/web/services/partialHydration';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
+import { IconContext } from 'sly/common/system/Icon';
 import { ApiProvider, createStore } from 'sly/web/services/api';
 
 const apiState = window.__API_STATE__;
@@ -29,18 +30,21 @@ export default function partiallyHydrateClient(componentsToHydrate, routePath, r
   const Providers = ({ children }) => (
     <ApiProvider value={{
       store: apiStore,
-    }}>
+    }}
+    >
       <Provider store={store}>
-        <BreakpointProvider>
-          <ThemeProvider theme={theme}>
-            <Helmet>
-              <style type="text/css">{GlobalStyles}</style>
-            </Helmet>
-            <BrowserRouter>
-              <Route path={routePath} render={() => children} />
-            </BrowserRouter>
-          </ThemeProvider>
-        </BreakpointProvider>
+        <IconContext.Provider value={{}}>
+          <BreakpointProvider>
+            <ThemeProvider theme={theme}>
+              <Helmet>
+                <style type="text/css">{GlobalStyles}</style>
+              </Helmet>
+              <BrowserRouter>
+                <Route path={routePath} render={() => children} />
+              </BrowserRouter>
+            </ThemeProvider>
+          </BreakpointProvider>
+        </IconContext.Provider>
       </Provider>
     </ApiProvider>
   );

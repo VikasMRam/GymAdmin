@@ -10,6 +10,7 @@ const buttonBaseStyles = {
   padding: 'm',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
+  cursor: 'pointer',
   textOverflow: 'ellipsis',
   ':focus': {
     outline: 'none',

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, shape, string, object } from 'prop-types';
+import { oneOf, arrayOf, shape, string, object } from 'prop-types';
 
-import { size } from 'sly/common/components/themes';
-import { text as textPropType } from 'sly/common/propTypes/text';
-import { Link, Block } from 'sly/common/components/atoms';
-import { Span } from 'sly/web/components/atoms';
 
-const getSize = p => size('text', p.size);
+import theme from 'sly/common/system/theme';
+import { Link, Block, Span, font, space } from 'sly/common/system';
+
+
+const getSize = p => font(p.size);
 
 const Wrapper = styled(Block)`
   ol {
@@ -23,7 +23,7 @@ const Wrapper = styled(Block)`
       font-size: ${getSize};
 
       .separator {
-        margin: 0 ${size('spacing.regular')};
+        margin: 0 ${space('xs')};
       }
     }
   }
@@ -37,14 +37,14 @@ const BreadCrumb = ({ items, innerRef, size, ...props }) => (
           const { label, path, event } = item;
 
           const isLast = index === items.length - 1;
-          const palette = isLast
+          const color = isLast
             ? 'slate'
             : 'primary';
 
           const content = (
             <>
               <meta itemProp="position" content={index + 1} />
-              <Span itemProp="name" palette={palette} size={size}>{label}</Span>
+              <Span itemProp="name" color={color} size={size}>{label}</Span>
             </>
           );
 
@@ -77,11 +77,11 @@ BreadCrumb.propTypes = {
     event: object,
   })).isRequired,
   innerRef: object,
-  size: textPropType,
+  size: oneOf(Object.getOwnPropertyNames(theme.fonts)),
 };
 
 BreadCrumb.defaultProps = {
-  size: 'caption',
+  size: 'body-s',
 };
 
 export default BreadCrumb;

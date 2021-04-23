@@ -279,7 +279,7 @@ export default class CommunityDetailPage extends Component {
         </Block>
         <CommunityDetailPageTemplate>
           <Wrapper>
-            <BreadCrumb pad="large" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
+            <BreadCrumb pad="m" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
             <TwoColumn>
               <Body>
                 <Gallery>

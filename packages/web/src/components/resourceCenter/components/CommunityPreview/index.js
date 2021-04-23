@@ -38,7 +38,7 @@ const CommunityPreview = ({
       </Block>
       <Block padding="m" sx$tablet={{ flexGrow: 1 }}>
         <CommunityInfo
-          palette="viridian.base"
+          color="viridian.base"
           index={index}
           community={{
             ...rest,

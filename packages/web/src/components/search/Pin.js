@@ -2,12 +2,11 @@ import React from 'react';
 import { number, any } from 'prop-types';
 import styled from 'styled-components';
 
-import { getKey } from 'sly/common/components/themes';
-import { withShadow } from 'sly/common/components/helpers';
+import { space } from 'sly/common/system';
 
-const Svg = styled.svg(
-  withShadow,
-);
+const Svg = styled.svg`
+  filter: drop-shadow(0 ${space('xxs')} ${space('xs')} #00000030);
+`;
 
 export const PinDefs = () => (
   <Svg
@@ -45,7 +44,6 @@ const Pin = ({ number, active, ...props }) => {
         transform: 'translate(-50%, -100%)',
         position: 'absolute',
         zIndex: active ? 900 : (800 - number),
-        filter: `drop-shadow(0 ${getKey('sizes.spacing.small')} ${getKey('sizes.spacing.regular')} ${getKey('palette.black.base')}30)`,
       }}
       {...props}
     >

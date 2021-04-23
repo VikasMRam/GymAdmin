@@ -4,21 +4,18 @@ import { arrayOf, func, object, bool } from 'prop-types';
 import ExploreContainer from './ExploreContainer';
 
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
-import { getKey } from 'sly/common/components/themes';
 import {
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import Footer from 'sly/web/components/organisms/Footer';
+import { Block, Link, Heading, space, sx } from 'sly/common/system';
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
-import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
-import Heading from 'sly/common/components/atoms/Heading';
 import Filters, { DEFAULT_PAGE_SIZE } from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
-import Link from 'sly/common/components/atoms/Link';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
 import { getTocSeoLabel, getLocationLabel } from 'sly/web/components/search/helpers';
@@ -107,13 +104,9 @@ const Search = ({
       {/* SEARCH */}
       <Block
         flexDirection="column"
-        css={{
-          paddingTop: headerHeight,
-        }}
-        upToLaptop={{
-          display: 'flex',
-        }}
-        startingWithLaptop={{
+        display="flex"
+        paddingTop={headerHeight}
+        sx$laptop={{
           display: 'grid',
           gridTemplateRows: 'auto auto',
           gridTemplateColumns: '708px auto',
@@ -122,34 +115,34 @@ const Search = ({
       >
         <Block
           gridArea="filters"
-          padding="xLarge"
+          paddingY="s"
+          paddingX="l"
+          sx$tablet={{
+            paddingY: 'l',
+          }}
           css={{
             zIndex: '100',
-          }}
-          upToLaptop={{
-            paddingTop: getKey('sizes.spacing.medium'),
-            paddingBottom: getKey('sizes.spacing.medium'),
           }}
         >
 
           {!!listSize &&
             <Block
-              upToLaptop={{
-                display: show === LIST ? 'block' : 'none',
+              marginBottom="xs"
+              display={show === LIST ? 'block' : 'none'}
+              sx$laptop={{
+                display: 'block',
               }}
-              css={{
-              marginBottom: 'small',
-            }}
             >
               {listSize} results
             </Block>
           }
           <Block
-            upToLaptop={{
-              display: show === LIST ? 'block' : 'none',
+            display={show === LIST ? 'block' : 'none'}
+            sx$laptop={{
+              display: 'block',
             }}
           >
-            <Heading level="hero" size="title">{title}</Heading>
+            <Heading pad="l" font="title-xl">{title}</Heading>
           </Block>
           <Filters
             ref={filtersRef}
@@ -160,7 +153,10 @@ const Search = ({
           >
 
             <FilterButton
-              startingWithLaptop={{ display: 'none' }}
+              display="flex"
+              sx$laptop={{
+                display: 'none',
+              }}
               marginLeft="auto"
               onClick={toggleShow}
             >
@@ -169,13 +165,13 @@ const Search = ({
           </Filters>
           {(hasFinished && !listSize) &&
             <Block
-              marginTop="xxxLarge"
-              upToTablet={{
-                marginTop: getKey('sizes.spacing.xxLarge'),
+              marginTop="xl"
+              sx$tablet={{
+                marginTop: 'xxl',
               }}
             >
-              <Heading level="subtitle" size="subtitle" pad="regular">No results</Heading>
-              <Block marginBottom="large">Try removing some filters or zooming out on the map to find more communities.</Block>
+              <Heading font="title-s-azo" pad="xs">No results</Heading>
+              <Block marginBottom="m">Try removing some filters or zooming out on the map to find more communities.</Block>
               <Link onClick={() => onClearFilters()}>
                 Clear all filters
               </Link>
@@ -185,12 +181,15 @@ const Search = ({
 
         <Block
           gridArea="list"
-          upToTablet={{
-            paddingBottom: getKey('sizes.spacing.xxLarge'),
+          paddingBottom="xl"
+          display={show === LIST ? 'block' : 'none'}
+          sx$laptop={{
+              display: 'block',
+            }}
+          sx$tablet={{
+            paddingBottom: 'unset',
           }}
-          upToLaptop={{
-            display: show === LIST ? 'block' : 'none',
-          }}
+
         >
           {communities.map((community, i) => (
             <Fragment key={community.id}>
@@ -201,7 +200,7 @@ const Search = ({
               />
               {!isInternational && !showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
-                  margin="0 xLarge xLarge"
+                  margin="0 l l"
                 >
                   <GetAssessmentBoxContainer
                     completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
@@ -213,7 +212,7 @@ const Search = ({
               }
               {!isInternational && showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
-                  margin="0 xLarge xLarge"
+                  margin="0 l l"
                 >
                   <SearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
                 </Block>
@@ -239,13 +238,15 @@ const Search = ({
           selectedCommunity={hoveredCommunity || selectedCommunity}
           cursor={cursor}
           width="100%"
-          upToLaptop={{
+          sx={{
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
             marginTop: `-${upToLaptopOffset}px`,
-            height: `calc(100vh - ${getKey('sizes.spacing.xLarge')})`,
+            height: sx`calc(100vh - ${space('l')})`,
           }}
-          startingWithLaptop={{
+
+          sx$laptop={{
+            display: 'block',
             position: 'sticky',
             top: '0px !important',
             paddingTop: `${startingWithLaptopOffset}px`,
