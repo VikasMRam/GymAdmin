@@ -26,8 +26,6 @@ import AskAgentQuestionHowItWorksBannerNotificationContainer from 'sly/web/conta
 import CommunityDetailsPageColumnContainer from 'sly/web/containers/CommunityDetailsPageColumnContainer';
 import Image from 'sly/web/components/atoms/Image';
 import careTypes from 'sly/web/constants/careTypes';
-import CommunityProfileAdTileContainer from 'sly/web/containers/communityProfile/AdTileContainer';
-import BannerNotificationAdContainer from 'sly/web/containers/BannerNotificationAdContainer';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
 import GetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import Chatbox from 'sly/web/components/pages/CommunityDetailPage/Chatbox';
@@ -66,8 +64,6 @@ partiallyHydrateClient(
     LazyCommunityMapContainer,
     CommunityDetailsPageColumnContainer,
     Image,
-    CommunityProfileAdTileContainer,
-    BannerNotificationAdContainer,
     CommunityPricingTable,
     GetAssessmentBoxContainerHydrator,
     SidebarCTAContainer,

@@ -6,7 +6,6 @@ import { Icon, Link } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 import {
   ADMIN_DASHBOARD_AGENTS_PATH,
-  ADMIN_DASHBOARD_CALLS_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_TASKS_PATH,
@@ -45,7 +44,6 @@ export const menuItems = [
   { label: 'Communities', icon: 'community-size-large', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
   { label: 'Tasks', icon: 'checkmark-circle', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
   { label: 'Contacts', icon: 'contacts', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
-  { label: 'Calls', icon: 'phone', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Messages', icon: 'message', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Home Base', icon: 'house', href: FAMILY_DASHBOARD_HOME_PATH, role: CUSTOMER_ROLE },
   { label: 'Favorites', icon: 'favourite-light', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },

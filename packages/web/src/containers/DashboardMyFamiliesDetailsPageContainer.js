@@ -25,7 +25,7 @@ import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import AcceptAndContactFamilyContainer from 'sly/web/containers/AcceptAndContactFamilyContainer';
 import DashboardMyFamiliesDetailsPage from 'sly/web/components/pages/DashboardMyFamiliesDetailsPage';
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
 

@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 
 
 import AddCommunityFormContainer from 'sly/web/containers/dashboard/AddCommunityFormContainer'
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import SlyEvent from 'sly/web/services/helpers/events';
 import {

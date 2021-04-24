@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
-import { func, object, string, oneOf } from 'prop-types';
+import { func, object, string, oneOf, array } from 'prop-types';
 
 import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { generateSearchUrl, parseURLQueryParams, isInternationalPath } from 'sly/web/services/helpers/url';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import SlyEvent from 'sly/web/services/helpers/events';
+import withNotification from 'sly/web/components/helpers/notification';
 import { userIs } from 'sly/web/services/helpers/role';
+// import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import SlyEvent from 'sly/web/services/helpers/events';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
-import NotificationController from 'sly/web/controllers/NotificationController';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';
@@ -120,6 +120,7 @@ const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuIte
   queryParams: parseURLQueryParams(location.search),
   pathname: location.pathname,
 }))
+@withNotification
 
 export default class HeaderContainer extends PureComponent {
   static typeHydrationId = 'HeaderContainer';
@@ -133,6 +134,8 @@ export default class HeaderContainer extends PureComponent {
     getCommunity: func,
     redirectTo: func.isRequired,
     layout: oneOf(['default', 'wizards']),
+    messages: array,
+    dismiss: func,
   };
 
   state = {
@@ -192,6 +195,8 @@ export default class HeaderContainer extends PureComponent {
       ensureAuthenticated,
       location,
       layout,
+      messages,
+      dismiss,
     } = this.props;
     const { isDropdownOpen } = this.state;
 
@@ -269,39 +274,32 @@ export default class HeaderContainer extends PureComponent {
       <ModalController>
         {({
           show,
-        }) => (
-          <NotificationController>
-            {({
-              messages,
-              dismiss,
-            }) => {
-              if (howItWorksItem) {
-                howItWorksItem.onClick = ({ name }) => { show(modalBody, null, 'fullScreen'); sendHeaderItemClickEvent(name); };
-              }
-              return (
-                <>
-                  <Header
-                    menuOpen={isDropdownOpen}
-                    onMenuIconClick={this.toggleDropdown}
-                    onMenuItemClick={this.toggleDropdown}
-                    onHeaderBlur={this.toggleDropdown}
-                    onLogoClick={this.onLogoClick}
-                    headerItems={headerItems}
-                    hideMenuItemsInSmallScreen={layout !== 'wizard'}
-                    menuItems={menuItems}
-                    smallScreenMenuItems={smallScreenMenuItems}
-                    className={className}
-                    onCurrentLocation={this.handleCurrentLocation}
-                    hasSearchBox={layout !== 'wizard'}
-                    template={layout}
-                  />
-                  <AuthContainer />
-                  <Notifications messages={messages} dismiss={dismiss} />
-                </>
-              );
-            }}
-          </NotificationController>
-        )}
+        }) => {
+          if (howItWorksItem) {
+            howItWorksItem.onClick = ({ name }) => { show(modalBody, null, 'fullScreen'); sendHeaderItemClickEvent(name); };
+          }
+          return (
+            <>
+              <Header
+                menuOpen={isDropdownOpen}
+                onMenuIconClick={this.toggleDropdown}
+                onMenuItemClick={this.toggleDropdown}
+                onHeaderBlur={this.toggleDropdown}
+                onLogoClick={this.onLogoClick}
+                headerItems={headerItems}
+                hideMenuItemsInSmallScreen={layout !== 'wizard'}
+                menuItems={menuItems}
+                smallScreenMenuItems={smallScreenMenuItems}
+                className={className}
+                onCurrentLocation={this.handleCurrentLocation}
+                hasSearchBox={layout !== 'wizard'}
+                template={layout}
+              />
+              <AuthContainer />
+              <Notifications messages={messages} dismiss={dismiss} />
+            </>
+          );
+        }}
       </ModalController>
     );
   }

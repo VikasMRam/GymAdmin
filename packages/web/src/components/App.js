@@ -29,8 +29,7 @@ import {
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
-  ADMIN_DASHBOARD_CALLS_PATH,
-  ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
+  AGENT_DASHBOARD_CONTACTS_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   DASHBOARD_COMMUNITIES_PATH,
@@ -81,8 +80,6 @@ const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpack
 const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/web/components/pages/DashboardAgentFamilyOverviewPage'));
 const DashboardMessagesPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/web/containers/DashboardMessagesPageContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/web/containers/DashboardMessageDetailsPageContainer'));
-const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/web/containers/DashboardCallsIndexPageContainer'));
-const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/web/containers/DashboardCallDetailsPageContainer'));
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/web/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/web/components/pages/DashboardAgentContactsPage'));
 const DashboardAgentsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/dashboard/agents/DashboardAgentsIndexPageContainer'));
@@ -179,15 +176,6 @@ const routes = [
     path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
     component: DashboardMessageDetailsPageContainer,
     exact: true,
-  },
-  {
-    path: ADMIN_DASHBOARD_CALLS_PATH,
-    component: DashboardCallsIndexPageContainer,
-    exact: true,
-  },
-  {
-    path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
-    component: DashboardCallDetailsPageContainer,
   },
   {
     path: DASHBOARD_ACCOUNT_PATH,

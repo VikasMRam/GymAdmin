@@ -16,6 +16,7 @@ import WSProvider from 'sly/web/services/ws/WSProvider';
 import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
+import { NotificationProvider } from 'sly/web/components/helpers/notification';
 import { IconContext } from 'sly/common/system/Icon';
 import { ApiProvider, createStore } from 'sly/web/services/api';
 
@@ -36,14 +37,16 @@ const renderApp = () => (
     <Provider store={store}>
       <IconContext.Provider value={{}}>
         <BreakpointProvider>
-          <WSProvider>
-            <NotificationSubscriptions>
-              <BrowserRouter>
-                <PageEventsContainer />
-                <App />
-              </BrowserRouter>
-            </NotificationSubscriptions>
-          </WSProvider>
+          <NotificationProvider>
+            <WSProvider>
+              <NotificationSubscriptions>
+                <BrowserRouter>
+                  <PageEventsContainer />
+                  <App />
+                </BrowserRouter>
+              </NotificationSubscriptions>
+            </WSProvider>
+          </NotificationProvider>
         </BreakpointProvider>
       </IconContext.Provider>
     </Provider>

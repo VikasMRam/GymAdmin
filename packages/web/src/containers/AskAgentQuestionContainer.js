@@ -9,7 +9,6 @@ import Thankyou from 'sly/web/components/molecules/Thankyou';
 import AdvisorPopupTest from 'sly/web/components/molecules/AdvisorPopupTest';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
-import withNotification from 'sly/web/controllers/withNotification';
 import { prefetch } from 'sly/web/services/api';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 
@@ -23,7 +22,6 @@ const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkNam
   }),
 )
 @withModal
-@withNotification
 
 export default class AskAgentQuestionContainer extends Component {
   static typeHydrationId = 'AskAgentQuestionContainer';
@@ -32,7 +30,6 @@ export default class AskAgentQuestionContainer extends Component {
     type: string.isRequired,
     community: object.isRequired,
     agent: object,
-    notifyInfo: func.isRequired,
     showModal: func.isRequired,
     hideModal: func.isRequired,
     children: func,
@@ -60,7 +57,7 @@ export default class AskAgentQuestionContainer extends Component {
   };
 
   openAskAgentQuestionModal = (subType) => {
-    const { type, community, agent, showModal, hideModal, notifyInfo } = this.props;
+    const { type, community, agent, showModal, hideModal } = this.props;
 
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
@@ -70,7 +67,6 @@ export default class AskAgentQuestionContainer extends Component {
       this.handleToggleAskAgentQuestionModal(true, subType);
     };
     const postSubmit = () => {
-      // notifyInfo('Request sent successfully');
       toggleAskAgentQuestionModal();
       if (community) {
         recordEntityCta(type, community.id);
@@ -127,7 +123,6 @@ export default class AskAgentQuestionContainer extends Component {
       }
       const modalComponentProps = {
         toggleAskAgentQuestionModal,
-        notifyInfo,
         entityId: community.id,
         category: 'community',
         heading,

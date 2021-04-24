@@ -16,7 +16,7 @@ import {
 } from 'sly/web/constants/dashboardAppPaths';
 import DashboardCommunityDetailsPage from 'sly/web/components/pages/DashboardCommunityDetailsPage';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import loadable from '@loadable/component';
-
 import { withRouter } from 'react-router';
+
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { prefetch, query } from 'sly/web/services/api';
 import { assetPath } from 'sly/web/components/themes';
 import withAuth from 'sly/web/services/api/withAuth';
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
@@ -26,7 +26,7 @@ function getCommunityUserSave(community, userSaves) {
     userSaves &&
     userSaves.find(
       ({ entityType, entitySlug }) =>
-        entityType === COMMUNITY_ENTITY_TYPE && entitySlug === community.id
+        entityType === COMMUNITY_ENTITY_TYPE && entitySlug === community.id,
     )
   );
 }
@@ -87,7 +87,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
   req({
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': match.params.communitySlug,
-  })
+  }),
 )
 @query('updateOldUserSave')
 export default class CommunityMediaGalleryContainer extends React.Component {
@@ -175,7 +175,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
       notifyError,
       userSaves,
       ensureAuthenticated,
-      status: { userSaves: { refetch: refetchUserSaves }},
+      status: { userSaves: { refetch: refetchUserSaves } },
     } = this.props;
 
     if (isCommunityAlreadySaved(community, userSaves)) {
@@ -186,7 +186,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
         .then(refetchUserSaves)
         .then(() => notifyInfo(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS))
         .catch(() =>
-          notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED)
+          notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED),
         );
 
       this.sendEvent('click', 'unsaveCommunity');
@@ -203,8 +203,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
           null,
           'letsmovetothismodaltypealltheothermodals',
           false,
-        )
-      );
+        ));
 
       this.sendEvent('click', 'saveCommunity');
     }
@@ -229,7 +228,7 @@ export default class CommunityMediaGalleryContainer extends React.Component {
         notifyInfo={notifyInfo}
         onSuccess={onSuccess}
       />,
-      onClose
+      onClose,
     );
 
     this.sendEvent('click', 'shareCommunity');
