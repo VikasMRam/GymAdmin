@@ -5,13 +5,13 @@ import { useLocation } from 'react-router-dom';
 import communityPropType from 'sly/common/propTypes/community';
 import { getIsActiveAdult } from 'sly/web/services/helpers/community';
 import { shouldShowZillowProfileAd } from 'sly/web/services/helpers/adtiles';
-import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { useQuery } from 'sly/web/services/api';
 import { EXTERNAL_LINK_CLICK } from 'sly/web/services/api/constants';
-import { usePrefetch } from 'sly/web/services/api/prefetch';
+import CommunityStickyFooter from 'sly/web/components/organisms/CommunityStickyFooter';
 
 const StickyFooterCTAContainer = (props) => {
-  const { requestInfo: { normalized: createAction } } = usePrefetch('createUuidAction');
+  const createAction = useQuery('createUuidAction');
 
   const { pathname } = useLocation();
 
@@ -24,7 +24,6 @@ const StickyFooterCTAContainer = (props) => {
       label: community.id,
     });
     return createAction({
-      type: 'UUIDAction',
       attributes: {
         actionType: EXTERNAL_LINK_CLICK,
         actionPage: pathname,
