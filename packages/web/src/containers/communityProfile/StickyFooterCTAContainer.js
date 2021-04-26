@@ -24,6 +24,7 @@ const StickyFooterCTAContainer = (props) => {
       label: community.id,
     });
     return createAction({
+      type: 'UUIDAction',
       attributes: {
         actionType: EXTERNAL_LINK_CLICK,
         actionPage: pathname,
