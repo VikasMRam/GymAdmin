@@ -71,8 +71,9 @@ export default class CommunityPartnersPageContainer extends PureComponent {
   };
 
   render() {
+    const { user } = this.props;
     return (
-      <CommunityPartnersPage onRegisterClick={this.onRegisterClick} />
+      <CommunityPartnersPage onRegisterClick={this.onRegisterClick} user={user}/>
     );
   }
 }
