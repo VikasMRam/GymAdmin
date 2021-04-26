@@ -16,5 +16,5 @@
     }
   },
   "include": ["packages/*/src"],
-  "exclude": ["node_modules", "dist", "packages/mobile", "packages/*/node_modules"]
+  "exclude": ["node_modules", "dist", "packages/mobile", "packages/*/node_modules", "packages/*/dist"]
 }

@@ -8,7 +8,7 @@ export {
 
 export { invalidateRequests } from './actions';
 
-export reducer from './reducer';
+export { default as reducer } from './reducer';
 
 export {
   getEntity,
@@ -21,18 +21,19 @@ export {
   createMemoizedRequestInfoSelector,
 } from './selectors';
 
-export createApi from './createApi';
-export query from './query';
-export prefetch from './prefetch';
-export middleware from './middleware';
 
-export withUser from './withUser';
-export withAuth from './withAuth';
+export { createStore, ApiProvider, useApi, useSelector } from './context';
+export { default as connectApi } from './connectApi';
+export { default as createApi } from './createApi';
+export { default as query, useQuery } from './query';
+export { default as prefetch } from './prefetch';
+export { default as middleware } from './middleware';
 
-export renderToString from './renderAndPrefetch';
-export withPrefetchWait from './withPrefetchWait';
-export { useResourceBuffer, withResourceBuffer } from './resourceBuffer';
-export makeApiCallAction from './makeApiCallAction';
-export apiInstance from './apiInstance';
+export { default as withUser } from './withUser';
+export { default as withAuth } from './withAuth';
+
+export { default as renderToString } from './renderAndPrefetch';
+export { default as withPrefetchWait } from './withPrefetchWait';
+export { default as makeApiCallAction } from './makeApiCallAction';
 
 export { normalizeResponse } from './helpers';

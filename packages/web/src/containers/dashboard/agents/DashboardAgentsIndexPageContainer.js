@@ -5,7 +5,7 @@ import { withRouter, generatePath } from 'react-router';
 
 import DashboardAgentIndexPage from 'sly/web/components/pages/DashboardAgentIndexPage';
 import AddAgentFormContainer from 'sly/web/containers/dashboard/agents/AddAgentFormContainer'
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import SlyEvent from 'sly/web/services/helpers/events';
 import {

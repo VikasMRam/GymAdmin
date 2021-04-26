@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
-
 import { withRouter } from 'react-router';
+
 import { prefetch, withUser } from 'sly/web/services/api';
+import withNotification from 'sly/web/components/helpers/notification';
 import clientPropType from 'sly/common/propTypes/client';
 import taskPropType from 'sly/common/propTypes/task';
 import DashboardAgentTasksSection from 'sly/web/components/organisms/DashboardAgentTasksSection';
 import ModalController from 'sly/web/controllers/ModalController';
-import NotificationController from 'sly/web/controllers/NotificationController';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -52,6 +52,7 @@ const getPaginationData = ({ result, meta }) => {
   }
   return req(datatable.query);
 })
+@withNotification
 
 export default class DashboardAgentTasksSectionContainer extends Component {
   static propTypes = {
@@ -70,7 +71,7 @@ export default class DashboardAgentTasksSectionContainer extends Component {
   };
 
   render() {
-    const { tasks, status, match, location, datatable, ...props } = this.props;
+    const { tasks, status, match, location, datatable, notifyError, notifyInfo, ...props } = this.props;
 
     // const params = getPageParams({ match, location });
     // const { taskType, taskName } = params;
@@ -81,30 +82,26 @@ export default class DashboardAgentTasksSectionContainer extends Component {
     }
 
     return (
-      <NotificationController>
-        {({ notifyInfo, notifyError }) => (
-          <ModalController>
-            {({ show, hide }) => (
-              <DashboardAgentTasksSection
-                {...props}
-                isPageLoading={!hasFinished || !datatable.hasFinished}
-                datatable={datatable}
-                tasks={tasks}
-                tasksRaw={tasksRaw}
-                pagination={getPaginationData(status.tasks)}
-                activeTab={match.params.taskType}
-                // onSearchTextKeyUp={this.handleSearchTextKeyUp}
-                showModal={show}
-                hideModal={hide}
-                meta={meta || {}}
-                notifyError={notifyError}
-                notifyInfo={notifyInfo}
-                refetchTasks={this.refetchTasks}
-              />
-            )}
-          </ModalController>
+      <ModalController>
+        {({ show, hide }) => (
+          <DashboardAgentTasksSection
+            {...props}
+            isPageLoading={!hasFinished || !datatable.hasFinished}
+            datatable={datatable}
+            tasks={tasks}
+            tasksRaw={tasksRaw}
+            pagination={getPaginationData(status.tasks)}
+            activeTab={match.params.taskType}
+            // onSearchTextKeyUp={this.handleSearchTextKeyUp}
+            showModal={show}
+            hideModal={hide}
+            meta={meta || {}}
+            notifyError={notifyError}
+            notifyInfo={notifyInfo}
+            refetchTasks={this.refetchTasks}
+          />
         )}
-      </NotificationController>
+      </ModalController>
     );
   }
 }

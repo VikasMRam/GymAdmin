@@ -9,7 +9,7 @@ import { required, createValidator, email, usPhone, dependentRequired } from 'sl
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
-import { query, getRelationship } from 'sly/web/services/api';
+import { query, getRelationship, connectApi } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { validateAM } from 'sly/web/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/common/services/helpers/forms';
@@ -29,12 +29,12 @@ const ReduxForm = reduxForm({
 })(FamilyDetailsForm);
 
 @query('updateClient', 'updateClient')
-
 @query('updateUuidAux', 'updateUuidAux')
-
 @connect((state, props) => ({
-  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
   formData: selectFormData(state, formName),
+}))
+@connectApi((state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
 }))
 
 export default class FamilyDetailsFormContainer extends Component {

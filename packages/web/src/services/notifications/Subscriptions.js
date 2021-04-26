@@ -11,6 +11,7 @@ import WSContext from 'sly/web/services/ws/WSContext';
 import NotificationController from 'sly/web/controllers/NotificationController';
 import withUser from 'sly/web/services/api/withUser';
 import subscriptionList from 'sly/web/services/notifications/subscriptionList';
+import {useNotification} from "sly/web/components/helpers/notification";
 
 const StyledLink = styled(Link)`
   display: block;
@@ -127,16 +128,14 @@ class Notifications extends Component {
 }
 
 export default function Subscriptions({ children }) {
+  const { notifyInfo } = useNotification();
+
   return (
     <WSContext.Consumer>
       {ws => (
-        <NotificationController>
-          {({ notifyInfo }) => (
-            <Notifications ws={ws} notifyInfo={notifyInfo}>
-              {children}
-            </Notifications>
-          )}
-        </NotificationController>
+        <Notifications ws={ws} notifyInfo={notifyInfo}>
+          {children}
+        </Notifications>
       )}
     </WSContext.Consumer>
   );

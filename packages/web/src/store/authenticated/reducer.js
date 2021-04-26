@@ -1,5 +1,8 @@
-import { initialState } from './selectors';
 import { AUTHENTICATE, AUTHENTICATE_CANCEL, AUTHENTICATE_SUCCESS } from './actions';
+
+export const initialState = {
+  loggingIn: false,
+};
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {

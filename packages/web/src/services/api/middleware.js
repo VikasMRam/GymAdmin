@@ -1,9 +1,7 @@
 import { logWarn } from 'sly/web/services/helpers/logging';
 import { API_CALL } from 'sly/web/services/api/constants';
 
-const pendingPromises = {};
-
-export default () => next => (action) => {
+export default (pendingPromises={}) => next => (action) => {
   const { type, payload } = action;
 
   if (type !== API_CALL) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { object } from 'prop-types';
 
-import Block from 'sly/common/components/atoms/Block';
+import { Block } from 'sly/common/system';
 import { getKey } from 'sly/common/components/themes';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
@@ -24,11 +24,12 @@ const SearchPagination = ({
 
     <Block
       display="flex"
-      direction="column"
+      flexDirection="column"
       alignItems="center"
-      padding="xLarge 0"
-      upToTablet={{
-        paddingBottom: getKey('sizes.spacing.xxLarge'),
+      padding="l 0"
+      paddingBottom="xl"
+      sx$tablet={{
+        paddingBottom: 'l',
       }}
     >
       {total > 0 &&
@@ -43,17 +44,18 @@ const SearchPagination = ({
           }}
         />
       }
-      {!!count && 
+      {!!count &&
         <Block
-          pad="xLarge"
-          upToTablet={{
-            display: 'none',
+          pad="l"
+          display="none"
+          sx$tablet={{
+            display: 'unset',
           }}
         >
           {start} - {end} of {count} results
         </Block>
       }
-      {!!count && 
+      {!!count &&
         <BreadCrumb
           items={getBreadCrumbsForLocation(currentFilters, true)}
           upToTablet={{

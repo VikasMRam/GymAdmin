@@ -3,10 +3,9 @@ import { object, func, arrayOf, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-import { query, getRelationship, invalidateRequests, withUser } from 'sly/web/services/api';
+import { query, getRelationship, invalidateRequests, withUser, connectApi } from 'sly/web/services/api';
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
@@ -49,17 +48,15 @@ const ReduxForm = reduxForm({
   validate,
 })(UpdateFamilyStageForm);
 
-const mapStateToProps = (state, props) => ({
-  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
-  formState: selectFormData(state, 'UpdateFamilyStageForm'),
-});
-
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateUuidAux', 'updateUuidAux')
 @withUser
 
-@connect(mapStateToProps, {
+@connectApi((state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
+  formState: selectFormData(state, 'UpdateFamilyStageForm'),
+}), {
   invalidateClients: () => invalidateRequests('getClients'),
 })
 

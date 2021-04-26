@@ -268,9 +268,6 @@ export default class CommunityDetailPage extends Component {
         <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
-          {/* {!bannerNotification && !isActiveAdult && partnerAgent && ( */}
-          {/* <BannerNotificationAdContainer community={community} type="wizardCommunity" noMarginBottom /> */}
-          {/* )} */}
           {bannerNotification && (
             <BannerNotification>
               {bannerNotification}
@@ -279,7 +276,7 @@ export default class CommunityDetailPage extends Component {
         </Block>
         <CommunityDetailPageTemplate>
           <Wrapper>
-            <BreadCrumb pad="large" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
+            <BreadCrumb pad="m" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
             <TwoColumn>
               <Body>
                 <Gallery>
@@ -342,11 +339,6 @@ export default class CommunityDetailPage extends Component {
                     />
                   </StyledHeadingBoxSection>
                 )}
-
-                {/* Disable home care AD and availability only */}
-                {/* <AdWrapper> */}
-                {/* <CommunityProfileAdTileContainer type="getOffer" community={community} /> */}
-                {/* </AdWrapper> */}
 
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||

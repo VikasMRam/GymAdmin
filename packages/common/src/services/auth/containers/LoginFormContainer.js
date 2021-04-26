@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
-import withNotification from 'sly/web/controllers/withNotification';
 import LoginForm from 'sly/common/services/auth/components/LoginForm';
 
 const formName = 'LoginForm';
@@ -25,15 +24,12 @@ const mapDispatchToProps = {
 };
 
 @withAuth
-@withNotification
 @connect(null, mapDispatchToProps)
 
 export default class LoginFormContainer extends Component {
   static propTypes = {
     resendOtpCode: func.isRequired,
     loginUser: func.isRequired,
-    notifyInfo: func.isRequired,
-    notifyError: func.isRequired,
     clearSubmitErrors: func,
     onSubmit: func,
     form: string,

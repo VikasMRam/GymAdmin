@@ -7,7 +7,7 @@ import { getKey } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
   from 'sly/web/constants/wizards/assessment';
-import Grid from 'sly/common/components/atoms/Grid';
+import { Grid } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 import SearchExploreTypes from 'sly/web/components/organisms/SearchExploreTypes';
@@ -41,13 +41,12 @@ function ExploreContainer({ filters }) {
   return (
     <Grid
       background="primary.lighter-95"
-      padding={['xxxLarge', 'xLarge']}
-      flow="row"
-      gap="xxxLarge"
-      upToTablet={{
-        gridGap: getKey('sizes.spacing.xxLarge'),
-        paddingTop: getKey('sizes.spacing.xxLarge'),
-        paddingBottom: getKey('sizes.spacing.xxLarge'),
+      flexDirection="row"
+      gridGap="xl"
+      padding="xl l"
+      sx$laptop={{
+        gridGap: 'xxl',
+        paddingY: 'xxl',
       }}
     >
       {guide && <div dangerouslySetInnerHTML={{ __html: guide }} />}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { any, oneOf } from 'prop-types';
+import { any } from 'prop-types';
 import styled from 'styled-components';
 
 import Root from './Root';
@@ -29,7 +29,6 @@ const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
 ))``;
 
 StyledHeading.propTypes = {
-  size: oneOf(['hero', 'title', 'subtitle', 'body', 'superHero', 'displayL', 'displayS', 'display']).isRequired,
   level: any, // should be deprecated
 };
 

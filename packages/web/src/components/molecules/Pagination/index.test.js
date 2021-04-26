@@ -29,25 +29,25 @@ describe('Pagination', () => {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
       expect(button.prop('to')).toEqual(i === 0 ? '/test' : `/test?page-number=${i}`);
-      expect(button.prop('palette')).toEqual(i === 0 ? 'primary' : 'slate');
+      expect(button.prop('value')).toEqual(i === 0);
     }
   });
 
   it('should render next button but not prev', () => {
     const wrapper = wrap({ ...small, current: 0 });
     const nextButton = wrapper.childAt(5);
-    const nextIcon = nextButton.dive().dive().dive().dive()
-      .find('Icon');
-    expect(nextIcon.prop('rotate')).toEqual(0);
+    const nextIcon = nextButton.dive().dive().dive()
+      .find('ChevronIcon');
+    expect(nextIcon.prop('rotation')).toEqual(90);
     expect(nextButton.prop('to')).toEqual('/test?page-number=1');
   });
 
   it('should render prev button but not next', () => {
     const wrapper = wrap({ ...small, current: 4 });
     const prevButton = wrapper.childAt(0);
-    const prevIcon = prevButton.dive().dive().dive().dive()
-      .find('Icon');
-    expect(prevIcon.prop('rotate')).toEqual(2);
+    const prevIcon = prevButton.dive().dive().dive()
+      .find('ChevronIcon');
+    expect(prevIcon.prop('rotation')).toEqual(270);
     expect(prevButton.prop('to')).toEqual('/test?page-number=3');
   });
 
@@ -56,15 +56,15 @@ describe('Pagination', () => {
     expect(wrapper.children()).toHaveLength(7);
 
     const prevButton = wrapper.childAt(0);
-    const prevIcon = prevButton.dive().dive().dive().dive()
-      .find('Icon');
-    expect(prevIcon.prop('rotate')).toEqual(2);
+    const prevIcon = prevButton.dive().dive().dive()
+      .find('ChevronIcon');
+    expect(prevIcon.prop('rotation')).toEqual(270);
     expect(prevButton.prop('to')).toEqual('/test?page-number=2');
 
     const nextButton = wrapper.childAt(6);
-    const nextIcon = nextButton.dive().dive().dive().dive()
-      .find('Icon');
-    expect(nextIcon.prop('rotate')).toEqual(0);
+    const nextIcon = nextButton.dive().dive().dive()
+      .find('ChevronIcon');
+    expect(nextIcon.prop('rotation')).toEqual(90);
     expect(nextButton.prop('to')).toEqual('/test?page-number=4');
   });
 
@@ -81,26 +81,23 @@ describe('Pagination', () => {
 
     const fortyNine = wrapper.childAt(3);
     expect(fortyNine.prop('children')).toEqual(49);
-    expect(fortyNine.prop('palette')).toEqual('slate');
+    expect(fortyNine.prop('value')).toEqual(false);
     expect(fortyNine.prop('to')).toEqual('/test?page-number=48');
 
     const fiftyOne = wrapper.childAt(5);
-    expect(fiftyOne.prop('ghost')).toEqual(true);
-    expect(fiftyOne.prop('palette')).toEqual('primary');
+    expect(fiftyOne.prop('value')).toEqual(true);
     expect(fiftyOne.prop('to')).toEqual('/test?page-number=50');
 
 
     const fiftyThree = wrapper.childAt(7);
-    expect(fiftyThree.prop('ghost')).toEqual(true);
-    expect(fiftyThree.prop('palette')).toEqual('slate');
+    expect(fiftyThree.prop('value')).toEqual(false);
     expect(fiftyThree.prop('to')).toEqual('/test?page-number=52');
 
     const secondDots = wrapper.childAt(8);
     expect(secondDots.prop('children')).toEqual('...');
 
     const hundred = wrapper.childAt(9);
-    expect(hundred.prop('ghost')).toEqual(true);
-    expect(hundred.prop('palette')).toEqual('slate');
+    expect(hundred.prop('value')).toEqual(false);
     expect(hundred.prop('to')).toEqual('/test?page-number=99');
   });
 });

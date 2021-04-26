@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import userPropType from 'sly/common/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
-import { query, prefetch, getRelationship } from 'sly/web/services/api';
-import withUser from 'sly/web/services/api/withUser';
+import { query, prefetch, getRelationship, connectApi, withUser, withPurgeFromRelationsips, withInvalidate } from 'sly/web/services/api';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm'; // Currently
@@ -31,7 +30,7 @@ const arrayMove = (array, from, to) => {
 @prefetch('agent', 'getAgent', (req, { match }) => req({
   id: match.params.id,
 }))
-@connect((state, { status }) => {
+@connectApi((state, { status }) => {
   const gallery  = getRelationship(state, status.agent.result, 'gallery');
   const images = getRelationship(state, gallery, 'images');
   return {
