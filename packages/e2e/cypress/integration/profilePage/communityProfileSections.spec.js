@@ -32,6 +32,12 @@ describe('Community Profile Sections', () => {
   let community;
 
   beforeEach(() => {
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
