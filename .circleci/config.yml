@@ -315,7 +315,7 @@ jobs:
     steps:
       - prepare_workspace:
           cache_prefix: e2e-
-          skip_deps: "{@sly-react/storybook,@sly-react/mobile}"
+          skip_deps: "{@sly-react/storybook}"
 
       # - run:
       #     name: Clone SlyApi

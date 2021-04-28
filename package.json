@@ -22,9 +22,7 @@
     "open:e2e": "npm --prefix=packages/e2e run open",
     "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "start:web:prod": "npm --prefix=packages/web run start:prod",
-    "start:mobile": "npm --prefix=packages/mobile run ${PLATFORM:-ios}",
-    "start:storybook": "npm --prefix=packages/storybook start",
-    "start:storybook:mobile": "npm --prefix=packages/storybook run start:mobile:${PLATFORM:-ios}"
+    "start:storybook": "npm --prefix=packages/storybook start"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
