@@ -5,9 +5,13 @@ import SignupForm from '.';
 
 const handleSubmit = jest.fn();
 const handleOtpClick = jest.fn();
+const onGoogleSignUpClick = jest.fn();
+const onFacebookSignUpClick = jest.fn();
 const defaultProps = {
   handleSubmit,
   handleOtpClick,
+  onFacebookSignUpClick,
+  onGoogleSignUpClick,
 };
 const wrap = (props = {}) => shallow(<SignupForm {...defaultProps} {...props} />);
 
@@ -21,6 +25,7 @@ describe('SignupForm|Web', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('Field')).toHaveLength(5);
+    expect(wrapper.find('IconButton')).toHaveLength(2);
     expect(wrapper.find('Button')).toHaveLength(1);
   });
 
@@ -44,5 +49,21 @@ describe('SignupForm|Web', () => {
 
     wrapper.find('Form').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
+  });
+
+
+  it('handles google signup', () => {
+    const onGoogleSignUpClick = jest.fn();
+    const wrapper = wrap({ onGoogleSignUpClick });
+    wrapper.find('IconButton').at(1).simulate('click');
+    expect(onGoogleSignUpClick).toHaveBeenCalled();
+  });
+
+
+  it('handles facebook signup', () => {
+    const onFacebookSignUpClick = jest.fn();
+    const wrapper = wrap({ onFacebookSignUpClick });
+    wrapper.find('IconButton').at(0).simulate('click');
+    expect(onFacebookSignUpClick).toHaveBeenCalled();
   });
 });

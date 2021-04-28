@@ -44,6 +44,7 @@ export default class SignupFormContainer extends Component {
     onSubmit: func,
     status: object,
     updateUuidAux: func,
+    handleOtpClick: func,
   };
 
   state = { socialLoginError: '' };
@@ -161,17 +162,21 @@ export default class SignupFormContainer extends Component {
   };
 
   handleSubmit = ({ phonePreference, ...data }) => {
-    const { registerUser, clearSubmitErrors, onSubmit } = this.props;
+    const { registerUser, clearSubmitErrors, onSubmit, handleOtpClick } = this.props;
     data = { ...data, name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
 
     clearSubmitErrors();
     return Promise.all([registerUser(data), this.updatePhoneContactPreference(phonePreference)])
       .then(onSubmit)
       .catch((data) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const errorMessage = Object.values(data.body.errors).join('. ');
-        console.log(errorMessage);
-        throw new SubmissionError({ _error: errorMessage });
+        if (data.status === 409) {
+          handleOtpClick();
+        } else {
+          // TODO: Need to set a proper way to handle server side errors
+          const errorMessage = Object.values(data.body.errors).join('. ');
+          console.log(errorMessage);
+          throw new SubmissionError({ _error: errorMessage });
+        }
       });
   };
 

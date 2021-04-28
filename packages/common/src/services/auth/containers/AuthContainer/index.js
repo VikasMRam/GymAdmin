@@ -153,7 +153,7 @@ export default class AuthContainer extends Component {
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
               onSocialSignupSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
               handleOtpClick={() => {
-                this.setState({ title: 'Get one time passcode' });
+                this.setState({ title: 'Login to your account' });
                 goto('OtpLogin');
               }}
               heading={signUpHeading}
@@ -166,6 +166,7 @@ export default class AuthContainer extends Component {
               name="ThirdPartyPromptForm"
               onSubmit={() => {
                 onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation');
+                this.setState({ title: '' });
               }}
             />
 

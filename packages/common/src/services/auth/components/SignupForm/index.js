@@ -89,15 +89,7 @@ const SignupForm = ({
         {submitButtonText} with Google
       </IconButton>
     </Block>
-
-    <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
     {socialSignupError && <Block pad="large" palette="danger" size="caption">{socialSignupError}</Block>}
-    {error && error === 'user already exists' &&
-    <Block marginBottom="large">
-      <Button ghost onClick={handleOtpClick} type="submit" width="100%" pad="regular">
-        Get One Time Passcode
-      </Button>
-    </Block>}
     {error && <Block textAlign="center" palette="danger" size="caption">{error}</Block>}
     <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
 

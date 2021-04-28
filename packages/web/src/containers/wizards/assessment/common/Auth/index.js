@@ -31,8 +31,7 @@ export default class Auth extends Component {
 
   componentDidMount() {
     const { user } = this.props;
-
-    if (user) {
+    if (user && user.name && user.phoneNumber) {
       this.handleAuthSuccess();
     }
   }
@@ -86,7 +85,7 @@ export default class Auth extends Component {
         onAuthenticateSuccess={this.handleAuthSuccess}
         onSignupSuccess={this.handleAuthSuccess}
         signUpHeading={signUpHeading}
-        initialStep="Signup"
+        initialStep={user && (!user.name || !user.phoneNumber) ? 'ThirdPartyPromptForm' : 'Signup'}
         formName="AssessmentWizardAuthForm"
         signUpSubmitButtonText={submitButtonText}
         signUpHasPassword={false}

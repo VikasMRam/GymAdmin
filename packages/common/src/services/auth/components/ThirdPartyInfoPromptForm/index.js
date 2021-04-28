@@ -12,7 +12,9 @@ const ThirdPartyInfoPromptForm = ({
   hasPreference, hasName, hasPhoneNumber,
 }) => (
   <Form onSubmit={handleSubmit}>
-    {!hasName && <Grid gap="small">
+    <Block pad="xLarge">Please enter your phone number {!hasName && 'and name'}so we may contact you about your request.</Block>
+    {!hasName &&
+    <Grid gap="small">
       <Field
         name="firstName"
         label="First Name"
