@@ -14,7 +14,7 @@ export default function buildApi(endpoints, config = {}) {
   } = config;
 
   // wrap config
-  const request = type => (path, placeholders, requestOptions) => {
+  const request = endpointBaseUrl => (path, placeholders, requestOptions) => {
     const augmentedOptions = {
       ...requestOptions,
       headers: configureHeaders({
@@ -25,14 +25,14 @@ export default function buildApi(endpoints, config = {}) {
     };
 
     return apiFetch(
-      type === 'cms' ? cmsUrl : baseUrl,
+      endpointBaseUrl,
       applyUrlWithPlaceholders(path, placeholders, requestOptions),
       configureOptions(augmentedOptions),
     );
   };
 
   return Object.keys(endpoints).reduce((acc, key) => {
-    const { path, required, method, ssrIgnore, type } = endpoints[key];
+    const { path, required, method, ssrIgnore, baseUrl: endpointBaseUrl = baseUrl, jsonApi = true } = endpoints[key];
 
     const requiredPlaceholders = required || [];
     const placeholderRegexp = /:([^\/$]+)/g;
@@ -60,17 +60,17 @@ export default function buildApi(endpoints, config = {}) {
 
     acc[key] = (...args) => {
       const { placeholders, options } = normalizeArguments(...args);
-      return request(type)(path, placeholders, options);
+      return request(endpointBaseUrl)(path, placeholders, options);
     };
 
     acc[key].actionName = key;
     acc[key].method = method;
     acc[key].asAction = (...args) => {
       const { placeholders, options } = normalizeArguments(...args);
-      return makeApiCallAction(request(type), { placeholders, path, options, actionName: key });
+      return makeApiCallAction(request(endpointBaseUrl), { placeholders, path, options, actionName: key });
     };
     acc[key].ssrIgnore = ssrIgnore;
-    acc[key].type = type;
+    acc[key].isJsonApi = jsonApi;
 
     return acc;
   }, {});

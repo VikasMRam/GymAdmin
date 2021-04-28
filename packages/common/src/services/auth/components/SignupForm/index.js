@@ -12,7 +12,7 @@ const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
   hasPreference, onFacebookSignUpClick,
   onGoogleSignUpClick,  hasProviderSignup,
-  socialSignupError,
+  socialSignupError, handleOtpClick,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid gap="small">
@@ -60,7 +60,7 @@ const SignupForm = ({
     />
 
     }
-    <Block marginBottom="large">
+    <Block marginBottom={error === 'user already exists' ? 'regular' : 'large'}>
       <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
         {submitButtonText}
       </Button>
@@ -92,7 +92,15 @@ const SignupForm = ({
 
     <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
     {socialSignupError && <Block pad="large" palette="danger" size="caption">{socialSignupError}</Block>}
-    {error && <Block palette="danger" size="caption">{error}</Block>}
+    {error && error === 'user already exists' &&
+    <Block marginBottom="large">
+      <Button ghost onClick={handleOtpClick} type="submit" width="100%" pad="regular">
+        Get One Time Passcode
+      </Button>
+    </Block>}
+    {error && <Block textAlign="center" palette="danger" size="caption">{error}</Block>}
+    <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
+
     <Grid flow="row" gap="large" verticalAlign="middle">
       <Block display="flex" align="center" direction="row" size="caption">
         Already have an account?&nbsp;&nbsp;
@@ -123,6 +131,7 @@ SignupForm.propTypes = {
   hasPassword: bool,
   hasPreference: bool,
   socialSignupError: string,
+  handleOtpClick: func.isRequired,
 };
 
 SignupForm.defaultProps = {

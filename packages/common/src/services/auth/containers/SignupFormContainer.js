@@ -22,6 +22,7 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: 'SignupForm',
   validate,
+  destroyOnUnmount: false,
 })(SignupForm);
 
 const mapDispatchToProps = {
