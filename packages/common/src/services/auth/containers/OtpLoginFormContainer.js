@@ -11,6 +11,7 @@ import OtpLoginForm from 'sly/common/services/auth/components/OtpLoginForm';
 const formName = 'OtpLoginForm';
 
 const validate = createValidator({
+  email: [required, email],
   code: [required],
 });
 
@@ -41,16 +42,36 @@ export default class OtpLoginFormContainer extends Component {
     onSubmit: func,
     form: string,
     formState: object,
+    sendOtpCode: func,
+    setOtpTitle: func,
   };
 
-  handleOnSubmit = ({ emailOrPhone, code }) => {
+
+  state={
+    sentCode: false,
+  }
+
+
+  handleOtpClick=() => {
+    const { sendOtpCode, notifyInfo, formState, clearSubmitErrors, setOtpTitle } = this.props;
+    const { email } = formState;
+
+    sendOtpCode({ email }).then(() => {
+      notifyInfo(`A one time passcode has been sent to ${email}.`);
+      this.setState({ sentCode: true });
+      setOtpTitle();
+      clearSubmitErrors();
+    }).catch((error) => {
+      // TODO: Need to set a proper way to handle server side errors
+      const errorMessage = Object.values(error.body.errors).join('. ');
+      throw new SubmissionError({ _error: errorMessage });
+    });
+  }
+
+  handleOnSubmit = ({ email, code }) => {
     const { otpLoginUser, onSubmit, clearSubmitErrors, form } = this.props;
-    const payload = { otp: code };
-    if (!email(emailOrPhone)) {
-      payload.email = emailOrPhone;
-    } else {
-      payload.phone_number = emailOrPhone;
-    }
+    const payload = { otp: code, email };
+
 
     clearSubmitErrors(form);
     return otpLoginUser(payload)
@@ -67,21 +88,13 @@ export default class OtpLoginFormContainer extends Component {
 
   resendCode = () => {
     const { formState, resendOtpCode, notifyError, notifyInfo } = this.props;
-    const { emailOrPhone } = formState;
-    let payload = {};
-    if (!email(emailOrPhone)) {
-      payload = {
-        email: emailOrPhone,
-      };
-    } else {
-      payload = {
-        phone_number: emailOrPhone,
-      };
-    }
+    const { email } = formState;
+    const payload = { email };
+
 
     return resendOtpCode(payload)
       .then(() => {
-        notifyInfo(`Code resent to ${emailOrPhone}`);
+        notifyInfo(`Code resent to ${email}`);
       })
       .catch(() => {
         notifyError('Failed to resend code. Please try again.');
@@ -94,6 +107,8 @@ export default class OtpLoginFormContainer extends Component {
         {...this.props}
         onSubmit={this.handleOnSubmit}
         onResendCodeClick={this.resendCode}
+        sentCode={this.state.sentCode}
+        handleOtpClick={this.handleOtpClick}
       />
     );
   }
