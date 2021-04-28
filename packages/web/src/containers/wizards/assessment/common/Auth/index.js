@@ -75,10 +75,10 @@ export default class Auth extends Component {
 
   render() {
     const { user, signUpHeading, submitButtonText } = this.props;
-
-    if (user) {
-      return <div />;
-    }
+    console.log('render', user);
+    // if (user) {
+    //   return <div />;
+    // }
 
     return (
       <AuthContainer

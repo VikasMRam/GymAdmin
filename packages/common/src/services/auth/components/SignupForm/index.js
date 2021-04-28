@@ -6,10 +6,13 @@ import { Block, Button, Form, Grid } from 'sly/common/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
-  hasPreference, hasProviderSignup,
+  hasPreference, onFacebookSignUpClick,
+  onGoogleSignUpClick,  hasProviderSignup,
+  socialSignupError,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid gap="small">
@@ -61,8 +64,34 @@ const SignupForm = ({
       <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
         {submitButtonText}
       </Button>
+      <IconButton
+        icon="facebook-f"
+        width="100%"
+        pad="regular"
+        borderPalette="grey"
+        palette="slate"
+        onClick={onFacebookSignUpClick}
+        ghost
+        noSpaceBetween
+      >
+        {submitButtonText} with Facebook
+      </IconButton>
+      <IconButton
+        icon="google"
+        width="100%"
+        pad="regular"
+        borderPalette="grey"
+        palette="slate"
+        onClick={onGoogleSignUpClick}
+        ghost
+        noSpaceBetween
+      >
+        {submitButtonText} with Google
+      </IconButton>
     </Block>
+
     <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
+    {socialSignupError && <Block pad="large" palette="danger" size="caption">{socialSignupError}</Block>}
     {error && <Block palette="danger" size="caption">{error}</Block>}
     <Grid flow="row" gap="large" verticalAlign="middle">
       <Block display="flex" align="center" direction="row" size="caption">
@@ -81,15 +110,19 @@ const SignupForm = ({
 
 SignupForm.propTypes = {
   handleSubmit: func.isRequired,
+  onFacebookSignUpClick: func.isRequired,
+  onGoogleSignUpClick: func.isRequired,
   submitting: bool,
   hasProviderSignup: bool.isRequired,
   invalid: bool,
   error: string,
+  socialLoginError: string,
   onLoginClicked: func,
   onProviderClicked: func,
   submitButtonText: string.isRequired,
   hasPassword: bool,
   hasPreference: bool,
+  socialSignupError: string,
 };
 
 SignupForm.defaultProps = {

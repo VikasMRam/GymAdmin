@@ -17,6 +17,8 @@ import AgentSignupFormContainer from 'sly/common/services/auth/containers/AgentS
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
 import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
+import ThirdPartyPromptFormContainer from 'sly/common/services/auth/containers/ThirdPartyPromptFormContainer';
+
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -69,6 +71,7 @@ export default class AuthContainer extends Component {
       authenticated,
     } = this.props;
 
+
     if (!this.state.isOpen && authenticated.loggingIn) {
       this.setState({ isOpen: true });
     } else if (this.state.isOpen && !authenticated.loggingIn) {
@@ -92,7 +95,6 @@ export default class AuthContainer extends Component {
 
   handleAuthenticateSuccess = () => {
     const { onAuthenticateSuccess, authenticateSuccess } = this.props;
-
     // authenticateSuccess is not a promise, hence call success event callback immediately
     authenticateSuccess();
     if (onAuthenticateSuccess) {
@@ -126,7 +128,7 @@ export default class AuthContainer extends Component {
         onComplete={this.handleAuthenticateSuccess}
       >
         {({
-          goto, next, ...props
+          goto, reset, next, ...props
         }) => (
           <WizardSteps {...props}>
             <WizardStep
@@ -134,6 +136,7 @@ export default class AuthContainer extends Component {
               name="Login"
               onRegisterClick={() => this.setState({ title: 'Sign Up' }, () => goto('Signup'))}
               onResetPasswordClick={() => this.setState({ title: 'Having trouble logging in?' }, () => goto('ResetPassword'))}
+              onSociaLoginSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
               onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
@@ -148,11 +151,21 @@ export default class AuthContainer extends Component {
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
               onProviderClicked={() => this.setState({ title: 'Create a community manager account' }, () => goto('ProviderSignup'))}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
+              onSocialSignupSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
               hasPassword={signUpHasPassword}
               hasProviderSignup={hasProviderSignup}
             />
+            <WizardStep
+              component={ThirdPartyPromptFormContainer}
+              name="ThirdPartyPromptForm"
+              onSubmit={() => {
+                onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation');
+              }}
+            />
+
+
             <WizardStep
               component={CustomerSignupConfirmationContainer}
               name="CustomerSignupConfirmation"

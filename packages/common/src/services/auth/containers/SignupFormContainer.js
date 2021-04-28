@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import { func, bool, object } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
+import loadFB from 'sly/web/services/helpers/facebookSDK';
+import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/common/constants/loginProviders';
 import { withAuth, query, prefetch } from 'sly/web/services/api';
 import { createValidator, required, email, usPhone, minLength } from 'sly/web/services/validation';
 import SignupForm from 'sly/common/services/auth/components/SignupForm';
+import SlyEvent from 'sly/web/services/helpers/events';
 
 const validate = createValidator({
   firstName: [required],
@@ -33,11 +36,117 @@ const mapDispatchToProps = {
 export default class SignupFormContainer extends Component {
   static propTypes = {
     registerUser: func,
+    thirdPartyLogin: func.isRequired,
+    onSocialSignupSuccess: func,
     clearSubmitErrors: func,
     submitFailed: bool,
     onSubmit: func,
     status: object,
     updateUuidAux: func,
+  };
+
+  state = { socialLoginError: '' };
+
+  sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+    category: 'third-party-signup',
+    action,
+    label,
+    value,
+  });
+
+  componentDidMount() {
+    if (window.gapi) {
+      window.gapi.load('auth2', () => {
+        if (!window.gapi.auth2.getAuthInstance()) {
+          window.gapi.auth2.init();
+        }
+      });
+    }
+    this.getFB();
+  }
+
+  onGoogleConnected = (resp) => {
+    const { thirdPartyLogin, onSocialSignupSuccess } = this.props;
+    const r = resp.getAuthResponse();
+    const p = resp.getBasicProfile();
+    const data = {
+      token: r.id_token,
+      provider: LOGIN_PROVIDER_GOOGLE,
+      name: p.getName(),
+      email: p.getEmail(),
+    };
+
+    this.sendEvent('auth_sucess', 'google', data.name);
+    thirdPartyLogin(data)
+      .then(
+        onSocialSignupSuccess,
+        () => this.setSocialLoginError('Failed to authorize with Google. Please try again.'),
+      );
+  };
+
+  onFacebookProfileFetchSucess = (accessToken, { email, name }) => {
+    const { thirdPartyLogin, onSocialSignupSuccess } = this.props;
+
+    // in case of fb accounts having unconfirmed emails api won't return it
+    if (email) {
+      const data = {
+        token: accessToken,
+        provider: LOGIN_PROVIDER_FACEBOOK,
+        name,
+        email,
+      };
+      this.sendEvent('auth_sucess', 'facebook', data.name);
+      return thirdPartyLogin(data)
+        .then(
+          onSocialSignupSuccess,
+          () => this.setSocialLoginError('Failed to authorize with Facebook. Please try again.'),
+        );
+    }
+    this.sendEvent('auth_fail', 'facebook', null);
+    return this.setSocialLoginError('Failed to fetch required info from Facebook. Please try again.');
+  };
+
+  onFacebookConnected = ({ accessToken }) => {
+    this.getFB()
+      .then(FB =>
+        FB.api('/me', { fields: 'name, email' },
+          resp => this.onFacebookProfileFetchSucess(accessToken, resp)),
+      );
+  };
+
+  getFB = () => loadFB()
+    .catch(() => this.setSocialLoginError("Can't load FB SDK"));
+
+  setSocialLoginError = msg =>
+    this.setState({
+      socialLoginError: msg,
+    });
+
+  handleFacebookSignUpClick = () => {
+    this.setSocialLoginError('');
+
+    this.getFB()
+      .then(FB =>
+        FB.login((response) => {
+          if (response.authResponse) {
+            this.onFacebookConnected(response.authResponse);
+          } else {
+            this.setSocialLoginError('Failed to connect with Facebook. Please try again.');
+          }
+        }, { scope: 'email' }),
+      );
+  };
+
+  handleGoogleSignUpClick = () => {
+    this.setSocialLoginError('');
+
+    if (window.gapi) {
+      window.gapi.auth2.getAuthInstance().signIn()
+        .then(
+          this.onGoogleConnected,
+          () => this.setSocialLoginError('Failed to connect with Google. Please try again.'),
+        );
+    }
   };
 
   updatePhoneContactPreference = (phonePreference) => {
@@ -60,14 +169,19 @@ export default class SignupFormContainer extends Component {
       .catch((data) => {
         // TODO: Need to set a proper way to handle server side errors
         const errorMessage = Object.values(data.body.errors).join('. ');
+        console.log(errorMessage);
         throw new SubmissionError({ _error: errorMessage });
       });
   };
 
   render() {
+    const { socialLoginError } = this.state;
     return (
       <ReduxForm
         {...this.props}
+        onFacebookSignUpClick={this.handleFacebookSignUpClick}
+        onGoogleSignUpClick={this.handleGoogleSignUpClick}
+        socialLoginError={socialLoginError}
         onSubmit={this.handleSubmit}
       />
     );
