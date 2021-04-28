@@ -17,6 +17,7 @@ import AgentSignupFormContainer from 'sly/common/services/auth/containers/AgentS
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
 import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
+import OtpLoginFormContainer from 'sly/common/services/auth/containers/OtpLoginFormContainer';
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -126,7 +127,7 @@ export default class AuthContainer extends Component {
         onComplete={this.handleAuthenticateSuccess}
       >
         {({
-          goto, next, ...props
+          goto, reset, next, ...props
         }) => (
           <WizardSteps {...props}>
             <WizardStep
@@ -148,6 +149,10 @@ export default class AuthContainer extends Component {
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
               onProviderClicked={() => this.setState({ title: 'Create a community manager account' }, () => goto('ProviderSignup'))}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
+              handleOtpClick={() => {
+                this.setState({ title: 'Get one time passcode' });
+                goto('OtpLogin');
+              }}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
               hasPassword={signUpHasPassword}
@@ -157,6 +162,17 @@ export default class AuthContainer extends Component {
               component={CustomerSignupConfirmationContainer}
               name="CustomerSignupConfirmation"
               onSubmit={this.handleAuthenticateSuccess}
+            />
+            <WizardStep
+              component={OtpLoginFormContainer}
+              name="OtpLogin"
+              setOtpTitle={() =>
+                this.setState({ title: 'Login with passcode' })
+              }
+              onSubmit={() => {
+                this.handleAuthenticateSuccess();
+                reset();
+                }}
             />
             <WizardStep
               component={ProviderSignupFormContainer}

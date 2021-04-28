@@ -182,7 +182,7 @@ describe('Community Profile Sections', () => {
     it('should be able to share', () => {
       cy.route('POST', '**/user-shares').as('postUserShares');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-
+      cy.wait('@postUuidActions');
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
       select('.ReactModal').contains('Share this community').should('exist');
 
