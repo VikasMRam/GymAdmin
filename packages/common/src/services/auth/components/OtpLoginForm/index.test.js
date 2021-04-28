@@ -51,10 +51,10 @@ describe('OtpLoginForm|Web', () => {
     const error = 'error';
     const wrapper = wrap({ error });
     const errors = wrapper.find('Block');
-
+    console.log(wrapper.debug());
     expect(wrapper.find('Button')).toHaveLength(1);
-    expect(errors).toHaveLength(1);
-    expect(errors.at(0).dive().render().text()).toBe(error);
+    expect(errors).toHaveLength(2);
+    expect(errors.at(1).dive().render().text()).toBe(error);
   });
 
   it('handles submit', () => {
