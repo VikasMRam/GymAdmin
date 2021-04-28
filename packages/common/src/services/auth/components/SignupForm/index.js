@@ -12,7 +12,7 @@ const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
   hasPreference, onFacebookSignUpClick,
   onGoogleSignUpClick,  hasProviderSignup,
-  socialSignupError, handleOtpClick,
+  socialSignupError,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid gap="small">
