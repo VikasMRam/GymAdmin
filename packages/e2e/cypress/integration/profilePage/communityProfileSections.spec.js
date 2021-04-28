@@ -32,7 +32,7 @@ describe('Community Profile Sections', () => {
   let community;
 
   beforeEach(() => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
+    Cypress.on('uncaught:exception', () => {
       // returning false here prevents Cypress from
       // failing the test
       return false;
