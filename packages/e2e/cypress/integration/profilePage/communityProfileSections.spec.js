@@ -54,7 +54,7 @@ describe('Community Profile Sections', () => {
           cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
           waitForHydration(cy.get('form input[name="email"]')).type(`fonz+e2e+${rand}@seniorly.com`).should('have.value', `fonz+e2e+${rand}@seniorly.com`);
           waitForHydration(cy.get('form input[name="password"]')).type('nopassword').should('have.value', 'nopassword');
-          waitForHydration(cy.get('button').contains('Log in')).click();
+          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click();
         }
       });
     });
@@ -65,7 +65,7 @@ describe('Community Profile Sections', () => {
           waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
           waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
           waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-          waitForHydration(cy.get('button').contains('Log in')).click({ force: true });
+          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click({ force: true });
         }
       });
     });
