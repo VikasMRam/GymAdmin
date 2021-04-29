@@ -29,7 +29,6 @@ import {
   Budget,
   Conversion,
   End,
-  Agent,
 } from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
