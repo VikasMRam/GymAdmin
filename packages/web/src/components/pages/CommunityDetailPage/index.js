@@ -21,7 +21,7 @@ import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
-import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
+import { Button, Block, Heading, Hr, Link } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -43,7 +43,6 @@ import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import IconButton from 'sly/common/components/molecules/IconButton';
 import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
@@ -61,7 +60,6 @@ import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContaine
 import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
 import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import UnHydratedTrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
-import UnHydratedAgentAppointmentContainer from 'sly/web/containers/communityProfile/AgentAppointmentContainer';
 
 const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
 const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
@@ -74,7 +72,6 @@ const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContai
 const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
 const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
 const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
-const AgentAppointmentContainer = withHydration(UnHydratedAgentAppointmentContainer);
 const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
 const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
 const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
@@ -406,21 +403,20 @@ export default class CommunityDetailPage extends Component {
                   <StyledHeadingBoxSection
                     heading={`Helpful ${typeOfCare} Resources`}
                   >
+
                     {rgsAux.rgsInfo.resourceLinks.map((item, i) => (
                       <>
-                        <IconButton
+                        <Link
                           to={item.to}
-                          icon="chevron"
-                          right
-                          transparent
-                          rotate={-1}
                           palette="primary"
-                          width="100%"
-                          padding="0"
-                          size="body"
+                          event={{
+                            category: 'community-resource-link',
+                            action: 'link-click',
+                            label: item.to,
+                          }}
                         >
                           {item.title}
-                        </IconButton>
+                        </Link>
                         {i !== rgsAux.rgsInfo.resourceLinks.length - 1 && <Hr />}
                       </>
                     ))}

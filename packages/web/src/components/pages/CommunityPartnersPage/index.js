@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
+import { func, object } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
 import { gridColumns, assetPath } from 'sly/web/components/themes';
@@ -8,7 +8,7 @@ import { getHelmetForCommunityPartnersPage } from 'sly/web/services/helpers/html
 import { partnerCommunityFAQs } from 'sly/web/constants/communities';
 import { TemplateHeader, TemplateContent } from 'sly/web/components/templates/BasePageTemplate';
 import { Hr } from 'sly/common/components/atoms';
-import { Paragraph, ResponsiveImage } from 'sly/web/components/atoms';
+import { Paragraph, ResponsiveImage, Link } from 'sly/web/components/atoms';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import Section from 'sly/web/components/molecules/Section';
 import IconInfoTile from 'sly/web/components/molecules/IconInfoTile';
@@ -127,14 +127,22 @@ const familiesWeHaveHelpedTiles = [
 ];
 
 const CommunityPartnersPage = ({
-   onRegisterClick
+   onRegisterClick,
+   user,
   }) => {
   const headerContent = (
     <>
       <HeaderContainer />
       <HeroWrapper>
         <StyledImage path="react-assets/agents-partners-hero.png" alt="A Home To Love" height={480} />
-        <HeroTextWrapper><PartnerWithSlyCommunities onRegisterClick={onRegisterClick} /></HeroTextWrapper>
+        <HeroTextWrapper>
+          {
+            !user && <PartnerWithSlyCommunities onRegisterClick={onRegisterClick} />
+          }
+          {
+            user && <Link to="/dashboard/communities">View Dashboard</Link>
+          }
+        </HeroTextWrapper>
       </HeroWrapper>
     </>
   );
@@ -211,6 +219,7 @@ const CommunityPartnersPage = ({
 
 CommunityPartnersPage.propTypes = {
   onRegisterClick: func,
+  user: object,
 };
 
 export default CommunityPartnersPage;
