@@ -1,15 +1,10 @@
-import React, { useCallback, useState, Component } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { func } from 'prop-types';
 import loadable from '@loadable/component';
-import { withRouter } from 'react-router';
 
 import Thankyou from 'sly/web/components/molecules/Thankyou';
 import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
-import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
-import withModal from 'sly/web/controllers/withModal';
-import { prefetch } from 'sly/web/services/api';
 import { PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
@@ -25,14 +20,6 @@ const possibleModals = {
   askQuestionToAgent: 'AskQuestionToAgentFormContainer',
 };
 
-const ModalContainer = ({ modalProps: { modalName, onCloseModal, ...restProps } }) => (
-  <Modal onClose={onCloseModal}>
-    {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restProps} />}
-    {modalName === possibleModals.thankYou && <Thankyou {...restProps} />}
-    {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restProps} />}
-  </Modal>
-);
-
 const CommunityQuestionAnswersContainer = () => {
   const [modalProps, setModalProps] = useState(null);
 
@@ -43,33 +30,34 @@ const CommunityQuestionAnswersContainer = () => {
     include: 'similar-communities,questions,agents',
   });
 
+  const { id: communityId, name: communityName, questions: communityQuestions, communityFaQs } = community;
+
   const sendEvent = useCallback((action, category) => {
     SlyEvent.getInstance().sendEvent({
       action,
       category,
-      label: this.props.community.id,
+      label: communityId,
     });
-  }, []);
+  }, [communityId]);
 
   const handleCloseModal = useCallback(() => setModalProps(null), []);
 
   const openAnswerQuestionModal = useCallback(question =>
-      setModalProps({
-        onSuccess: handleCloseModal,
-        communitySlug: community.id,
-        questionText: question.contentData,
-        questionId: question.id,
-        onClose: handleCloseModal,
-        modalName: possibleModals.communityLeaveAnAnswer,
-      })
-    , []);
+    setModalProps({
+      onSuccess: handleCloseModal,
+      communitySlug: communityId,
+      questionText: question.contentData,
+      questionId: question.id,
+      onClose: handleCloseModal,
+      modalName: possibleModals.communityLeaveAnAnswer,
+    })
+  , [communityId]);
 
   const openAskQuestionModal = useCallback((question = {}) => {
-    const { id, name } = community;
     const postSubmit = () => {
       handleCloseModal();
       if (community) {
-        recordEntityCta(type, community.id);
+        recordEntityCta(type, communityId); // TODO: type is not defined
       }
       setModalProps({
         heading: 'Success!',
@@ -84,30 +72,38 @@ const CommunityQuestionAnswersContainer = () => {
     const onClose = () => { sendEvent('close-modal', 'AskQuestion'); handleCloseModal(); };
     setModalProps({
       actionType: PROFILE_ASK_QUESTION,
-      entityId: id,
+      entityId: communityId,
       initialValues: { question: question.contentData },
       parentSlug: question.id,
-      communityName: name,
+      communityName,
       type: 'profile-content-question',
       category: 'community',
       postSubmit,
       modalName: possibleModals.askQuestionToAgent,
       onCloseModal: onClose,
     });
-  }, []);
+  }, [community]);
+
+  const { modalName, onCloseModal, ...restModalProps } = modalProps;
 
   return (
     <>
-      <HeadingBoxSection hasNoHr heading={`Questions About ${community.name}`} pad="xLarge">
+      <HeadingBoxSection hasNoHr heading={`Questions About ${communityName}`} pad="xLarge">
         <CommunityQuestionAnswers
-          communityName={community.name}
-          questions={community.questions}
-          communityFaQs={community.communityFaQs}
+          communityName={communityName}
+          questions={communityQuestions}
+          communityFaQs={communityFaQs}
           onLeaveAnswerClick={openAnswerQuestionModal}
           onAskQuestionClick={openAskQuestionModal}
         />
       </HeadingBoxSection>
-      {modalProps && <ModalContainer modalProps={modalProps} />}
+      {modalProps && (
+        <Modal onClose={onCloseModal}>
+          {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
+          {modalName === possibleModals.thankYou && <Thankyou {...restModalProps} />}
+          {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restModalProps} />}
+        </Modal>
+      )}
     </>
   );
 };
