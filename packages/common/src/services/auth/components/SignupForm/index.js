@@ -9,7 +9,7 @@ import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 
 const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
-  hasPreference, hasProviderSignup,
+  hasPreference, hasProviderSignup, handleOtpClick,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid gap="small">
@@ -57,13 +57,20 @@ const SignupForm = ({
     />
 
     }
-    <Block marginBottom="large">
+    <Block marginBottom={error === 'user already exists' ? 'regular' : 'large'}>
       <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
         {submitButtonText}
       </Button>
     </Block>
+    {error && error === 'user already exists' &&
+    <Block marginBottom="large">
+      <Button ghost onClick={handleOtpClick} type="submit" width="100%" pad="regular">
+        Get One Time Passcode
+      </Button>
+    </Block>}
+    {error && <Block textAlign="center" palette="danger" size="caption">{error}</Block>}
     <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
-    {error && <Block palette="danger" size="caption">{error}</Block>}
+
     <Grid flow="row" gap="large" verticalAlign="middle">
       <Block display="flex" align="center" direction="row" size="caption">
         Already have an account?&nbsp;&nbsp;
@@ -90,6 +97,7 @@ SignupForm.propTypes = {
   submitButtonText: string.isRequired,
   hasPassword: bool,
   hasPreference: bool,
+  handleOtpClick: func.isRequired,
 };
 
 SignupForm.defaultProps = {

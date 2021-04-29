@@ -1,4 +1,5 @@
 import { get, patch, put, post, destroy } from './httpMethods';
+import { cmsUrl } from 'sly/web/config';
 
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification
@@ -21,8 +22,8 @@ export default {
   getUserSave: { method: get, path: '/marketplace/user-saves/:id', ssrIgnore: true },
   updateUserSave: { method: patch, path: '/marketplace/user-saves/:id' },
   createUserSave: { method: post, path: '/marketplace/user-saves' },
-  updateOldUserSave: { method: patch, path: '/platform/user-saves/:id' },
-  createOldUserSave: { method: post, path: '/platform/user-saves' },
+  updateOldUserSave: { method: patch, path: '/platform/user-saves/:id', jsonApi: false },
+  createOldUserSave: { method: post, path: '/platform/user-saves', jsonApi: false },
   getHomeBase: { method: get, path: '/marketplace/home/:id', ssrIgnore: true },
 
   registerUser: { method: post, path: '/platform/auth/register' },
@@ -113,10 +114,10 @@ export default {
   getPerformers: { method: get, path: '/platform/performers' },
   getEmails: { method: get, path: '/platform/emails' },
 
-  getResourceCenterMainInfo: { method: get, path: '/home-page', type: 'cms' },
-  getAuthor: { method: get, path: '/authors', type: 'cms' },
-  getArticle: { method: get, path: '/articles', type: 'cms' },
-  getArticlesCount: { method: get, path: '/articles/count', type: 'cms' },
-  getArticlesForSitemap: { method: get, path: '/articles/sitemap', type: 'cms' },
-  getTopic: { method: get, path: '/topics', type: 'cms' },
+  getResourceCenterMainInfo: { method: get, path: '/home-page', jsonApi: false, baseUrl: cmsUrl },
+  getAuthor: { method: get, path: '/authors', jsonApi: false, baseUrl: cmsUrl },
+  getArticle: { method: get, path: '/articles', jsonApi: false, baseUrl: cmsUrl },
+  getArticlesCount: { method: get, path: '/articles/count', jsonApi: false, baseUrl: cmsUrl },
+  getArticlesForSitemap: { method: get, path: '/articles/sitemap', jsonApi: false, baseUrl: cmsUrl },
+  getTopic: { method: get, path: '/topics', jsonApi: false, baseUrl: cmsUrl },
 };

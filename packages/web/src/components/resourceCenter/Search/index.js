@@ -35,16 +35,16 @@ const Search = ({ match, location }) => {
 
   const { requestInfo: { result: articlesCount, hasFinished: requestByCountHasFinished } } = usePrefetch(
     'getArticlesCount',
-    req => req({ stringWithDataFromRelations_contains: searchBy }),
+    { stringWithDataFromRelations_contains: searchBy },
   );
 
   const { requestInfo: { result: articles, hasFinished: requestByArticlesHasFinished } } = usePrefetch(
     'getArticle',
-    req => req({
+    {
       stringWithDataFromRelations_contains: searchBy,
       _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
       _limit: ARTICLES_RANGE_FOR_PAGINATION,
-    }),
+    },
   );
 
   if (!requestByArticlesHasFinished || !requestByCountHasFinished) {

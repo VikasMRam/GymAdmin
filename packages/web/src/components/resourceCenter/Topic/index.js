@@ -25,6 +25,7 @@ import Grid from 'sly/common/system/Grid';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
 import Hr from 'sly/common/system/Hr';
+import Link from 'sly/common/system/Link';
 import Select from 'sly/web/components/atoms/Select';
 import ArrowDrop from 'sly/common/icons/ArrowDrop';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
@@ -108,25 +109,26 @@ const Topic = ({ match, location, history }) => {
 
   const { requestInfo: { result: topicRes , hasFinished: requestByTopicHasFinished } } = usePrefetch(
     'getTopic',
-    req => req({ slug: topicSlug, }),
+    { slug: topicSlug, },
   );
 
   const { requestInfo: { result: articlesCount, hasFinished: requestByCountHasFinished } } = usePrefetch(
     'getArticlesCount',
-    req => req({
+    {
       'mainTopic.slug': topicSlug,
       ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
-    }),
+    },
   );
 
   const { requestInfo: { result: articles, hasFinished: requestByArticlesHasFinished } } = usePrefetch(
     'getArticle',
-    req => req({
+    {
       'mainTopic.slug': topicSlug,
       ...(tagNameSearchItem && { tagsSlug_contains: toUppercaseAndSnakeCase(tagName) }),
       _start: pageNumber ? pageNumber * ARTICLES_RANGE_FOR_PAGINATION : 0,
       _limit: ARTICLES_RANGE_FOR_PAGINATION,
-    }));
+    }
+  );
 
   if (
     (!topicRes?.[0] && requestByTopicHasFinished) ||
@@ -169,7 +171,14 @@ const Topic = ({ match, location, history }) => {
           sx$tablet={{ padding: '5rem 0', width: 'col8', marginX: 'auto' }}
           sx$laptop={{ width: 'col12' }}
         >
-          <Block font="body-m" marginBottom="l">Resource Center Home</Block>
+          <Link
+            to={RESOURCE_CENTER_PATH}
+            font="body-m"
+            marginBottom="l"
+            color="white.base"
+          >
+            Resource Center Home
+          </Link>
           <Block
             font="title-xxl"
             marginBottom="l"
@@ -182,7 +191,9 @@ const Topic = ({ match, location, history }) => {
         </Block>
         <Image
           css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
-          // src={topicRes?.[0].img?.url}
+          sources={[320, 425, 728, 1080, 1200]}
+          sizes="100vw"
+          path={topicRes?.[0].img?.path}
         />
       </Block>
 

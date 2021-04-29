@@ -1,9 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
-import styled from 'styled-components';
 import { array, bool, string } from 'prop-types';
 
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
-import { sx, sx$tablet } from 'sly/common/system/sx';
 import Block from 'sly/common/system/Block';
 import Heading from 'sly/common/system/Heading';
 import Grid from 'sly/common/system/Grid';
@@ -15,12 +13,6 @@ const hideOnTabletStyles = {
   sx$tablet: { display: 'none' },
   sx$laptop: { display: 'flex' },
 };
-
-const RedirectToTopicLink = styled(Link)`
-  display: block;
-  ${sx({ font: 'body-l' })}
-  ${sx$tablet({ textAlign: 'end' })}
-`;
 
 const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles }) => {
   const hrefToTopicPage = useMemo(() =>
@@ -56,10 +48,15 @@ const ArticlesList = ({ topic, withRedirectToTopicPage, articlesTitle, articles 
           {articlesTitle}
         </Heading>
         {withRedirectToTopicPage && (
-          <RedirectToTopicLink to={hrefToTopicPage}>
+          <Link
+            display="block"
+            font="body-l"
+            sx$tablet={{ textAlign: 'end' }}
+            to={hrefToTopicPage}
+          >
             See all {articlesTitle}
             <Chevron verticalAlign="sub" rotation="90" />
-          </RedirectToTopicLink>
+          </Link>
         )}
       </Block>
       <Grid

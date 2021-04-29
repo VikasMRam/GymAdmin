@@ -1,11 +1,12 @@
 import React, { forwardRef } from 'react';
+import { func, string } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
-import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import { sx, space } from 'sly/common/system/sx';
+import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import Block from 'sly/common/system/Block';
 
-const Search = forwardRef(({ onCurrentLocation, ...props }, ref) => (
+const Search = forwardRef(({ onCurrentLocation, title, ...props }, ref) => (
   <Block
     ref={ref}
     border="round"
@@ -16,11 +17,10 @@ const Search = forwardRef(({ onCurrentLocation, ...props }, ref) => (
     sx$tablet={{
       padding: 'xl',
       width: 'col6',
-      marginBottom: 'xl'
+      marginBottom: 'xl',
     }}
     sx$laptop={{
       width: 'col8',
-      margin: 'm 0 xxl',
     }}
     {...props}
   >
@@ -28,7 +28,7 @@ const Search = forwardRef(({ onCurrentLocation, ...props }, ref) => (
       font="title-l"
       marginBottom={['s', 'l']}
     >
-      Find assisted living communities near you
+      {title}
     </Block>
     <SearchBoxContainer
       onCurrentLocation={onCurrentLocation}
@@ -43,6 +43,10 @@ const Search = forwardRef(({ onCurrentLocation, ...props }, ref) => (
   </Block>
 ));
 
+Search.propTypes = {
+  onCurrentLocation: func,
+  title: string,
+};
 Search.displayName = 'Search';
 
 export default Search;

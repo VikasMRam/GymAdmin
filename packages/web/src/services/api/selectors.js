@@ -89,23 +89,32 @@ export const twoSetsAreEqual = (a, b) => {
   return a === b;
 };
 
-export function getRequestInfo(request, entities, notJSONApi) {
+export function getRequestInfo(request, entities, isJsonApi = true) {
   const error = request && request.error ? request.error : false;
   const hasStarted = hasRequestStarted(request);
   const isLoading = isRequestLoading(request);
 
+
+  const result = isJsonApi
+    ? getRequestResult(entities, request)
+    : request?.response;
+
+  const normalized = isJsonApi
+    ? getRequestResult(entities, request, true)
+    : request?.response;
+
   return {
     hasStarted,
     isLoading,
+    result,
+    normalized,
+    error,
     isInvalid: request?.invalid,
     hasFinished: hasStarted && !isLoading,
     hasFailed: !!error,
-    result: notJSONApi ? request?.response : getRequestResult(entities, request),
-    normalized: notJSONApi ? request?.response : getRequestResult(entities, request, true),
     headers: getRequestHeaders(request),
     meta: getRequestMeta(request),
     status: request?.status,
-    error,
   };
 }
 // state, apiCall, args
@@ -113,10 +122,10 @@ export function createMemoizedRequestInfoSelector() {
   let lastRequestInfo = null;
   let lastRequest;
 
-  return function getMemoizedRequestInfo(request, entities, notJSONApi) {
+  return function getMemoizedRequestInfo(request, entities, isJsonApi) {
     if (typeof lastRequest === 'undefined' || request !== lastRequest) {
       lastRequest = request;
-      lastRequestInfo = getRequestInfo(request, entities, notJSONApi);
+      lastRequestInfo = getRequestInfo(request, entities, isJsonApi);
     }
 
     return lastRequestInfo;

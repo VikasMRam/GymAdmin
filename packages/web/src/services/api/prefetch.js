@@ -24,9 +24,7 @@ function getDisplayName(WrappedComponent) {
       || 'Component';
 }
 
-export function usePrefetch(apiCall, dispatcher = defaultDispatcher) {
-  // capture dispatcher call args
-  const args = dispatcher((...args) => args);
+export function usePrefetch(apiCall, ...args) {
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
 
@@ -45,7 +43,7 @@ export function usePrefetch(apiCall, dispatcher = defaultDispatcher) {
   const requestInfo = useSelector(state => getMemoizedRequestInfo(
     state.api.requests?.[apiCall]?.[argsKey],
     state.api.entities,
-    api[apiCall].type === 'cms',
+    api[apiCall].isJsonApi,
   ));
 
   const { hasStarted, isLoading, isInvalid } = requestInfo;
@@ -95,6 +93,7 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
       const requestInfo = getMemoizedRequestInfo(
         state.api.requests?.[apiCall]?.[JSON.stringify(placeholders)],
         state.api.entities,
+        api[apiCall].isJsonApi,
       );
 
       return {

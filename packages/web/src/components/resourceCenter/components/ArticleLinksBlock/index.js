@@ -4,19 +4,9 @@ import { array, string } from 'prop-types';
 
 import { host } from 'sly/web/config';
 import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
-import { space } from 'sly/common/system/sx';
 import Block from 'sly/common/system/Block';
 import Heading from 'sly/common/system/Heading';
 import Link from 'sly/common/system/Link';
-
-const LinkItem = styled(Link)`
-  display: block;
-  margin-bottom: ${space('m')};
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
 
 const LinksBlock = ({ title, description, links }) => {
   return (
@@ -37,13 +27,22 @@ const LinksBlock = ({ title, description, links }) => {
       {links?.map(({ to, title, id }) => {
         const isResourceCenterRoute = to.includes(`${host}${RESOURCE_CENTER_PATH}`);
         const splitPath = to.split(host);
-        return <LinkItem
-          key={id}
-          font="body-l"
-          {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : to}}
-        >
-          {title}
-        </LinkItem>
+        return (
+          <Link
+            key={id}
+            font="body-l"
+            display="block"
+            mb="m"
+            sx={{
+              '&:last-child': {
+                mb: 0
+              },
+            }}
+            {...{ [isResourceCenterRoute ? 'to' : 'href']: isResourceCenterRoute ? splitPath[splitPath.length - 1] : to}}
+          >
+            {title}
+          </Link>
+        )
       })}
     </Block>
   );

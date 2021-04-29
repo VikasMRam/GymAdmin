@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { prefetch } from 'sly/web/services/api';
+import { prefetch, query } from 'sly/web/services/api';
 import { assetPath } from 'sly/web/components/themes';
 import withAuth from 'sly/web/services/api/withAuth';
 import withNotification from 'sly/web/controllers/withNotification';
@@ -89,6 +89,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
     'filter[entity_slug]': match.params.communitySlug,
   })
 )
+@query('updateOldUserSave')
 export default class CommunityMediaGalleryContainer extends React.Component {
   static typeHydrationId = 'CommunityMediaGalleryContainer';
   static propTypes = {
@@ -157,11 +158,13 @@ export default class CommunityMediaGalleryContainer extends React.Component {
       label: this.props.community.id,
     });
 
-  updateUserSave = (id, data) =>
-    this.props.ensureAuthenticated(
+  authenticatedUpdateUserSave = (id, data) => {
+    const { ensureAuthenticated, updateOldUserSave } = this.props;
+    return ensureAuthenticated(
       'Sign up to add to your favorites list',
-      api.updateOldUserSave.asAction({ id }, data)
+      () => updateOldUserSave({ id }, data),
     );
+  };
 
   handleFavouriteClick = () => {
     const {
@@ -172,13 +175,15 @@ export default class CommunityMediaGalleryContainer extends React.Component {
       notifyError,
       userSaves,
       ensureAuthenticated,
+      status: { userSaves: { refetch: refetchUserSaves }},
     } = this.props;
 
     if (isCommunityAlreadySaved(community, userSaves)) {
       const userSaveToUpdate = getCommunityUserSave(community, userSaves);
-      this.updateUserSave(userSaveToUpdate.id, {
+      this.authenticatedUpdateUserSave(userSaveToUpdate.id, {
         status: USER_SAVE_DELETE_STATUS,
       })
+        .then(refetchUserSaves)
         .then(() => notifyInfo(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS))
         .catch(() =>
           notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED)

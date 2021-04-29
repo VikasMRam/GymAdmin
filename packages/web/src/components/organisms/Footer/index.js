@@ -1,11 +1,18 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
+import { node, object } from 'prop-types';
 
 import config from 'sly/web/config';
-import { Logo, Linkedin, Twitter, Facebook, Instagram } from 'sly/common/icons/index';
+import {
+  Logo,
+  Linkedin,
+  Twitter,
+  Facebook,
+  Instagram,
+} from 'sly/common/icons/index';
 import { Heading, Block, Link, Span } from 'sly/common/system';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 
-const currentYear = (new Date()).getFullYear();
+const currentYear = new Date().getFullYear();
 
 const aboutUs = {
   'Our story': '/about',
@@ -21,7 +28,8 @@ const typesOf = {
   'Memory care': '/memory-care',
   'Home care': '/in-home-care',
   'Respite care': '/respite-care',
-  'Continuing care retirement communities (CCRC)': '/continuing-care-retirement-community',
+  'Continuing care retirement communities (CCRC)':
+    '/continuing-care-retirement-community',
   'Skilled nursing facilities': '/skilled-nursing-facility',
   'Senior living overview': '/senior-living',
 };
@@ -30,7 +38,7 @@ const forFamilies = {
   'Senior living resources': '/resources',
   'How it works': '/how-it-works',
   'Seniorly Local Advisors': '/agents',
-  'Veteran\'s benefits': '/veterans-benefit-assisted-living',
+  "Veteran's benefits": '/veterans-benefit-assisted-living',
 };
 
 const forPartners = {
@@ -38,26 +46,29 @@ const forPartners = {
   'Partner communities': '/partners/communities',
 };
 
-
-const Body = ({ children, ...props }) =>
-  (<Block
+const Body = ({ children }) => (
+  <Block
     width="100%"
     margin="0 auto"
     padding="l"
     sx$laptop={{
-    width: 'col12',
-    display: 'flex',
-    marginBottom: 'l',
-    paddingX: '0',
-    paddingBottom: '0',
-    '> *': {
-      flex: '1 1 0px',
-    },
-  }}
+      width: 'col12',
+      display: 'flex',
+      marginBottom: 'l',
+      paddingX: '0',
+      paddingBottom: '0',
+      '> *': {
+        flex: '1 1 0px',
+      },
+    }}
   >
     {children}
-  </Block>);
+  </Block>
+);
 
+Body.propTypes = {
+  children: node,
+};
 
 const FooterGroup = ({ children, ...props }) => (
   <Block
@@ -65,15 +76,22 @@ const FooterGroup = ({ children, ...props }) => (
     borderColor="slate.lighter-90"
     paddingTop="l"
     {...props}
-  >{children}
-  </Block>);
+  >
+    {children}
+  </Block>
+);
 
+FooterGroup.propTypes = {
+  children: node,
+};
 
-const GroupHeading = ({ children, ...props }) =>
-  (<Heading
-    {...props}
-  >{children}
-  </Heading>);
+const GroupHeading = ({ children, ...props }) => (
+  <Heading {...props}>{children}</Heading>
+);
+
+GroupHeading.propTypes = {
+  children: node,
+};
 
 
 GroupHeading.defaultProps = {
@@ -100,15 +118,14 @@ const Links = ({ items }) => (
         display: 'block',
         marginBottom: 's',
         paddingRight: 'm',
+        '&:hover': {
+          color: 'viridian.base',
+        },
         '@tablet': {
           width: 'calc(100%/3)',
         },
         '@laptop': {
           width: '100%',
-        },
-        '&:hover': {
-          color: 'viridian.base',
-          textDecoration: 'underline',
         },
       },
     }}
@@ -129,6 +146,10 @@ const Links = ({ items }) => (
     ))}
   </Block>
 );
+
+Links.propTypes = {
+  items: object,
+};
 
 const Bottom = ({ children, ...props }) => (
   <Block
@@ -180,6 +201,10 @@ const Bottom = ({ children, ...props }) => (
   </Block>
 );
 
+Bottom.propTypes = {
+  children: node,
+};
+
 const Footer = props => (
   <Block as="footer" background="harvest.lighter-90" {...props}>
     <Body>
@@ -207,38 +232,42 @@ const Footer = props => (
           <Logo size="l" marginTop="-4px" />
         </Link>
         <Span fontSize="body-s">
-          &copy;
-          Seniorly {currentYear}
-          <Span >{config.version}</Span>
-          {' '}· <Link
+          &copy; Seniorly {currentYear}
+          <Span>{config.version}</Span> ·{' '}
+          <Link
             event={{
               category: 'footer-link',
               action: 'link-click',
               label: 'Privacy',
-             }}
+            }}
             color="slate.base"
             to="/privacy"
-          >Privacy
-          </Link>
-          {' '}· <Link
+          >
+            Privacy
+          </Link>{' '}
+          ·{' '}
+          <Link
             event={{
               category: 'footer-link',
               action: 'link-click',
               label: 'Terms',
-             }}
+            }}
             color="slate.base"
             to="/tos"
-          >Terms
-          </Link>
-          {' '}· <Link
+          >
+            Terms
+          </Link>{' '}
+          ·{' '}
+          <Link
             event={{
               category: 'footer-link',
               action: 'link-click',
               label: 'Sitemap',
-             }}
+            }}
             color="slate.base"
             to="/sitemap"
-          >Sitemap
+          >
+            Sitemap
           </Link>
         </Span>
       </div>

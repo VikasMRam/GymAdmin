@@ -18,7 +18,7 @@ import ResourceLinks from './ResourceLinks'
 const citiesToShowGeoGuide = ['new-york', 'miami', 'las-vegas', 'san-francisco', 'madison', 'scottsdale', 'skokie', 'columbus', 'orlando', 'atlanta', 'san-jose', 'kendall'];
 
 function ExploreContainer({ filters }) {
-  const { requestInfo } = usePrefetch('getGeoGuides', request => request(filters, { encode: false }));
+  const { requestInfo } = usePrefetch('getGeoGuides', filters, { encode: false });
 
   const [geoGuides, setGeoGuides] = useState(requestInfo.normalized);
   useEffect(() => {

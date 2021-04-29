@@ -55,6 +55,17 @@ export default class Link extends Component {
 
   render() {
     const { LinkComponent, ...props } = this.checkPropsForLinks();
-    return <LinkComponent as="a" color="viridian.base" {...props} />;
+    const { sx: { '&:hover': hover = {}, ...restSx } = {}, ...restProps } = props;
+    return (
+      <LinkComponent
+        as="a"
+        color="viridian.base"
+        sx={{
+          '&:hover': { textDecoration: 'underline', cursor: 'pointer', ...hover },
+          ...restSx,
+        }}
+        {...restProps}
+      />
+    );
   }
 }

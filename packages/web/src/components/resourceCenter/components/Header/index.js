@@ -9,7 +9,7 @@ import { Logo, Menu, Chevron, ArrowDrop, Close } from 'sly/common/icons/index';
 import Block from 'sly/common/system/Block';
 import SearchContainer from 'sly/web/components/resourceCenter/components/ArticlesSearchContainer';
 import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
-import { color, sx$laptop } from 'sly/common/system';
+import { sx, color, space, sx$laptop } from 'sly/common/system';
 
 const backToSeniorlyItem = {
   label: 'Back to Seniorly.com',
@@ -32,8 +32,10 @@ const Wrapper = forwardRef(({ children, menuIsOpen, ...props }, ref) => (
       width: '100%',
       zIndex: 3,
     }) || {}),
+    '@tablet': { px: 'l' },
     '@laptop': {
-      padding: '0 m',
+      height: sx`${space('xxxl')}`,
+      py: 0,
       ...((menuIsOpen && {
         top: 'initial',
         position: 'initial',
@@ -65,6 +67,7 @@ const getMenuItem = (item, setMenuIsOpen) => (
   <StyledLink
     key={item.value}
     to={item.to}
+    sx={{ '&:hover': { textDecoration: 'unset' } }}
     {...(setMenuIsOpen && { onClick: () => setMenuIsOpen(false) })}
   >
     {item.label}
@@ -113,7 +116,6 @@ const Header = () => {
       justifyContent="space-between"
       align-items="center"
       borderBottom="1px solid"
-      borderRadius="4px"
       borderColor="slate.lighter-90"
       menuIsOpen={menuIsOpen}
       onBlur={handleHeaderMenuBlur}
@@ -137,6 +139,7 @@ const Header = () => {
         <Link
           display="flex"
           alignItems="center"
+          sx={{ '&:hover': { textDecoration: 'unset' } }}
           to={RESOURCE_CENTER_PATH}
         >
           <Logo size="xl" />
@@ -154,7 +157,7 @@ const Header = () => {
       </Block>
 
       <Block
-        height="44px"
+        height="m"
         display="none"
         sx$laptop={{
           display: 'flex',
@@ -238,7 +241,7 @@ const Header = () => {
       {menuIsOpen && (
         <HeaderMenuList
           listItems={getMenuItems(headerMenuItems, setMenuIsOpen)}
-          headerRef={headerMenuRef}
+          ref={headerMenuRef}
           menuIsOpen={menuIsOpen}
         />
       )}

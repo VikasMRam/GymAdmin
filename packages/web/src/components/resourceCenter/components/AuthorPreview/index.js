@@ -11,7 +11,7 @@ import Flex from 'sly/common/system/Flex';
 
 const WrittenBy = forwardRef((props, ref) => (
   <Block
-    palette="slate.lighter-40"
+    color="slate.lighter-40"
     font="label"
     marginBottom="s"
     width="100%"
