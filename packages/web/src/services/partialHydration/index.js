@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { hydrate } from 'react-dom';
-import styled from 'styled-components';
+import loadable from '@loadable/component';
+
+import { isBrowser } from 'sly/web/config';
 
 const HYDRATION_DATA_TYPE = 'application/hydration-data';
 const HYDRATION_MARKER_TYPE = 'application/hydration-marker';
@@ -31,20 +33,35 @@ function storeProps(Component, props) {
   return hid;
 }
 
-function HydratedComponentWrapper({ children }) {
-  return <div>{children}</div>;
+const imports = [];
+if (isBrowser) {
+  window.resolveImports = () => {
+    let imp;
+    while(imp = imports.pop()) {
+      imp();
+    }
+  };
 }
 
-export const withHydration = (Component, { alwaysHydrate, Wrapper = HydratedComponentWrapper } = {}) => (props) => {
-  const hid = storeProps(Component, props);
-
-  return (
-    <>
-      <script type={HYDRATION_MARKER_TYPE} data-hid={hid} data-always-hydrate={!!alwaysHydrate} />
-      <Wrapper>
+export const withHydration = (loadFn, { fallback = null } = {}) => {
+  // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
+  let Component;
+  // console.log('withHydration');
+  // if (!isBrowser) {
+    Component = loadable(loadFn, { ssrOnly: true, suspense: false });
+  // } else {
+  //   Component = React.lazy(() => new Promise((resolve) => {
+  //     loadFn.importAsync().then((module) => {
+  //       imports.push(() => {
+  //         resolve(module);
+  //       });
+  //     });
+  //   }));
+  // }
+  return (props) => (
+  //<Suspense fallback={fallback}>
         <Component {...props} />
-      </Wrapper>
-    </>
+  //</Suspense>
   );
 };
 

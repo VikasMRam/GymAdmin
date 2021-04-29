@@ -57,7 +57,6 @@ const config = {
     googleAppId: GOOGLE_CLIENT_ID,
     olarkSiteId: '9319-500-10-7635',
     muteReduxLogger: true,
-    hideChatbox: false,
     disableExperiments: DISABLE_EXPERIMENTS,
     enableExperimentsDebugger: ENABLE_EXPERIMENT_DEBUGGER,
     tinyMCEApiKey: 'zalf4x4cr6354ko1klhtu90vmtbee1qw9r4j1qy1dpm3xabb',
@@ -67,6 +66,7 @@ const config = {
       resource: '3335478033',
       search: '2390417245',
     },
+    hideChatbox: HIDE_CHATBOX,
   },
 
   test: {
@@ -81,7 +81,6 @@ const config = {
 
   development: {
     muteReduxLogger: MUTE_REDUX_LOGGER,
-    hideChatbox: HIDE_CHATBOX,
   },
 
   staging: {

@@ -36,8 +36,8 @@ export default function connectApi(parentMapStateToProps, mapDispatchToProps = {
     };
 
     const Wrapper = (props) => {
-      const { state, dispatch } = useApi();
-      const stateProps = mapStateToProps(state, props);
+      const { store, dispatch } = useApi();
+      const stateProps = mapStateToProps(store.getState(), props);
       const dispatchProps = typeof mapDispatchToProps === 'function'
         ? mapDispatchToProps(dispatch)
         : Object.entries(mapDispatchToProps)

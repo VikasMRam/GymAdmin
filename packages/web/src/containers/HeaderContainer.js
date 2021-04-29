@@ -1,5 +1,4 @@
-import React, { useCallback, useState, useMemo } from 'react';
-import { func, object, string, array } from 'prop-types';
+import React, { useCallback, useState } from 'react';
 
 import { useHistory, useLocation } from 'react-router';
 import { useAuth } from 'sly/web/services/api';

@@ -74,8 +74,6 @@ const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.
 const clientWebEntryPath = path.join(sourcePath, 'client-web.js');
 const clientNodeEntryPath = path.join(sourcePath, 'client-node.js');
 const externalEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
-const clientCommunityDetailWebEntryPath = path.join(sourcePath, 'client-community-detail-web.js');
-const clientCommunityDetailNodeEntryPath = path.join(sourcePath, 'client-community-detail-node.js');
 
 const name = name => (context, { merge }) =>
   merge({
@@ -286,12 +284,10 @@ const client = (target, entries) => {
 
 const webpackConfig = [
   client('public', {
-    'community-details': clientCommunityDetailWebEntryPath,
     main: clientWebEntryPath,
     external: externalEntryPath,
   }),
   client('node', {
-    'community-details': clientCommunityDetailNodeEntryPath,
     main: clientNodeEntryPath,
   }),
 ];

@@ -52,7 +52,7 @@ export function getRequestResult(entities, request, isNormalized) {
 }
 
 export function getRequestHeaders(request) {
-  return request && request.headers;
+  return (request && request.headers) || {};
 }
 
 export function getRequestMeta(request) {

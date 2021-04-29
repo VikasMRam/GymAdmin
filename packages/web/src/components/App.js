@@ -1,7 +1,6 @@
 /* eslint-disable react/no-danger */
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 import loadable from '@loadable/component';
@@ -10,30 +9,11 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 
 import { hideChatbox } from 'sly/web/config';
-import theme from 'sly/common/system/theme';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
-import Router from 'sly/web/components/molecules/Router';
 import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
 import {
-  DASHBOARD_PATH,
-  DASHBOARD_ACCOUNT_PATH,
-  FAMILY_DASHBOARD_HOME_PATH,
-  FAMILY_DASHBOARD_FAVORITES_PATH,
-  AGENT_DASHBOARD_PROFILE_PATH,
-  AGENT_DASHBOARD_FAMILIES_PATH,
-  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
-  AGENT_DASHBOARD_MESSAGES_PATH,
-  AGENT_DASHBOARD_TASKS_PATH,
-  AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
-  FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
-  FAMILY_DASHBOARD_MESSAGES_PATH,
-  AGENT_DASHBOARD_CONTACTS_PATH,
-  ADMIN_DASHBOARD_AGENTS_PATH,
-  ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
-  DASHBOARD_COMMUNITIES_PATH,
-  DASHBOARD_COMMUNITIES_DETAIL_PATH,
   RESOURCE_CENTER_PATH,
   RESOURCE_CENTER_AUTHOR_PATH,
   RESOURCE_CENTER_ARTICLE_PATH,
@@ -50,7 +30,6 @@ const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPo
 const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/web/components/pages/PartnersPage'));
 const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/web/containers/CommunityPartnersPageContainer'));
 const SearchContainer = loadable(() => import(/* webpackChunkName: "chunkSearchContainer" */ 'sly/web/components/search/SearchContainer'));
-const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/web/containers/StateSearchPageContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/web/containers/HomePageContainer'));
 const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NearMePageContainer'));
 const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/web/containers/AgentsPageContainer'));
@@ -63,28 +42,15 @@ const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "ch
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/web/containers/AgentRegionPageContainer'));
 const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/web/containers/CareTypeGuideContainer'));
 const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/web/containers/CareTypeRegionGuideContainer'));
-const CurtainUpPageContainer = loadable(() => import(/* webpackChunkName: "chunkCurtainUp" */ 'sly/web/containers/CurtainUpPageContainer'));
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/web/containers/EmailViewPageContainer'));
 const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/web/containers/EmailSharePageFormContainer'));
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
-const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/web/containers/DashboardHomePageContainer'));
-const DashboardFamilyHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/dashboard/families/HomeBasePageContainer'));
-const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/web/containers/DashboardFavoritesPageContainer'));
-const DashboardMyAccountPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyAccount" */ 'sly/web/containers/DashboardMyAccountPageContainer'));
-const DashboardAgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/web/containers/DashboardAgentProfilePageContainer'));
-const DashboardAgentDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/web/containers/DashboardAgentDetailPageContainer'));
+const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/components/Dashboard'));
 
-const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/web/containers/DashboardMyFamiliesDetailsPageContainer'));
-const DashboardAgentFamilyOverviewPage = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/web/components/pages/DashboardAgentFamilyOverviewPage'));
-const DashboardMessagesPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/web/containers/DashboardMessagesPageContainer'));
-const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/web/containers/DashboardMessageDetailsPageContainer'));
-const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/web/components/pages/DashboardAgentTasksPage'));
-const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/web/components/pages/DashboardAgentContactsPage'));
-const DashboardAgentsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/dashboard/agents/DashboardAgentsIndexPageContainer'));
-const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/containers/DashboardCommunityIndexPageContainer'));
-const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/containers/DashboardCommunityDetailsPageContainer'));
+// community profile
+const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/containers/CommunityDetailPageContainer'));
 
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
@@ -124,85 +90,9 @@ const TempHowItWorks = ({ ...props }) => (
 
 const routes = [
   {
-    path: DASHBOARD_PATH,
-    component: DashboardHomePageContainer,
+    path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
+    component: CommunityDetailPageContainer,
     exact: true,
-  },
-  {
-    path: FAMILY_DASHBOARD_HOME_PATH,
-    component: DashboardFamilyHomePageContainer,
-    exact: true,
-  },
-  {
-    path: FAMILY_DASHBOARD_FAVORITES_PATH,
-    component: DashboardFavoritesPageContainer,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_FAMILIES_PATH,
-    component: DashboardAgentFamilyOverviewPage,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_MESSAGES_PATH,
-    component: DashboardMessagesPageContainer,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_TASKS_PATH,
-    component: DashboardAgentTasksPage,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_CONTACTS_PATH,
-    component: DashboardAgentContactsPage,
-  },
-  {
-    path: FAMILY_DASHBOARD_MESSAGES_PATH,
-    component: DashboardMessagesPageContainer,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
-    component: DashboardMyFamiliesDetailsPageContainer,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
-    component: DashboardMessageDetailsPageContainer,
-    exact: true,
-  },
-  {
-    path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
-    component: DashboardMessageDetailsPageContainer,
-    exact: true,
-  },
-  {
-    path: DASHBOARD_ACCOUNT_PATH,
-    component: DashboardMyAccountPageContainer,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_PROFILE_PATH,
-    component: DashboardAgentProfilePageContainer,
-    exact: true,
-  },
-  {
-    path: ADMIN_DASHBOARD_AGENTS_PATH,
-    component: DashboardAgentsIndexPageContainer,
-    exact: true,
-  },
-  {
-    path: ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
-    component: DashboardAgentDetailPageContainer,
-  },
-  {
-    path: DASHBOARD_COMMUNITIES_DETAIL_PATH,
-    component: DashboardCommunityDetailPageContainer,
-  },
-  {
-    path: DASHBOARD_COMMUNITIES_PATH,
-    component: DashboardCommunityIndexPageContainer,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,
@@ -307,11 +197,6 @@ const routes = [
   {
     path: '/email/share/:id',
     component: EmailSharePageContainer,
-  },
-  {
-    path: '/curtainup',
-    component: CurtainUpPageContainer,
-    exact: true,
   },
   {
     path: '/wizards/assessment/community/:communityId',
@@ -427,33 +312,33 @@ export default class App extends Component {
           <style type="text/css">{GlobalStyles}</style>
         </Helmet>
 
-        <ThemeProvider theme={theme}>
-          <Router requiresAuth={[/^\/dashboard/]}>
-            <Switch>
-              <Route
-                path="/ping"
-                render={() => <h1>pong</h1>}
-                exact
+        <Switch>
+          <Route
+            path="/ping"
+            render={() => <h1>pong</h1>}
+            exact
+          />
+          <Route
+            path="/ads.txt"
+            render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
+            exact
+          />
+          <Route
+            path={`/:toc(${careTypes})/:state/:city/filters`}
+            render={({ match }) => (
+              <Redirect
+                to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
               />
-              <Route
-                path="/ads.txt"
-                render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
-                exact
-              />
-              <Route
-                path={`/:toc(${careTypes})/:state/:city/filters`}
-                render={({ match }) => (
-                  <Redirect
-                    to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
-                  />
-                )}
-              />
-              {routeComponents}
-              <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-            </Switch>
-          </Router>
-          {!hideChatbox && <ChatBoxContainer />}
-        </ThemeProvider>
+            )}
+          />
+          <Route
+            path="/dashboard/*"
+            component={Dashboard}
+          />
+          {routeComponents}
+          <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+        </Switch>
+        {!hideChatbox && <ChatBoxContainer />}
       </>
     );
   }
