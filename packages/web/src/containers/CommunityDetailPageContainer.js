@@ -40,6 +40,19 @@ const CommunityDetailPageContainer = () => {
     'filter[actionInfo-slug]': communitySlug,
   });
 
+  const hasProfileAction = useMemo(() => createHasProfileAction(uuidActions), [uuidActions]);
+  const profileContacted = useMemo(() => ({
+    tour: hasProfileAction(TOUR_BOOKED),
+
+    pricing: hasProfileAction(PROFILE_CONTACTED, {
+      contactType: PRICING_REQUEST,
+    }),
+
+    availability: hasProfileAction(PROFILE_CONTACTED, {
+      contactType: AVAILABILITY_REQUEST,
+    }),
+  }), [hasProfileAction]);
+
   if (communityStatus === 301) {
     const newSlug = getLastSegment(communityLocation);
     return <Redirect to={replaceLastSegment(location.pathname, newSlug)} />;
@@ -57,19 +70,6 @@ const CommunityDetailPageContainer = () => {
   if (location.pathname !== community.url) {
     return <Redirect to={community.url} />;
   }
-
-  const hasProfileAction = useMemo(() => createHasProfileAction(uuidActions), [uuidActions]);
-  const profileContacted = useMemo(() => ({
-    tour: hasProfileAction(TOUR_BOOKED),
-
-    pricing: hasProfileAction(PROFILE_CONTACTED, {
-      contactType: PRICING_REQUEST,
-    }),
-
-    availability: hasProfileAction(PROFILE_CONTACTED, {
-      contactType: AVAILABILITY_REQUEST,
-    }),
-  }), [hasProfileAction]);
 
   return (
     <CommunityDetailPage
