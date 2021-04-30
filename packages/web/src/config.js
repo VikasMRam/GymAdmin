@@ -87,7 +87,7 @@ const config = {
   staging: {
     isDev: false,
     eventServerUrl: 'https://event.myseniorly.com/events/new',
-    facebookAppId: '614862451969442',
+    facebookAppId: '299735431723954',
     googleAppId: '522248695659-ces03d2ptbgegiusk0c6v8j9abc7pdbf.apps.googleusercontent.com',
   },
 
