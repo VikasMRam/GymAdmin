@@ -13,7 +13,7 @@ describe('Community survey', () => {
   let community;
   let lookingFor;
   const wizardVersion = 'Wizard_V1';
-  const wizardSteps = 6;
+  const wizardSteps = 2;
   // const WizardConfiguration = {
   //   Wizard_V1:
   //         [{ name: 'step-2:Who',
