@@ -14,7 +14,7 @@ function lazilyLoadFacebookSDK(opts = {}) {
 
     const {
       lang = 'en_US',
-      debug = false,
+      debug = true,
       sdkModule = '',
     } = opts;
 
