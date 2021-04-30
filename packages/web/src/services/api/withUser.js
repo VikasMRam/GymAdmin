@@ -45,7 +45,7 @@ export default function withUser(InnerComponent) {
       status: {
         ...status,
         uuidAux: {
-          ...info.infoUuidAux,
+          ...info.uuidAux,
           refetch: fetchUuidAux,
           invalidate: invalidateUuidAux,
         },

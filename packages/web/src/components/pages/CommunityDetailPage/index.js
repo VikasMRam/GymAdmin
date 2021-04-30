@@ -46,7 +46,7 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 
-const CommunityAgentSectionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/containers/CommunityAgentSectionContainer'));
+const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const PageViewActionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'), { alwaysHydrate: true });
 const PageEventsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'), { alwaysHydrate: true });
 const CommunityMediaGalleryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
@@ -308,7 +308,7 @@ export default class CommunityDetailPage extends PureComponent {
                 }
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
-                    <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
+                    <CommunityAgentSection agent={partnerAgent} pad="xLarge" />
                     <AskAgentQuestionButtonContainer
                       agent={partnerAgent}
                       width="100%"
