@@ -2,7 +2,7 @@ import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
-import {  EXPERIMENTAL_ADL_OPTIONS, MEDICAID_OPTIONS }
+import {  EXPERIMENT_ADL_OPTIONS, MEDICAID_OPTIONS }
   from 'sly/web/constants/wizards/assessment';
 
 Cypress.on('uncaught:exception', () => {
@@ -121,7 +121,7 @@ describe('Community survey', () => {
                 parents: 'Does your parent need help with any of the following?',
                 other: 'Do you need help with any of the following?',
               },
-              Options: EXPERIMENTAL_ADL_OPTIONS,
+              Options: EXPERIMENT_ADL_OPTIONS,
               maxSelect: 4,
               optionsId: 'adl',
               skipAllowed: true,
