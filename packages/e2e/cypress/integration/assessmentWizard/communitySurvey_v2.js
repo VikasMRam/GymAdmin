@@ -283,7 +283,7 @@ describe('Community survey', () => {
       cy.wait('@postUuidActions').then((xhr) => {
         const request = xhr.requestBody;
         const attrs = request.data.attributes;
-        expect(attrs.actionInfo).to.have.property('stepName', 'step-8:Conversion');
+        expect(attrs.actionInfo).to.have.property('stepName', 'step-4:Conversion-New_Steps');
         expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
         expect(attrs.actionInfo).to.have.property('wizardPostConversionInfo', 'wizardPostConversionInfo');
         expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);

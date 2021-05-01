@@ -257,7 +257,7 @@ export default class AssessmentWizardV2 extends Component {
                     signUpHeading={data.whatToDoNext === 'start' ?
           'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
           : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                    stepName="step-4:Conversion-Reduced_Steps"
+                    stepName="step-4:Conversion-New_Steps"
                     onAuthSuccess={next}
                     onSubmit={next}
                     onSkipClick={next}
