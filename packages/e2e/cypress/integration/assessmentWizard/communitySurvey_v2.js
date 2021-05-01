@@ -115,12 +115,7 @@ describe('Community survey', () => {
     Wizard_V1:
           [
             { name: 'step-2:ADL-New_Steps',
-              title: {
-                spouse: 'Does your spouse or partner need help with any of the following?',
-                myself: 'Do you need help with any of the following?',
-                parents: 'Does your parent need help with any of the following?',
-                other: 'Do you need help with any of the following?',
-              },
+              title: 'Do you need help with any of the following?',
               Options: EXPERIMENT_ADL_OPTIONS,
               maxSelect: 4,
               optionsId: 'adl',
@@ -129,15 +124,10 @@ describe('Community survey', () => {
               submitText: 'Continue',
               isSelect: false,
               multipleselectionAllowed: true,
-              istitleNested: true,
+              istitleNested: false,
             },
             { name: 'step-3:Medicaid-New_Steps',
-              title: {
-                spouse: 'Does your spouse or partner qualify for Medicaid?',
-                myself: 'Do you qualify for Medicaid?',
-                parents: 'Does your parent qualify for Medicaid?',
-                other: 'Does the person you are looking for qualify for Medicaid?',
-              },
+              title: 'Does the person you are looking for qualify for Medicaid?',
               Options: MEDICAID_OPTIONS,
               maxSelect: 3,
               optionsId: 'medicaid',
@@ -146,7 +136,7 @@ describe('Community survey', () => {
               submitText: 'Continue',
               isSelect: false,
               multipleselectionAllowed: false,
-              istitleNested: true,
+              istitleNested: false,
             },
           ],
   };
