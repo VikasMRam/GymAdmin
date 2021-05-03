@@ -109,8 +109,7 @@ export default class AuthContainer extends Component {
       hasProviderSignup, formName,
     } = this.props;
     let { initialStep } = this.props;
-
-    if (authenticated.options && authenticated.options.register) {
+    if (authenticated.options && authenticated.options.register && initialStep !== 'ThirdPartyPromptForm') {
       initialStep = 'Signup';
     }
     if (authenticated.options && authenticated.options.provider) {
@@ -165,12 +164,12 @@ export default class AuthContainer extends Component {
               component={ThirdPartyPromptFormContainer}
               name="ThirdPartyPromptForm"
               onSubmit={() => {
-                onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation');
+                if (authenticated.options && authenticated.options.register) { onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation'); } else {
+                  this.handleAuthenticateSuccess();
+                }
                 this.setState({ title: '' });
               }}
             />
-
-
             <WizardStep
               component={CustomerSignupConfirmationContainer}
               name="CustomerSignupConfirmation"
