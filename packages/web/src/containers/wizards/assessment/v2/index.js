@@ -16,7 +16,8 @@ import {
   ASSESSMENT_WIZARD_COMPLETED,
   ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
   ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS,
-  WIZARD_EXPERIMENT_ZIP_CODES } from 'sly/web/constants/wizards/assessment';
+  WIZARD_EXPERIMENT_ZIP_CODES,
+  WIZARD_EXPERIMENT_STATES } from 'sly/web/constants/wizards/assessment';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 import SlyEvent from 'sly/web/services/helpers/events';
 /* Wizard Step Imports */
@@ -28,14 +29,12 @@ import {
   Budget,
   Conversion,
   End,
-  Agent,
 } from 'sly/web/containers/wizards/assessment/common';
 import Intro from 'sly/web/containers/wizards/assessment/v1_1/Intro';
 import Services from 'sly/web/containers/wizards/assessment/v1_1/Services';
 import Medicaid from 'sly/web/containers/wizards/assessment/v1_1/Medicaid';
 import { ProgressBarWrapper } from 'sly/web/components/wizards/assessment/Template';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
-import { Experiment, Variant } from 'sly/web/services/experiments';
 
 
 @withWS
@@ -219,124 +218,66 @@ export default class AssessmentWizardV2 extends Component {
             [city, state] = data.location.displayText.split(', ');
           }
           return (
-            community && WIZARD_EXPERIMENT_ZIP_CODES.includes(zip) ?
-              <Experiment name="DirectMarketWizard">
-                <Variant name="Reduced_Steps">
-                  <section className={className}>
-                    {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
-                    <ProgressBarWrapper>
-                      <ProgressBar totalSteps="3" currentStep={props.currentStepIndex} />
-                    </ProgressBarWrapper>
-                    }
-                    <WizardSteps {...props}>
-                      {!skipIntro && <WizardStep
-                        component={Intro}
-                        name="Intro"
-                        skipOptionText={skipOptionText}
-                        {...intro}
-                      />}
-                      <WizardStep
-                        component={ADL}
-                        name="ADL"
-                        stepName="step-2:ADL-Reduced_Steps"
-                        hasTip={hasTip}
-                        onSkipClick={next}
-                        onBackClick={previous}
-                      />
+            community && (WIZARD_EXPERIMENT_ZIP_CODES.includes(zip) || WIZARD_EXPERIMENT_STATES.includes(state)) ?
+              <section className={className}>
+                {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
+                <ProgressBarWrapper>
+                  <ProgressBar totalSteps="3" currentStep={props.currentStepIndex} />
+                </ProgressBarWrapper>
+            }
+                <WizardSteps {...props}>
+                  {!skipIntro && <WizardStep
+                    component={Intro}
+                    name="Intro"
+                    skipOptionText={skipOptionText}
+                    {...intro}
+                  />}
 
-                      <WizardStep
-                        component={Medicaid}
-                        name="Medicaid"
-                        stepName="step-3:Medicaid-Reduced_Steps"
-                        hasTip={hasTip}
-                        onSkipClick={next}
-                        onBackClick={previous}
-                      />
+                  <WizardStep
+                    component={ADL}
+                    name="ADL"
+                    stepName="step-2:ADL-New_Steps"
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
 
-                      <WizardStep
-                        component={Conversion}
-                        name="Auth"
-                        signUpHeading={data.whatToDoNext === 'start' ?
-                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                        stepName="step-4:Conversion-Reduced_Steps"
-                        onAuthSuccess={next}
-                        onSubmit={next}
-                        onSkipClick={next}
-                        onBackClick={previous}
-                        whoNeedsHelp={data.lookingFor}
-                        data={data}
-                        community={community}
-                        entry={entry}
-                        conversionInfo={conversionInfo}
-                      />
-                      <WizardStep
-                        component={End}
-                        name="End"
-                        onComplete={next}
-                        whoNeedsHelp={data.lookingFor}
-                        hasTip={hasTip}
-                      />
-                    </WizardSteps>
-                  </section>
-                </Variant>
-                <Variant name="New_Steps">
-                  <section className={className}>
-                    {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
-                    <ProgressBarWrapper>
-                      <ProgressBar totalSteps={3} currentStep={props.currentStepIndex} />
-                    </ProgressBarWrapper>
-                    }
-                    <WizardSteps {...props}>
-                      {!skipIntro && <WizardStep
-                        component={Intro}
-                        name="Intro"
-                        skipOptionText={skipOptionText}
-                        {...intro}
-                      />}
-                      <WizardStep
-                        component={ADL}
-                        name="ADL"
-                        stepName="step-2:ADL-New_Steps"
-                        hasTip={hasTip}
-                        onSkipClick={next}
-                        onBackClick={previous}
-                      />
-                      <WizardStep
-                        component={Agent}
-                        name="Agent"
-                        hasTip={hasTip}
-                        onSkipClick={next}
-                        onBackClick={previous}
-                      />
-                      <WizardStep
-                        component={Conversion}
-                        name="Auth"
-                        signUpHeading={data.whatToDoNext === 'start' ?
-                  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-                  : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
-                        experimentDescription={data.agent === 'no-agent' ? "We'll get back to you on your request soon." : null}
-                        stepName="step-4:Conversion:New_Steps"
-                        onAuthSuccess={next}
-                        onSubmit={next}
-                        onSkipClick={next}
-                        onBackClick={previous}
-                        data={data}
-                        community={community}
-                        entry={entry}
-                        conversionInfo={conversionInfo}
-                      />
-                      <WizardStep
-                        component={End}
-                        name="End"
-                        onComplete={next}
-                        hasTip={hasTip}
-                      />
-                    </WizardSteps>
-                  </section>
-                </Variant>
-              </Experiment>
-            :
+                  <WizardStep
+                    component={Medicaid}
+                    name="Medicaid"
+                    stepName="step-3:Medicaid-New_Steps"
+                    hasTip={hasTip}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                  />
+
+                  <WizardStep
+                    component={Conversion}
+                    name="Auth"
+                    signUpHeading={data.whatToDoNext === 'start' ?
+          'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+          : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                    stepName="step-4:Conversion-New_Steps"
+                    onAuthSuccess={next}
+                    onSubmit={next}
+                    onSkipClick={next}
+                    onBackClick={previous}
+                    whoNeedsHelp={data.lookingFor}
+                    data={data}
+                    community={community}
+                    entry={entry}
+                    conversionInfo={conversionInfo}
+                  />
+                  <WizardStep
+                    component={End}
+                    name="End"
+                    onComplete={next}
+                    whoNeedsHelp={data.lookingFor}
+                    hasTip={hasTip}
+                  />
+                </WizardSteps>
+              </section>
+           :
               <section className={className}>
                 {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
                 <ProgressBarWrapper>
