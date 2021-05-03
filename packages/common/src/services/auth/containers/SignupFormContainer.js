@@ -126,7 +126,7 @@ export default class SignupFormContainer extends Component {
 
   handleFacebookSignUpClick = () => {
     this.setSocialLoginError('');
-
+    this.sendEvent('click', 'facebook', null);
     this.getFB()
       .then(FB =>
         FB.login((response) => {
@@ -141,7 +141,7 @@ export default class SignupFormContainer extends Component {
 
   handleGoogleSignUpClick = () => {
     this.setSocialLoginError('');
-
+    this.sendEvent('click', 'google', null);
     if (window.gapi) {
       window.gapi.auth2.getAuthInstance().signIn()
         .then(
