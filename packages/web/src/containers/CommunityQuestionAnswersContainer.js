@@ -84,7 +84,7 @@ const CommunityQuestionAnswersContainer = () => {
     });
   }, [community]);
 
-  const { modalName, onCloseModal, ...restModalProps } = modalProps;
+  const { modalName, onCloseModal, ...restModalProps } = modalProps || {};
 
   return (
     <>
@@ -97,13 +97,11 @@ const CommunityQuestionAnswersContainer = () => {
           onAskQuestionClick={openAskQuestionModal}
         />
       </HeadingBoxSection>
-      {modalProps && (
-        <Modal onClose={onCloseModal}>
-          {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
-          {modalName === possibleModals.thankYou && <Thankyou {...restModalProps} />}
-          {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restModalProps} />}
-        </Modal>
-      )}
+      <Modal isOpen={modalProps} onClose={onCloseModal}>
+        {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
+        {modalName === possibleModals.thankYou && <Thankyou {...restModalProps} />}
+        {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restModalProps} />}
+      </Modal>
     </>
   );
 };
