@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import loadable from '@loadable/component';
 
@@ -8,7 +8,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
-import Modal from 'sly/web/components/atoms/NewModal';
+import Modal, { HeaderWithClose, ModalBody } from 'sly/web/components/atoms/NewModal';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/web/containers/CommunityLeaveAnAnswerFormContainer'));
@@ -57,7 +57,7 @@ const CommunityQuestionAnswersContainer = () => {
     const postSubmit = () => {
       handleCloseModal();
       if (community) {
-        recordEntityCta(type, communityId); // TODO: type is not defined
+        // recordEntityCta(type, communityId); // TODO: type is not defined
       }
       setModalProps({
         heading: 'Success!',
@@ -86,6 +86,13 @@ const CommunityQuestionAnswersContainer = () => {
 
   const { modalName, onCloseModal, ...restModalProps } = modalProps || {};
 
+  const filteredQuestions = useMemo(() => communityQuestions?.filter(({ contents }) => contents?.length > 0),
+    [communityQuestions]);
+
+  if (!filteredQuestions?.length) { // TODO: We need this check?
+    return null;
+  }
+
   return (
     <>
       <HeadingBoxSection hasNoHr heading={`Questions About ${communityName}`} pad="xLarge">
@@ -98,9 +105,12 @@ const CommunityQuestionAnswersContainer = () => {
         />
       </HeadingBoxSection>
       <Modal isOpen={modalProps} onClose={onCloseModal}>
-        {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
-        {modalName === possibleModals.thankYou && <Thankyou {...restModalProps} />}
-        {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restModalProps} />}
+        <HeaderWithClose onClose={onCloseModal} />
+        <ModalBody>
+          {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
+          {modalName === possibleModals.thankYou && <Thankyou {...restModalProps} />}
+          {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restModalProps} />}
+        </ModalBody>
       </Modal>
     </>
   );
@@ -108,4 +118,4 @@ const CommunityQuestionAnswersContainer = () => {
 
 CommunityQuestionAnswersContainer.typeHydrationId = 'CommunityQuestionAnswersContainer';
 
-export default CommunityQuestionAnswersContainer;
+export default React.memo(CommunityQuestionAnswersContainer);
