@@ -66,7 +66,7 @@ describe('Sending Referral to Community', () => {
             waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
             waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
             waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-            waitForHydration(cy.get('button').contains('Log in')).click({ force: true });
+            waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click({ force: true });
           }
         });
       });

@@ -201,7 +201,10 @@ describe('Community survey', () => {
         verifypostUuidActions(name, optionsId, value);
       } else {
         const valueArr = [];
-        const qty = Math.floor(Math.random() * (maxSelect));
+        let qty = Math.floor(Math.random() * (maxSelect));
+        if (name === 'step-2:ADL-New_Steps') {
+          qty = 1;
+        }
         const arr = getuniqueRandoms(qty, minSelect, maxSelect);
 
         for (let i = 0; i < arr.length; i++) {
