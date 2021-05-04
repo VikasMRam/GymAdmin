@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
@@ -22,22 +22,30 @@ export function usePrefetch(apiCall, ...args) {
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
 
-  // FIXME: undo when we have only 1 react app in community profile
-  const { /* state, */ state: hookState, dispatch } = useApi();
-  const state = isServer ? hookState : apiStore.getState();
+  const { store, dispatch, skipApiCalls } = useApi();
   const fetch = useCallback(() => dispatch(
     api[apiCall].asAction(placeholders, options),
-  ), [argsKey]);
+  ), [apiCall, argsKey]);
 
   const invalidate = useCallback(() => dispatch(
     invalidateRequests(apiCall, placeholders),
-  ), [argsKey]);
+  ), [apiCall, argsKey]);
 
   const getMemoizedRequestInfo = useMemo(createMemoizedRequestInfoSelector, []);
 
+  const [request, setRequest] = useState(store.getState().requests?.[apiCall]?.[argsKey]);
+
+  useEffect(() => {
+    store.on(apiCall, argsKey, setRequest);
+    if (request !== store.getState().requests?.[apiCall]?.[argsKey]) {
+      fetch();
+    }
+    return () => store.off(apiCall, argsKey, setRequest);
+  }, [apiCall, argsKey]);
+
   const requestInfo = getMemoizedRequestInfo(
-    state.requests?.[apiCall]?.[argsKey],
-    state.entities,
+    request,
+    store.getState().entities,
     api[apiCall].isJsonApi,
   );
 
@@ -50,8 +58,7 @@ export function usePrefetch(apiCall, ...args) {
   // red flag here having a hook inside a conditional, but hoping that it's ok
   // as this branch will always be accessed or not consistently for the env
   if (isServer) {
-    const apiContext = useApi();
-    const shouldSkip = apiContext.skipApiCalls || api[apiCall].ssrIgnore;
+    const shouldSkip = skipApiCalls || api[apiCall].ssrIgnore;
     if (isInvalid || (!shouldSkip && !hasStarted)) {
       fetch();
     }

@@ -6,34 +6,12 @@
     "preinstall": "../../scripts/check-install-allowed.sh",
     "lint": "../../node_modules/.bin/eslint .",
     "test": "../../node_modules/.bin/jest --passWithNoTests",
-    "prestart:mobile:android": "rnstl",
-    "prestart:mobile:ios": "rnstl",
     "start-storybook-web": "../../node_modules/@storybook/react/bin/index.js",
-    "start": "npm run start-storybook-web -- -s ../web/public -p 9001 -c src",
-    "start:mobile": "node_modules/@storybook/react-native-server/bin/index.js start-storybook -p 9002 -c src/mobile",
-    "context:mobile:storybook:android": "cd ../mobile && npm run android:storybook",
-    "postcontext:mobile:storybook:android": "adb reverse tcp:9002 tcp:9002",
-    "context:mobile:storybook:ios": "cd ../mobile && npm run ios:storybook",
-    "start:mobile:android": "../../node_modules/.bin/npm-run-all -p start:mobile context:mobile:storybook:android",
-    "start:mobile:ios": "../../node_modules/.bin/npm-run-all -p start:mobile context:mobile:storybook:ios"
+    "start": "npm run start-storybook-web -- -s ../web/public -p 9001 -c src"
   },
   "dependencies": {
     "@storybook/addon-actions": "5.3.19",
     "@storybook/addons": "5.3.19",
-    "@storybook/react": "5.3.19",
-    "@storybook/react-native": "5.3.19",
-    "@storybook/react-native-server": "5.3.19",
-    "@storybook/addon-ondevice-actions": "5.3.19",
-    "react-native-storybook-loader": "2.0.1"
-  },
-  "config": {
-    "react-native-storybook-loader": {
-      "searchDir": [
-        "../common",
-        "../mobile"
-      ],
-      "pattern": "**/*.stories.native.js",
-      "outputFile": "./src/mobile/storyLoader.js"
-    }
+    "@storybook/react": "5.3.19"
   }
 }

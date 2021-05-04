@@ -98,7 +98,7 @@ describe('Community Profile Sections', () => {
 
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', formatMoney(community.startingRate));
       select('.CommunityRating__StyledRating').parent().contains(rating);
-      cy.get('a[class*=GetCommunityPricingAndAvailability').contains('Get Pricing and Availability').click({ force: true });
+      cy.get('[data-buttonid="GetCommunityPricingAndAvailability"]').contains('Get Pricing and Availability').click({ force: true });
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
@@ -182,7 +182,7 @@ describe('Community Profile Sections', () => {
     it('should be able to share', () => {
       cy.route('POST', '**/user-shares').as('postUserShares');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-
+      cy.wait('@postUuidActions');
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
       select('.ReactModal').contains('Share this community').should('exist');
 

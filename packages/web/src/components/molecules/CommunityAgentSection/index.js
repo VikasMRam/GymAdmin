@@ -70,5 +70,6 @@ CommunityAgentSection.propTypes = {
 CommunityAgentSection.defaultProps = {
   layout: 'community',
 };
+CommunityAgentSection.typeHydrationId = 'CommunityAgentSection';
 
 export default CommunityAgentSection;

@@ -4,8 +4,10 @@ import { shallow } from 'enzyme';
 import SignupForm from '.';
 
 const handleSubmit = jest.fn();
+const handleOtpClick = jest.fn();
 const defaultProps = {
   handleSubmit,
+  handleOtpClick,
 };
 const wrap = (props = {}) => shallow(<SignupForm {...defaultProps} {...props} />);
 
@@ -31,8 +33,7 @@ describe('SignupForm|Web', () => {
   it('render error when error is passed', () => {
     const error = 'Blah';
     const wrapper = wrap({ error });
-    const errors = wrapper.find('Block').at(2);
-
+    const errors = wrapper.find('Block').at(1);
     expect(wrapper.find('Button')).toHaveLength(1);
     expect(errors.contains(error)).toBeTruthy();
   });

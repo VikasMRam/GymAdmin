@@ -3,8 +3,8 @@ import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { withAuth } from 'sly/web/services/api';
+import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
@@ -17,6 +17,7 @@ import AgentSignupFormContainer from 'sly/common/services/auth/containers/AgentS
 import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
 import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
 import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
+import OtpLoginFormContainer from 'sly/common/services/auth/containers/OtpLoginFormContainer';
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -31,6 +32,7 @@ const mapStateToProps = state => ({
 
 export default class AuthContainer extends Component {
   static propTypes = {
+    location: object,
     authenticated: object,
     authenticateCancel: func.isRequired,
     authenticateSuccess: func.isRequired,
@@ -67,26 +69,25 @@ export default class AuthContainer extends Component {
   shouldAuth = () => {
     const {
       authenticated,
+      location,
     } = this.props;
 
     if (!this.state.isOpen && authenticated.loggingIn) {
-      this.setState({ isOpen: true });
-    } else if (this.state.isOpen && !authenticated.loggingIn) {
-      this.setState({ isOpen: false });
-      this.setState({ title: '' });
-    }
+      this.setState({ isOpen: true, title: 'Login' });
 
-    if (authenticated.loggingIn && this.state.title === '') {
-      this.setState({ title: 'Login' });
       if (authenticated.options && authenticated.options.register) {
         this.setState({ title: 'Sign Up' });
       }
-      if (authenticated.options && authenticated.options.provider) {
+
+      if (location.pathname === '/partners/communities') {
         this.setState({ title: 'Create a community manager account' });
       }
-      if (authenticated.options && authenticated.options.agent) {
+      if (location.pathname === '/partners/agents') {
         this.setState({ title: 'Create a partner agent account' });
       }
+    } else if (this.state.isOpen && !authenticated.loggingIn) {
+      this.setState({ isOpen: false });
+      this.setState({ title: '' });
     }
   };
 
@@ -126,7 +127,7 @@ export default class AuthContainer extends Component {
         onComplete={this.handleAuthenticateSuccess}
       >
         {({
-          goto, next, ...props
+          goto, reset, next, ...props
         }) => (
           <WizardSteps {...props}>
             <WizardStep
@@ -148,6 +149,10 @@ export default class AuthContainer extends Component {
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
               onProviderClicked={() => this.setState({ title: 'Create a community manager account' }, () => goto('ProviderSignup'))}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
+              handleOtpClick={() => {
+                this.setState({ title: 'Get one time passcode' });
+                goto('OtpLogin');
+              }}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
               hasPassword={signUpHasPassword}
@@ -157,6 +162,17 @@ export default class AuthContainer extends Component {
               component={CustomerSignupConfirmationContainer}
               name="CustomerSignupConfirmation"
               onSubmit={this.handleAuthenticateSuccess}
+            />
+            <WizardStep
+              component={OtpLoginFormContainer}
+              name="OtpLogin"
+              setOtpTitle={() =>
+                this.setState({ title: 'Login with passcode' })
+              }
+              onSubmit={() => {
+                this.handleAuthenticateSuccess();
+                reset();
+                }}
             />
             <WizardStep
               component={ProviderSignupFormContainer}

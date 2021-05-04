@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import UnhydratedChatbox from './Chatbox';
 
 import { size, palette } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
@@ -37,49 +36,32 @@ import {
 import Section from 'sly/web/components/molecules/Section';
 import CommunityAbout from 'sly/web/components/organisms/CommunityAbout';
 import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
-import UnhydratedLazyCommunityMap from 'sly/web/containers/LazyCommunityMapContainer';
-import UnhydratedCommunityMediaGalleryContainer from 'sly/web/containers/CommunityMediaGalleryContainer';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
-import UnhydratedOfferNotification from 'sly/web/components/molecules/OfferNotification';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
-import UnhydratedHowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
-import UnhydratedAskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
-import UnhydratedCommunitySummaryContainer from 'sly/web/containers/CommunitySummaryContainer';
-import UnhydratedCommunityQuestionAnswersContainer from 'sly/web/containers/CommunityQuestionAnswersContainer';
-import UnhydratedCommunityReviewsContainer from 'sly/web/containers/CommunityReviewsContainer';
-import UnhydratedCommunityMorePicturesContainer from 'sly/web/containers/CommunityMorePicturesContainer';
-import UnhydratedTrackedSimilarCommunitiesContainer from 'sly/web/containers/TrackedSimilarCommunitiesContainer';
-import UnhydratedPageViewActionContainer from 'sly/web/containers/PageViewActionContainer';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
-import UnhydratedPageEventsContainer from 'sly/web/containers/PageEventsContainer';
-import UnhydratedGetAssessmentBoxContainerHydrator from 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator';
-import UnhydratedCommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
-import UnHydratedTrustScoreContainer from 'sly/web/containers/communityProfile/TrustScoreContainer';
-import UnHydratedAgentAppointmentContainer from 'sly/web/containers/communityProfile/AgentAppointmentContainer';
 
-const CommunityAgentSectionContainer = withHydration(UnhydratedCommunityAgentSectionContainer);
-const PageViewActionContainer = withHydration(UnhydratedPageViewActionContainer, { alwaysHydrate: true });
-const PageEventsContainer = withHydration(UnhydratedPageEventsContainer, { alwaysHydrate: true });
-const CommunityMediaGalleryContainer = withHydration(UnhydratedCommunityMediaGalleryContainer);
-const CommunitySummaryContainer = withHydration(UnhydratedCommunitySummaryContainer);
-const OfferNotification = withHydration(UnhydratedOfferNotification);
-const TrackedSimilarCommunitiesContainer = withHydration(UnhydratedTrackedSimilarCommunitiesContainer);
-const HowSlyWorksVideoContainer = withHydration(UnhydratedHowSlyWorksVideoContainer);
-const CommunityReviewsContainer = withHydration(UnhydratedCommunityReviewsContainer);
-const CommunityQuestionAnswersContainer = withHydration(UnhydratedCommunityQuestionAnswersContainer);
-const AskAgentQuestionButtonContainer = withHydration(UnhydratedAskAgentQuestionButtonContainer);
-const AgentAppointmentContainer = withHydration(UnHydratedAgentAppointmentContainer);
-const CommunityMorePicturesContainer = withHydration(UnhydratedCommunityMorePicturesContainer);
-const LazyCommunityMap = withHydration(UnhydratedLazyCommunityMap);
-const GetAssessmentBoxContainerHydrator = withHydration(UnhydratedGetAssessmentBoxContainerHydrator, { alwaysHydrate: true });
-const TrustScoreTile = withHydration(UnHydratedTrustScoreContainer, { alwaysHydrate: true });
-const Chatbox = withHydration(UnhydratedChatbox, { alwaysHydrate: true });
+const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
+const PageViewActionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'), { alwaysHydrate: true });
+const PageEventsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'), { alwaysHydrate: true });
+const CommunityMediaGalleryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
+const CommunitySummaryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
+const OfferNotification = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkOfferNotification" */ 'sly/web/components/molecules/OfferNotification'));
+const TrackedSimilarCommunitiesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/TrackedSimilarCommunitiesContainer'));
+const HowSlyWorksVideoContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkHowSlyWorksVideo" */ 'sly/web/containers/HowSlyWorksVideoContainer'));
+const CommunityReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/containers/CommunityReviewsContainer'));
+const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
+const AskAgentQuestionButtonContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAskAgentQuestionButton" */ 'sly/web/containers/AskAgentQuestionButtonContainer'));
+const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/containers/CommunityMorePicturesContainer'));
+const GetAssessmentBoxContainerHydrator = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/components/pages/CommunityDetailPage/GetAssessmentBoxContainerHydrator'), { alwaysHydrate: true });
+const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrustScore" */ 'sly/web/containers/communityProfile/TrustScoreContainer'), { alwaysHydrate: true });
+const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/components/pages/CommunityDetailPage/Chatbox'), { alwaysHydrate: true });
+const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -172,13 +154,11 @@ const makeBanner = (profileContacted) => {
   )} request. Your Seniorly Local Advisor is checking with this community and will get back to you shortly.`;
 };
 
-export default class CommunityDetailPage extends Component {
+export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
-    user: object,
     community: object.isRequired,
     location: object.isRequired,
     profileContacted: object.isRequired,
-    history: object,
   };
 
   render() {
@@ -186,7 +166,6 @@ export default class CommunityDetailPage extends Component {
       community,
       profileContacted,
       location,
-      user,
     } = this.props;
 
     const {
@@ -268,11 +247,11 @@ export default class CommunityDetailPage extends Component {
         <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
-          {bannerNotification && (
+            {/*bannerNotification && (
             <BannerNotification>
               {bannerNotification}
             </BannerNotification>
-          )}
+          )*/}
         </Block>
         <CommunityDetailPageTemplate>
           <Wrapper>
@@ -282,7 +261,7 @@ export default class CommunityDetailPage extends Component {
                 <Gallery>
                   <CommunityMediaGalleryContainer />
                 </Gallery>
-                <StyledCommunitySummary isAdmin={user && user.admin} />
+                <StyledCommunitySummary />
                 {(promoDescription || promoTitle) && (
                   <StyledOfferNotification
                     palette="warning"
@@ -329,7 +308,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 {partnerAgent && (
                   <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
-                    <CommunityAgentSectionContainer agent={partnerAgent} pad="xLarge" />
+                    <CommunityAgentSection agent={partnerAgent} pad="xLarge" />
                     <AskAgentQuestionButtonContainer
                       agent={partnerAgent}
                       width="100%"

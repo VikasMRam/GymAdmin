@@ -1,6 +1,7 @@
 import { arrayOf, object, shape, bool, func } from 'prop-types';
 import React, { useContext, useMemo, useState, useCallback } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import mitt from 'mitt';
 
 import createMiddleware from 'sly/web/services/api/middleware';
 import apiReducer from 'sly/web/services/api/reducer';
@@ -37,37 +38,48 @@ export default function withApiContext(Component) {
 
 export const createStore = (initialState) => {
   let state = initialState;
+  const emitter = mitt();
   return {
     getState() {
       return state;
     },
-    setState(newState, callback) {
+    setState(newState) {
+      const oldState = state;
       state = newState;
-      if (typeof callback === 'function') {
-        callback(state);
-      }
+      Object.entries(newState.requests).forEach(([call, requests]) => {
+        Object.entries(requests).forEach(([key, request]) => {
+          if (request !== oldState.requests?.[call]?.[key]) {
+            emitter.emit(`${call}#${key}`, request);
+          }
+        });
+      });
     },
+    on(call, key, cb) {
+      emitter.on(`${call}#${key}`, cb);
+    },
+    off(call, key, cb) {
+      emitter.off(`${call}#${key}`, cb);
+    }
   };
 };
 
 export const useApi = () => useContext(ApiContext);
 
 export const useSelector = (selector) => {
-  const { state } = useApi();
-  return useMemo(() => selector(state), [selector, state]);
+  const { store } = useApi();
+  return useMemo(() => selector(store.getState()), [selector, store]);
 };
 
+const defaultPromises = {};
 export const ApiProvider = ({
   value: {
     store,
-    promises = {},
+    promises = defaultPromises,
     skipApiCalls = false,
   } = {},
   ...props
 }) => {
-  const [state, setState] = useState(store.getState());
-
-  const reducerDispatch = useCallback((action) => store.setState(apiReducer(store.getState(), action), setState), [store.getState()]);
+  const reducerDispatch = useCallback((action) => store.setState(apiReducer(store.getState(), action)), [store]);
 
   const dispatch = useMemo(
     () => createMiddleware(promises)(reducerDispatch),
@@ -85,7 +97,7 @@ export const ApiProvider = ({
   const api = useMemo(createApi, []);
 
   const contextValue = useMemo(() => ({
-    state,
+    store,
     dispatch,
     promises,
     skipApiCalls,
@@ -93,12 +105,9 @@ export const ApiProvider = ({
     invalidate,
     purgeFromRelationships,
   }), [
-    state,
+    store,
     dispatch,
-    promises,
     skipApiCalls,
-    invalidate,
-    purgeFromRelationships,
   ]);
 
   return (
