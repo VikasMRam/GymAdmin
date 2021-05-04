@@ -528,7 +528,6 @@ export const getHelmetForCommunityPage = (community, location) => {
       {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
       <script type="application/ld+json">{`${JSON.stringify(videoObjectLD, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
-      {qaPageLdObjs}
     </Helmet>
   );
 };
