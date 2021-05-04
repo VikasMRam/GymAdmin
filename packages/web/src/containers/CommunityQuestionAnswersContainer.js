@@ -104,7 +104,7 @@ const CommunityQuestionAnswersContainer = () => {
           onAskQuestionClick={openAskQuestionModal}
         />
       </HeadingBoxSection>
-      <Modal isOpen={modalProps} onClose={onCloseModal}>
+      <Modal isOpen={!!modalProps} onClose={onCloseModal}>
         <HeaderWithClose onClose={onCloseModal} />
         <ModalBody>
           {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
