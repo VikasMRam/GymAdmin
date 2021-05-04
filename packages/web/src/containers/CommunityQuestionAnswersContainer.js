@@ -49,6 +49,7 @@ const CommunityQuestionAnswersContainer = () => {
       questionText: question.contentData,
       questionId: question.id,
       onClose: handleCloseModal,
+      onCloseModal: handleCloseModal,
       modalName: possibleModals.communityLeaveAnAnswer,
     })
   , [communityId]);
@@ -65,6 +66,7 @@ const CommunityQuestionAnswersContainer = () => {
         onClose: handleCloseModal,
         doneText: 'Finish',
         modalName: possibleModals.thankYou,
+        onCloseModal: handleCloseModal,
       });
     };
     sendEvent('open-modal', 'AskQuestion');
