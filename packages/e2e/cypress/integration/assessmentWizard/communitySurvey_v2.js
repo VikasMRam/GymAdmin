@@ -123,7 +123,7 @@ describe('Community survey', () => {
               backAllowed: true,
               submitText: 'Continue',
               isSelect: false,
-              multipleselectionAllowed: true,
+              multipleselectionAllowed: false,
               istitleNested: false,
             },
             { name: 'step-3:Medicaid-New_Steps',
