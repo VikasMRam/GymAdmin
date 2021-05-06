@@ -6,10 +6,13 @@ import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/common/constants/roles';
 import rolePropType from 'sly/common/propTypes/role';
 import { Block, Button, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
+import IconButton from 'sly/common/components/molecules/IconButton';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 
 const LoginForm = ({
   handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick, role,
+  onFacebookLoginClick,
+  onGoogleLoginClick, socialSignupError,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -26,12 +29,37 @@ const LoginForm = ({
     />
     <Button
       type="submit"
-      pad={error ? 'large' : 'xLarge'}
+      pad="regular"
       disabled={submitting || invalid}
       width="100%"
     >
       Log in
     </Button>
+    <IconButton
+      icon="facebook-f"
+      width="100%"
+      pad="regular"
+      borderPalette="grey"
+      palette="slate"
+      onClick={onFacebookLoginClick}
+      ghost
+      noSpaceBetween
+    >
+      Log in with Facebook
+    </IconButton>
+    <IconButton
+      icon="google"
+      width="100%"
+      pad={error ? 'large' : 'xLarge'}
+      borderPalette="grey"
+      palette="slate"
+      onClick={onGoogleLoginClick}
+      ghost
+      noSpaceBetween
+    >
+      Log in with Google
+    </IconButton>
+    {socialSignupError && <Block pad="large" palette="danger" size="caption">{socialSignupError}</Block>}
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <ButtonLink pad="large" display="flex" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
@@ -48,6 +76,9 @@ const LoginForm = ({
 
 LoginForm.propTypes = {
   handleSubmit: func.isRequired,
+  onGoogleLoginClick: func.isRequired,
+  onFacebookLoginClick: func.isRequired,
+  socialSignupError: string,
   submitting: bool,
   invalid: bool,
   error: string,

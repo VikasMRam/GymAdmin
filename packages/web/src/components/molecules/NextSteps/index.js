@@ -56,7 +56,6 @@ const NextSteps = ({
           ghost
           transparent
           borderPalette="slate"
-          rotate={-1}
         >
           {p.title}
         </StyledIconButton>

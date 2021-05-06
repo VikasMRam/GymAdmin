@@ -31,7 +31,7 @@ const getDefaultHeaderItems = () => {
   const items = []
 
   items.push(
-    { name: 'Senior Living Resources', to: '/resources', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    { name: 'Senior Living Resources', to: '/resource-center', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
     { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
   );
 
@@ -46,7 +46,7 @@ const smallScreenMenuItems = [
 const defaultMenuItems = () => {
   const menuItems = [
     {
-      name: 'Senior Living Resources', to: '/resources', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
+      name: 'Senior Living Resources', to: '/resource-center', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),
     },
     {
       name: 'Assisted Living', to: '/assisted-living', hideInBigScreen: true, section: 2, onClick: ({ name }) => sendHeaderItemClickEvent(name),

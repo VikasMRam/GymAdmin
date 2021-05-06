@@ -20,7 +20,7 @@ import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
-import { Button, Block, Heading, Hr } from 'sly/common/components/atoms';
+import { Button, Block, Heading, Hr, Link } from 'sly/common/components/atoms';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -39,8 +39,6 @@ import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import IconButton from 'sly/common/components/molecules/IconButton';
-import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
@@ -247,11 +245,6 @@ export default class CommunityDetailPage extends PureComponent {
         <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
-            {/*bannerNotification && (
-            <BannerNotification>
-              {bannerNotification}
-            </BannerNotification>
-          )*/}
         </Block>
         <CommunityDetailPageTemplate>
           <Wrapper>
@@ -379,19 +372,17 @@ export default class CommunityDetailPage extends PureComponent {
                   >
                     {rgsAux.rgsInfo.resourceLinks.map((item, i) => (
                       <>
-                        <IconButton
+                        <Link
                           to={item.to}
-                          icon="chevron"
-                          right
-                          transparent
-                          rotate={-1}
                           palette="primary"
-                          width="100%"
-                          padding="0"
-                          size="body"
+                          event={{
+                            category: 'community-resource-link',
+                            action: 'link-click',
+                            label: item.to,
+                          }}
                         >
                           {item.title}
-                        </IconButton>
+                        </Link>
                         {i !== rgsAux.rgsInfo.resourceLinks.length - 1 && <Hr />}
                       </>
                     ))}

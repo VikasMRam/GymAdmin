@@ -6,8 +6,12 @@ import LoginForm from '.';
 import { AGENT_ND_ROLE } from 'sly/common/constants/roles';
 
 const handleSubmit = jest.fn();
+const onFacebookLoginClick = jest.fn();
+const onGoogleLoginClick = jest.fn();
 const defaultProps = {
   handleSubmit,
+  onFacebookLoginClick,
+  onGoogleLoginClick,
 };
 const wrap = (props = {}) => shallow(<LoginForm {...defaultProps} {...props} />);
 
@@ -33,6 +37,7 @@ describe('LoginForm|Web', () => {
     const errors = wrapper.find('Block').first();
 
     expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('IconButton')).toHaveLength(2);
     expect(errors.contains(error)).toBeTruthy();
   });
 
@@ -57,6 +62,21 @@ describe('LoginForm|Web', () => {
 
     expect(wrapper.find('Block').find('Block').contains("Don't have an account?")).toBeTruthy();
     expect(wrapper.find('Block').find('ButtonLink').contains('Sign up')).toBeTruthy();
+  });
+
+  it('handles google signup', () => {
+    const onGoogleLoginClick = jest.fn();
+    const wrapper = wrap({ onGoogleLoginClick });
+    wrapper.find('IconButton').at(1).simulate('click');
+    expect(onGoogleLoginClick).toHaveBeenCalled();
+  });
+
+
+  it('handles facebook signup', () => {
+    const onFacebookLoginClick = jest.fn();
+    const wrapper = wrap({ onFacebookLoginClick });
+    wrapper.find('IconButton').at(0).simulate('click');
+    expect(onFacebookLoginClick).toHaveBeenCalled();
   });
 
   it('renders correct footer for AGENT_ND_ROLE', () => {

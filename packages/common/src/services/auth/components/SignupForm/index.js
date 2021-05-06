@@ -6,10 +6,13 @@ import { Block, Button, Form, Grid } from 'sly/common/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
+import IconButton from 'sly/common/components/molecules/IconButton';
 
 const SignupForm = ({
   handleSubmit, submitting, invalid, error, onLoginClicked, onProviderClicked, submitButtonText, hasPassword,
-  hasPreference, hasProviderSignup, handleOtpClick,
+  hasPreference, onFacebookSignUpClick,
+  onGoogleSignUpClick,  hasProviderSignup,
+  socialSignupError,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Grid gap="small">
@@ -61,13 +64,32 @@ const SignupForm = ({
       <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
         {submitButtonText}
       </Button>
+      <IconButton
+        icon="facebook-f"
+        width="100%"
+        pad="regular"
+        borderPalette="grey"
+        palette="slate"
+        onClick={onFacebookSignUpClick}
+        ghost
+        noSpaceBetween
+      >
+        {submitButtonText} with Facebook
+      </IconButton>
+      <IconButton
+        icon="google"
+        width="100%"
+        pad="regular"
+        borderPalette="grey"
+        palette="slate"
+        onClick={onGoogleSignUpClick}
+        ghost
+        noSpaceBetween
+      >
+        {submitButtonText} with Google
+      </IconButton>
     </Block>
-    {error && error === 'user already exists' &&
-    <Block marginBottom="large">
-      <Button ghost onClick={handleOtpClick} type="submit" width="100%" pad="regular">
-        Get One Time Passcode
-      </Button>
-    </Block>}
+    {socialSignupError && <Block pad="large" palette="danger" size="caption">{socialSignupError}</Block>}
     {error && <Block textAlign="center" palette="danger" size="caption">{error}</Block>}
     <Block marginBottom="xLarge"> <TosAndPrivacy openLinkInNewTab /> </Block>
 
@@ -88,15 +110,19 @@ const SignupForm = ({
 
 SignupForm.propTypes = {
   handleSubmit: func.isRequired,
+  onFacebookSignUpClick: func.isRequired,
+  onGoogleSignUpClick: func.isRequired,
   submitting: bool,
   hasProviderSignup: bool.isRequired,
   invalid: bool,
   error: string,
+  socialLoginError: string,
   onLoginClicked: func,
   onProviderClicked: func,
   submitButtonText: string.isRequired,
   hasPassword: bool,
   hasPreference: bool,
+  socialSignupError: string,
   handleOtpClick: func.isRequired,
 };
 
