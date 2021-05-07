@@ -24,16 +24,16 @@ const CommunityDetailPageContainer = () => {
   const { communitySlug } = useParams();
   const location = useLocation() || {};
 
-  const {
-    requestInfo: {
-      normalized: community,
-      status: communityStatus,
-      headers: { location: communityLocation },
-    },
-  } = usePrefetch('getCommunity', {
+  const { requestInfo } = usePrefetch('getCommunity', {
     id: communitySlug,
     include: 'similar-communities,questions,agents',
   });
+
+  const {
+    normalized: community,
+    status: communityStatus,
+    headers: { location: communityLocation },
+  } = requestInfo;
 
   const { requestInfo: { normalized: uuidActions }} = usePrefetch('getUuidActions', {
     'filter[actionType]': `${PROFILE_CONTACTED},${TOUR_BOOKED}`,

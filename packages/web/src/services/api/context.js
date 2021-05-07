@@ -1,4 +1,4 @@
-import { arrayOf, object, shape, bool, func } from 'prop-types';
+import { object, shape, bool, func } from 'prop-types';
 import React, { useContext, useMemo, useState, useCallback } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import mitt from 'mitt';
@@ -11,7 +11,7 @@ import { invalidateRequests, purgeFromRelationships } from 'sly/web/services/api
 export const apiContextPropType = shape({
   store: object,
   dispatch: func,
-  promises: arrayOf(object),
+  promises: object,
   skipApiCalls: bool,
 });
 
@@ -46,9 +46,9 @@ export const createStore = (initialState) => {
     setState(newState) {
       const oldState = state;
       state = newState;
-      Object.entries(newState.requests).forEach(([call, requests]) => {
+      Object.entries(newState).forEach(([call, requests]) => {
         Object.entries(requests).forEach(([key, request]) => {
-          if (request !== oldState.requests?.[call]?.[key]) {
+          if (request !== oldState[call]?.[key]) {
             emitter.emit(`${call}#${key}`, request);
           }
         });
@@ -87,11 +87,11 @@ export const ApiProvider = ({
   );
 
   const invalidate = useCallback((...args) => dispatch(
-    invalidateRequests(args),
+    invalidateRequests(...args),
   ), [dispatch]);
 
   const purgeFromRelationships = useCallback((...args) => dispatch(
-    purgeFromRelationships(args),
+    purgeFromRelationships(...args),
   ), [dispatch]);
 
   const api = useMemo(createApi, []);

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import clientPropType from 'sly/common/propTypes/client';
 import userProptype from 'sly/common/propTypes/user';
-import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import { query, prefetch } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
@@ -15,7 +15,7 @@ import DashboardCommunityAdminForm from 'sly/web/components/organisms/DashboardC
 import { patchFormInitialValues } from 'sly/web/services/edits';
 import { rgsAuxAttributes } from 'sly/common/propTypes/community';
 import defaultsDeep from 'lodash/defaultsDeep';
-import connectApi from '../services/api/connectApi';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 const formName = 'DashboardCommunityAdminForm';
 
@@ -35,9 +35,9 @@ const mapStateToProps = (state, { status }) => ({
   include: 'suggested-edits',
 }))
 @connect(mapStateToProps)
-@connectApi((state, { status }) => ({
-  rgsAux: getRelationship(state, status.community.result, 'rgsAux'),
-  communityUser: getRelationship(state, status.community.result, 'user'),
+@withProps(({ status }) => ({
+  rgsAux: status.community.getRelationship(status.community.result, 'rgsAux'),
+  communityUser: status.community.getRelationship(status.community.result, 'user'),
 }))
 
 export default class DashboardCommunityAdminFormContainer extends Component {

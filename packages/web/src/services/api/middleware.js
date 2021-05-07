@@ -1,21 +1,28 @@
+import { API_CALL } from './actions';
+
 import { logWarn } from 'sly/web/services/helpers/logging';
-import { API_CALL } from 'sly/web/services/api/constants';
 
 export default (pendingPromises={}) => next => (action) => {
-  const { type, payload } = action;
+  const {
+    payload: {
+      call,
+      placeholders,
+      options,
+      actionName,
+      path,
+    },
+  } = action;
 
-  if (type !== API_CALL) {
+  if (action.type !== API_CALL) {
     return next(action);
   }
-
-  const { call, placeholders, options, actionName, path } = payload;
 
   if (!call || !actionName || !placeholders) {
     logWarn(new Error('dispatching undefined action, check redux-bees queries'));
     return Promise.reject();
   }
 
-  const actionKey = `${actionName}:${JSON.stringify(placeholders)}`;
+  const actionKey = `${actionName}#${JSON.stringify(placeholders)}`;
 
   if (typeof pendingPromises[actionKey] !== 'undefined') {
     return pendingPromises[actionKey];
@@ -25,6 +32,7 @@ export default (pendingPromises={}) => next => (action) => {
     api: true,
     name: actionName,
     params: placeholders,
+    isJsonApi: call.isJsonApi
   };
 
   next({

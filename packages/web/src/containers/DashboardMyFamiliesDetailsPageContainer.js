@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 import { Redirect, generatePath } from 'react-router';
 import { parse } from 'query-string';
 
-import { withUser, prefetch, query, invalidateRequests, connectApi } from 'sly/web/services/api';
+import { withUser, prefetch, query } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import conversationPropType from 'sly/common/propTypes/conversation/conversation';
 import clientPropType from 'sly/common/propTypes/client';
@@ -29,10 +29,6 @@ import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
 
-const mapStateToProps = (state, { conversations }) => ({
-  selectedConversation: conversations && conversations.length === 1 ? conversations[0] : null,
-});
-
 @withNotification
 @withModal
 @prefetch('client', 'getClient', (req, { match }) => req({
@@ -48,16 +44,6 @@ const mapStateToProps = (state, { conversations }) => ({
 @query('getClients', 'getClients')
 @withBreakpoint
 @withUser
-
-@connectApi(mapStateToProps, {
-  invalidateNotes:
-    () => invalidateRequests('getNotes'),
-  invalidateClients:
-    () => invalidateRequests('getClients'),
-  invalidateConversations:
-    () => invalidateRequests('getConversations'),
-})
-
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -79,10 +65,15 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     hideModal: func.isRequired,
     isModalOpen: bool.isRequired,
     notes: arrayOf(notePropType),
-    invalidateClients: func,
-    invalidateConversations: func,
-    invalidateNotes: func,
   };
+
+  static getDerivedStateFromProps({ conversations }, state) {
+    const selectedConversation = state.selectedConversation || (conversations && conversations.length === 1 ? conversations[0] : null);
+    return {
+      ...state,
+      selectedConversation,
+    };
+  }
 
   state = {
     selectedConversation: null,
@@ -119,8 +110,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const {
       createNote,
       client,
-      invalidateClients,
-      invalidateNotes,
+      status,
     } = this.props;
 
     const { id } = client;
@@ -143,8 +133,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const notePromise = () => createNote(payload);
 
     return notePromise()
-      .then(invalidateNotes)
-      .then(invalidateClients)
+      .then(status.notes.refetch)
+      .then(status.client.refetch)
       .then(() => {
         hideModal();
         notifyInfo('Note successfully added');
@@ -167,9 +157,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   onEditNote = (data, note, notifyError, notifyInfo, hideModal) => {
     const {
       updateNote,
-      invalidateClients,
       status,
-      invalidateNotes,
     } = this.props;
     const rawNotes = status.notes.result;
     const { id } = note;
@@ -188,8 +176,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const notePromise = () => updateNote({ id }, payload);
 
     return notePromise()
-      // .then(invalidateNotes)
-      .then(invalidateClients)
+      .then(status.client.refetch)
       .then(() => {
         hideModal();
         notifyInfo('Note successfully edited');
@@ -210,7 +197,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   handleAcceptClick = (showModal, hideModal, notifyError) => {
-    const { client, status, updateClient, invalidateConversations } = this.props;
+    const { client, status, updateClient } = this.props;
     const { result: rawClient } = status.client;
     const { id } = client;
     const [contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
@@ -230,7 +217,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
           <AcceptAndContactFamilyContainer
             client={client}
             onCancel={hideModal}
-            refetchConversations={invalidateConversations}
           />), null, 'noPadding', false);
         status.client.refetch();
       })
@@ -260,19 +246,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   setSelectedConversation = (conversation) => {
     this.setState({ selectedConversation: conversation });
   };
-
-  refetchClient = () => {
-    const { status } = this.props;
-    status.client.refetch();
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    const selectedConversation = state.selectedConversation || props.selectedConversation;
-    return {
-      ...state,
-      selectedConversation,
-    };
-  }
 
   toggleEditStatusDetailsMode = () => {
     const { isEditStatusDetailsMode } = this.state;
@@ -316,7 +289,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: userHasFinished } = status.user;
-    console.log('loading', clientHasFinished, status.client);
     // since it's using conditional prefetch, in initial stage clients key won't be there
     return (
       <DashboardMyFamiliesDetailsPage
@@ -332,7 +304,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         isModalOpen={isModalOpen}
         meta={meta}
         onRejectSuccess={() => onRejectSuccess(hideModal)}
-        refetchClient={this.refetchClient}
+        refetchClient={status.client.refetch}
         refetchNotes={status.notes.refetch}
         onAddNote={onAddNote}
         onEditNote={onEditNote}
@@ -343,7 +315,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         isLoading={!clientHasFinished || !userHasFinished || !client}
         goToFamilyDetails={this.goToFamilyDetails}
         goToMessagesTab={this.goToMessagesTab}
-        refetchConversations={this.refetchConversations}
         user={user || {}}
         conversation={selectedConversation}
         setSelectedConversation={this.setSelectedConversation}

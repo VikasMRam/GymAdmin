@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { object, arrayOf, func } from 'prop-types';
 import { Redirect, generatePath, matchPath, withRouter } from 'react-router';
-import { connect } from 'react-redux';
 import get from 'lodash/get';
 import diff from 'deep-diff';
 
-import { getRelationship, prefetch, withUser, connectApi } from 'sly/web/services/api';
+import { prefetch, withUser } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import communityPropType from 'sly/common/propTypes/community';
 import {
@@ -22,12 +21,12 @@ import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
 import { EditContext } from 'sly/web/services/edits';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
   id,
   tab: PROFILE,
 });
-
 
 @withNotification
 @withModal
@@ -37,9 +36,10 @@ const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
   id: match.params.id,
   include: 'suggested-edits',
 }))
-@connectApi((state, { status }) => ({
-  suggestedEdits: getRelationship(state, status.community.result, 'suggestedEdits') || [],
+@withProps(({ status }) => ({
+  suggestedEdits: status.community.getRelationship(status.community.result, 'suggestedEdits') || [],
 }))
+
 export default class DashboardCommunityDetailsPageContainer extends Component {
   static propTypes = {
     user: userPropType,

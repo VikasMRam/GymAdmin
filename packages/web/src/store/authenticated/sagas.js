@@ -3,13 +3,8 @@ import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 import * as actions from './actions';
 
 import { isFSA } from 'sly/web/store/actions';
-import { createMemoizedRequestInfoSelector } from 'sly/web/services/api';
 
-const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
-const getUser = state => getMemoizedRequestInfo(
-  state.requests?.['getUser']?.['{"id":"me"}'],
-  state.entities,
-);
+const getUser = state => state['getUser']?.['{"id":"me"}'];
 
 export function* authenticate(apiStore, reason, options) {
   // check if there is an user

@@ -4,11 +4,9 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/web/config';
 import api from 'sly/web/services/api/apiInstance';
-import {
-  createMemoizedRequestInfoSelector,
-} from 'sly/web/services/api/selectors';
+import { defaultRequest, getRelationship as selectRelationship } from 'sly/web/services/api/selectors';
 import { useApi } from 'sly/web/services/api/context';
-import { invalidateRequests } from 'sly/web/services/api/actions';
+import { invalidateRequests, purgeFromRelationships as purgeFromRelationshipsAction } from 'sly/web/services/api/actions';
 
 const defaultDispatcher = call => call();
 
@@ -31,29 +29,27 @@ export function usePrefetch(apiCall, ...args) {
     invalidateRequests(apiCall, placeholders),
   ), [apiCall, argsKey]);
 
-  const getMemoizedRequestInfo = useMemo(createMemoizedRequestInfoSelector, []);
+  const purgeFromRelationships = useCallback((relationship) => dispatch(
+    purgeFromRelationshipsAction(apiCall, placeholders, relationship),
+  ), [apiCall, argsKey]);
 
-  const [request, setRequest] = useState(store.getState().requests?.[apiCall]?.[argsKey]);
+  const [request, setRequest] = useState(store.getState()[apiCall]?.[argsKey] || { ...defaultRequest });
+
+  const getRelationship = useCallback((entity, relationship) => selectRelationship(request.entities, entity, relationship), [request]);
 
   useEffect(() => {
     store.on(apiCall, argsKey, setRequest);
-    if (request !== store.getState().requests?.[apiCall]?.[argsKey]) {
+    if (request !== store.getState()[apiCall]?.[argsKey]) {
       fetch();
     }
     return () => store.off(apiCall, argsKey, setRequest);
   }, [apiCall, argsKey]);
 
-  const requestInfo = getMemoizedRequestInfo(
-    request,
-    store.getState().entities,
-    api[apiCall].isJsonApi,
-  );
-
   const prefetch = useMemo(() => (
-    { requestInfo, fetch, invalidate }
-  ), [requestInfo, fetch, invalidate]);
+    { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships }
+  ), [request, apiCall, argsKey]);
 
-  const { hasStarted, isInvalid } = requestInfo;
+  const { hasStarted, isInvalid } = request;
   // initial fetch
   // red flag here having a hook inside a conditional, but hoping that it's ok
   // as this branch will always be accessed or not consistently for the env
@@ -67,7 +63,7 @@ export function usePrefetch(apiCall, ...args) {
       if (isInvalid || !hasStarted) {
         fetch();
       }
-    }, [requestInfo]);
+    }, [request]);
   }
 
   return prefetch;
@@ -76,7 +72,7 @@ export function usePrefetch(apiCall, ...args) {
 function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const Wrapper = ({ status = {}, ...props }) => {
-      const { requestInfo: request, fetch, invalidate } = usePrefetch(apiCall, ...dispatcher((...args) => args, props));
+      const { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships } = usePrefetch(apiCall, ...dispatcher((...args) => args, props));
 
       const innerProps = {
         ...props,
@@ -87,6 +83,8 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
             ...request,
             refetch: fetch,
             invalidate,
+            getRelationship,
+            purgeFromRelationships,
           },
         },
       };
