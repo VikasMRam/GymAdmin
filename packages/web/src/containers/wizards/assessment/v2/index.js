@@ -217,7 +217,6 @@ export default class AssessmentWizardV2 extends Component {
           if (data.location) {
             [city, state] = data.location.displayText.split(', ');
           }
-          console.log(data);
           return (
             community && (WIZARD_EXPERIMENT_ZIP_CODES.includes(zip) || WIZARD_EXPERIMENT_STATES.includes(state)) ?
               <section className={className}>
