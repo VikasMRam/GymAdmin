@@ -25,7 +25,7 @@ const CommunityQuestionAnswersContainer = () => {
 
   const { communitySlug } = useParams();
 
-  const { requestInfo: { normalized: community } } = usePrefetch('getCommunity', {
+  const { requestInfo: { normalized: community, fetch } } = usePrefetch('getCommunity', {
     id: communitySlug,
     include: 'similar-communities,questions,agents',
   });
@@ -66,7 +66,7 @@ const CommunityQuestionAnswersContainer = () => {
         onClose: handleCloseModal,
         doneText: 'Finish',
         modalName: possibleModals.thankYou,
-        onCloseModal: handleCloseModal,
+        onCloseModal: () => { fetch(); handleCloseModal(); },
       });
     };
     sendEvent('open-modal', 'AskQuestion');
