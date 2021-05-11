@@ -25,7 +25,7 @@ const CommunityQuestionAnswersContainer = () => {
 
   const { communitySlug } = useParams();
 
-  const { requestInfo: { normalized: community, fetch } } = usePrefetch('getCommunity', {
+  const { requestInfo: { normalized: community }, fetch } = usePrefetch('getCommunity', {
     id: communitySlug,
     include: 'similar-communities,questions,agents',
   });
@@ -63,10 +63,10 @@ const CommunityQuestionAnswersContainer = () => {
       setModalProps({
         heading: 'Success!',
         subheading: 'Your question has been sent and we will connect with you shortly',
-        onClose: handleCloseModal,
+        onClose: () => { fetch(); handleCloseModal(); },
         doneText: 'Finish',
         modalName: possibleModals.thankYou,
-        onCloseModal: () => { fetch(); handleCloseModal(); },
+        onCloseModal: handleCloseModal,
       });
     };
     sendEvent('open-modal', 'AskQuestion');
