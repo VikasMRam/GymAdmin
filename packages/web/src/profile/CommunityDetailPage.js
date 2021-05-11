@@ -15,6 +15,7 @@ import {
   calculatePricing,
   buildPriceList,
   buildEstimatedPriceList,
+  buildNewPriceList,
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
 import { withHydration } from 'sly/web/services/partialHydration';
@@ -193,6 +194,7 @@ export default class CommunityDetailPage extends PureComponent {
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
 
+    const newPricesList = buildNewPriceList(community);
     const pricesList = buildPriceList(community);
     const estimatedPriceList = buildEstimatedPriceList(community);
     const pricingTitle =
@@ -264,6 +266,7 @@ export default class CommunityDetailPage extends PureComponent {
                     extraProps={{
                       pricesList,
                       estimatedPriceList,
+                      newPricesList,
                     }}
                   />
                 </StyledHeadingBoxSection>

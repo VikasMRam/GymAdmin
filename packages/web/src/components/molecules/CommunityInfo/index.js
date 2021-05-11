@@ -51,8 +51,7 @@ export default class CommunityInfo extends Component {
       community, inverted, color, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
     const { priceTextSize } = this.props;
-    const { propInfo = {}, propRatings, communitySize } = community;
-
+    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate } = community;
 
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = community.care || community.typeCare || propInfo.typeCare;
@@ -163,7 +162,7 @@ export default class CommunityInfo extends Component {
             font={type === 'map' ? 'body-xs' : null}
             marginRight="s"
           />
-          {community.startingRate ? (
+          {startingRate ? (
             <Block
               color={color || (inverted ? 'white' : 'primary')}
               font="body-s"
@@ -176,7 +175,7 @@ export default class CommunityInfo extends Component {
                 display="inline"
                 font={priceTextSize}
               >
-                {formatMoney(community.startingRate)}
+                {formatMoney(startingRate)}{maxRate && maxRate !== 0 ? ` - ${formatMoney(maxRate)}` : ''}
               </Block>&nbsp;/&nbsp;month
             </Block>
           ) : null }

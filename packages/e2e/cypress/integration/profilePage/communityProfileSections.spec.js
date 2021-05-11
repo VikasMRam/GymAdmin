@@ -20,9 +20,9 @@ export const buildEstimatedPriceList = (community) => {
   const priceList = [];
   sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
   privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
-  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio', value: studioApartmentRate });
+  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom', value: twoBedroomApartmentRate });
 
   return priceList;
 };
@@ -259,6 +259,7 @@ describe('Community Profile Sections', () => {
     it('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
+      cy.route('GET', '**/platform/users/me').as('getUser');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       waitForHydration(cy.get('button').contains('Ask a Question')).click({ force: true });
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
@@ -302,20 +303,21 @@ describe('Community Profile Sections', () => {
         });
       });
 
+      cy.wait('@getUser');
 
-      waitForHydration(cy.contains('Finish').click());
+
+      waitForHydration(cy.contains('Finish').click({ force: true }));
 
       cy.getCookie('sly-session').should('exist');
-      // cy.get('a').contains(firstName);
       cy.clearCookie('sly-session');
-      cy.wait(5000);
+      cy.wait(1000);
       cy.visit('/');
       waitForHydration(cy.adminLogin());
 
       cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('tr').contains(`${firstName} ${lastName}`)).click();
 
-      cy.get('h1').contains(`${firstName} ${lastName}`);
+      cy.get('h2').contains(`${firstName} ${lastName}`);
       cy.get('a').contains('See more family details').click();
 
       cy.get('input[name="name"]').should('have.value', `${firstName} ${lastName}`);

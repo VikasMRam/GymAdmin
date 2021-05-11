@@ -1,17 +1,17 @@
 import React from 'react';
-import { object, string } from 'prop-types';
+import { object, string, bool } from 'prop-types';
 
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { Block, Box, Grid, Button } from 'sly/common/system';
 
 
-const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, ...props }) => (
+const DashboardCommunityCTAPricingBox = ({ color, layout, buttonProps, ctaText, showButton, buttonText, ...props }) => (
   <Box {...props}>
     <Grid
       gridTemplateColumns="auto"
       sx$tablet={{
-        gridTemplateColumns: 'auto 9.2rem',
+        gridTemplateColumns: showButton ? 'auto 10rem' : 'auto',
         gridGap: 'xl',
       }}
       justifyContent="center"
@@ -26,44 +26,46 @@ const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, 
             marginBottom: layout === 'row' ? 'l' : '0',
           }}
         color={color}
-      >
-
-        Need help finding senior living options?
-        Complete this 2-minute quiz to get personalized senior living and care options.
-
+        font="body-m"
+        danger
+      >{ctaText}
       </Block>
-      <Button
-        as="a"
+      {showButton && <Button
+        type="button"
         textDecoration="none"
         width="100%"
         height="max-content"
         color="slate"
         pallete="none"
         variant="neutral"
-        textAlign="center"
         background={color}
-        href={to}
+        textAlign="center"
         {...buttonProps}
       >
-        Take the quiz
-      </Button>
+        {buttonText}
+      </Button>}
     </Grid>
   </Box>
 );
 
-GetAssessmentBox.propTypes = {
+DashboardCommunityCTAPricingBox.propTypes = {
   layout: string.isRequired,
   color: palettePropType,
   buttonProps: object,
+  buttonText: string,
+  ctaText: string,
+  showButton: bool,
 };
 
-GetAssessmentBox.defaultProps = {
+DashboardCommunityCTAPricingBox.defaultProps = {
   layout: 'column',
   buttonProps: {},
-  background: 'blue',
+  background: 'viridian.base',
+  buttonText: 'Update Pricing',
+  ctaText: 'Your community profile will use Seniorly’s Estimated Pricing until you update pricing.',
   color: 'white',
   padding: 'xl xxl',
-  'data-testid': 'GetAssessmentBox',
+  showButton: true,
 };
 
-export default GetAssessmentBox;
+export default DashboardCommunityCTAPricingBox;

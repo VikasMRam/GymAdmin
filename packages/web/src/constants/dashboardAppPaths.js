@@ -58,6 +58,7 @@ export const MESSAGES = 'messages';
 export const EMAILS = 'emails';
 export const PROFILE = 'profile';
 export const PRICING = 'pricing';
+export const NEWPRICING = 'new-pricing';
 export const LISTINGS = 'listings';
 export const PHOTOS = 'photos';
 export const SERVICES = 'services';

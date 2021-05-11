@@ -75,7 +75,7 @@ describe('Sending Referral to Community', () => {
     it('Add Test community', () => {
       cy.login();
       cy.visit('/dashboard/communities');
-      waitForHydration(cy.get('div [class*=DashboardWithSummaryTemplate__Section]').contains('Add Community')).click();
+      waitForHydration(cy.get('[data-cy="plus"]')).click();
       addtestCommunity();
       waitForHydration(cy.get('button').contains('Create Community')).click();
       select('.Notifications').contains('Community added successfully');
