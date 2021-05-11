@@ -50,7 +50,7 @@ const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHou
 const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/components/Dashboard'));
 
 // community profile
-const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/containers/CommunityDetailPageContainer'));
+const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
 
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));

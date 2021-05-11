@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import OfferNotification from 'sly/web/components/molecules/OfferNotification';
+import OfferNotification from 'sly/web/profile/OfferNotification/OfferNotification';
 import GetCustomPricingContainer from 'sly/web/containers/GetCustomPricingContainer';
 
 jest.mock('sly/web/containers/AskAgentQuestionContainer');
