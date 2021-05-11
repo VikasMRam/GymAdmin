@@ -81,18 +81,6 @@ export default class DashboardCommunityAdminForm extends Component {
         </SectionForm>
         <SectionForm heading="Community information">
           <EditField
-            name="propInfo.covidInfoTitle"
-            label="Covid Title"
-            type="text"
-            readOnly={!canEdit}
-          />
-          <EditField
-            name="propInfo.covidInfoDescription"
-            label="Covid Description"
-            type="textarea"
-            readOnly={!canEdit}
-          />
-          <EditField
             name="propInfo.promoTitle"
             label="Promotions Title"
             type="text"
