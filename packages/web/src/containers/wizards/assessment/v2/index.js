@@ -254,9 +254,10 @@ export default class AssessmentWizardV2 extends Component {
                   <WizardStep
                     component={Conversion}
                     name="Auth"
+                    // eslint-disable-next-line no-nested-ternary
                     signUpHeading={data.whatToDoNext === 'start' ?
           'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-          : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+          : data.whatToDoNext === 'no-thanks' ? 'Please provide your contact details so we can connect with you regarding your detailed pricing.' : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                     stepName="step-4:Conversion-New_Steps"
                     onAuthSuccess={next}
                     onSubmit={next}
@@ -350,9 +351,10 @@ export default class AssessmentWizardV2 extends Component {
                   <WizardStep
                     component={Conversion}
                     name="Auth"
+                    // eslint-disable-next-line no-nested-ternary
                     signUpHeading={data.whatToDoNext === 'start' ?
                     'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
-                    : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
+                    :  data.whatToDoNext === 'no-thanks' ? 'Please provide your contact details so we can connect with you regarding your detailed pricing.' : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                     onAuthSuccess={next}
                     onSubmit={next}
                     onSkipClick={next}

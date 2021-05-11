@@ -100,8 +100,6 @@ export default class DashboardCommunityAdminFormContainer extends Component {
     const initialValues = pick(
       status.community.result.attributes,
       [
-        'propInfo.covidInfoTitle',
-        'propInfo.covidInfoDescription',
         'propInfo.promoTitle',
         'propInfo.promoDescription',
         'propInfo.adminNotes',
