@@ -12,7 +12,7 @@ import ReduxField from 'sly/common/components/organisms/ReduxField';
 const LoginForm = ({
   handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick, role,
   onFacebookLoginClick,
-  onGoogleLoginClick, socialSignupError,
+  onGoogleLoginClick, socialLoginError,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -59,7 +59,7 @@ const LoginForm = ({
     >
       Log in with Google
     </IconButton>
-    {socialSignupError && <Block pad="large" palette="danger" size="caption">{socialSignupError}</Block>}
+    {socialLoginError && <Block pad="large" palette="danger" size="caption">{socialLoginError}</Block>}
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
     <ButtonLink pad="large" display="flex" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
       Reset password
@@ -78,7 +78,7 @@ LoginForm.propTypes = {
   handleSubmit: func.isRequired,
   onGoogleLoginClick: func.isRequired,
   onFacebookLoginClick: func.isRequired,
-  socialSignupError: string,
+  socialLoginError: string,
   submitting: bool,
   invalid: bool,
   error: string,
