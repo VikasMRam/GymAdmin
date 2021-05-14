@@ -98,7 +98,7 @@ const config = {
     olarkSiteId: '9319-500-10-7635',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-5888W7H',
-    facebookAppId: '1609538575934980',
+    facebookAppId: '296657038622214',
     googleAppId: '522248695659-kbpgg45i1pg4kt1ahsqm2trdr8cdms2k.apps.googleusercontent.com',
   },
 };
