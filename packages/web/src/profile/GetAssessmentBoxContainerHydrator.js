@@ -1,38 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { isBrowser } from 'sly/web/config';
-import { isCtaRecorded } from 'sly/web/services/helpers/localStorage';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,
-  ASSESSMENT_WIZARD_COMPLETED_COMMUNITIES,
 } from 'sly/web/constants/wizards/assessment';
-import { PRICING_REQUEST } from 'sly/web/services/api/constants';
+import { PROFILE_CONTACTED } from 'sly/web/services/api/constants';
 import communityPropType from 'sly/common/propTypes/community';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
+import { usePrefetch } from 'sly/web/services/api';
+import { useHasPricingRequest } from 'sly/web/profile/hooks/useHasPricingRequest';
 
-export default class GetAssessmentBoxContainerHydrator extends Component {
-  static typeHydrationId = 'GetAssessmentBoxContainerHydrator';
+const GetAssessmentBoxContainerHydrator = (props) => {
+  const params = useParams();
 
-  static propTypes = {
-    community: communityPropType,
-  };
+  const { requestInfo: { normalized: uuidActions } } = usePrefetch('getUuidActions', {
+    'filter[actionType]': PROFILE_CONTACTED,
+    'filter[actionInfo-slug]': params.communitySlug,
+  });
 
-  render() {
-    if (!isBrowser) {
-      // return null;
-    }
-    const { community } = this.props;
-    const completedAssessment = isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED);
-    const completedPricing = isBrowser && (community ? isCtaRecorded(PRICING_REQUEST, community.id)  : false);
+  const hasAlreadyRequestedPricing = useHasPricingRequest(uuidActions);
+  const completedAssessment = isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED);
 
-    return (
-      <GetAssessmentBoxContainer
-        {...this.props}
-        completedAssessment={completedAssessment}
-        completedPricing={completedPricing}
-        agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
-      />
-    );
-  }
-}
+  return (
+    <GetAssessmentBoxContainer
+      {...props}
+      completedAssessment={completedAssessment}
+      completedPricing={hasAlreadyRequestedPricing}
+      agentId={isBrowser ? (localStorage.getItem(ASSESSMENT_WIZARD_MATCHED_AGENT) || '') : ''}
+    />
+  );
+};
+
+GetAssessmentBoxContainerHydrator.typeHydrationId = 'GetAssessmentBoxContainerHydrator';
+GetAssessmentBoxContainerHydrator.propTypes = {
+  community: communityPropType,
+};
+
+export default GetAssessmentBoxContainerHydrator;

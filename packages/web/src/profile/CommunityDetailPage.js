@@ -128,6 +128,13 @@ const Footer = makeFooter('footer');
 const Wrapper = makeWrapper('div');
 const Gallery = makeGallery('div');
 
+const getAssessmentBoxModes = {
+  pricingTable: { cta: 'pricing', entry: 'pricingTable' },
+  profileSection: { cta: 'generalOptions', entry: 'profileSection' },
+  communityFooter: { cta: 'pricing', entry: 'communityFooter' },
+  communitySidebar: { cta: 'pricing', entry: 'communitySidebar' },
+};
+
 export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
@@ -262,7 +269,7 @@ export default class CommunityDetailPage extends PureComponent {
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="pricing-table"
-                    mode={{ cta: 'pricing', entry: 'pricingTable' }}
+                    mode={getAssessmentBoxModes.pricingTable}
                     extraProps={{
                       pricesList,
                       estimatedPriceList,
@@ -335,7 +342,7 @@ export default class CommunityDetailPage extends PureComponent {
                 <PaddedGetAssessmentBoxContainerHydrator
                   startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                   community={community}
-                  mode={{ cta: 'generalOptions', entry: 'profileSection' }}
+                  mode={getAssessmentBoxModes.profileSection}
                 />
                 }
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
@@ -430,7 +437,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
-                    mode={{ cta: 'pricing', entry: 'communityFooter' }}
+                    mode={getAssessmentBoxModes.communityFooter}
                     layout="footer"
                   />
                 }
@@ -442,7 +449,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
-                    mode={{ cta: 'pricing', entry: 'communitySidebar' }}
+                    mode={getAssessmentBoxModes.communitySidebar}
                     layout="sidebar"
                   />
                   }

@@ -2,13 +2,11 @@ import { useMemo } from 'react';
 import isMatch from 'lodash/isMatch';
 
 import {
-  AVAILABILITY_REQUEST,
   PRICING_REQUEST,
   PROFILE_CONTACTED,
-  TOUR_BOOKED,
 } from 'sly/web/services/api/constants';
 
-const createHasProfileAction = (uuidActions) => (
+const createHasProfileAction = uuidActions => (
   type,
   actionInfo,
 ) => {
