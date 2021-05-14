@@ -168,7 +168,7 @@ const VeteransBenefitAssistedLivingPage = ({
     return (
       <>
         <StyledArticle>
-          <Heading level="title" size="title" ref={alRef} >What is Assisted Living for Veterans?</Heading>
+          <Heading level="title" size="title" ref={alRef} ></Heading>
           <Paragraph pad="xxLarge">Long-term care costs quickly add up, but for Veterans and their surviving spouses,
             assistance may be available to help with these costs. Unfortunately, it’s hard to know what help is available,
             if you qualify, and how to apply. In fact, many Veterans and their families struggle through the application
@@ -775,7 +775,7 @@ const VeteransBenefitAssistedLivingPage = ({
     );
   };
 
-  const title = 'Guide to VA Benefits and Senior Living';
+  const title = 'Veteran\'s Benefits and Senior Living';
   const description = 'The Seniorly Veterans Benefits Guide answers your questions about the Veterans Aid and Attendance Pension Program, and several other ways to qualify for government assistance for long term care.';
 
   return (
@@ -786,7 +786,7 @@ const VeteransBenefitAssistedLivingPage = ({
       </Helmet>
       <HubHeader
         imagePath="react-assets/hub/veterans-benefit/veteran-benefit.png"
-        heading="Veteran’s Benefits for Assisted Living"
+        heading="Veteran's Benefits and Senior Living"
         toc="Veteran’s Benefits"
         showSearch={false}
         mobileBGGradientPalette="slate"

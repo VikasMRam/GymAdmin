@@ -11,7 +11,6 @@ import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import {
   HubPageTemplate,
   makeBody,
@@ -26,8 +25,6 @@ import {
 import { Heading, Paragraph, Link, Box } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/web/components/search/helpers';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 const StyledLink = styled(Link)`
@@ -58,21 +55,9 @@ const ListWrapper = makeOneColumnListWrapper('div');
 
 const MemoryCareNearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('board-and-care-homes');
-
-
   const bncRef = React.createRef();
   const servicesRef = React.createRef();
   const otherRef = React.createRef();
@@ -80,7 +65,6 @@ const MemoryCareNearMePage = ({
   const touringRef = React.createRef();
   const faqRef = React.createRef();
   const nextRef = React.createRef();
-  const nearRef = React.createRef();
 
   const sectionIdMap = {
     bnc: 'what-is-board-and-care',
@@ -90,13 +74,12 @@ const MemoryCareNearMePage = ({
     touring: 'touring-questions',
     faqs: 'frequently-asked-question',
     next: 'next-steps',
-    near: 'memory-care-near-you',
   };
 
 
   const tocList = [
     {
-      title: 'What is a Board and Care Home Near You?',
+      title: 'What is a Board and Care Home?',
       id: 'what-is-board-and-care',
       ref: bncRef,
     },
@@ -131,11 +114,6 @@ const MemoryCareNearMePage = ({
       id: 'next',
       ref: nextRef,
 
-    },
-    {
-      title: 'Browse Board and Care Homes Near You',
-      id: 'board-and-care-near-you',
-      ref: nearRef,
     },
 
   ];
@@ -219,7 +197,6 @@ const MemoryCareNearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={bncRef} >
-            What is a Board and Care Home Near You?
           </Heading>
           <Paragraph>
             A board and care home is a residential care community for senior adults located within a residential
@@ -263,7 +240,7 @@ const MemoryCareNearMePage = ({
             What Services are Provided at a Board and Care Home?
           </Heading>
           <Paragraph>
-            The services provided at a board and care home near you are similar to those provided at an assisted
+            The services provided at a board and care home are similar to those provided at an assisted
             living community, but in a home setting. Staff in a residential care home help with a wide variety of
             personal services. The owner or manager of the home often lives there with the residents,
             though there's no requirement for staff to be available to residents 24/7.
@@ -346,7 +323,7 @@ const MemoryCareNearMePage = ({
 
           <StyledBox background="primary.lighter-90">
             <Heading level="subtitle" size="subtitle">
-              Find Board and Care Home near you
+              Find Board and Care Home Near You
             </Heading>
             <Paragraph>
               If you are ready to search for a Board and Care Home near you, just enter your city or zip code in the search box below:
@@ -956,7 +933,7 @@ const MemoryCareNearMePage = ({
             What Questions to Ask When Touring a Board and Care Home
           </Heading>
           <Paragraph>
-            If you're looking for the right board and care home near you, or even if you're just considering it as
+            If you're looking for the right board and care home, or even if you're just considering it as
             a possible senior living option, you probably have a lot of questions. We want to help you answer them.
             As you research and visit board and care homes in your area, it can be helpful to take along a set of
             questions so you get all the information you need.
@@ -1079,9 +1056,8 @@ const MemoryCareNearMePage = ({
     );
   };
 
-  const title = 'What is a Board and Care Home Near You';
+  const title = 'What is a Board and Care Home?';
   const description = 'Learn all about board and care homes, including medical services provided, costs and more. Board and care homes are a great alternative for senior living.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -1095,7 +1071,7 @@ const MemoryCareNearMePage = ({
       <HubHeader
         imagePath="react-assets/hub/board-and-care-home-cover.jpg"
         toc="board and care home"
-        heading="What is Board and Care Homes Near You?"
+        heading="What is Board and Care Homes ?"
         label="Use our free search to find board and care homes nearby"
         onCurrentLocation={onCurrentLocation}
         onLocationSearch={onLocationSearch}
@@ -1110,17 +1086,6 @@ const MemoryCareNearMePage = ({
             </Column>
             <Body>
               {SEOContent()}
-              <Heading level="title" size="title" ref={nearRef}>
-                {heading}
-              </Heading>
-              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-              {!isFetchingResults && communityList && communityList.length > 0 && (
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
             )}
             </Body>
           </TwoColumn>
@@ -1135,12 +1100,7 @@ const MemoryCareNearMePage = ({
 
 MemoryCareNearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
   onCurrentLocation: func,
 };
 

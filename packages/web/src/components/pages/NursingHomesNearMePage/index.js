@@ -1177,7 +1177,7 @@ const NearMePage = ({
 
   const title = 'Find the Best Nursing Home Near You ';
   const description = 'Search nursing homes near you that range from assisted living facilities, memory care communities and other senior living options. Compare cost, property highlights and more.';
-  const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
+  const heading = state? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
 
 
   return (
@@ -1192,7 +1192,7 @@ const NearMePage = ({
       <HubHeader
         imagePath="react-assets/hub/assisted-living-cover.jpg"
         toc="nursing homes"
-        heading="What is Nursing Home Near You?"
+        heading="What is Nursing Home?"
         label="Use our free search to find nursing homes nearby"
         onCurrentLocation={onCurrentLocation}
         onLocationSearch={onLocationSearch}
