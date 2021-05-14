@@ -12,7 +12,6 @@ import NextSteps from 'sly/web/components/molecules/NextSteps';
 import ADLChart from 'sly/web/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import {
   HubPageTemplate,
   makeBody,
@@ -27,7 +26,6 @@ import {
 import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
@@ -53,20 +51,9 @@ const ListWrapper = makeOneColumnListWrapper('div');
 
 const SeniorLivingNearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = 'Senior Living Communities';
-
 
   const slRef = React.createRef();
   const costRef = React.createRef();
@@ -74,7 +61,6 @@ const SeniorLivingNearMePage = ({
   const typesRef = React.createRef();
   const faqRef = React.createRef();
   const nextRef = React.createRef();
-  const nearRef = React.createRef();
 
   const sectionIdMap = {
     sl: 'what-is-senior-living',
@@ -83,7 +69,6 @@ const SeniorLivingNearMePage = ({
     typesil: 'types-of-senior-living',
     faqs: 'frequently-asked-question',
     next: 'next-steps',
-    near: 'senior-living-near-you',
   };
 
   const tocList = [
@@ -117,12 +102,6 @@ const SeniorLivingNearMePage = ({
       title: "Next Steps",
       id: "next-steps",
       ref: nextRef
-
-    },
-    {
-      title: "How to Find the Best Senior Living Near Me",
-      id: "senior-living-near-you",
-      ref: nearRef
 
     },
   ];
@@ -211,7 +190,6 @@ const SeniorLivingNearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={slRef} >
-            What is Senior Living?
           </Heading>
           <Paragraph>
             Senior living is an umbrella term for communities designed to meet the care and lifestyle needs of older
@@ -221,8 +199,7 @@ const SeniorLivingNearMePage = ({
           <Paragraph>
             Senior living communities are classified by the type and level of care they provide and include
             independent living, assisted living, memory care, respite care and many other types that will be
-            covered below. In many cases, a single parent company may run several types of senior living communities
-            near you — for example,{' '}
+            covered below. In many cases, a single parent company may run several types of senior living communities — for example,{' '}
             <Link href="https://www.seniorly.com/resources/articles/what-are-the-brookdale-options-in-los-angeles-ca">
               Brookdale Senior Living.
             </Link>
@@ -465,7 +442,7 @@ const SeniorLivingNearMePage = ({
             </ListItem>
           </ListWrapper>
           <Paragraph>
-            Assisted living communities near you can range from large resort-like properties to intimate boutique
+            Assisted living communities can range from large resort-like properties to intimate boutique
             communities. The majority of assisted living facilities are private pay and offer month-to-month rental agreements.
           </Paragraph>
           <Paragraph>
@@ -841,9 +818,8 @@ const SeniorLivingNearMePage = ({
     );
   };
 
-  const title = 'Find Senior Living Near Me';
+  const title = 'Find Senior Living?';
   const description = 'Senior living options nearby include assisted living facilities, memory care communities, independent living, ccrc’s, respite care, nursing homes and in-home care.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -870,27 +846,6 @@ const SeniorLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" ref={nearRef}>
-              {heading}
-            </Heading>
-            <StyledArticle>
-              <Paragraph>
-                There are a lot of different factors that go into finding the right senior living community for you or
-                your loved one. Take time to meet with everyone who is involved in the decision and list the desired
-                lifestyle amenities and location. Figure out your price range and investigate potential ways of
-                financing senior living. It’s also important to talk with your doctor to determine the level of care needed.
-
-              </Paragraph>
-            </StyledArticle>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && communityList && communityList.length > 0 &&(
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
             </Body>
           </TwoColumn>
         </Wrapper>
@@ -904,12 +859,7 @@ const SeniorLivingNearMePage = ({
 
 SeniorLivingNearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
   onCurrentLocation: func,
 };
 

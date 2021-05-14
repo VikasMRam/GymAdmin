@@ -68,7 +68,6 @@ const SearchBoxWrapper = styled.div`
 const AuditWrapper = styled.div`
    background-color: ${palette('grey', 'stroke')};
    padding: ${size('spacing.large')};
-   margin-bottom: ${size('spacing.huge')};
 `;
 
 const AuditTextWrapper = styled.div`
