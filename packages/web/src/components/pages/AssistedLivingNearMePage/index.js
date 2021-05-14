@@ -12,7 +12,6 @@ import NextSteps from 'sly/web/components/molecules/NextSteps';
 import ADLChart from 'sly/web/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import {
   HubPageTemplate,
   makeBody,
@@ -30,8 +29,6 @@ import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/web/services/helpers/homepage';
-import { getTocSeoLabel } from 'sly/web/components/search/helpers';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
@@ -92,19 +89,9 @@ const ListWrapperOne = makeOneColumnListWrapper('div');
 
 const NearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('assisted-living');
 
   const alRef = useRef(null);
   const staffRef = useRef(null);
@@ -123,7 +110,7 @@ const NearMePage = ({
       ref: alRef,
     },
     {
-      title: 'What Does Assisted Living Cost Near You?',
+      title: 'What Does Assisted Living Cost?',
       id: 'cost',
       ref: costRef,
     },
@@ -308,22 +295,18 @@ const NearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={alRef} >
-            What is Assisted Living?
           </Heading>
+
           <Paragraph>
-            Assisted living near you can be defined as 24-hour non-medical care delivered in a residential setting.
-            Previously  known as{' '}
+            Assisted living is defined as 24-hour non-medical care delivered in a residential setting for seniors. Previously known as {' '}
             <Link href="https://www.seniorly.com/nursing-homes">
               nursing homes
             </Link>
-            , the properties and amenities have improved immensely over the years
-            and so they are now called  senior living or assisted living communities.
+            , the properties and amenities have improved immensely over the years and so they are now called senior living or assisted living communities.
           </Paragraph>
           <Paragraph>
-            Assisted living facilities offer seniors
-            room and board, 24-hour non-medical care, housekeeping, laundry services, social engagement,
-            wellness programs, and much more. Assisted living communities near you can be large hotel-like properties
-            or single family homes (often called{' '}
+            Assisted living facilities offer seniors room and board, 24-hour non-medical care, housekeeping, laundry services, social engagement, wellness programs, and much more.
+            Assisted living communities near you can be large hotel-like properties or single family homes  (often called{' '}
             <Link href="https://www.seniorly.com/assisted-living/articles/understanding-board-and-care-homes">
               Board and Care
             </Link>
@@ -347,7 +330,7 @@ const NearMePage = ({
             can be the most desirable option.
           </Paragraph>
           <Paragraph>
-            Assisted Living near you can be the right balance for seniors who want to be independent, but also need
+            Assisted Living can be the right balance for seniors who want to be independent, but also need
             some day-to-day assistance and care with their{' '}
             <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
               activities of daily living (ADLs).
@@ -413,7 +396,7 @@ const NearMePage = ({
 
         <StyledArticle>
           <Heading level="title" size="title" ref={costRef} >
-            What Does Assisted Living Cost Near You?
+            What Does Assisted Living Cost ?
           </Heading>
           <Paragraph>
             As of 2019, according to{' '}
@@ -534,7 +517,7 @@ const NearMePage = ({
             What Type Of Medical Staff Is Present?
           </Heading>
           <Paragraph>
-            Every assisted living facility near you is different. They are each dedicated to different levels of care and
+            Every assisted living facility is different. They are each dedicated to different levels of care and
             services. Assisted living communities will offer regular activities, on-site non-medical health care,
             comfortable living spaces, and prepared meals. Some communities that focus on higher acuity care may
             have licensed nurses on staff. Others focus on dementia or{' '}
@@ -872,9 +855,8 @@ const NearMePage = ({
     );
   };
 
-  const title = 'Find the Best Assisted Living Near You ';
+  const title = 'What is Assisted Living? ';
   const description = 'Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -889,7 +871,7 @@ const NearMePage = ({
       <HubHeader
         imagePath="react-assets/hub/assisted-living-cover.jpg"
         toc="assisted living"
-        heading="What is Assisted Living Near You?"
+        heading="What is Assisted Living?"
         label="Use our free search to find assisted living nearby"
         onCurrentLocation={onCurrentLocation}
         onLocationSearch={onLocationSearch}
@@ -904,20 +886,6 @@ const NearMePage = ({
             </Column>
             <Body>
               {SEOContentAL()}
-              {!isFetchingResults && communityList && communityList.length > 0 &&
-                <Heading level="title" size="title">
-                  {heading}
-                </Heading>
-              }
-              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-              {!isFetchingResults && communityList && communityList.length > 0 && (
-                <CommunitySearchList
-                  communityList={communityList}
-                  searchParams={searchParams}
-                  requestMeta={requestMeta}
-                  location={location}
-                />
-              )}
             </Body>
           </TwoColumn>
         </Wrapper>
@@ -935,12 +903,7 @@ const NearMePage = ({
 
 NearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
   onCurrentLocation: func,
 };
 
