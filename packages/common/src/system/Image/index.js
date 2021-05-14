@@ -93,7 +93,7 @@ export default class Image extends React.Component {
 
   static defaultProps = {
     className: '',
-    loading: 'eager',
+    loading: 'lazy',
     sizes: '(max-width: 1079px) 100vw, 680px',
     onLoadFailed: () => {},
   };

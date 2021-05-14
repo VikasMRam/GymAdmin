@@ -34,8 +34,9 @@ const config = {
     env: NODE_ENV,
     slyEnv: SLY_ENV,
     gaEnv: GA_ENV,
-    isDev: NODE_ENV,
+    isDev: false,
     isTest: false,
+    isStaging: false,
     isProd: false,
     host: HOST,
     port: PORT,
@@ -71,7 +72,6 @@ const config = {
 
   test: {
     isTest: true,
-    isDev: false,
     publicPath: '',
     domain: 'localhost',
     host: 'http://localhost',
@@ -80,18 +80,18 @@ const config = {
   },
 
   development: {
+    isDev: true,
     muteReduxLogger: MUTE_REDUX_LOGGER,
   },
 
   staging: {
-    isDev: false,
+    isStaging: true,
     eventServerUrl: 'https://event.myseniorly.com/events/new',
     facebookAppId: '299735431723954',
     googleAppId: '522248695659-ces03d2ptbgegiusk0c6v8j9abc7pdbf.apps.googleusercontent.com',
   },
 
   production: {
-    isDev: false,
     isProd: true,
     eventServerUrl: 'https://event.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',

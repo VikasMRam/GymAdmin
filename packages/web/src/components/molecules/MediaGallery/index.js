@@ -190,16 +190,7 @@ export default class MediaGallery extends Component {
 
   shouldLoadMedia = (i) => {
     const { currentSlide } = this.props;
-    const numItems = this.allMedia.length;
-    // media can be loaded if:
-    // - it's current slide
-    // - it's one before current slide
-    // - it's one after current slide
-    return (Math.abs(i - currentSlide) < 2) ||
-      // if the current slide is last slide then also load first slide
-      // ~if the current slide is first slide then also load last slide~ not because of reducing bytes
-      (currentSlide === numItems - 1 && i === 0);
-    // return i === currentSlide;
+    return i === currentSlide;
   };
 
   generateSlideContent = (media, index) => {
@@ -218,6 +209,7 @@ export default class MediaGallery extends Component {
             aspectRatio="3:2"
             sizes={sizes}
             alt={media.alt}
+            shouldPreload={index === 0}
             loading={this.shouldLoadMedia(index) ? 'auto' : 'lazy'}
             ref={(c) => {
               this.mediaRefs[index] = c;

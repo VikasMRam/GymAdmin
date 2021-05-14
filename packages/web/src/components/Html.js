@@ -31,7 +31,7 @@ const Html = ({
         <link rel="preload" href={`${publicPath}/fonts/TiemposHeadline-Medium.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-bold-webfont.woff2`} as="font" crossOrigin="anonymous" />
         {linkElements}
         {styleElements}
         {helmet.link.toComponent()}

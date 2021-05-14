@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useRef, useEffect } from 'react';
 import { hydrate } from 'react-dom';
 import loadable from '@loadable/component';
 
+import { requestIdleCallback } from 'sly/web/requestIdleCallback';
 import { isBrowser } from 'sly/web/config';
 
 const HYDRATION_DATA_TYPE = 'application/hydration-data';
@@ -36,6 +37,7 @@ function storeProps(Component, props) {
 const imports = [];
 if (isBrowser) {
   window.resolveImports = () => {
+    console.log('resolving', imports.length, 'imports');
     let imp;
     while(imp = imports.pop()) {
       imp();
@@ -43,26 +45,54 @@ if (isBrowser) {
   };
 }
 
+
+const makeId = () => [...Array(16)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+
 export const withHydration = (loadFn, { fallback = null } = {}) => {
   // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
   let Component;
-  // console.log('withHydration');
-  // if (!isBrowser) {
+  let doFetch;
+  if (!isBrowser) {
     Component = loadable(loadFn, { ssrOnly: true, suspense: false });
-  // } else {
-  //   Component = React.lazy(() => new Promise((resolve) => {
-  //     loadFn.importAsync().then((module) => {
-  //       imports.push(() => {
-  //         resolve(module);
-  //       });
-  //     });
-  //   }));
-  // }
-  return (props) => (
-  //<Suspense fallback={fallback}>
-        <Component {...props} />
-  //</Suspense>
-  );
+  } else {
+    const fetchPromise = new Promise((resolve) => {
+      doFetch = () => loadFn.importAsync().then((module) => {
+        requestIdleCallback(() => {
+          queueMicrotask(() => {
+            console.log('run partial hydrate');
+            resolve(module);
+          });
+        });
+      });
+    })
+    Component = React.lazy(() => fetchPromise);
+  }
+
+  return (props) => {
+    const ref = useRef();
+    useEffect(() => {
+      const check = (items) => {
+        items.forEach((item) => {
+          if (item.isIntersecting) {
+                doFetch();
+          }
+        });
+      };
+      const observer = new IntersectionObserver(check, {
+        marginRoot: '0px 0px 500px 0px',
+      });
+      observer.observe(ref.current);
+      return () => observer.disconnect();
+    }, []);
+
+    return (
+      <div ref={ref}>
+        <Suspense fallback={fallback}>
+          <Component {...props} />
+        </Suspense>
+      </div>
+    );
+  }
 };
 
 function getComponentTypeHydrationId(component) {

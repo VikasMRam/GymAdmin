@@ -59,7 +59,7 @@ const AskAgentQuestionButtonContainer = withHydration(/* #__LOADABLE__ */ () => 
 const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/containers/CommunityMorePicturesContainer'));
 const GetAssessmentBoxContainerHydrator = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'), { alwaysHydrate: true });
 const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrustScore" */ 'sly/web/containers/communityProfile/TrustScoreContainer'), { alwaysHydrate: true });
-const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
+//const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
 
 const BackToSearch = styled.div`
@@ -149,7 +149,7 @@ export default class CommunityDetailPage extends PureComponent {
 
     const {
       name,
-      propInfo,
+      propInfo = {},
       address,
       rgsAux,
       floorPlans,
@@ -178,9 +178,9 @@ export default class CommunityDetailPage extends PureComponent {
       residentDescription,
       ownerExperience,
       typeCare: typeCares,
-    } = propInfo;
+    } = (propInfo || {});
 
-    const typeOfCare = typeCares[0];
+    const typeOfCare = typeCares?.[0];
     const isActiveAdult = getIsActiveAdult(community);
 
     if (!address.country || address.country === '') {
@@ -218,7 +218,7 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {!isInternational && <Chatbox community={community} />}
+      {/*!isInternational && <Chatbox community={community} />*/}
         {getHelmetForCommunityPage(community, location)}
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
@@ -407,7 +407,7 @@ export default class CommunityDetailPage extends PureComponent {
                 }
                 <CommunityDisclaimerSection
                   title="Disclaimer"
-                  phone={(twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) ? twilioNumber.numbers[0] : '8558664515'}
+                  phone={twilioNumber?.numbers?.[0] || '8558664515'}
                   isClaimed={isClaimed}
                   id={community.id}
                   city={address.city}

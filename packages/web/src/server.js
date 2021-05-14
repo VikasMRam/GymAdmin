@@ -7,10 +7,7 @@ import React from 'react';
 import serialize from 'serialize-javascript';
 import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { cache } from 'emotion';
-import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 import nodeFetch from 'node-fetch';
 import builder from 'xmlbuilder';
@@ -145,13 +142,13 @@ app.use(async (req, res, next) => {
     const store = configureStore({ experiments: {} }, { apiStore: apiContext.store });
 
     const app = sheet.collectStyles(extractor.collectChunks((
-      <CacheProvider value={cache}>
-        <Provider store={store}>
-          <StaticRouter context={context} location={req.url}>
-            <ClientApp apiContext={apiContext} iconsContext={iconsContext} />
-          </StaticRouter>
-        </Provider>
-      </CacheProvider>
+      <StaticRouter context={context} location={req.url}>
+        <ClientApp
+          apiContext={apiContext}
+          iconsContext={iconsContext}
+          reduxStore={store}
+        />
+      </StaticRouter>
     )));
 
     const result = await renderAndPrefetch(app, apiContext);
