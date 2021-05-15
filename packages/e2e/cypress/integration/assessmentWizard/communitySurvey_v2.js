@@ -14,6 +14,7 @@ describe('Community survey', () => {
   let lookingFor;
   const wizardVersion = 'Wizard_V1';
   const wizardSteps = 6;
+  const retries = 10;
   const WizardConfiguration = {
     Wizard_V1:
       [{ name: 'step-2:Who',
@@ -192,10 +193,17 @@ describe('Community survey', () => {
       url: '**/uuid-actions',
       response: {},
     }).as('postUuidActions');
+    let attempts = 0;
+    while (!community?.id && attempts < retries) {
+      // eslint-disable-next-line no-loop-func
+      cy.getCommunity(TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+      // eslint-disable-next-line no-loop-func
+      attempts++;
+    }
 
-    cy.getCommunity(TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+
     Cypress.Cookies.preserveOnce('sly_uuid', 'sly_sid');
   });
 
