@@ -44,6 +44,7 @@ import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
+import ModalContainer from 'sly/web/containers/ModalContainer';
 
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const PageViewActionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'), { alwaysHydrate: true });
@@ -220,6 +221,7 @@ export default class CommunityDetailPage extends PureComponent {
       <>
       {/*!isInternational && <Chatbox community={community} />*/}
         {getHelmetForCommunityPage(community, location)}
+        <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
         <PageEventsContainer />
         <Block pad="large">

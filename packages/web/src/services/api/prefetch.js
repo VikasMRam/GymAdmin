@@ -33,20 +33,22 @@ export function usePrefetch(apiCall, ...args) {
     purgeFromRelationshipsAction(apiCall, placeholders, relationship),
   ), [apiCall, argsKey]);
 
-  const [request, setRequest] = useState(store.getState()[apiCall]?.[argsKey] || { ...defaultRequest });
+  const getCurrentRequestInfo = useCallback(() => store.getState()[apiCall]?.[argsKey], [apiCall, argsKey]);
+
+  const [request, setRequest] = useState(getCurrentRequestInfo() || { ...defaultRequest });
 
   const getRelationship = useCallback((entity, relationship) => selectRelationship(request.entities, entity, relationship), [request]);
 
   useEffect(() => {
     store.on(apiCall, argsKey, setRequest);
-    if (request !== store.getState()[apiCall]?.[argsKey]) {
+    if (request !== getCurrentRequestInfo()) {
       fetch();
     }
     return () => store.off(apiCall, argsKey, setRequest);
   }, [apiCall, argsKey]);
 
   const prefetch = useMemo(() => (
-    { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships }
+    { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships, getCurrentRequestInfo }
   ), [request, apiCall, argsKey]);
 
   const { hasStarted, isInvalid } = request;

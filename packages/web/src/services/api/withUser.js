@@ -13,6 +13,7 @@ function getDisplayName(WrappedComponent) {
 export const useUser = () => {
   const uuidAux = usePrefetch('getUuidAux', { id: 'me' });
   const user = usePrefetch('getUser', { id: 'me' });
+  const getCurrentUser = useCallback(() => user.getCurrentRequestInfo().normalized);
 
   return useMemo(() => {
     return {
@@ -23,6 +24,7 @@ export const useUser = () => {
       user: user.requestInfo.normalized,
       fetchUser: user.fetch,
       invalidateUser: user.invalidate,
+      getCurrentUser,
 
       info: {
         uuidAux: uuidAux.requestInfo,
@@ -34,7 +36,7 @@ export const useUser = () => {
 
 export default function withUser(InnerComponent) {
   const Wrapper = ({ status={}, ...props }) => {
-    const { user, uuidAux, fetchUser, invalidateUser, fetchUuidAux, invalidateUuidAux, info } = useUser();
+    const { user, uuidAux, fetchUser, invalidateUser, fetchUuidAux, invalidateUuidAux, info, getCurrentUser } = useUser();
 
     const userHas = useCallback((fields) => {
       if (!user) return false;
@@ -52,6 +54,7 @@ export default function withUser(InnerComponent) {
         user: {
           ...info.user,
           refetch: fetchUser,
+          getCurrentUser,
           invalidate: invalidateUser,
         },
       },

@@ -104,9 +104,9 @@ app.disable('x-powered-by');
 if (isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'public')));
   app.use(clientDevMiddleware());
-} else {
-  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
+
+app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 
 app.use(clientConfigsMiddleware());
 
