@@ -1,3 +1,7 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="Cypress" />
+
+
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { PROFILE_TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
@@ -30,6 +34,7 @@ export const buildEstimatedPriceList = (community) => {
 
 describe('Community Profile Sections', () => {
   let community;
+  const retries = 10;
 
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
@@ -42,9 +47,15 @@ describe('Community Profile Sections', () => {
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
 
-    cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+    let attempts = 0;
+    while (!community?.id && attempts < retries) {
+      // eslint-disable-next-line no-loop-func
+      cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+      // eslint-disable-next-line no-loop-func
+      attempts++;
+    }
 
     Cypress.Commands.add('login', () => {
       cy.get('button').then(($a) => {
@@ -259,9 +270,26 @@ describe('Community Profile Sections', () => {
     it('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
-      cy.route('GET', '**/platform/users/me').as('getUser');
+      cy.route('GET', '**/users/me*').as('fetchUser');
+      cy.route('POST', '**/user/trackUserSession*').as('botSession');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      waitForHydration(cy.get('button').contains('Ask a Question')).click({ force: true });
+      cy.wait('@postUuidActions').then((xhr) => {
+        expect(xhr.requestBody).to.deep.equal({
+          data: {
+            type: 'UUIDAction',
+            attributes: {
+              actionType: 'profileViewed',
+              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+              actionInfo: {
+                slug: community.id,
+              },
+            },
+          },
+        });
+      });
+      cy.wait('@fetchUser');
+      cy.wait('@botSession', { timeout: 15000 });
+      waitForHydration(cy.get('button').contains('Ask a Question')).click();
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
       const firstName = `Lead${randHash()}`;
@@ -310,8 +338,8 @@ describe('Community Profile Sections', () => {
 
       cy.getCookie('sly-session').should('exist');
       cy.clearCookie('sly-session');
-      cy.wait(1000);
       cy.visit('/');
+      cy.reload();
       waitForHydration(cy.adminLogin());
 
       cy.visit('/dashboard/agent/my-families/new');
