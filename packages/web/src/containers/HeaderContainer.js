@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
-
+import React, { useCallback, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import { stringify, parse } from 'query-string';
+
 import { useAuth } from 'sly/web/services/api';
 import { generateSearchUrl, isInternationalPath } from 'sly/web/services/helpers/url';
 import { useNotification } from 'sly/web/components/helpers/notification';
@@ -11,6 +12,11 @@ import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';
+
+import {
+  parseURLQueryParams,
+  removeQueryParamFromURL,
+} from 'sly/web/services/helpers/url';
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -101,7 +107,7 @@ const generateMenuItems = ({ user, logIn, signUp, logOut }) => [
 export default function HeaderContainer(props) {
   const location = useLocation();
   const history = useHistory();
-  const { user, logoutUser, ensureAuthenticated } = useAuth();
+  const { user, logoutUser, authenticated, ensureAuthenticated } = useAuth();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = useCallback(() => {
     setDropdownOpen(!isDropdownOpen);
@@ -126,7 +132,25 @@ export default function HeaderContainer(props) {
     }
   }, []);
 
-  const isInternationalPage = isInternationalPath(location.pathname);
+  const { pathname, search, hash } = location;
+  const { loginRedirect } = parseURLQueryParams(search);
+
+  useEffect(() => {
+    if (!authenticated.loggingIn && loginRedirect) {
+      ensureAuthenticated()
+        .then(() => {
+          history.replace(decodeURIComponent(loginRedirect));
+          // temp fix for issues with redirect not working.
+          window.location.reload(false);
+        })
+        .catch(() => {
+          const params = removeQueryParamFromURL('loginRedirect', search);
+          history.replace(`${pathname}${stringify(params)}${hash}`);
+        });
+    }
+  }, [authenticated.loggingIn, loginRedirect]);
+
+  const isInternationalPage = isInternationalPath(pathname);
 
   const signUp = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({ register: true }); };
   const logIn = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
