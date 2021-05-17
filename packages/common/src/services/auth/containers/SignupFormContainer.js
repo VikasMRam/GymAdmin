@@ -174,7 +174,7 @@ export default class SignupFormContainer extends Component {
         } else {
           const errors = data?.body?.errors;
           if (typeof errors === 'undefined') {
-            console.error(errorMessage);
+            console.error(data);
             throw data;
           }
           const errorMessage = Object.values(errors).join('. ');
