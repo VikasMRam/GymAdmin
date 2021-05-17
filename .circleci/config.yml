@@ -3,7 +3,7 @@ version: 2.1
 
 aliases:
   - &packages_node_modules_cache_dir packages-node_modules
-  - &cache_version v15
+  - &cache_version v16
 
 commands:
   prepare_workspace:
