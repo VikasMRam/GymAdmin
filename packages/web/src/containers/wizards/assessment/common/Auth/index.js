@@ -23,6 +23,7 @@ export default class Auth extends Component {
     onAuthSuccess: func,
     location: object.isRequired,
     stepName: string.isRequired,
+    status: object,
   };
 
   static defaultProps = {
