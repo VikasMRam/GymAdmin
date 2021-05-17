@@ -3,7 +3,7 @@ version: 2.1
 
 aliases:
   - &packages_node_modules_cache_dir packages-node_modules
-  - &cache_version v16
+  - &cache_version v17
 
 commands:
   prepare_workspace:
@@ -60,10 +60,6 @@ commands:
             else
               echo "node_modules from cache exist. So skipping install."
             fi
-      - run:
-          name: Link local @loadable/component
-          command: |
-            ln -s ../../private/loadable-component node_modules/@loadable/component
 
   cache_deps:
     parameters:
