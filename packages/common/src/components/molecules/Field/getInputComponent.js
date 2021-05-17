@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import loadable from '@loadable/component';
 
 
