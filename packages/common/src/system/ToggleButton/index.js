@@ -62,7 +62,7 @@ const ToggleButton = forwardRef((props, ref) => {
       padding="m"
       height="element-l"
       variant="neutral"
-      onClick={props.to ? null : onChange}
+      onClick={props.to && !onChange ? null : onChange}
       sx={getStyles(props)}
       {...props}
     />

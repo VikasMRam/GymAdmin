@@ -188,7 +188,7 @@ export default class Pagination extends Component {
         kind="label"
         key={index}
         to={pageHref}
-        onClick={() => window.scrollTo(0, 0)}
+        onChange={() => window.scrollTo(0, 0)}
         collapsedInMobile={collapsedInMobile}
         value={sel}
       >
