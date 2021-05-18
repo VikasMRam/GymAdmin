@@ -515,7 +515,7 @@ const NearMePage = ({
       <HubHeader
         imagePath="react-assets/hub/assisted-living-cover.jpg"
         toc="nursing homes"
-        heading="What is Nursing Home?"
+        heading="What is a Nursing Home?"
         label="Use our free search to find nursing homes nearby"
         onCurrentLocation={onCurrentLocation}
         onLocationSearch={onLocationSearch}
