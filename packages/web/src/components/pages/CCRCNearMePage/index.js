@@ -827,7 +827,7 @@ const CCRCNearMePage = ({
   </>
 );
 
-  const title = 'What is Continuing Care Retirement Community (CCRC)?';
+  const title = 'What is a Continuing Care Retirement Community (CCRC)?';
   const description = 'Find the best continuing care retirement community(CCRC) near you with local senior living communities & providers. Browse CCRC nearby with prices, reviews & photos.';
 
   return (
@@ -841,7 +841,7 @@ const CCRCNearMePage = ({
       </Helmet>
       <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
          toc="CCRC"
-         heading="What is Continuing Care Retirement Community (CCRC)?"
+         heading="What is a Continuing Care Retirement Community(CCRC)?"
          label="Use our free search to find CCRC nearby"
          onCurrentLocation={onCurrentLocation}
          onLocationSearch={onLocationSearch} />

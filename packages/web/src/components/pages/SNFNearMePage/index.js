@@ -568,8 +568,8 @@ const NearMePage = ({
     );
   };
 
-  const title = 'What is Skilled Nursing Facility?';
-  const description = 'Search skilled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
+  const title = 'What is a Skilled Nursing Facility?';
+  const description = 'Search skia lled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
 
   return (
     <>
@@ -583,7 +583,7 @@ const NearMePage = ({
 
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
                  toc="skilled nursing facility"
-                 heading="What is Skilled Nursing Facility?"
+                 heading="What is a Skilled Nursing Facility?"
                  label="Use our free search to find skilled nursing facilities nearby"
                  onCurrentLocation={onCurrentLocation}
                  onLocationSearch={onLocationSearch} />

@@ -1071,7 +1071,7 @@ const MemoryCareNearMePage = ({
       <HubHeader
         imagePath="react-assets/hub/board-and-care-home-cover.jpg"
         toc="board and care home"
-        heading="What is Board and Care Homes ?"
+        heading="What is a Board and Care Home?"
         label="Use our free search to find board and care homes nearby"
         onCurrentLocation={onCurrentLocation}
         onLocationSearch={onLocationSearch}
