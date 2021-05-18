@@ -375,7 +375,7 @@ jobs:
           name: Run Cypress tests
           working_directory: ~/project/packages/e2e
           command: |
-            TESTFILES=$(circleci tests glob "cypress/integration/**/*.js" | circleci tests split --split-by=timings --timings-type=classname | xargs | sed -e 's/ /,/g')
+            TESTFILES=$(circleci tests glob "cypress/integration/**/*.js" | circleci tests split --split-by=timings | xargs | sed -e 's/ /,/g')
             cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec $TESTFILES
       - run: 
           name: Format Test Results
