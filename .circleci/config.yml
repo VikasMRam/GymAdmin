@@ -354,20 +354,20 @@ jobs:
           background: true
       - run:
           name: Waiting for Local Go to be up and running
-          command: npx wait-on -i 1000 -s 1 -t 120000 http-get://localhost:8080/v0/ping && npx wait-on -i 1000 -s 1 -t 120000 http-get://localhost:8080/v0/marketplace/communities/eskaton-village-placerville?include=similar-communities%2Cquestions%2Cagents
+          command: npx wait-on -i 1000 -s 1 -t 120000 http-get://lvh.me/v0/ping && npx wait-on -i 1000 -s 1 -t 120000 http-get://lvh.me/v0/marketplace/communities/eskaton-village-placerville?include=similar-communities%2Cquestions%2Cagents
 
       - run:
           name: Waiting for Local React to be up and running
-          command: npx wait-on -i 1000 -s 1 -t 120000 http-get://localhost:8000/ping && npx wait-on -i 1000 -s 1 -t 120000 http-get://localhost:8000/assisted-living/california/placerville/eskaton-village-placerville
+          command: npx wait-on -i 1000 -s 1 -t 120000 http-get://lvh.me/ping && npx wait-on -i 1000 -s 1 -t 120000 http-get://lvh.me/assisted-living/california/placerville/eskaton-village-placerville
       - run:
           name: Validate service is working
           command: |
-            timeout 120 bash -c 'HTTPD=`curl -o /dev/null -w "%{http_code}\\n" -X POST -H "Content-Type: application/json" -d "{\"email\":\"slytest+admin@seniorly.com\",\"password\":\"nopassword\"}" http://localhost:8080/v0/platform/auth/login`
+            timeout 120 bash -c 'HTTPD=`curl -o /dev/null -w "%{http_code}\\n" -X POST -H "Content-Type: application/json" -d "{\"email\":\"slytest+admin@seniorly.com\",\"password\":\"nopassword\"}" http://lvh.me/v0/platform/auth/login`
             echo $HTTPD
             until [ "$HTTPD" == "200" ]; do
               echo $HTTPD
               sleep 3
-              HTTPD=`curl -o /dev/null -w "%{http_code}\\n" -X POST -H "Content-Type: application/json" -d "{\"email\":\"slytest+admin@seniorly.com\",\"password\":\"nopassword\"}" http://localhost:8080/v0/platform/auth/login`
+              HTTPD=`curl -o /dev/null -w "%{http_code}\\n" -X POST -H "Content-Type: application/json" -d "{\"email\":\"slytest+admin@seniorly.com\",\"password\":\"nopassword\"}" http://lvh.me/v0/platform/auth/login`
             done'
               
             
@@ -387,7 +387,6 @@ jobs:
 
       - store_test_results:
           path: ~/project/packages/e2e/cypress/results
-          when: on_success
       - store_artifacts:
           path: ~/project/packages/e2e/cypress/videos
 
