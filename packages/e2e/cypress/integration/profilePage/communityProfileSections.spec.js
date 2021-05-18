@@ -46,7 +46,8 @@ describe('Community Profile Sections', () => {
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
-
+    cy.route('GET', '**/users/me').as('getUser');
+    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
     let attempts = 0;
     while (!community?.id && attempts < retries) {
       // eslint-disable-next-line no-loop-func
@@ -73,6 +74,8 @@ describe('Community Profile Sections', () => {
     Cypress.Commands.add('adminLogin', () => {
       cy.get('button').then(($a) => {
         if ($a.text().includes('Log In')) {
+          cy.wait('@getUser');
+          cy.wait('@getUuid');
           waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
           waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
           waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
@@ -270,8 +273,7 @@ describe('Community Profile Sections', () => {
     it('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
-      cy.route('GET', '**/users/me*').as('fetchUser');
-      cy.route('POST', '**/user/trackUserSession*').as('botSession');
+      cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions').then((xhr) => {
         expect(xhr.requestBody).to.deep.equal({
@@ -287,8 +289,8 @@ describe('Community Profile Sections', () => {
           },
         });
       });
-      cy.wait('@fetchUser');
-      cy.wait('@botSession', { timeout: 15000 });
+      cy.wait('@getUser');
+
       waitForHydration(cy.get('button').contains('Ask a Question')).click();
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
@@ -338,8 +340,9 @@ describe('Community Profile Sections', () => {
 
       cy.getCookie('sly-session').should('exist');
       cy.clearCookie('sly-session');
-      cy.visit('/');
       cy.reload();
+      cy.visit('/');
+
       waitForHydration(cy.adminLogin());
 
       cy.visit('/dashboard/agent/my-families/new');
