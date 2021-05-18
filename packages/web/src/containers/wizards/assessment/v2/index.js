@@ -219,7 +219,8 @@ export default class AssessmentWizardV2 extends Component {
             [city, state] = data.location.displayText.split(', ');
           }
           return (
-            community && WIZARD_EXPERIMENT_ZIP_CODES.includes(zip) ?
+            // disable direct experiment. leaving code in case there is a new test to run
+            (false && community && WIZARD_EXPERIMENT_ZIP_CODES.includes(zip)) ?
               <Experiment name="DirectMarketWizard">
                 <Variant name="Reduced_Steps">
                   <section className={className}>
