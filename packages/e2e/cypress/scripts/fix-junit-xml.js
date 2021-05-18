@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
 // As per https://github.com/michaelleeallen/mocha-junit-reporter/issues/132
 const fs = require('fs');
 
