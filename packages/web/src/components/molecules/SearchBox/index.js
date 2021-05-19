@@ -1,26 +1,26 @@
-import React from "react";
-import { oneOf, string, func, bool, arrayOf, object } from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import { oneOf, string, func, bool, arrayOf, object } from 'prop-types';
+import styled from 'styled-components';
 
-import { palette, key } from "sly/common/components/themes";
-import { Icon, Block } from "sly/common/components/atoms";
-import { Input } from "sly/web/components/atoms";
-import IconButton from "sly/common/components/molecules/IconButton";
-import IconItem from "sly/web/components/molecules/IconItem";
+import { palette, key } from 'sly/common/components/themes';
+import { Icon, Block } from 'sly/common/components/atoms';
+import { Input } from 'sly/web/components/atoms';
+import IconButton from 'sly/common/components/molecules/IconButton';
+import IconItem from 'sly/web/components/molecules/IconItem';
 
 const SuggestionsWrapper = styled(Block)`
-  z-index: ${key("zIndexes.searchSuggestions")};
+  z-index: ${key('zIndexes.searchSuggestions')};
   left: 0;
   right: 0;
 `;
-SuggestionsWrapper.displayName = "SuggestionsWrapper";
+SuggestionsWrapper.displayName = 'SuggestionsWrapper';
 
 const Suggestion = styled(Block)`
   :hover {
-    background-color: ${palette("primary", "stroke")};
+    background-color: ${palette('primary', 'stroke')};
   }
 `;
-Suggestion.displayName = "Suggestion";
+Suggestion.displayName = 'Suggestion';
 
 const Suggestions = styled(Block)`
   :last-child {
@@ -36,19 +36,19 @@ const groupSuggestions = suggestions =>
   }, {});
 
 const GROUP_LABELS = {
-  City: "Locations",
-  Zipcode: "Locations",
-  GoogleCity: "Locations",
-  Community: "Communities",
-  PartnerAgent: "Agents"
+  City: 'Locations',
+  Zipcode: 'Locations',
+  GoogleCity: 'Locations',
+  Community: 'Communities',
+  PartnerAgent: 'Agents',
 };
 
 const GROUP_ICONS = {
-  City: "location",
-  Zipcode: "location",
-  GoogleCity: "location",
-  Community: "community-size-large",
-  PartnerAgent: "user"
+  City: 'location',
+  Zipcode: 'location',
+  GoogleCity: 'location',
+  Community: 'community-size-large',
+  PartnerAgent: 'user',
 };
 
 const GROUP_LIMITS = {
@@ -56,10 +56,10 @@ const GROUP_LIMITS = {
   Zipcode: 5,
   GoogleCity: 5,
   Community: 3,
-  PartnerAgent: 3
+  PartnerAgent: 3,
 };
 
-const GROUPS_DISPLAY_TEXT = ["City", "Zipcode"];
+const GROUPS_DISPLAY_TEXT = ['City', 'Zipcode'];
 
 const SearchBox = ({
   layout,
@@ -100,7 +100,7 @@ const SearchBox = ({
           readOnly={readOnly}
           onKeyDown={onKeyDown}
           onChange={onChange}
-          size={layout === "homeHero" ? "large" : undefined}
+          size={layout === 'homeHero' ? 'large' : undefined}
           snap="right"
           data-testid={dataTestId}
           {...inputProps}
@@ -109,7 +109,7 @@ const SearchBox = ({
           icon="search"
           snap="left"
           border="0"
-          data-testid = {dataTestIdButton}
+          data-testid={dataTestIdButton}
           onClick={onSearchButtonClick}
         />
       </Block>
@@ -131,12 +131,12 @@ const SearchBox = ({
               onMouseDown={onCurrentLocationClick}
               cursor="pointer"
               width="100%"
-              padding={["medium", "xLarge"]}
+              padding={['medium', 'xLarge']}
               size="caption"
               iconSize="caption"
               palette="primary"
             >
-              <Icon icon="navigation" marginRight="regular" palette="primary" />{" "}
+              <Icon icon="navigation" marginRight="regular" palette="primary" />{' '}
               Current location
             </Suggestion>
           )}
@@ -158,10 +158,10 @@ const SearchBox = ({
                   onMouseDown={() => onSelect(suggestion)}
                   cursor="pointer"
                   key={suggestion.id}
-                  background={suggestion.active ? "grey.stroke" : "white"}
+                  background={suggestion.active ? 'grey.stroke' : 'white'}
                   palette="primary"
                   width="100%"
-                  padding={["medium", "xLarge"]}
+                  padding={['medium', 'xLarge']}
                   size="caption"
                   clamped
                 >
@@ -181,7 +181,7 @@ const SearchBox = ({
 };
 
 SearchBox.propTypes = {
-  layout: oneOf(["header", "homeHero"]),
+  layout: oneOf(['header', 'homeHero']),
   value: string.isRequired,
   defaultValue: string.isRequired,
   onChange: func.isRequired,
@@ -195,15 +195,18 @@ SearchBox.propTypes = {
   onKeyDown: func,
   placeholder: string,
   readOnly: bool,
-  suggestions: arrayOf(object).isRequired
+  suggestions: arrayOf(object).isRequired,
+  dataTestId: '',
+  dataTestIdButton: '',
 };
 
 SearchBox.defaultProps = {
-  layout: "header",
-  placeholder: "Search by city, state, zip",
-  value: "",
-  defaultValue: "",
-  suggestions: []
+  layout: 'header',
+  placeholder: 'Search by city, state, zip',
+  value: '',
+  defaultValue: '',
+  suggestions: [],
+
 };
 
 export default SearchBox;
