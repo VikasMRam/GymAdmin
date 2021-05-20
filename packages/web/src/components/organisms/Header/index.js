@@ -332,8 +332,6 @@ const Header = React.memo(
               visibility={menuOpen ? 'hidden' : 'visible'}
               include="community"
               placeholder="Search by city, zip, community name"
-              dataTestId="search-box"
-              dataTestIdButton="search-button"
             />
           )}
           {template !== 'wizard' && (

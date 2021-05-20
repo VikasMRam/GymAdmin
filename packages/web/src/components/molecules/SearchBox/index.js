@@ -77,8 +77,6 @@ const SearchBox = ({
   placeholder,
   readOnly,
   suggestions,
-  dataTestId,
-  dataTestIdButton,
   ...props
 }) => {
   const gps = groupSuggestions(suggestions);
@@ -102,14 +100,12 @@ const SearchBox = ({
           onChange={onChange}
           size={layout === 'homeHero' ? 'large' : undefined}
           snap="right"
-          data-testid={dataTestId}
           {...inputProps}
         />
         <IconButton
           icon="search"
           snap="left"
           border="0"
-          data-testid={dataTestIdButton}
           onClick={onSearchButtonClick}
         />
       </Block>
@@ -195,9 +191,7 @@ SearchBox.propTypes = {
   onKeyDown: func,
   placeholder: string,
   readOnly: bool,
-  suggestions: arrayOf(object).isRequired,
-  dataTestId: '',
-  dataTestIdButton: '',
+  suggestions: arrayOf(object).isRequired
 };
 
 SearchBox.defaultProps = {
