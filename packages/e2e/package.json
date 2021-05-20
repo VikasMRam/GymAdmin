@@ -6,7 +6,8 @@
     "preinstall": "../../scripts/check-install-allowed.sh",
     "lint": "../../node_modules/.bin/eslint .",
     "start": "cypress run",
-    "open": "cypress open"
+    "open": "cypress open",
+    "fixresults":"node cypress/scripts/fix-junit-xml.js"
   },
   "devDependencies": {
     "cypress": "5.5.0"

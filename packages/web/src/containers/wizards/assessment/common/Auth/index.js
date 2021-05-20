@@ -23,6 +23,7 @@ export default class Auth extends Component {
     onAuthSuccess: func,
     location: object.isRequired,
     stepName: string.isRequired,
+    status: object,
   };
 
   static defaultProps = {
@@ -37,7 +38,8 @@ export default class Auth extends Component {
   }
 
   handleAuthSuccess = () => {
-    const { createAction, location: { pathname }, community, user, onAuthSuccess, stepName } = this.props;
+    const { createAction, location: { pathname }, community, onAuthSuccess, stepName, status } = this.props;
+    const user = status.user.getCurrentUser();
     const actionType = community ? PROFILE_CONTACTED : CONSULTATION_REQUESTED;
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',

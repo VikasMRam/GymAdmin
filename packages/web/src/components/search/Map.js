@@ -11,7 +11,7 @@ import debounce from 'lodash/debounce';
 import Marker from './Marker';
 import SearchOnMoveControl from './SearchOnMoveControl';
 
-import Block from 'sly/common/components/atoms/Block';
+import { Block } from 'sly/common/system';
 import mapsTheme from 'sly/web/components/themes/maps';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
 import MapCommunityTile from 'sly/web/components/search/MapCommunityTile';
@@ -110,13 +110,13 @@ const Map = ({
     const community = communities.find(({ id }) => id === key);
     const index = cursor + communities.indexOf(community);
 
-    sendEvent('pin-click', community.name , index);
+    sendEvent('pin-click', community.name, index);
     onMarkerClick(community);
   }, [communities]);
 
   const onMapMarkerHover = useCallback((community) => {
     const index = cursor + communities.indexOf(community);
-    sendEvent('pin-hover', community.name , index);
+    sendEvent('pin-hover', community.name, index);
     onMarkerHover(community);
   }, [communities]);
 
@@ -164,9 +164,9 @@ const Map = ({
           const y = pt.y - 28;
           return Math.sqrt(
             (x - mousePos.x) * (x - mousePos.x) +
-              (y - mousePos.y) * (y - mousePos.y)
+              (y - mousePos.y) * (y - mousePos.y),
           );
-        }}   
+        }}
         options={maps => ({
           zoomControl: true,
           fullscreenControl: false,
@@ -174,7 +174,7 @@ const Map = ({
            position: maps.ControlPosition.TOP_LEFT,
           },
           draggable: true,
-          gestureHandling: "greedy",
+          gestureHandling: 'greedy',
           clickableIcons: false,
           styles: mapsTheme.propertyDetailTheme,
          })}

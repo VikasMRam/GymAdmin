@@ -1,11 +1,8 @@
-import React from 'react';
-import { object, func } from 'prop-types';
+import React, { useMemo, useCallback } from 'react';
 import get from 'lodash/get';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import userPropType, { uuidAux as uuidAuxPropType } from 'sly/common/propTypes/user';
-import { query } from 'sly/web/services/api';
-import prefetch from 'sly/web/services/api/prefetch';
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -13,51 +10,63 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+export const useUser = () => {
+  const uuidAux = usePrefetch('getUuidAux', { id: 'me' });
+  const user = usePrefetch('getUser', { id: 'me' });
+  const getCurrentUser = useCallback(() => user.getCurrentRequestInfo().normalized);
+
+  return useMemo(() => {
+    return {
+      uuidAux: uuidAux.requestInfo.normalized,
+      fetchUuidAux: uuidAux.fetch,
+      invalidateUuidAux: uuidAux.invalidate,
+
+      user: user.requestInfo.normalized,
+      fetchUser: user.fetch,
+      invalidateUser: user.invalidate,
+      getCurrentUser,
+
+      info: {
+        uuidAux: uuidAux.requestInfo,
+        user: user.requestInfo,
+      },
+    };
+  }, [uuidAux, user]);
+};
+
 export default function withUser(InnerComponent) {
-  @prefetch('user', 'getUser', req => req({ id: 'me' }))
-  @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
-  @query('updateUser', 'updateUser')
-  class Wrapper extends React.PureComponent {
-    static displayName = `withUser(${getDisplayName(InnerComponent)})`;
+  const Wrapper = ({ status={}, ...props }) => {
+    const { user, uuidAux, fetchUser, invalidateUser, fetchUuidAux, invalidateUuidAux, info, getCurrentUser } = useUser();
 
-    static WrappedComponent = InnerComponent;
+    const userHas = useCallback((fields) => {
+      if (!user) return false;
+      return !fields.some(field => !get(user, field, false));
+    }, [user]);
 
-    static propTypes = {
-      user: userPropType,
-      uuidAux: uuidAuxPropType,
-      status: object,
-    };
+    const innerProps = useMemo(() => ({
+      status: {
+        ...status,
+        uuidAux: {
+          ...info.uuidAux,
+          refetch: fetchUuidAux,
+          invalidate: invalidateUuidAux,
+        },
+        user: {
+          ...info.user,
+          refetch: fetchUser,
+          getCurrentUser,
+          invalidate: invalidateUser,
+        },
+      },
+      user,
+      uuidAux,
+      userHas,
+    }), [user, uuidAux, userHas, ...Object.values(status)]);
 
-    userHas = (fields) => {
-      const { status } = this.props;
-      if (!status.user.normalized) return false;
-      return !fields.some(field => !get(status.user.normalized, field, false));
-    };
+    return <InnerComponent {...props} {...innerProps} />;
+  };
 
-    count = 0;
-
-    render() {
-      const {
-        status,
-        user,
-        uuidAux,
-        ...props
-      } = this.props;
-
-      const innerProps = {
-        ...props,
-
-        user,
-        uuidAux,
-        userHas: this.userHas,
-
-        status,
-      };
-
-      return <InnerComponent {...innerProps} />;
-    }
-  }
-
+  Wrapper.displayName = `withUser(${getDisplayName(InnerComponent)})`;
   Wrapper.WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
   hoistNonReactStatics(Wrapper, InnerComponent);
 

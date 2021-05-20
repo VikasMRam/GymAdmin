@@ -5,13 +5,11 @@ import classes from 'classnames';
 
 import { size } from 'sly/common/components/themes';
 import { withHydration } from 'sly/web/services/partialHydration';
-import BaseHeaderContainer from 'sly/web/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import FooterOrganism from 'sly/web/components/organisms/Footer/communityFooter';
-import BaseModalContainer from 'sly/web/containers/ModalContainer';
 
-const HeaderContainer = withHydration(BaseHeaderContainer);
-const ModalContainer = withHydration(BaseModalContainer, { alwaysHydrate: true });
+const HeaderContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
+const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'), { alwaysHydrate: true });
 
 export const CommunityDetailPageTemplate = styled.main`
   .overlayWrapper {

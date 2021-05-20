@@ -6,13 +6,15 @@ import { ifNotProp, ifProp } from 'styled-tools';
 import { size } from 'sly/common/components/themes';
 import { startingWith, upTo, withBorder, withFlex, withText } from 'sly/common/components/helpers';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
-import { Block, Box, Heading, Label } from 'sly/web/components/atoms';
+import { Label } from 'sly/web/components/atoms';
 import BackLink from 'sly/web/components/molecules/BackLink';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
+import { space, Block, Box, Heading } from 'sly/common/system';
+
 
 export const Top = styled.div`
   grid-area: top;
-  padding: ${size('spacing.xLarge')} 0;
+  padding: ${space('l')} 0;
 `;
 
 const LeftBody = styled(Block)`
@@ -33,10 +35,9 @@ export const Left = styled(({ children, heading, actions, ...props }) => (
   <Box {...props}>
     {children}
     <LeftBody>
-      <LeftHeading lineHeight="1.15">
+      <LeftHeading font="title-l">
         {heading}
       </LeftHeading>
-
       {actions}
     </LeftBody>
   </Box>
@@ -60,22 +61,22 @@ Left.defaultProps = {
 export const LeftNotifications = styled(Block)``;
 
 LeftNotifications.defaultProps = {
-  margin: '-xLarge',
-  borderRadius: 'small',
+  margin: '-l',
+  borderRadius: 'xxs',
   snap: 'bottom',
   overflow: 'hidden',
   marginBottom: 0,
-  paddingBottom: 'xLarge',
+  paddingBottom: 'l',
 };
 
 export const Right = styled(Block)`
   grid-area: right;
 `;
 
-export const Section = styled(Box)``;
+export const Section = Box;
 
 Section.defaultProps = {
-  background: 'white',
+  background: 'white !important',
   padding: '0',
   snap: 'top',
 };
@@ -83,7 +84,7 @@ Section.defaultProps = {
 export const SectionHeader = ({ actions, children, className, ...props }) => (
   <Block
     className={className}
-    padding={['large', 'xLarge']}
+    padding="m l"
     borderBottom="regular"
     display="flex"
     alignItems="center"
@@ -109,21 +110,15 @@ export const Warning = styled(Block)``;
 Warning.defaultProps = {
   background: 'yellow.lighter-60',
   textAlign: 'center',
-  padding: 'large',
+  padding: 'm',
 };
 
-  // ${withBorder({ borderBottom: 'regular' })}
-    // ${withBorder({ borderBottom: 0 })};
-export const SummarySectionHeader = styled(Box)`
-
-  ${startingWith('laptop', css`
-    ${withText({ size: 'body' })};
-  `)}
-`;
-
+// ${withBorder({ borderBottom: 'regular' })}
+// ${withBorder({ borderBottom: 0 })};
+export const SummarySectionHeader = Box;
 SummarySectionHeader.defaultProps = {
   weight: 'medium',
-  padding: ['large', 'xLarge'],
+  padding: 'm l',
   snap: 'vertical',
   size: 'subtitle',
   lineHeight: '40px',
@@ -137,7 +132,7 @@ export const SummarySectionBody = styled(Section)`
 `;
 
 SummarySectionBody.defaultProps = {
-  padding: 'large xLarge xLarge',
+  padding: 'm l l',
   snap: 'top',
 };
 
@@ -160,13 +155,14 @@ export const SummarySection = styled(({ children, startingWith, ...props }) => (
   `)}
 `;
 
+
 export const SummaryRow = styled(({ label, children, collapsible, ...props }) => {
   const BlockComponent = collapsible
     ? CollapsibleBlock
     : Block;
   return (
     <BlockComponent size="caption" minHeight="tiny" {...props}>
-      <Label palette="grey">{label}</Label>
+      <Label color="grey">{label}</Label>
       <Block>
         {children}
       </Block>
@@ -192,19 +188,19 @@ SummaryRow.propTypes = {
 };
 
 SummaryRow.defaultProps = {
-  marginBottom: 'large',
+  marginBottom: 'm',
 };
 
 export const SectionForm = ({ heading, children }) => (
   <Block
-    padding="xLarge"
+    padding="l"
     borderBottom="regular"
   >
     {heading && (
       <Block
         level="body"
         weight="medium"
-        pad="large"
+        pad="m"
       >
         {heading}
       </Block>
@@ -222,7 +218,7 @@ SectionForm.propTypes = {
 
 export const SectionActions = props => (
   <Block
-    padding="xLarge"
+    padding="l"
     align="right"
     borderPalette="slate"
     borderVariation="lighter-90"
@@ -232,15 +228,15 @@ export const SectionActions = props => (
 
 export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
   display: block;
-  padding: 0 ${size('spacing.large')};
+  padding: 0 ${space('m')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0 ${size('spacing.xLarge')} ${size('spacing.xLarge')};
+    padding: 0 ${space('l')} ${space('l')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;
-    column-gap: ${size('spacing.xLarge')};
+    column-gap: ${space('l')};
     grid-template-columns: ${size('layout.col4')} minmax(0, 1fr);
     grid-template-rows: max-content max-content auto;
     grid-template-areas:
@@ -277,5 +273,4 @@ Loading.propTypes = {
     event: object,
   }),
 };
-
 

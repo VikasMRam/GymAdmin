@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { size, palette } from 'sly/common/components/themes';
-import { upTo } from 'sly/common/components/helpers';
-import { Button, Icon, Block } from 'sly/common/components/atoms';
+import { Block, Button, ToggleButton, space, sx, color } from 'sly/common/system';
+import { Chevron } from 'sly/common/icons';
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,53 +14,68 @@ const Wrapper = styled.div`
 
 const ChevronLink = styled(({ flip, ...props }) => (
   <Button
-    ghost
-    kind="label"
-    palette="slate"
-    borderPalette="slate"
+    variant="neutral"
+    pallete="slate"
+    onClick={() => window.scrollTo(0, 0)}
     {...props}
   >
-    <Icon
-      rotate={flip ? 2 : 0}
-      icon="chevron"
-      size="caption"
-      palette="slate"
+    <Chevron
+      sx={{
+        display: 'block',
+        margin: 'auto',
+      }}
+      rotation={flip ? 270 : 90}
+      size="s"
+      color="slate"
     />
   </Button>
 ))`
-  margin-right: ${size('spacing.large')};
-  width: 32px;
-  height: 32px;
-  padding: 0;
+  margin-right: ${space('m')};
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
   line-height: normal;
-  ${ifProp('collapsedInMobile', upTo('tablet', 'margin-right: 0!important;'))}
+  ${ifProp('collapsedInMobile', sx({
+    marginRight: '0',
+    '@tablet': {
+      marginRight: 'm',
+    },
+  }))}
 `;
 
-const PageLink = styled(Button)`
-  margin-right: ${size('spacing.large')};
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  line-height: normal;
-  font-weight: normal;
+const PageLink = styled(ToggleButton)`
+  margin-right: ${space('m')};
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
   &:last-of-type {
     margin-right: 0;
   }
-  ${ifProp('collapsedInMobile', upTo('tablet', 'display: none!important;'))}
+  ${ifProp('collapsedInMobile', sx({
+    display: 'none',
+    '@tablet': {
+      display: 'block',
+    },
+  }))}
 `;
 
 const BreakView = styled(Block)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: ${size('element.regular')};
-  color: ${palette('slate', 'base')};
-  border-color: ${palette('white', 'base')};
+  height: ${space('xs')};
+  color: ${color('slate.base')};
+  border-color: ${color('white.base')};
   cursor: default;
   width: 32px;
   height: 32px;
-  margin-right: ${size('spacing.large')};
-  ${ifProp('collapsedInMobile', upTo('tablet', 'display: none!important;'))}
+  margin-right: ${space('spacing.m')};
+  ${ifProp('collapsedInMobile', sx({
+    display: 'none',
+    '@tablet': {
+      display: 'block',
+    },
+  }))}
 `;
 
 export default class Pagination extends Component {
@@ -102,7 +116,7 @@ export default class Pagination extends Component {
           to={basePath}
           flip
           collapsedInMobile={collapsedInMobile}
-          startingWithTablet={current === 0 ? {
+          sx$tablet={current === 0 ? {
             display: 'none!important',
           } : null}
         />
@@ -124,7 +138,7 @@ export default class Pagination extends Component {
         <ChevronLink
           to={basePath}
           collapsedInMobile={collapsedInMobile}
-          startingWithTablet={{
+          sx$tablet={{
             display: 'none!important',
           }}
         />
@@ -158,17 +172,14 @@ export default class Pagination extends Component {
 
   pageButton(index) {
     const {
-      current, basePath, pageParam, palette: paletteProp, collapsedInMobile,
+      current, basePath, pageParam, collapsedInMobile,
     } = this.props;
     const sel = current === index;
     let delim = '?';
     if (basePath && basePath.indexOf(delim) > -1) {
       delim = '&';
     }
-    const palette = sel
-      ? paletteProp
-      : 'slate';
-    const borderPalette = sel ? paletteProp : 'slate';
+
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
 
@@ -176,12 +187,10 @@ export default class Pagination extends Component {
       <PageLink
         kind="label"
         key={index}
-        ghost
         to={pageHref}
-        palette={palette}
-        borderPalette={borderPalette}
-        selected={sel}
+        onChange={() => window.scrollTo(0, 0)}
         collapsedInMobile={collapsedInMobile}
+        value={sel}
       >
         {index + 1}
       </PageLink>
@@ -239,7 +248,7 @@ export default class Pagination extends Component {
         { this.pagination() }
         {collapsedInMobile && (
           <Block
-            startingWithTablet={{
+            sx$tablet={{
               display: 'none!important',
             }}
             css={{

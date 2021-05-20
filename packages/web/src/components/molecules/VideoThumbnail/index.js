@@ -45,7 +45,7 @@ export default class VideoThumbnail extends Component {
   };
 
   render() {
-    const { src, path, onClick, aspectRatio } = this.props;
+    const { src, path, onClick, aspectRatio, ...props } = this.props;
 
     return (
       <Wrapper>
@@ -59,7 +59,7 @@ export default class VideoThumbnail extends Component {
             Watch Video
           </Block>
         </CenterContent>
-        <StyledImage src={src} path={path} aspectRatio={aspectRatio} loading="auto" />
+        <StyledImage src={src} path={path} aspectRatio={aspectRatio} {...props} />
       </Wrapper>
     );
   }

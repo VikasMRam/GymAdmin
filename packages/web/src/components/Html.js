@@ -7,7 +7,7 @@ import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl, gMapsA
 import {iconToComponent } from 'sly/common/system/Icon';
 
 const Html = ({
-  linkElements, styleElements, scriptElements, icons, state, content,
+  linkElements, styleElements, scriptElements, iconsContext, state, content,
 }) => {
   const helmet = Helmet.renderStatic();
   const htmlAttrs = helmet.htmlAttributes.toComponent();
@@ -31,7 +31,7 @@ const Html = ({
         <link rel="preload" href={`${publicPath}/fonts/TiemposHeadline-Medium.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-bold-webfont.woff2`} as="font" crossOrigin="anonymous" />
         {linkElements}
         {styleElements}
         {helmet.link.toComponent()}
@@ -40,7 +40,7 @@ const Html = ({
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
-        {iconToComponent(icons)}
+        {iconToComponent(iconsContext)}
         {state.trim().length > 0 && <script type="text/javascript" dangerouslySetInnerHTML={{ __html: state }} />}
         {scriptElements}
         {/* eslint-disable */}
@@ -80,6 +80,7 @@ Html.propTypes = {
   scriptElements: PropTypes.array.isRequired,
   state: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  iconsContext: PropTypes.object,
 };
 
 export default Html;

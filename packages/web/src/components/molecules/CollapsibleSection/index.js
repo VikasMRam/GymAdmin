@@ -4,13 +4,11 @@ import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key, palette } from 'sly/common/components/themes';
-import { Icon, Heading } from 'sly/common/components/atoms';
+import { Icon } from 'sly/common/components/atoms';
 import { weight as weightPropType } from 'sly/common/propTypes/weight';
-import Block from 'sly/common/components/atoms/Block';
-import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
+import { Heading, Block, space } from 'sly/common/system';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 
-const noop = () => {};
 
 const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};
@@ -36,18 +34,10 @@ ${ifProp('collapsed', css`
 }
 `;
 
-const getHeadingSize = (size) => {
-  switch (size) {
-    case 'small':
-      return 'body';
-    default:
-      return 'subtitle';
-  }
-};
 
-export const MainSection = styled.div`
-  padding: 0 ${size('spacing.xLarge')};
-  padding-bottom: ${size('spacing.xLarge')};
+export const MainSection = styled(Block)`
+  padding: 0 ${space('l')};
+  padding-bottom: ${space('l')};
   ${ifProp('collapsed', css`
     padding-bottom: 0;
   `)};
@@ -68,9 +58,9 @@ const CollapsibleSection = ({
   borderless,
   showIf,
   forMobileOnly,
+  headingFont,
   ...props
 }) => {
-  const breakpoint = useBreakpoint();
   const [collapsed, setCollapsed] = useState(collapsedDefault);
   const [measureRef, { height: maxHeight }] = useDimensions();
 
@@ -78,12 +68,6 @@ const CollapsibleSection = ({
     setCollapsed(!collapsed);
   }, [collapsed]);
 
-  const showResizeControls = !forMobileOnly
-    || (forMobileOnly && breakpoint.isMobile());
-
-  const onPointerDown = showResizeControls
-    ? toggle
-    : noop;
 
   return showIf && (
     <Section
@@ -95,11 +79,11 @@ const CollapsibleSection = ({
       className={className}
     >
       <Block
-        onClick={onPointerDown}
+        onClick={toggle}
         display="grid"
         justifyContent="space-between"
         gridTemplateColumns="auto auto"
-        padding={`xLarge ${borderless ? 0 : ''}`}
+        padding="m l"
         css={css({
           ':hover': {
             cursor: 'pointer',
@@ -107,17 +91,16 @@ const CollapsibleSection = ({
         })}
       >
         <Heading
-          weight={headingWeight}
-          level="title"
-          size={getHeadingSize(size)}
-          pad={0}
-          clamped
+          font={headingFont}
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
         >
           {title}
         </Heading>
-        {showResizeControls && (
-          <Icon rotate={1} icon="chevron" palette="slate" flip={!collapsed} />
-        )}
+
+        <Icon rotate={1} icon="chevron" palette="slate" flip={!collapsed} />
+
       </Block>
       <ContentWrapper maxHeight={maxHeight} collapsed={collapsed} {...props}>
         <div ref={measureRef}>
@@ -142,6 +125,7 @@ CollapsibleSection.propTypes = {
   id: string,
   forMobileOnly: bool,
   showIf: bool,
+  headingFont: string,
 };
 
 CollapsibleSection.defaultProps = {
@@ -150,6 +134,7 @@ CollapsibleSection.defaultProps = {
   headingWeight: 'medium',
   borderless: false,
   showIf: true,
+  headingFont: 'title-s-azo',
 };
 
 export default CollapsibleSection;

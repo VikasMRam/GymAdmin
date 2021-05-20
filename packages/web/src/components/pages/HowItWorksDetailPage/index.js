@@ -104,7 +104,7 @@ const Header = ({ heroImageUrl, heading, subheading }) => (
   <>
     <HeaderContainer />
     <HeroWrapper>
-      <HeroBackgroundImage path={heroImageUrl} loading="eager" alt="A Home To Love" aspectRatio={false} />
+      <HeroBackgroundImage path={heroImageUrl} loading="lazy" alt="A Home To Love" aspectRatio={false} />
       <HeroTextWrapper>
         <FixedWidthContainer>
           <HeroHeading level="hero" size="hero" palette="white">

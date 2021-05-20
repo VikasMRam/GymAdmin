@@ -1,7 +1,7 @@
 import React, { forwardRef, useCallback } from 'react';
 import { bool, func, string } from 'prop-types';
 
-import Block from 'sly/common/system/Block';
+import Button from 'sly/common/system/Button';
 
 const buttonBaseStyles = {
   border: 'box',
@@ -10,6 +10,7 @@ const buttonBaseStyles = {
   padding: 'm',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
+  cursor: 'pointer',
   textOverflow: 'ellipsis',
   ':focus': {
     outline: 'none',
@@ -55,14 +56,13 @@ const ToggleButton = forwardRef((props, ref) => {
   );
 
   return (
-    <Block
+    <Button
       ref={ref}
-      as="button"
       border="box"
       padding="m"
       height="element-l"
       variant="neutral"
-      onClick={onChange}
+      onClick={props.to && !onChange ? null : onChange}
       sx={getStyles(props)}
       {...props}
     />
@@ -74,6 +74,7 @@ ToggleButton.propTypes = {
   value: bool,
   disabled: bool,
   onChange: func,
+  to: string,
 };
 
 ToggleButton.defaultProps = {

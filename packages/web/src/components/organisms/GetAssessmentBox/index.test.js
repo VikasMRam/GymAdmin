@@ -14,8 +14,7 @@ describe('GetAssessmentBox', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Icon')).toHaveLength(2);
-    expect(wrapper.find('Heading')).toHaveLength(1);
+    expect(wrapper.find('Block').text('Need help'));
     expect(wrapper.find('Button')).toHaveLength(1);
   });
 });

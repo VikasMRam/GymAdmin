@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Link, Button } from 'sly/common/components/atoms';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import CommunityAgentSectionContainer from 'sly/web/containers/CommunityAgentSectionContainer';
 import Grid from 'sly/common/components/atoms/Grid';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { MPLACE_RESOURCE_ARTICLE, MPLACE_RESOURCE_OFFER } from 'sly/web/constants/homeBase';
@@ -14,6 +13,7 @@ import MarketplaceResourceOfferTile from 'sly/web/components/organisms/homeBase/
 import ChecklistTile from 'sly/web/components/organisms/homeBase/ChecklistTile';
 import WelcomeBanner from 'sly/web/components/organisms/homeBase/WelcomeBanner';
 import { getChecklistItems } from 'sly/web/services/helpers/homeBase';
+import CommunityAgentSection from 'sly/web/components/molecules/CommunityAgentSection';
 
 
 const StyledLink = styled(Link)`
@@ -112,7 +112,7 @@ const FamilyHomePage = ({
           <Grid gap="large" flow="row" height="fit-content">
             {agent &&
             <HeadingBoxSection hasNoBodyPadding maxHeight="100%" heading={agentSectionHeading} >
-              <CommunityAgentSectionContainer layout="homeBase" agent={agent} pad="xLarge" />
+              <CommunityAgentSection layout="homeBase" agent={agent} pad="xLarge" />
               <Button onClick={openAskAgentQuestionModal}> Ask {agentDisplayName} a question</Button>
             </HeadingBoxSection>
             }

@@ -7,10 +7,7 @@ import React from 'react';
 import serialize from 'serialize-javascript';
 import { ServerStyleSheet } from 'styled-components';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
-import { cache } from 'emotion';
-import { CacheProvider } from '@emotion/core';
 import { renderStylesToString } from 'emotion-server';
 import nodeFetch from 'node-fetch';
 import builder from 'xmlbuilder';
@@ -25,6 +22,7 @@ import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConf
 import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { createStore } from 'sly/web/services/api/context';
 
 const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
@@ -36,7 +34,7 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  initialState, content, sheet, extractor, icons,
+  initialState, apiState, content, sheet, extractor, iconsContext,
 }) => {
   const linkElements = (extractor && extractor.getLinkElements()) || [];
   const scriptElements = (extractor && extractor.getScriptElements()) || [];
@@ -44,6 +42,7 @@ const renderHtml = ({
 
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
+    ${apiState ? `window.__API_STATE__ = ${serialize(apiState)};` : ''}
   `;
 
   const props = {
@@ -52,7 +51,7 @@ const renderHtml = ({
     linkElements,
     styleElements,
     scriptElements,
-    icons,
+    iconsContext,
   };
   const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
@@ -105,9 +104,9 @@ app.disable('x-powered-by');
 if (isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'public')));
   app.use(clientDevMiddleware());
-} else {
-  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
+
+app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 
 app.use(clientConfigsMiddleware());
 
@@ -126,8 +125,6 @@ app.use((req, res, next) => {
 
 // render
 app.use(async (req, res, next) => {
-  const store = configureStore({ experiments: {} });
-
   const {
     extractor,
     ClientApp,
@@ -136,17 +133,22 @@ app.use(async (req, res, next) => {
   try {
     const sheet = new ServerStyleSheet();
     const context = {};
-    const apiContext = { promises: [] };
-    const icons = {};
+    const apiContext = {
+      store: createStore({}),
+      promises: [],
+      skipApiCalls: false,
+    };
+    const iconsContext = {};
+    const store = configureStore({ experiments: {} }, { apiStore: apiContext.store });
 
     const app = sheet.collectStyles(extractor.collectChunks((
-      <CacheProvider value={cache}>
-        <Provider store={store}>
-          <StaticRouter context={context} location={req.url}>
-            <ClientApp apiContext={apiContext} icons={icons} />
-          </StaticRouter>
-        </Provider>
-      </CacheProvider>
+      <StaticRouter context={context} location={req.url}>
+        <ClientApp
+          apiContext={apiContext}
+          iconsContext={iconsContext}
+          reduxStore={store}
+        />
+      </StaticRouter>
     )));
 
     const result = await renderAndPrefetch(app, apiContext);
@@ -160,6 +162,7 @@ app.use(async (req, res, next) => {
       res.redirect(301, context.url);
     } else {
       const initialState = store.getState();
+      const apiState = apiContext.store.getState();
       res.header('Cache-Control', [
         'max-age=0, private, must-revalidate',
         'no-cache="set-cookie"',
@@ -167,10 +170,11 @@ app.use(async (req, res, next) => {
 
       res.send(renderHtml({
         initialState,
+        apiState,
         content,
         sheet,
         extractor,
-        icons,
+        iconsContext,
       }));
     }
   } catch (error) {

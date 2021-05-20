@@ -107,7 +107,7 @@ const CareTypeGuidePage = ({
 
   const title = searchParams.tocg === 'assisted-living-guide' ? 'Assisted Living City Guides ' : 'Memory Care Guides ';
   const description = searchParams.tocg === 'assisted-living-guide' ?
-    'Learn everything about assisted living facilities in the United States. Understand cost, compare retirement living communities and options, and find city specific resources for senior residents.':
+    'Learn everything about assisted living facilities in the United States. Understand cost, compare retirement living communities and options, and find city specific resources for senior residents.' :
     'Learn everything about memory care facilities in the United States. From Alzheimer’s disease to dementia care, use these guides to understand cost, compare retirement living communities and options, and find city specific resources for senior residents.';
   const canonicalUrl = `${host}/${searchParams.tocg}`;
   const intro = searchParams.tocg === 'assisted-living-guide' ?
@@ -122,7 +122,7 @@ const CareTypeGuidePage = ({
           <meta name="description" content={description} />
           <link rel="canonical" href={canonicalUrl} />
         </Helmet>
-        <BreadCrumb pad="large" items={getBreadCrumbsForGuides(searchParams)} />
+        <BreadCrumb pad="m" items={getBreadCrumbsForGuides(searchParams)} />
         {guideList &&
           <Wrapper>
             <Paragraph>
