@@ -16,6 +16,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
   <Button
     variant="neutral"
     pallete="slate"
+    onClick={() => window.scrollTo(0, 0)}
     {...props}
   >
     <Chevron
@@ -187,6 +188,7 @@ export default class Pagination extends Component {
         kind="label"
         key={index}
         to={pageHref}
+        onChange={() => window.scrollTo(0, 0)}
         collapsedInMobile={collapsedInMobile}
         value={sel}
       >
