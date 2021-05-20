@@ -1,16 +1,15 @@
 import {
   Breakpoint,
   LANDSCAPE,
-  PORTRAIT,
   MOBILE,
   TABLET,
   LAPTOP,
 } from './breakpoint';
 
 const breakpoints = {
-  [MOBILE]           : 0,
-  [TABLET]           : 728,
-  [LAPTOP]           : 1080,
+  [MOBILE]: 0,
+  [TABLET]: 728,
+  [LAPTOP]: 1080,
 };
 
 const order = [
@@ -19,11 +18,9 @@ const order = [
   LAPTOP,
 ];
 
-const indexes = Object.fromEntries(Object.entries(order).map(([k, v]) => [v, k]));
-
 describe('breakpoint', () => {
   it('should detect upTo and atLeast breakpoints', () => {
-    Object.entries(breakpoints).forEach(([breakpoint, size], i) => {
+    Object.entries(breakpoints).forEach(([, size], i) => {
       const currentBreakpoint = order[i];
       const current = new Breakpoint(size, size * 1.5);
 
@@ -51,7 +48,6 @@ describe('breakpoint', () => {
         expect(current.upTo(nextBreakpoint)).toBe(true);
         expect(next.upTo(currentBreakpoint)).toBe(false);
       }
-      //expect(current.atLeast(previousBreakpoint)).toBe(false);
     });
   });
 

@@ -55,7 +55,7 @@ export class Breakpoint {
   upToTablet = () => this.upTo(TABLET);
   upToLaptop = () => this.upTo(LAPTOP);
 
-  is(breakpoint, orientation=PORTRAIT) {
+  is(breakpoint, orientation = PORTRAIT) {
     if (!breakpoints[breakpoint] && breakpoint !== MOBILE) {
       throw new Error(`no breakpoint ${breakpoint}`);
     }
@@ -103,13 +103,6 @@ function getDisplayName(WrappedComponent) {
 }
 
 const BreakpointContext = React.createContext(null);
-
-const defaultBreakpoint = ((breakpoint=null) => () => {
-  return breakpoint || (breakpoint = isBrowser
-    ? new Breakpoint(window.innerWidth, window.innerHeight)
-    : undefined
-  );
-})();
 
 export const BreakpointProvider = ({ children }) => {
   const defaultBreakpoint = useMemo(() => isBrowser
