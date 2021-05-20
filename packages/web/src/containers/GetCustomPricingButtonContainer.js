@@ -23,7 +23,7 @@ export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPri
           Pricing Requested
         </IconButton>
       ) : (
-        <Button data-buttonid="GetCommunityPricingAndAvailability" ghost={ghost} onClick={getCustomPricing} {...props}>
+        <Button ghost={ghost} onClick={getCustomPricing} {...props}>
           Get Pricing and Availability
         </Button>
       )}

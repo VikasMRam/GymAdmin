@@ -74,6 +74,8 @@ const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.
 const clientWebEntryPath = path.join(sourcePath, 'client-web.js');
 const clientNodeEntryPath = path.join(sourcePath, 'client-node.js');
 const externalEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
+const clientCommunityDetailWebEntryPath = path.join(sourcePath, 'client-community-detail-web.js');
+const clientCommunityDetailNodeEntryPath = path.join(sourcePath, 'client-community-detail-node.js');
 
 const name = name => (context, { merge }) =>
   merge({
@@ -267,30 +269,6 @@ const client = (target, entries) => {
       }),
     ]),
 
-    when(!isDev && isWeb, [
-      optimization({
-        runtimeChunk: 'single',
-        splitChunks: {
-          chunks: 'all',
-          maxInitialRequests: Infinity,
-          minSize: 0,
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name(module) {
-                // get the name. E.g. node_modules/packageName/not/this/part.js
-                // or node_modules/packageName
-                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-                // npm package names are URL-safe, but some servers don't like @ symbols
-                return `npm.${packageName.replace('@', '')}`;
-              },
-            },
-          },
-        },
-      }),
-    ]),
-
     // eslint-disable-next-line no-prototype-builtins
     when(entries.hasOwnProperty('external'), [externalWidget]),
 
@@ -308,10 +286,12 @@ const client = (target, entries) => {
 
 const webpackConfig = [
   client('public', {
+    'community-details': clientCommunityDetailWebEntryPath,
     main: clientWebEntryPath,
     external: externalEntryPath,
   }),
   client('node', {
+    'community-details': clientCommunityDetailNodeEntryPath,
     main: clientNodeEntryPath,
   }),
 ];

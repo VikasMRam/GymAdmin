@@ -61,6 +61,7 @@ export const withAlign = ({
 
   // when flex-direction is row - align-items vertical, justify-content horizontal
   // when flex-direction is column - align-items horizontal, justify-content vertical
+  // justifySelf is not present in react native; so don't apply that for mobiles
   if (align) {
     styles = {
       ...styles,

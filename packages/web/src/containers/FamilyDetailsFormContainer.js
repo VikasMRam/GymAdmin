@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { withRouter } from 'react-router';
 import { object, func, arrayOf } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
@@ -10,8 +9,7 @@ import { required, createValidator, email, usPhone, dependentRequired } from 'sl
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
-import { query, getRelationship, prefetch } from 'sly/web/services/api';
-import { withProps } from 'sly/web/services/helpers/hocs';
+import { query, getRelationship } from 'sly/web/services/api';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { validateAM } from 'sly/web/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/common/services/helpers/forms';
@@ -30,17 +28,13 @@ const ReduxForm = reduxForm({
   validate,
 })(FamilyDetailsForm);
 
-@withRouter
-@prefetch('client', 'getClient', (req, { match }) => req({
-  id: match.params.id,
-}))
 @query('updateClient', 'updateClient')
+
 @query('updateUuidAux', 'updateUuidAux')
+
 @connect((state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
   formData: selectFormData(state, formName),
-}))
-@withProps(({ status }) => ({
-  uuidAux: status.client.getRelationship(status.client.result, 'uuidAux'),
 }))
 
 export default class FamilyDetailsFormContainer extends Component {
@@ -52,6 +46,7 @@ export default class FamilyDetailsFormContainer extends Component {
     notifyError: func.isRequired,
     client: clientPropType.isRequired,
     users: arrayOf(userPropType),
+    rawClient: object,
     uuidAux: object,
     formData: object,
     status: object,
@@ -59,7 +54,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, status, refetchClient, notifyInfo, notifyError, uuidAux,
+      client, updateClient, refetchClient, rawClient, notifyInfo, notifyError, uuidAux,
     } = this.props;
     const { id } = client;
     trimFormData(data);
@@ -95,7 +90,7 @@ export default class FamilyDetailsFormContainer extends Component {
         state,
       };
     }
-    let newClient = immutable.wrap(pick(status.client.result, ['id', 'type', 'attributes.clientInfo']));
+    let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
     if (name) {
       newClient.set('attributes.clientInfo.name', name);
     }

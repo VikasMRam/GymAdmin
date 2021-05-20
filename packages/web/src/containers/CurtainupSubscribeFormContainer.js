@@ -9,7 +9,7 @@ import { query, prefetch } from 'sly/web/services/api';
 import { CURTIANUP_SUBSCRIBE } from 'sly/web/services/api/constants';
 import matchPropType from 'sly/common/propTypes/match';
 import uuidActionPropType from 'sly/common/propTypes/uuidAction';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import { createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import CurtainupSubscribeForm from 'sly/web/components/organisms/CurtainupSubscribeForm';
 

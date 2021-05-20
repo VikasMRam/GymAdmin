@@ -21,12 +21,11 @@ if (!muteReduxLogger && isBrowser) {
   optionalMiddleware.push(require('redux-logger').createLogger());
 }
 
-export default function configure (initialState, services = {}) {
+export default function (initialState, services = {}) {
   const sagaMiddleware = createSagaMiddleware();
 
   const middlewares = [
-    //middleware,
-    thunkMiddleware, sagaThunkMiddleware, sagaMiddleware, ...optionalMiddleware,
+    middleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware, ...optionalMiddleware,
   ];
 
   const enhancers = [

@@ -1,5 +1,5 @@
 import { configure } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from 'enzyme-adapter-react-16';
 
 process.env = Object.assign(process.env, {
   SLY_ENV: 'test',

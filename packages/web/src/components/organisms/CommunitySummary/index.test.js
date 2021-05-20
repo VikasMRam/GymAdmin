@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
@@ -13,7 +12,7 @@ const searchParams = {
   toc: 'assisted-living',
 };
 
-const wrap = (props = {}) => mount(<BrowserRouter><CommunitySummary {...props} searchParams={searchParams} /></BrowserRouter>);
+const wrap = (props = {}) => shallow(<CommunitySummary {...props} searchParams={searchParams} />);
 
 const getCommunity = (state, tag) => {
   const community = { ...RhodaGoldmanPlaza };
@@ -58,7 +57,7 @@ describe('CommunitySummary', () => {
       isAdmin: true,
     });
     verify(wrapper);
-    expect(wrapper.find('Heading[level="hero"] Link')).toHaveLength(2);
+    expect(wrapper.find('Heading[level="hero"] Link')).toHaveLength(1);
   });
 
   it('Should render the care types tags for state Delaware', () => {

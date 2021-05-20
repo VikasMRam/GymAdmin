@@ -7,7 +7,7 @@ import { assetPath } from 'sly/web/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
 import { hcaAdEnabled } from 'sly/web/services/helpers/tileAds';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import AdTile from 'sly/web/components/organisms/AdTile';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Modal, { HeaderWithClose, PaddedHeaderWithCloseBody } from 'sly/web/components/atoms/NewModal';

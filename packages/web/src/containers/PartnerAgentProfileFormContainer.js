@@ -13,7 +13,7 @@ import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import { ORGANIZATION_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 
 const validate = createValidator({
   name: [required],

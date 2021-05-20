@@ -11,9 +11,10 @@
     "paths": {
       "sly/web/*": ["./packages/web/src/*"],
       "sly/common/*": ["./packages/common/src/*"],
+      "sly/mobile/*": ["./packages/mobile/src/*"],
       "sly/storybook/*": ["./packages/storybook/src/*"]
     }
   },
   "include": ["packages/*/src"],
-  "exclude": ["node_modules", "dist", "packages/*/node_modules", "packages/*/dist"]
+  "exclude": ["node_modules", "dist", "packages/mobile", "packages/*/node_modules"]
 }

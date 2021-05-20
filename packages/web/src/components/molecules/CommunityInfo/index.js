@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { bool, string, object, oneOf, number } from 'prop-types';
+import { css } from 'styled-components';
 
+import { upTo, startingWith } from 'sly/common/components/helpers';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Heading, Link, Block, Span } from 'sly/common/system';
+import { Block, Heading, Link } from 'sly/common/components/atoms';
+import IconItem from 'sly/web/components/molecules/IconItem';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { CommunitySizeLarge, CommunitySizeMedium, CommunitySizeSmall, Family } from 'sly/common/icons';
-
 
 const communityDefaultIcon = {
-  'up to 20 Beds': <CommunitySizeSmall mr="s" />,
-  '20 - 51 Beds': <CommunitySizeMedium mr="s" />,
-  '51 +': <CommunitySizeLarge mr="s" />,
+  'up to 20 Beds': 'community-size-small',
+  '20 - 51 Beds': 'community-size-medium',
+  '51 +': 'community-size-large',
 };
 
 const validSizes = Object.keys(communityDefaultIcon);
@@ -27,7 +28,7 @@ export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
     inverted: bool,
-    color: palettePropType,
+    palette: palettePropType,
     className: string,
     headerIsLink: bool,
     event: object,
@@ -41,17 +42,21 @@ export default class CommunityInfo extends Component {
     display: 'flex',
     height: '100%',
     justifyContent: 'space-between',
-    flexDirection: 'column',
-    priceTextSize: 'title-xs-azo',
+    direction: 'column',
+    priceTextSize: 'subtitle',
     type: 'list',
   };
 
   render() {
     const {
-      community, inverted, color, headerIsLink, event, swapRatingPrice, type, index, ...props
+      community, inverted, palette, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
-    const { priceTextSize } = this.props;
-    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate } = community;
+    let { priceTextSize } = this.props;
+    const { propInfo = {}, propRatings, communitySize } = community;
+
+    if (type === 'map') {
+      priceTextSize = 'body';
+    }
 
     const { reviewsValue, numReviews } = propRatings || community;
     const typeCare = community.care || community.typeCare || propInfo.typeCare;
@@ -62,46 +67,42 @@ export default class CommunityInfo extends Component {
 
     if (typeCare && typeCare.length) {
       livingTypeComponent = (
-
-
-        <Span
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          display="flex"
-          width="100%"
-          sx={type === 'map' ? {
-            '*:first-child': {
-              display: 'none',
-              '@tablet': {
-                display: 'unset',
-              },
-              '@laptop': {
-                display: 'none',
-              },
-            },
-          } : null}
-          font="body-s"
-          color={inverted ? 'white' : 'slate'}
-          pad="xxs"
-          title={typeCare.join('.')}
+        <IconItem
+          icon={placeholder}
+          iconSize="body"
+          iconPalette={inverted ? 'white' : 'slate'}
+          palette={inverted ? 'white' : 'slate'}
+          size="caption"
+          pad="small"
+          type={type}
+          title={typeCare.join(',')}
+          clamped
+          css={type === 'map' ? css`
+            ${upTo('tablet', `
+              *:first-child {
+                display: none;
+              }
+            `)}
+            ${startingWith('laptop', css`
+              *:first-child {
+                display: none;
+              }
+            `)}
+          ` : null}
         >
-          {placeholder}{typeCare.join(' . ')}
-        </Span>
-
-
+          {typeCare.join(' · ')}
+        </IconItem>
       );
     }
 
     const headerContent  = (
       <Heading
-        font={type === 'map' ? 'title-xs-azo' : 'title-m'}
-        pad={type === 'map' ? 'xxs' : 'xs'}
+        level="subtitle"
+        size={type === 'map' ? 'body' : 'subtitle'}
+        pad={type === 'map' ? 'small' : 'regular'}
         title={community.name}
-        color={inverted ? 'white' : 'slate'}
-        whiteSpace="nowrap"
-        overflow="hidden"
-        textOverflow="ellipsis"
+        palette={inverted ? 'white' : 'slate'}
+        clamped
       >
         {index && `${index}. `}
         {community.name}
@@ -121,61 +122,60 @@ export default class CommunityInfo extends Component {
           {header}
           {livingTypeComponent}
           {capacity !== '' &&
-          <Span
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            display="flex"
-            maxWidth="100%"
-            sx={type === 'map' ? {
-              '*:first-child': {
-                display: 'none',
-              '@tablet': {
-                display: 'unset',
-                },
-              '@laptop': {
-                display: 'none',
-                },
-              },
-            } : null}
-            font="body-s"
-            color={inverted ? 'white' : 'slate'}
-            pad="xxs"
-            title={typeCare ? typeCare.join('.') : null}
+          <IconItem
+            icon="family"
+            iconPalette={inverted ? 'white' : 'slate'}
+            iconSize="body"
+            title={capacity}
+            palette={inverted ? 'white' : 'slate'}
+            size="caption"
+            pad="small"
+            clamped
+            css={type === 'map' ? css`
+              ${upTo('tablet', `
+                *:first-child {
+                  display: none;
+                }
+              `)}
+              ${startingWith('laptop', css`
+                *:first-child {
+                  display: none;
+                }
+              `)}
+            ` : null}
           >
-            <Family mr="s" /> {`${capacity} resident capacity`}
-          </Span>
-
+            {`${capacity} resident capacity`}
+          </IconItem>
           }
         </div>
         <Block
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          flexDirection={swapRatingPrice ? 'row-reverse' : undefined}
+          direction={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
             seedId={community.id}
             rating={reviewsValue}
             numReviews={numReviews}
-            color={inverted ? 'white' : 'primary'}
-            font={type === 'map' ? 'body-xs' : null}
-            marginRight="s"
+            palette={inverted ? 'white' : 'primary'}
+            size="caption"
+            marginRight="large"
           />
-          {startingRate ? (
+          {community.startingRate ? (
             <Block
-              color={color || (inverted ? 'white' : 'primary')}
-              font="body-s"
+              palette={palette || (inverted ? 'white' : 'primary')}
+              size="caption"
               testID="Rate"
               overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
+              clamped
             >
               <Block
                 display="inline"
-                font={priceTextSize}
+                weight="medium"
+                size={priceTextSize}
               >
-                {formatMoney(startingRate)}{maxRate && maxRate !== 0 ? ` - ${formatMoney(maxRate)}` : ''}
+                {formatMoney(community.startingRate)}
               </Block>&nbsp;/&nbsp;month
             </Block>
           ) : null }

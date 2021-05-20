@@ -4,12 +4,13 @@ import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
-import { Button, Hr, Block, Grid, Image, space, sx } from 'sly/common/system';
+import { Button, Hr, Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
+import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -58,16 +59,13 @@ const CommunityTile = ({
 
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
-  const spacing = type === 'map' ? 'xs' : 'l';
+  const spacing = type === 'map' ? 'regular' : 'xLarge';
   imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
-
-
-  imageMargin = layout === 'column' ? `${imageMargin || 0} ${spacing} ${imageMargin || 0} ${imageMargin || 0}` : null;
+  imageMargin = layout === 'column' ? [imageMargin || 0, spacing, imageMargin || 0, imageMargin || 0] : null;
   if (type === 'map') {
     imageMargin = spacing;
   }
   const imageSnap = imageMargin && type !== 'map' ? 'right' : null;
-
 
   return (
     <Block
@@ -77,32 +75,23 @@ const CommunityTile = ({
     >
       {plusCategory && <PlusBadge plusCategory={plusCategory} fullWidth />}
       <Grid
-        flexDirection={layout}
-        borderRadius="xxs"
-        border="s"
-        borderColor="slate.lighter-90"
-        // dimensions={[type === 'list' ? COLUMN_LAYOUT_IMAGE_WIDTH : COLUMN_LAYOUT_IMAGE_WIDTH_SMALL, 'auto']}
-        sx$laptop={type === 'list' ? null : {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto !important`,
-          gridGap: 'xs',
-        }}
-
-        sx$tablet={type === 'list' ?
-        {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
-          gridGap: '0px',
-        }
-        : {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto`,
-          gridGap: 'xs',
+        flow={layout}
+        borderRadius="small"
+        border="regular"
+        borderPalette="grey.stroke"
+        gap={type === 'list' ? null : 'regular'}
+        dimensions={[type === 'list' ? COLUMN_LAYOUT_IMAGE_WIDTH : COLUMN_LAYOUT_IMAGE_WIDTH_SMALL, 'auto']}
+        upToLaptop={type === 'list' ? null : {
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto!important`,
+          gridGap: `${getKey('sizes.spacing.large')}!important`,
         }}
         // no column layout support below tablet
-        sx={type === 'list' ? {
-          gridTemplateColumns: 'auto',
-          gridGap: 'm',
+        upToTablet={type === 'list' ? {
+          gridTemplateColumns: 'auto!important',
+          gridGap: `${getKey('sizes.spacing.large')}!important`,
         } : {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto`,
-          gridGap: 'xs',
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto!important`,
+          gridGap: `${getKey('sizes.spacing.regular')}!important`,
         }}
       >
         {!noGallery &&
@@ -118,55 +107,37 @@ const CommunityTile = ({
           />
         }
         {noGallery &&
-          <Image
-            flexDirection={layout}
+          <ResponsiveImage
+            layout={layout}
             path={imagePath}
             src={imageSrc}
             placeholder={placeholder}
             sizes={mediaSizes}
             aspectRatio={imageAspectRatio}
-
-            margin={type === 'map' ? imageMargin : 0}
+            borderRadius="small"
+            margin={imageMargin}
             snap={layout === 'row' ? 'bottom' : imageSnap}
             loading={loading}
-            borderRadius="xxs"
-            borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
-            borderBottomRightRadius={type === 'map' ? null : '0px !important'}
-            sx$tablet={{
-              borderBottomLeftRadius: sx`${space('xxs')}!important`,
-              borderTopRightRadius: type === 'map' ? null : '0px !important',
-              margin: imageMargin,
+            upToTablet={type === 'map' ? null : {
+              borderRadius: size('spacing.small'),
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              margin: 0,
             }}
-            // upToTablet={type === 'map' ? null : {
-            //   borderRadius: size('spacing.small'),
-            //   borderBottomLeftRadius: 0,
-            //   borderBottomRightRadius: 0,
-            //   margin: 0,
-            // }}
           >
             {topRightSection &&
               <Block position="absolute" top="regular" right="regular" zIndex={1}>
                 {topRightSection()}
               </Block>
             }
-          </Image>
+          </ResponsiveImage>
         }
         <Block
           overflow="hidden"
-
-          // eslint-disable-next-line no-nested-ternary
-          sx={type === 'map' ?
-            {
-              padding: spacing,
-              paddingTop: 'xs',
-            } : layout === 'row' ?
-            {
-            padding: `xs ${spacing} ${spacing} ${spacing}`,
-            } :
-            { padding: `m ${spacing}` }
-          }
-          sx$tablet={{
-            padding: layout === 'row' ? `xs ${spacing} ${spacing} ${spacing}`  : `m ${spacing}`,
+          padding={layout === 'row' ? ['regular', spacing, spacing, spacing] : ['large' , spacing]}
+          upToTablet={type === 'map' ? null : {
+            padding: size('spacing', spacing),
+            paddingTop: size('spacing', 'regular'),
           }}
         >
           <CommunityInfo
@@ -174,8 +145,8 @@ const CommunityTile = ({
             showFloorPlan={showFloorPlan}
             event={event}
             type={type}
-            priceTextSize={layout === 'row' ? 'body-m' : undefined}
-            pad={actionButtons.length ? 'm' : undefined}
+            priceTextSize={layout === 'row' ? 'body' : undefined}
+            pad={actionButtons.length ? 'large' : undefined}
             swapRatingPrice={layout === 'row'}
             index={index}
           />
@@ -185,8 +156,8 @@ const CommunityTile = ({
             <>
               <Block
                 display="inline"
-                size="body-s"
-                marginRight="xxxs"
+                size="caption"
+                marginRight="tiny"
                 testID="Note"
               >
                 {note}
@@ -194,8 +165,8 @@ const CommunityTile = ({
               <Button
                 transparent
                 padding="0"
-                color="primary"
-                size="body-s"
+                palette="primary"
+                size="caption"
                 testID="EditNote"
                 onClick={onEditNoteClick}
               >
@@ -206,8 +177,8 @@ const CommunityTile = ({
           {!note && addNote &&
             <Block
               textAlign="center"
-              color="primary"
-              size="body-s"
+              palette="primary"
+              size="caption"
               testID="AddNote"
               onClick={onAddNoteClick}
             >
@@ -255,7 +226,7 @@ CommunityTile.defaultProps = {
   type: 'list',
   lazyLoadImage: true,
   position: 'relative',
-  borderRadius: 'xxs',
+  borderRadius: 'small',
   imageAspectRatio: '3:2',
 };
 

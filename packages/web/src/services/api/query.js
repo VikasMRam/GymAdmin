@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import { connect } from 'react-redux';
 import { func } from 'prop-types';
 
-import { useApi } from 'sly/web/services/api/context';
 import { destroy, get } from 'sly/web/services/api/httpMethods';
+import api from 'sly/web/services/api/apiInstance';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -11,49 +12,52 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
-export const useQuery = (apiCall) => {
-  const { dispatch, api } = useApi();
-  return useCallback((...args) => {
-    const call = api[apiCall];
-
-    if (get === call.method) {
-      return call(...args);
-    }
-
-    if (destroy === call.method) {
-      return dispatch(call.asAction(...args));
-    }
-
-    const placeholders = args.length >= 2 ? args[0] : {};
-    const data = args.length >= 2 ? args[1] : args[0];
-    const options = args.length === 3 ? args[2] : {};
-
-    const body = call.isJsonApi
-      ? { data }
-      : data;
-
-    return dispatch(call.asAction(placeholders, body, options));
-  }, []);
-};
-
 function query(propName, apiCall = propName) {
+  if (typeof apiCall === 'undefined') apiCall = propName;
   return (InnerComponent) => {
-    const Wrapper = (props) => {
-      // hack to pass dispatch to query children
-      // will go away with functional components
-      const { dispatch } = useApi();
-      const fetch = useQuery(apiCall);
-      const innerProps = {
-        ...props,
-        dispatch,
-        [propName]: fetch,
+    @connect(null, dispatch => ({ dispatch }))
+    class Wrapper extends React.Component {
+      static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
+      static WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
+      static propTypes = {
+        dispatch: func.isRequired,
       };
 
-      return <InnerComponent {...innerProps} />;
-    }
+      // props fetch not bound to dispatch
+      // FIXME: dispatch posts and patches, dispatch invalidate for delete
+      fetch = (...args) => {
+        const call = api[apiCall];
 
-    Wrapper.displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
-    Wrapper.WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
+        if (get === call.method) {
+          return call(...args);
+        }
+
+        if (destroy === call.method) {
+          return this.props.dispatch(call.asAction(...args));
+        }
+
+        const placeholders = args.length >= 2 ? args[0] : {};
+        const data = args.length >= 2 ? args[1] : args[0];
+        const options = args.length === 3 ? args[2] : {};
+
+        const body = call.isJsonApi
+          ? { data }
+          : data;
+
+        return this.props.dispatch(call.asAction(placeholders, body, options));
+      };
+
+      render() {
+        const { ...props } = this.props;
+
+        const innerProps = {
+          ...props,
+          [propName]: this.fetch,
+        };
+
+        return <InnerComponent {...innerProps} />;
+      }
+    }
 
     Wrapper.typeHydrationId = InnerComponent.typeHydrationId;
     hoistNonReactStatics(Wrapper, InnerComponent);

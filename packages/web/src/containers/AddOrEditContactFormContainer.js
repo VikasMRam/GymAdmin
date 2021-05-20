@@ -6,7 +6,7 @@ import { query, withUser } from 'sly/web/services/api';
 import contactPropType from 'sly/common/propTypes/contact';
 import { createValidator, email, required, usPhone } from 'sly/web/services/validation';
 import AddContactForm from 'sly/web/components/organisms/AddContactForm';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import { saveContactPayload } from 'sly/web/containers/dashboard/helpers';
 
 const validate = createValidator({

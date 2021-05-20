@@ -1,171 +1,15 @@
-import React, { useMemo, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import get from 'lodash/get';
 import set from 'lodash/set';
 
-import { useUser } from './withUser';
-import { useApi } from 'sly/web/services/api';
+import withUser from './withUser';
 
-import { ensureAuthenticated as ensureAuthenticatedAction } from 'sly/web/store/actions';
-
-export const useAuth = () => {
-  const { api, dispatch } = useApi();
-  const {
-    user,
-    info: { user: userInfo },
-    fetchUser,
-    invalidateUser,
-  } = useUser();
-
-  const userApiMethods = useMemo(() => [
-    'registerUser',
-    'updateUser',
-    'loginUser',
-    'logoutUser',
-    'recoverPassword',
-    'resetPassword',
-    'setPassword',
-    'updatePassword',
-    'thirdPartyLogin',
-    'resendOtpCode',
-    'otpLoginUser',
-    'sendOtpCode',
-  ].reduce((acc, method) => {
-    acc[method] = (...args) => dispatch(api[method].asAction(...args));
-    return acc;
-  }, {}), [api, dispatch]);
-
-  const registerUser = useCallback((options = {}) => {
-    const { ignoreExisting, ...data } = options;
-
-    return userApiMethods.registerUser(data)
-      .catch((e) => {
-        const alreadyExists = e.status && e.status === 409;
-        if (ignoreExisting && alreadyExists) {
-          return Promise.resolve();
-        }
-        return Promise.reject(e);
-      })
-      .then(fetchUser);
-  }, []);
-
-  const createOrUpdateUser = useCallback((data, { ignoreAlreadyRegistered } = {}) => {
-    const { name, phone, email } = data;
-
-    if (!phone && !email) return Promise.resolve();
-
-    if (!user) {
-      return registerUser({
-        name,
-        email,
-        phone_number: phone,
-      })
-        .catch((e) => {
-          const alreadyExists = e.status && e.status === 409;
-          if (ignoreAlreadyRegistered && alreadyExists) {
-            return Promise.resolve({ alreadyExists });
-          }
-          return Promise.reject(e);
-        });
-    }
-
-    const userData = pick(userInfo.result, [
-      'id',
-      'type',
-      'attributes.name',
-      'attributes.phone',
-      'attributes.email',
-    ]);
-
-    const willUpdate = Object.entries({
-      'attributes.name': name,
-      'attributes.phoneNumber': phone,
-      'attributes.email': email,
-    }).reduce((willUpdate, [path, newValue]) => {
-      if (newValue && newValue !== get(userData, path)) {
-        set(userData, path, newValue);
-        return true;
-      }
-      return willUpdate;
-    }, false);
-
-    if (willUpdate) {
-      return userApiMethods.updateUser({ id: userData.id }, userData);
-    }
-
-    return Promise.resolve();
-  }, [user, userInfo]);
-
-  const loginUser = useCallback((data) => {
-    return userApiMethods.loginUser(data).then(fetchUser);
-  }, []);
-
-  const logoutUser = useCallback((data) => {
-    return userApiMethods.logoutUser(data).then(fetchUser);
-  }, []);
-
-  const recoverPassword = useCallback((data) => {
-    return userApiMethods.recoverPassword(data);
-  }, []);
-
-  const resetPassword = useCallback((data) => {
-    return userApiMethods.resetPassword(data);
-  }, []);
-
-  const setPassword = useCallback((data) => {
-    return userApiMethods.setPassword(data).then(fetchUser);
-  }, []);
-
-  const updatePassword = useCallback((data) => {
-    return userApiMethods.updatePassword(data).then(fetchUser);
-  }, []);
-
-  const thirdPartyLogin = useCallback((data) => {
-    return userApiMethods.thirdPartyLogin(data).then(fetchUser);
-  }, []);
-
-  const resendOtpCode = useCallback((data) => {
-    return userApiMethods.resendOtpCode(data);
-  }, []);
-
-  const otpLoginUser = useCallback((data) => {
-    return userApiMethods.otpLoginUser(data).then(fetchUser);
-  }, []);
-
-  const sendOtpCode = useCallback((data) => {
-    return userApiMethods.sendOtpCode(data);
-  }, []);
-
-  const authenticated = useSelector(state => state.authenticated);
-  const reduxDispatch = useDispatch();
-  const ensureAuthenticated = useCallback((...args) => {
-    return reduxDispatch(ensureAuthenticatedAction(...args));
-  }, []);
-
-  return {
-    isLoggedIn: userInfo.status === 200,
-    user,
-    userInfo,
-    fetchUser,
-    invalidateUser,
-    createOrUpdateUser,
-    loginUser,
-    logoutUser,
-    registerUser,
-    setPassword,
-    updatePassword,
-    recoverPassword,
-    resetPassword,
-    thirdPartyLogin,
-    resendOtpCode,
-    otpLoginUser,
-    sendOtpCode,
-    authenticated,
-    ensureAuthenticated,
-  };
-};
+import api from 'sly/web/services/api/apiInstance';
+import { ensureAuthenticated } from 'sly/web/store/actions';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -173,27 +17,200 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+const mapStateToProps = state => ({
+  authenticated: state.authenticated,
+});
+
+const userApiMethods = [
+  'registerUser',
+  'loginUser',
+  'logoutUser',
+  'recoverPassword',
+  'resetPassword',
+  'setPassword',
+  'updatePassword',
+  'thirdPartyLogin',
+  'resendOtpCode',
+  'otpLoginUser',
+  'sendOtpCode',
+].reduce((acc, method) => {
+  acc[method] = api[method].asAction;
+  return acc;
+}, {});
+
+
+const mapDispatchToProps = {
+  ensureAuthenticated,
+  ...userApiMethods,
+};
+
 export default function withAuth(InnerComponent) {
-  const WithAuth = ({ status = {}, ...props }) => {
-    const { userInfo, fetchUser, invalidateUser, ...auth } = useAuth();
-    return (
-      <InnerComponent
-        status={{
-          ...status,
-          user: {
-            ...userInfo,
-            refetch: fetchUser,
-            invalidate: invalidateUser,
+  @withUser
+  @connect(mapStateToProps, mapDispatchToProps)
+
+  class WithAuth extends React.Component {
+    static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
+
+    static propTypes = {
+      registerUser: func.isRequired,
+      loginUser: func.isRequired,
+      logoutUser: func.isRequired,
+      recoverPassword: func.isRequired,
+      resetPassword: func.isRequired,
+      setPassword: func.isRequired,
+      updatePassword: func.isRequired,
+      thirdPartyLogin: func.isRequired,
+      authenticated: object.isRequired,
+      ensureAuthenticated: func.isRequired,
+      status: object.isRequired,
+      user: object,
+      updateUser: func.isRequired,
+      resendOtpCode: func.isRequired,
+      otpLoginUser: func.isRequired,
+      sendOtpCode: func.isRequired,
+    };
+
+    static WrappedComponent = InnerComponent;
+
+    createOrUpdateUser = (data, { ignoreAlreadyRegistered } = {}) => {
+      const { user, updateUser, status } = this.props;
+      const { name, phone, email } = data;
+
+      if (!phone && !email) return Promise.resolve();
+
+      if (!user) {
+        return this.registerUser({
+          name,
+          email,
+          phone_number: phone,
+        })
+          .catch((e) => {
+            const alreadyExists = e.status && e.status === 409;
+            if (ignoreAlreadyRegistered && alreadyExists) {
+              return Promise.resolve({ alreadyExists });
+            }
+            return Promise.reject(e);
+          });
+      }
+
+      const userData = pick(status.user.result, [
+        'id',
+        'type',
+        'attributes.name',
+        'attributes.phone',
+        'attributes.email',
+      ]);
+
+      const willUpdate = Object.entries({
+        'attributes.name': name,
+        'attributes.phoneNumber': phone,
+        'attributes.email': email,
+      }).reduce((willUpdate, [path, newValue]) => {
+        if (newValue && newValue !== get(userData, path)) {
+          set(userData, path, newValue);
+          return true;
+        }
+        return willUpdate;
+      }, false);
+
+      if (willUpdate) {
+        return updateUser({ id: userData.id }, userData);
+      }
+
+      return Promise.resolve();
+    };
+
+    registerUser = (options = {}) => {
+      const { registerUser, status } = this.props;
+      const { ignoreExisting, ...data } = options;
+
+      return registerUser(data)
+        .catch((e) => {
+          const alreadyExists = e.status && e.status === 409;
+          if (ignoreExisting && alreadyExists) {
+            return Promise.resolve();
           }
-        }}
-        {...props}
-        {...auth}
+          return Promise.reject(e);
+        })
+        .then(status.user.refetch);
+    };
+
+    loginUser = (data) => {
+      const { loginUser, status } = this.props;
+      return loginUser(data).then(status.user.refetch);
+    };
+
+    logoutUser = (data) => {
+      const { logoutUser, status } = this.props;
+      return logoutUser(data).then(status.user.refetch);
+    };
+
+    recoverPassword = (data) => {
+      const { recoverPassword } = this.props;
+      return recoverPassword(data);
+    };
+
+    resetPassword = (data) => {
+      const { resetPassword } = this.props;
+      return resetPassword(data);
+    };
+
+    setPassword = (data) => {
+      const { setPassword, status } = this.props;
+      return setPassword(data).then(status.user.refetch);
+    };
+
+    ensureAuthenticated = (...args) => {
+      const { ensureAuthenticated } = this.props;
+      return ensureAuthenticated(...args);
+    };
+
+    updatePassword = (data) => {
+      const { updatePassword, status } = this.props;
+      return updatePassword(data).then(status.user.refetch);
+    };
+
+    thirdPartyLogin = (data) => {
+      const { thirdPartyLogin, status } = this.props;
+      return thirdPartyLogin(data).then(status.user.refetch);
+    };
+
+    resendOtpCode = (data) => {
+      const { resendOtpCode } = this.props;
+      return resendOtpCode(data);
+    };
+
+    otpLoginUser = (data) => {
+      const { otpLoginUser, status } = this.props;
+      return otpLoginUser(data).then(status.user.refetch);
+    };
+
+    sendOtpCode = (data) => {
+      const { sendOtpCode } = this.props;
+      return sendOtpCode(data);
+    };
+
+    render = () => (
+      <InnerComponent
+        {...this.props}
+        isLoggedIn={this.props.status.user.status === 200}
+        createOrUpdateUser={this.createOrUpdateUser}
+        loginUser={this.loginUser}
+        logoutUser={this.logoutUser}
+        registerUser={this.registerUser}
+        setPassword={this.setPassword}
+        updatePassword={this.updatePassword}
+        recoverPassword={this.recoverPassword}
+        resetPassword={this.resetPassword}
+        thirdPartyLogin={this.thirdPartyLogin}
+        ensureAuthenticated={this.ensureAuthenticated}
+        resendOtpCode={this.resendOtpCode}
+        otpLoginUser={this.otpLoginUser}
+        sendOtpCode={this.sendOtpCode}
       />
     );
   }
 
-  WithAuth.displayName = `withAuth(${getDisplayName(InnerComponent)})`;
-  WithAuth.WrappedComponent = InnerComponent;
   hoistNonReactStatic(WithAuth, InnerComponent);
 
   return WithAuth;

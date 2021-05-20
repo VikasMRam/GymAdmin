@@ -1,50 +1,60 @@
-import React, { useCallback } from 'react';
-import { bool, string } from 'prop-types';
-import { useParams } from 'react-router-dom';
+import React, { Component } from 'react';
+import { bool, object } from 'prop-types';
 
+import { withRouter } from 'react-router';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { prefetch } from 'sly/web/services/api';
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
-import { usePrefetch } from 'sly/web/services/api/prefetch';
 
-const CommunitySummaryContainer = ({ isAdmin, className }) => {
-  const params = useParams();
+@withRouter
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
 
-  const { requestInfo: { normalized: community } } = usePrefetch('getCommunity', {
-    id: params.communitySlug,
-    include: 'similar-communities,questions,agents',
-  });
+export default class CommunitySummaryContainer extends Component {
+  static typeHydrationId = 'CommunitySummaryContainer';
+  static propTypes = {
+    community: object.isRequired,
+    isAdmin: bool,
+    history: object,
+    match: object,
+  };
 
-  const sendEvent = useCallback((action, category) =>
+  sendEvent = (action, category) =>
     SlyEvent.getInstance().sendEvent({
       action,
       category,
-      label: community.id,
-    }), []);
+      label: this.props.community.id,
+    });
 
-  const conciergeNumberClicked = useCallback(() => sendEvent('click', 'conciergeNumberClicked'), []);
+  conciergeNumberClicked = () => {
+    this.sendEvent('click', 'conciergeNumberClicked');
+  };
 
-  const communityNumberClicked = useCallback(() => sendEvent('click', 'communityNumberClicked'), []);
+  communityNumberClicked = () => {
+    this.sendEvent('click', 'communityNumberClicked');
+  };
 
-  const goToReviews = useCallback(() => sendEvent('click', 'viewReviews'), []);
+  goToReviews = () => {
+    this.sendEvent('click', 'viewReviews');
+  };
 
-  return (
-    <CommunitySummary
-      community={community}
-      isAdmin={isAdmin}
-      onConciergeNumberClicked={conciergeNumberClicked}
-      onCommunityNumberClicked={communityNumberClicked}
-      goToReviews={goToReviews}
-      className={className}
-      searchParams={params}
-    />
-  );
-};
 
-CommunitySummaryContainer.propTypes = {
-  isAdmin: bool,
-  className: string,
-};
+  render() {
+    const { community, isAdmin, className, match } = this.props;
 
-CommunitySummaryContainer.typeHydrationId = 'CommunitySummaryContainer';
+    return (
+      <CommunitySummary
+        community={community}
+        isAdmin={isAdmin}
+        onConciergeNumberClicked={this.conciergeNumberClicked}
+        onCommunityNumberClicked={this.communityNumberClicked}
+        goToReviews={this.goToReviews}
+        className={className}
+        searchParams={match.params}
 
-export default CommunitySummaryContainer;
+      />
+    );
+  }
+}

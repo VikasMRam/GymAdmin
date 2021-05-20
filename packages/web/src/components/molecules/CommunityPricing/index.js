@@ -37,7 +37,7 @@ const StyledIcon = styled(Icon)`
   vertical-align: text-top;
 `;
 
-const CommunityPricing = ({ id, estimated, price, palette, variation, className, size, tipId, tooltipPos, max }) => (
+const CommunityPricing = ({ id, estimated, price, palette, variation, className, size, tipId, tooltipPos }) => (
   <StyledCommunityPricingWrapper className={className}>
     {estimated &&
       <DescriptionBlock size="caption">
@@ -85,19 +85,14 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
         )}
       </DescriptionBlock>
     }
-    {!estimated && !max &&
+    {!estimated &&
     <DescriptionBlock size="caption">
       Pricing starts from
     </DescriptionBlock>
     }
-    {!estimated && max &&
-    <DescriptionBlock size="caption">
-      Pricing ranges from
-    </DescriptionBlock>
-    }
     <Block>
       <Span size={size} weight="medium" palette={palette} variation={variation}>
-        {formatMoney(price)}{max && ` - ${formatMoney(max)}`}
+        {formatMoney(price)}
       </Span>
       <Span palette={palette} variation={variation}>
         /month
@@ -117,7 +112,6 @@ CommunityPricing.propTypes = {
   size: textPropType,
   tooltipPos: string,
   tipId: string,
-  max: number,
 };
 
 CommunityPricing.defaultProps = {

@@ -18,11 +18,13 @@ const StyledConfirmationDialog = styled(ConfirmationDialog)`
   padding: ${size('spacing.xxLarge')};
 `;
 
+const mapStateToProps = state => ({
+  formState: state.form && state.form[formName] ? state.form[formName].values : {},
+});
+
 @query('updateUserSave', 'updateUserSave')
 
-@connect(state => ({
-  formState: state.form && state.form[formName] ? state.form[formName].values : {},
-}))
+@connect(mapStateToProps)
 
 export default class AddOrEditNoteForSavedCommunityContainer extends Component {
   static propTypes = {

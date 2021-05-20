@@ -1,17 +1,16 @@
 import React from 'react';
 import { arrayOf, string, object } from 'prop-types';
 
-
-import { Heading, Link, Grid, Block } from 'sly/common/system';
+import { Heading, Link, Grid, Block } from 'sly/common/components/atoms';
 
 const SeoLinks = ({ title, links, ...props }) => (
   <Block as="section" {...props}>
-    <Heading font="title-m" pad="l">{title}</Heading>
+    <Heading level="subtitle" size="subtitle" pad="xLarge">{title}</Heading>
     <Grid
-      gridTemplateColumns="auto!important"
-      gridGap="m"
-      sx$tablet={{
-        gridTemplateColumns: '50% 50%',
+      dimensions={['50%', '50%']}
+      gap="large"
+      upToTablet={{
+        gridTemplateColumns: 'auto!important',
       }}
     >
       {links.map(link => (

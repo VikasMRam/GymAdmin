@@ -10,7 +10,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
 import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import withModal from 'sly/web/controllers/withModal';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import CommunityAskQuestionAgentFormContainer from 'sly/web/containers/CommunityAskQuestionAgentFormContainer';
 import AddOrEditNoteForSavedCommunityContainer from 'sly/web/containers/AddOrEditNoteForSavedCommunityContainer';
 import DashboardFavoritesPage from 'sly/web/components/pages/DashboardFavoritesPage';

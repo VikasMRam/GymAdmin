@@ -1,20 +1,20 @@
 import React from 'react';
-import { number, func, string, oneOf } from 'prop-types';
+import { number, func, string } from 'prop-types';
 import styled from 'styled-components';
 
-
-import theme from 'sly/common/system/theme';
+import { size } from 'sly/common/components/themes';
+import { text as textPropType } from 'sly/common/propTypes/text';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { formatRating } from 'sly/web/services/helpers/rating';
-import { Block, Link, space } from 'sly/common/system';
+import { Block, Link } from 'sly/common/components/atoms';
 import Rating from 'sly/web/components/molecules/Rating';
 
 const StyledRating = styled(Rating)`
-  margin-right: ${space('xxs')};
+  margin-right: ${size('spacing.small')};
 `;
 
-const CommunityRating = ({ rating, numReviews, description, size, color, variation, goToReviews, seedId, ...props }) => {
+const CommunityRating = ({ rating, numReviews, description, size, palette, variation, goToReviews, seedId, ...props }) => {
   if (rating < 1) {
     return <div />;
   }
@@ -25,20 +25,20 @@ const CommunityRating = ({ rating, numReviews, description, size, color, variati
 
   return (
     <Block {...linkProps} {...props}>
-      <Block testID="RatingValue" marginRight="xxs" color={color}  fontWeight="500 !important">
+      <Block testID="RatingValue" marginRight="small" palette={palette} variation={variation} weight="medium">
         {rating > 0 ? formatRating(rating) : 'Not yet rated'}
       </Block>
       {rating > 0 &&
         <StyledRating
           seedId={seedId}
           value={rating}
-          color={color}
+          palette={palette}
           variation={variation}
-          font={size}
+          size={size}
         />
       }
       {numReviews > 0 &&
-        <Block font="body-s" color="slate.lighter-40" variation={variation}>
+        <Block size="caption" palette={palette} variation={variation}>
           ({numReviews})
         </Block>
       }
@@ -51,16 +51,16 @@ CommunityRating.propTypes = {
   rating: number.isRequired,
   numReviews: number.isRequired,
   goToReviews: func,
-  size: oneOf(Object.keys(theme.fonts)),
-  color: palettePropType,
+  size: textPropType,
+  palette: palettePropType,
   variation: variationPropType,
   className: string,
   seedId: string,
 };
 
 CommunityRating.defaultProps = {
-  size: 'body-m',
-  color: 'primary',
+  size: 'body',
+  palette: 'primary',
   display: 'flex',
   alignItems: 'center',
 };

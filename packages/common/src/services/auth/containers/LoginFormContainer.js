@@ -7,6 +7,7 @@ import { createValidator, required, email } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
 import loadFB from 'sly/web/services/helpers/facebookSDK';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/common/constants/loginProviders';
+import withNotification from 'sly/web/controllers/withNotification';
 import LoginForm from 'sly/common/services/auth/components/LoginForm';
 import SlyEvent from 'sly/web/services/helpers/events';
 
@@ -27,6 +28,7 @@ const mapDispatchToProps = {
 };
 
 @withAuth
+@withNotification
 @connect(null, mapDispatchToProps)
 
 export default class LoginFormContainer extends Component {
@@ -35,6 +37,8 @@ export default class LoginFormContainer extends Component {
     onSociaLoginSuccess: func.isRequired,
     thirdPartyLogin: func.isRequired,
     loginUser: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
     clearSubmitErrors: func,
     onSubmit: func,
     form: string,

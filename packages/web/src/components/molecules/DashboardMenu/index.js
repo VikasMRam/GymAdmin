@@ -2,22 +2,11 @@ import React from 'react';
 import { string } from 'prop-types';
 import { generatePath } from 'react-router';
 
-import { Link } from 'sly/common/components/atoms';
-import {
-  Family,
-  Agents,
-  CommunitySizeLarge,
-  CheckmarkCircle,
-  Contacts,
-  Messages,
-  CommunitySizeSmall,
-  Favorite,
-  User,
-  Settings,
-} from 'sly/common/icons';
+import { Icon, Link } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 import {
   ADMIN_DASHBOARD_AGENTS_PATH,
+  ADMIN_DASHBOARD_CALLS_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_TASKS_PATH,
@@ -49,24 +38,24 @@ const menuItemFor = (menuItem) => {
   };
 };
 
-const FavoriteActive = props => <Favorite active {...props} />;
 /* eslint-disable no-bitwise */
 export const menuItems = [
-  { label: 'Families', Icon: Family, href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
-  { label: 'Agents', Icon: Agents, href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE },
-  { label: 'Communities', Icon: CommunitySizeLarge, href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
-  { label: 'Tasks', Icon: CheckmarkCircle, href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
-  { label: 'Contacts', Icon: Contacts, href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
-  { label: 'Messages', Icon: Messages, href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
-  { label: 'Home Base', Icon: CommunitySizeSmall, href: FAMILY_DASHBOARD_HOME_PATH, role: CUSTOMER_ROLE },
-  { label: 'Favorites', Icon: FavoriteActive, href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
-  { label: 'Profile', Icon: User, href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
-  { label: 'Account', Icon: Settings, href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },
+  { label: 'Families', icon: 'users', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
+  { label: 'Agents', icon: 'case', href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Communities', icon: 'community-size-large', href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
+  { label: 'Tasks', icon: 'checkmark-circle', href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
+  { label: 'Contacts', icon: 'contacts', href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
+  { label: 'Calls', icon: 'phone', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Messages', icon: 'message', href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Home Base', icon: 'house', href: FAMILY_DASHBOARD_HOME_PATH, role: CUSTOMER_ROLE },
+  { label: 'Favorites', icon: 'favourite-light', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
+  { label: 'Profile', icon: 'user', href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
+  { label: 'Account', icon: 'settings', href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },
 ].map(menuItemFor);
 /* eslint-enable no-bitwise */
 
 const DashboardMenu = ({ activeMenuItem }) => {
-  const menuItemComponents = menuItems.map(({ Icon, ...item }) => {
+  const menuItemComponents = menuItems.map((item) => {
     const selected = item.label === activeMenuItem;
     const palette = selected
       ? 'primary'
@@ -85,7 +74,11 @@ const DashboardMenu = ({ activeMenuItem }) => {
           block
           marginBottom="xLarge"
         >
-          <Icon size="s" marginRight="s" />
+          <Icon
+            size="caption"
+            icon={item.icon}
+            marginRight="medium"
+          />
           <Span weight={weight}>{item.label}</Span>
         </Link>
       </Role>

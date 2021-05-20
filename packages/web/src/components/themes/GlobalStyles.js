@@ -1,6 +1,7 @@
 import { publicPath } from 'sly/web/config';
+import styles from 'sly/common/components/themes/default';
 
-const baseColor = '#121c2b';
+const baseColor = styles.palette.slate.base;
 
 export default `
   @font-face {

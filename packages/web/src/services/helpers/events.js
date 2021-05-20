@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 
 import { randomHexNumber } from './utils';
 
-import { domain, isServer, isTest, gAnalyticsKey, eventServerUrl, isProd, gaEnv } from 'sly/web/config';
+import { domain, isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/web/config';
 
 const cookie = new Cookies();
 
@@ -82,7 +82,7 @@ export default class SlyEvent {
       t: Date.now(),
     };
 
-    if (!isProd) {
+    if (isDev || isTest) {
       console.info('EVENT pageview', uri, `${eventServerUrl}?${stringify(se)}`);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
@@ -126,7 +126,7 @@ export default class SlyEvent {
       nonInteraction,
     };
 
-    if (!isProd) {
+    if (isDev) {
       console.info('EVENT event', gaEvent);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);

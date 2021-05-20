@@ -48,8 +48,7 @@ const StyledResponsiveImage = styled(ResponsiveImage)`
 `;
 
 const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack, isActiveAdult, isZillowAd, ...props }) => {
-  const { id, startingRate, rates, propInfo } = community;
-  const { maxRate } = propInfo;
+  const { id, startingRate, rates } = community;
   if (isActiveAdult) {
     return (
       <Wrapper>
@@ -72,7 +71,7 @@ const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack,
   }
   return (
     <Wrapper>
-      {startingRate > 0 && <CommunityPricing size="subtitle" id={id} tipId="stickyFooter" estimated={rates !== 'Provided'} max={maxRate} price={startingRate} tooltipPos="top" />}
+      {startingRate > 0 && <CommunityPricing size="subtitle" id={id} tipId="stickyFooter" estimated={rates !== 'Provided'} price={startingRate} tooltipPos="top" />}
       <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} />
     </Wrapper>
   );

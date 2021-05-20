@@ -67,7 +67,7 @@ const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => 
   if (isPopOver) {
     return (
       <Block
-        paddingTop="l"
+        paddingTop="xLarge"
         {...props}
       >
         {children}
@@ -76,7 +76,7 @@ const CollapsiblePopoverSwitch = ({ isPopOver, showIf, children, ...props }) => 
   }
   return (
     <Collapsible
-      borderBottom="s"
+      borderBottom="regular"
       upToTablet={{
         collapsedDefault: true,
       }}
@@ -113,7 +113,8 @@ const Filters = forwardRef(({
   const closeModal = useCallback(() => sendEvent('close-filter', isOpen.toString()) || setIsOpen(false), [isOpen]);
   const clearFilters = useCallback(() => {
     sendEvent('clear-filters', isOpen.toString());
-    typeof isOpen === 'string' ? onClearFilters([...PAGINATION_FILTERS, isOpen]) : onClearFilters([...PAGINATION_FILTERS, ...isOpen]);
+    typeof isOpen === 'string' ? onClearFilters([...PAGINATION_FILTERS, isOpen]) : onClearFilters([...PAGINATION_FILTERS, ...isOpen])
+
   }, [isOpen]);
   const openFilters = useCallback((section = true) => sendEvent('open-filter', section.toString()) || setIsOpen(section), []);
   const breakpoint = useBreakpoint();
@@ -124,7 +125,6 @@ const Filters = forwardRef(({
   const [priceButtonRef, priceButtonCoords] = useDimensions();
   const [sizeButtonRef, sizeButtonCoords] = useDimensions();
   const popOverCss = useMemo(() => {
-    console.log('breakpoint', breakpoint);
     if (breakpoint?.atLeastTablet() && [BUDGET, SIZE].includes(isOpen)) {
       const coords = ({
         [BUDGET]: priceButtonCoords,
@@ -298,11 +298,11 @@ const Filters = forwardRef(({
       <Block
         ref={ref}
         display="flex"
+        flexGap="regular"
         {...props}
       >
         <FilterButton
-          dispaly="flex"
-          sx$tablet={{ display: 'none' }}
+          startingWithTablet={{ display: 'none' }}
           onClick={() => openFilters(ALL_FILTERS)}
           number={totalNumberOfFilters}
         >
@@ -310,11 +310,7 @@ const Filters = forwardRef(({
         </FilterButton>
         {showTOC &&
           <FilterButton
-            display="none"
-            sx$tablet={{
-              display: 'flex',
-            }}
-
+            startingWith="tablet"
             onClick={() => openFilters(TOC)}
             selected={Boolean(currentTocText)}
           >
@@ -323,10 +319,7 @@ const Filters = forwardRef(({
         }
         <FilterButton
           ref={sizeButtonRef}
-          display="none"
-          sx$tablet={{
-            display: 'flex',
-            }}
+          startingWith="tablet"
           onClick={() => openFilters(SIZE)}
           selected={Boolean(currentSizeText)}
         >
@@ -334,20 +327,14 @@ const Filters = forwardRef(({
         </FilterButton>
         <FilterButton
           ref={priceButtonRef}
-          display="none"
-          sx$tablet={{
-            display: 'flex',
-            }}
+          startingWith="tablet"
           onClick={() => openFilters(BUDGET)}
           selected={Boolean(currentBudgetText)}
         >
           {currentBudgetText || 'Price'}
         </FilterButton>
         <FilterButton
-          display="none"
-          sx$tablet={{
-            display: 'flex',
-          }}
+          startingWith="tablet"
           onClick={() => openFilters(MORE_FILTERS)}
           number={totalMoreFilters}
         >

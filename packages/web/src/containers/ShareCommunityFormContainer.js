@@ -32,13 +32,13 @@ const ReduxForm = reduxForm({
 })(ShareCommunityForm);
 
 const mapDispatchToProps = {
+  createUserShare: api.createUserShare.asAction,
   clearSubmitErrors,
 };
 
 @withRouter
 
 @query('createAction', 'createUuidAction')
-@query('createUserShare')
 
 @connect(null, mapDispatchToProps)
 

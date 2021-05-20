@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
-import { withRouter } from 'react-router';
+import { arrayOf, object, func } from 'prop-types';
 
+import { withRouter } from 'react-router';
 import { prefetch, withUser } from 'sly/web/services/api';
 import agentPropType from 'sly/common/propTypes/agent';
 import DashboardAgentsIndexSection from 'sly/web/components/organisms/DashboardAgentsIndexSection';
+import withNotification from 'sly/web/controllers/withNotification';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -32,6 +33,7 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRouter
 @withUser
+@withNotification
 @prefetch('agents', 'getAgents', (req, { datatable }) => {
   const payload = datatable.query;
   payload['page-size'] = 15;
@@ -46,6 +48,8 @@ export default class DashboardAgentsIndexSectionContainer extends Component {
     datatable: object,
     match: object,
     location: object,
+    notifyError: func,
+    notifyInfo: func,
   };
 
   refetchAgents = () => {
@@ -54,7 +58,7 @@ export default class DashboardAgentsIndexSectionContainer extends Component {
   };
 
   render() {
-    const { agents, status, match, location, datatable, ...props } = this.props;
+    const { agents, status, match, location, datatable, notifyInfo, notifyError, ...props } = this.props;
     const { error, hasFinished } = status.agents;
 
     if (error) {

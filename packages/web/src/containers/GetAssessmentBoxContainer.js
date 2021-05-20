@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import { string, object, bool } from 'prop-types';
+import React, { Component } from 'react';
+import { string, object, bool, func } from 'prop-types';
+import { branch } from 'recompose';
 
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { isBrowser } from 'sly/web/config';
-import { useQuery, normalizeResponse } from 'sly/web/services/api';
+import { prefetch, query } from 'sly/web/services/api';
 import { PRICING_REQUEST } from 'sly/web/services/api/constants';
-import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
+import agentPropType from 'sly/common/propTypes/agent';
 import communityPropType from 'sly/common/propTypes/community';
 import SlyEvent, { objectToEventLabel } from 'sly/web/services/helpers/events';
 import CommunityPricingTable from 'sly/web/components/organisms/CommunityPricingTable';
@@ -16,39 +17,53 @@ import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import SidebarCTAContainer from 'sly/web/containers/communityProfile/SidebarCTAContainer';
 import StickyFooterCTAContainer from 'sly/web/containers/communityProfile/StickyFooterCTAContainer';
+import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
+
+
+@query('createAction', 'createUuidAction')
+@branch(
+  ({ completedAssessment, agentId }) => completedAssessment && agentId,
+  prefetch('agent', 'getAgent', (req, { agentId }) => req({
+    id: agentId,
+  })),
+)
 
 // TODO: Also has pricing request cta flow, de-couple or rename
 // State is in properties ( ? ) ( button text depends on pricing completion)
+export default class GetAssessmentBoxContainer extends Component {
+  static typeHydrationId = 'GetAssessmentBoxContainer';
+  static propTypes = {
+    agentId: string,
+    agent: agentPropType,
+    community: communityPropType,
+    status: object,
+    layout: string.isRequired,
+    boxLayout: string,
+    startLink: string.isRequired,
+    completedAssessment: bool,
+    completedPricing: bool,
+    className: string,
+    mode: object.isRequired,
+    createAction: func,
+    extraProps: object.isRequired,
+  };
+  static defaultProps = {
+    layout: 'box',
+    extraProps: {},
+  };
 
-const GetAssessmentBoxContainer = ({
-  layout,
-  completedPricing,
-  mode,
-  community,
-  startLink,
-  completedAssessment,
-  className,
-  boxLayout,
-  extraProps,
-  agentId,
-}) => {
-  const [agent, setAgent] = useState(null);
-  const [modalOpened, setModalOpened] = useState(false);
+  state = {
+    didRender: false,
+    modalOpened: false,
+  };
 
-  const getAgent = useQuery('getAgent');
-
-  useEffect(() => {
-    if (completedAssessment && agentId) {
-      getAgent({ id: agentId })
-        .then(res => normalizeResponse(res.body))
-        .then(res => setAgent(res))
-        .catch(err => console.error(err));
-    }
-  }, [completedAssessment && agentId]);
-
-  const createAction = useQuery('createUuidAction');
-
-  const startAssessmentFlow = useCallback(() => {
+  componentDidMount() {
+    this.setState({
+      didRender: true,
+    });
+  }
+  startAssessmentFlow = () => {
+    const { mode } = this.props;
     if (isBrowser) {
       SlyEvent.getInstance().sendEvent({
         category: 'assessmentWizard',
@@ -56,18 +71,10 @@ const GetAssessmentBoxContainer = ({
         label: objectToEventLabel(mode),
       });
     }
-  }, [mode]);
+  }
 
-  const toggleModal = useCallback(() => {
-    setModalOpened(!modalOpened);
-    SlyEvent.getInstance().sendEvent({
-      category: 'assessmentWizard',
-      action: `${modalOpened ? 'close' : 'open'}-modal`,
-      label: layout,
-    });
-  }, [modalOpened, layout]);
-
-  const completedAssessmentFlow = useCallback((evt) => {
+  completedAssessmentFlow = (evt) => {
+    const { createAction, completedPricing, mode, community } = this.props;
     evt.preventDefault();
     if (isBrowser) {
       SlyEvent.getInstance().sendEvent({
@@ -78,9 +85,17 @@ const GetAssessmentBoxContainer = ({
     }
     if (!completedPricing && community) {
       // send pricing request uuid action
+      const tm = this.toggleModal;
       createAction({
         type: 'UUIDAction',
-        attributes: { actionType: PRICING_REQUEST, actionInfo: { data: { communityId: community.id } } },
+        attributes: {
+          actionType: PRICING_REQUEST,
+          actionInfo: {
+            data: {
+              communityId: community.id,
+            },
+          },
+        },
       }).then(() => {
         return recordEntityCta(PRICING_REQUEST, community.id);
       }, (e) => {
@@ -88,84 +103,108 @@ const GetAssessmentBoxContainer = ({
         console.log(e);
         return recordEntityCta(PRICING_REQUEST, community.id);
       },
-      ).then(toggleModal);
+      ).then(() => {
+        return tm();
+      });
     }
-  }, [completedPricing, mode, community]);
+  }
 
-  const buttonProps = useMemo(() => {
+  toggleModal = () => {
+    const { modalOpened } = this.state;
+    this.setState({
+      modalOpened: !modalOpened,
+    });
+    const action = modalOpened ? 'close-modal' : 'open-modal';
+    const { layout } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      category: 'assessmentWizard',
+      action,
+      label: layout,
+    });
+  };
+
+
+  render() {
+    const {
+      status = {}, layout, boxLayout, agent, community, completedAssessment, completedPricing, startLink, className, extraProps, mode,
+    } = this.props;
+    const { modalOpened, didRender } = this.state;
+    let hasFinished = true;
+    // compose new startLink : Add query params from mode
     const sl = `${startLink}?${objectToURLQueryParams(mode)}`;
+    let buttonProps = {
+      to: sl,
+      buttonTo: sl,
+      onClick: this.startAssessmentFlow,
+    };
+
+
     if (completedAssessment) {
-      return { onClick: completedAssessmentFlow };
-    } return { to: sl, buttonTo: sl, onClick: startAssessmentFlow };
-  }, [startLink, mode, completedAssessment]);
+      buttonProps = {
+        onClick: this.completedAssessmentFlow,
+      };
+    }
+    if (status.agent) {
+      ({ hasFinished } = status.agent);
+    }
 
-  return (
-    <div className={className}>
-      {layout === 'box' && !completedAssessment && (
-        <GetAssessmentBox layout={boxLayout} buttonProps={buttonProps} />
-      )}
-      {layout === 'sidebar' && (
-        <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
-      )}
-      {layout === 'footer' && (
-        <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
-      )}
-      {layout === 'pricing-table' && (
-        <CommunityPricingTable
-          {...extraProps}
-          community={community}
-          isAlreadyPricingRequested={completedPricing}
-          buttonProps={buttonProps}
-        />
-      )}
-      <Modal isOpen={modalOpened} onClose={toggleModal}>
-        <HeaderWithClose icon="check" onClose={toggleModal} marginBottom="large">Success!</HeaderWithClose>
-        <PaddedHeaderWithCloseBody>
-          {agent && (
-            <MatchedAgent
-              hasBox={false}
-              agent={agent}
-              heading={`Request sent! Your Seniorly Local Advisor, ${agent.name} will get back to you with pricing information on this community.`}
-            />
-          )}
-          {!agent && (
-            <PostConversionGreetingForm
-              hasBox={false}
-              community={community}
-              onReturnClick={toggleModal}
-              heading="Request sent! One of our Seniorly Local Advisors will reach out to assist you."
-              description="Questions? You can contact us by phone or email:"
-            >
-              <Block pad="regular">
-                <Link href="mailto:sharon@seniorly.com">sharon@seniorly.com</Link>
-              </Block>
-              <Block pad="regular">
-                <Link href="tel:8558664515">(855) 866-4515</Link>
-              </Block>
-            </PostConversionGreetingForm>
-          )}
-        </PaddedHeaderWithCloseBody>
-      </Modal>
-    </div>
-  );
-};
+    if (!hasFinished) {
+      return null;
+    }
 
-GetAssessmentBoxContainer.propTypes = {
-  agentId: string,
-  community: communityPropType,
-  layout: string.isRequired,
-  boxLayout: string,
-  startLink: string.isRequired,
-  completedAssessment: bool,
-  completedPricing: bool,
-  className: string,
-  mode: object.isRequired,
-  extraProps: object.isRequired,
-};
-
-GetAssessmentBoxContainer.defaultProps = {
-  layout: 'box',
-  extraProps: {},
-};
-
-export default GetAssessmentBoxContainer;
+    return (
+      <div className={className}>
+        {layout === 'box' && !completedAssessment && didRender && isBrowser &&
+          <GetAssessmentBox
+            layout={boxLayout}
+            buttonProps={buttonProps}
+            mode={mode}
+          />
+        }
+        {layout === 'sidebar' &&
+          <SidebarCTAContainer mode={mode} community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
+        }
+        {layout === 'footer' &&
+          <StickyFooterCTAContainer mode={mode} community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
+        }
+        {layout === 'pricing-table' &&
+          <CommunityPricingTable
+            {...extraProps}
+            community={community}
+            isAlreadyPricingRequested={completedPricing}
+            buttonProps={buttonProps}
+            mode={mode}
+          />
+        }
+        <Modal isOpen={modalOpened} onClose={this.toggleModal}>
+          <HeaderWithClose icon="check" onClose={this.toggleModal} marginBottom="large">Success!</HeaderWithClose>
+          <PaddedHeaderWithCloseBody>
+            {agent &&
+              <MatchedAgent
+                hasBox={false}
+                agent={agent}
+                heading={`Request sent! Your Seniorly Local Advisor, ${agent.name} will get back to you with pricing information on this community.`}
+              />
+            }
+            {!agent &&
+              <PostConversionGreetingForm
+                hasBox={false}
+                community={community}
+                onReturnClick={this.toggleModal}
+                heading="Request sent! One of our Seniorly Local Advisors will reach out to assist you."
+                description="Questions? You can contact us by phone or email:"
+              >
+                <Block pad="regular">
+                  <Link href="mailto:sharon@seniorly.com">sharon@seniorly.com</Link>
+                </Block>
+                <Block pad="regular">
+                  <Link href="tel:8558664515">(855) 866-4515</Link>
+                </Block>
+              </PostConversionGreetingForm>
+            }
+          </PaddedHeaderWithCloseBody>
+        </Modal>
+      </div>
+    );
+  }
+}

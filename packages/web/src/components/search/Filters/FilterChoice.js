@@ -1,90 +1,79 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { oneOf } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Radio, Checkbox } from 'sly/common/icons';
-import { Block } from 'sly/common/system';
+import { upTo, startingWith } from 'sly/common/components/helpers';
+import { withSpacing, withMedia, withColor, withElementSize, withText } from 'sly/common/components/helpers';
+import Radio from 'sly/web/components/molecules/Radio';
+import Checkbox from 'sly/web/components/molecules/Checkbox';
+import { size, palette } from 'sly/common/components/themes';
 
-
-const Row = styled(Block)`
+const Row = styled.div(
+  withSpacing,
+  withElementSize,
+  css`
     display: flex;
     align-items: center;
     cursor: pointer;
     > * {
       flex-grow: 0;
     }
-`;
+  `,
+);
 
-const Label = forwardRef(({ children, ...props }, ref) => (
-  <Block
-    flexGrow="1 !important"
-    marginRight="m"
-    sx$tablet={{
-     marginLeft: 'm',
-     marginRight: 'unset',
-     order: 1,
-   }}
-    as="label"
-    {...props}
-    ref={ref}
-  >
-    {children}
-  </Block>
-));
+const Label = styled.label(
+  withText,
+  withSpacing,
+  withColor,
+  withMedia,
+  css`
+    display: block;
+    flex-grow: 1;
+    ${upTo('tablet', css`
+      margin-right: ${size('spacing.large')};
+    `)}
+    ${startingWith('tablet', css`
+      margin-left: ${size('spacing.large')};
+      order: 1;
+    `)}
+  `,
+);
 
-
-// const Label = styled(Block)`
-//     display: block;
-//     flex-grow: 1;
-//     ${upTo('tablet', css`
-//       margin-right: ${size('spacing.large')};
-//     `)}
-//     ${startingWith('tablet', css`
-//       margin-left: ${size('spacing.large')};
-//       order: 1;
-//     `)}
-//   `
-
+const Title = styled.div(
+  withSpacing,
+  withColor,
+);
 
 const CheckboxRow = ({ checked, label, ...props }) => (
   <Row
-    marginBottom="xs"
-    height="2.5rem"
+    marginBottom="regular"
+    elementSize="regular"
     {...props}
   >
-    <Label font="body-s">
+    <Label size="caption">
       {label}
     </Label>
-    <Checkbox
-      minWidth="24px"
-      hoverColor="viridian.lighter-90"
-      color="viridian.base"
-      active={checked}
-      size="m"
-    />
+    <Checkbox checked={checked} />
   </Row>
 );
 
 const RadioRow = ({ label, description, checked, ...props }) => (
   <Row
-    marginBottom="l"
+    marginBottom="xLarge"
     {...props}
   >
-    <Label color="slate.lighter-30" font="body-s">
-      <Block
-        color="slate.base"
-        marginBottom={!description ? 'none' : 'xxs'}
+    <Label palette="slate.lighter-30" size="caption">
+      <Title
+        palette="slate.base"
+        marginBottom={!description ? 'none' : 'small'}
       >
         {label}
-      </Block>
+      </Title>
       {description}
     </Label>
     <Radio
-      minWidth="24px"
-      size="m"
-      hoverColor="viridian.lighter-90"
-      color="viridian.base"
-      active={checked}
+      checked={checked}
+      marginRight="0"
     />
   </Row>
 );

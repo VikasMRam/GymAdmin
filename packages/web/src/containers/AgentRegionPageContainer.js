@@ -4,7 +4,7 @@ import { arrayOf, object, func } from 'prop-types';
 import agentPropType from 'sly/common/propTypes/agent';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getAgentUrl, urlize } from 'sly/web/services/helpers/url';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { getAgentParams } from 'sly/web/components/search/helpers';
 import prefetch from 'sly/web/services/api/prefetch';

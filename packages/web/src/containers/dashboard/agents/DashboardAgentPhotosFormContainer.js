@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
-import { withProps } from 'sly/web/services/helpers/hocs';
+import { withRouter } from 'react-router';
 import userPropType from 'sly/common/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
-import { query, prefetch, withUser } from 'sly/web/services/api';
+import { query, prefetch, getRelationship } from 'sly/web/services/api';
+import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm'; // Currently
 // its the same form for agents and communities
+import { purgeFromRelationships, invalidateRequests } from 'sly/web/services/api/actions';
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const arrayMove = (array, from, to) => {
@@ -29,20 +31,22 @@ const arrayMove = (array, from, to) => {
 @prefetch('agent', 'getAgent', (req, { match }) => req({
   id: match.params.id,
 }))
-@withProps(({ status }) => {
-  const gallery  = status.agent.getRelationship(status.agent.result, 'gallery') || [];
-  const images = status.agent.getRelationship(gallery, 'images') || [];
+@connect((state, { status }) => {
+  const gallery  = getRelationship(state, status.agent.result, 'gallery');
+  const images = getRelationship(state, gallery, 'images');
   return {
     gallery,
     images,
   };
-})
+}, { purgeFromRelationships, invalidateRequests })
 
 export default class DashboardAgentPhotosFormContainer extends Component {
   static propTypes = {
     createImage: func.isRequired,
     updateImage: func.isRequired,
     deleteImage: func.isRequired,
+    purgeFromRelationships: func.isRequired,
+    invalidateRequests: func.isRequired,
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
@@ -88,8 +92,6 @@ export default class DashboardAgentPhotosFormContainer extends Component {
     images: [],
   };
 
-  state = { images: [] };
-
   addImage = ({name, path}) => {
     // this adds a image template with the relationship and sortOrder
     // the rest of the attributes of the image are added in MediaItem
@@ -106,13 +108,12 @@ export default class DashboardAgentPhotosFormContainer extends Component {
         sortOrder: images.length,
       },
     };
-    this.saveImage(newImage).then(() => {
-      this.setState({
-        images: [
-          ...images,
-          newImage,
-        ],
-      });
+    this.saveImage(newImage);
+    this.setState({
+      images: [
+        ...images,
+        newImage,
+      ],
     });
   };
 
@@ -164,7 +165,7 @@ export default class DashboardAgentPhotosFormContainer extends Component {
 
   saveImage = (image) => {
     const { createImage, notifyError, notifyInfo } = this.props;
-    return createImage(image).then(() => {
+    createImage(image).then(() => {
       this.spliceImageFromState(image);
     })
       .then(() => notifyInfo(`Image ${image.attributes.name} saved correctly`))
@@ -182,10 +183,10 @@ export default class DashboardAgentPhotosFormContainer extends Component {
   };
 
   deleteImage = (image) => {
-    const { showModal, hideModal, notifyInfo, notifyError, status } = this.props;
+    const { showModal, hideModal, notifyInfo, notifyError } = this.props;
 
     const doDelete = () => {
-      const { gallery, deleteImage } = this.props;
+      const { gallery, deleteImage, purgeFromRelationships } = this.props;
       if (image.id && image.type) {
         const entity = {
           ...image,
@@ -196,7 +197,7 @@ export default class DashboardAgentPhotosFormContainer extends Component {
           },
         };
         return deleteImage(image)
-          .then(() => status.agent.purgeFromRelationships({
+          .then(() => purgeFromRelationships({
             name: 'images',
             entity,
           }))
@@ -243,6 +244,7 @@ export default class DashboardAgentPhotosFormContainer extends Component {
 
     return (
       <DashboardCommunityPhotosForm
+
         onUpload={this.onUpload}
         onUploadError={this.onUploadError}
         saveImage={this.saveImage}

@@ -1,6 +1,3 @@
-// eslint-disable-next-line spaced-comment
-/// <reference types="Cypress" />
-
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 import randomCommunity from '../../helpers/randomCommunity';
@@ -70,7 +67,6 @@ describe('Sending Referral to Community', () => {
       Cypress.Commands.add('login', () => {
         cy.get('button').then(($a) => {
           if ($a.text().includes('Log In')) {
-            cy.wait('@getUser');
             waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
             waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
             waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
@@ -84,15 +80,10 @@ describe('Sending Referral to Community', () => {
 
     it('Add Test community', () => {
       cy.login();
-      cy.route('POST', '**/communities').as('createCommunity');
-      cy.route('GET', '**/communities/*').as('getNewCommunity');
       cy.visit('/dashboard/communities');
-      waitForHydration(cy.get('[data-cy="plus"]')).click();
+      waitForHydration(cy.get('div [class*=DashboardWithSummaryTemplate__Section]').contains('Add Community')).click();
       addtestCommunity();
       waitForHydration(cy.get('button').contains('Create Community')).click();
-      cy.wait('@createCommunity');
-      cy.wait('@getNewCommunity');
-      cy.url().should('contain', 'profile');
       select('.Notifications').contains('Community added successfully');
     });
 
@@ -112,24 +103,16 @@ describe('Sending Referral to Community', () => {
 
     it('Create lead', () => {
       cy.login();
-      cy.route('POST', '**/clients').as('createLead');
-      cy.route('GET', '**/clients/*').as('getLead');
-      cy.route('GET', '**/notes*').as('getNotes');
       cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('div [class*=DashboardAgentFamilyOverviewSection__TwoColumn]').contains('Add family')).click('right', { force: true });
       addfamilyContact();
       waitForHydration(cy.get('button').contains('Create')).click();
-      cy.wait('@createLead');
-      cy.wait('@getLead');
-      cy.wait('@getNotes');
-      select('.Notifications').contains('Family added successfully');
+      select('div[class*=Notifications]').contains('Family added successfully');
     });
 
     it('Send referral to community', () => {
-      cy.login();
       cy.route('GET', '**/communities*').as('searchCommunities');
-      cy.route('POST', '**/clients').as('sendReferral');
-      cy.route('GET', '**/clients/*').as('getReferral');
+      cy.login();
       cy.visit('/dashboard/agent/my-families/new');
 
       waitForHydration(cy.get('table').find('tbody').find('tr a[class*=ClientRowCard__StyledNameCell]').first()).click();
@@ -145,8 +128,6 @@ describe('Sending Referral to Community', () => {
       cy.wait('@searchCommunities');
       waitForHydration(cy.get('div[class*="DashboardCommunityReferralSearch__StyledDashboardAdminReferralCommunityTile"]').first()).click('right');
       waitForHydration(cy.get('button').contains('Send Referral')).click({ force: true });
-      cy.wait('@sendReferral');
-      waitForHydration(cy.get('div[class*="TopWrapper"]').should('contain', 'Communities'));
       select('.Notifications').contains('Sent referrral successfully');
     });
   });

@@ -22,20 +22,3 @@ export const withProps = (digestProps = _ => _) => {
     return Wrapper;
   };
 };
-
-
-export const snitch = (InnerComponent) => {
-  const Wrapper = (props) => {
-    console.log('props', props);
-    return <InnerComponent { ...props } /> 
-  };
-
-
-
-  Wrapper.displayName = InnerComponent.displayName;
-  Wrapper.WrappedComponent = InnerComponent;
-  hoistStatics(Wrapper, InnerComponent);
-
-  return Wrapper;
-};
-

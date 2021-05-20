@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 const wrap = (props = {}) => shallow(<Datatable.WrappedComponent {...defaultProps} {...props} />);
-describe.skip('Datatable', () => {
+describe('Datatable', () => {
   it('renders', () => {
     const wrapper = wrap({
       children: () => <div>hola</div>,

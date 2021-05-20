@@ -24,11 +24,11 @@ const PaddedCommunityRating = pad(CommunityRating);
 
 const onClickEvent = id => ({ action: 'click-gcp-button-sidebar', category: 'PricingWizard', label: id });
 
-const GetCommunityPricingAndAvailability = ({ completedAssessment, community: { id, startingRate, rates, propInfo: { maxRate }, propRatings: { reviewsValue, numReviews } }, buttonTo, onClick }) => {
+const GetCommunityPricingAndAvailability = ({ completedAssessment, community: { id, startingRate, rates, propRatings: { reviewsValue, numReviews } }, buttonTo, onClick }) => {
   return (
     <Box>
       <PaddedHeading level="title" size="subtitle">Get Pricing and Availability</PaddedHeading>
-      {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !== 'Provided'} price={startingRate} max={maxRate} />}
+      {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !== 'Provided'} price={startingRate} />}
       {reviewsValue > 0 && <PaddedCommunityRating rating={reviewsValue} numReviews={numReviews} />}
       <StyledButton ghost={completedAssessment} to={buttonTo} onClick={onClick} event={onClickEvent(id)}>
         {completedAssessment && <Icon icon="tick" />}

@@ -58,7 +58,6 @@ export const MESSAGES = 'messages';
 export const EMAILS = 'emails';
 export const PROFILE = 'profile';
 export const PRICING = 'pricing';
-export const NEWPRICING = 'new-pricing';
 export const LISTINGS = 'listings';
 export const PHOTOS = 'photos';
 export const SERVICES = 'services';
@@ -69,6 +68,8 @@ export const EDITS = 'edits';
 export const USERS = 'users';
 export const ADMIN = 'admin';
 
+export const ADMIN_DASHBOARD_CALLS_PATH = `${AGENT_DASHBOARD_PATH}/calls`;
+export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;
 

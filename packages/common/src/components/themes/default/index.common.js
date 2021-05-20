@@ -1,5 +1,6 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from 'sly/common/components/themes/color';
+import { isBrowser, isDev } from 'sly/web/config';
+import { makeColor, makeColorTable } from 'sly/common/components/themes/color';
 
 const makeFont = (() => {
   const fontText = (size, weight) => `${weight} ${size} Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif`;
@@ -37,6 +38,10 @@ theme.palette = {
   black      : makeColor('#000000'),
   harvest    : makeColor('#9F8352'),
 };
+
+if (isBrowser && isDev) {
+  console.table(makeColorTable(theme.palette));
+}
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

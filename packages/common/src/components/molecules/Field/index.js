@@ -94,7 +94,7 @@ const Field = ({
   };
   const InputComponent = getInputComponent(type);
   const renderInputFirst =
-    (type === 'checkbox' && !options) || type === 'radio' || type === 'file' || type === 'boxChoice' || type === 'toggle';
+    (type === 'checkbox' && !options) || type === 'radio' || type === 'file' || type === 'boxChoice';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
   if (type === 'date') {
     inputProps.selected = inputProps.value;
@@ -264,7 +264,6 @@ Field.propTypes = {
     'daterange',
     'richtextarea',
     'button',
-    'toggle',
   ]),
   placeholder: string,
   labelRight: node,

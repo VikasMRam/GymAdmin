@@ -3,11 +3,12 @@ import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { generatePath } from 'react-router';
+import { connect } from 'react-redux';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/common/components/themes';
-import { prefetch, withUser, query } from 'sly/web/services/api';
+import { prefetch, withUser, query, invalidateRequests } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/common/propTypes/conversation/conversation';
@@ -46,7 +47,6 @@ import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContaine
 import { getConversationName } from 'sly/web/services/helpers/conversation';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { withRouter } from 'react-router';
-import { withProps } from 'sly/web/services/helpers/hocs';
 
 const categoryName = 'conversation-messages';
 
@@ -110,6 +110,10 @@ const StyledHeadingBoxSection = styled(HeadingBoxSection)`
   flex-grow: 0;
 `;
 
+const mapStateToProps = (state, { conversation, user }) => ({
+  viewingAsParticipant: conversation && user && conversation.conversationParticipants.find(p => p.participantID === user.id),
+});
+
 @prefetch('messages', 'getConversationMessages', (req, { conversationId }) => req({
   'filter[conversationID]': conversationId,
   sort: '-created_at',
@@ -124,13 +128,14 @@ const StyledHeadingBoxSection = styled(HeadingBoxSection)`
 @query('updateConversationParticipant', 'updateConversationParticipant')
 @query('updateConversationMessage', 'updateConversationMessage')
 @query('createAction', 'createUuidAction')
+
 @withWS
 @withUser
 @withRouter
 
-@withProps(({ conversation, user }) => ({
-  viewingAsParticipant: conversation && user && conversation.conversationParticipants.find(p => p.participantID === user.id),
-}))
+@connect(mapStateToProps, {
+  invalidateConversationMessages: () => invalidateRequests('getConversationMessages'),
+})
 
 export default class ConversationMessagesContainer extends Component {
   static propTypes = {
@@ -151,6 +156,7 @@ export default class ConversationMessagesContainer extends Component {
     onBackClick: func,
     createAction: func.isRequired,
     match: matchPropType,
+    invalidateConversationMessages: func.isRequired,
   };
 
   static defaultProps = {
@@ -211,14 +217,14 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   componentWillUnmount() {
-    const { ws, status } = this.props;
+    const { ws, invalidateConversationMessages } = this.props;
 
     ws.pubsub.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }
     // this is required so that users who come back to this page after navigating will see new messages
-    status.messages.invalidate();
+    invalidateConversationMessages();
   }
 
   // FIXME: query should not use redux

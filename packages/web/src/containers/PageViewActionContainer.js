@@ -1,27 +1,32 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { Component } from 'react';
+import { object, string } from 'prop-types';
 
-import { useQuery } from 'sly/web/services/api';
+import { withRouter } from 'react-router';
+import { query } from 'sly/web/services/api';
 
+@query('createAction', 'createUuidAction')
+@withRouter
+export default class PageViewActionContainer extends Component {
+  static typeHydrationId = 'PageViewActionContainer';
+  static propTypes = {
+    actionInfo: object.isRequired,
+    actionType: string.isRequired,
+  };
 
-const PageViewActionContainer = ({ actionType, actionInfo }) => {
-  const createAction = useQuery('createUuidAction');
-  const { pathname } = useLocation();
+  componentDidMount() {
+    const { match, createAction, actionType, actionInfo } = this.props;
 
-  useEffect(() => {
     createAction({
       type: 'UUIDAction',
       attributes: {
         actionInfo,
-        actionPage: pathname,
+        actionPage: match.url,
         actionType,
       },
     });
-  }, []);
+  }
 
-  return null;
-};
-
-PageViewActionContainer.typeHydrationId = 'PageViewActionContainer';
-
-export default PageViewActionContainer;
+  render() {
+    return null;
+  }
+}

@@ -1,48 +1,53 @@
 import React from 'react';
 import { object, string } from 'prop-types';
 
-
+import { getKey } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { Block, Box, Grid, Button } from 'sly/common/system';
+import { Heading, Box, Icon, Button, Grid, Block } from 'sly/common/components/atoms';
 
-
-const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, ...props }) => (
+const GetAssessmentBox = ({ palette, layout, buttonProps, ...props }) => (
   <Box {...props}>
     <Grid
-      gridTemplateColumns="auto"
-      sx$tablet={{
-        gridTemplateColumns: 'auto 9.2rem',
-        gridGap: 'xl',
-      }}
+      dimensions={['max-content', '1fr', 'max-content']}
       justifyContent="center"
       alignItems="center"
-      flexDirectionw={layout}
+      flow={layout}
+      upToTablet={{
+        gridTemplateColumns: 'auto!important',
+      }}
     >
-
       <Block
-        marginBottom="m"
-        sx$tablet={{
-            marginRight: layout === 'column' ? 'l' : null,
-            marginBottom: layout === 'row' ? 'l' : '0',
-          }}
-        color={color}
+        position="relative"
+        marginRight={layout === 'column' ? 'large' : null}
+        marginBottom={layout === 'row' ? 'large' : null}
+        upToTablet={{
+          marginRight: 0,
+          marginBottom: getKey('sizes.spacing.large'),
+        }}
       >
-
-        Need help finding senior living options?
-        Complete this 2-minute quiz to get personalized senior living and care options.
-
+        <Icon icon="house" palette={palette} size="title" />
+        <Icon icon="search" palette="warning" marginLeft="-large" marginTop="small" />
+      </Block>
+      <Block
+        marginRight={layout === 'column' ? 'xLarge' : null}
+        marginBottom={layout === 'row' ? 'xLarge' : null}
+        upToTablet={{
+          marginRight: 0,
+          marginBottom: getKey('sizes.spacing.large'),
+        }}
+      >
+        <Heading level="subtitle" size="subtitle" pad="regular" palette={palette}>
+          Need help finding senior living options?
+        </Heading>
+        <Block palette={palette}>
+          Complete this 2-minute quiz to get personalized senior living and care options.
+        </Block>
       </Block>
       <Button
-        as="a"
-        textDecoration="none"
         width="100%"
         height="max-content"
-        color="slate"
-        pallete="none"
-        variant="neutral"
-        textAlign="center"
-        background={color}
-        href={to}
+        palette="slate"
+        background={palette}
         {...buttonProps}
       >
         Take the quiz
@@ -53,7 +58,7 @@ const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, 
 
 GetAssessmentBox.propTypes = {
   layout: string.isRequired,
-  color: palettePropType,
+  palette: palettePropType,
   buttonProps: object,
 };
 
@@ -61,8 +66,8 @@ GetAssessmentBox.defaultProps = {
   layout: 'column',
   buttonProps: {},
   background: 'blue',
-  color: 'white',
-  padding: 'xl xxl',
+  palette: 'white',
+  padding: ['xxLarge', 'xLarge'],
   'data-testid': 'GetAssessmentBox',
 };
 
