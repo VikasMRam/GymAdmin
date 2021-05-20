@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { func, object } from 'prop-types';
 
-import { parseURLQueryParams } from 'sly/web/services/helpers/url';
-import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
+import { withAuth, query } from 'sly/web/services/api';
 import { createValidator, required } from 'sly/web/services/validation';
 import ProviderFindCommunity from 'sly/common/services/auth/components/ProviderFindCommunity';
 
@@ -22,16 +20,12 @@ const mapDispatchToProps = {
   clearSubmitErrors: () => clearSubmitErrors('ProviderFindCommunity'),
 };
 
-@withRouter
 @withAuth
 @connect(null, mapDispatchToProps)
-@query('getCommunity')
 @query('claimCommunity', 'claimCommunity')
 
 export default class ProviderFindCommunityContainer extends Component {
   static propTypes = {
-    location: object,
-    getCommunity: func,
     authenticated: object,
     claimCommunity: func,
     onClaimApproved: func,
@@ -42,21 +36,16 @@ export default class ProviderFindCommunityContainer extends Component {
     community: null,
   };
 
-  componentDidMount() {
-    const { location, getCommunity } = this.props;
-    const prop = parseURLQueryParams(location.search)?.prop;
-    if (prop) {
-      getCommunity({ id: prop }).then((resp) => {
-        const community = normalizeResponse(resp.body);
-
-        return this.setState({
-          community: {
-            value: community.id,
-            label: `${community.name}: ${community.address.city}, ${community.address.state}`,
-          },
-        });
-      });
+  // todo: test if it works
+  static getDerivedStateFromProps({ authenticated }, { community }) {
+    if (!community && authenticated &&
+      authenticated.options && authenticated.options.community) {
+      return {
+        community: authenticated.options.community,
+      };
     }
+
+    return null;
   }
 
   handleSubmit = () => {

@@ -35,6 +35,7 @@ const ReduxForm = reduxForm({
 
 @connect(state => ({
   currentValues: state.form[formName]?.values,
+  state,
 }))
 
 export default class EmailSharePageFormContainer extends Component {

@@ -1,22 +1,20 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router';
-import { stringify, parse } from 'query-string';
+import React, { PureComponent } from 'react';
+import { func, object, string, oneOf } from 'prop-types';
 
-import { useAuth } from 'sly/web/services/api';
-import { generateSearchUrl, isInternationalPath } from 'sly/web/services/helpers/url';
-import { useNotification } from 'sly/web/components/helpers/notification';
-import { userIs } from 'sly/web/services/helpers/role';
-// import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { withAuth, normalizeResponse, query } from 'sly/web/services/api';
+import { withRedirectTo } from 'sly/common/services/redirectTo';
+import { withProps } from 'sly/web/services/helpers/hocs';
+import { generateSearchUrl, parseURLQueryParams, isInternationalPath } from 'sly/web/services/helpers/url';
+import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import SlyEvent from 'sly/web/services/helpers/events';
+import { userIs } from 'sly/web/services/helpers/role';
 import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
+import NotificationController from 'sly/web/controllers/NotificationController';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';
-
-import {
-  parseURLQueryParams,
-  removeQueryParamFromURL,
-} from 'sly/web/services/helpers/url';
+import ModalController from 'sly/web/controllers/ModalController';
+import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -33,13 +31,18 @@ const headerMenuLabel = 'headerMenu';
 const logoLabel = 'logo';
 const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, headerItemLabel, value);
 
-const getDefaultHeaderItems = () => {
-  const items = []
+const getDefaultHeaderItems = (layout, isInternationalPage) => {
+  let items = [
+    // { name: 'Call for help (855) 866-4515', to: 'tel:+18558664515', palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+  ];
 
-  items.push(
-    { name: 'Senior Living Resources', to: '/resource-center', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-    { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
-  );
+  if (layout !== 'wizard') {
+    items = [
+      { name: 'Senior Living Resources', to: '/resource-center', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+      { name: 'Assisted Living', to: '/assisted-living', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+      ...items,
+    ];
+  }
 
   return items;
 };
@@ -69,24 +72,33 @@ const defaultMenuItems = () => {
   return menuItems;
 };
 
-const loggedInMenuItems = ({ user, logIn, signUp, logOut }) => {
-  const items = [];
-
+const loggedInMenuItems = (user) => {
+  /* eslint-disable no-bitwise */
+  let roleBasedItems = [];
+  let guestItems = [];
   if (user) {
-    menuItems.filter(mi => userIs(user, mi.role)).forEach(mi => items.push({
+    roleBasedItems = menuItems.filter(mi => userIs(user, mi.role)).map(mi => ({
       name: mi.label,
       to: mi.href,
       section: 1,
-      Icon: mi.Icon,
+      icon: mi.icon,
       onClick: ({ name }) => sendHeaderItemClickEvent(name),
     }));
-    items.push({ name: 'Log out', section: 3, palette: 'primary', onClick: logOut });
   } else {
-    items.push({ name: 'Log in', section: 3, palette: 'primary', onClick: logIn });
-    items.push({ name: 'Sign up', section: 3, palette: 'primary', onClick: signUp });
+    guestItems = [
+      { name: 'Sign Up', section: 3, palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    ];
   }
 
-  return items;
+  const loginButtonText = user
+    ? 'Log Out'
+    : 'Log In';
+
+  return [
+    ...roleBasedItems,
+    { name: loginButtonText, section: 3, palette: 'primary', onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    ...guestItems,
+  ];
 };
 
 const getUserName = (user) => {
@@ -94,92 +106,203 @@ const getUserName = (user) => {
   return name.length > 10 ? `${name.substring(0, 10)}...` : name;
 };
 
-const loginHeaderItems = ({ user, logIn, signUp, toggleDropdown }) => user
-  ? [{ name: getUserName(user), isToggler: true, onClick: toggleDropdown }]
-  : [{ name: 'Log In', ghost: true, isButton: true, onClick: logIn },
-    { name: 'Sign Up', isButton: true, onClick: signUp }];
+const loginHeaderItems = user => user
+  ? [{ name: getUserName(user), isToggler: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }]
+  : [{ name: 'Log In', ghost: true, isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) },
+    { name: 'Sign Up', isButton: true, onClick: ({ name }) => sendHeaderItemClickEvent(name) }];
 
-const generateMenuItems = ({ user, logIn, signUp, logOut }) => [
-  ...defaultMenuItems(),
-  ...loggedInMenuItems({ user, logIn, signUp, logOut }),
-];
+const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuItems(user)];
 
-export default function HeaderContainer(props) {
-  const location = useLocation();
-  const history = useHistory();
-  const { user, logoutUser, authenticated, ensureAuthenticated } = useAuth();
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const toggleDropdown = useCallback(() => {
-    setDropdownOpen(!isDropdownOpen);
+@withAuth
+@withRedirectTo
+@query('getCommunity', 'getCommunity')
+@withProps(({ location }) => ({
+  queryParams: parseURLQueryParams(location.search),
+  pathname: location.pathname,
+}))
+
+export default class HeaderContainer extends PureComponent {
+  static typeHydrationId = 'HeaderContainer';
+  static propTypes = {
+    user: object,
+    logoutUser: func,
+    ensureAuthenticated: func,
+    className: string,
+    queryParams: object,
+    location: object,
+    getCommunity: func,
+    redirectTo: func.isRequired,
+    layout: oneOf(['default', 'wizards']),
+  };
+
+  state = {
+    isDropdownOpen: false,
+    community: {},
+  };
+
+  componentDidMount() {
+    const { queryParams, getCommunity } = this.props;
+    if (!queryParams) {
+      return;
+    }
+    const { prop } = queryParams;
+    if (!prop) {
+      return;
+    }
+    getCommunity({ id: prop }).then((resp) => {
+      const community = normalizeResponse(resp.body);
+      return this.setState({
+        community,
+      });
+    });
+  }
+
+  toggleDropdown = () => {
+    const { isDropdownOpen } = this.state;
+    this.setState({
+      isDropdownOpen: !isDropdownOpen,
+    });
     sendEvent(category, toggleAction, headerMenuLabel, !isDropdownOpen);
-  }, [isDropdownOpen]);
+  };
 
-  const { dismiss, messages } = useNotification();
-
-  const logOut = useCallback(() => {
+  logout = () => {
+    const { logoutUser } = this.props;
     sendEvent(category, clickAction, headerItemLabel, 'Log Out');
     return logoutUser();
-  }, [logoutUser]);
+  };
 
-  const onLogoClick = useCallback(() => {
+  onLogoClick = () => {
     sendEvent(category, clickAction, logoLabel);
-  }, []);
+  };
 
-  const handleCurrentLocation = useCallback((addresses, { latitude, longitude }) => {
+  handleCurrentLocation = (addresses, { latitude, longitude }) => {
+    const { redirectTo } = this.props;
+
     if (addresses.length) {
       const path = `${generateSearchUrl(['Nursing Homes'], addresses[0])}`; // ?geo=${latitude},${longitude},10`;
-      history.push(path);
+
+      redirectTo(path);
     }
-  }, []);
+  };
 
-  const { pathname, search, hash } = location;
-  const { loginRedirect } = parseURLQueryParams(search);
+  render() {
+    const {
+      user,
+      className,
+      ensureAuthenticated,
+      location,
+      layout,
+    } = this.props;
+    const { isDropdownOpen } = this.state;
 
-  useEffect(() => {
-    if (!authenticated.loggingIn && loginRedirect) {
-      ensureAuthenticated()
-        .then(() => {
-          history.replace(decodeURIComponent(loginRedirect));
-          // temp fix for issues with redirect not working.
-          window.location.reload(false);
-        })
-        .catch(() => {
-          const params = removeQueryParamFromURL('loginRedirect', search);
-          history.replace(`${pathname}${stringify(params)}${hash}`);
-        });
+    const isInternationalPage = isInternationalPath(location.pathname);
+
+    const hItems = getDefaultHeaderItems(layout, isInternationalPage);
+    const lhItems = layout !== 'wizards' && !isInternationalPage ? loginHeaderItems(user) : [];
+    const menuItems = isInternationalPage ? defaultMenuItems(user) : generateMenuItems(user);
+
+    const logoutLeftMenuItem = menuItems.find(item => item.name === 'Log Out');
+    if (logoutLeftMenuItem) {
+      logoutLeftMenuItem.onClick = this.logout;
     }
-  }, [authenticated.loggingIn, loginRedirect]);
+    let loginItem = lhItems.find(item => item.name === 'Log In');
+    if (loginItem) {
+      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
+    }
+    loginItem = menuItems.find(item => item.name === 'Log In');
+    if (loginItem) {
+      loginItem.onClick = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
+    }
+    let registerItem = lhItems.find(item => item.name === 'Sign Up');
+    if (registerItem) {
+      registerItem.onClick = ({ name }) => {
+        sendHeaderItemClickEvent(name);
+        const { community } = this.state;
+        const data = { register: true };
+        if (location.pathname === '/partners/communities') {
+          data.provider = true;
+          if (community.id) {
+            data.community = { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` };
+          }
+        }
+        if (location.pathname === '/partners/agents') {
+          data.agent = true;
+        }
+        ensureAuthenticated(data);
+      };
+    }
+    registerItem = menuItems.find(item => item.name === 'Sign Up');
+    if (registerItem) {
+      registerItem.onClick = ({ name }) => {
+        sendHeaderItemClickEvent(name);
+        const { community } = this.state;
+        const data = { register: true };
+        if (location.pathname === '/partners/communities') {
+          data.provider = true;
+          if (community.id) {
+            data.community = { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` };
+          }
+        }
+        if (location.pathname === '/partners/agents') {
+          data.agents = true;
+        }
+        ensureAuthenticated(data);
+      };
+    }
+    const mySlyMenuItem = lhItems.find(item => item.isToggler);
+    if (mySlyMenuItem) {
+      mySlyMenuItem.onClick = this.toggleDropdown;
+    }
 
-  const isInternationalPage = isInternationalPath(pathname);
+    const howItWorksItem = hItems.find(item => item.name === 'How It Works');
 
-  const signUp = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({ register: true }); };
-  const logIn = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
+    const headerItems = [
+      ...hItems,
+      ...lhItems,
+    ];
 
-  const hItems = getDefaultHeaderItems();
-  const lhItems = !isInternationalPage ? loginHeaderItems({ user, logIn, signUp, toggleDropdown }) : [];
-  const menuItems = isInternationalPage ? defaultMenuItems() : generateMenuItems({ user, logIn, signUp, logOut });
+    const modalBody = (
+      <HowSlyWorksVideoContainer isPlaying eventLabel="header" />
+    );
 
-  const headerItems = [
-    ...hItems,
-    ...lhItems,
-  ];
-
-  return (
-    <>
-      <Header
-        menuOpen={isDropdownOpen}
-        toggleDropdown={toggleDropdown}
-        onLogoClick={onLogoClick}
-        headerItems={headerItems}
-        menuItems={menuItems}
-        smallScreenMenuItems={smallScreenMenuItems}
-        onCurrentLocation={handleCurrentLocation}
-      />
-      <AuthContainer />
-      <Notifications messages={messages} dismiss={dismiss} />
-    </>
-  );
+    return (
+      <ModalController>
+        {({
+          show,
+        }) => (
+          <NotificationController>
+            {({
+              messages,
+              dismiss,
+            }) => {
+              if (howItWorksItem) {
+                howItWorksItem.onClick = ({ name }) => { show(modalBody, null, 'fullScreen'); sendHeaderItemClickEvent(name); };
+              }
+              return (
+                <>
+                  <Header
+                    menuOpen={isDropdownOpen}
+                    onMenuIconClick={this.toggleDropdown}
+                    onMenuItemClick={this.toggleDropdown}
+                    onHeaderBlur={this.toggleDropdown}
+                    onLogoClick={this.onLogoClick}
+                    headerItems={headerItems}
+                    hideMenuItemsInSmallScreen={layout !== 'wizard'}
+                    menuItems={menuItems}
+                    smallScreenMenuItems={smallScreenMenuItems}
+                    className={className}
+                    onCurrentLocation={this.handleCurrentLocation}
+                    hasSearchBox={layout !== 'wizard'}
+                    template={layout}
+                  />
+                  <AuthContainer />
+                  <Notifications messages={messages} dismiss={dismiss} />
+                </>
+              );
+            }}
+          </NotificationController>
+        )}
+      </ModalController>
+    );
+  }
 }
-
-HeaderContainer.typeHydrationId = 'HeaderContainer';
-

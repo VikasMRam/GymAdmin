@@ -4,18 +4,21 @@ import { arrayOf, func, object, bool } from 'prop-types';
 import ExploreContainer from './ExploreContainer';
 
 import { getHelmetForSearchPage } from 'sly/web/services/helpers/html_headers';
+import { getKey } from 'sly/common/components/themes';
 import {
   TemplateHeader,
 } from 'sly/web/components/templates/BasePageTemplate';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import Footer from 'sly/web/components/organisms/Footer';
-import { Block, Link, Heading, space, sx } from 'sly/common/system';
 import Map from 'sly/web/components/search/Map';
 import coordPropType from 'sly/common/propTypes/coordPropType';
+import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
+import Heading from 'sly/common/components/atoms/Heading';
 import Filters, { DEFAULT_PAGE_SIZE } from 'sly/web/components/search/Filters';
 import { LIST, MAP, SHOW_OPTIONS } from 'sly/web/components/search/constants';
 import FilterButton from 'sly/web/components/search/Filters/FilterButton';
+import Link from 'sly/common/components/atoms/Link';
 import useDimensions from 'sly/common/components/helpers/useDimensions';
 import SearchPagination from 'sly/web/components/search/SearchPagination';
 import { getTocSeoLabel, getLocationLabel } from 'sly/web/components/search/helpers';
@@ -94,7 +97,7 @@ const Search = ({
           width: '100%',
         }}
       >
-      <HeaderContainer />
+        <HeaderContainer />
         {/* <BannerNotificationAdContainer
             type="wizardSearch"
             {...currentFilters}
@@ -104,9 +107,13 @@ const Search = ({
       {/* SEARCH */}
       <Block
         flexDirection="column"
-        display="flex"
-        paddingTop={headerHeight}
-        sx$laptop={{
+        css={{
+          paddingTop: headerHeight,
+        }}
+        upToLaptop={{
+          display: 'flex',
+        }}
+        startingWithLaptop={{
           display: 'grid',
           gridTemplateRows: 'auto auto',
           gridTemplateColumns: '708px auto',
@@ -115,34 +122,34 @@ const Search = ({
       >
         <Block
           gridArea="filters"
-          paddingY="s"
-          paddingX="l"
-          sx$tablet={{
-            paddingY: 'l',
-          }}
+          padding="xLarge"
           css={{
             zIndex: '100',
+          }}
+          upToLaptop={{
+            paddingTop: getKey('sizes.spacing.medium'),
+            paddingBottom: getKey('sizes.spacing.medium'),
           }}
         >
 
           {!!listSize &&
             <Block
-              marginBottom="xs"
-              display={show === LIST ? 'block' : 'none'}
-              sx$laptop={{
-                display: 'block',
+              upToLaptop={{
+                display: show === LIST ? 'block' : 'none',
               }}
+              css={{
+              marginBottom: 'small',
+            }}
             >
               {listSize} results
             </Block>
           }
           <Block
-            display={show === LIST ? 'block' : 'none'}
-            sx$laptop={{
-              display: 'block',
+            upToLaptop={{
+              display: show === LIST ? 'block' : 'none',
             }}
           >
-            <Heading pad="l" font="title-xl">{title}</Heading>
+            <Heading level="hero" size="title">{title}</Heading>
           </Block>
           <Filters
             ref={filtersRef}
@@ -153,10 +160,7 @@ const Search = ({
           >
 
             <FilterButton
-              display="flex"
-              sx$laptop={{
-                display: 'none',
-              }}
+              startingWithLaptop={{ display: 'none' }}
               marginLeft="auto"
               onClick={toggleShow}
             >
@@ -165,13 +169,13 @@ const Search = ({
           </Filters>
           {(hasFinished && !listSize) &&
             <Block
-              marginTop="xl"
-              sx$tablet={{
-                marginTop: 'xxl',
+              marginTop="xxxLarge"
+              upToTablet={{
+                marginTop: getKey('sizes.spacing.xxLarge'),
               }}
             >
-              <Heading font="title-s-azo" pad="xs">No results</Heading>
-              <Block marginBottom="m">Try removing some filters or zooming out on the map to find more communities.</Block>
+              <Heading level="subtitle" size="subtitle" pad="regular">No results</Heading>
+              <Block marginBottom="large">Try removing some filters or zooming out on the map to find more communities.</Block>
               <Link onClick={() => onClearFilters()}>
                 Clear all filters
               </Link>
@@ -181,15 +185,12 @@ const Search = ({
 
         <Block
           gridArea="list"
-          paddingBottom="xl"
-          display={show === LIST ? 'block' : 'none'}
-          sx$laptop={{
-              display: 'block',
-            }}
-          sx$tablet={{
-            paddingBottom: 'unset',
+          upToTablet={{
+            paddingBottom: getKey('sizes.spacing.xxLarge'),
           }}
-
+          upToLaptop={{
+            display: show === LIST ? 'block' : 'none',
+          }}
         >
           {communities.map((community, i) => (
             <Fragment key={community.id}>
@@ -200,7 +201,7 @@ const Search = ({
               />
               {!isInternational && !showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
-                  margin="0 l l"
+                  margin="0 xLarge xLarge"
                 >
                   <GetAssessmentBoxContainer
                     completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}
@@ -212,7 +213,7 @@ const Search = ({
               }
               {!isInternational && showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block
-                  margin="0 l l"
+                  margin="0 xLarge xLarge"
                 >
                   <SearchResultsAdTileContainer type="getOffer" locationLabel={locLabel} tocLabel={tocLabel} />
                 </Block>
@@ -238,15 +239,13 @@ const Search = ({
           selectedCommunity={hoveredCommunity || selectedCommunity}
           cursor={cursor}
           width="100%"
-          sx={{
+          upToLaptop={{
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
             marginTop: `-${upToLaptopOffset}px`,
-            height: sx`calc(100vh - ${space('l')})`,
+            height: `calc(100vh - ${getKey('sizes.spacing.xLarge')})`,
           }}
-
-          sx$laptop={{
-            display: 'block',
+          startingWithLaptop={{
             position: 'sticky',
             top: '0px !important',
             paddingTop: `${startingWithLaptopOffset}px`,

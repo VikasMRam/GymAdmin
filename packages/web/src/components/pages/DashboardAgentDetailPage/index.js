@@ -43,7 +43,7 @@ import { AGENT_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import FamilyActivityItem from 'sly/web/components/molecules/FamilyActivityItem';
 import { NOTE_CTYPE_NOTE } from 'sly/web/constants/notes';
 import withModal from 'sly/web/controllers/withModal';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import SlyEvent from 'sly/web/services/helpers/events';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import conversationPropType from 'sly/common/propTypes/conversation/conversation';

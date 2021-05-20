@@ -4,53 +4,59 @@ import 'react-hot-loader/patch';
 import 'isomorphic-fetch';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrate } from 'react-dom';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import Modal from 'react-modal';
 import { loadableReady } from '@loadable/component';
 
-import AppWrapper from 'sly/web/components/AppWrapper';
+import RetentionPopup from 'sly/web/services/retentionPopup';
+import App from 'sly/web/components/App';
 import configureStore from 'sly/web/store/configure';
-import { createStore } from 'sly/web/services/api';
-import { isDev } from 'sly/web/config';
-import { requestIdleCallback } from 'sly/web/requestIdleCallback';
+import WSProvider from 'sly/web/services/ws/WSProvider';
+import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
+import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
+import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
+import { IconContext } from 'sly/common/system/Icon';
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
 
 const initialState = window.__INITIAL_STATE__;
-const apiState = window.__API_STATE__;
-const apiContext = { store: createStore(apiState) };
-if (isDev) {
-  window.apiStore = apiContext.store;
-}
-const store = configureStore(initialState, { apiStore: apiContext.store });
+const store = configureStore(initialState);
 
-const AppRenderer = () => (
-  <BrowserRouter>
-    <AppWrapper
-      apiContext={apiContext}
-      iconsContext={{}}
-      reduxStore={store}
-    />
-  </BrowserRouter>
+const renderApp = () => (
+  <Provider store={store}>
+    <IconContext.Provider value={{}}>
+      <BreakpointProvider>
+        <WSProvider>
+          <NotificationSubscriptions>
+            <BrowserRouter>
+              <PageEventsContainer />
+              <>
+                <RetentionPopup />
+                <App />
+              </>
+            </BrowserRouter>
+          </NotificationSubscriptions>
+        </WSProvider>
+      </BreakpointProvider>
+    </IconContext.Provider>
+  </Provider>
 );
 
-if (typeof window.queueMicrotask !== 'function') {
-  window.queueMicrotask = function (callback) {
-    Promise.resolve()
-      .then(callback)
-      .catch(e => setTimeout(() => { throw e; })); // report exceptions
-  };
-}
+const root = document.getElementById('app');
 
-window.addEventListener('load', () => {
-  requestIdleCallback(() => {
-    loadableReady(() => {
-      queueMicrotask(() => {
-        console.log('run hydrate');
-        const rootElement = document.getElementById('app');
-        ReactDOM.createRoot(rootElement, { hydrate: true }).render(<AppRenderer />);
-      });
+Modal.setAppElement('#app');
+
+loadableReady(() => {
+  hydrate(renderApp(), root);
+  if (module.hot) {
+    module.hot.accept('./components/App', () => {
+      require('./components/App');
+      console.log('rerendering');
+      hydrate(renderApp(), root);
     });
-  });
+  }
 });
+

@@ -1,21 +1,21 @@
 
 import React from 'react';
+import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
+import thunkMiddleware from 'redux-thunk';
 
-import { createStore, ApiProvider } from 'sly/web/services/api';
 import Role from 'sly/web/components/common/Role';
 
-const apiStore = createStore({});
-window.apiStore = apiStore;
+
+const mockStore = configureStore([thunkMiddleware]);
 
 const wrap = (props = {}, children) => mount(
-  <ApiProvider value={{ store: apiStore }}>
-    <Role
-      {...props}
-    >
-      {children}
-    </Role>
-  </ApiProvider>,
+  <Role
+    store={mockStore({ api: { requests: {} } })}
+    {...props}
+  >
+    {children}
+  </Role>,
 );
 
 const makeUserRequestInfo = roleID => ({
@@ -28,7 +28,7 @@ const makeUserRequestInfo = roleID => ({
 });
 
 describe('Role', () => {
-  it.skip('show when role matches', () => {
+  it('show when role matches', () => {
     const text = 'test text';
     const content = <div>{text}</div>;
     const wrapper = wrap({
@@ -39,7 +39,7 @@ describe('Role', () => {
     expect(wrapper.render().text()).toBe(text);
   });
 
-  it.skip('does not show when role matches', () => {
+  it('does not show when role matches', () => {
     const text = 'test text';
     const content = <div>{text}</div>;
     const wrapper = wrap({

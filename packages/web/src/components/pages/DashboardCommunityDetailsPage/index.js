@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { string, func, object, arrayOf, bool, shape } from 'prop-types';
 import { generatePath } from 'react-router';
 
-
 import {
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
   PRICING,
-  NEWPRICING,
   SERVICES,
   CONTACTS,
   PHOTOS,
@@ -35,7 +33,6 @@ import {
 import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
 import DashboardCommunityDetailsFormContainer from 'sly/web/containers/DashboardCommunityDetailsFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
-import DashboardCommunityNewPricingFormContainer from 'sly/web/containers/DashboardCommunityNewPricingFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
 import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
 import DashboardCommunityAdminFormContainer from 'sly/web/containers/DashboardCommunityAdminFormContainer';
@@ -77,7 +74,6 @@ export default class DashboardCommunityDetailsPage extends Component {
       Profile: PROFILE,
       Photos: PHOTOS,
       Pricing: PRICING,
-      'New Pricing': [NEWPRICING, PLATFORM_ADMIN_ROLE],
       'Services And Amenities': SERVICES,
       Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
       Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
@@ -251,14 +247,6 @@ export default class DashboardCommunityDetailsPage extends Component {
           )}
           {currentTab === PRICING && (
             <DashboardCommunityPricingFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === NEWPRICING && (
-            <DashboardCommunityNewPricingFormContainer
               notifyInfo={notifyInfo}
               notifyError={notifyError}
               community={community}

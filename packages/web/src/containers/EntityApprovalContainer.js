@@ -9,22 +9,22 @@ import { logError } from 'sly/web/services/helpers/logging';
 import withAuth from 'sly/web/services/api/withAuth';
 import api from 'sly/web/services/api/apiInstance';
 
-const getApiFor = (entity, { updateContent, updateRating }) => {
+const getApiFor = (entity) => {
   switch (entity) {
-    case 'content': return updateContent;
-    case 'rating': return updateRating;
+    case 'content': return api.updateContent.asAction;
+    case 'rating': return api.updateRating.asAction;
     default: return null;
   }
 };
 
 const mapDispatchToProps = {
-  ensureAuthenticated,
+  approveEntity: (entity, id) => ensureAuthenticated(
+    `Sign up to approve ${entity}`,
+    getApiFor(entity)({ id }, { approve: true }),
+  ),
 };
 
 @withAuth
-@query('updateContent')
-@query('updateRating')
-@query('approveEntity')
 @connect(null, mapDispatchToProps)
 
 export default class EntityApprovalContainer extends Component {
@@ -37,16 +37,12 @@ export default class EntityApprovalContainer extends Component {
   state = { message: 'Loading...' };
 
   componentDidMount() {
-    const { match, approveEntity, ...props } = this.props;
+    const { match, approveEntity } = this.props;
 
     const { params } = match;
     const { entitySlug, entity } = params;
 
-    ensureAuthenticated(
-      `Sign up to approve ${entity}`,
-      () => getApiFor(entity, props)({ id }, { approve: true }),
-    )
-      .then(() => approveEntity(entity, entitySlug))
+    approveEntity(entity, entitySlug)
       .then(() => {
         this.setState({ message: 'Success' });
       })

@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
-import { BrowserRouter } from 'react-router-dom';
 
 import ClientRowCard from '.';
 
@@ -16,9 +15,7 @@ const activeClient = clients[1];
 activeClient.residentName = resName;
 const createdDate = dayjs(activeClient.createdAt).format('MM/DD/YYYY');
 
-const wrap = (props = { client: activeClient }) => mount(<BrowserRouter><ClientRowCard  {...props} /></BrowserRouter>, {
-  attachTo: document.createElement('tbody'),
-});
+const wrap = (props = { client: activeClient }) => shallow(<ClientRowCard  {...props} />);
 
 describe('ClientRowCard', () => {
   it('should render ClientRowCard', () => {
@@ -29,7 +26,7 @@ describe('ClientRowCard', () => {
     const nameCell = wrapper.find('NameCell');
 
     expect(nameCell).toHaveLength(1);
-    expect(nameCell.text()).toContain(name);
+    expect(nameCell.render().text()).toContain(name);
     expect(wrapper.find('ResidentCell').contains(resName)).toBeTruthy();
     expect(wrapper.find('Stage').prop('stage')).toBe(stage);
     expect(wrapper.find('NoteCell')).toHaveLength(1);
@@ -41,7 +38,7 @@ describe('ClientRowCard', () => {
     const wrapper = wrap();
     const nameCell = wrapper.find('NameCell');
 
-    expect(nameCell.find(Icon)).toHaveLength(0);
+    expect(nameCell.dive().dive().dive().find(Icon)).toHaveLength(0);
   });
 
   it('should render pause icon for inactive families', () => {
@@ -55,7 +52,7 @@ describe('ClientRowCard', () => {
 
     expect(nameCell).toHaveLength(1);
     expect(nameCell.render().text()).toContain(name);
-    expect(nameCell.find(Icon)).toHaveLength(1);
+    expect(nameCell.dive().dive().dive().find(Icon)).toHaveLength(1);
 
     expect(wrapper.find('DateAddedCell').contains(createdDate)).toBeTruthy();
   });

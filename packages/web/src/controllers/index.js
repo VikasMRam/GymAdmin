@@ -41,7 +41,7 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     };
 
     @connect(mapStateToProps, mapDispatchToProps)
-    class ConnectedController extends React.Component {
+    class ConnectedController extends React.PureComponent {
       static displayName = `controller(${getDisplayName(WrappedComponent)})`;
       static WrappedComponent = WrappedComponent.WrappedComponent || WrappedComponent;
 

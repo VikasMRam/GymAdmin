@@ -51,7 +51,7 @@ const FAQSection = ({ faqs, className }) => {
 
   const restFaqComponents = restFaqs.map(({ title, description }) => (
     <StyledCollapsibleSection key={title} headingWeight="regular" title={title}>
-      <MainSection padding={['large', 'xLarge']}>
+      <MainSection>
         <Block palette="grey">
           {description}
         </Block>

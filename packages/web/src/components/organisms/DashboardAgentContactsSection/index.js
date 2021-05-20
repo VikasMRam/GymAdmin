@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import { Route, generatePath } from 'react-router';
+import { Route } from 'react-router';
 
 import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
@@ -145,7 +145,6 @@ export default class DashboardAgentContactsSection extends Component {
       datatable,
       refetchContacts,
       match,
-      location,
       history,
       redirectTo,
       entityId,
@@ -169,13 +168,7 @@ export default class DashboardAgentContactsSection extends Component {
         Add contact
       </IconButton>
     );
-    const closeModal = () => {
-      if (history.action === 'PUSH') {
-        history.goBack();
-      } else {
-        redirectTo(match.url, true);
-      }
-    };
+
     return (
       <Section>
         <SectionHeader actions={actions}>
@@ -284,21 +277,37 @@ export default class DashboardAgentContactsSection extends Component {
             }}
           </Route>
         )}
-        <Modal
-          isOpen={!isPageLoading && match.url.match(/\/new$/)}
-          onClose={closeModal}
-          closeable
-          layout="noPadding"
-        >
-          <AddOrEditContactFormContainer
-            refetchContacts={refetchContacts}
-            onSuccess={closeModal}
-            onCancel={closeModal}
-            entityId={entityId}
-            entityType={entityType}
-            entityName={entityName}
-          />
-        </Modal>
+        {!isPageLoading && (
+          <Route path={`${match.url}/new`}>
+            {({ match: routeMatch }) => {
+              const closeModal = () => {
+                if (history.action === 'PUSH') {
+                  history.goBack();
+                } else {
+                  redirectTo(match.url, true);
+                }
+              };
+
+              return (
+                <Modal
+                  isOpen={!!routeMatch}
+                  onClose={closeModal}
+                  closeable
+                  layout="noPadding"
+                >
+                  <AddOrEditContactFormContainer
+                    refetchContacts={refetchContacts}
+                    onSuccess={closeModal}
+                    onCancel={closeModal}
+                    entityId={entityId}
+                    entityType={entityType}
+                    entityName={entityName}
+                  />
+                </Modal>
+              );
+            }}
+          </Route>
+        )}
       </Section>
     );
   }

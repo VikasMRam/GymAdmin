@@ -1,9 +1,6 @@
-import React, { Suspense, useRef, useEffect } from 'react';
+import React from 'react';
 import { hydrate } from 'react-dom';
-import loadable from '@loadable/component';
-
-import { requestIdleCallback } from 'sly/web/requestIdleCallback';
-import { isBrowser } from 'sly/web/config';
+import styled from 'styled-components';
 
 const HYDRATION_DATA_TYPE = 'application/hydration-data';
 const HYDRATION_MARKER_TYPE = 'application/hydration-marker';
@@ -34,65 +31,21 @@ function storeProps(Component, props) {
   return hid;
 }
 
-const imports = [];
-if (isBrowser) {
-  window.resolveImports = () => {
-    console.log('resolving', imports.length, 'imports');
-    let imp;
-    while(imp = imports.pop()) {
-      imp();
-    }
-  };
+function HydratedComponentWrapper({ children }) {
+  return <div>{children}</div>;
 }
 
+export const withHydration = (Component, { alwaysHydrate, Wrapper = HydratedComponentWrapper } = {}) => (props) => {
+  const hid = storeProps(Component, props);
 
-const makeId = () => [...Array(16)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-
-export const withHydration = (loadFn, { fallback = null } = {}) => {
-  // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
-  let Component;
-  let doFetch;
-  if (!isBrowser) {
-    Component = loadable(loadFn, { ssrOnly: true, suspense: false });
-  } else {
-    const fetchPromise = new Promise((resolve) => {
-      doFetch = () => loadFn.importAsync().then((module) => {
-        requestIdleCallback(() => {
-          queueMicrotask(() => {
-            console.log('run partial hydrate');
-            resolve(module);
-          });
-        });
-      });
-    })
-    Component = React.lazy(() => fetchPromise);
-  }
-
-  return (props) => {
-    const ref = useRef();
-    useEffect(() => {
-      const check = (items) => {
-        items.forEach((item) => {
-          if (item.isIntersecting) {
-                doFetch();
-          }
-        });
-      };
-      const observer = new IntersectionObserver(check, {
-        marginRoot: '0px 0px 500px 0px',
-      });
-      observer.observe(ref.current);
-      return () => observer.disconnect();
-    }, []);
-
-    return (
-      <div ref={ref}>
-        <Suspense fallback={fallback}>
-          <Component {...props} />
-        </Suspense>
-      </div>
-    );
-  }
+  return (
+    <>
+      <script type={HYDRATION_MARKER_TYPE} data-hid={hid} data-always-hydrate={!!alwaysHydrate} />
+      <Wrapper>
+        <Component {...props} />
+      </Wrapper>
+    </>
+  );
 };
 
 function getComponentTypeHydrationId(component) {

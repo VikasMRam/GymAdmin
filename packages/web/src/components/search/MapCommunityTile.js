@@ -3,7 +3,7 @@ import { number } from 'prop-types';
 
 import communityPropType from 'sly/common/propTypes/community';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import { Link } from 'sly/common/system';
+import Link from 'sly/common/components/atoms/Link';
 
 const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
   <Link
@@ -15,8 +15,8 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       value: index,
     }}
     target="_blank"
-    marginBottom="l"
-    display="block"
+    marginBottom="xLarge"
+    block
     zIndex={10}
   >
     <CommunityTile
@@ -30,22 +30,22 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       shadowPalette="black.base"
       shadowPaletteOpacity="20"
       noGallery
-      position="absolute"
-      sx={{
+      startingWithAll={{
         zIndex: 1000,
+        position: 'absolute',
         transform: 'translate(-50%)',
         bottom: '8px',
         left: '50%',
         width: 'calc(100% - 16px)',
-        '@tablet': {
-          bottom: '12px',
-          width: 'calc(100% - 48px)',
-          maxWidth: '680px',
-        },
-        '@laptop': {
-          width: '344px',
-          bottom: 'unset',
-        },
+      }}
+      startingWithTablet={{
+        bottom: '12px',
+        width: 'calc(100% - 48px)',
+        maxWidth: '680px',
+      }}
+      startingWithLaptop={{
+        width: '344px',
+        bottom: 'unset',
       }}
       {...props}
     />
@@ -54,7 +54,7 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
 
 MapCommunityTile.propTypes = {
   community: communityPropType,
-  index: number,
+  index: number
 };
 
 export default MapCommunityTile;

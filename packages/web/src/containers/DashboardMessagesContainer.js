@@ -124,7 +124,7 @@ export default class DashboardMessagesContainer extends Component {
     const { heading, onConversationClick, user, datatable, status, conversations } = this.props;
     const { conversations: conversationsStatus } = status;
     const { hasFinished: conversationsHasFinished, meta } = conversationsStatus;
-    const isLoading = !conversationsHasFinished || !conversations;
+    const isLoading = !conversationsHasFinished;
     const { id: userId } = user || {};
     const pagination = getDetailedPaginationData(conversationsStatus, 'conversations');
 

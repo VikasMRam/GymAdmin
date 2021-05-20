@@ -167,17 +167,14 @@ export default class SignupFormContainer extends Component {
 
     clearSubmitErrors();
     return Promise.all([registerUser(data), this.updatePhoneContactPreference(phonePreference)])
-      .then(() => onSubmit(data))
+      .then(onSubmit)
       .catch((data) => {
         if (data.status === 409) {
           handleOtpClick();
         } else {
-          const errors = data?.body?.errors;
-          if (typeof errors === 'undefined') {
-            console.error(data);
-            throw data;
-          }
-          const errorMessage = Object.values(errors).join('. ');
+          // TODO: Need to set a proper way to handle server side errors
+          const errorMessage = Object.values(data.body.errors).join('. ');
+          console.log(errorMessage);
           throw new SubmissionError({ _error: errorMessage });
         }
       });

@@ -1,8 +1,7 @@
 import React from 'react';
 import { string, node } from 'prop-types';
 
-
-import { Link, Block, Grid, Heading } from 'sly/common/system';
+import { Heading, Link, Grid, Block } from 'sly/common/components/atoms';
 
 const tocsHeadingDesc = {
   'assisted-living': {
@@ -38,9 +37,9 @@ const tocsHeadingDesc = {
 const HeadingDesc = ({ heading, to, children }) => (
   <article>
     <Link to={to} target="_blank">
-      <Heading font="title-xs-azo" pad="xxs" color="primary">{heading}</Heading>
+      <Heading level="subtitle" size="body" weight="regular" pad="small" palette="primary">{heading}</Heading>
     </Link>
-    <Block font="body-s" color="grey">{children}</Block>
+    <Block size="caption" palette="grey">{children}</Block>
   </article>
 );
 
@@ -71,18 +70,17 @@ const SearchExploreTypes = ({ title, city, state, ...props }) => {
 
   return (
     <Block as="section" {...props}>
-      <Heading font="title-m" pad="l">{title}</Heading>
+      <Heading level="subtitle" size="subtitle" pad="xLarge">{title}</Heading>
       <Grid
-        gridGap="l"
-        gridTemplateColumns="auto"
-        sx$laptop={{
-            gridTemplateColumns: 'calc(50% - 0.75rem) calc(50% - 0.75rem)',
-          }}
+        gap="xLarge"
+        upToTablet={{
+          gridTemplateColumns: 'auto!important',
+        }}
       >
-        <Grid flexDirection="row" gridGap="l">
+        <Grid flow="row" gap="xLarge">
           {column1}
         </Grid>
-        <Grid flexDirection="row" gridGap="l" height="min-content">
+        <Grid flow="row" gap="xLarge" height="min-content">
           {column2}
         </Grid>
       </Grid>

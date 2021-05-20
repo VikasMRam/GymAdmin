@@ -1,15 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { cmsUrl } from 'sly/web/config';
 import apiFetch from 'sly/web/services/api/apiFetch';
 import { sx, sx$tablet, space } from 'sly/common/system/sx';
-import { useNotification } from 'sly/web/components/helpers/notification';
 import Block from 'sly/common/system/Block';
 import Button from 'sly/common/system/Button';
 import Hr from 'sly/common/system/Hr';
 import Input from 'sly/common/system/Input';
-import Notifications from 'sly/web/components/organisms/Notifications';
+import Notification from 'sly/web/components/molecules/Notification';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -40,9 +39,16 @@ const Description = styled(Block)`
   `}
 `;
 
+const NotificationWrapper = styled(Block)`
+  display: ${({ visible }) => visible ? 'block' : 'none'};
+  position: fixed;
+  top: 0;
+  width: 100%;
+`;
+
 const SubscribeEmail = () => {
-  const { messages, notifyError, notifyInfo, dismiss } = useNotification();
   const [value, setValue] = useState('');
+  const [requestRes, setRequestRes] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(() => {
@@ -60,11 +66,11 @@ const SubscribeEmail = () => {
       },
     )
       .then((res) => {
-        notifyInfo(res.body.title);
+        setRequestRes({ status: res.status, title: res.body.title });
         setIsLoading(false);
       })
       .catch((err) => {
-        notifyError(err.body.message);
+        setRequestRes({ status: err.body.statusCode, title: err.body.message });
         setIsLoading(false);
       });
   }, [value]);
@@ -100,7 +106,16 @@ const SubscribeEmail = () => {
 
       <Hr />
 
-      <Notifications messages={messages} dismiss={dismiss} />
+      <NotificationWrapper visible={requestRes}>
+        <Notification {...(requestRes && {
+          isOpen: true,
+          type: requestRes?.status === 200 ? 'default' : 'error',
+          onClose: () => setRequestRes(null),
+        })}
+        >
+          {requestRes?.title}
+        </Notification>
+      </NotificationWrapper>
     </>
   );
 };

@@ -10,11 +10,6 @@ import { Icon, Button, Hr, Link, Block } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import Logo from 'sly/common/components/atoms/Logo';
 
-const SeniorlyLogoWrapper = styled(Block)`
-  display: none;
-  ${startingWith('laptop', 'display: block;')}
-`;
-
 const Wrapper = styled(Block)`
   // To remove blue line caused by tabIndex
   outline: none;
@@ -33,6 +28,11 @@ const HeaderBar = styled(Block)`
   ${startingWith('tablet', css`
     padding: 0 ${size('spacing.xLarge')};
   `)}
+`;
+
+const SeniorlyLogoWrapper = styled(Block)`  
+display: ${ifProp({ template: 'wizard' }, 'block', 'none')} ;
+${startingWith('laptop', 'display: block;')}
 `;
 
 const HeaderMenu = styled.div`
@@ -91,7 +91,8 @@ const HeaderItems = styled.div`
     white-space: nowrap;
   }
 
-  display: none;
+  ${ifProp('hideInSmallScreen', css`display: none;`)};
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
   }
@@ -148,24 +149,17 @@ const mapItem = (item, i, arr, menuOpen) => item.isButton ? (
 );
 
 const Header = React.memo(({
-  menuOpen,
-  toggleDropdown,
-  onLocationSearch,
-  onLogoClick,
-  headerItems,
-  menuItems,
-  smallScreenMenuItems,
-  onCurrentLocation,
-  ...props
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems, onLogoClick,
+  onCurrentLocation, hasSearchBox, hideMenuItemsInSmallScreen, template,
 }) => {
   const headerItemComponents = headerItems.map((...args) => mapItem(...args, menuOpen));
   menuItems = menuItems.sort((a, b) => a.section - b.section);
   let prevSection = menuItems.length ? menuItems[0].section : 0;
   const headerMenuItemComponents = menuItems
-    .map(({ Icon, ...item }) => {
+    .map((item) => {
       const mi = (
         <HeaderMenuItem key={item.to} size="caption" to={item.to} palette={item.palette ? item.palette : 'grey'} onClick={() => item.onClick(item)}>
-          {Icon && <Icon size="s" marginRight="s" />}
+          {item.icon && <Icon size="caption" marginRight="medium" icon={item.icon} palette={item.palette ? item.palette : 'grey'} />}
           {item.name}
         </HeaderMenuItem>
       );
@@ -185,9 +179,9 @@ const Header = React.memo(({
       );
     });
   const smallScreenMenuItemComponents = smallScreenMenuItems
-    .map(({ Icon, ...item }) => (
+    .map(item => (
       <HeaderMenuItem key={item.to} size="caption" to={item.to} palette={item.palette ? item.palette : 'grey'} onClick={() => item.onClick(item)}>
-        {Icon && <Icon size="s" marginRight="s" />}
+        {item.icon && <Icon size="caption" marginRight="medium" icon={item.icon} palette={item.palette ? item.palette : 'grey'} />}
         {item.name}
       </HeaderMenuItem>
     ));
@@ -195,7 +189,7 @@ const Header = React.memo(({
   const handleHeaderMenuBlur = (e) => {
     // trigger blur event handler only if focus is on an element outside dropdown, mind it
     if (menuOpen && headerMenuRef.current && !headerMenuRef.current.contains(e.relatedTarget)) {
-      toggleDropdown();
+      onHeaderBlur();
     }
   };
 
@@ -209,7 +203,7 @@ const Header = React.memo(({
       top="0"
       isMenuOpen={menuOpen}
       onBlur={handleHeaderMenuBlur}
-      {...props}
+      className={className}
     >
       <HeaderBar
         display="flex"
@@ -219,17 +213,29 @@ const Header = React.memo(({
         borderBottom="regular"
         borderPalette="slate"
         borderVariation="lighter-90"
+        horizontalAlign={template === 'wizard' ? 'center' : 'inherit'}
+        justifyContent={template === 'wizard' ? 'center' : 'inherit'}
         padding={[0, 'large']}
       >
-        <SeniorlyLogoWrapper onClick={onLogoClick} startingWithLaptop={{ marginRight: size('spacing.xxLarge') }}>
-          <Link to="/" display="block" lineHeight="0" >
-            <Logo />
-          </Link>
-        </SeniorlyLogoWrapper>
+        {template !== 'wizard' &&
+          <SeniorlyLogoWrapper onClick={onLogoClick} startingWithLaptop={{ marginRight: size('spacing.xxLarge') }}>
+            <Link to="/" display="block" lineHeight="0" >
+              <Logo />
+            </Link>
+          </SeniorlyLogoWrapper>
+        }
+
+        {template === 'wizard' &&
+        <Link to="/" display="block" lineHeight="0" >
+          <Logo />
+        </Link>
+        }
+        {template !== 'wizard'
+        &&
         <OnlyInSmallScreen display="flex" alignItems="center" marginRight="large" palette="primary">
           {(smallScreenMenuItemComponents.length > 0 || headerMenuItemComponents.length > 0) && (
             <Icon
-              onClick={toggleDropdown}
+              onClick={onMenuIconClick}
               marginRight="regular"
               cursor="pointer"
               palette="primary"
@@ -240,22 +246,27 @@ const Header = React.memo(({
           )}
           <Link palette="primary" variation="base" to="/"><Icon icon="logo" size="hero" /></Link>
         </OnlyInSmallScreen>
-        <StyledSearchBoxContainer
-          onCurrentLocation={onCurrentLocation}
-          onLocationSearch={onLocationSearch}
-          layout="header"
-          width="100%"
-          padding={['regular', 0]}
-          visibility={menuOpen ? 'hidden' : 'visible'}
-          include="community"
-          placeholder="Search by city, zip, community name"
-        />
-        <HeaderItems>
+        }
+        {hasSearchBox && (
+          <StyledSearchBoxContainer
+            onCurrentLocation={onCurrentLocation}
+            onLocationSearch={onLocationSearch}
+            layout="header"
+            width="100%"
+            padding={['regular', 0]}
+            visibility={menuOpen ? 'hidden' : 'visible'}
+            include="community"
+            placeholder="Search by city, zip, community name"
+          />
+        )}
+        {template !== 'wizard'
+        &&
+        <HeaderItems hideInSmallScreen={hideMenuItemsInSmallScreen}>
           {headerItemComponents}
-        </HeaderItems>
+        </HeaderItems>}
       </HeaderBar>
       {menuOpen &&
-        <HeaderMenu ref={headerMenuRef} onClick={toggleDropdown}>
+        <HeaderMenu ref={headerMenuRef} onClick={onMenuItemClick}>
           {smallScreenMenuItemComponents.length > 0 &&
             <OnlyInSmallScreen>
               {smallScreenMenuItemComponents}
@@ -271,9 +282,12 @@ const Header = React.memo(({
 
 Header.propTypes = {
   menuOpen: bool,
-  toggleDropdown: func,
+  onMenuIconClick: func,
+  onMenuItemClick: func,
   onLocationSearch: func,
   onCurrentLocation: func,
+  onHeaderBlur: func,
+  onLogoClick: func,
   headerItems: arrayOf(shape({
     name: string.isRequired,
     to: string,
@@ -297,11 +311,17 @@ Header.propTypes = {
     onClick: func,
     icon: string,
   })),
+  className: string,
+  hasSearchBox: bool,
+  hideMenuItemsInSmallScreen: bool,
+  template: oneOf(['home', 'dashboard', 'wizard']),
 };
 
 Header.defaultProps = {
   menuItems: [],
   smallScreenMenuItems: [],
+  hideMenuItemsInSmallScreen: true,
+  template: 'home',
 };
 
 export default Header;

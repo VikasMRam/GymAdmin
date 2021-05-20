@@ -8,7 +8,7 @@ import userPropType from 'sly/common/propTypes/user';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withDatatable } from 'sly/web/services/datatable';
 import withModal from 'sly/web/controllers/withModal';
-import withNotification from 'sly/web/components/helpers/notification';
+import withNotification from 'sly/web/controllers/withNotification';
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 
 const getPaginationData = ({ result, meta }) => {

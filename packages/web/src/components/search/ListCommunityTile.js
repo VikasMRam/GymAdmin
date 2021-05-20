@@ -1,7 +1,7 @@
 import React, { useCallback, memo } from 'react';
 import { func, number } from 'prop-types';
 
-import { Link } from 'sly/common/system';
+import Link from 'sly/common/components/atoms/Link';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import SlyEvent from 'sly/web/services/helpers/events';
@@ -24,7 +24,6 @@ const ListCommunityTile = memo(({ community, setHoveredCommunity, index }) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       target="_blank"
-      sx={{ '&:hover': { textDecoration: 'unset' } }}
       event={{
         category: eventCategory,
         action: 'community-click',
@@ -36,14 +35,13 @@ const ListCommunityTile = memo(({ community, setHoveredCommunity, index }) => {
       <CommunityTile
         noGallery
         community={community}
-        margin="0 l l"
+        margin="0 xLarge xLarge"
         layout="column"
         index={index}
-        sx={{
-          '&:hover': {
-            boxShadow: 'rgb(0 0 0 / 6%) 0px 0.25rem 1rem',
-          },
-        }}
+        shadowOnHoverBlur="large"
+        shadowOnHoverVOffset="small"
+        shadowOnHoverPalette="black.base"
+        shadowOnHoverPaletteOpacity="10"
       />
     </Link>
   );

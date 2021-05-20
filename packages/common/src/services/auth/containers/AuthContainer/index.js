@@ -3,8 +3,8 @@ import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { withAuth } from 'sly/web/services/api';
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
+import { withAuth } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
@@ -33,7 +33,6 @@ const mapStateToProps = state => ({
 
 export default class AuthContainer extends Component {
   static propTypes = {
-    location: object,
     authenticated: object,
     authenticateCancel: func.isRequired,
     authenticateSuccess: func.isRequired,
@@ -70,26 +69,27 @@ export default class AuthContainer extends Component {
   shouldAuth = () => {
     const {
       authenticated,
-      location,
     } = this.props;
 
 
     if (!this.state.isOpen && authenticated.loggingIn) {
-      this.setState({ isOpen: true, title: 'Login' });
-
-      if (authenticated.options && authenticated.options.register) {
-        this.setState({ title: 'Sign Up' });
-      }
-
-      if (location.pathname === '/partners/communities') {
-        this.setState({ title: 'Create a community manager account' });
-      }
-      if (location.pathname === '/partners/agents') {
-        this.setState({ title: 'Create a partner agent account' });
-      }
+      this.setState({ isOpen: true });
     } else if (this.state.isOpen && !authenticated.loggingIn) {
       this.setState({ isOpen: false });
       this.setState({ title: '' });
+    }
+
+    if (authenticated.loggingIn && this.state.title === '') {
+      this.setState({ title: 'Login' });
+      if (authenticated.options && authenticated.options.register) {
+        this.setState({ title: 'Sign Up' });
+      }
+      if (authenticated.options && authenticated.options.provider) {
+        this.setState({ title: 'Create a community manager account' });
+      }
+      if (authenticated.options && authenticated.options.agent) {
+        this.setState({ title: 'Create a partner agent account' });
+      }
     }
   };
 

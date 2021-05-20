@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import { object, func, arrayOf } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
+import { connect } from 'react-redux';
 import { set } from 'object-path-immutable';
 
 import { withRouter } from 'react-router';
 import userPropType from 'sly/common/propTypes/user';
 import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
-import { query, prefetch } from 'sly/web/services/api';
+import { query, prefetch, getRelationship } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm';
+import { purgeFromRelationships, invalidateRequests } from 'sly/web/services/api/actions';
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
-import { withProps } from 'sly/web/services/helpers/hocs';
 
 const arrayMove = (array, from, to) => {
   array = array.slice();
@@ -46,25 +47,27 @@ const imageHasChanged = list => image => list.find(n => n.id === image.id && (
 
 const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.data';
 
+@query('updateCommunity')
 @withUser
 @withRouter
-@query('updateCommunity')
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.id,
   include: 'suggested-edits',
 }))
-@withProps(({ status }) => {
-  const gallery  = status.community.getRelationship(status.community.result, 'gallery');
-  const images = status.community.getRelationship(gallery, 'images');
+@connect((state, { status }) => {
+  const gallery  = getRelationship(state, status.community.result, 'gallery');
+  const images = getRelationship(state, gallery, 'images');
   return {
     gallery,
     images,
   };
-})
+}, { purgeFromRelationships, invalidateRequests })
 
 export default class DashboardCommunityPhotosFormContainer extends Component {
   static propTypes = {
     updateCommunity: func.isRequired,
+    purgeFromRelationships: func.isRequired,
+    invalidateRequests: func.isRequired,
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,

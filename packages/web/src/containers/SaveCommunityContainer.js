@@ -12,6 +12,7 @@ import { USER_SAVE_INIT_STATUS } from 'sly/web/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS, NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/web/constants/notifications';
 import { community as communityPropType } from 'sly/common/propTypes/community';
+import api from 'sly/web/services/api/apiInstance';
 import { withAuth, prefetch, query } from 'sly/web/services/api';
 import { Block } from 'sly/web/components/atoms';
 import AddNoteFormContainer from 'sly/web/containers/AddNoteFormContainer';
@@ -31,6 +32,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+// FIXME: hack because createUser is not JSON:API, should use @query
+const mapDispatchToProps = {
+  ensureAuthenticated,
+};
+
+const getCommunitySlug = match => match.params.communitySlug;
+
 @withAuth
 @withRouter
 @prefetch('community', 'getCommunity', (req, { slug }) => req({
@@ -39,7 +47,7 @@ const mapStateToProps = (state, ownProps) => {
 }))
 @prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-  'filter[entity_slug]': match.params.communitySlug,
+  'filter[entity_slug]': getCommunitySlug(match),
 }))
 @query('createAction', 'createUuidAction')
 @query('createOldUserSave')
@@ -175,7 +183,7 @@ export default class SaveCommunityContainer extends Component {
 
   handleSubmitSaveCommunityForm = (data, next) => {
     const {
-      updateOldUserSave, userSave, clearSubmitErrors, status
+      updateOldUserSave, userSave, clearSubmitErrors,
     } = this.props;
 
     const { id } = userSave;
@@ -184,7 +192,6 @@ export default class SaveCommunityContainer extends Component {
     return updateOldUserSave({ id }, {
       note: data.note,
     })
-      .then(status.userSaves.refetch)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { response } = r;

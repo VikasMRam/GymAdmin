@@ -5,6 +5,7 @@ import parseUrl from 'parseurl';
 import pathToRegexp from 'path-to-regexp';
 import { ChunkExtractor } from '@loadable/server';
 
+import careTypes from 'sly/web/constants/careTypes';
 import { isDev, publicPath } from 'sly/web/config';
 
 
@@ -16,6 +17,11 @@ const configs = [
     bundle: 'external',
     ssr: false,
     path: pathToRegexp('/external*'),
+  },
+  {
+    bundle: 'community-details',
+    ssr: true,
+    path: pathToRegexp(`/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`),
   },
   {
     bundle: 'main',

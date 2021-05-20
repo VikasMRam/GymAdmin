@@ -1,8 +1,6 @@
 import React from 'react';
 import { number, object, string } from 'prop-types';
-import styled from 'styled-components';
-import isString from 'lodash/isString';
-import isArray from 'lodash/isArray';
+import { isString, isArray } from 'lodash';
 
 import Block from 'sly/common/system/Block';
 import Image from 'sly/common/system/Image';
@@ -38,7 +36,7 @@ const CommunityPreview = ({
       </Block>
       <Block padding="m" sx$tablet={{ flexGrow: 1 }}>
         <CommunityInfo
-          color="viridian.base"
+          palette="viridian.base"
           index={index}
           community={{
             ...rest,
