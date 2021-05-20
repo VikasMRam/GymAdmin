@@ -94,7 +94,6 @@ describe('Sending Referral to Community', () => {
       cy.wait('@getNewCommunity');
       cy.url().should('contain', 'profile');
       select('.Notifications').contains('Community added successfully');
-      cy.wait(3000);
     });
 
     it('Add multiple contacts to Test community', () => {
