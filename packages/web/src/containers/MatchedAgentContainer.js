@@ -4,7 +4,6 @@ import { bool, func } from 'prop-types';
 import agentPropType from 'sly/common/propTypes/agent';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
-// import PostConversionAdTileContainer from 'sly/web/containers/postConversion/AdTileContainer';
 import PostConversionGreetingForm from 'sly/web/components/organisms/PostConversionGreetingForm';
 import MatchedAgent from 'sly/web/components/organisms/MatchedAgent';
 
@@ -25,7 +24,6 @@ export default class MatchedAgentContainer extends Component {
       return (
         <div>
           <PaddedPostConversionGreetingForm heading={`You're all set! One of our Seniorly Local Advisors will reach out shortly to assist you with pricing for ${community.name}.`} community={community} onSubmit={onSubmit} />
-          {/* <PostConversionAdTileContainer type="homeCare" layout="row" community={community} /> */}
         </div>
       );
     }
@@ -35,7 +33,7 @@ export default class MatchedAgentContainer extends Component {
         heading={agent ? `${agent.name} will call you shortly to assist you with pricing for Portola Gardens` : ''}
         agent={agent}
       >
-        <PostConversionAdTileContainer community={community} />
+        {/*<PostConversionAdTileContainer community={community} />*/}
       </MatchedAgent>
     );
   }

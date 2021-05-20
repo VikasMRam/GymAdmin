@@ -1,43 +1,39 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import React, { useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
 import EntityReviews from 'sly/web/components/organisms/EntityReviews';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { community as communityPropType } from 'sly/common/propTypes/community';
-import { prefetch } from 'sly/web/services/api';
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 
-@withRouter
-@prefetch('community', 'getCommunity', (req, { match }) => req({
-  id: match.params.communitySlug,
-  include: 'similar-communities,questions,agents',
-}))
-export default class CommunityReviewsContainer extends Component {
-  static typeHydrationId = 'CommunityReviewsContainer';
-  static propTypes = {
-    community: communityPropType,
-  };
+const CommunityReviewsContainer = () => {
+  const { communitySlug } = useParams();
 
-  onReviewLinkClicked = (name) => {
+  const { requestInfo: { normalized: community } } = usePrefetch('getCommunity', {
+    id: communitySlug,
+    include: 'similar-communities,questions,agents',
+  });
+
+  const { id, reviews, propRatings: { reviewsValue, ratingsArray } } = community || {};
+
+  const onReviewLinkClicked = useCallback((name) => {
     SlyEvent.getInstance().sendEvent({
       action: 'click',
       category: 'externalReview',
-      label: this.props.community.id,
+      label: id,
       value: name,
     });
-  };
+  }, [id]);
 
-  render() {
-    const {
-      community: { reviews, propRatings: { reviewsValue, ratingsArray } },
-    } = this.props;
+  return (
+    <EntityReviews
+      reviewsValue={reviewsValue}
+      reviews={reviews || []}
+      reviewRatings={ratingsArray || []}
+      onReviewLinkClicked={onReviewLinkClicked}
+    />
+  );
+};
 
-    return (
-      <EntityReviews
-        reviewsValue={reviewsValue}
-        reviews={reviews || []}
-        reviewRatings={ratingsArray || []}
-        onReviewLinkClicked={this.onReviewLinkClicked}
-      />
-    );
-  }
-}
+CommunityReviewsContainer.typeHydrationId = 'CommunityReviewsContainer';
+
+export default CommunityReviewsContainer;

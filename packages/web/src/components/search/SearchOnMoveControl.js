@@ -4,14 +4,13 @@ import { bool, func } from 'prop-types';
 import Box from 'sly/common/components/atoms/Box';
 import Block from 'sly/common/components/atoms/Block';
 import Checkbox from 'sly/web/components/molecules/Checkbox';
+import { CheckboxButton } from 'sly/common/system';
+
 
 const SearchOnMoveControl = ({ onClick, active, ...props }) => (
-  <Box {...props}>
-    <Block display="flex" onClick={onClick} cursor="pointer">
-      <Checkbox checked={active} marginRight="medium" palette={active ? 'primary' : 'grey'} />
-      <Block size="caption">Search as map moves</Block>
-    </Block>
-  </Box>
+  <CheckboxButton onClick={onClick} value={active} {...props} >
+    Search as map moves
+  </CheckboxButton>
 );
 
 SearchOnMoveControl.propTypes = {
@@ -21,8 +20,8 @@ SearchOnMoveControl.propTypes = {
 
 SearchOnMoveControl.defaultProps = {
   background: 'white',
-  padding: 'medium',
-  margin: ['large', 'xLarge'],
+  padding: 's',
+  margin: 'm l',
   shadowBlur: 'regular',
   shadowVOffset: 'small',
   shadowPalette: 'black.base',

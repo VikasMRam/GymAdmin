@@ -22,16 +22,15 @@ const ReduxForm = reduxForm({
 })(CommunityLeaveAnAnswerForm);
 
 const mapDispatchToProps = {
-  leaveAnAnswer: data => ensureAuthenticated(
-    'Please Login to Answer this Question',
-    api.createAnswer.asAction(data),
-  ),
+  ensureAuthenticated,
 };
 
 @prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
   id: communitySlug,
   include: 'similar-communities,questions,agents',
 }))
+
+@query('createAnswer')
 
 @connect(null, mapDispatchToProps)
 
@@ -46,27 +45,31 @@ export default class CommunityLeaveAnAnswerFormContainer extends Component {
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, leaveAnAnswer, status, questionId, onSuccess,
+      communitySlug, createAnswer, status, questionId, onSuccess,
     } = this.props;
     const payload = {
       communitySlug,
       questionId,
       answer: values.answer,
     };
-    return leaveAnAnswer(payload).then(() => {
-      onSuccess();
-      status.community.refetch();
-    }).catch(({ status, body }) => {
-      let errorMessage = 'Error Answering Question';
-      if (body.errors) {
-        errorMessage = body.errors[0].detail;
-      } else if (status === 401) {
-        errorMessage = 'Please Login to Answer this Question';
-      } else {
-        console.error(body);
-      }
-      throw new SubmissionError({ answer: errorMessage });
-    });
+    return ensureAuthenticated(
+      'Please Login to Answer this Question',
+      () => createAnswer(payload),
+    )
+      .then(() => {
+        onSuccess();
+        status.community.refetch();
+      }).catch(({ status, body }) => {
+        let errorMessage = 'Error Answering Question';
+        if (body.errors) {
+          errorMessage = body.errors[0].detail;
+        } else if (status === 401) {
+          errorMessage = 'Please Login to Answer this Question';
+        } else {
+          console.error(body);
+        }
+        throw new SubmissionError({ answer: errorMessage });
+      });
   };
 
   render() {

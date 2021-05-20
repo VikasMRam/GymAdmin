@@ -1,5 +1,5 @@
 import React from 'react';
-import { any, oneOf } from 'prop-types';
+import { any } from 'prop-types';
 import styled from 'styled-components';
 
 import Root from './Root';
@@ -17,7 +17,7 @@ const getPad = (size) => {
   return null;
 };
 
-const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
+const Heading = styled(({ innerRef, size, level, ...props }) => (
   <Root
     ref={innerRef}
     size={size || level}
@@ -28,19 +28,16 @@ const StyledHeading = styled(({ innerRef, size, level, ...props }) => (
   />
 ))``;
 
-StyledHeading.propTypes = {
-  size: oneOf(['hero', 'title', 'subtitle', 'body', 'superHero', 'displayL', 'displayS', 'display']).isRequired,
+Heading.propTypes = {
   level: any, // should be deprecated
 };
 
-StyledHeading.defaultProps = {
+Heading.defaultProps = {
   font: 'title-xlarge',
   palette: 'slate',
   variation: 'base',
   weight: 'medium',
 };
-
-const Heading = React.forwardRef((props, ref) => <StyledHeading innerRef={ref} {...props} />);
 
 Heading.displayName = 'Heading';
 

@@ -28,7 +28,18 @@ const createHasProfileAction = uuidActions => (type, actionInfo) => {
   });
 };
 
-const mapStateToProps = (state, { communitySlug, uuidActions }) => {
+@withRouter
+@withRedirectTo
+
+@withAuth
+@prefetch('uuidActions', 'getUuidActions', (req, { communitySlug }) =>
+  req({
+    'filter[actionType]': `${PROFILE_CONTACTED}`,
+    'filter[actionInfo-slug]': communitySlug,
+  }),
+)
+@query('createAction', 'createUuidAction')
+@connect((state, { communitySlug, uuidActions }) => {
   const hasProfileAction = createHasProfileAction(uuidActions);
   const pricingRequested = hasProfileAction(PROFILE_CONTACTED, {
     contactType: PRICING_REQUEST,
@@ -46,20 +57,7 @@ const mapStateToProps = (state, { communitySlug, uuidActions }) => {
       contactRequested: pricingRequested || availabilityRequested,
     },
   };
-};
-
-@withRouter
-@withRedirectTo
-
-@withAuth
-@prefetch('uuidActions', 'getUuidActions', (req, { communitySlug }) =>
-  req({
-    'filter[actionType]': `${PROFILE_CONTACTED}`,
-    'filter[actionInfo-slug]': communitySlug,
-  }),
-)
-@query('createAction', 'createUuidAction')
-@connect(mapStateToProps)
+})
 
 export default class ConciergeController extends Component {
   static displayName = 'ConciergeController';

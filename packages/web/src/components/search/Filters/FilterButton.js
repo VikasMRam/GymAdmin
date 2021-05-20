@@ -1,52 +1,31 @@
 import React, { forwardRef } from 'react';
-import { bool, node, number, oneOf, oneOfType, string } from 'prop-types';
-import styled, { css } from 'styled-components';
+import { bool, node, number, oneOfType, string } from 'prop-types';
+import styled from 'styled-components';
 
-import {
-  withBorder,
-  withColor, withDimensions,
-  withDisplay,
-  withElementSize,
-  withMedia,
-  withSpacing, withText,
-} from 'sly/common/components/helpers';
-import { palette, size } from 'sly/common/components/themes';
 
-const Button = styled.div(
-  withText,
-  withColor,
-  withDisplay,
-  withBorder,
-  withElementSize,
-  withSpacing,
-  withMedia,
-  css`
-    margin-right: ${size('spacing.medium')};
+import { Block, Span, space, color } from 'sly/common/system';
+
+const Button = styled(Block)`
+    margin-right: ${space('s')};
     cursor: pointer;
     &:last-child {
       margin-right: 0;
     }
     &:hover {
-      border-color: ${palette('slate.lighter-60')};
+      border-color: ${color('slate.lighter-60')};
     }
-  `,
-);
+  `;
 
-const Number = styled.span(
-  withSpacing,
-  withDisplay,
-  withColor,
-  css`
+const Number = styled(Span)`
     text-align: center;
     border-radius: 4px;
     width: 20px;
     height: 20px;
-  `,
-);
+  `;
 
 Number.defaultProps = {
-  marginRight: 'regular',
-  palette: 'white.base',
+  marginRight: 'xs',
+  color: 'white.base',
   background: 'primary.base',
 };
 
@@ -60,13 +39,14 @@ const FilterButton = forwardRef(({
     <Button
       ref={ref}
       display="flex"
-      background={(number || selected) && 'primary.lighter-90'}
-      size="caption"
+      background={(number || selected) ? 'primary.lighter-90' : 'transparent'}
+      font="body-s"
       alignItems="center"
-      border="regular"
-      borderRadius="xLarge"
-      elementSize="small"
-      padding="0 large"
+      border="s"
+      borderColor="slate.lighter-90"
+      borderRadius="l"
+      height="m"
+      padding="0 m"
       {...props}
     >
       {number > 0 && (

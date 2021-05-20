@@ -122,6 +122,9 @@ theme.element = {
   // vertical sizing hardcoded
   m: '3rem',    // 48px
   l: '3.5rem',  // 56px
+  xl: '4rem',
+  xxl: '4.5rem',
+  xxxl: '5rem',
 };
 
 

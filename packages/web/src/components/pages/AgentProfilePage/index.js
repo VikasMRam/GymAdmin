@@ -112,7 +112,7 @@ class AgentProfilePage extends Component {
 
         <TemplateContent>
           <AgentSummaryWrapper ref={this.agentSummaryRef}>
-            <BreadCrumb size="caption" pad="large" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
+            <BreadCrumb size="body-s" pad="m" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
             <AgentSummary
               agent={agent}
               buttonHref="#ask-agent-question"
