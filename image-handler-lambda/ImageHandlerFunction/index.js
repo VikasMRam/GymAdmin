@@ -19,7 +19,7 @@ exports.handler = async (event) => {
   const imageHandler = new ImageHandler();
 
   try {
-    const request = await imageRequest.setup(event, process.env.BUCKET);
+    const request = await imageRequest.setup(event);
     const processedRequest = await imageHandler.process(request);
     const cacheControl = 'public, max-age=31536000';
     await imageRequest.uploadEditedImage(processedRequest, {
@@ -34,7 +34,7 @@ exports.handler = async (event) => {
       isBase64Encoded: true,
     };
   } catch (err) {
-    console.log(err);
+    console.error(err);
     const response = {
       statusCode: err.status,
       headers: getResponseHeaders('application/json'),
