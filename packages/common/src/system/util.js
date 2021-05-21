@@ -20,8 +20,9 @@ export const createMediaQuery = (n, bound = 'min') => `@media screen and (${boun
 
 export const makeMediaQueries = (breakpoints = {}) => Object.entries(breakpoints)
   .reduce((acc, [name, value], i) => {
+    const px = `${value}px`;
     acc.queries.push(createMediaQuery(value));
-    acc.upTo.push(createMediaQuery(`calc(${value} - 1px)`, 'max'));
+    acc.upTo.push(createMediaQuery(`calc(${px} - 1px)`, 'max'));
     acc.indexes[name] = i + 1;
     return acc;
   }, {
