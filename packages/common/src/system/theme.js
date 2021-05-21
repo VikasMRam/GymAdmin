@@ -6,9 +6,9 @@ import theme from 'sly/common/components/themes/default';
 // const theme = {};
 
 theme.breakpoint = {
-  tablet           : 728,
-  laptop           : 1080,
-  desktop          : 1280,
+  tablet           : '728px',
+  laptop           : '1080px',
+  desktop          : '1280px',
 };
 
 // DO NOT MODIFY the following without asking Jared

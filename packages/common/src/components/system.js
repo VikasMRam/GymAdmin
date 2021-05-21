@@ -38,7 +38,7 @@ export const get = (obj, key, def, p, undef) => {
   return obj === undef ? def : obj;
 };
 
-const createMediaQuery = n => `@media screen and (min-width: ${n}px)`;
+const createMediaQuery = n => `@media screen and (min-width: ${n})`;
 const getValue = (n, scale) => get(scale, n, n);
 
 
