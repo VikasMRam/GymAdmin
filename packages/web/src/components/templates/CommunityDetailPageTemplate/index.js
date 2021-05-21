@@ -51,10 +51,12 @@ export const CommunityDetailPageTemplate = styled.main`
   }
 
   .overlayBody {
-    & > :not(:first-child) {
-      width: 720px;
-      margin-left: auto;
-      margin-right: auto;
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      & > :not(:first-child) {
+        width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     grid-row: 2;
