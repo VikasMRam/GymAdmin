@@ -20,6 +20,7 @@ const getContentType = (ext) => {
   }
 };
 
+const log = (k, obj) => console.log(k, JSON.stringify(obj));
 class ImageRequest {
   /**
      * Initializer function for creating a new image request, used by the image
@@ -36,10 +37,14 @@ class ImageRequest {
       this.originalKey = '';
       this.destKey = this.parseDestImageKey(this.requestType);
       this.edits = this.parseImageEdits(this.requestType);
+      console.time('Acquiring');
       this.originalImage = await this.getOriginalImage();
+      //log('requestType', this.requestType);
       return Promise.resolve(this);
     } catch (err) {
       return Promise.reject(err);
+    } finally {
+      console.timeEnd('Acquiring');
     }
   }
 
@@ -81,31 +86,27 @@ class ImageRequest {
      * @return {Promise} - The original image or an error.
      */
   async getOriginalImage() {
-    console.time('acquiring');
     const S3 = require('aws-sdk/clients/s3');
     const s3 = new S3({
       region: this.regional,
     });
     for (let i = 0; i < extPriority.length; i++) {
-      const ext = extPriority[i];
-      const key = this.parseOriginalImageKey(this.requestType, { ext });
-      console.log('try key', key);
-      const imageLocation = { Bucket: this.bucket, Key: key };
-      const request = s3.getObject(imageLocation).promise();
       try {
+        const ext = extPriority[i];
+        const key = this.parseOriginalImageKey(this.requestType, { ext });
+        const imageLocation = { Bucket: this.bucket, Key: key };
+        const request = s3.getObject(imageLocation).promise();
         const originalImage = await request;
         this.originalKey = key;
         return Promise.resolve(originalImage.Body);
       } catch (err) {
-        if (i >= (extPriority.length - 1)) {
+        if (err.code !== 'NoSuchKey' || i === extPriority.length - 1) {
           return Promise.reject({
             status: 500,
             code: err.code,
             message: err.message,
           });
         }
-      } finally {
-        console.timeEnd('acquiring');
       }
     }
   }
@@ -151,8 +152,8 @@ class ImageRequest {
   parseImageEdits(requestType) {
     const edits = {};
 
-    const fit = requestType.atLeast
-      ? 'outside'
+    const fit = requestType.boundingBox
+      ? 'inside'
       : 'cover';
 
     edits.resize = {
@@ -180,13 +181,13 @@ class ImageRequest {
   parseRequestType(event) {
     const { path } = event;
     // ----
-    const matchDefault = /\/(?<type>[\w\/]+)\/(?<edits>(?<atLeast>a){0,1}(?<width>[\d]{0,4})x(?<height>[\d]{0,4}))\/(?<folder>[\S]+)\/(?<name>\S+)\.(?<ext>\w+)$/;
+    const matchDefault = /\/(?<type>[\w\/]+)\/(?<edits>(?<boundingBox>a){0,1}(?<width>[\d]{0,4})x(?<height>[\d]{0,4}))\/(?<folder>[\S]+)\/(?<name>\S+)\.(?<ext>\w+)$/;
     const result = matchDefault.exec(path);
     if (result) {  // use sharp
       const {
         type,
         edits,
-        atLeast,
+        boundingBox,
         width,
         height,
         folder,
@@ -197,7 +198,7 @@ class ImageRequest {
       return {
         type,
         edits,
-        atLeast: !!atLeast,
+        boundingBox: !!boundingBox,
         width: parseInt(width, 10),
         height: parseInt(height, 10),
         folder,
