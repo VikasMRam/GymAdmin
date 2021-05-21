@@ -2,12 +2,12 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Route, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
+import { act } from 'react-dom/test-utils';
 
 import PageEventsContainer from './PageEventsContainer';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import config from 'sly/web/config';
-
 
 jest.mock('sly/web/services/helpers/events');
 jest.mock('sly/web/config');
@@ -40,13 +40,11 @@ describe('Given the PageEventsContainer', () => {
     mockEvents.sendEvent.mockReset();
   });
 
-
   describe('when mounted without an event in the query', () => {
     it('should send a page view event only and not do any redirecting', () => {
       const { history } = mountComponent('/home?query=true');
 
       expect(mockEvents.sendPageView).toHaveBeenCalledWith('/home', '?query=true');
-
       expect(mockEvents.sendEvent).not.toHaveBeenCalled();
       expect(history.replace).not.toHaveBeenCalled();
     });
@@ -56,11 +54,11 @@ describe('Given the PageEventsContainer', () => {
     it('should send a page view event only and not do any redirecting', () => {
       const { history } = mountComponent('/home?query=true');
 
-      history.push('/search?new-page=true');
-
       expect(mockEvents.sendPageView).toHaveBeenCalledWith('/home', '?query=true');
-      expect(mockEvents.sendPageView).toHaveBeenCalledWith('/search', '?new-page=true');
 
+      act(() => history.push('/search?new-page=true'));
+
+      expect(mockEvents.sendPageView).toHaveBeenCalledWith('/search', '?new-page=true');
       expect(mockEvents.sendEvent).not.toHaveBeenCalled();
       expect(history.replace).not.toHaveBeenCalled();
     });
@@ -72,7 +70,6 @@ describe('Given the PageEventsContainer', () => {
 
       expect(mockEvents.sendEvent).toHaveBeenCalledWith({ action: 'clicky', category: 'McClick' });
       expect(history.replace).toHaveBeenCalledWith('/home?query=true');
-
       expect(mockEvents.sendPageView).toHaveBeenCalledWith('/home', '?query=true');
     });
   });
@@ -81,11 +78,10 @@ describe('Given the PageEventsContainer', () => {
     it('should publish the event and remove it from the query parameter before publishing a page view event', () => {
       const { history } = mountComponent('/');
 
-      history.push('/search?query=foo_bar_jones&sly_action=searched&sly_category=quickly&page=1');
+      act(() => history.push('/search?query=foo_bar_jones&sly_action=searched&sly_category=quickly&page=1'));
 
       expect(mockEvents.sendEvent).toHaveBeenCalledWith({ action: 'searched', category: 'quickly' });
       expect(history.replace).toHaveBeenCalledWith('/search?query=foo_bar_jones&page=1');
-
       expect(mockEvents.sendPageView).toHaveBeenCalledWith('/search', '?query=foo_bar_jones&page=1');
     });
   });
