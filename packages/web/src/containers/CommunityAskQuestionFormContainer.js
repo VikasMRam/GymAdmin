@@ -23,10 +23,6 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAskQuestionForm);
 
-const mapDispatchToProps = {
-  createQuestion: api.createQuestion.asAction,
-};
-
 @withRouter
 @withUser
 
@@ -36,8 +32,7 @@ const mapDispatchToProps = {
 }))
 
 @query('createAction', 'createUuidAction')
-
-@connect(null, mapDispatchToProps)
+@query('createQuestion')
 
 export default class CommunityAskQuestionFormContainer extends Component {
   static propTypes = {

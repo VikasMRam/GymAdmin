@@ -212,10 +212,20 @@ describe('Community survey', () => {
       cy.visit(`/assisted-living/california/placerville/${community.id}`);
 
       waitForHydration(cy.get('div[data-testid*=GetAssessmentBox]')).within(() => {
-        cy.get('h3').contains('Need help finding senior living options?').should('exist');
+        cy.get('div').contains('Need help finding senior living options?').should('exist');
         cy.get('a').contains('Take the quiz').click();
+        cy.wait('@postUuidActions').then((xhr) => {
+          const request = xhr.requestBody;
+          const attrs = request.data.attributes;
+          expect(request.data).to.have.property('type', 'UUIDAction');
+          expect(attrs.actionInfo).to.have.property('stepName', 'step-0:profileSection');
+          expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+          expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+          expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
+        });
       });
     });
+
 
     for (let i = 0; i < wizardSteps; i++) {
       verifywizardStep(i);

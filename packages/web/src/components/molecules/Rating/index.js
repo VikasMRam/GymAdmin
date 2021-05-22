@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { getThemePropType, size } from 'sly/common/components/themes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { withColor } from 'sly/common/components/helpers';
+import { color as getColor } from 'sly/common/system';
+
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
@@ -23,10 +23,11 @@ const StyledStar = styled.svg`
 `;
 
 const BaseStarPath = styled.path`
-  ${withColor};
+
 `;
 
-const StarPath = props => (
+// eslint-disable-next-line react/prop-types
+const StarPath = ({ color, ...props }) => (
   <BaseStarPath
     fill="currentColor"
     fillRule="evenodd"
@@ -35,8 +36,9 @@ const StarPath = props => (
   />
 );
 
+
 const StarFillPath = styled(StarPath)`
-  ${withColor};
+fill: ${props => props.color ? props.color : 'inherit'};
 `;
 
 const randHash = () =>
@@ -59,8 +61,7 @@ const MaskedStar = ({ id, value, ...props }) => {
 };
 
 const Rating = React.forwardRef(({
-  palette,
-  variation,
+  color,
   value,
   size,
   seedId,
@@ -70,10 +71,10 @@ const Rating = React.forwardRef(({
     <StyledStar ref={ref} size={size} viewBox="0 0 120 24">
       {times(5, i => (
         <Fragment key={`star${i}`}>
-          {value >= i + 1 && <StarPath palette={palette} variation={variation} transform={`translate(${i * 24}, 0)`} />}
-          {value < i + 1 && <StarFillPath palette={palette} variation="lighter-60" transform={`translate(${i * 24}, 0)`} />}
+          {value >= i + 1 && <StarFillPath color={getColor(`${color}.base`)} transform={`translate(${i * 24}, 0)`} />}
+          {value < i + 1 && <StarFillPath color={getColor(`${color}.lighter-60`)}  transform={`translate(${i * 24}, 0)`} />}
           {value > i &&
-            value < i + 1 && <MaskedStar id={`${seedId}_${i}`} palette={palette} variation={variation} value={value} transform={`translate(${i * 24}, 0)`} />}
+            value < i + 1 && <MaskedStar id={`${seedId}_${i}`} color={getColor(`${color}.base`)}  value={value} transform={`translate(${i * 24}, 0)`} />}
         </Fragment>
       ))}
     </StyledStar>
@@ -86,15 +87,13 @@ Rating.propTypes = {
   size: getThemePropType('text'),
   innerRef: object,
   value: number.isRequired,
-  palette: palettePropType,
-  variation: variationPropType,
+  color: palettePropType,
   seedId: string,
 };
 
 Rating.defaultProps = {
   size: 'body',
-  palette: 'primary',
-  variation: 'base',
+  color: 'primary',
   seedId: `${randHash()}`,
 };
 

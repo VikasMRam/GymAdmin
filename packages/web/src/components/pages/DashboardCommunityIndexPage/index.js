@@ -84,9 +84,23 @@ export default class DashboardCommunityIndexPage extends Component {
 
     if (isPageLoading) {
       return (
-        <Loading activeMenuItem="Communities">
-          Loading...
-        </Loading>
+        <DashboardPageTemplate activeMenuItem="Communities">
+          <Section snap="none">
+            <SectionHeader actions={actions}>
+              Communities
+            </SectionHeader>
+
+            <TableHeaderButtons
+              datatable={datatable}
+              modelConfig={modelConfig}
+              meta={meta}
+            />
+
+            <Block weight="medium" size="body" textAlign="center" padding="30px">
+              Loading...
+            </Block>
+          </Section>
+        </DashboardPageTemplate>
       );
     }
 

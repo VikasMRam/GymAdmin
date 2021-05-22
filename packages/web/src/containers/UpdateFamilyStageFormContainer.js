@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { object, func, arrayOf, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { reduxForm } from 'redux-form';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import dayjs from 'dayjs';
 
-import { query, getRelationship, invalidateRequests, withUser } from 'sly/web/services/api';
+import { query, withUser, prefetch } from 'sly/web/services/api';
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
@@ -49,19 +50,17 @@ const ReduxForm = reduxForm({
   validate,
 })(UpdateFamilyStageForm);
 
-const mapStateToProps = (state, props) => ({
-  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
-  formState: selectFormData(state, 'UpdateFamilyStageForm'),
-});
-
+@withRouter
 @query('updateClient', 'updateClient')
 @query('createNote', 'createNote')
 @query('updateUuidAux', 'updateUuidAux')
 @withUser
-
-@connect(mapStateToProps, {
-  invalidateClients: () => invalidateRequests('getClients'),
-})
+@prefetch('client', 'getClient', (req, { match }) => req({
+  id: match.params.id,
+}))
+@connect((state) => ({
+  formState: selectFormData(state, 'UpdateFamilyStageForm'),
+}))
 
 export default class UpdateFamilyStageFormContainer extends Component {
   static propTypes = {
@@ -77,10 +76,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
     rejectReasons: arrayOf(string).isRequired,
     currentLossReason: string,
     updateUuidAux: func.isRequired,
-    uuidAux: object,
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
-    invalidateClients: func,
+    invalidateClient: func,
     user: userPropType,
     initialValues: object,
   };
@@ -90,9 +88,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
 
   handleUpdateStage = (data) => {
     const {
-      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients,
-    } = this.props;
+      updateClient, client, status: { client: { invalidate: invalidateClient, getRelationship } }, rawClient, notifyError, notifyInfo, onSuccess, createNote,
+      updateUuidAux, refetchClient, refetchNotes } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
@@ -155,6 +152,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const clientPromise = () => refetchClient();
 
+    const uuidAux = getRelationship(rawClient, 'uuidAux');
     let newUuidAux = immutable.wrap(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     let newClient = immutable.wrap(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
@@ -249,7 +247,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .then(notePromise)
       .then(clientPromise)
       .then(getNotesPromise)
-      .then(invalidateClients)
+      .then(() => invalidateClient({ id }))
       .then(() => {
         let msg = 'Family stage updated';
         if (this.currentStage.group !== this.nextStage.group) {
@@ -282,6 +280,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       client, formState, lossReasons, initialValues, user, ...props
     } = this.props;
+
+    if (!client) {
+      return null;
+    }
+
     const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } }, provider, } = client;
     const { entityType, id: providerOrg } = provider;
     const { organization } = user;

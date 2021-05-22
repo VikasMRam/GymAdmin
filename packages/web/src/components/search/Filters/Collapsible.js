@@ -1,47 +1,35 @@
 import React, { forwardRef, useCallback, useMemo, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { bool, string, node, object } from 'prop-types';
 
-import { getKey, key, size } from 'sly/common/components/themes';
-import { Icon, Heading } from 'sly/common/components/atoms';
-import Block from 'sly/common/components/atoms/Block';
-import {
-  withDimensions,
-  withDisplay,
-  withSpacing,
-} from 'sly/common/components/helpers';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
+import { Block, sx$tablet, Heading } from 'sly/common/system';
+import { Chevron } from 'sly/common/icons';
 
-const Header = styled.div(
-  withSpacing,
-  withDisplay,
-  css`
-    transition: padding-bottom ${key('transitions.default')};
-  `,
-);
+const Header = styled(Block)`
+    transition: padding-bottom 0.2s ease-out;
+  `;
 
 Header.defaultProps = {
   display: 'flex',
 };
 
-const Content = styled.div(
-  withDimensions,
-  css`
+const Content = styled(Block)`
     box-sizing: border-box;
     overflow: hidden;
-    transition: height ${key('transitions.default')};
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: auto;
-      display: grid;
-      grid-template-columns: 50% 50%;
-    }
-  `,
-);
+    transition: height 0.2s ease-out;
+    ${sx$tablet({
+    width: 'auto',
+    display: 'grid',
+    gridTemplateColumns: '50% 50%',
+  })}
+  `;
 
 const Collapsible = forwardRef(({
   children,
   title,
   borderBottom,
+  borderColor,
   disabled,
   showIf,
   ...props
@@ -72,26 +60,26 @@ const Collapsible = forwardRef(({
     <Block
       ref={ref}
       borderBottom={!disabled && borderBottom}
+      borderColor={borderColor}
     >
       <Header
         onClick={(!disabled && toggle) || null}
-        paddingTop="xLarge"
-        paddingBottom={collapsed ? 'xLarge' : 'medium'}
+        paddingTop="l"
+        paddingBottom={collapsed ? 'l' : 's'}
       >
         <Heading
-          weight="medium"
-          size="body"
-          clamped
+          font="title-xs-azo"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          maxWidth="100%"
           pad={0}
         >
           {title}
         </Heading>
-        {!disabled && <Icon
+        {!disabled && <Chevron
           marginLeft="auto"
-          icon="chevron"
-          palette="slate"
-          rotate={1}
-          flip={!collapsed}
+          color="slate"
+          rotation={collapsed ? 180 : null}
         />}
       </Header>
       <Content
@@ -118,7 +106,8 @@ Collapsible.propTypes = {
 
 Collapsible.defaultProps = {
   showIf: true,
-  borderBottom: 'regular',
+  borderBottom: 's',
+  borderColor: 'slate.lighter-90',
   disabled: false,
 };
 

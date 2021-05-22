@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { func, object, node, array } from 'prop-types';
+import { object, node, array } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
 import { withRouter } from 'react-router';
 
-import {
-  parseURLQueryParams,
-  removeQueryParamFromURL,
-} from 'sly/web/services/helpers/url';
 import { withAuth } from 'sly/web/services/api';
 import { isServer } from 'sly/web/config';
 import withApiContext, { apiContextPropType } from 'sly/web/services/api/context';
@@ -19,24 +15,6 @@ const searchWhitelist = [
 
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
-
-// const LoginRedirect = () => {
-//   const { staticContext } = useContext(__RouterContext);
-//   const location = useLocation();
-//
-//   const {
-//     pathname,
-//     search,
-//     hash,
-//   } = location;
-//   const afterLogin = `${pathname}${search}${hash}`;
-//   const url = `/?${stringify({ loginRedirect: afterLogin })}`;
-//
-//   if (isServer) {
-//     staticContext.status = 302;
-//   }
-//   return <Redirect to={url} />;
-// };
 
 @withApiContext
 @withAuth
@@ -50,8 +28,6 @@ export default class Router extends Component {
     status: object,
     history: object,
     staticContext: object,
-    authenticated: object,
-    ensureAuthenticated: func,
     apiContext: apiContextPropType,
   };
 
@@ -60,35 +36,6 @@ export default class Router extends Component {
     children: null,
   };
 
-  checkLoginRedirect() {
-    const {
-      authenticated,
-      location,
-      history,
-      ensureAuthenticated,
-    } = this.props;
-
-    const { pathname, search, hash } = location;
-
-    const { loginRedirect } = parseURLQueryParams(search);
-    if (!authenticated.loggingIn && loginRedirect) {
-      ensureAuthenticated()
-        .then(() => {
-          history.replace(decodeURIComponent(loginRedirect));
-          // temp fix for issues with redirect not working.
-          window.location.reload(false);
-        })
-        .catch(() => {
-          const params = removeQueryParamFromURL('loginRedirect', search);
-          history.replace(`${pathname}${stringify(params)}${hash}`);
-        });
-    }
-  }
-
-  componentDidMount() {
-    this.checkLoginRedirect();
-  }
-
   componentDidUpdate(prevProps) {
     const { location } = this.props;
     const { pathname, search } = location;
@@ -96,11 +43,6 @@ export default class Router extends Component {
 
     const qs = parse(search);
     const prevQs = parse(prevSearch);
-
-    if (pathname !== prevPathname) {
-      // call component did mount here too
-      this.checkLoginRedirect();
-    }
 
     if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 
 import SlyEvent from 'sly/web/services/helpers/events';
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import AgentsPage from 'sly/web/components/pages/AgentsPage';
 import { urlize } from 'sly/web/services/helpers/url';
 

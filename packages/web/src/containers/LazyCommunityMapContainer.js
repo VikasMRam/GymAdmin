@@ -1,37 +1,43 @@
-import React, { Component } from 'react';
-import { Lazy } from 'react-lazy';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-import { withRouter } from 'react-router';
-import { prefetch } from 'sly/web/services/api';
-import { community as communityPropType } from 'sly/common/propTypes/community';
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 
 const CommunityMap = loadable(() => import(/* webpackChunkName: "chunkCommunityMap" */ 'sly/web/components/organisms/CommunityMap'));
 
-class LazyCommunityMapContainer extends Component {
-  state = { mounted: false };
+const LazyCommunityMapContainer = () => {
+  const [mounted, setMounted] = useState(false);
+  const placeholderRef = useRef();
 
-  componentDidMount() {
-    this.setState({ mounted: true });
-  }
+  const { communitySlug } = useParams();
 
-  render() {
-    const { community } = this.props;
+  const { requestInfo: { normalized: community } } = usePrefetch('getCommunity', {
+    id: communitySlug,
+    include: 'similar-communities,questions,agents',
+  });
 
-    return this.state.mounted ? (
-      <CommunityMap community={community} similarProperties={community.similarProperties} />
-    ) : <div />;
-  }
-}
-LazyCommunityMapContainer.typeHydrationId = 'LazyCommunityMapContainer';
-LazyCommunityMapContainer.propTypes = {
-  community: communityPropType,
+  useEffect(() => {
+    if (placeholderRef.current) {
+      const intersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setMounted(true);
+          }
+        })
+      }, {
+        rootMargin: '0px 0px 500px 0px',
+      });
+      intersectionObserver.observe(placeholderRef.current);
+      return () => intersectionObserver.disconnect();
+    }
+  }, [placeholderRef]);
+
+  return mounted
+    ? <CommunityMap community={community} similarProperties={community.similarProperties} />
+    : <div ref={placeholderRef} />;
 };
 
-const withCommunity = prefetch('community', 'getCommunity', (req, { match }) =>
-  req({
-    id: match.params.communitySlug,
-    include: 'similar-communities,questions,agents',
-  }),
-);
-export default withRouter(withCommunity(LazyCommunityMapContainer));
+LazyCommunityMapContainer.typeHydrationId = 'LazyCommunityMapContainer';
+
+export default LazyCommunityMapContainer;

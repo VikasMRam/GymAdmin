@@ -1,5 +1,6 @@
 import loadable from '@loadable/component';
 
+
 import { Button } from 'sly/common/components/atoms';
 import { Input } from 'sly/web/components/atoms';
 // leave as it is: cyclic dependency
@@ -12,6 +13,7 @@ import DateRange from 'sly/web/components/molecules/DateRange';
 import BoxChoice from 'sly/web/components/molecules/BoxChoice';
 import PhoneInput from 'sly/web/components/molecules/PhoneInput';
 import IconInput from 'sly/web/components/molecules/IconInput';
+import Toggle from 'sly/web/components/molecules/Toggle';
 import UserAutoComplete from 'sly/web/components/molecules/UserAutoComplete';
 import OrganizationAutoComplete from 'sly/web/components/molecules/OrganizationAutoComplete';
 import NumberInput from 'sly/web/components/molecules/NumberInput';
@@ -71,6 +73,8 @@ const getInputComponent = (type) => {
       return Button;
     case 'number':
       return NumberInput;
+    case 'toggle':
+      return Toggle;
     default:
       return Input;
   }

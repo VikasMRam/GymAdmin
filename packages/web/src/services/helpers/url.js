@@ -1,5 +1,5 @@
 import { stringify, parse } from 'query-string';
-import { toUpper } from 'lodash';
+import toUpper from 'lodash/toUpper';
 
 import { titleize } from 'sly/web/services/helpers/strings';
 import { communitySizeSearchParamMap } from 'sly/web/components/search/helpers';
