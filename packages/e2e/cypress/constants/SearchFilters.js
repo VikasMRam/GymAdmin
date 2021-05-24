@@ -37,15 +37,19 @@ export const SizeFilters = {
 export const FilterNames = {
   CommunityType: {
     uiText: 'Community type',
+    mobileUiText: 'Type of community',
   },
   Size: {
     uiText: 'Size',
+    mobileUiText: 'Size',
   },
   Price: {
     uiText: 'Price',
+    mobileUiText: 'Price',
   },
   MoreFilters: {
     uiText: 'More filters',
+
   },
 };
 
@@ -70,6 +74,7 @@ export const PriceFilter = {
 export const MoreFilters = {
   CareServices: {
     uiText: 'Care services',
+    mobileUiText: 'Care services',
     MedicationManagement: {
       uiText: 'Medication management',
     },

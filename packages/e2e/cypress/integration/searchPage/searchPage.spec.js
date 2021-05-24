@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="Cypress" />
+
 import { responsive } from '../../helpers/tests';
 import {
   CommunityTypes,
@@ -7,7 +10,6 @@ import {
   FilterNames,
 } from '../../constants/SearchFilters';
 
-// / <reference types="Cypress" />
 
 //* Helper Functions Start
 const toSearchPage = (address) => {
@@ -60,6 +62,18 @@ const checkForListCount = (count) => {
   });
 };
 
+const checkForADTile = (currentList) => {
+  if (currentList.length && currentList.length > 2) {
+    cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
+      expect(matchedElements.length).to.eql(2);
+    });
+  } else {
+    cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
+      expect(matchedElements.length).to.eql(1);
+    });
+  }
+};
+
 // Accepts array of text and validates that each text should be present in all list items
 // const checkForListText = (arrayOfText) => {
 //   cy.get('a article picture')
@@ -82,12 +96,50 @@ const checkForListCount = (count) => {
 //* Filter Logics
 
 // Accepts name of the filter, and clicks it.
-const applyFilter = (text) => {
-  cy.get('div[class*="FilterButton"]').contains(text).click();
+
+const clickFilterButtons  = (viewPort, buttonName) => {
+  if (viewPort === 'mobile') {
+    if (buttonName === 'Save') {
+      cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
+    } else if (buttonName === 'Clear') {
+      cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click();
+    }
+  } else if (buttonName === 'Save') {
+    cy.get('button')
+      .contains('Save')
+      .click({ force: true });
+  } else if (buttonName === 'Clear') {
+    cy.get('button') // Click on clear all
+      .contains('Clear all')
+      .click();
+  }
 };
 
-const applyGenericFilter = (filterName, selectionTypes) => {
-  applyFilter(filterName); // Click on filter
+const applyFilter = (filterName, viewPort) => {
+  cy.get('div[class*="FilterButton"]').each((filterButton) => {
+    cy.wrap(filterButton)
+      .invoke('text')
+      .then((text) => {
+        if (text.includes('Filters') && filterButton.is(':visible')) {
+          cy.wrap(filterButton).click();
+        }
+      });
+  }).then(() => {
+    console.log(viewPort);
+    if (viewPort === 'mobile') {
+      cy.get('div[class*="Collapsible__Header"]').contains(filterName.mobileUiText).click();
+    } else {
+      cy.get('div[class*="FilterButton"]').contains(filterName.uiText).click();
+    }
+  });
+  // cy.get('div[class*="FilterButton"]').contains(text).click();
+};
+
+
+const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
+  console.log(viewPort);
+  applyFilter(filterName, viewPort); // Click on filter
+
 
   // Select the choices
   selectionTypes.forEach((communityType) => {
@@ -97,30 +149,61 @@ const applyGenericFilter = (filterName, selectionTypes) => {
       .click();
   });
 
-  // Click on Save button
-  cy.get('button')
-    .contains('Save')
-    .click({ force: true });
-
-  cy.get('div[class*="FilterButton"]').contains(selectionTypes[0].uiText);
+  // if (viewPort === 'mobile') {
+  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
+  //   cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
+  // } else {
+  //   cy.get('button')
+  //     .contains('Save')
+  //     .click({ force: true });
+  //   cy.get('div[class*="FilterButton"]').contains(selectionTypes[0].uiText);
+  // }
+  clickFilterButtons(viewPort, 'Save');
+  if (viewPort === 'mobile') {
+    cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
+  } else {
+    cy.get('div[class*="FilterButton"]').contains(selectionTypes[0].uiText);
+  }
 };
 
-const clearGenericTypeFilter = (filterName, selectionValue) => {
-  applyFilter(selectionValue); // Click on filter
+const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
+  cy.log('Clear result');
+  if (viewPort === 'mobile') {
+    applyFilter(filterName, viewPort);
+  } else {
+    applyFilter(selectionValue, viewPort);
+  }
 
-  cy.get('button') // Click on clear all
-    .contains('Clear all')
-    .click();
+  // if (viewPort === 'mobile') {
+  //   cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click();
+  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
+  //   cy.get('span[class*="FilterButton__Number"]').should('not.exist');
+  // } else {
+  //   cy.get('button') // Click on clear all
+  //     .contains('Clear all')
+  //     .click();
+  //   cy.get('button')
+  //     .contains('Save')
+  //     .click({ force: true });
+  //   cy.get('div[class*="FilterButton"]').contains(selectionValue.uiText);
+  // }
 
-  cy.get('button')
-    .contains('Save')
-    .click({ force: true });
-
-  cy.get('div[class*="FilterButton"]').contains(filterName);
+  clickFilterButtons(viewPort, 'Clear');
+  clickFilterButtons(viewPort, 'Save');
+  if (viewPort === 'mobile') {
+    cy.get('span[class*="FilterButton__Number"]').should('not.exist');
+  } else {
+    cy.get('div[class*="FilterButton"]').contains(filterName.uiText);
+  }
 };
 
-const applyMoreFilter = (filterName, selectionTypes) => {
-  applyFilter(filterName);
+const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
+  if (viewPort === 'mobile') {
+    applyFilter(filterName, viewPort);
+  } else {
+    applyFilter(lapHeader, viewPort);
+  }
+
   selectionTypes.forEach((communityType) => {
     const searchText = communityType.uiText;
     cy.get('label[class*="FilterChoice"]')
@@ -128,42 +211,86 @@ const applyMoreFilter = (filterName, selectionTypes) => {
       .click();
   });
 
-  cy.get('button')
-    .contains('Save')
-    .click();
+  // if (viewPort === 'mobile') {
+  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
+  // } else {
+  //   cy.get('button')
+  //     .contains('Save')
+  //     .click({ force: true });
+  // }
+  clickFilterButtons(viewPort, 'Save');
+
 
   cy.log('Save Button Clicked');
 
-  cy.get('span[class*="FilterButton__Number"]').eq(1).scrollIntoView();
+  cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
 };
+
+const clearMoreFilter = (lapHeader, filterName, viewPort) => {
+  if (viewPort === 'mobile') {
+    applyFilter(filterName, viewPort);
+  } else {
+    applyFilter(lapHeader, viewPort);
+  }
+  // if (viewPort === 'mobile') {
+  //   cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click();
+  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
+  //   cy.get('span[class*="FilterButton__Number"]').should('not.exist');
+  // } else {
+  //   cy.get('button') // Click on clear all
+  //     .contains('Clear all')
+  //     .click();
+  //   cy.get('button')
+  //     .contains('Save')
+  //     .click({ force: true });
+  //   cy.get('div[class*="FilterButton"]').contains(filterName.uiText);
+  // }
+  clickFilterButtons(viewPort, 'Clear');
+  clickFilterButtons(viewPort, 'Save');
+  if (viewPort === 'mobile') {
+    cy.get('span[class*="FilterButton__Number"]').should('not.exist');
+  } else {
+    cy.get('div[class*="FilterButton"]').contains(lapHeader.uiText);
+  }
+};
+
 
 //* Result Set Logics
 
 // Accepts previous result count , and validate if present and previous count are different
 const validateChangeInResultSet = (previousResultCount) => {
+  console.log(previousResultCount);
+  cy.log('Validate Result');
+  cy.wait(2000);
   cy.get('div')
     .contains('results')
     .invoke('text')
     .then((text) => {
       const textCount = parseFloat(text);
-      expect(textCount !== Number(previousResultCount));
+      // expect(textCount !== Number(previousResultCount));
+      expect(textCount).not.eql(Number(previousResultCount));
     });
 };
-
-// Accepts count, and check it matches with present result count
-// const validateResultSetCount = (count) => {
-//   cy.get('div')
-//     .contains('results')
-//     .invoke('text')
-//     .then((text) => {
-//       const textCount = parseFloat(text);
-//       expect(Number(textCount)).to.eql(count);
-//     });
-// };
 
 const validateNoResultCheck = () => {
   cy.contains('No results');
 };
+
+// Accepts count, and check it matches with present result count
+const validateResultSetCount = (currentList, totalCount) => {
+  if (currentList && currentList.length) {
+    cy.get('div')
+      .contains('results')
+      .invoke('text')
+      .then((text) => {
+        const textCount = parseFloat(text);
+        expect(Number(textCount)).to.eql(totalCount);
+      });
+  } else {
+    validateNoResultCheck();
+  }
+};
+
 
 const checkForTitle = (titleText) => {
   cy.get('h1').contains(titleText).should('exist');
@@ -279,6 +406,11 @@ const mapCheck = (list, mode) => {
 };
 //* Helper Functions End
 
+const searchText = 'San Francisco, CA';
+const cityName = 'San Francisco';
+const urlCity = 'san-francisco';
+
+//! First Set
 describe('Search Page', () => {
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
@@ -295,6 +427,9 @@ describe('Search Page', () => {
     // cy.route('POST', '**/uuid-actions').as('postUuidActions');
   });
   let currentList = [];
+  let totalResultCount = 0;
+
+
   responsive(() => {
     it('Check for near by cities links ', () => {
       cy.visit('/');
@@ -308,14 +443,15 @@ describe('Search Page', () => {
     });
 
     it('Navigate to city search page', () => {
-      toSearchPage('San Francisco, CA');
+      toSearchPage(searchText);
       // Url check
-      cy.url().should('have.string', 'san-francisco');
+      cy.url().should('have.string', urlCity);
       cy.wait('@communitySearch').then((res) => {
         res.response.body.text().then((text) => {
           const responseBody = JSON.parse(text);
           if (responseBody.data && responseBody.data.length) {
             currentList = responseBody.data;
+            totalResultCount = responseBody.meta['filtered-count'];
           }
         });
       });
@@ -323,19 +459,22 @@ describe('Search Page', () => {
 
     it('Title check', () => {
       // Heading check
-      cy.contains('Senior Living Communities in San Francisco');
+      cy.contains(`Senior Living Communities in ${cityName}`);
     });
-
-    // it("Results text check", () => {
-    //   // Results text
-    //   validateResultSetCount(currentList.length);
-    // });
 
     it('Filter section check', () => {
       //! Filter Section
       cy.get('div[class*="FilterButton__"]')
         .its('length')
         .should('greaterThan', 4);
+    });
+    it('Results text check', () => {
+      // Results text
+      validateResultSetCount(currentList, totalResultCount);
+    });
+
+    it('Verify AD Tile', () => {
+      checkForADTile(currentList);
     });
     it('List section check', () => {
       checkForListCount(20);
@@ -350,8 +489,13 @@ describe('Search Page', () => {
 // ! Second Set
 describe('Search Page Sections', () => {
   let currentList = [];
-  let currentResultCount = 0;
+  let totalResultCount = 0;
   beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
     cy.server();
     cy.route({
       method: 'GET',
@@ -360,146 +504,122 @@ describe('Search Page Sections', () => {
     cy.route('GET', '**/search?**').as('searchRequest');
   });
 
-  it('Navigate to search page', () => {
-    cy.visit('/');
-    toSearchPage('San Francisco, CA');
-    // Url check
-    cy.url().should('have.string', 'san-francisco');
-    cy.wait('@communitySearch').then((res) => {
-      res.response.body.text().then((text) => {
-        const responseBody = JSON.parse(text);
-        if (responseBody.data && responseBody.data.length) {
-          currentList = responseBody.data;
-        }
+  responsive((viewport, id) => {
+    it('Navigate to search page', () => {
+      cy.visit('/');
+      toSearchPage(searchText);
+      // Url check
+      cy.url().should('have.string', urlCity);
+      cy.wait('@communitySearch').then((res) => {
+        res.response.body.text().then((text) => {
+          const responseBody = JSON.parse(text);
+          if (responseBody.data && responseBody.data.length) {
+            currentList = responseBody.data;
+            totalResultCount = responseBody.meta['filtered-count'];
+          }
+        });
       });
     });
-  });
 
-  it('Care types explanation check', () => {
-    // Care types explanation
-    cy.get('section h3')
-      .contains('Explore other types of communities')
-      .parent()
-      .children()
-      .find('article')
-      .each((element) => {
-        cy.wrap(element)
-          .invoke('text')
-          .then((text) => {
-            expect(text.length).to.be.at.least(10);
-          });
-      });
-  });
+    it('Care types explanation check', () => {
+      // Care types explanation
+      cy.get('section h3')
+        .contains('Explore other types of communities')
+        .parent()
+        .children()
+        .find('article')
+        .each((element) => {
+          cy.wrap(element)
+            .invoke('text')
+            .then((text) => {
+              expect(text.length).to.be.at.least(10);
+            });
+        });
+    });
 
-  it('List check for 20 elements', () => {
-    checkForListCount(20);
-  });
+    it('List check for 20 elements', () => {
+      checkForListCount(20);
+    });
 
-  it('Care Type Filter Check', () => {
-    cy.get('div')
-      .contains('results')
-      .invoke('text')
-      .then((text) => {
-        currentResultCount = parseFloat(text);
-      });
+    it('Care Type Filter Check', () => {
+      applyGenericFilter(FilterNames.CommunityType, [
+        CommunityTypes.AssistedLiving,
+      ], viewport);
+      // check for title change
+      checkForTitle(CommunityTypes.AssistedLiving.uiText);
 
-    applyGenericFilter(FilterNames.CommunityType.uiText, [
-      CommunityTypes.AssistedLiving,
-    ]);
-    // check for title change
-    checkForTitle(CommunityTypes.AssistedLiving.uiText);
+      validateChangeInResultSet(totalResultCount);
 
-    validateChangeInResultSet(currentResultCount);
+      clearGenericTypeFilter(
+        FilterNames.CommunityType,
+        CommunityTypes.AssistedLiving, viewport,
+      );
+    });
 
-    clearGenericTypeFilter(
-      FilterNames.CommunityType.uiText,
-      CommunityTypes.AssistedLiving.uiText,
-    );
-  });
+    it('Size Type Filter Check', () => {
+      applyGenericFilter(FilterNames.Size, [SizeFilters.Small], viewport);
+      validateChangeInResultSet(totalResultCount);
+      clearGenericTypeFilter(FilterNames.Size, SizeFilters.Small, viewport);
+    });
 
-  it('Size Type Filter Check', () => {
-    cy.get('div')
-      .contains('results')
-      .invoke('text')
-      .then((text) => {
-        currentResultCount = parseFloat(text);
-      });
+    it('Prize Type Filter Check', () => {
+      applyGenericFilter(FilterNames.Price, [PriceFilter.Range1], viewport);
+      validateChangeInResultSet(totalResultCount);
+      clearGenericTypeFilter(FilterNames.Price, PriceFilter.Range1, viewport);
+    });
 
-    applyGenericFilter(FilterNames.Size.uiText, [SizeFilters.Small]);
-    validateChangeInResultSet(currentResultCount);
-    clearGenericTypeFilter(FilterNames.Size.uiText, SizeFilters.Small.uiText);
-  });
+    it('More Filter Check', () => {
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
 
-  it('Prize Type Filter Check', () => {
-    cy.get('div')
-      .contains('results')
-      .invoke('text')
-      .then((text) => {
-        currentResultCount = parseFloat(text);
-      });
+      // applyMoreFilter(FilterNames.MoreFilters.uiText, [
+      //   MoreFilters.CareServices.MedicationManagement,
+      // ]);
 
-    applyGenericFilter(FilterNames.Price.uiText, [PriceFilter.Range1]);
-    validateChangeInResultSet(currentResultCount);
-    clearGenericTypeFilter(FilterNames.Price.uiText, PriceFilter.Range1.uiText);
-  });
+      validateChangeInResultSet(totalResultCount);
+      clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
+    });
 
-  it('More Filter Check', () => {
-    cy.get('div')
-      .contains('results')
-      .invoke('text')
-      .then((text) => {
-        currentResultCount = parseFloat(text);
-      });
-    applyMoreFilter(FilterNames.MoreFilters.uiText, [
-      MoreFilters.CareServices.MedicationManagement,
-    ]);
-    validateChangeInResultSet(currentResultCount);
-    clearGenericTypeFilter(
-      FilterNames.MoreFilters.uiText,
-      FilterNames.MoreFilters.uiText,
-    );
-  });
+    it('More Filter Check - No results', () => {
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.TransportArrangememt, MoreFilters.CareServices.MedicationManagement], viewport);
+      validateNoResultCheck();
+      clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
+    });
 
-  it('More Filter Check - No results', () => {
-    applyMoreFilter(FilterNames.MoreFilters.uiText, [
-      MoreFilters.CareServices.TransportArrangememt,
-      MoreFilters.CareServices.MedicationManagement,
-    ]);
-    validateNoResultCheck();
-    clearGenericTypeFilter(
-      FilterNames.MoreFilters.uiText,
-      FilterNames.MoreFilters.uiText,
-    );
-  });
 
-  // it("Verify AD Tile", () => {});
+    it('Navigate to page 2', () => {
+      // cy.get('div[class*="SearchPagination"]')
+      //   .find('button')
+      //   .contains('2')
+      //   .click();
+      cy.get('div[class*="Pagination"]').find('div[rotate="0"]').click();
 
-  it('Navigate to page 2', () => {
-    cy.get('div[class*="SearchPagination"]')
-      .find('button')
-      .contains('2')
-      .click();
-
-    cy.wait('@communitySearch').then((res) => {
-      res.response.body.text().then((text) => {
-        const responseBody = JSON.parse(text);
-        if (responseBody.data && responseBody.data.length) {
-          currentList = responseBody.data;
-        }
+      cy.wait('@communitySearch').then((res) => {
+        res.response.body.text().then((text) => {
+          const responseBody = JSON.parse(text);
+          if (responseBody.data && responseBody.data.length) {
+            currentList = responseBody.data;
+          }
+        });
       });
     });
-  });
 
-  it('check contents of page 2', () => {
-    checkPopulationOfList(currentList);
+    it('check contents of page 2', () => {
+      checkPopulationOfList(currentList);
+    });
   });
 });
+
 
 //! Third Set
 
 describe('Assisted Search Page Sections', () => {
   let currentList = [];
   beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
     cy.server();
     cy.route({
       method: 'GET',
@@ -507,46 +627,47 @@ describe('Assisted Search Page Sections', () => {
     }).as('communitySearch');
   });
 
-  it('Navigate to search page', () => {
-    // cy.visit('/');
-    cy.visit('/');
-    toSearchPageFromCity('San Francisco');
-    cy.wait('@communitySearch').then((res) => {
-      res.response.body.text().then((text) => {
-        const responseBody = JSON.parse(text);
-        if (responseBody.data && responseBody.data.length) {
-          currentList = responseBody.data;
-        }
+  responsive(() => {
+    it('Navigate to search page', () => {
+      // cy.visit('/');
+      cy.visit('/');
+      toSearchPageFromCity('San Francisco');
+      cy.wait('@communitySearch').then((res) => {
+        res.response.body.text().then((text) => {
+          const responseBody = JSON.parse(text);
+          if (responseBody.data && responseBody.data.length) {
+            currentList = responseBody.data;
+          }
+        });
       });
     });
-  });
 
-  it('List population check', () => {
-    checkPopulationOfList(currentList);
-  });
-
-  it('map check', () => {
-    mapCheck(currentList, 'CONTENT');
-  });
-
-  it('Navigate from map popover', () => {
-    cy.window().then((win) => {
-      cy.stub(win, 'open').as('windowOpen');
+    it('List population check', () => {
+      checkPopulationOfList(currentList);
     });
 
-    mapCheck([currentList[0]], 'MARKER_NAVIGATION');
-  });
+    it('map check', () => {
+      mapCheck(currentList, 'CONTENT');
+    });
 
-  it('Geo Guide', () => {
-    cy.get('div')
-      .contains('Getting Ready to Move to Assisted Living')
-      .should('exist');
-    cy.get('div')
-      .contains('Costs Associated with Assisted Living')
-      .should('exist');
-    cy.get('div')
-      .contains('Comparing Assisted Living to Other Care communities')
-      .should('exist');
+    it('Navigate from map popover', () => {
+      cy.window().then((win) => {
+        cy.stub(win, 'open').as('windowOpen');
+      });
+
+      mapCheck([currentList[0]], 'MARKER_NAVIGATION');
+    });
+
+    it('Geo Guide', () => {
+      cy.get('div')
+        .contains('Getting Ready to Move to Assisted Living')
+        .should('exist');
+      cy.get('div')
+        .contains('Costs Associated with Assisted Living')
+        .should('exist');
+      cy.get('div')
+        .contains('Comparing Assisted Living to Other Care communities')
+        .should('exist');
+    });
   });
-  // it("Verify AD Tile", () => {});
 });
