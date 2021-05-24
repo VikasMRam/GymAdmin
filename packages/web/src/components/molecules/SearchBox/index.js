@@ -28,12 +28,11 @@ const Suggestions = styled(Block)`
   }
 `;
 
-const groupSuggestions = suggestions =>
-  suggestions.reduce((acc, curr) => {
-    if (!acc[curr.resourceType]) acc[curr.resourceType] = [];
-    acc[curr.resourceType].push(curr);
-    return acc;
-  }, {});
+const groupSuggestions = suggestions => suggestions.reduce((acc, curr) => {
+  if (!acc[curr.resourceType]) acc[curr.resourceType] = [];
+  acc[curr.resourceType].push(curr);
+  return acc;
+}, {});
 
 const GROUP_LABELS = {
   City: 'Locations',
@@ -59,7 +58,10 @@ const GROUP_LIMITS = {
   PartnerAgent: 3,
 };
 
-const GROUPS_DISPLAY_TEXT = ['City', 'Zipcode'];
+const GROUPS_DISPLAY_TEXT = [
+  'City',
+  'Zipcode',
+];
 
 const SearchBox = ({
   layout,
@@ -102,14 +104,9 @@ const SearchBox = ({
           snap="right"
           {...inputProps}
         />
-        <IconButton
-          icon="search"
-          snap="left"
-          border="0"
-          onClick={onSearchButtonClick}
-        />
+        <IconButton icon="search" snap="left" border="0" onClick={onSearchButtonClick} />
       </Block>
-      {isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0) && (
+      {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
         <SuggestionsWrapper
           background="white"
           position="absolute"
@@ -122,7 +119,7 @@ const SearchBox = ({
             use mouseDown instead of onClick as the onClick which is triggered after mouse button is release will trigger blur of textbox
             that will by the time hide the suggestions dropdown
           */}
-          {onCurrentLocationClick && !suggestions.length && (
+          {onCurrentLocationClick && !suggestions.length &&
             <Suggestion
               onMouseDown={onCurrentLocationClick}
               cursor="pointer"
@@ -132,10 +129,9 @@ const SearchBox = ({
               iconSize="caption"
               palette="primary"
             >
-              <Icon icon="navigation" marginRight="regular" palette="primary" />{' '}
-              Current location
+              <Icon icon="navigation" marginRight="regular" palette="primary" /> Current location
             </Suggestion>
-          )}
+          }
           {Object.keys(gps).map(k => (
             <Suggestions key={k} borderBottom="regular" paddingTop="medium">
               <IconItem
@@ -162,9 +158,8 @@ const SearchBox = ({
                   clamped
                 >
                   <Block display="inline" marginLeft="xxLarge">
-                    {GROUPS_DISPLAY_TEXT.includes(suggestion.resourceType)
-                      ? suggestion.displayText
-                      : suggestion.name}
+                    {GROUPS_DISPLAY_TEXT.includes(suggestion.resourceType) ?
+                      suggestion.displayText : suggestion.name}
                   </Block>
                 </Suggestion>
               ))}
@@ -191,7 +186,7 @@ SearchBox.propTypes = {
   onKeyDown: func,
   placeholder: string,
   readOnly: bool,
-  suggestions: arrayOf(object).isRequired
+  suggestions: arrayOf(object).isRequired,
 };
 
 SearchBox.defaultProps = {
@@ -200,7 +195,6 @@ SearchBox.defaultProps = {
   value: '',
   defaultValue: '',
   suggestions: [],
-
 };
 
 export default SearchBox;
