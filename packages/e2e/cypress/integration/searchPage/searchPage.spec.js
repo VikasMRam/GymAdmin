@@ -125,7 +125,6 @@ const applyFilter = (filterName, viewPort) => {
         }
       });
   }).then(() => {
-    console.log(viewPort);
     if (viewPort === 'mobile') {
       cy.get('div[class*="Collapsible__Header"]').contains(filterName.mobileUiText).click();
     } else {
@@ -137,7 +136,6 @@ const applyFilter = (filterName, viewPort) => {
 
 
 const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
-  console.log(viewPort);
   applyFilter(filterName, viewPort); // Click on filter
 
 
@@ -259,7 +257,6 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
 
 // Accepts previous result count , and validate if present and previous count are different
 const validateChangeInResultSet = (previousResultCount) => {
-  console.log(previousResultCount);
   cy.log('Validate Result');
   cy.wait(2000);
   cy.get('div')
@@ -504,7 +501,7 @@ describe('Search Page Sections', () => {
     cy.route('GET', '**/search?**').as('searchRequest');
   });
 
-  responsive((viewport, id) => {
+  responsive((viewport) => {
     it('Navigate to search page', () => {
       cy.visit('/');
       toSearchPage(searchText);
