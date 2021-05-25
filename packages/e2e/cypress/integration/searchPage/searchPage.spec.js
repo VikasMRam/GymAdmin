@@ -648,13 +648,13 @@ describe('Assisted Search Page Sections', () => {
       checkPopulationOfList(currentList);
     });
     it('Geo Guide', () => {
-      cy.get('div')
+      cy.get('h2')
         .contains('Getting Ready to Move to Assisted Living')
         .should('exist');
-      cy.get('div')
+      cy.get('h2')
         .contains('Costs Associated with Assisted Living')
         .should('exist');
-      cy.get('div')
+      cy.get('h2')
         .contains('Comparing Assisted Living to Other Care communities')
         .should('exist');
     });
