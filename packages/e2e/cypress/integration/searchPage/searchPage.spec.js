@@ -649,6 +649,11 @@ describe('Assisted Search Page Sections', () => {
     it('List population check', () => {
       checkPopulationOfList(currentList);
     });
+
+    it('map check', () => {
+      mapCheck(currentList, 'CONTENT');
+    });
+    
     it('Geo Guide', () => {
       cy.get('h2')
         .contains('Getting Ready to Move to Assisted Living')
@@ -661,9 +666,7 @@ describe('Assisted Search Page Sections', () => {
         .should('exist');
     });
 
-    it('map check', () => {
-      mapCheck(currentList, 'CONTENT');
-    });
+
 
     it('Navigate from map popover', () => {
       cy.window().then((win) => {
