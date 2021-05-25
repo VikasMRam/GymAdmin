@@ -653,7 +653,7 @@ describe('Assisted Search Page Sections', () => {
     it('map check', () => {
       mapCheck(currentList, 'CONTENT');
     });
-    
+
     it('Geo Guide', () => {
       cy.get('h2')
         .contains('Getting Ready to Move to Assisted Living')
@@ -667,7 +667,6 @@ describe('Assisted Search Page Sections', () => {
     });
 
 
-
     it('Navigate from map popover', () => {
       cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
@@ -677,3 +676,5 @@ describe('Assisted Search Page Sections', () => {
     });
   });
 });
+
+// "ignoreTestFiles": "**/*/!(*v2*|*ProfileSections*|*communityReferral*|*searchPage*).js",
