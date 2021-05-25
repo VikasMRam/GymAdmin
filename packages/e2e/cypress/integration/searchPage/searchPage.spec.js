@@ -317,9 +317,13 @@ const countMapMarkers = (list) => {
   closeMapView();
 };
 const navigateAndCheckTitles  = (data) => {
+  // console.log(data);
   let currentUrl;
   cy.url().then((url) => {
+    // currentUrl = url;
+
     currentUrl = url.substr(url.indexOf('assisted'));
+    // console.log(currentUrl);
     // http://www.lvh.me/assisted-living/california/san-francisco
     // extract only relative url , as environment changes
     data.forEach((dataObj, index) => {
@@ -654,17 +658,17 @@ describe('Assisted Search Page Sections', () => {
       mapCheck(currentList, 'CONTENT');
     });
 
-    it('Geo Guide', () => {
-      cy.get('h2')
-        .contains('Getting Ready to Move to Assisted Living', { timeout: 60000 })
-        .should('exist');
-      cy.get('h2')
-        .contains('Costs Associated with Assisted Living', { timeout: 60000 })
-        .should('exist');
-      cy.get('h2')
-        .contains('Comparing Assisted Living to Other Care communities', { timeout: 60000 })
-        .should('exist');
-    });
+    // it('Geo Guide', () => {
+    //   cy.get('h2')
+    //     .contains('Getting Ready to Move to Assisted Living')
+    //     .should('exist');
+    //   cy.get('h2')
+    //     .contains('Costs Associated with Assisted Living')
+    //     .should('exist');
+    //   cy.get('h2')
+    //     .contains('Comparing Assisted Living to Other Care communities')
+    //     .should('exist');
+    // });
 
 
     it('Navigate from map popover', () => {
