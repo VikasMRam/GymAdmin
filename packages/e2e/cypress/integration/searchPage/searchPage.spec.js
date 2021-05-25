@@ -343,11 +343,13 @@ const markerNavigation = (list) => {
         .then(() => {
           cy.get("a[href*='map']")
             .find('h3')
-            .contains(list[index].attributes.name).parents("a[href*='map']")
+            // str = str.replace(/ +(?= )/g,'');
+            // list[index].attributes.name
+            .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
             .each((aTag, index, collection) => {
               urlData.push({
                 url: aTag[0].href,
-                title: list[index].attributes.name,
+                title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
               });
               if (index === collection.length - 1) {
                 navigateAndCheckTitles(urlData);
