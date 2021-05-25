@@ -372,7 +372,7 @@ const mapAssertions = (list) => {
         .then((text) => {
           const index = ((Number(text)) - 1) % 20;
           cy.get('h3')
-            .contains(list[index].attributes.name)
+            .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim())
             .should('exist');
         });
     });
