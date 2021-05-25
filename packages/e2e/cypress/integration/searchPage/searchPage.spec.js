@@ -319,7 +319,9 @@ const countMapMarkers = (list) => {
 const navigateAndCheckTitles  = (data) => {
   let currentUrl;
   cy.url().then((url) => {
-    currentUrl = url;
+    currentUrl = url.substr(url.indexOf('assisted'));
+    // http://www.lvh.me/assisted-living/california/san-francisco
+    // extract only relative url , as environment changes
     data.forEach((dataObj, index) => {
       cy.visit(dataObj.url);
       checkForTitle(dataObj.title);
@@ -483,7 +485,7 @@ describe('Search Page', () => {
   });
 });
 
-// ! Second Set
+// // ! Second Set
 describe('Search Page Sections', () => {
   let currentList = [];
   let totalResultCount = 0;
@@ -642,6 +644,17 @@ describe('Assisted Search Page Sections', () => {
     it('List population check', () => {
       checkPopulationOfList(currentList);
     });
+    it('Geo Guide', () => {
+      cy.get('div')
+        .contains('Getting Ready to Move to Assisted Living')
+        .should('exist');
+      cy.get('div')
+        .contains('Costs Associated with Assisted Living')
+        .should('exist');
+      cy.get('div')
+        .contains('Comparing Assisted Living to Other Care communities')
+        .should('exist');
+    });
 
     it('map check', () => {
       mapCheck(currentList, 'CONTENT');
@@ -653,18 +666,6 @@ describe('Assisted Search Page Sections', () => {
       });
 
       mapCheck([currentList[0]], 'MARKER_NAVIGATION');
-    });
-
-    it('Geo Guide', () => {
-      cy.get('div')
-        .contains('Getting Ready to Move to Assisted Living')
-        .should('exist');
-      cy.get('div')
-        .contains('Costs Associated with Assisted Living')
-        .should('exist');
-      cy.get('div')
-        .contains('Comparing Assisted Living to Other Care communities')
-        .should('exist');
     });
   });
 });
