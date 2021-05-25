@@ -368,7 +368,7 @@ const mapAssertions = (list) => {
       cy.wrap(marker)
         .invoke('text')
         .then((text) => {
-          const index = (Number(text)) - 1;
+          const index = ((Number(text)) - 1) % 20;
           cy.get('h3')
             .contains(list[index].attributes.name)
             .should('exist');
@@ -485,7 +485,7 @@ describe('Search Page', () => {
   });
 });
 
-// // ! Second Set
+// ! Second Set
 describe('Search Page Sections', () => {
   let currentList = [];
   let totalResultCount = 0;
@@ -604,6 +604,9 @@ describe('Search Page Sections', () => {
 
     it('check contents of page 2', () => {
       checkPopulationOfList(currentList);
+    });
+    it('map check - page 2', () => {
+      mapCheck(currentList, 'CONTENT');
     });
   });
 });
