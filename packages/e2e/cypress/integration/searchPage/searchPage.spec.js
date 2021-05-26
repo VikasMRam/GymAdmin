@@ -713,7 +713,7 @@ describe('Assisted Search Page Sections', () => {
         cy.stub(win, 'open').as('windowOpen');
       });
 
-      mapCheck([currentList], 'MARKER_NAVIGATION');
+      mapCheck(currentList, 'MARKER_NAVIGATION');
     });
   });
 });
