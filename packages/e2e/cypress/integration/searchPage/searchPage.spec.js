@@ -339,6 +339,56 @@ const navigateAndCheckTitles  = (data) => {
   });
 };
 
+// const markerNavigation = (list) => {
+//   const urlData = [];
+
+//   // cy.get('button[class*="gm-control"]').then(() => {
+//   //   cy.get('div[class*="Marker__"]').each((marker, index) => {
+//   //     cy.wrap(marker).find('svg').click({ force: true });
+//   //     cy.wrap(marker)
+//   //       .invoke('text')
+//   //       .then(() => {
+//   //         cy.get("a[href*='map']")
+//   //           .find('h3')
+//   //           // str = str.replace(/ +(?= )/g,'');
+//   //           // list[index].attributes.name
+//   //           .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
+//   //           .each((aTag, index, collection) => {
+//   //             urlData.push({
+//   //               url: aTag[0].href,
+//   //               title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
+//   //             });
+//   //             if (index === collection.length - 1) {
+//   //               navigateAndCheckTitles(urlData);
+//   //             }
+//   //           });
+//   //       });
+//   //   });
+//   // });
+//   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
+//   cy.get('div[class*="Marker__"]').each((marker, index) => {
+//     cy.wrap(marker).find('svg').click({ force: true })
+//     // cy.wrap(marker)
+//       .invoke('text')
+//       .then(() => {
+//         cy.get("a[href*='map']")
+//           .find('h3')
+//           // str = str.replace(/ +(?= )/g,'');
+//           // list[index].attributes.name
+//           .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
+//           .each((aTag, index, collection) => {
+//             urlData.push({
+//               url: aTag[0].href,
+//               title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
+//             });
+//             if (index === collection.length - 1) {
+//               navigateAndCheckTitles(urlData);
+//             }
+//           });
+//       });
+//   });
+// };
+
 const markerNavigation = (list) => {
   const urlData = [];
 
@@ -366,22 +416,23 @@ const markerNavigation = (list) => {
   //   });
   // });
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-  cy.get('div[class*="Marker__"]').each((marker, index) => {
+  cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
     // cy.wrap(marker)
       .invoke('text')
-      .then(() => {
+      .then((text) => {
+        const markerIndex = ((Number(text)) - 1) % 20;
         cy.get("a[href*='map']")
           .find('h3')
           // str = str.replace(/ +(?= )/g,'');
           // list[index].attributes.name
-          .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
-          .each((aTag, index, collection) => {
+          .contains(list[markerIndex].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
+          .each((aTag) => {
             urlData.push({
               url: aTag[0].href,
-              title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
+              title: list[markerIndex].attributes.name.replace(/ +(?= )/g, '').trim(),
             });
-            if (index === collection.length - 1) {
+            if (markersIndex === markers.length - 1) {
               navigateAndCheckTitles(urlData);
             }
           });
