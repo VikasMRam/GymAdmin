@@ -329,9 +329,9 @@ const navigateAndCheckTitles  = (data) => {
     // console.log(currentUrl);
     // http://www.lvh.me/assisted-living/california/san-francisco
     // extract only relative url , as environment changes
-    data.forEach((dataObj, index) => {
+    [data[0]].forEach((dataObj, index) => {
       cy.visit(dataObj.url);
-      cy.wait('@postUuidActions');
+      // cy.wait('@postUuidActions');
       checkForTitle(dataObj.title);
       if (index === data.length - 1) {
         cy.visit(currentUrl);
