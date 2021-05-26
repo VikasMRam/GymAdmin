@@ -331,6 +331,7 @@ const navigateAndCheckTitles  = (data) => {
     // extract only relative url , as environment changes
     data.forEach((dataObj, index) => {
       cy.visit(dataObj.url);
+      cy.wait('@postUuidActions');
       checkForTitle(dataObj.title);
       if (index === data.length - 1) {
         cy.visit(currentUrl);
@@ -721,6 +722,11 @@ describe('Assisted Search Page Sections', () => {
       method: 'GET',
       url: '**/platform/community-search?filter**',
     }).as('communitySearch');
+    cy.route({
+      method: 'POST',
+      url: '**/uuid-actions',
+      response: {},
+    }).as('postUuidActions');
   });
 
   responsive(() => {
