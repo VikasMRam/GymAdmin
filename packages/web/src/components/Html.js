@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl, gMapsApiKey } from 'sly/web/config';
-import {iconToComponent } from 'sly/common/system/Icon';
+import { iconToComponent } from 'sly/common/system/Icon';
 
 const Html = ({
   linkElements, styleElements, scriptElements, iconsContext, state, content,
@@ -47,11 +47,13 @@ const Html = ({
 
         {/* Google Tag Manager */}
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','${googleTagManagerId}');
+          setTimeout(function(){
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${googleTagManagerId}');
+          },4500)
         `}}></script>
         <noscript>
           {`<iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" height="0" width="0" />`}
@@ -62,13 +64,13 @@ const Html = ({
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
           (function(s,d,r) {
             var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-            j.async=true;j.src=r;f.parentNode.insertBefore(j,f);
+            j.defer=true;j.src=r;f.parentNode.insertBefore(j,f);
           })('script', document, 'https://apis.google.com/js/platform.js');
         `}}></script>
         {/* End Google Platform Library Code */}
         {/* eslint-enable */}
 
-        {/*<script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} />*/}
+        {/* <script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} /> */}
       </body>
     </html>
   );

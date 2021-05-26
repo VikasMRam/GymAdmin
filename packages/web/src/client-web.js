@@ -44,13 +44,9 @@ if (typeof window.queueMicrotask !== 'function') {
 }
 
 window.addEventListener('load', () => {
-  requestIdleCallback(() => {
-    loadableReady(() => {
-      queueMicrotask(() => {
-        console.log('run hydrate');
-        const rootElement = document.getElementById('app');
-        ReactDOM.createRoot(rootElement, { hydrate: true }).render(<AppRenderer />);
-      });
-    });
+  loadableReady(() => {
+    const rootElement = document.getElementById('app');
+    ReactDOM.hydrate(<AppRenderer />, rootElement);
   });
 });
+
