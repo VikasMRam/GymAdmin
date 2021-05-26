@@ -366,8 +366,8 @@ const markerNavigation = (list) => {
   //   });
   // });
   cy.get('div[class*="Marker__"]').each((marker, index) => {
-    cy.wrap(marker).find('svg').click({ force: true });
-    cy.wrap(marker)
+    cy.wrap(marker).find('svg').click({ force: true })
+    // cy.wrap(marker)
       .invoke('text')
       .then(() => {
         cy.get("a[href*='map']")
@@ -407,8 +407,8 @@ const mapAssertions = (list) => {
   // });
 
   cy.get('div[class*="Marker__"]').each((marker) => {
-    cy.wrap(marker).find('svg').click({ force: true });
-    cy.wrap(marker)
+    cy.wrap(marker).find('svg').click({ force: true })
+    // cy.wrap(marker)
       .invoke('text')
       .then((text) => {
         const index = ((Number(text)) - 1) % 20;
