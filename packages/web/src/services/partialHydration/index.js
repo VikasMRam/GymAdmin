@@ -1,6 +1,7 @@
-import React, { Suspense, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { hydrate } from 'react-dom';
 import loadable from '@loadable/component';
+
 
 import { requestIdleCallback } from 'sly/web/requestIdleCallback';
 import { isBrowser } from 'sly/web/config';
@@ -39,7 +40,7 @@ if (isBrowser) {
   window.resolveImports = () => {
     console.log('resolving', imports.length, 'imports');
     let imp;
-    while(imp = imports.pop()) {
+    while (imp = imports.pop()) {
       imp();
     }
   };
@@ -48,33 +49,27 @@ if (isBrowser) {
 
 const makeId = () => [...Array(16)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
-export const withHydration = (loadFn, { fallback = null } = {}) => {
-  // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
-  let Component;
-  let doFetch;
-  if (!isBrowser) {
-    Component = loadable(loadFn, { ssrOnly: true, suspense: false });
-  } else {
-    const fetchPromise = new Promise((resolve) => {
-      doFetch = () => loadFn.importAsync().then((module) => {
-        requestIdleCallback(() => {
-          queueMicrotask(() => {
-            console.log('run partial hydrate');
-            resolve(module);
-          });
-        });
-      });
-    })
-    Component = React.lazy(() => fetchPromise);
-  }
 
+export const withHydration = (loadFn) => {
+  // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
+  let Component = loadable(loadFn, { ssrOnly: true });
+
+  let doFetch;
   return (props) => {
     const ref = useRef();
+    const [shouldHydrate, setShouldHydrate] = useState(false);
     useEffect(() => {
       const check = (items) => {
         items.forEach((item) => {
           if (item.isIntersecting) {
-                doFetch();
+            // loadFn.importAsync().then((module)=>{
+            console.log('fetching');
+            // })
+            loadFn.importAsync().then((module) => {
+              Component = module.render();
+              setShouldHydrate(true);
+            });
+            console.log(Component);
           }
         });
       };
@@ -84,16 +79,72 @@ export const withHydration = (loadFn, { fallback = null } = {}) => {
       observer.observe(ref.current);
       return () => observer.disconnect();
     }, []);
-
+    if (isBrowser) {
+      if (shouldHydrate) {
+        return (
+          <div ref={ref}>
+            <Component {...props} />
+          </div>
+        );
+      }
+      return <div ref={ref} dangerouslySetInnerHTML={{ __html: '' }} />;
+    }
+    // serverside
     return (
       <div ref={ref}>
-        <Suspense fallback={fallback}>
-          <Component {...props} />
-        </Suspense>
+        <Component {...props} />
       </div>
     );
-  }
+  };
 };
+
+
+// export const withHydration = (loadFn, { fallback = null } = {}) => {
+//   // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
+//   let Component;
+//   let doFetch;
+//   if (!isBrowser) {
+//     Component = loadable(loadFn, { ssrOnly: true, suspense: false });
+//   } else {
+//     const fetchPromise = new Promise((resolve) => {
+//       doFetch = () => loadFn.importAsync().then((module) => {
+//         requestIdleCallback(() => {
+//           queueMicrotask(() => {
+//             console.log('run partial hydrate');
+//             resolve(module);
+//           });
+//         });
+//       });
+//     })
+//     Component = React.lazy(() => fetchPromise);
+//   }
+
+//   return (props) => {
+//     const ref = useRef();
+//     useEffect(() => {
+//       const check = (items) => {
+//         items.forEach((item) => {
+//           if (item.isIntersecting) {
+//                 doFetch();
+//           }
+//         });
+//       };
+//       const observer = new IntersectionObserver(check, {
+//         marginRoot: '0px 0px 500px 0px',
+//       });
+//       observer.observe(ref.current);
+//       return () => observer.disconnect();
+//     }, []);
+
+//     return (
+//       <div ref={ref}>
+//         <Suspense fallback={fallback}>
+//           <Component {...props} />
+//         </Suspense>
+//       </div>
+//     );
+//   }
+// };
 
 function getComponentTypeHydrationId(component) {
   const { typeHydrationId } = component;

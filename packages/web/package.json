@@ -79,7 +79,7 @@
     "react-cookie": "4.0.3",
     "react-datepicker": "2.16.0",
     "date-fns": "2.19.0",
-    "react-dom": "0.0.0-experimental-2bf4805e4",
+    "react-dom": "17.2.0",
     "react-ga": "2.7.0",
     "react-google-maps": "9.4.5",
     "react-helmet": "6.1.0",
@@ -110,6 +110,7 @@
     "xmlbuilder": "^15.1.1",
     "yall-js": "3.1.7",
     "sanitize-html":"2.3.3",
-    "ansi-to-html": "^0.6.11"
+    "ansi-to-html": "^0.6.11",
+    "react-intersection-observer":"8.32.0"
   }
 }

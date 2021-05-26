@@ -57,14 +57,16 @@ export default class SignupFormContainer extends Component {
   });
 
   componentDidMount() {
-    if (window.gapi) {
-      window.gapi.load('auth2', () => {
-        if (!window.gapi.auth2.getAuthInstance()) {
-          window.gapi.auth2.init();
-        }
-      });
-    }
-    this.getFB();
+    setTimeout(() => {
+      if (window.gapi) {
+        window.gapi.load('auth2', () => {
+          if (!window.gapi.auth2.getAuthInstance()) {
+            window.gapi.auth2.init();
+          }
+        });
+      }
+      this.getFB();
+    }, 4500);
   }
 
   onGoogleConnected = (resp) => {

@@ -302,7 +302,7 @@ const client = (target, entries) => {
       addPlugins([new LoadablePlugin()]),
     ]),
 
-    // when(isDev || isStaging, [sourceMaps()]),
+    when(isDev || isStaging, [sourceMaps()]),
   ]);
 };
 
