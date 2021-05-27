@@ -65,14 +65,16 @@ export const withHydration = (loadFn) => {
             console.log('fetching');
             // })
             loadFn.importAsync().then((module) => {
-              Component = module.render();
+              console.log(module);
+              Component = module.default;
+              console.log(Component);
               setShouldHydrate(true);
             });
           }
         });
       };
       const observer = new IntersectionObserver(check, {
-        marginRoot: '0px 0px 0px 500px',
+        marginRoot: '0px 0px 0px 0px',
       });
       observer.observe(ref.current);
       return () => observer.disconnect();

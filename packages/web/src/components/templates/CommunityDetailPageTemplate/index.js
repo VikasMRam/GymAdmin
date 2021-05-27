@@ -6,6 +6,8 @@ import classes from 'classnames';
 import { size } from 'sly/common/components/themes';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import FooterOrganism from 'sly/web/components/organisms/Footer/communityFooter';
+import { withHydration } from 'sly/web/services/partialHydration';
+
 
 const HeaderContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
 const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'));
