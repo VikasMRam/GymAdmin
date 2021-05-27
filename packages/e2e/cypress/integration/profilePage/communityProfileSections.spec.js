@@ -271,7 +271,7 @@ describe('Community Profile Sections', () => {
     });
 
 
-    it('creates prospective lead when question is asked on community profile', () => {
+    it.only('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
       cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
@@ -292,7 +292,11 @@ describe('Community Profile Sections', () => {
       });
       cy.wait('@getUser');
 
+
+      waitForHydration(cy.get('button').contains('Ask a Question'));
+      cy.wait(0);
       waitForHydration(cy.get('button').contains('Ask a Question')).click();
+
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
       const firstName = `Lead${randHash()}`;
