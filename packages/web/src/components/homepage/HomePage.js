@@ -54,6 +54,7 @@ const HomePage = ({
         <Image
           path="react-assets/home/cover6.jpg"
           alt="A Home To Love"
+          loading="auto"
           css={css`
             object-fit: cover;
             width: 100%;
