@@ -34,7 +34,7 @@ const StyledHeading = styled(Heading)`
 const WhatIsPartnerAgent = ({ toc, agents }) => (
   <>
     <Paragraph>
-      As you search for {toc} near you, you will be comforted to know there are senior care professionals
+      As you search for {toc}, you will be comforted to know there are senior living advisors
       living and working in your city. These experts know all the senior living communities, their staff turnover,
       their unique selling points, and best of all they can often negotiate fees on your behalf at your favorite options.
     </Paragraph>

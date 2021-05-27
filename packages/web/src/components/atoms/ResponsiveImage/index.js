@@ -1,7 +1,8 @@
 import React from 'react';
-import { string, array, oneOfType, oneOf, any, func, number } from 'prop-types';
+import { string, array, oneOfType, oneOf, any, func, number, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
+import Helmet from 'react-helmet';
 
 import { size, getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
@@ -82,7 +83,9 @@ export default class ResponsiveImage extends React.Component {
     src: string,
     placeholder: string,
     // use height to force a height for all sources like in a hero banner
+    width: number,
     height: number,
+    shouldPreload: bool,
     alt: string,
     sizes: oneOfType([array, string]),
     sources: array,
@@ -93,7 +96,7 @@ export default class ResponsiveImage extends React.Component {
 
   static defaultProps = {
     className: '',
-    loading: 'eager',
+    loading: 'lazy',
     sizes: '(max-width: 1079px) 100vw, 680px',
     onLoadFailed: () => {},
   };
@@ -111,7 +114,7 @@ export default class ResponsiveImage extends React.Component {
 
   render() {
     const {
-      src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, onLoadFailed, ...props
+      src, path, placeholder, width, height, shouldPreload, sizes, sources, alt, loading, className: classNameProp, aspectRatio, children, onLoadFailed, ...props
     } = this.props;
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
@@ -127,12 +130,15 @@ export default class ResponsiveImage extends React.Component {
 
     const imageProps = {
       src: imgSrc,
+      width,
+      height,
     };
 
     if (!this.state.failed) {
       imageProps[srcProp] = imgSrc;
     }
 
+    let preload = null;
     let sourceSets = null;
     if (!this.state.failed && isS3Path) {
       let sourcesAry;
@@ -165,18 +171,31 @@ export default class ResponsiveImage extends React.Component {
 
       const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
 
+      const sizesProp = makeSizes(sizes);
+
       const jpegSourceProps = {
         [srcSetProp]: jpegSrcset,
+        sizes: sizesProp,
       };
 
       const webpSourceProps = {
         [srcSetProp]: webpSrcset,
+        sizes: sizesProp,
       };
+
+      if (shouldPreload) {
+        preload = (
+          <Helmet>
+            <link rel="preload" href={imgSrc} as="image" imageSrcSet={webpSrcset} imageSizes={sizesProp} />
+          </Helmet>
+        );
+      }
 
       sourceSets = (
         <>
-          <source type="image/webp" {...webpSourceProps} sizes={makeSizes(sizes)} />
-          <source type="image/jpeg" {...jpegSourceProps} sizes={makeSizes(sizes)} />
+          {preload}
+          <source type="image/webp" {...webpSourceProps} />
+          <source type="image/jpeg" {...jpegSourceProps} />
         </>
       );
     }
@@ -216,6 +235,7 @@ export default class ResponsiveImage extends React.Component {
         className={classNameProp}
         {...props}
       >
+        {preload}
         {picture}
         {children}
       </ResponsiveWrapper>

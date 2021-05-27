@@ -16,7 +16,7 @@ export default {
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
   createUuidAux: { method: post, path: '/platform/uuid-auxes' },
 
-  createUserShare: { method: post, path: '/platform/user-shares' },
+  createUserShare: { method: post, path: '/platform/user-shares', jsonApi: false },
 
   getUserSaves: { method: get, path: '/marketplace/user-saves', ssrIgnore: true },
   getUserSave: { method: get, path: '/marketplace/user-saves/:id', ssrIgnore: true },

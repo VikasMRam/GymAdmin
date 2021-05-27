@@ -6,33 +6,30 @@ export {
   destroy,
 } from './httpMethods';
 
-export { invalidateRequests } from './actions';
+export { invalidateRequests, purgeFromRelationships } from './actions';
 
-export reducer from './reducer';
+export { default as reducer } from './reducer';
 
 export {
-  getEntity,
   getRelationship,
   getRequestResult,
   isRequestLoading,
   hasRequestStarted,
   getRequestHeaders,
   getRequestMeta,
-  createMemoizedRequestInfoSelector,
 } from './selectors';
 
-export createApi from './createApi';
-export query from './query';
-export prefetch from './prefetch';
-export middleware from './middleware';
 
-export withUser from './withUser';
-export withAuth from './withAuth';
+export { createStore, ApiProvider, useApi, useSelector } from './context';
+export { default as createApi } from './createApi';
+export { default as query, useQuery } from './query';
+export { default as prefetch, usePrefetch } from './prefetch';
+export { default as middleware } from './middleware';
 
-export renderToString from './renderAndPrefetch';
-export withPrefetchWait from './withPrefetchWait';
-export { useResourceBuffer, withResourceBuffer } from './resourceBuffer';
-export makeApiCallAction from './makeApiCallAction';
-export apiInstance from './apiInstance';
+export { default as withUser, useUser } from './withUser';
+export { default as withAuth, useAuth } from './withAuth';
+
+export { default as renderToString } from './renderAndPrefetch';
+export { default as withPrefetchWait } from './withPrefetchWait';
 
 export { normalizeResponse } from './helpers';

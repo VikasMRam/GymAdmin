@@ -3,18 +3,12 @@ import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 import * as actions from './actions';
 
 import { isFSA } from 'sly/web/store/actions';
-import { createMemoizedRequestInfoSelector } from 'sly/web/services/api';
 
+const getUser = state => state['getUser']?.['{"id":"me"}'];
 
-const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
-const getUser = state => getMemoizedRequestInfo(
-  state.api.requests.['getUser']?.['{"id":"me"}'],
-  state.api.entities,
-);
-
-export function* authenticate(reason, options) {
+export function* authenticate(apiStore, reason, options) {
   // check if there is an user
-  const user = yield select(getUser);
+  const user = getUser(apiStore.getState());
   if (user.status === 200) {
     return {
       authenticated: true,
@@ -30,8 +24,8 @@ export function* authenticate(reason, options) {
   });
 }
 
-export function* ensureAuthenticated(api, { reason, action, options }, { thunk }) {
-  const { authenticated, cancel } = yield call(authenticate, reason, options);
+export function* ensureAuthenticated(apiStore, { reason, action, options }, { thunk }) {
+  const { authenticated, cancel } = yield call(authenticate, apiStore, reason, options);
   if (authenticated) {
     try {
       let result;
@@ -57,8 +51,8 @@ export function* ensureAuthenticated(api, { reason, action, options }, { thunk }
   }
 }
 
-export function* forAuthenticated(api, { action }, { thunk }) {
-  const user = yield select(getUser);
+export function* forAuthenticated(apiStore, { action }, { thunk }) {
+  const user = getUser(apiStore.getState());
   if (user) {
     try {
       let result;
@@ -80,15 +74,15 @@ export function* forAuthenticated(api, { action }, { thunk }) {
   }
 }
 
-export function* watchEnsureAuthenticated(api, { payload, meta }) {
-  yield call(ensureAuthenticated, api, payload, meta);
+export function* watchEnsureAuthenticated(apiStore, { payload, meta }) {
+  yield call(ensureAuthenticated, apiStore, payload, meta);
 }
 
-export function* watchForAuthenticated(api, { payload, meta }) {
-  yield call(forAuthenticated, api, payload, meta);
+export function* watchForAuthenticated(apiStore, { payload, meta }) {
+  yield call(forAuthenticated, apiStore, payload, meta);
 }
 
-export default function* authenticatedSagas({ api }) {
-  yield takeEvery(actions.ENSURE_AUTHENTICATED, watchEnsureAuthenticated, api);
-  yield takeEvery(actions.FOR_AUTHENTICATED, watchForAuthenticated, api);
+export default function* authenticatedSagas({ apiStore }) {
+  yield takeEvery(actions.ENSURE_AUTHENTICATED, watchEnsureAuthenticated, apiStore);
+  yield takeEvery(actions.FOR_AUTHENTICATED, watchForAuthenticated, apiStore);
 }

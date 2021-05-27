@@ -7,13 +7,11 @@ import authenticated from './authenticated/reducer';
 import experiments from './experiments/reducer';
 import controller from './controller/reducer';
 
-import { reducer as api } from 'sly/web/services/api';
 import notifications from 'sly/web/services/notifications/reducer';
 
 export default combineReducers({
   form,
   thunk,
-  api,
   modal,
   notifications,
   authenticated,

@@ -32,7 +32,6 @@ const Column = makeColumn('aside');
 const Wrapper = makeWrapper('div');
 const StickToTop = makeStickToTop('div');
 const StyledArticle = makeArticle('article');
-const StyledTable = makeTable('table');
 
 const RespiteCareNearMePage = ({
   handleAnchor,
@@ -73,7 +72,7 @@ const RespiteCareNearMePage = ({
           href={`#${sectionIdMap.rc}`}
           onClick={e => handleAnchor(e, rcRef)}
         >
-           What is Respite Care Near You?
+           What is Respite Care?
         </StyledLink>
         <StyledLink
           href={`#${sectionIdMap.why}`}
@@ -123,8 +122,6 @@ const RespiteCareNearMePage = ({
       <>
       <StyledArticle>
         <Heading level="title" size="title" ref={rcRef} >
-          What is Respite Care Near You?
-
         </Heading>
         <Paragraph>
           Respite care often refers to short-term stays in{' '}
@@ -402,7 +399,7 @@ const RespiteCareNearMePage = ({
     );
   };
 
-  const title = 'What is Respite Care | Guide to Respite Care for Seniors ';
+  const title = 'What is Respite Care? ';
   const description = 'What is respite care? Respite care is a short-term stay in assisted living facility. Learn about respite care and why it may be a good option for some seniors..';
 
   return (
@@ -413,7 +410,7 @@ const RespiteCareNearMePage = ({
     </Helmet>
     <HubHeader imagePath="react-assets/hub/home-care-cover.jpg"
                toc="respite care"
-               heading="What is Respite Care Near You?"
+               heading="What is Respite Care?"
                showSearch={false}/>
     <HubPageTemplate>
       <Wrapper>

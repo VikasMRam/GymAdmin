@@ -34,8 +34,9 @@ const config = {
     env: NODE_ENV,
     slyEnv: SLY_ENV,
     gaEnv: GA_ENV,
-    isDev: NODE_ENV,
+    isDev: false,
     isTest: false,
+    isStaging: false,
     isProd: false,
     host: HOST,
     port: PORT,
@@ -57,7 +58,6 @@ const config = {
     googleAppId: GOOGLE_CLIENT_ID,
     olarkSiteId: '9319-500-10-7635',
     muteReduxLogger: true,
-    hideChatbox: false,
     disableExperiments: DISABLE_EXPERIMENTS,
     enableExperimentsDebugger: ENABLE_EXPERIMENT_DEBUGGER,
     tinyMCEApiKey: 'zalf4x4cr6354ko1klhtu90vmtbee1qw9r4j1qy1dpm3xabb',
@@ -67,11 +67,11 @@ const config = {
       resource: '3335478033',
       search: '2390417245',
     },
+    hideChatbox: HIDE_CHATBOX,
   },
 
   test: {
     isTest: true,
-    isDev: false,
     publicPath: '',
     domain: 'localhost',
     host: 'http://localhost',
@@ -80,26 +80,25 @@ const config = {
   },
 
   development: {
+    isDev: true,
     muteReduxLogger: MUTE_REDUX_LOGGER,
-    hideChatbox: HIDE_CHATBOX,
   },
 
   staging: {
-    isDev: false,
+    isStaging: true,
     eventServerUrl: 'https://event.myseniorly.com/events/new',
     facebookAppId: '299735431723954',
     googleAppId: '522248695659-ces03d2ptbgegiusk0c6v8j9abc7pdbf.apps.googleusercontent.com',
   },
 
   production: {
-    isDev: false,
     isProd: true,
     eventServerUrl: 'https://event.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
     olarkSiteId: '9319-500-10-7635',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-5888W7H',
-    facebookAppId: '1609538575934980',
+    facebookAppId: '296657038622214',
     googleAppId: '522248695659-kbpgg45i1pg4kt1ahsqm2trdr8cdms2k.apps.googleusercontent.com',
   },
 };

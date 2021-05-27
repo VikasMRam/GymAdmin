@@ -13,7 +13,6 @@ import ADLChart from 'sly/web/components/molecules/ADLChart';
 import Tip from 'sly/web/components/molecules/Tip';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer';
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import {
   HubPageTemplate,
   makeBody,
@@ -28,8 +27,6 @@ import {
 import { Heading, Paragraph, Link, Box } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/web/components/search/helpers';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
 
@@ -61,21 +58,9 @@ const ListWrapper = makeOneColumnListWrapper('div');
 
 const MemoryCareNearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('memory-care');
-
-
   const mcRef = React.createRef();
   const careRef = React.createRef();
   const staffRef = React.createRef();
@@ -84,7 +69,6 @@ const MemoryCareNearMePage = ({
   const chooseRef = React.createRef();
   const nextRef = React.createRef();
   const faqRef = React.createRef();
-  const nearRef = React.createRef();
 
   const tocList = [
     {
@@ -128,11 +112,6 @@ const MemoryCareNearMePage = ({
       id: 'next',
       ref: nextRef,
 
-    },
-    {
-      title: 'Browse Memory Care Near You',
-      id: 'near',
-      ref: nearRef,
     },
 
   ];
@@ -216,7 +195,6 @@ const MemoryCareNearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={mcRef} >
-            What is Memory Care?
           </Heading>
           <Paragraph>
             Memory Care is a senior living community built to care for seniors who have{' '}
@@ -376,7 +354,7 @@ const MemoryCareNearMePage = ({
           </Paragraph>
           <StyledBox background="primary.lighter-90">
             <Heading level="subtitle" size="subtitle">
-              Find Memory Care near you
+              Find Memory Care Near You
             </Heading>
             <Paragraph>
               If you are ready to search for a Memory Care near you, just enter your city or zip code in the search box below:
@@ -907,9 +885,8 @@ const MemoryCareNearMePage = ({
     );
   };
 
-  const title = 'Find the Best Memory Care Near You ';
+  const title = 'What is Memory Care?';
   const description = 'Find the best memory care near you with local senior living communities & providers. Browse memory care nearby with prices, reviews & photos.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -923,7 +900,7 @@ const MemoryCareNearMePage = ({
       <HubHeader
         imagePath="react-assets/hub/memory-care-cover.jpg"
         toc="memory care"
-        heading="What is Memory Care Near You?"
+        heading="What is Memory Care?"
         label="Use our free search to find memory care nearby"
         onCurrentLocation={onCurrentLocation}
         onLocationSearch={onLocationSearch}
@@ -938,25 +915,6 @@ const MemoryCareNearMePage = ({
             </Column>
             <Body>
               {SEOContentMC()}
-              <Heading level="title" size="title" ref={nearRef}>
-                {heading}
-              </Heading>
-              <StyledArticle>
-                <Paragraph>
-                  Seniorly promises to make your search for memory care near you easy and stress-free. Below, compare memory care
-                  communities near you and then let us connect you to your local senior living advisor.
-                  They can answer all your questions, share costs, arrange tours, and even negotiate rent. Our services are free.
-                </Paragraph>
-              </StyledArticle>
-              {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-              {!isFetchingResults && communityList && communityList.length > 0 && (
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
             </Body>
           </TwoColumn>
         </Wrapper>
@@ -970,12 +928,7 @@ const MemoryCareNearMePage = ({
 
 MemoryCareNearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
   onCurrentLocation: func,
 };
 

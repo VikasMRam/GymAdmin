@@ -47,7 +47,7 @@ export default class SignupFormContainer extends Component {
     handleOtpClick: func,
   };
 
-  state = { socialLoginError: '' };
+  state = { socialSignupError: '' };
 
   sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
     category: 'third-party-signup',
@@ -82,7 +82,7 @@ export default class SignupFormContainer extends Component {
     thirdPartyLogin(data)
       .then(
         onSocialSignupSuccess,
-        () => this.setSocialLoginError('Failed to authorize with Google. Please try again.'),
+        () => this.setSocialSignupError('Failed to authorize with Google. Please try again.'),
       );
   };
 
@@ -101,11 +101,11 @@ export default class SignupFormContainer extends Component {
       return thirdPartyLogin(data)
         .then(
           onSocialSignupSuccess,
-          () => this.setSocialLoginError('Failed to authorize with Facebook. Please try again.'),
+          () => this.setSocialSignupError('Failed to authorize with Facebook. Please try again.'),
         );
     }
     this.sendEvent('auth_fail', 'facebook', null);
-    return this.setSocialLoginError('Failed to fetch required info from Facebook. Please try again.');
+    return this.setSocialSignupError('Failed to fetch required info from Facebook. Please try again.');
   };
 
   onFacebookConnected = ({ accessToken }) => {
@@ -117,15 +117,15 @@ export default class SignupFormContainer extends Component {
   };
 
   getFB = () => loadFB()
-    .catch(() => this.setSocialLoginError("Can't load FB SDK"));
+    .catch(() => this.setSocialSignupError("Can't load FB SDK"));
 
-  setSocialLoginError = msg =>
+  setSocialSignupError = msg =>
     this.setState({
-      socialLoginError: msg,
+      socialSignupError: msg,
     });
 
   handleFacebookSignUpClick = () => {
-    this.setSocialLoginError('');
+    this.setSocialSignupError('');
     this.sendEvent('click', 'facebook', null);
     this.getFB()
       .then(FB =>
@@ -133,20 +133,20 @@ export default class SignupFormContainer extends Component {
           if (response.authResponse) {
             this.onFacebookConnected(response.authResponse);
           } else {
-            this.setSocialLoginError('Failed to connect with Facebook. Please try again.');
+            this.setSocialSignupError('Failed to connect with Facebook. Please try again.');
           }
         }, { scope: 'email' }),
       );
   };
 
   handleGoogleSignUpClick = () => {
-    this.setSocialLoginError('');
+    this.setSocialSignupError('');
     this.sendEvent('click', 'google', null);
     if (window.gapi) {
       window.gapi.auth2.getAuthInstance().signIn()
         .then(
           this.onGoogleConnected,
-          () => this.setSocialLoginError('Failed to connect with Google. Please try again.'),
+          () => this.setSocialSignupError('Failed to connect with Google. Please try again.'),
         );
     }
   };
@@ -167,27 +167,30 @@ export default class SignupFormContainer extends Component {
 
     clearSubmitErrors();
     return Promise.all([registerUser(data), this.updatePhoneContactPreference(phonePreference)])
-      .then(onSubmit)
+      .then(() => onSubmit(data))
       .catch((data) => {
         if (data.status === 409) {
           handleOtpClick();
         } else {
-          // TODO: Need to set a proper way to handle server side errors
-          const errorMessage = Object.values(data.body.errors).join('. ');
-          console.log(errorMessage);
+          const errors = data?.body?.errors;
+          if (typeof errors === 'undefined') {
+            console.error(data);
+            throw data;
+          }
+          const errorMessage = Object.values(errors).join('. ');
           throw new SubmissionError({ _error: errorMessage });
         }
       });
   };
 
   render() {
-    const { socialLoginError } = this.state;
+    const { socialSignupError } = this.state;
     return (
       <ReduxForm
         {...this.props}
         onFacebookSignUpClick={this.handleFacebookSignUpClick}
         onGoogleSignUpClick={this.handleGoogleSignUpClick}
-        socialLoginError={socialLoginError}
+        socialSignupError={socialSignupError}
         onSubmit={this.handleSubmit}
       />
     );

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { arrayOf, object, string } from 'prop-types';
-import { generatePath } from 'react-router';
+import { generatePath, withRouter } from 'react-router';
 
 import { prefetch } from 'sly/web/services/api';
 import clientPropType from 'sly/common/propTypes/client';
+import withNotification from 'sly/web/components/helpers/notification';
+import { withDatatable } from 'sly/web/services/datatable';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewSection from 'sly/web/components/organisms/DashboardAgentFamilyOverviewSection';
 import ModalController from 'sly/web/controllers/ModalController';
-import NotificationController from 'sly/web/controllers/NotificationController';
-import { withRouter } from 'react-router';
-import { withDatatable } from 'sly/web/services/datatable';
 
 const getPaginationData = ({ result, meta }) => {
   if (!result) return {};
@@ -47,6 +46,7 @@ const getPaginationData = ({ result, meta }) => {
 @withRouter
 @withDatatable('clients')
 @prefetch('clients', 'getClients', (req, { datatable }) => req(datatable.query))
+@withNotification
 
 export default class DashboardAgentFamilyOverviewSectionContainer extends Component {
   static propTypes = {
@@ -69,7 +69,7 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
 
   render() {
     const {
-      clients, status, datatable, match, location, basePath,
+      clients, status, datatable, match, location, basePath, notifyInfo,
     } = this.props;
 
     const { error, hasFinished } = status.clients;
@@ -81,28 +81,24 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     const { meta } = status.clients;
 
     return (
-      <NotificationController>
-        {({ notifyInfo }) => (
-          <ModalController>
-            {({ show, hide }) => (
-              <DashboardAgentFamilyOverviewSection
-                isPageLoading={!hasFinished || !datatable.hasFinished}
-                clients={clients || []}
-                meta={meta || {}}
-                basePath={basePath}
-                pagination={getPaginationData(status.clients)}
-                activeTab={match.params.clientType}
-                datatable={datatable}
-                showModal={show}
-                hideModal={hide}
-                notifyInfo={notifyInfo}
-                onAddFamilySuccess={this.onAddFamilySuccess}
-                location={location}
-              />
-            )}
-          </ModalController>
+      <ModalController>
+        {({ show, hide }) => (
+          <DashboardAgentFamilyOverviewSection
+            isPageLoading={!hasFinished || !datatable.hasFinished}
+            clients={clients || []}
+            meta={meta || {}}
+            basePath={basePath}
+            pagination={getPaginationData(status.clients)}
+            activeTab={match.params.clientType}
+            datatable={datatable}
+            showModal={show}
+            hideModal={hide}
+            notifyInfo={notifyInfo}
+            onAddFamilySuccess={this.onAddFamilySuccess}
+            location={location}
+          />
         )}
-      </NotificationController>
+      </ModalController>
     );
   }
 }

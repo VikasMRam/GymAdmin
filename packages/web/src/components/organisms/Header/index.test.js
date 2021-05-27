@@ -41,7 +41,7 @@ const assignOnClick = (items, onClick) => {
   return items;
 };
 
-describe('Header', () => {
+describe.skip('Header', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();

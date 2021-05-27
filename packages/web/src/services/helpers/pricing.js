@@ -1,4 +1,5 @@
 import { stateNames } from  'sly/web/constants/geo';
+import { costSections, orderedLabels, valueToLabel } from 'sly/web/constants/communityPricing';
 
 export const sortProperties = (obj) => {
   const sortable = [];
@@ -56,13 +57,13 @@ export const buildPriceList = (community) => {
       priceList.push({ label: 'Private Suite', value: getAveragePriceString(privateSuiteRate) });
     }
     if (studioApartmentRate && !studioApartmentRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'Studio Apartment', value: getAveragePriceString(studioApartmentRate) });
+      priceList.push({ label: 'Studio', value: getAveragePriceString(studioApartmentRate) });
     }
     if (oneBedroomApartmentRate && !oneBedroomApartmentRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'One Bedroom Apartment', value: getAveragePriceString(oneBedroomApartmentRate) });
+      priceList.push({ label: 'One Bedroom', value: getAveragePriceString(oneBedroomApartmentRate) });
     }
     if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
-      priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
+      priceList.push({ label: 'Two Bedroom', value: getAveragePriceString(twoBedroomApartmentRate) });
     }
     if (alSharedRate && !alSharedRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Assisted Living Shared', value: getAveragePriceString(alSharedRate) });
@@ -79,8 +80,39 @@ export const buildPriceList = (community) => {
   } catch (e) {
     console.log('Non numeric prices');
   }
-
   return priceList;
+};
+
+
+export const buildNewPriceList = (community) => {
+  const newPricesList = [];
+  const { prices } = community;
+  if (!prices[0]) {
+    return newPricesList;
+  }
+
+  const sortedPrices = prices.sort((a, b) => costSections.indexOf(a.title) - costSections.indexOf(b.title));
+
+  sortedPrices.forEach((entityPrice, index) => {
+    newPricesList[index] = {};
+    newPricesList[index].prices = [];
+
+    Object.keys(entityPrice.info.prices).forEach((roomValue) => {
+      const values = entityPrice.info.prices[roomValue];
+      const roomName = valueToLabel[roomValue];
+      if (values.type !== 'disabled') {
+        newPricesList[index].prices.push({ roomName, values });
+        newPricesList[index].title = entityPrice.title;
+      }
+    });
+    if (!newPricesList[index].prices[0]) {
+      newPricesList.splice(index, 1);
+    } else {
+      newPricesList[index].prices.sort((a, b) => orderedLabels.indexOf(a.roomName) - orderedLabels.indexOf(b.roomName));
+    }
+  });
+
+  return newPricesList;
 };
 
 export const buildEstimatedPriceList = (community) => {
@@ -108,18 +140,17 @@ export const buildEstimatedPriceList = (community) => {
       priceList.push({ label: 'Private Suite', value: privateSuiteRate });
     }
     if (studioApartmentRate && studioApartmentRate !== 0) {
-      priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
+      priceList.push({ label: 'Studio', value: studioApartmentRate });
     }
     if (oneBedroomApartmentRate && oneBedroomApartmentRate !== 0) {
-      priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
+      priceList.push({ label: 'One Bedroom', value: oneBedroomApartmentRate });
     }
     if (twoBedroomApartmentRate && twoBedroomApartmentRate !== 0) {
-      priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+      priceList.push({ label: 'Two Bedroom', value: twoBedroomApartmentRate });
     }
   } catch (e) {
     console.log('Non numeric prices');
   }
-
   return priceList;
 };
 

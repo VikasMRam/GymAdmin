@@ -1,3 +1,7 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="Cypress" />
+
+
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import { PROFILE_TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
@@ -20,9 +24,9 @@ export const buildEstimatedPriceList = (community) => {
   const priceList = [];
   sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
   privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
-  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio', value: studioApartmentRate });
+  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom', value: twoBedroomApartmentRate });
 
   return priceList;
 };
@@ -30,6 +34,7 @@ export const buildEstimatedPriceList = (community) => {
 
 describe('Community Profile Sections', () => {
   let community;
+  const retries = 10;
 
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
@@ -41,10 +46,17 @@ describe('Community Profile Sections', () => {
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
-
-    cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+    cy.route('GET', '**/users/me').as('getUser');
+    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    let attempts = 0;
+    while (!community?.id && attempts < retries) {
+      // eslint-disable-next-line no-loop-func
+      cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+      // eslint-disable-next-line no-loop-func
+      attempts++;
+    }
 
     Cypress.Commands.add('login', () => {
       cy.get('button').then(($a) => {
@@ -62,6 +74,8 @@ describe('Community Profile Sections', () => {
     Cypress.Commands.add('adminLogin', () => {
       cy.get('button').then(($a) => {
         if ($a.text().includes('Log In')) {
+          cy.wait('@getUser');
+          cy.wait('@getUuid');
           waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
           waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
           waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
@@ -104,7 +118,7 @@ describe('Community Profile Sections', () => {
 
       select('.CommunityPricing__StyledCommunityPricingWrapper').should('contain', formatMoney(community.startingRate));
       select('.CommunityRating__StyledRating').parent().contains(rating);
-      cy.get('a[class*=GetCommunityPricingAndAvailability').contains('Get Pricing and Availability').click({ force: true });
+      cy.get('[data-buttonid="GetCommunityPricingAndAvailability"]').contains('Get Pricing and Availability').click({ force: true });
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
@@ -118,6 +132,7 @@ describe('Community Profile Sections', () => {
       buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
+      cy.wait('@getUser');
       cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability')
         .click();
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
@@ -259,8 +274,25 @@ describe('Community Profile Sections', () => {
     it('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
+      cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      waitForHydration(cy.get('button').contains('Ask a Question')).click({ force: true });
+      cy.wait('@postUuidActions').then((xhr) => {
+        expect(xhr.requestBody).to.deep.equal({
+          data: {
+            type: 'UUIDAction',
+            attributes: {
+              actionType: 'profileViewed',
+              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+              actionInfo: {
+                slug: community.id,
+              },
+            },
+          },
+        });
+      });
+      cy.wait('@getUser');
+
+      waitForHydration(cy.get('button').contains('Ask a Question')).click();
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
       const firstName = `Lead${randHash()}`;
@@ -302,20 +334,22 @@ describe('Community Profile Sections', () => {
         });
       });
 
+      cy.wait('@getUser');
 
-      waitForHydration(cy.contains('Finish').click());
+
+      waitForHydration(cy.contains('Finish').click({ force: true }));
 
       cy.getCookie('sly-session').should('exist');
-      // cy.get('a').contains(firstName);
       cy.clearCookie('sly-session');
-      cy.wait(5000);
+      cy.reload();
       cy.visit('/');
+
       waitForHydration(cy.adminLogin());
 
       cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('tr').contains(`${firstName} ${lastName}`)).click();
 
-      cy.get('h1').contains(`${firstName} ${lastName}`);
+      cy.get('h2').contains(`${firstName} ${lastName}`);
       cy.get('a').contains('See more family details').click();
 
       cy.get('input[name="name"]').should('have.value', `${firstName} ${lastName}`);

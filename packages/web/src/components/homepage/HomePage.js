@@ -68,7 +68,6 @@ const HomePage = ({
           sources={[120, 240, 480]}
           sizes="30vw"
         />
-        {/* <BannerNotificationAdContainer type="wizardHome" noMarginBottom /> */}
         <Section
           display="flex"
           flexDirection="column"

@@ -39,7 +39,7 @@ const CommunityAgentSection = ({
   return (
     <Block {...props}>
       <Grid
-        dimensions={[getKey('sizes.element.xxxLarge'), '100%']}
+        dimensions={[getKey('sizes.element.xxxLarge'), `calc(100% - ${getKey('sizes.element.xxxLarge')} - ${getKey('sizes.spacing.large')})`]}
         gap="large"
         align="center"
         pad="regular"
@@ -70,5 +70,6 @@ CommunityAgentSection.propTypes = {
 CommunityAgentSection.defaultProps = {
   layout: 'community',
 };
+CommunityAgentSection.typeHydrationId = 'CommunityAgentSection';
 
 export default CommunityAgentSection;
