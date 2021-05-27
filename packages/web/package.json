@@ -110,7 +110,6 @@
     "xmlbuilder": "^15.1.1",
     "yall-js": "3.1.7",
     "sanitize-html":"2.3.3",
-    "ansi-to-html": "^0.6.11",
-    "react-intersection-observer":"8.32.0"
+    "ansi-to-html": "^0.6.11"
   }
 }
