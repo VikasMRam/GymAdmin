@@ -265,7 +265,7 @@ const Footer = props => (
               label: 'Sitemap',
             }}
             color="slate.base"
-            to="/sitemap"
+            href="/sitemap"
           >
             Sitemap
           </Link>
