@@ -63,14 +63,14 @@ describe('Sending Referral to Community', () => {
       cy.clearCookie('sly_sid');
       cy.clearCookie('sly_uuid');
       cy.clearCookie('sly-session');
-      cy.reload();
       cy.server();
       cy.route('POST', '**/auth/login').as('login');
       cy.route('GET', '**/users/me').as('getUser');
+      cy.reload();
+      cy.wait('@getUser');
       Cypress.Commands.add('login', () => {
         cy.get('button').then(($a) => {
           if ($a.text().includes('Log In')) {
-            cy.wait('@getUser');
             waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
             waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
             waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
