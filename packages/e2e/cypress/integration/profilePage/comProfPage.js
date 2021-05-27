@@ -6,7 +6,6 @@ const getPriceFooter =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[last()]";
 const getPriceTable =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[1]";
-const askBtn = "//button[text()='Ask a Question']";
 
 // Selectors dynamic
 const imageByScr = src => `(//img[@src='${src}'])[last()]`;
@@ -39,7 +38,7 @@ export const getPriceWizardInfoIsPresent = () => {
 };
 
 export const askQuestBtn = () =>
-  waitForHydration(cy.xpath(askBtn)).click({ force: true });
+  waitForHydration(cy.xpath(buttonText("Ask a Question"))).click({ force: true });
 
 export const sendAskForm = ({ ...props }) => {
   const { name, lastName, email, phone, question } = props;
