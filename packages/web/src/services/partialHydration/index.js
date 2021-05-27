@@ -73,7 +73,7 @@ export const withHydration = (loadFn) => {
         });
       };
       const observer = new IntersectionObserver(check, {
-        marginRoot: '0px 0px 0px 0px',
+        marginRoot: '0px 0px 0px 250px',
       });
       observer.observe(ref.current);
       return () => observer.disconnect();
