@@ -294,8 +294,8 @@ describe('Community Profile Sections', () => {
 
 
       waitForHydration(cy.get('button').contains('Ask a Question'));
-      cy.wait(10);
-      waitForHydration(cy.get('button').contains('Ask a Question')).click();
+      cy.wait(100);
+      cy.get('button').contains('Ask a Question').click();
 
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
