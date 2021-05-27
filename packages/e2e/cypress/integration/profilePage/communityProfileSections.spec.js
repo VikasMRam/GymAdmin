@@ -8,6 +8,7 @@ import { PROFILE_TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constant
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
+import * as communityPage from './comProfPage';
 
 const randHash = () => Math.random().toString(36).substring(7);
 
@@ -360,24 +361,23 @@ describe('Community Profile Sections', () => {
   // });
 
   responsive(() => {
-    it.only('Check wizard pricing footer (ComPrfPage - row 4)', function() {
-
+    it('Check wizard pricing footer (ComPrfPage - row 4)', function() {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
-      // Second Get pricing button (footer) - in responsive mode with small resolution will display first
+      // Second button 'Get pricing' button (footer) - in responsive mode with small resolution will display first
       communityPage.getPriceBtnFooter();
       communityPage.getPriceWizardInfoIsPresent();
       cy.url().should('include', 'cta=pricing&entry=communityFooter');
     });
   });
 
-  it('Check wizard pricing table (ComPrfPage - row 5)', function() {
+  it.only('Check wizard pricing table (ComPrfPage - row 5)', function() {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions');
-    // Second Get pricing button (footer) - in responsive mode with small resolution will display first
     communityPage.getPriceBtnTable();
     communityPage.getPriceWizardInfoIsPresent();
     cy.url().should('include', 'cta=pricing&entry=pricingTable');
   });
+
 });
 
