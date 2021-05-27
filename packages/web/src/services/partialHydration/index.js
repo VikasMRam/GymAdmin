@@ -3,7 +3,6 @@ import { hydrate } from 'react-dom';
 import loadable from '@loadable/component';
 
 
-import { requestIdleCallback } from 'sly/web/requestIdleCallback';
 import { isBrowser } from 'sly/web/config';
 
 const HYDRATION_DATA_TYPE = 'application/hydration-data';
