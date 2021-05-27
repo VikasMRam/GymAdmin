@@ -440,4 +440,5 @@ describe('Community Profile Sections', () => {
     cy.wait('@getUser');
     communityPage.successModalIsSeenAndClosed();
   });
+  // http://www.lvh.me/assisted-living/california/san-francisco/buena-vista-manor-house
 });
