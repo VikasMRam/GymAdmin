@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
-
+import loadable from '@loadable/component';
 
 import { size, palette } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
@@ -47,11 +47,11 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
 
-const PageViewActionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
-const PageEventsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'));
-const CommunityMediaGalleryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
-const CommunitySummaryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
-const GetAssessmentBoxContainerHydrator = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
+const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
+const PageEventsContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'));
+const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
+const CommunitySummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
+const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
 
 
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
