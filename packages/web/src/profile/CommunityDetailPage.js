@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
-import loadable from '@loadable/component';
 
 
 import { size, palette } from 'sly/common/components/themes';
@@ -48,11 +47,14 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 
 
+const PageViewActionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
+const PageEventsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'));
+const CommunityMediaGalleryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
+const CommunitySummaryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
+const GetAssessmentBoxContainerHydrator = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
+
+
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
-// const PageViewActionContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'), { alwaysHydrate: true });
-// const PageEventsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'), { alwaysHydrate: true });
-// const CommunityMediaGalleryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
-// const CommunitySummaryContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
 const OfferNotificationContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkOfferNotification" */ 'sly/web/profile/OfferNotification/OfferNotificationContainer'));
 const TrackedSimilarCommunitiesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/TrackedSimilarCommunitiesContainer'));
 const HowSlyWorksVideoContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkHowSlyWorksVideo" */ 'sly/web/containers/HowSlyWorksVideoContainer'));
@@ -60,28 +62,11 @@ const CommunityReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import
 const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
 const AskAgentQuestionButtonContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAskAgentQuestionButton" */ 'sly/web/containers/AskAgentQuestionButtonContainer'));
 const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/containers/CommunityMorePicturesContainer'));
-// const GetAssessmentBoxContainerHydrator = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'), { alwaysHydrate: true });
+
 const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrustScore" */ 'sly/web/containers/communityProfile/TrustScoreContainer'));
 // const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
 
-// const CommunityAgentSection = idleUntilUrgent(loadable(() => import('sly/web/components/molecules/CommunityAgentSection')));
-// const CommunityAgentSection = idleUntilUrgent(<Hydrator load={/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection')} />);
-const PageViewActionContainer = loadable(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
-const PageEventsContainer = loadable(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'));
-const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
-const CommunitySummaryContainer = loadable(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
-// const OfferNotificationContainer = idleUntilUrgent(loadable(() => import('sly/web/profile/OfferNotification/OfferNotificationContainer')));
-// const TrackedSimilarCommunitiesContainer = idleUntilUrgent(loadable(() => import('sly/web/containers/TrackedSimilarCommunitiesContainer')));
-// const HowSlyWorksVideoContainer = idleUntilUrgent(loadable(() => import('sly/web/containers/HowSlyWorksVideoContainer')));
-// const CommunityReviewsContainer = idleUntilUrgent(loadable(() => import('sly/web/containers/CommunityReviewsContainer')));
-// const CommunityQuestionAnswersContainer = idleUntilUrgent(loadable(() => import('sly/web/containers/CommunityQuestionAnswersContainer')));
-// const AskAgentQuestionButtonContainer = idleUntilUrgent(loadable(() => import('sly/web/containers/AskAgentQuestionButtonContainer')));
-// const CommunityMorePicturesContainer = idleUntilUrgent(loadable(() => import('sly/web/containers/CommunityMorePicturesContainer')));
-const GetAssessmentBoxContainerHydrator = loadable(() => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
-// const TrustScoreTile = idleUntilUrgent(loadable(() => import('sly/web/containers/communityProfile/TrustScoreContainer')));
-// // const Chatbox = loadable( () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
-// const LazyCommunityMap = idleUntilUrgent(loadable(() => import('sly/web/containers/LazyCommunityMapContainer')));
 
 const BackToSearch = styled.div`
   text-align: center;

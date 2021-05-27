@@ -54,7 +54,6 @@ export const withHydration = (loadFn) => {
   // const Component = loadable(loadFn, { ssrOnly: true, suspense: isBrowser });
   let Component = loadable(loadFn, { ssrOnly: true });
 
-  let doFetch;
   return (props) => {
     const ref = useRef();
     const [shouldHydrate, setShouldHydrate] = useState(false);
@@ -69,12 +68,11 @@ export const withHydration = (loadFn) => {
               Component = module.render();
               setShouldHydrate(true);
             });
-            console.log(Component);
           }
         });
       };
       const observer = new IntersectionObserver(check, {
-        marginRoot: '0px 0px 500px 0px',
+        marginRoot: '0px 0px 0px 500px',
       });
       observer.observe(ref.current);
       return () => observer.disconnect();
