@@ -17,6 +17,7 @@ export const formatPhone = phone => `${phone.substr(0, 3)}-${phone.substr(3, 3)}
 
 export default function randomUser() {
   const name = `Fonz ${randHash()}`;
+  const lastName = `Last ${randHash()}`;
   const email = `slytest+${randHash()}@seniorly.com`;
   let phone = null;
   do {
@@ -28,5 +29,6 @@ export default function randomUser() {
     email,
     phone,
     formattedPhone: formatPhone(phone),
+    lastName
   };
 }

@@ -1,19 +1,24 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="Cypress" />
 
-
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { PROFILE_TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
+import {
+  PROFILE_TEST_COMMUNITY,
+  ServicesAmenitiesFilters,
+} from '../../constants/community';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
 import * as communityPage from './comProfPage';
+import randomUser from '../../helpers/randomUser';
 
-const randHash = () => Math.random().toString(36).substring(7);
+const randHash = () =>
+  Math.random()
+    .toString(36)
+    .substring(7);
 
-
-export const buildEstimatedPriceList = (community) => {
+export const buildEstimatedPriceList = community => {
   const {
     sharedSuiteRate,
     privateSuiteRate,
@@ -23,15 +28,24 @@ export const buildEstimatedPriceList = (community) => {
   } = community.propInfo;
 
   const priceList = [];
-  sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
-  privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio', value: studioApartmentRate });
-  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom', value: twoBedroomApartmentRate });
+  sharedSuiteRate &&
+    sharedSuiteRate !== 'N/A' &&
+    priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
+  privateSuiteRate &&
+    privateSuiteRate !== 'N/A' &&
+    priceList.push({ label: 'Private Suite', value: privateSuiteRate });
+  studioApartmentRate &&
+    studioApartmentRate !== 'N/A' &&
+    priceList.push({ label: 'Studio', value: studioApartmentRate });
+  oneBedroomApartmentRate &&
+    oneBedroomApartmentRate !== 'N/A' &&
+    priceList.push({ label: 'One Bedroom', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate &&
+    twoBedroomApartmentRate !== 'N/A' &&
+    priceList.push({ label: 'Two Bedroom', value: twoBedroomApartmentRate });
 
   return priceList;
 };
-
 
 describe('Community Profile Sections', () => {
   let community;
@@ -52,7 +66,7 @@ describe('Community Profile Sections', () => {
     let attempts = 0;
     while (!community?.id && attempts < retries) {
       // eslint-disable-next-line no-loop-func
-      cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
+      cy.getCommunity(PROFILE_TEST_COMMUNITY).then(response => {
         community = response;
       });
       // eslint-disable-next-line no-loop-func
@@ -60,27 +74,43 @@ describe('Community Profile Sections', () => {
     }
 
     Cypress.Commands.add('login', () => {
-      cy.get('button').then(($a) => {
+      cy.get('button').then($a => {
         if ($a.text().includes('Log In')) {
-          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
+          waitForHydration(
+            cy.get('div[class*=Header__HeaderItems]').contains('Log In'),
+          ).click({ force: true });
           const rand = randHash();
           cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
-          waitForHydration(cy.get('form input[name="email"]')).type(`fonz+e2e+${rand}@seniorly.com`).should('have.value', `fonz+e2e+${rand}@seniorly.com`);
-          waitForHydration(cy.get('form input[name="password"]')).type('nopassword').should('have.value', 'nopassword');
-          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click();
+          waitForHydration(cy.get('form input[name="email"]'))
+            .type(`fonz+e2e+${rand}@seniorly.com`)
+            .should('have.value', `fonz+e2e+${rand}@seniorly.com`);
+          waitForHydration(cy.get('form input[name="password"]'))
+            .type('nopassword')
+            .should('have.value', 'nopassword');
+          waitForHydration(
+            cy.get('button[type="submit"]').contains('Log in'),
+          ).click();
         }
       });
     });
 
     Cypress.Commands.add('adminLogin', () => {
-      cy.get('button').then(($a) => {
+      cy.get('button').then($a => {
         if ($a.text().includes('Log In')) {
           cy.wait('@getUser');
           cy.wait('@getUuid');
-          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
-          waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
-          waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click({ force: true });
+          waitForHydration(
+            cy.get('div[class*=Header__HeaderItems]').contains('Log In'),
+          ).click({ force: true });
+          waitForHydration(cy.get('form input[name="email"]')).type(
+            'slytest+admin@seniorly.com',
+          );
+          waitForHydration(cy.get('form input[name="password"]')).type(
+            'nopassword',
+          );
+          waitForHydration(
+            cy.get('button[type="submit"]').contains('Log in'),
+          ).click({ force: true });
         }
       });
     });
@@ -371,7 +401,7 @@ describe('Community Profile Sections', () => {
     });
   });
 
-  it.only('Check wizard pricing table (ComPrfPage - row 5)', function() {
+  it('Check wizard pricing table (ComPrfPage - row 5)', function() {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions');
     communityPage.getPriceBtnTable();
@@ -379,5 +409,35 @@ describe('Community Profile Sections', () => {
     cy.url().should('include', 'cta=pricing&entry=pricingTable');
   });
 
+  it.only('About section CTA (ComPrfPage - row 6)', function() {
+    const user = randomUser();
+    const question = `Auto test ${user.lastName}`;
+    const expectedActionType = 'profileAskQuestion';
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions');
+    communityPage.askQuestBtn();
+    communityPage.sendAskForm({...user, question});
+    cy.wait('@postUuidActions').then(xhr => {
+      expect(xhr.requestBody).to.deep.equal({
+        data: {
+          type: 'UUIDAction',
+          attributes: {
+            actionType: expectedActionType,
+            actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+            actionInfo: {
+              email: user.email,
+              entityType: 'Community',
+              name: `${user.name} ${user.lastName}`,
+              phone: user.phone,
+              question,
+              questionText: question,
+              slug: community.id,
+            },
+          },
+        },
+      });
+    });
+    cy.wait('@getUser');
+    communityPage.successModalIsSeenAndClosed();
+  });
 });
-
