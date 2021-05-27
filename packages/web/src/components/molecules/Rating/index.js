@@ -55,7 +55,7 @@ const MaskedStar = ({ id, value, ...props }) => {
         <rect x="0" y="0" width="24" height="24" fill="white" />
         <rect x={x} y="0" width="24" height="24" fill="black" />
       </mask>
-      <StarPath mask={`url(#${id})`} {...props} />
+      <StarFillPath mask={`url(#${id})`} {...props} />
     </>
   );
 };
