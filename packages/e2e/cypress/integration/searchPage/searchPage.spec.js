@@ -15,12 +15,9 @@ import {
 const toSearchPage = (address) => {
   // Get Search Box Input
   cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').type(address);
-
   cy.wait('@searchRequest');
-
   // Wait untill suggestions appear
   cy.get('div[class*=__SuggestionsWrapper]').contains(address);
-
   // Click Search Icon
   cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').parent().find('button')
     .click();
@@ -131,13 +128,11 @@ const applyFilter = (filterName, viewPort) => {
       cy.get('div[class*="FilterButton"]').contains(filterName.uiText).click();
     }
   });
-  // cy.get('div[class*="FilterButton"]').contains(text).click();
 };
 
 
 const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
   applyFilter(filterName, viewPort); // Click on filter
-
 
   // Select the choices
   selectionTypes.forEach((communityType) => {
@@ -146,16 +141,6 @@ const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
       .contains(searchText)
       .click();
   });
-
-  // if (viewPort === 'mobile') {
-  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
-  //   cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
-  // } else {
-  //   cy.get('button')
-  //     .contains('Save')
-  //     .click({ force: true });
-  //   cy.get('div[class*="FilterButton"]').contains(selectionTypes[0].uiText);
-  // }
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
@@ -171,21 +156,6 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
   } else {
     applyFilter(selectionValue, viewPort);
   }
-
-  // if (viewPort === 'mobile') {
-  //   cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click();
-  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
-  //   cy.get('span[class*="FilterButton__Number"]').should('not.exist');
-  // } else {
-  //   cy.get('button') // Click on clear all
-  //     .contains('Clear all')
-  //     .click();
-  //   cy.get('button')
-  //     .contains('Save')
-  //     .click({ force: true });
-  //   cy.get('div[class*="FilterButton"]').contains(selectionValue.uiText);
-  // }
-
   clickFilterButtons(viewPort, 'Clear');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
@@ -201,26 +171,14 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
   } else {
     applyFilter(lapHeader, viewPort);
   }
-
   selectionTypes.forEach((communityType) => {
     const searchText = communityType.uiText;
     cy.get('label[class*="FilterChoice"]')
       .contains(searchText)
       .click();
   });
-
-  // if (viewPort === 'mobile') {
-  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
-  // } else {
-  //   cy.get('button')
-  //     .contains('Save')
-  //     .click({ force: true });
-  // }
   clickFilterButtons(viewPort, 'Save');
-
-
   cy.log('Save Button Clicked');
-
   cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
 };
 
@@ -230,19 +188,6 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
   } else {
     applyFilter(lapHeader, viewPort);
   }
-  // if (viewPort === 'mobile') {
-  //   cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click();
-  //   cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
-  //   cy.get('span[class*="FilterButton__Number"]').should('not.exist');
-  // } else {
-  //   cy.get('button') // Click on clear all
-  //     .contains('Clear all')
-  //     .click();
-  //   cy.get('button')
-  //     .contains('Save')
-  //     .click({ force: true });
-  //   cy.get('div[class*="FilterButton"]').contains(filterName.uiText);
-  // }
   clickFilterButtons(viewPort, 'Clear');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
@@ -264,7 +209,6 @@ const validateChangeInResultSet = (previousResultCount) => {
     .invoke('text')
     .then((text) => {
       const textCount = parseFloat(text);
-      // expect(textCount !== Number(previousResultCount));
       expect(textCount).not.eql(Number(previousResultCount));
     });
 };
@@ -309,26 +253,16 @@ const closeMapView = () => {
 };
 
 const countMapMarkers = (list) => {
-  // cy.get('button[class*="gm-control"]').then(() => {
-  //   cy.get('div[class*="Marker__"]').then((markers) => {
-  //     expect(list.length).to.eql(markers.length);
-  //   });
-  // });
   cy.get('div[class*="Marker__"]').then((markers) => {
     expect(list.length).to.eql(markers.length);
   });
   closeMapView();
 };
 const navigateAndCheckTitles  = (data) => {
-  // console.log(data);
   let currentUrl;
   cy.url().then((url) => {
-    // currentUrl = url;
-
-    currentUrl = url.substr(url.indexOf('assisted'));
-    // console.log(currentUrl);
-    // http://www.lvh.me/assisted-living/california/san-francisco
     // extract only relative url , as environment changes
+    currentUrl = url.substr(url.indexOf('assisted'));
     [data[0]].forEach((dataObj, index) => {
       cy.visit(dataObj.url);
       // cy.wait('@postUuidActions');
@@ -340,82 +274,8 @@ const navigateAndCheckTitles  = (data) => {
   });
 };
 
-// const markerNavigation = (list) => {
-//   const urlData = [];
-
-//   // cy.get('button[class*="gm-control"]').then(() => {
-//   //   cy.get('div[class*="Marker__"]').each((marker, index) => {
-//   //     cy.wrap(marker).find('svg').click({ force: true });
-//   //     cy.wrap(marker)
-//   //       .invoke('text')
-//   //       .then(() => {
-//   //         cy.get("a[href*='map']")
-//   //           .find('h3')
-//   //           // str = str.replace(/ +(?= )/g,'');
-//   //           // list[index].attributes.name
-//   //           .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
-//   //           .each((aTag, index, collection) => {
-//   //             urlData.push({
-//   //               url: aTag[0].href,
-//   //               title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
-//   //             });
-//   //             if (index === collection.length - 1) {
-//   //               navigateAndCheckTitles(urlData);
-//   //             }
-//   //           });
-//   //       });
-//   //   });
-//   // });
-//   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-//   cy.get('div[class*="Marker__"]').each((marker, index) => {
-//     cy.wrap(marker).find('svg').click({ force: true })
-//     // cy.wrap(marker)
-//       .invoke('text')
-//       .then(() => {
-//         cy.get("a[href*='map']")
-//           .find('h3')
-//           // str = str.replace(/ +(?= )/g,'');
-//           // list[index].attributes.name
-//           .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
-//           .each((aTag, index, collection) => {
-//             urlData.push({
-//               url: aTag[0].href,
-//               title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
-//             });
-//             if (index === collection.length - 1) {
-//               navigateAndCheckTitles(urlData);
-//             }
-//           });
-//       });
-//   });
-// };
-
 const markerNavigation = (list) => {
   const urlData = [];
-
-  // cy.get('button[class*="gm-control"]').then(() => {
-  //   cy.get('div[class*="Marker__"]').each((marker, index) => {
-  //     cy.wrap(marker).find('svg').click({ force: true });
-  //     cy.wrap(marker)
-  //       .invoke('text')
-  //       .then(() => {
-  //         cy.get("a[href*='map']")
-  //           .find('h3')
-  //           // str = str.replace(/ +(?= )/g,'');
-  //           // list[index].attributes.name
-  //           .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
-  //           .each((aTag, index, collection) => {
-  //             urlData.push({
-  //               url: aTag[0].href,
-  //               title: list[index].attributes.name.replace(/ +(?= )/g, '').trim(),
-  //             });
-  //             if (index === collection.length - 1) {
-  //               navigateAndCheckTitles(urlData);
-  //             }
-  //           });
-  //       });
-  //   });
-  // });
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
   cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
@@ -425,8 +285,6 @@ const markerNavigation = (list) => {
         const markerIndex = ((Number(text)) - 1) % 20;
         cy.get("a[href*='map']")
           .find('h3')
-          // str = str.replace(/ +(?= )/g,'');
-          // list[index].attributes.name
           .contains(list[markerIndex].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
           .each((aTag) => {
             urlData.push({
@@ -445,20 +303,6 @@ const markerNavigation = (list) => {
 // Accepts list's data, and check no of markers equal to list length
 // Click on markers and validate data
 const mapAssertions = (list) => {
-  // cy.get('button[class*="gm-control"]').then(() => {
-  //   cy.get('div[class*="Marker__"]').each((marker) => {
-  //     cy.wrap(marker).find('svg').click({ force: true });
-  //     cy.wrap(marker)
-  //       .invoke('text')
-  //       .then((text) => {
-  //         const index = ((Number(text)) - 1) % 20;
-  //         cy.get('h3')
-  //           .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim())
-  //           .should('exist');
-  //       });
-  //   });
-  // });
-
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
     // cy.wrap(marker)
@@ -470,7 +314,6 @@ const mapAssertions = (list) => {
           .should('exist');
       });
   });
-
   closeMapView();
 };
 
@@ -518,7 +361,6 @@ describe('Search Page', () => {
       method: 'GET',
       url: '**/platform/community-search?filter**',
     }).as('communitySearch');
-    // cy.route('POST', '**/uuid-actions').as('postUuidActions');
   });
   let currentList = [];
   let totalResultCount = 0;
@@ -552,12 +394,10 @@ describe('Search Page', () => {
     });
 
     it('Title check', () => {
-      // Heading check
       cy.contains(`Senior Living Communities in ${cityName}`);
     });
 
     it('Filter section check', () => {
-      //! Filter Section
       cy.get('div[class*="FilterButton__"]')
         .its('length')
         .should('greaterThan', 4);
@@ -574,7 +414,6 @@ describe('Search Page', () => {
       checkForListCount(20);
     });
     it('Map section check', () => {
-      //! Map Section
       mapCheck(currentList, 'Markers');
     });
   });
@@ -616,7 +455,6 @@ describe('Search Page Sections', () => {
     });
 
     it('Care types explanation check', () => {
-      // Care types explanation
       cy.get('section h3')
         .contains('Explore other types of communities')
         .parent()
@@ -641,9 +479,7 @@ describe('Search Page Sections', () => {
       ], viewport);
       // check for title change
       checkForTitle(CommunityTypes.AssistedLiving.uiText);
-
       validateChangeInResultSet(totalResultCount);
-
       clearGenericTypeFilter(
         FilterNames.CommunityType,
         CommunityTypes.AssistedLiving, viewport,
@@ -664,11 +500,6 @@ describe('Search Page Sections', () => {
 
     it('More Filter Check', () => {
       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
-
-      // applyMoreFilter(FilterNames.MoreFilters.uiText, [
-      //   MoreFilters.CareServices.MedicationManagement,
-      // ]);
-
       validateChangeInResultSet(totalResultCount);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
@@ -681,12 +512,7 @@ describe('Search Page Sections', () => {
 
 
     it('Navigate to page 2', () => {
-      // cy.get('div[class*="SearchPagination"]')
-      //   .find('button')
-      //   .contains('2')
-      //   .click();
       cy.get('div[class*="Pagination"]').find('div[rotate="0"]').click();
-
       cy.wait('@communitySearch').then((res) => {
         res.response.body.text().then((text) => {
           const responseBody = JSON.parse(text);
@@ -700,6 +526,7 @@ describe('Search Page Sections', () => {
     it('check contents of page 2', () => {
       checkPopulationOfList(currentList);
     });
+
     it('map check - page 2', () => {
       mapCheck(currentList, 'CONTENT');
     });
@@ -731,7 +558,6 @@ describe('Assisted Search Page Sections', () => {
 
   responsive(() => {
     it('Navigate to search page', () => {
-      // cy.visit('/');
       cy.visit('/');
       toSearchPageFromCity('San Francisco');
       cy.wait('@communitySearch').then((res) => {
@@ -769,10 +595,8 @@ describe('Assisted Search Page Sections', () => {
       cy.window().then((win) => {
         cy.stub(win, 'open').as('windowOpen');
       });
-
       mapCheck(currentList, 'MARKER_NAVIGATION');
     });
   });
 });
 
-// "ignoreTestFiles": "**/*/!(*v2*|*ProfileSections*|*communityReferral*|*searchPage*).js",
