@@ -279,7 +279,6 @@ const markerNavigation = (list) => {
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
   cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
-    // cy.wrap(marker)
       .invoke('text')
       .then((text) => {
         const markerIndex = ((Number(text)) - 1) % 20;
