@@ -59,33 +59,27 @@ function addcommContact() {
 describe('Sending Referral to Community', () => {
   responsive(() => {
     beforeEach(() => {
-      cy.visit('/');
+      cy.intercept('POST', '**/auth/login').as('login');
+      cy.intercept('GET', '**/users/me').as('getUser');
       cy.clearCookie('sly_sid');
       cy.clearCookie('sly_uuid');
       cy.clearCookie('sly-session');
-      cy.server();
-      cy.route('POST', '**/auth/login').as('login');
-      cy.route('GET', '**/users/me').as('getUser');
-      cy.reload();
-      cy.wait('@getUser');
+      cy.visit('/');
+      cy.wait('@getUser', { timeout: 15000 }).its('response.statusCode').should('eq', 401);
       Cypress.Commands.add('login', () => {
-        cy.get('button').then(($a) => {
-          if ($a.text().includes('Log In')) {
-            waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
-            waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
-            waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-            waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click();
-            cy.wait('@login');
-            cy.wait('@getUser');
-          }
-        });
+        cy.get('div[class*=Header__HeaderItems]').contains('Log In').scrollIntoView().click({ force: true });
+        cy.get('form input[name="email"]').type('slytest+admin@seniorly.com');
+        cy.get('form input[name="password"]').type('nopassword');
+        cy.get('button[type="submit"]').contains('Log in').click();
+        cy.wait('@login');
+        cy.wait('@getUser');
       });
     });
 
     it('Add Test community', () => {
       cy.login();
-      cy.route('POST', '**/communities').as('createCommunity');
-      cy.route('GET', '**/communities/*').as('getNewCommunity');
+      cy.intercept('POST', '**/communities').as('createCommunity');
+      cy.intercept('GET', '**/communities/*').as('getNewCommunity');
       cy.visit('/dashboard/communities');
       waitForHydration(cy.get('[data-cy="plus"]')).click();
       addtestCommunity();
@@ -112,9 +106,9 @@ describe('Sending Referral to Community', () => {
 
     it('Create lead', () => {
       cy.login();
-      cy.route('POST', '**/clients').as('createLead');
-      cy.route('GET', '**/clients/*').as('getLead');
-      cy.route('GET', '**/notes*').as('getNotes');
+      cy.intercept('POST', '**/clients').as('createLead');
+      cy.intercept('GET', '**/clients/*').as('getLead');
+      cy.intercept('GET', '**/notes*').as('getNotes');
       cy.visit('/dashboard/agent/my-families/new');
       waitForHydration(cy.get('div [class*=DashboardAgentFamilyOverviewSection__TwoColumn]').contains('Add family')).click('right', { force: true });
       addfamilyContact();
@@ -127,9 +121,9 @@ describe('Sending Referral to Community', () => {
 
     it('Send referral to community', () => {
       cy.login();
-      cy.route('GET', '**/communities*').as('searchCommunities');
-      cy.route('POST', '**/clients').as('sendReferral');
-      cy.route('GET', '**/clients/*').as('getReferral');
+      cy.intercept('GET', '**/communities*').as('searchCommunities');
+      cy.intercept('POST', '**/clients').as('sendReferral');
+      cy.intercept('GET', '**/clients/*').as('getReferral');
       cy.visit('/dashboard/agent/my-families/new');
 
       waitForHydration(cy.get('table').find('tbody').find('tr a[class*=ClientRowCard__StyledNameCell]').first()).click();
