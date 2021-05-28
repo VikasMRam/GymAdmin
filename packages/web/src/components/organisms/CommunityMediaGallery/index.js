@@ -6,7 +6,10 @@ import { size, palette, getKey } from 'sly/common/components/themes';
 import { Button, Link } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
-import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
+// import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
+import { withHydration } from 'sly/web/services/partialHydration';
+
+const FullscreenMediaGallery = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/web/components/molecules/FullscreenMediaGallery'));
 
 const BottomRightWrapper = styled.span`
   background: ${palette('slate', 'base')}80;
@@ -47,7 +50,7 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, city, state, images, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode, onFavouriteClick, isFavorited, onShareClick
+      communityName, city, state, images, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode, onFavouriteClick, isFavorited, onShareClick,
     } = this.props;
 
     const galleryImages = images.map((image, i) => ({

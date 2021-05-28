@@ -186,7 +186,8 @@ export default class ResponsiveImage extends React.Component {
       if (shouldPreload) {
         preload = (
           <Helmet>
-            <link rel="preload" href={imgSrc} as="image" imageSrcSet={webpSrcset} imageSizes={sizesProp} />
+            {/* <link rel="preload" as="image" imageSrcSet={jpegSrcset} imageSizes={sizesProp} /> */}
+            <link rel="preload" as="image" imageSrcSet={webpSrcset} imageSizes={sizesProp} />
           </Helmet>
         );
       }

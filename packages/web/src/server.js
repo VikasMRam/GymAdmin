@@ -23,6 +23,7 @@ import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { createStore } from 'sly/web/services/api/context';
+import { getImagePath } from 'sly/web/services/images';
 
 const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
@@ -39,7 +40,25 @@ const renderHtml = ({
   const linkElements = (extractor && extractor.getLinkElements()) || [];
   const scriptElements = (extractor && extractor.getScriptElements()) || [];
   const styleElements = (sheet && sheet.getStyleElement()) || [];
-
+  // if (apiState?.getCommunity) {
+  //   const imagePreload = linkElements.pop();
+  //   console.log(imagePreload);
+  //   linkElements = [imagePreload, ...linkElements];
+  // }
+  // console.log(linkElements);
+  // console.log(scriptElements);
+  // console.log(styleElements);
+  // console.log(apiState?.getCommunity?.[Object.keys(apiState?.getCommunity)[0]]?.normalized?.gallery?.images?.[0]);
+  // // const imageToPreload = apiState?.getCommunity?.[Object.keys(apiState?.getCommunity)[0]]?.result?.attributes?.mainImage;
+  // const imagePathToPreload = apiState?.getCommunity?.[Object.keys(apiState?.getCommunity)[0]]?.normalized?.gallery?.images?.[0]?.path;
+  // console.log(linkElements);
+  // if (imagePathToPreload) {
+  //   linkElements.push(<link rel="preload" as="image" href={getImagePath(imagePathToPreload)} />);
+  // }
+  // console.log(linkElements);
+  // // console.log(apiState.getCommunity[Object.keys(apiState.getCommunity)[0]].attributes.mainImage);
+  // // apiState[Object.keys(apiState.result)[0]];
+  // // console.log(apiState.getCommunity.result);
   const state = `
     ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
     ${apiState ? `window.__API_STATE__ = ${serialize(apiState)};` : ''}
