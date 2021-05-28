@@ -161,6 +161,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
       .click();
   });
   cy.wait('@communitySearch');
+
   clickFilterButtons(viewPort, 'Save');
   cy.log('Save Button Clicked');
   cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
@@ -187,13 +188,14 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
 
 // Accepts previous result count , and validate if present and previous count are different
 const validateChangeInResultSet = (previousResultCount) => {
-  cy.get('div')
-    .contains('results')
-    .invoke('text')
-    .then((text) => {
-      const textCount = parseFloat(text);
-      expect(textCount).not.eql(Number(previousResultCount));
-    });
+  // cy.get('div')
+  //   .contains('results')
+  //   .invoke('text')
+  //   .then((text) => {
+  //     const textCount = parseFloat(text);
+  //     expect(textCount).not.eql(Number(previousResultCount));
+  //   });
+  cy.get('div').contains('results').should('not.have.value', previousResultCount);
 };
 
 const validateNoResultCheck = () => {
@@ -260,11 +262,7 @@ const navigateAndCheckTitles  = (data) => {
 const markerNavigation = (list) => {
   const urlData = [];
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-
-  cy.get('div[class*="Marker__"]').each((marker) => {
-    cy.wrap(marker).find('svg').click({ force: true });
-  });
-
+  cy.get('button[title="Zoom in"]').click({ force: true });
   cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
@@ -294,6 +292,7 @@ const mapAssertions = (list) => {
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true });
   });
+  cy.get('button[title="Zoom in"]').click({ force: true });
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
     // cy.wrap(marker)
@@ -444,6 +443,11 @@ describe('Search Page Sections', () => {
       url: '**/uuid-auxes/me',
       response: {},
     }).as('getUuid');
+    cy.route({
+      method: 'GET',
+      url: '**platform/geo-guides?**',
+      response: {},
+    }).as('geoGuide');
   });
 
   responsive((viewport) => {
