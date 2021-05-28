@@ -370,7 +370,6 @@ describe('Search Page', () => {
   responsive(() => {
     it('Check for near by cities links ', () => {
       cy.visit('/');
-      cy.get('img[alt="face1"]').should('exist');
       cy.wait('@getUsers');
       cy.wait('@getUuid');
       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
@@ -450,7 +449,6 @@ describe('Search Page Sections', () => {
   responsive((viewport) => {
     it('Navigate to search page', () => {
       cy.visit('/');
-      cy.get('img[alt="face1"]').should('exist');
       cy.wait('@getUsers');
       cy.wait('@getUuid');
       toSearchPage(searchText);
