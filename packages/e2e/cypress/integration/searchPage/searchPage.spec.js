@@ -13,8 +13,6 @@ import {
 
 //* Helper Functions Start
 const toSearchPage = (address) => {
-  // cy.wait(20000);
-
   // Get Search Box Input
   cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').click().type(address);
   cy.wait('@searchRequest');
@@ -73,25 +71,6 @@ const checkForADTile = (currentList) => {
   }
 };
 
-// Accepts array of text and validates that each text should be present in all list items
-// const checkForListText = (arrayOfText) => {
-//   cy.get('a article picture')
-//     .parents('article')
-//     .each((item) => {
-//       cy.wrap(item)
-//         .invoke('text')
-//         .then((text) => {
-//           let textFound = false;
-//           arrayOfText.forEach((listText) => {
-//             if (text.includes(listText)) {
-//               textFound = true;
-//             }
-//           });
-//           expect(textFound).to.be.true;
-//         });
-//     });
-// };
-
 //* Filter Logics
 
 // Accepts name of the filter, and clicks it.
@@ -143,6 +122,7 @@ const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
       .contains(searchText)
       .click();
   });
+  cy.wait('@communitySearch');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
@@ -159,6 +139,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
     applyFilter(selectionValue, viewPort);
   }
   clickFilterButtons(viewPort, 'Clear');
+  cy.wait('@communitySearch');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
@@ -179,6 +160,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
       .contains(searchText)
       .click();
   });
+  cy.wait('@communitySearch');
   clickFilterButtons(viewPort, 'Save');
   cy.log('Save Button Clicked');
   cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
@@ -191,6 +173,7 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
     applyFilter(lapHeader, viewPort);
   }
   clickFilterButtons(viewPort, 'Clear');
+  cy.wait('@communitySearch');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
@@ -204,8 +187,6 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
 
 // Accepts previous result count , and validate if present and previous count are different
 const validateChangeInResultSet = (previousResultCount) => {
-  cy.log('Validate Result');
-  cy.wait(2000);
   cy.get('div')
     .contains('results')
     .invoke('text')
@@ -283,7 +264,7 @@ const markerNavigation = (list) => {
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true });
   });
-  // cy.get('button[class*="gm-control-active"]').should('exist');
+
   cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
