@@ -10,7 +10,6 @@ const cssmin = require('cssmin');
 const nodeExternals = require('webpack-node-externals');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const BundleAnalyzerModule = require('webpack-bundle-analyzer');
-const BrotliPlugin = require('brotli-webpack-plugin');
 const {
   match,
   babel,
