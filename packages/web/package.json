@@ -36,6 +36,7 @@
     "@loadable/babel-plugin": "5.12.0",
     "@loadable/webpack-plugin": "5.12.0",
     "@svgr/webpack": "^5.5.0",
+    "@testing-library/react-hooks": "^6.0.0",
     "babel-loader": "8.1.0",
     "cssmin": "0.4.3",
     "eslint-import-resolver-webpack": "0.11.1",
@@ -109,7 +110,7 @@
     "validator": "13.0.0",
     "xmlbuilder": "^15.1.1",
     "yall-js": "3.1.7",
-    "sanitize-html":"2.3.3",
+    "sanitize-html": "2.3.3",
     "ansi-to-html": "^0.6.11"
   }
 }
