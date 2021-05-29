@@ -58,7 +58,7 @@ const { BundleAnalyzerPlugin } = BundleAnalyzerModule;
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 
 const isDev = NODE_ENV === 'development';
-const isStaging = SLY_ENV === 'staging';
+// const isStaging = SLY_ENV === 'staging';
 
 // use __dirname as this file can be included from root package
 const sourcePath = path.join(__dirname, SOURCE);
