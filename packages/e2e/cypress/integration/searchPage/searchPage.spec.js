@@ -188,13 +188,6 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
 
 // Accepts previous result count , and validate if present and previous count are different
 const validateChangeInResultSet = (previousResultCount) => {
-  // cy.get('div')
-  //   .contains('results')
-  //   .invoke('text')
-  //   .then((text) => {
-  //     const textCount = parseFloat(text);
-  //     expect(textCount).not.eql(Number(previousResultCount));
-  //   });
   cy.get('div').contains('results').should('not.have.value', previousResultCount);
 };
 
@@ -250,7 +243,6 @@ const navigateAndCheckTitles  = (data) => {
     currentUrl = url.substr(url.indexOf('assisted'));
     [data[0]].forEach((dataObj, index) => {
       cy.visit(dataObj.url);
-      // cy.wait('@postUuidActions');
       checkForTitle(dataObj.title);
       if (index === data.length - 1) {
         cy.visit(currentUrl);
@@ -295,7 +287,6 @@ const mapAssertions = (list) => {
   cy.get('button[title="Zoom in"]').click({ force: true });
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
-    // cy.wrap(marker)
       .invoke('text')
       .then((text) => {
         const index = ((Number(text)) - 1) % 20;
