@@ -254,7 +254,10 @@ const navigateAndCheckTitles  = (data) => {
 const markerNavigation = (list) => {
   const urlData = [];
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-  cy.get('button[title="Zoom in"]').click({ force: true });
+  // cy.get('div[class*="Marker__"]').each((marker) => {
+  //   cy.wrap(marker).find('svg').click({ force: true });
+  // });
+  cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
   cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
@@ -281,10 +284,10 @@ const markerNavigation = (list) => {
 // Click on markers and validate data
 const mapAssertions = (list) => {
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-  cy.get('div[class*="Marker__"]').each((marker) => {
-    cy.wrap(marker).find('svg').click({ force: true });
-  });
-  cy.get('button[title="Zoom in"]').click({ force: true });
+  // cy.get('div[class*="Marker__"]').each((marker) => {
+  //   cy.wrap(marker).find('svg').click({ force: true });
+  // });
+  cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
