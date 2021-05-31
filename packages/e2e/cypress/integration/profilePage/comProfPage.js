@@ -1,4 +1,4 @@
-import { isVisibleXpath, isNotVisibleXpath } from '../../helpers/domElements';
+import {isVisibleXpath, isNotVisibleXpath, domElement} from '../../helpers/domElements';
 import { waitForHydration } from '../../helpers/tests';
 
 // Selectors static
@@ -38,11 +38,15 @@ export const getPriceWizardInfoIsPresent = () => {
 };
 
 export const askQuestBtn = () =>
-  waitForHydration(cy.xpath(buttonText("Ask a Question"))).click({ force: true });
+  waitForHydration(cy.xpath(buttonText('Ask a Question'))).click({ force: true });
+
+export const askExperttBtn = () =>
+  waitForHydration(cy.get('button[type="expert"]')).click({ force: true });
 
 export const sendAskForm = ({ ...props }) => {
   const { name, lastName, email, phone, question } = props;
-  waitForHydration(cy.get('#firstName')).type(name);
+  // waitForHydration(cy.get('#firstName')).type(name);
+  waitForHydration(domElement('#firstName')).type(name);
   waitForHydration(cy.get('#lastName')).type(lastName);
   waitForHydration(cy.get('#phone')).type(phone);
   waitForHydration(cy.xpath("(//input[@id='email'])[1]")).type(email);

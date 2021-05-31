@@ -5,6 +5,7 @@ import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
 import {
   PROFILE_TEST_COMMUNITY,
+  BUENA_VISTA_COMMUNITY,
   ServicesAmenitiesFilters,
 } from '../../constants/community';
 
@@ -393,7 +394,7 @@ describe('Community Profile Sections', () => {
   responsive(() => {
     it('Check wizard pricing footer (ComPrfPage - row 4)', function() {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions');
+      cy.wait('@postUuidActions', { timeout: 10000 });
       // Second button 'Get pricing' button (footer) - in responsive mode with small resolution will display first
       communityPage.getPriceBtnFooter();
       communityPage.getPriceWizardInfoIsPresent();
@@ -403,20 +404,20 @@ describe('Community Profile Sections', () => {
 
   it('Check wizard pricing table (ComPrfPage - row 5)', function() {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-    cy.wait('@postUuidActions');
+    cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.getPriceBtnTable();
     communityPage.getPriceWizardInfoIsPresent();
     cy.url().should('include', 'cta=pricing&entry=pricingTable');
   });
 
-  it.only('About section CTA (ComPrfPage - row 6)', function() {
+  it('About section CTA (ComPrfPage - row 6)', function() {
     const user = randomUser();
     const question = `Auto test ${user.lastName}`;
     const expectedActionType = 'profileAskQuestion';
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-    cy.wait('@postUuidActions');
+    cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.askQuestBtn();
-    communityPage.sendAskForm({...user, question});
+    communityPage.sendAskForm({ ...user, question });
     cy.wait('@postUuidActions').then(xhr => {
       expect(xhr.requestBody).to.deep.equal({
         data: {
@@ -431,6 +432,41 @@ describe('Community Profile Sections', () => {
               phone: user.phone,
               question,
               questionText: question,
+              slug: community.id,
+            },
+          },
+        },
+      });
+    });
+    cy.wait('@getUser');
+    communityPage.successModalIsSeenAndClosed();
+  });
+
+  it.only('Agent Block CTA (ComPrfPage - row 7)', function() {
+    const user = randomUser();
+    const question = `Auto test ${user.lastName}`;
+    const expectedActionType = 'agentAskQuestions';
+    cy.getCommunity(BUENA_VISTA_COMMUNITY).then(response => {
+      community = response;
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    });
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.askExperttBtn();
+    communityPage.sendAskForm({ ...user, question });
+    cy.wait('@postUuidActions').then(xhr => {
+      expect(xhr.requestBody).to.deep.equal({
+        data: {
+          type: 'UUIDAction',
+          attributes: {
+            actionType: expectedActionType,
+            actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+            actionInfo: {
+              email: user.email,
+              entityType: 'Community',
+              name: `${user.name} ${user.lastName}`,
+              phone: user.phone,
+              question,
+              // questionText: question,
               slug: community.id,
             },
           },

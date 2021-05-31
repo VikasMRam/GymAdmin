@@ -1,5 +1,6 @@
 export const TEST_COMMUNITY = 'eskaton-village-placerville';
 export const PROFILE_TEST_COMMUNITY = 'almavia-of-san-francisco';
+export const BUENA_VISTA_COMMUNITY = 'buena-vista-manor-house';
 
 export const ServicesAmenitiesFilters = {
   careServices: [

@@ -5,7 +5,7 @@ const selectorTpeDetector = (selector) => {
   return 'CSS'
 };
 
-export const domElement = (selector, timeout = 5000) => {
+export const domElement = (selector, timeout = 10000) => {
   return selectorTpeDetector(selector) === 'CSS' ? cy.get(selector , {timeout}) : cy.xpath(selector , {timeout});
 };
 
