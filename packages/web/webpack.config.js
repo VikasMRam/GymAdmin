@@ -23,6 +23,7 @@ const {
   sourceMaps,
   devServer,
   when,
+  resolve,
   optimization,
 } = require('webpack-blocks');
 
@@ -258,6 +259,12 @@ const client = (target, entries) => {
       ]),
       optimization({
         concatenateModules: false,
+      }),
+      resolve({
+        alias: {
+          'react-dom$': 'react-dom/profiling',
+          'scheduler/tracing': 'scheduler/tracing-profiling',
+        },
       }),
     ]),
 

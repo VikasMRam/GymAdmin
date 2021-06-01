@@ -50,16 +50,14 @@ export default class LoginFormContainer extends Component {
   });
 
   componentDidMount() {
-    setTimeout(() => {
-      if (window.gapi) {
-        window.gapi.load('auth2', () => {
-          if (!window.gapi.auth2.getAuthInstance()) {
-            window.gapi.auth2.init();
-          }
-        });
-      }
-      this.getFB();
-    }, 4500);
+    if (window.gapi) {
+      window.gapi.load('auth2', () => {
+        if (!window.gapi.auth2.getAuthInstance()) {
+          window.gapi.auth2.init();
+        }
+      });
+    }
+    this.getFB();
   }
 
   onGoogleConnected = (resp) => {
