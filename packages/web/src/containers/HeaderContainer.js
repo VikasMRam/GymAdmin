@@ -11,9 +11,7 @@ import { generateSearchUrl, isInternationalPath,
 } from 'sly/web/services/helpers/url';
 import { useNotification } from 'sly/web/components/helpers/notification';
 import { userIs } from 'sly/web/services/helpers/role';
-// import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import SlyEvent from 'sly/web/services/helpers/events';
-// import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';

@@ -10,16 +10,6 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wiza
 import { Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import { Wrapper } from 'sly/common/services/auth/components/Template';
-// import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
-// import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
-// import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
-// import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
-// import AgentSignupFormContainer from 'sly/common/services/auth/containers/AgentSignupFormContainer';
-// import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
-// import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
-// import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
-// import ThirdPartyPromptFormContainer from 'sly/common/services/auth/containers/ThirdPartyPromptFormContainer';
-// import OtpLoginFormContainer from 'sly/common/services/auth/containers/OtpLoginFormContainer';
 
 
 const ResetPasswordFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "resetPasswordContainer" */ import('sly/common/services/auth/containers/ResetPasswordFormContainer'));

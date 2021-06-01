@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
-import { withHydration } from '../services/partialHydration';
-
 import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { prefetch, query } from 'sly/web/services/api';

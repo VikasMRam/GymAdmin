@@ -6,10 +6,8 @@ import { size, palette, getKey } from 'sly/common/components/themes';
 import { Button, Link } from 'sly/common/components/atoms';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import MediaGallery from 'sly/web/components/molecules/MediaGallery';
-// import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
-import { withHydration } from 'sly/web/services/partialHydration';
+import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
 
-const FullscreenMediaGallery = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/web/components/molecules/FullscreenMediaGallery'));
 
 const BottomRightWrapper = styled.span`
   background: ${palette('slate', 'base')}80;
