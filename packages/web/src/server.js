@@ -24,7 +24,6 @@ import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { createStore } from 'sly/web/services/api/context';
 
-
 const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
   if (isDev) {
