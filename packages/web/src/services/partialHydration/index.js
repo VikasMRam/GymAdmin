@@ -60,13 +60,8 @@ export const withHydration = (loadFn) => {
       const check = (items) => {
         items.forEach((item) => {
           if (item.isIntersecting) {
-            // loadFn.importAsync().then((module)=>{
-            console.log('fetching');
-            // })
             loadFn.importAsync().then((module) => {
-              console.log(module);
               Component = module.default;
-              console.log(Component);
               setShouldHydrate(true);
             });
           }

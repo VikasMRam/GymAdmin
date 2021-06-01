@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Measure from 'react-measure';
 
 import CollapsibleBlock, { ReadMore } from 'sly/web/components/molecules/CollapsibleBlock';
 
