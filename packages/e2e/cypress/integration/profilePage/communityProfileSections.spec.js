@@ -402,6 +402,30 @@ describe('Community Profile Sections', () => {
     });
   });
 
+  it.only('Get pricing sidebar-first time user (ComPrfPage - row 2)', function() {
+    const user = randomUser();
+    const expectedActionType = 'wizardStepCompleted';
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.getPriceBtnTable();
+    // cy.wait('@postUuidActions').then(xhr => {
+    //   expect(xhr.requestBody).to.deep.equal({
+    //     data: {
+    //       type: 'UUIDAction',
+    //       attributes: {
+    //         actionPage: `/wizards/assessment/community/${community.id}`,
+    //         actionType: expectedActionType,
+    //         actionInfo: {},
+    //       },
+    //     },
+    //   });
+    // });
+    cy.url().should('include', 'cta=pricing&entry=communitySidebar');
+    communityPage.getPriceWizardInfoIsPresent();
+    communityPage.justWantToSeePricing({...user});
+  });
+
+
   it('Check wizard pricing table (ComPrfPage - row 5)', function() {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
@@ -442,7 +466,7 @@ describe('Community Profile Sections', () => {
     communityPage.successModalIsSeenAndClosed();
   });
 
-  it.only('Agent Block CTA (ComPrfPage - row 7)', function() {
+  it('Agent Block CTA (ComPrfPage - row 7)', function() {
     const user = randomUser();
     const question = `Auto test ${user.lastName}`;
     const expectedActionType = 'agentAskQuestions';

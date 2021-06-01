@@ -37,6 +37,20 @@ export const getPriceWizardInfoIsPresent = () => {
   );
 };
 
+export const nameEmailPhoneInput = (name, lastName, email, phone) => {
+  waitForHydration(domElement('#firstName')).type(name);
+  waitForHydration(cy.get('#lastName')).type(lastName);
+  waitForHydration(cy.xpath("(//input[@id='email'])[1]")).type(email);
+  waitForHydration(cy.get('#phone')).type(phone);
+};
+
+export const justWantToSeePricing = ({ ...props }) => {
+  const { name, lastName, email, phone } = props;
+  waitForHydration(cy.xpath(buttonText('No thanks, I just want to see pricing.'))).click({ force: true });
+  nameEmailPhoneInput(name, lastName, email, phone);
+  waitForHydration(cy.xpath(buttonText('Get pricing'))).click();
+};
+
 export const askQuestBtn = () =>
   waitForHydration(cy.xpath(buttonText('Ask a Question'))).click({ force: true });
 
@@ -45,11 +59,7 @@ export const askExperttBtn = () =>
 
 export const sendAskForm = ({ ...props }) => {
   const { name, lastName, email, phone, question } = props;
-  // waitForHydration(cy.get('#firstName')).type(name);
-  waitForHydration(domElement('#firstName')).type(name);
-  waitForHydration(cy.get('#lastName')).type(lastName);
-  waitForHydration(cy.get('#phone')).type(phone);
-  waitForHydration(cy.xpath("(//input[@id='email'])[1]")).type(email);
+  nameEmailPhoneInput(name, lastName, email, phone);
   waitForHydration(cy.get('#message')).type(question);
   waitForHydration(cy.xpath(buttonText('Send'))).click();
 };
