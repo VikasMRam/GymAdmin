@@ -13,6 +13,7 @@ import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
 import * as communityPage from './comProfPage';
 import randomUser from '../../helpers/randomUser';
+import {object} from "prop-types";
 
 const randHash = () =>
   Math.random()
@@ -51,6 +52,7 @@ export const buildEstimatedPriceList = community => {
 describe('Community Profile Sections', () => {
   let community;
   const retries = 10;
+  let storedCookies;
 
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
@@ -435,6 +437,22 @@ describe('Community Profile Sections', () => {
     cy.url().should('include', 'cta=pricing&entry=communitySidebar');
     communityPage.getPriceWizardInfoIsPresent();
     communityPage.justWantToSeePricing({...user});
+    cy.contains('We\'ve sent your request!', { timeout: 15000 }).should('be.visible');
+    cy.contains('Go to my Home Base').click();
+    cy.url().should('include', 'dashboard/family/home');
+    cy.getCookies().then((cookies) => {
+      console.assert('COOCKIES', cookies)
+        storedCookies = cookies
+      })
+  });
+
+  it.only('Get pricing sidebar-repeat user Desktop Only (ComPrfPage - row 3)', function() {
+    cy.viewport(1920, 1200);
+    for (const [key, value] of Object.entries(storedCookies)) {
+      cy.setCookie(`${key}`, `${value}`)
+    }
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.contains('Pricing Requested').should('be.visible');
   });
 
 
