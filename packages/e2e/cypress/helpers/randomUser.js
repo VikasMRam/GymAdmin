@@ -1,5 +1,4 @@
 import isMobilePhone from 'validator/lib/isMobilePhone';
-/home/vitalii/Work/Seniorly/Sly/React/packages/e2e/cypress/helpers/randomUser.js
 const randChars = (characters, length = 1) => {
   let result = '';
   while (length > 0 && length--) {

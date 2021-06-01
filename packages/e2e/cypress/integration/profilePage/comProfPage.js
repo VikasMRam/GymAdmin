@@ -7,6 +7,8 @@ const getPriceFooter =
 const getPriceTable =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[1]";
 
+const getPricingAndAvailabilitySectionBtn = '//h2[text()="Get Pricing and Availability"]/parent::div//button';
+
 // Selectors dynamic
 const imageByScr = src => `(//img[@src='${src}'])[last()]`;
 const divText = text => `//div[text()='${text}']`;
@@ -15,7 +17,7 @@ const divContainText = containText =>
 const buttonText = text => `//button[text()="${text}"]`;
 const h3Text = text => `//h3[text()='${text}']`;
 const h1Text = text => `//h1[text()='${text}']`;
-
+const universalLabelFormInput = label => `//label[text()='${label}']/parent::div/parent::div//input`;
 //Methods
 
 export const getPriceBtnFooter = () =>
@@ -23,6 +25,9 @@ export const getPriceBtnFooter = () =>
 
 export const getPriceBtnTable = () =>
   waitForHydration(cy.xpath(getPriceTable)).click({ force: true });
+
+export const getPriceBtnRightSectionDesktop = () =>
+  waitForHydration(cy.xpath(getPricingAndAvailabilitySectionBtn)).click({ force: true });
 
 export const getPriceWizardInfoIsPresent = () => {
   isVisibleXpath(buttonText("Let's get started"));
@@ -38,15 +43,15 @@ export const getPriceWizardInfoIsPresent = () => {
 };
 
 export const nameEmailPhoneInput = (name, lastName, email, phone) => {
-  waitForHydration(domElement('#firstName')).type(name);
-  waitForHydration(cy.get('#lastName')).type(lastName);
+  waitForHydration(domElement(universalLabelFormInput('First Name'))).type(name);
+  waitForHydration(cy.xpath(universalLabelFormInput('Last Name'))).type(lastName);
   waitForHydration(cy.xpath("(//input[@id='email'])[1]")).type(email);
-  waitForHydration(cy.get('#phone')).type(phone);
+  waitForHydration(cy.xpath(universalLabelFormInput('Phone'))).type(phone);
 };
 
 export const justWantToSeePricing = ({ ...props }) => {
   const { name, lastName, email, phone } = props;
-  waitForHydration(cy.xpath(buttonText('No thanks, I just want to see pricing.'))).click({ force: true });
+  waitForHydration(domElement(buttonText('No thanks, I just want to see pricing.'))).click().click();
   nameEmailPhoneInput(name, lastName, email, phone);
   waitForHydration(cy.xpath(buttonText('Get pricing'))).click();
 };

@@ -402,24 +402,36 @@ describe('Community Profile Sections', () => {
     });
   });
 
-  it.only('Get pricing sidebar-first time user (ComPrfPage - row 2)', function() {
+  it.only('Get pricing sidebar-first time user Desktop Only (ComPrfPage - row 2)', function() {
+    // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
+    cy.viewport(1920, 1200);
     const user = randomUser();
     const expectedActionType = 'wizardStepCompleted';
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
-    communityPage.getPriceBtnTable();
-    // cy.wait('@postUuidActions').then(xhr => {
-    //   expect(xhr.requestBody).to.deep.equal({
-    //     data: {
-    //       type: 'UUIDAction',
-    //       attributes: {
-    //         actionPage: `/wizards/assessment/community/${community.id}`,
-    //         actionType: expectedActionType,
-    //         actionInfo: {},
-    //       },
-    //     },
-    //   });
-    // });
+    communityPage.getPriceBtnRightSectionDesktop();
+    cy.wait('@postUuidActions').then(xhr => {
+      expect(xhr.requestBody).to.deep.equal({
+        data: {
+          type: 'UUIDAction',
+          attributes: {
+            actionType: expectedActionType,
+            actionPage: `/wizards/assessment/community/${community.id}`,
+            actionInfo: {
+              stepName: 'step-0:communitySidebar',
+              wizardName: 'assessmentWizard',
+              data: {
+                cta: 'pricing',
+                entry: 'communitySidebar',
+                sly_action: 'click-gcp-button-sidebar',
+                sly_category: 'PricingWizard',
+                sly_label: community.id,
+              },
+            },
+          },
+        },
+      });
+    });
     cy.url().should('include', 'cta=pricing&entry=communitySidebar');
     communityPage.getPriceWizardInfoIsPresent();
     communityPage.justWantToSeePricing({...user});
