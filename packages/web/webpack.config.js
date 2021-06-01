@@ -23,6 +23,7 @@ const {
   sourceMaps,
   devServer,
   when,
+  resolve,
   optimization,
 } = require('webpack-blocks');
 
@@ -57,7 +58,7 @@ const { BundleAnalyzerPlugin } = BundleAnalyzerModule;
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 
 const isDev = NODE_ENV === 'development';
-const isStaging = SLY_ENV === 'staging';
+// const isStaging = SLY_ENV === 'staging';
 
 // use __dirname as this file can be included from root package
 const sourcePath = path.join(__dirname, SOURCE);
@@ -259,6 +260,12 @@ const client = (target, entries) => {
       optimization({
         concatenateModules: false,
       }),
+      resolve({
+        alias: {
+          'react-dom$': 'react-dom/profiling',
+          'scheduler/tracing': 'scheduler/tracing-profiling',
+        },
+      }),
     ]),
 
     when(isDev, [
@@ -302,7 +309,7 @@ const client = (target, entries) => {
       addPlugins([new LoadablePlugin()]),
     ]),
 
-    when(isDev || isStaging, [sourceMaps()]),
+    when(isDev, [sourceMaps()]),
   ]);
 };
 

@@ -2,21 +2,22 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { stringify, parse } from 'query-string';
 
+import { withHydration } from '../services/partialHydration';
+
 import { useAuth } from 'sly/web/services/api';
-import { generateSearchUrl, isInternationalPath } from 'sly/web/services/helpers/url';
+import { generateSearchUrl, isInternationalPath,
+  parseURLQueryParams,
+  removeQueryParamFromURL,
+} from 'sly/web/services/helpers/url';
 import { useNotification } from 'sly/web/components/helpers/notification';
 import { userIs } from 'sly/web/services/helpers/role';
-// import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import SlyEvent from 'sly/web/services/helpers/events';
-import AuthContainer from 'sly/common/services/auth/containers/AuthContainer';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';
 
-import {
-  parseURLQueryParams,
-  removeQueryParamFromURL,
-} from 'sly/web/services/helpers/url';
+
+const AuthContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "authContainer" */ import('sly/common/services/auth/containers/AuthContainer'));
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -34,7 +35,7 @@ const logoLabel = 'logo';
 const sendHeaderItemClickEvent = value => sendEvent(category, clickAction, headerItemLabel, value);
 
 const getDefaultHeaderItems = () => {
-  const items = []
+  const items = [];
 
   items.push(
     { name: 'Senior Living Resources', to: '/resource-center', onClick: ({ name }) => sendHeaderItemClickEvent(name) },

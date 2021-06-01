@@ -10,6 +10,7 @@ export default (pendingPromises={}) => next => (action) => {
       options,
       actionName,
       path,
+      isJsonApi,
     },
   } = action;
 
@@ -32,7 +33,7 @@ export default (pendingPromises={}) => next => (action) => {
     api: true,
     name: actionName,
     params: placeholders,
-    isJsonApi: call.isJsonApi
+    isJsonApi: isJsonApi
   };
 
   next({
