@@ -254,9 +254,8 @@ const navigateAndCheckTitles  = (data) => {
 const markerNavigation = (list) => {
   const urlData = [];
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-  // cy.get('div[class*="Marker__"]').each((marker) => {
-  //   cy.wrap(marker).find('svg').click({ force: true });
-  // });
+  // Wait untill zoom button loads, here no api calls happening so
+  // We have to give timeout option before cy.get resolves
   cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
   cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
     cy.wrap(marker).find('svg').click({ force: true })
@@ -284,9 +283,8 @@ const markerNavigation = (list) => {
 // Click on markers and validate data
 const mapAssertions = (list) => {
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-  // cy.get('div[class*="Marker__"]').each((marker) => {
-  //   cy.wrap(marker).find('svg').click({ force: true });
-  // });
+  // Wait untill zoom button loads, here no api calls happening so
+  // We have to give timeout option before cy.get resolves
   cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
