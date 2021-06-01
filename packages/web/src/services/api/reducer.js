@@ -75,21 +75,25 @@ export default function reducer(state = {}, action) {
     const request = {};
 
     if (action.payload.body) {
-      const { data, meta, included } = action.payload.body;
+      if (isJsonApi) {
+        const { data, meta, included } = action.payload.body;
 
-      request.response = data;
-      request.meta = meta;
+        request.response = data;
+        request.meta = meta;
 
-      if (data) {
-        const entities = (Array.isArray(data) ? [...data] : [data]);
-        if (included) {
-          entities.push(...included);
+        if (data) {
+          const entities = (Array.isArray(data) ? [...data] : [data]);
+          if (included) {
+            entities.push(...included);
+          }
+
+          request.entities = entities.reduce((acc, item) => {
+            (acc[item.type] = acc[item.type] || {})[item.id] = item;
+            return acc;
+          }, {});
         }
-
-        request.entities = entities.reduce((acc, item) => {
-          (acc[item.type] = acc[item.type] || {})[item.id] = item;
-          return acc;
-        }, {});
+      } else {
+        request.response = action.payload.body;
       }
     }
 

@@ -292,7 +292,11 @@ describe('Community Profile Sections', () => {
       });
       cy.wait('@getUser');
 
-      waitForHydration(cy.get('button').contains('Ask a Question')).click();
+
+      waitForHydration(cy.get('button').contains('Ask a Question'));
+      cy.wait(1000);
+      cy.contains('Ask a Question').click();
+
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
       const firstName = `Lead${randHash()}`;

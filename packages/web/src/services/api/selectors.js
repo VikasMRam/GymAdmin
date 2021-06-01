@@ -99,7 +99,7 @@ export function getRequestInfo(request, isJsonApi = true) {
 
   const normalized = isJsonApi
     ? getRequestResult(request, true)
-    : request?.response;
+    : undefined;
 
   return {
     hasStarted,

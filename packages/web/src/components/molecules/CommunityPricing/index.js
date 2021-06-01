@@ -95,11 +95,11 @@ const CommunityPricing = ({ id, estimated, price, palette, variation, className,
       Pricing ranges from
     </DescriptionBlock>
     }
-    <Block>
-      <Span size={size} weight="medium" palette={palette} variation={variation}>
+    <Block clamped>
+      <Span clamped size={size} weight="medium" palette={palette} variation={variation}>
         {formatMoney(price)}{max && ` - ${formatMoney(max)}`}
       </Span>
-      <Span palette={palette} variation={variation}>
+      <Span clamped palette={palette} variation={variation}>
         /month
       </Span>
     </Block>
