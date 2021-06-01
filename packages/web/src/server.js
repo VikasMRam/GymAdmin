@@ -23,7 +23,7 @@ import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { createStore } from 'sly/web/services/api/context';
-import { getImagePath } from 'sly/web/services/images';
+
 
 const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
