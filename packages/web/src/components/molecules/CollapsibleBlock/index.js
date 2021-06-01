@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Measure from 'react-measure';
 import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 import { ifProp } from 'styled-tools';
