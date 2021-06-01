@@ -52,7 +52,6 @@ export const buildEstimatedPriceList = community => {
 describe('Community Profile Sections', () => {
   let community;
   const retries = 10;
-  let storedCookies;
 
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
@@ -404,7 +403,7 @@ describe('Community Profile Sections', () => {
     });
   });
 
-  it.only('Get pricing sidebar-first time user Desktop Only (ComPrfPage - row 2)', function() {
+  it.only('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', function() {
     // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
     cy.viewport(1920, 1200);
     const user = randomUser();
@@ -440,19 +439,10 @@ describe('Community Profile Sections', () => {
     cy.contains('We\'ve sent your request!', { timeout: 15000 }).should('be.visible');
     cy.contains('Go to my Home Base').click();
     cy.url().should('include', 'dashboard/family/home');
-    cy.getCookies().then((cookies) => {
-      console.assert('COOCKIES', cookies)
-        storedCookies = cookies
-      })
-  });
 
-  it.only('Get pricing sidebar-repeat user Desktop Only (ComPrfPage - row 3)', function() {
-    cy.viewport(1920, 1200);
-    for (const [key, value] of Object.entries(storedCookies)) {
-      cy.setCookie(`${key}`, `${value}`)
-    }
+    //With current user should be Pricing Requested
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-    cy.contains('Pricing Requested').should('be.visible');
+    cy.contains('Pricing Requested', { timeout: 12000 }).should('be.visible');
   });
 
 
