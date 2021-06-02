@@ -19,6 +19,7 @@ const h3Text = text => `//h3[text()='${text}']`;
 const h1Text = text => `//h1[text()='${text}']`;
 const universalLabelFormInput = label => `//label[text()='${label}']/parent::div/parent::div//input`;
 const gallery = '//div[contains(@class, "Modal__Body")]';
+const mediaGalleryBtnClose = "(//div[@class='ReactModalPortal']/div//button)[1]";
 
 //Methods
 export const getPriceBtnFooter = () =>
@@ -83,3 +84,5 @@ export const viewPhotos = () => waitForHydration(cy.xpath(buttonText('View Photo
 export const galleryIsOpen = () => isVisibleXpath(gallery);
 
 export const galleryIsClosed = () => isNotVisibleXpath(gallery);
+
+export const closeGalleryBtn = () => waitForHydration(cy.xpath(mediaGalleryBtnClose)).click({ force: true });
