@@ -530,7 +530,7 @@ describe('Community Profile Sections', () => {
     communityPage.galleryIsClosed();
   });
 
-  it.only('View Photos - Launch, Exit Gallery - click close button (ComPrfPage - row 8)', function() {
+  it('View Photos - Launch, Exit Gallery - click close button (ComPrfPage - row 8)', function() {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.viewPhotos();
@@ -538,6 +538,17 @@ describe('Community Profile Sections', () => {
     communityPage.closeGalleryBtn();
     communityPage.galleryIsClosed();
   });
+
+  it.only('View Photos - Navigate with buttons (row 9)', function() {
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.viewPhotos();
+    // cy.wait(7000);
+    // communityPage.clickGalleryRight();
+    // cy.wait(7000);
+    // communityPage.checkPicturesIsChangedAndDisplays();
+  });
+
 
   // http://www.lvh.me/assisted-living/california/san-francisco/buena-vista-manor-house
 });
