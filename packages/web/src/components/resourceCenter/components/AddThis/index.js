@@ -14,7 +14,7 @@ const AddThis = () => {
 
       <Helmet>
         {isBrowser && !window.addThis && (
-          <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5542ad2748437167" />
+          <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5542ad2748437167" defer/>
         )}
       </Helmet>
     </>
