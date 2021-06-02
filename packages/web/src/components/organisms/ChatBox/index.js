@@ -69,11 +69,13 @@ export default class ChatBox extends Component {
           defer
           type="text/javascript"
           dangerouslySetInnerHTML={{ __html: `
+            setTimeout(function(){
               (function(s,d,r) {
                 var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
                 j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
                 f.parentNode.insertBefore(j,f);
               })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
+            }, 10000);
           ` }}
         />
       </>
