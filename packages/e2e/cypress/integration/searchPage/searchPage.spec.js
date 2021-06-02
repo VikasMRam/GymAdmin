@@ -35,13 +35,13 @@ const toSearchPageFromCity = (cityName) => {
 // Accepts list data (Array of json) and validates,
 // if a card with each json object is rendered in Ui or not
 const checkPopulationOfList = (data) => {
-  cy.get('a article picture')
-    .parents('article')
+  cy.get('a article h3')
     .each((item) => {
       cy.wrap(item)
         .invoke('text')
         .then((text) => {
           let textFound = false;
+
           data.forEach((dataObj) => {
             if (text.includes(dataObj.attributes.name)) {
               textFound = true;
@@ -54,9 +54,7 @@ const checkPopulationOfList = (data) => {
 
 // Validates expected list count to renered list count
 const checkForListCount = (count) => {
-  cy.get('a article img').then((elements) => {
-    expect(elements.length).to.eql(count);
-  });
+  cy.get('a article img').should('have.length', count);
 };
 
 const checkForADTile = (currentList) => {
@@ -254,6 +252,9 @@ const navigateAndCheckTitles  = (data) => {
 const markerNavigation = (list) => {
   const urlData = [];
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
+  cy.get('div[class*="Marker__"]').each((marker) => {
+    cy.wrap(marker).find('svg').click({ force: true });
+  });
   // Wait untill zoom button loads, here no api calls happening so
   // We have to give timeout option before cy.get resolves
   cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
@@ -285,15 +286,26 @@ const mapAssertions = (list) => {
   cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
   // Wait untill zoom button loads, here no api calls happening so
   // We have to give timeout option before cy.get resolves
+
   cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
+  cy.get('div[class*="Marker__Wra"]').each((marker) => {
+    cy.wrap(marker).find('svg').click({ force: true });
+  });
+
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
-      .then((text) => {
-        const index = ((Number(text)) - 1) % 20;
-        cy.get('h5')
-          .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim())
-          .should('exist');
+      .then(() => {
+        let textFound = false;
+        cy.get('h5').invoke('text').then((title) => {
+          title = title.replace(/ +(?= )/g, '').trim();
+          list.forEach((dataObj) => {
+            if (title.includes(dataObj.attributes.name.replace(/ +(?= )/g, '').trim())) {
+              textFound = true;
+            }
+          });
+          expect(textFound).to.be.true;
+        });
       });
   });
   closeMapView();
@@ -337,22 +349,10 @@ describe('Search Page', () => {
       // failing the test
       return false;
     });
-    cy.server();
-    cy.route('GET', '**/search?**').as('searchRequest');
-    cy.route({
-      method: 'GET',
-      url: '**/platform/community-search?filter**',
-    }).as('communitySearch');
-    cy.route({
-      method: 'GET',
-      url: '**/users/**',
-      response: {},
-    }).as('getUsers');
-    cy.route({
-      method: 'GET',
-      url: '**/uuid-auxes/me',
-      response: {},
-    }).as('getUuid');
+    cy.intercept('GET', '**/search?**').as('searchRequest');
+    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/users/**').as('getUsers');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
   });
   let currentList = [];
   let totalResultCount = 0;
@@ -373,13 +373,11 @@ describe('Search Page', () => {
       // Url check
       cy.url().should('have.string', urlCity);
       cy.wait('@communitySearch').then((res) => {
-        res.response.body.text().then((text) => {
-          const responseBody = JSON.parse(text);
-          if (responseBody.data && responseBody.data.length) {
-            currentList = responseBody.data;
-            totalResultCount = responseBody.meta['filtered-count'];
-          }
-        });
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
       });
     });
 
@@ -419,27 +417,11 @@ describe('Search Page Sections', () => {
       // failing the test
       return false;
     });
-    cy.server();
-    cy.route({
-      method: 'GET',
-      url: '**/platform/community-search?filter**',
-    }).as('communitySearch');
-    cy.route('GET', '**/search?**').as('searchRequest');
-    cy.route({
-      method: 'GET',
-      url: '**/users/**',
-      response: {},
-    }).as('getUsers');
-    cy.route({
-      method: 'GET',
-      url: '**/uuid-auxes/me',
-      response: {},
-    }).as('getUuid');
-    cy.route({
-      method: 'GET',
-      url: '**platform/geo-guides?**',
-      response: {},
-    }).as('geoGuide');
+    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search?**').as('searchRequest');
+    cy.intercept('GET', '**/users/**').as('getUsers');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
+    cy.intercept('GET', '**platform/geo-guides?**').as('geoGuide');
   });
 
   responsive((viewport) => {
@@ -451,13 +433,11 @@ describe('Search Page Sections', () => {
       // Url check
       cy.url().should('have.string', urlCity);
       cy.wait('@communitySearch').then((res) => {
-        res.response.body.text().then((text) => {
-          const responseBody = JSON.parse(text);
-          if (responseBody.data && responseBody.data.length) {
-            currentList = responseBody.data;
-            totalResultCount = responseBody.meta['filtered-count'];
-          }
-        });
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
       });
     });
 
@@ -516,21 +496,28 @@ describe('Search Page Sections', () => {
       validateNoResultCheck();
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
+    it('check list', () => {
+      checkPopulationOfList(currentList);
+    });
+    it('map check', () => {
+      mapCheck(currentList, 'CONTENT');
+    });
 
 
     it('Navigate to page 2', () => {
       cy.get('div[class*="Pagination"]').find('button').contains('2').click({ force: true });
       cy.wait('@communitySearch').then((res) => {
-        res.response.body.text().then((text) => {
-          const responseBody = JSON.parse(text);
-          if (responseBody.data && responseBody.data.length) {
-            currentList = responseBody.data;
-          }
-        });
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
       });
     });
 
     it('check contents of page 2', () => {
+      // Here wait untill second list populates
+      cy.get('a article h3').contains('21.');
       checkPopulationOfList(currentList);
     });
 
@@ -544,33 +531,16 @@ describe('Search Page Sections', () => {
 //! Third Set
 
 describe('Assisted Search Page Sections', () => {
-  let currentList = [];
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
       // returning false here prevents Cypress from
       // failing the test
       return false;
     });
-    cy.server();
-    cy.route({
-      method: 'GET',
-      url: '**/platform/community-search?filter**',
-    }).as('communitySearch');
-    cy.route({
-      method: 'POST',
-      url: '**/uuid-actions',
-      response: {},
-    }).as('postUuidActions');
-    cy.route({
-      method: 'GET',
-      url: '**/users/**',
-      response: {},
-    }).as('getUsers');
-    cy.route({
-      method: 'GET',
-      url: '**/uuid-auxes/me',
-      response: {},
-    }).as('getUuid');
+    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/uuid-actions').as('postUuidActions');
+    cy.intercept('GET', '**/users/**').as('getUsers');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
   });
 
   responsive(() => {
@@ -579,23 +549,17 @@ describe('Assisted Search Page Sections', () => {
       cy.wait('@getUsers');
       cy.wait('@getUuid');
       toSearchPageFromCity('San Francisco');
-      cy.wait('@communitySearch').then((res) => {
-        res.response.body.text().then((text) => {
-          const responseBody = JSON.parse(text);
-          if (responseBody.data && responseBody.data.length) {
-            currentList = responseBody.data;
-          }
-        });
-      });
     });
 
-    it('List population check', () => {
-      checkPopulationOfList(currentList);
-    });
+    // !To DO
+    // it('List population check', () => {
+    //   checkPopulationOfList(currentList);
+    // });
 
-    it('map check', () => {
-      mapCheck(currentList, 'CONTENT');
-    });
+    // !To DO
+    // it('map check', () => {
+    //   mapCheck(currentList, 'CONTENT');
+    // });
 
     // it('Geo Guide', () => {
     //   cy.get('h2')
@@ -609,13 +573,13 @@ describe('Assisted Search Page Sections', () => {
     //     .should('exist');
     // });
 
-
-    it('Navigate from map popover', () => {
-      cy.window().then((win) => {
-        cy.stub(win, 'open').as('windowOpen');
-      });
-      mapCheck(currentList, 'MARKER_NAVIGATION');
-    });
+    // !To DO
+    // it('Navigate from map popover', () => {
+    //   cy.window().then((win) => {
+    //     cy.stub(win, 'open').as('windowOpen');
+    //   });
+    //   mapCheck(currentList, 'MARKER_NAVIGATION');
+    // });
   });
 });
 
