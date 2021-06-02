@@ -14,6 +14,7 @@ export default class ChatBoxContainer extends Component {
 
   state = {
     footerReached: false,
+    shouldMount: false,
   };
 
   componentDidMount() {
@@ -21,6 +22,9 @@ export default class ChatBoxContainer extends Component {
       this.handleScroll();
       window.addEventListener('scroll', this.handleScroll);
     }
+    setTimeout(() => {
+      this.setState({ shouldMount: true });
+    }, 10000);
   }
 
   componentWillUnmount() {
@@ -43,7 +47,12 @@ export default class ChatBoxContainer extends Component {
 
   render() {
     const { location: { pathname } } = this.props;
-    const { footerReached } = this.state;
+    const { footerReached, shouldMount } = this.state;
+
+    if (!shouldMount) {
+      return null;
+    }
+
     this.matched = ENABLED_ROUTES.find(r => !!matchPath(pathname, {
       path: r,
     }));
