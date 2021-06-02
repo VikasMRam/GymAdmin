@@ -18,7 +18,7 @@ const GetAssessmentBoxContainerHydrator = (props) => {
   const { requestInfo: { normalized: uuidActions } } = usePrefetch('getUuidActions', {
     'filter[actionType]': PROFILE_CONTACTED,
     'filter[actionInfo-slug]': params.communitySlug,
-  });
+  }, { loggedInOnly: true });
 
   const hasAlreadyRequestedPricing = useHasPricingRequest(uuidActions);
   const completedAssessment = isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED);

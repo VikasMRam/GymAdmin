@@ -16,6 +16,8 @@ function getDisplayName(WrappedComponent) {
       || 'Component';
 }
 
+const isLoggedIn = () => (typeof document !== 'undefined' && document.cookie || '').indexOf('sly-session') !== -1;
+
 export function usePrefetch(apiCall, ...args) {
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
@@ -39,33 +41,29 @@ export function usePrefetch(apiCall, ...args) {
 
   const getRelationship = useCallback((entity, relationship) => selectRelationship(request.entities, entity, relationship), [request]);
 
+  const shouldBail = options.loggedInOnly && !isLoggedIn();
+
   useEffect(() => {
     store.on(apiCall, argsKey, setRequest);
-    if (request !== getCurrentRequestInfo()) {
+    const currentRequest = getCurrentRequestInfo() || request;
+    const { hasStarted, isInvalid } = currentRequest;
+    if (!shouldBail && (!hasStarted || isInvalid)) {
       fetch();
     }
     return () => store.off(apiCall, argsKey, setRequest);
-  }, [apiCall, argsKey]);
+  }, [apiCall, argsKey, shouldBail]);
 
   const prefetch = useMemo(() => (
     { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships, getCurrentRequestInfo }
   ), [request, apiCall, argsKey]);
 
-  const { hasStarted, isInvalid } = request;
-  // initial fetch
-  // red flag here having a hook inside a conditional, but hoping that it's ok
-  // as this branch will always be accessed or not consistently for the env
+  // initial server fetch, server does not run the effects
   if (isServer) {
+    const { hasStarted, isInvalid } = request;
     const shouldSkip = skipApiCalls || api[apiCall].ssrIgnore;
     if (isInvalid || (!shouldSkip && !hasStarted)) {
       fetch();
     }
-  } else {
-    useEffect(() => {
-      if (isInvalid || !hasStarted) {
-        fetch();
-      }
-    }, [request]);
   }
 
   return prefetch;
