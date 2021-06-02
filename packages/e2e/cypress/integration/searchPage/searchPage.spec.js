@@ -35,28 +35,27 @@ const toSearchPageFromCity = (cityName) => {
 // Accepts list data (Array of json) and validates,
 // if a card with each json object is rendered in Ui or not
 const checkPopulationOfList = (data) => {
-  cy.get('a article h3').each((ele) => {
-    cy.wrap(ele).invoke('text').then((text) => {
-      console.log(text);
-    });
-  });
-  cy.get('a article h3').contains(data[0].attributes.name);
-  // cy.get('a article picture').should('have.text' , data[0].attributes.name)
-  //   .parents('article')
-  //   .each((item) => {
-  //     cy.wrap(item)
-  //       .invoke('text')
-  //       .then((text) => {
-  //         let textFound = false;
-
-  //         data.forEach((dataObj) => {
-  //           if (text.includes(dataObj.attributes.name)) {
-  //             textFound = true;
-  //           }
-  //         });
-  //         expect(textFound).to.be.true;
-  //       });
+  // cy.get('a article h3').each((ele) => {
+  //   cy.wrap(ele).invoke('text').then((text) => {
+  //     console.log(text);
   //   });
+  // });
+  cy.get('a article h3')
+  // cy.get('a article h3')
+    .each((item) => {
+      cy.wrap(item)
+        .invoke('text')
+        .then((text) => {
+          let textFound = false;
+
+          data.forEach((dataObj) => {
+            if (text.includes(dataObj.attributes.name)) {
+              textFound = true;
+            }
+          });
+          expect(textFound).to.be.true;
+        });
+    });
 };
 
 // Validates expected list count to renered list count
@@ -303,10 +302,20 @@ const mapAssertions = (list) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
       .then((text) => {
-        const index = ((Number(text)) - 1) % 20;
-        cy.get('h5')
-          .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim())
-          .should('exist');
+        // const index = ((Number(text)) - 1) % 20;
+        // cy.get('h5')
+        //   .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim())
+        //   .should('exist');
+        let textFound = false;
+        cy.get('h5').invoke('text').then((title) => {
+          title = title.replace(/ +(?= )/g, '').trim();
+          list.forEach((dataObj) => {
+            if (title.includes(dataObj.attributes.name.replace(/ +(?= )/g, '').trim())) {
+              textFound = true;
+            }
+          });
+          expect(textFound).to.be.true;
+        });
       });
   });
   closeMapView();
@@ -343,70 +352,70 @@ const cityName = 'San Francisco';
 const urlCity = 'san-francisco';
 
 //! First Set
-describe('Search Page', () => {
-  beforeEach(() => {
-    Cypress.on('uncaught:exception', () => {
-      // returning false here prevents Cypress from
-      // failing the test
-      return false;
-    });
-    cy.intercept('GET', '**/search?**').as('searchRequest');
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
-    cy.intercept('GET', '**/users/**').as('getUsers');
-    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
-  });
-  let currentList = [];
-  let totalResultCount = 0;
+// describe('Search Page', () => {
+//   beforeEach(() => {
+//     Cypress.on('uncaught:exception', () => {
+//       // returning false here prevents Cypress from
+//       // failing the test
+//       return false;
+//     });
+//     cy.intercept('GET', '**/search?**').as('searchRequest');
+//     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+//     cy.intercept('GET', '**/users/**').as('getUsers');
+//     cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
+//   });
+//   let currentList = [];
+//   let totalResultCount = 0;
 
 
-  responsive(() => {
-    it('Check for near by cities links ', () => {
-      cy.visit('/');
-      cy.wait('@getUsers');
-      cy.wait('@getUuid');
-      cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
-        expect(cityCards.length).to.eql(30);
-      });
-    });
+//   responsive(() => {
+//     it('Check for near by cities links ', () => {
+//       cy.visit('/');
+//       cy.wait('@getUsers');
+//       cy.wait('@getUuid');
+//       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
+//         expect(cityCards.length).to.eql(30);
+//       });
+//     });
 
-    it('Navigate to city search page', () => {
-      toSearchPage(searchText);
-      // Url check
-      cy.url().should('have.string', urlCity);
-      cy.wait('@communitySearch').then((res) => {
-        const responseBody = res.response.body;
-        if (responseBody.data && responseBody.data.length) {
-          currentList = responseBody.data;
-          totalResultCount = responseBody.meta['filtered-count'];
-        }
-      });
-    });
+//     it('Navigate to city search page', () => {
+//       toSearchPage(searchText);
+//       // Url check
+//       cy.url().should('have.string', urlCity);
+//       cy.wait('@communitySearch').then((res) => {
+//         const responseBody = res.response.body;
+//         if (responseBody.data && responseBody.data.length) {
+//           currentList = responseBody.data;
+//           totalResultCount = responseBody.meta['filtered-count'];
+//         }
+//       });
+//     });
 
-    it('Title check', () => {
-      cy.contains(`Senior Living Communities in ${cityName}`);
-    });
+//     it('Title check', () => {
+//       cy.contains(`Senior Living Communities in ${cityName}`);
+//     });
 
-    it('Filter section check', () => {
-      cy.get('div[class*="FilterButton__"]')
-        .its('length')
-        .should('greaterThan', 4);
-    });
-    it('Results text check', () => {
-      // Results text
-      validateResultSetCount(currentList, totalResultCount);
-    });
+//     it('Filter section check', () => {
+//       cy.get('div[class*="FilterButton__"]')
+//         .its('length')
+//         .should('greaterThan', 4);
+//     });
+//     it('Results text check', () => {
+//       // Results text
+//       validateResultSetCount(currentList, totalResultCount);
+//     });
 
-    it('Verify AD Tile', () => {
-      checkForADTile(currentList);
-    });
-    it('List section check', () => {
-      checkForListCount(20);
-    });
-    it('Map section check', () => {
-      mapCheck(currentList, 'Markers');
-    });
-  });
-});
+//     it('Verify AD Tile', () => {
+//       checkForADTile(currentList);
+//     });
+//     it('List section check', () => {
+//       checkForListCount(20);
+//     });
+//     it('Map section check', () => {
+//       mapCheck(currentList, 'Markers');
+//     });
+//   });
+// });
 
 // ! Second Set
 describe('Search Page Sections', () => {
@@ -497,6 +506,9 @@ describe('Search Page Sections', () => {
       validateNoResultCheck();
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
+    it('check list', () => {
+      checkPopulationOfList(currentList);
+    });
     it('map check', () => {
       mapCheck(currentList, 'CONTENT');
     });
@@ -514,6 +526,8 @@ describe('Search Page Sections', () => {
     });
 
     it('check contents of page 2', () => {
+      // Here wait untill second list populates
+      cy.get('a article h3').contains('21.');
       checkPopulationOfList(currentList);
     });
 
