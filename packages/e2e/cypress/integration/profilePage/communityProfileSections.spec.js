@@ -403,7 +403,7 @@ describe('Community Profile Sections', () => {
     });
   });
 
-  it.only('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', function() {
+  it('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', function() {
     // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
     cy.viewport(1920, 1200);
     const user = randomUser();
@@ -519,6 +519,15 @@ describe('Community Profile Sections', () => {
     });
     cy.wait('@getUser');
     communityPage.successModalIsSeenAndClosed();
+  });
+
+  it.only('View Photos- Launch, Exit Gallery - click outside (ComPrfPage - row 8)', function() {
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.viewPhotos();
+    communityPage.galleryIsOpen();
+    cy.get('.ReactModal__Overlay').realTouch({ position: 'topRight' });
+    communityPage.galleryIsClosed();
   });
   // http://www.lvh.me/assisted-living/california/san-francisco/buena-vista-manor-house
 });

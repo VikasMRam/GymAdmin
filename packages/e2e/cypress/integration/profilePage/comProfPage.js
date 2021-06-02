@@ -18,8 +18,9 @@ const buttonText = text => `//button[text()="${text}"]`;
 const h3Text = text => `//h3[text()='${text}']`;
 const h1Text = text => `//h1[text()='${text}']`;
 const universalLabelFormInput = label => `//label[text()='${label}']/parent::div/parent::div//input`;
-//Methods
+const gallery = '//div[contains(@class, "Modal__Body")]';
 
+//Methods
 export const getPriceBtnFooter = () =>
   waitForHydration(cy.xpath(getPriceFooter)).click({ force: true });
 
@@ -76,3 +77,9 @@ export const successModalIsSeenAndClosed = () => {
   waitForHydration(cy.xpath(finishBtn)).click();
   isNotVisibleXpath(finishBtn);
 };
+
+export const viewPhotos = () => waitForHydration(cy.xpath(buttonText('View Photos'))).click({ force: true });
+
+export const galleryIsOpen = () => isVisibleXpath(gallery);
+
+export const galleryIsClosed = () => isNotVisibleXpath(gallery);
