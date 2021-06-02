@@ -35,13 +35,7 @@ const toSearchPageFromCity = (cityName) => {
 // Accepts list data (Array of json) and validates,
 // if a card with each json object is rendered in Ui or not
 const checkPopulationOfList = (data) => {
-  // cy.get('a article h3').each((ele) => {
-  //   cy.wrap(ele).invoke('text').then((text) => {
-  //     console.log(text);
-  //   });
-  // });
   cy.get('a article h3')
-  // cy.get('a article h3')
     .each((item) => {
       cy.wrap(item)
         .invoke('text')
@@ -301,11 +295,7 @@ const mapAssertions = (list) => {
   cy.get('div[class*="Marker__"]').each((marker) => {
     cy.wrap(marker).find('svg').click({ force: true })
       .invoke('text')
-      .then((text) => {
-        // const index = ((Number(text)) - 1) % 20;
-        // cy.get('h5')
-        //   .contains(list[index].attributes.name.replace(/ +(?= )/g, '').trim())
-        //   .should('exist');
+      .then(() => {
         let textFound = false;
         cy.get('h5').invoke('text').then((title) => {
           title = title.replace(/ +(?= )/g, '').trim();
@@ -352,70 +342,70 @@ const cityName = 'San Francisco';
 const urlCity = 'san-francisco';
 
 //! First Set
-// describe('Search Page', () => {
-//   beforeEach(() => {
-//     Cypress.on('uncaught:exception', () => {
-//       // returning false here prevents Cypress from
-//       // failing the test
-//       return false;
-//     });
-//     cy.intercept('GET', '**/search?**').as('searchRequest');
-//     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
-//     cy.intercept('GET', '**/users/**').as('getUsers');
-//     cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
-//   });
-//   let currentList = [];
-//   let totalResultCount = 0;
+describe('Search Page', () => {
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+    cy.intercept('GET', '**/search?**').as('searchRequest');
+    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/users/**').as('getUsers');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
+  });
+  let currentList = [];
+  let totalResultCount = 0;
 
 
-//   responsive(() => {
-//     it('Check for near by cities links ', () => {
-//       cy.visit('/');
-//       cy.wait('@getUsers');
-//       cy.wait('@getUuid');
-//       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
-//         expect(cityCards.length).to.eql(30);
-//       });
-//     });
+  responsive(() => {
+    it('Check for near by cities links ', () => {
+      cy.visit('/');
+      cy.wait('@getUsers');
+      cy.wait('@getUuid');
+      cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
+        expect(cityCards.length).to.eql(30);
+      });
+    });
 
-//     it('Navigate to city search page', () => {
-//       toSearchPage(searchText);
-//       // Url check
-//       cy.url().should('have.string', urlCity);
-//       cy.wait('@communitySearch').then((res) => {
-//         const responseBody = res.response.body;
-//         if (responseBody.data && responseBody.data.length) {
-//           currentList = responseBody.data;
-//           totalResultCount = responseBody.meta['filtered-count'];
-//         }
-//       });
-//     });
+    it('Navigate to city search page', () => {
+      toSearchPage(searchText);
+      // Url check
+      cy.url().should('have.string', urlCity);
+      cy.wait('@communitySearch').then((res) => {
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
+      });
+    });
 
-//     it('Title check', () => {
-//       cy.contains(`Senior Living Communities in ${cityName}`);
-//     });
+    it('Title check', () => {
+      cy.contains(`Senior Living Communities in ${cityName}`);
+    });
 
-//     it('Filter section check', () => {
-//       cy.get('div[class*="FilterButton__"]')
-//         .its('length')
-//         .should('greaterThan', 4);
-//     });
-//     it('Results text check', () => {
-//       // Results text
-//       validateResultSetCount(currentList, totalResultCount);
-//     });
+    it('Filter section check', () => {
+      cy.get('div[class*="FilterButton__"]')
+        .its('length')
+        .should('greaterThan', 4);
+    });
+    it('Results text check', () => {
+      // Results text
+      validateResultSetCount(currentList, totalResultCount);
+    });
 
-//     it('Verify AD Tile', () => {
-//       checkForADTile(currentList);
-//     });
-//     it('List section check', () => {
-//       checkForListCount(20);
-//     });
-//     it('Map section check', () => {
-//       mapCheck(currentList, 'Markers');
-//     });
-//   });
-// });
+    it('Verify AD Tile', () => {
+      checkForADTile(currentList);
+    });
+    it('List section check', () => {
+      checkForListCount(20);
+    });
+    it('Map section check', () => {
+      mapCheck(currentList, 'Markers');
+    });
+  });
+});
 
 // ! Second Set
 describe('Search Page Sections', () => {
@@ -541,7 +531,6 @@ describe('Search Page Sections', () => {
 //! Third Set
 
 describe('Assisted Search Page Sections', () => {
-  // const currentList = [];
   beforeEach(() => {
     Cypress.on('uncaught:exception', () => {
       // returning false here prevents Cypress from
@@ -562,10 +551,12 @@ describe('Assisted Search Page Sections', () => {
       toSearchPageFromCity('San Francisco');
     });
 
+    // !To DO
     // it('List population check', () => {
     //   checkPopulationOfList(currentList);
     // });
 
+    // !To DO
     // it('map check', () => {
     //   mapCheck(currentList, 'CONTENT');
     // });
@@ -582,7 +573,7 @@ describe('Assisted Search Page Sections', () => {
     //     .should('exist');
     // });
 
-
+    // !To DO
     // it('Navigate from map popover', () => {
     //   cy.window().then((win) => {
     //     cy.stub(win, 'open').as('windowOpen');
