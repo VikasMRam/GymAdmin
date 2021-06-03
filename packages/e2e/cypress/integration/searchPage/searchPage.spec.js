@@ -361,8 +361,7 @@ describe('Search Page', () => {
   responsive(() => {
     it('Check for near by cities links ', () => {
       cy.visit('/');
-      cy.wait('@getUsers');
-      cy.wait('@getUuid');
+      cy.waitForPageViewEvent();
       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
         expect(cityCards.length).to.eql(30);
       });
