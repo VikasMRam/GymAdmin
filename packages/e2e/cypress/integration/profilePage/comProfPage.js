@@ -1,4 +1,4 @@
-import {isVisibleXpath, isNotVisibleXpath, domElement} from '../../helpers/domElements';
+import {isVisibleXpath, isNotVisibleXpath, isAbsentXpath, domElement} from '../../helpers/domElements';
 import { waitForHydration } from '../../helpers/tests';
 
 //=========Selectors static=========
@@ -18,6 +18,8 @@ const mediaGalleryBtnLeft = "(//div[@class='ReactModalPortal']/div//button)[2]";
 const mediaGalleryBtnRight = "(//div[@class='ReactModalPortal']/div//button)[3]";
 
 const currentDisplayingImage = "(//div[@aria-hidden='false'])[last()]//picture/img";
+
+const filmstripPictures = "//ul/li/picture";
 
 //=========Selectors dynamic=========
 const imageByScr = src => `(//img[@src='${src}'])[last()]`;
@@ -134,3 +136,13 @@ export const leftRightGalleryButtonIsWorks = () => {
     expect(pic2).equal(backToPicture2);
   });
 };
+
+export const scrollFilmStripToLastPicture = () => {
+  domElement(filmstripPictures).first().realSwipe("toLeft", {length:5000});
+  domElement(filmstripPictures).then((list) => {
+    const lastPicture = list.length;
+    isVisibleXpath(`(${filmstripPictures})[${lastPicture}]`);
+  });
+  isAbsentXpath(`(${filmstripPictures})[1]`);
+};
+
