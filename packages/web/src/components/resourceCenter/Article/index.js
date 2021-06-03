@@ -21,18 +21,14 @@ import Image from 'sly/common/system/Image';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import { withHydration } from 'sly/web/services/partialHydration';
-// import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
-// import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
-import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
-import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 
 const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
-const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
-// const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
-// const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
+const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
+const ArticleTags = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticleTags" */ 'sly/web/components/resourceCenter/components/ArticleTags'));
+const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/components/resourceCenter/components/SuscribeEmails'));
 
 
 const BlockHr = ({ hideOnMobile }) => (
