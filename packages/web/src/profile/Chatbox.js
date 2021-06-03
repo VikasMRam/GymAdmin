@@ -51,15 +51,9 @@ export default class Chatbox extends Component {
       eventName = 'user-intent';
     }
 
-    if (state === 'AZ') {
-      eventName = 'Test Trigger 2';
-    } else if (state === 'CO') {
-      eventName = 'Test Trigger 1';
-    }
-
     if (eventName) {
       console.log('Loading chat bot: ', eventName);
-      window.RokoInstabot.trigger(eventName);
+      // window.RokoInstabot.trigger(eventName);
     }
   };
 
