@@ -358,6 +358,7 @@ describe('Search Page', () => {
 
   responsive(() => {
     it('Check for near by cities links ', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit('/');
       cy.waitForPageViewEvent();
       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
@@ -421,6 +422,7 @@ describe('Search Page Sections', () => {
 
   responsive((viewport) => {
     it('Navigate to search page', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit('/');
       cy.waitForPageViewEvent();
       toSearchPage(searchText);
@@ -537,6 +539,7 @@ describe('Assisted Search Page Sections', () => {
 
   responsive(() => {
     it('Navigate to search page', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit('/');
       cy.waitForPageViewEvent();
       toSearchPageFromCity('San Francisco');
