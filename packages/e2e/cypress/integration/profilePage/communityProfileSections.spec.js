@@ -530,7 +530,7 @@ describe('Community Profile Sections', () => {
     communityPage.galleryIsClosed();
   });
 
-  it('View Photos - Launch, Exit Gallery - click close button (ComPrfPage - row 8)', function() {
+  it.only('View Photos - Launch, Exit Gallery - click close button (ComPrfPage - row 8)', function() {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.viewPhotos();
@@ -543,10 +543,7 @@ describe('Community Profile Sections', () => {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.viewPhotos();
-    // cy.wait(7000);
-    // communityPage.clickGalleryRight();
-    // cy.wait(7000);
-    // communityPage.checkPicturesIsChangedAndDisplays();
+    communityPage.leftRightGalleryButtonIsWorks();
   });
 
 

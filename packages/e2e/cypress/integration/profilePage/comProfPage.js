@@ -107,7 +107,7 @@ export const clickGalleryRight = () => waitForHydration(cy.xpath(mediaGalleryBtn
 export const clickGalleryLeft = () => waitForHydration(cy.xpath(mediaGalleryBtnLeft)).click({ force: true });
 
 
-export const checkPicturesIsChangedAndDisplays = () => {
+export const leftRightGalleryButtonIsWorks = () => {
   let pic1 = null;
   let pic2 = null;
   let pic3 = null;
