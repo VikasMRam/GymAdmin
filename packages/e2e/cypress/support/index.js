@@ -42,9 +42,10 @@ import './commands';
 //   }
 // });
 
-
 // we remove fetch to force the app to fall back to XHR
 // so cypress can intercept the calls
 Cypress.on('window:before:load', (win) => {
+  global.infoSpy = cy.spy(win.console, 'info');
   delete win.fetch;
 });
+
