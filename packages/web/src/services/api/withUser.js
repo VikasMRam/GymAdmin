@@ -11,8 +11,8 @@ function getDisplayName(WrappedComponent) {
 }
 
 export const useUser = () => {
-  const uuidAux = usePrefetch('getUuidAux', { id: 'me' });
-  const user = usePrefetch('getUser', { id: 'me' });
+  const uuidAux = usePrefetch('getUuidAux', { id: 'me' }, { loggedInOnly: true });
+  const user = usePrefetch('getUser', { id: 'me' }, { loggedInOnly: true });
   const getCurrentUser = useCallback(() => user.getCurrentRequestInfo().normalized);
 
   return useMemo(() => {
