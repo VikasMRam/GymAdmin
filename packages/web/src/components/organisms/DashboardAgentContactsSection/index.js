@@ -284,21 +284,37 @@ export default class DashboardAgentContactsSection extends Component {
             }}
           </Route>
         )}
-        <Modal
-          isOpen={!isPageLoading && match.url.match(/\/new$/)}
-          onClose={closeModal}
-          closeable
-          layout="noPadding"
-        >
-          <AddOrEditContactFormContainer
-            refetchContacts={refetchContacts}
-            onSuccess={closeModal}
-            onCancel={closeModal}
-            entityId={entityId}
-            entityType={entityType}
-            entityName={entityName}
-          />
-        </Modal>
+        {!isPageLoading && (
+          <Route path={`${match.url}/new`}>
+            {({ match: routeMatch }) => {
+              const closeModal = () => {
+                if (history.action === 'PUSH') {
+                  history.goBack();
+                } else {
+                  redirectTo(match.url, true);
+                }
+              };
+
+              return (
+                <Modal
+                  isOpen={!!routeMatch}
+                  onClose={closeModal}
+                  closeable
+                  layout="noPadding"
+                >
+                  <AddOrEditContactFormContainer
+                    refetchContacts={refetchContacts}
+                    onSuccess={closeModal}
+                    onCancel={closeModal}
+                    entityId={entityId}
+                    entityType={entityType}
+                    entityName={entityName}
+                  />
+                </Modal>
+              );
+            }}
+          </Route>
+        )}
       </Section>
     );
   }

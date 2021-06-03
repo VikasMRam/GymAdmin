@@ -224,7 +224,7 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {/*! isInternational && <Chatbox community={community} /> */}
+        {/*!isInternational && <Chatbox community={community} /> */}
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />

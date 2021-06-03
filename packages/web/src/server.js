@@ -119,7 +119,6 @@ app.use(clientConfigsMiddleware());
 
 // non ssr apps
 app.use((req, res, next) => {
-  console.log('came to here');
   const { ssr, extractor } = req.clientConfig;
   if (!ssr) {
     res.send(renderHtml({
