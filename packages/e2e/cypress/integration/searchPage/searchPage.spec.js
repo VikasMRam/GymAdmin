@@ -52,6 +52,13 @@ const checkPopulationOfList = (data) => {
     });
 };
 
+
+const genricCheckPopulationOfList = () => {
+  cy.get('a article h3').then((matchedCards) => {
+    expect(matchedCards.length).to.greaterThan(0);
+  });
+};
+
 // Validates expected list count to renered list count
 const checkForListCount = (count) => {
   cy.get('a article img').should('have.length', count);
@@ -552,9 +559,10 @@ describe('Assisted Search Page Sections', () => {
     });
 
     // !To DO
-    // it('List population check', () => {
-    //   checkPopulationOfList(currentList);
-    // });
+    it('List population check', () => {
+      genricCheckPopulationOfList();
+    });
+
 
     // !To DO
     // it('map check', () => {
