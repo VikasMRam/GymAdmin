@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
+import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
+
 import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/web/config';
 
-import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 
 const loadOlark = () => {
   // /* eslint-disable */
@@ -74,7 +75,7 @@ export default class ChatBox extends Component {
                 j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
                 f.parentNode.insertBefore(j,f);
               })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
-            }, 5000);
+            }, 10000);
           ` }}
         />
       </>

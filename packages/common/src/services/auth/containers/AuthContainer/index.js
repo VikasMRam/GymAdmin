@@ -239,6 +239,10 @@ export default class AuthContainer extends Component {
       );
     }
 
+    if (!isOpen) {
+      return null;
+    }
+
     return (
       <Modal
         isOpen={isOpen}
