@@ -45,9 +45,8 @@ export function usePrefetch(apiCall, ...args) {
 
   useEffect(() => {
     store.on(apiCall, argsKey, setRequest);
-    const currentRequest = getCurrentRequestInfo() || request;
-    const { hasStarted, isInvalid } = currentRequest;
-    if (!shouldBail && (!hasStarted || isInvalid)) {
+    const currentRequest = getCurrentRequestInfo() || defaultRequest;
+    if (!shouldBail && currentRequest !== request) {
       fetch();
     }
     return () => store.off(apiCall, argsKey, setRequest);

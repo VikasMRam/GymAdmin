@@ -270,7 +270,7 @@ describe('Community Profile Sections', () => {
     });
 
 
-    it.only('creates prospective lead when question is asked on community profile', () => {
+    it('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
       cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');

@@ -282,7 +282,7 @@ describe('system', () => {
     });
   });
 
-  it.only('finds responsive props', () => {
+  it('finds responsive props', () => {
     const parse = system({
       x: {
         scale: 'x',
