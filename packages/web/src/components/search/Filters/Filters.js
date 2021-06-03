@@ -123,7 +123,6 @@ const Filters = forwardRef(({
   const [priceButtonRef, priceButtonCoords] = useDimensions();
   const [sizeButtonRef, sizeButtonCoords] = useDimensions();
   const popOverCss = useMemo(() => {
-    console.log('breakpoint', breakpoint);
     if (breakpoint?.atLeastTablet() && [BUDGET, SIZE].includes(isOpen)) {
       const coords = ({
         [BUDGET]: priceButtonCoords,
