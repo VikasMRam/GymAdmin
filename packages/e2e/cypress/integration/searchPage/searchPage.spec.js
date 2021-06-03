@@ -351,8 +351,6 @@ describe('Search Page', () => {
     });
     cy.intercept('GET', '**/search?**').as('searchRequest');
     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
-    cy.intercept('GET', '**/users/**').as('getUsers');
-    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
   });
   let currentList = [];
   let totalResultCount = 0;
@@ -418,16 +416,13 @@ describe('Search Page Sections', () => {
     });
     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
     cy.intercept('GET', '**/search?**').as('searchRequest');
-    cy.intercept('GET', '**/users/**').as('getUsers');
-    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
     cy.intercept('GET', '**platform/geo-guides?**').as('geoGuide');
   });
 
   responsive((viewport) => {
     it('Navigate to search page', () => {
       cy.visit('/');
-      cy.wait('@getUsers');
-      cy.wait('@getUuid');
+      cy.waitForPageViewEvent();
       toSearchPage(searchText);
       // Url check
       cy.url().should('have.string', urlCity);
@@ -538,15 +533,12 @@ describe('Assisted Search Page Sections', () => {
     });
     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
     cy.intercept('GET', '**/uuid-actions').as('postUuidActions');
-    cy.intercept('GET', '**/users/**').as('getUsers');
-    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
   });
 
   responsive(() => {
     it('Navigate to search page', () => {
       cy.visit('/');
-      cy.wait('@getUsers');
-      cy.wait('@getUuid');
+      cy.waitForPageViewEvent();
       toSearchPageFromCity('San Francisco');
     });
 
