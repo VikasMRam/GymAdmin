@@ -20,13 +20,20 @@ import Link from 'sly/common/system/Link';
 import Image from 'sly/common/system/Image';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
-import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
+import { withHydration } from 'sly/web/services/partialHydration';
+// import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
-import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
+// import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
 import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+
+const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
+const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
+// const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
+// const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
+
 
 const BlockHr = ({ hideOnMobile }) => (
   <Hr
@@ -88,6 +95,7 @@ const ArticlePage = ({ match }) => {
     );
   }
 
+
   return (
     <>
       <Helmet
@@ -143,6 +151,8 @@ const ArticlePage = ({ match }) => {
           <Image
             path={requestInfo?.result?.[0]?.mainImg?.path}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
+            shouldPreload
+            loading="eager"
             aspectRatio="3:2"
             sources={[
               288,

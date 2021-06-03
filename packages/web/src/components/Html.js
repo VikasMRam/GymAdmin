@@ -54,7 +54,7 @@ const Html = ({
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${googleTagManagerId}');
-          },4500)
+          },8000)
         `}}></script>
         <noscript>
           {`<iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" height="0" width="0" />`}
