@@ -83,7 +83,9 @@ describe('Sending Referral to Community', () => {
       cy.waitForUser();
       cy.get('input[class*=SearchTextInput]').scrollIntoView().type(community.name,  { delay: 50 }).should('have.value', community.name);
       cy.wait('@getNewCommunity');
-      cy.get('table').find('tbody').find('tr a[class*=Root]').contains(community.name).scrollIntoView().click();
+      cy.get('table').find('tbody').find('tr a[class*=Root]').contains(community.name)
+        .scrollIntoView()
+        .click();
       cy.get('a[id=contacts]').click();
 
       cy.get('section[class*=DashboardAgentContacts]').contains('Add contact').scrollIntoView().dblclick({ force: true });
@@ -114,7 +116,8 @@ describe('Sending Referral to Community', () => {
       cy.intercept('GET', '**/clients/*').as('getReferral');
       cy.visit('/dashboard/agent/my-families/new');
 
-      cy.get('table').find('tbody').find('tr a[class*=ClientRowCard__StyledNameCell]').first().click();
+      cy.get('table').find('tbody').find('tr a[class*=ClientRowCard__StyledNameCell]').first()
+        .click();
       cy.get('a[id*=communities]').contains('Communities').click({ force: true });
 
       cy.get('button').contains('Search for communities').click({ force: true });

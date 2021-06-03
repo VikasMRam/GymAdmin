@@ -94,10 +94,10 @@ Cypress.Commands.add('getCommunity', (community) => {
 });
 
 
-Cypress.Commands.add('waitForPageViewEvent', function () {
+Cypress.Commands.add('waitForPageViewEvent', () => {
   let ENV = null;
   cy.waitUntil(() => {
-    return cy.window().then(win => {
+    return cy.window().then((win) => {
       if (!win.SLY_EVENT_ENV) {
         return Cypress.Promise.reject();
       }
@@ -115,7 +115,7 @@ Cypress.Commands.add('waitForPageViewEvent', function () {
           cy.log('args', call.args);
           return call.args[0] === 'EVENT pageview';
         });
-      })
+      });
     }
   });
 });
