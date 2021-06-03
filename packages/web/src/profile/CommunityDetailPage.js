@@ -64,7 +64,7 @@ const AskAgentQuestionButtonContainer = withHydration(/* #__LOADABLE__ */ () => 
 const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/containers/CommunityMorePicturesContainer'));
 
 const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrustScore" */ 'sly/web/containers/communityProfile/TrustScoreContainer'));
-// const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
+const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
 
 
@@ -224,7 +224,7 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {/* {!isInternational && <Chatbox community={community} /> } */}
+        {!isInternational && <Chatbox community={community} /> }
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
