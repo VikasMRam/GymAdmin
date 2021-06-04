@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import SearchInput from 'sly/common/system/SearchInput';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 
 const ArticlesSearchContainer = () => {

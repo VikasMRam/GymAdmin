@@ -18,7 +18,7 @@ import AddOrEditContactFormContainer from 'sly/web/containers/AddOrEditContactFo
 import IconButton from 'sly/common/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 

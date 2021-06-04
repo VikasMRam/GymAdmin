@@ -7,7 +7,7 @@ import { bool, object } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { formatDate } from 'sly/web/services/helpers/date';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
 import { cmsUrl } from 'sly/web/config';
 import apiFetch from 'sly/web/services/api/apiFetch';

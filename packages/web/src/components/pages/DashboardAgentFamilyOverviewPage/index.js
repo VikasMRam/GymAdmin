@@ -7,7 +7,7 @@ import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/Das
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   NEWFAMILIES,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 
 const DashboardAgentFamilyOverviewPage = ({ match }) => {
   if (!match.params.clientType) {

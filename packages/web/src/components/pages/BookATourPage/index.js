@@ -17,7 +17,7 @@ import {
   makeHeader,
 } from 'sly/web/components/templates/FullScreenWizard';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { DASHBOARD_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { DASHBOARD_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import CommunityWizardAcknowledgementContainer from 'sly/web/containers/CommunityWizardAcknowledgementContainer';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';

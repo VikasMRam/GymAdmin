@@ -23,7 +23,7 @@ import {
   RESOURCE_CENTER_TOPIC_PATH,
   RESOURCE_CENTER_SEARCH_PATH,
   RESOURCE_CENTER_SITEMAP_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
@@ -59,7 +59,7 @@ const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emai
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
-const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/components/Dashboard'));
+const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/dashboard/Dashboard'));
 
 // community profile
 const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));

@@ -9,7 +9,7 @@ import userPropType from 'sly/common/propTypes/user';
 import { adminAgentPropType } from 'sly/common/propTypes/agent';
 import notePropType from 'sly/common/propTypes/note';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { AGENT_DETAILS } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DETAILS } from 'sly/web/dashboard/dashboardAppPaths';
 import { NOTE_COMMENTABLE_TYPE_AGENT } from 'sly/web/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
 @withUser

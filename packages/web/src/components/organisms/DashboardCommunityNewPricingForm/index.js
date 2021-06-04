@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
-import { Section, SectionActions, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { Section, SectionActions, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import { space, color, Block, Grid, Span } from 'sly/common/system/index';
 import CollapsibleSection, { MainSection } from 'sly/web/components/molecules/CollapsibleSection';
 import { size } from 'sly/common/components/themes';

@@ -16,12 +16,12 @@ import {
 } from 'sly/web/components/atoms';
 import Th from 'sly/web/components/molecules/Th';
 import { CardRow, CellWithLabel } from 'sly/web/components/atoms/TableCard';
-import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import { Link } from 'sly/common/components/atoms';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PHOTOS,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import communityPropType from 'sly/common/propTypes/community';
 import * as editConfig from 'sly/web/services/edits/constants/community';
 import { textAlign } from 'sly/web/components/helpers/text';

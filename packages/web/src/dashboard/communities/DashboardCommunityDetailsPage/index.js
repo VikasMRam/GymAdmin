@@ -17,7 +17,7 @@ import {
   EDITS,
   ADMIN,
   DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import communityPropType from 'sly/common/propTypes/community';
 import userPropType from 'sly/common/propTypes/user';
@@ -31,13 +31,13 @@ import {
   Right,
   Left,
   DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
-import DashboardCommunitySummary from 'sly/web/components/organisms/DashboardCommunitySummary';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
+import DashboardCommunitySummary from 'sly/web/dashboard/communities/DashboardCommunitySummary';
 import DashboardCommunityDetailsFormContainer from 'sly/web/containers/DashboardCommunityDetailsFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
 import DashboardCommunityNewPricingFormContainer from 'sly/web/containers/DashboardCommunityNewPricingFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
-import DashboardCommunityPhotosFormContainer from 'sly/web/containers/DashboardCommunityPhotosFormContainer';
+import DashboardCommunityPhotosFormContainer from 'sly/web/dashboard/communities/DashboardCommunityPhotosFormContainer';
 import DashboardCommunityAdminFormContainer from 'sly/web/containers/DashboardCommunityAdminFormContainer';
 import DashboardContactsSectionContainer from 'sly/web/containers/dashboard/DashboardContactsSectionContainer';
 import DashboardAgentFamilyOverviewSectionContainer from 'sly/web/containers/DashboardAgentFamilyOverviewSectionContainer';

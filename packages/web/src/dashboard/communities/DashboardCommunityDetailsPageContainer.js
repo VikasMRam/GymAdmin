@@ -4,24 +4,24 @@ import { Redirect, generatePath, matchPath, withRouter } from 'react-router';
 import get from 'lodash/get';
 import diff from 'deep-diff';
 
+import { withProps } from 'sly/web/services/helpers/hocs';
 import { prefetch, withUser } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import communityPropType from 'sly/common/propTypes/community';
+import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
+import { EditContext } from 'sly/web/services/edits';
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
   DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
-import DashboardCommunityDetailsPage from 'sly/web/components/pages/DashboardCommunityDetailsPage';
+} from 'sly/web/dashboard/dashboardAppPaths';
+import DashboardCommunityDetailsPage from 'sly/web/dashboard/communities/DashboardCommunityDetailsPage';
 import withBreakpoint from 'sly/web/components/helpers/breakpoint';
 import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
-import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
-import { EditContext } from 'sly/web/services/edits';
-import { withProps } from 'sly/web/services/helpers/hocs';
 
 const activityPath = id => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, {
   id,

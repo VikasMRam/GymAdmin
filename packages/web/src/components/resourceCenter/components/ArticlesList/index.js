@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { array, bool, string } from 'prop-types';
 
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Block from 'sly/common/system/Block';
 import Heading from 'sly/common/system/Heading';
 import Grid from 'sly/common/system/Grid';

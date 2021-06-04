@@ -12,7 +12,7 @@ import {
   SectionActions,
   SectionForm,
   SectionHeader,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
 const tagColumn = { typeInfo: { api: `${apiUrl}/platform/tags?filter[category]=Affinity,Activeness,Acuity&filter[name]=` }, value: 'tag.name' };
