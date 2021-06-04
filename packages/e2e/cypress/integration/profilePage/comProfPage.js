@@ -1,25 +1,38 @@
-import {isVisibleXpath, isNotVisibleXpath, isAbsentXpath, domElement} from '../../helpers/domElements';
+import {
+  isVisibleXpath,
+  isNotVisibleXpath,
+  isAbsentXpath,
+  domElement,
+  isVisible,
+  isNoVisible,
+} from '../../helpers/domElements';
 import { waitForHydration } from '../../helpers/tests';
-
+import { baseUrl } from '../../../cypress';
 //=========Selectors static=========
 const getPriceFooter =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[last()]";
 const getPriceTable =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[1]";
 
-const getPricingAndAvailabilitySectionBtn = '//h2[text()="Get Pricing and Availability"]/parent::div//button';
+const getPricingAndAvailabilitySectionBtn =
+  '//h2[text()="Get Pricing and Availability"]/parent::div//button';
 
 const gallery = '//div[contains(@class, "Modal__Body")]';
 
-const mediaGalleryBtnClose = "(//div[@class='ReactModalPortal']/div//button)[1]";
+const mediaGalleryBtnClose =
+  "(//div[@class='ReactModalPortal']/div//button)[1]";
 
 const mediaGalleryBtnLeft = "(//div[@class='ReactModalPortal']/div//button)[2]";
 
-const mediaGalleryBtnRight = "(//div[@class='ReactModalPortal']/div//button)[3]";
+const mediaGalleryBtnRight =
+  "(//div[@class='ReactModalPortal']/div//button)[3]";
 
-const currentDisplayingImage = "(//div[@aria-hidden='false'])[last()]//picture/img";
+const currentDisplayingImage =
+  "(//div[@aria-hidden='false'])[last()]//picture/img";
 
-const filmstripPictures = "//ul/li/picture";
+const filmstripPictures = '//ul/li/picture';
+
+const map = 'div[aria-label="Map"]';
 
 //=========Selectors dynamic=========
 const imageByScr = src => `(//img[@src='${src}'])[last()]`;
@@ -35,8 +48,10 @@ const h3Text = text => `//h3[text()='${text}']`;
 
 const h1Text = text => `//h1[text()='${text}']`;
 
-const universalLabelFormInput = label => `//label[text()='${label}']/parent::div/parent::div//input`;
+const universalLabelFormInput = label =>
+  `//label[text()='${label}']/parent::div/parent::div//input`;
 
+const spanText = text => `//span[text()='${text}']`;
 
 //=========Methods=========
 export const getPriceBtnFooter = () =>
@@ -46,7 +61,9 @@ export const getPriceBtnTable = () =>
   waitForHydration(cy.xpath(getPriceTable)).click({ force: true });
 
 export const getPriceBtnRightSectionDesktop = () =>
-  waitForHydration(cy.xpath(getPricingAndAvailabilitySectionBtn)).click({ force: true });
+  waitForHydration(cy.xpath(getPricingAndAvailabilitySectionBtn)).click({
+    force: true,
+  });
 
 export const getPriceWizardInfoIsPresent = () => {
   isVisibleXpath(buttonText("Let's get started"));
@@ -62,21 +79,31 @@ export const getPriceWizardInfoIsPresent = () => {
 };
 
 export const nameEmailPhoneInput = (name, lastName, email, phone) => {
-  waitForHydration(domElement(universalLabelFormInput('First Name'))).type(name);
-  waitForHydration(cy.xpath(universalLabelFormInput('Last Name'))).type(lastName);
+  waitForHydration(domElement(universalLabelFormInput('First Name'))).type(
+    name,
+  );
+  waitForHydration(cy.xpath(universalLabelFormInput('Last Name'))).type(
+    lastName,
+  );
   waitForHydration(cy.xpath("(//input[@id='email'])[1]")).type(email);
   waitForHydration(cy.xpath(universalLabelFormInput('Phone'))).type(phone);
 };
 
 export const justWantToSeePricing = ({ ...props }) => {
   const { name, lastName, email, phone } = props;
-  waitForHydration(domElement(buttonText('No thanks, I just want to see pricing.'))).click().click();
+  waitForHydration(
+    domElement(buttonText('No thanks, I just want to see pricing.')),
+  )
+    .click()
+    .click();
   nameEmailPhoneInput(name, lastName, email, phone);
   waitForHydration(cy.xpath(buttonText('Get pricing'))).click();
 };
 
 export const askQuestBtn = () =>
-  waitForHydration(cy.xpath(buttonText('Ask a Question'))).click({ force: true });
+  waitForHydration(cy.xpath(buttonText('Ask a Question'))).click({
+    force: true,
+  });
 
 export const askExperttBtn = () =>
   waitForHydration(cy.get('button[type="expert"]')).click({ force: true });
@@ -89,60 +116,112 @@ export const sendAskForm = ({ ...props }) => {
 };
 
 export const successModalIsSeenAndClosed = () => {
-  const finishBtn = buttonText("Finish");
+  const finishBtn = buttonText('Finish');
   isVisibleXpath(h1Text('Success!'));
-  isVisibleXpath(divText('Your request has been sent and we will connect with you shortly.'));
+  isVisibleXpath(
+    divText('Your request has been sent and we will connect with you shortly.'),
+  );
   waitForHydration(cy.xpath(finishBtn)).click();
   isNotVisibleXpath(finishBtn);
 };
 
-export const viewPhotos = () => waitForHydration(cy.xpath(buttonText('View Photos'))).click({ force: true });
+export const viewPhotos = () =>
+  waitForHydration(cy.xpath(buttonText('View Photos'))).click({ force: true });
 
 export const galleryIsOpen = () => isVisibleXpath(gallery);
 
 export const galleryIsClosed = () => isNotVisibleXpath(gallery);
 
-export const closeGalleryBtn = () => waitForHydration(cy.xpath(mediaGalleryBtnClose)).click({ force: true });
+export const closeGalleryBtn = () =>
+  waitForHydration(cy.xpath(mediaGalleryBtnClose)).click({ force: true });
 
-export const clickGalleryRight = () => waitForHydration(cy.xpath(mediaGalleryBtnRight)).click({ force: true });
+export const clickGalleryRight = () =>
+  waitForHydration(cy.xpath(mediaGalleryBtnRight)).click({ force: true });
 
-export const clickGalleryLeft = () => waitForHydration(cy.xpath(mediaGalleryBtnLeft)).click({ force: true });
-
+export const clickGalleryLeft = () =>
+  waitForHydration(cy.xpath(mediaGalleryBtnLeft)).click({ force: true });
 
 export const leftRightGalleryButtonIsWorks = () => {
   let pic1 = null;
   let pic2 = null;
   let pic3 = null;
-  domElement(currentDisplayingImage).invoke('attr', 'src').then(src => {
-    pic1 = src;
-    isVisibleXpath(imageByScr(pic1));
-  });
+  domElement(currentDisplayingImage)
+    .invoke('attr', 'src')
+    .then(src => {
+      pic1 = src;
+      isVisibleXpath(imageByScr(pic1));
+    });
   clickGalleryRight();
-  domElement(currentDisplayingImage).invoke('attr', 'src').then(src => {
-    pic2 = src;
-    isVisibleXpath(imageByScr(pic2));
-    expect(pic1).to.not.equal(pic2)
-  });
+  domElement(currentDisplayingImage)
+    .invoke('attr', 'src')
+    .then(src => {
+      pic2 = src;
+      isVisibleXpath(imageByScr(pic2));
+      expect(pic1).to.not.equal(pic2);
+    });
   clickGalleryRight();
-  domElement(currentDisplayingImage).invoke('attr', 'src').then(src => {
-    pic3 = src;
-    isVisibleXpath(imageByScr(pic3));
-    expect(pic1).to.not.equal(pic3);
-    expect(pic2).to.not.equal(pic3);
-  });
+  domElement(currentDisplayingImage)
+    .invoke('attr', 'src')
+    .then(src => {
+      pic3 = src;
+      isVisibleXpath(imageByScr(pic3));
+      expect(pic1).to.not.equal(pic3);
+      expect(pic2).to.not.equal(pic3);
+    });
   clickGalleryLeft();
-  domElement(currentDisplayingImage).invoke('attr', 'src').then(backToPicture2 => {
-    isVisibleXpath(imageByScr(backToPicture2));
-    expect(pic2).equal(backToPicture2);
-  });
+  domElement(currentDisplayingImage)
+    .invoke('attr', 'src')
+    .then(backToPicture2 => {
+      isVisibleXpath(imageByScr(backToPicture2));
+      expect(pic2).equal(backToPicture2);
+    });
 };
 
 export const scrollFilmStripToLastPicture = () => {
-  domElement(filmstripPictures).first().realSwipe("toLeft", {length:5000});
-  domElement(filmstripPictures).then((list) => {
+  domElement(filmstripPictures)
+    .first()
+    .realSwipe('toLeft', { length: 5000 });
+  domElement(filmstripPictures).then(list => {
     const lastPicture = list.length;
     isVisibleXpath(`(${filmstripPictures})[${lastPicture}]`);
   });
   isAbsentXpath(`(${filmstripPictures})[1]`);
 };
 
+const BREADCRUMBS_OPTIONS = {
+  ['Home']: {
+    url: `${baseUrl}/`,
+    expectUI: 'Find a senior living community you’ll love.',
+  },
+  ['Assisted Living']: {
+    url: `${baseUrl}/assisted-living`,
+    expectUI: 'What is Assisted Living?',
+  },
+
+  ['California']: {
+    url: `${baseUrl}/assisted-living/california`,
+    expectUI: 'Assisted Living Facilities in CA',
+    mapPresent: true,
+  },
+  ['San Francisco']: {
+    url: `${baseUrl}/assisted-living/california/san-francisco`,
+    expectUI: 'Assisted Living Facilities in San Francisco, CA',
+    mapPresent: true,
+  },
+};
+
+export const navigationBreadcrumbs = communityId => {
+  cy.wrap(Object.keys(BREADCRUMBS_OPTIONS)).each(option => {
+    cy.visit(`/assisted-living/california/san-francisco/${communityId}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+
+    waitForHydration(domElement(spanText(option))).click({ force: true });
+    cy.url().should('eq', BREADCRUMBS_OPTIONS[option].url);
+    cy.contains(BREADCRUMBS_OPTIONS[option].expectUI, {
+      timeout: 10000,
+    }).should('be.visible');
+    if (BREADCRUMBS_OPTIONS[option].mapPresent) {
+      cy.get(map).should('be.visible');
+    }
+  });
+};
