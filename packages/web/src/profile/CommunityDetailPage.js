@@ -48,7 +48,6 @@ import ModalContainer from 'sly/web/containers/ModalContainer';
 
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
-const PageEventsContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
 const CommunitySummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
 const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
@@ -64,7 +63,7 @@ const AskAgentQuestionButtonContainer = withHydration(/* #__LOADABLE__ */ () => 
 const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/containers/CommunityMorePicturesContainer'));
 
 const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrustScore" */ 'sly/web/containers/communityProfile/TrustScoreContainer'));
-// const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
+const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
 
 
@@ -224,11 +223,10 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {/*! isInternational && <Chatbox community={community} /> */}
+        {!isInternational && <Chatbox community={community} /> }
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
-        <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
         </Block>

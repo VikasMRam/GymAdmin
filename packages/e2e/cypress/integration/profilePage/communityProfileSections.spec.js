@@ -123,6 +123,7 @@ describe('Community Profile Sections', () => {
     });
 
     it('should show pricing section', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
@@ -132,9 +133,8 @@ describe('Community Profile Sections', () => {
       buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
-      cy.wait('@getUser');
-      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability')
-        .click();
+      cy.waitForPageViewEvent();
+      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability').click();
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
@@ -275,6 +275,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
       cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions').then((xhr) => {
         expect(xhr.requestBody).to.deep.equal({
@@ -290,7 +291,7 @@ describe('Community Profile Sections', () => {
           },
         });
       });
-      cy.wait('@getUser');
+      cy.waitForPageViewEvent();
 
 
       waitForHydration(cy.get('button').contains('Ask a Question'));

@@ -313,6 +313,7 @@ export default class MediaGallery extends Component {
             slideStyle={sliderSlideStyle}
             onChangeIndex={onSlideChange}
             enableMouseEvents
+            disableLazyLoading
             index={currentSlide}
           >
             {slideViews}
