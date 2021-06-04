@@ -242,13 +242,7 @@ const countMapMarkers = (list) => {
   closeMapView();
 };
 
-const checkForPresenceOfMarkers = () => {
-  openMapView();
-  cy.get('div[class*="Marker__"]').then((markers) => {
-    expect(markers.length).to.greaterThan(0);
-  });
-  closeMapView();
-};
+
 const navigateAndCheckTitles  = (data) => {
   let currentUrl;
   cy.url().then((url) => {
@@ -309,6 +303,14 @@ const openMapView = () => {
   });
 };
 
+const checkForPresenceOfMarkers = () => {
+  openMapView();
+  cy.get('div[class*="Marker__"]').then((markers) => {
+    expect(markers.length).to.greaterThan(0);
+  });
+  closeMapView();
+};
+
 
 const genericMarkerNavigation = () => {
   openMapView();
@@ -361,190 +363,190 @@ const cityName = 'San Francisco';
 const urlCity = 'san-francisco';
 
 //! First Set
-// describe('Search Page', () => {
-//   beforeEach(() => {
-//     Cypress.on('uncaught:exception', () => {
-//       // returning false here prevents Cypress from
-//       // failing the test
-//       return false;
-//     });
-//     cy.intercept('GET', '**/search?**').as('searchRequest');
-//     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
-//     cy.intercept('GET', '**/users/**').as('getUsers');
-//     cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
-//   });
-//   let currentList = [];
-//   let totalResultCount = 0;
+describe('Search Page', () => {
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+    cy.intercept('GET', '**/search?**').as('searchRequest');
+    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/users/**').as('getUsers');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
+  });
+  let currentList = [];
+  let totalResultCount = 0;
 
 
-//   responsive(() => {
-//     it('Check for near by cities links ', () => {
-//       cy.visit('/');
-//       cy.wait('@getUsers');
-//       cy.wait('@getUuid');
-//       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
-//         expect(cityCards.length).to.eql(30);
-//       });
-//     });
+  responsive(() => {
+    it('Check for near by cities links ', () => {
+      cy.visit('/');
+      cy.wait('@getUsers');
+      cy.wait('@getUuid');
+      cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
+        expect(cityCards.length).to.eql(30);
+      });
+    });
 
-//     it('Navigate to city search page', () => {
-//       toSearchPage(searchText);
-//       // Url check
-//       cy.url().should('have.string', urlCity);
-//       cy.wait('@communitySearch').then((res) => {
-//         const responseBody = res.response.body;
-//         if (responseBody.data && responseBody.data.length) {
-//           currentList = responseBody.data;
-//           totalResultCount = responseBody.meta['filtered-count'];
-//         }
-//       });
-//     });
+    it('Navigate to city search page', () => {
+      toSearchPage(searchText);
+      // Url check
+      cy.url().should('have.string', urlCity);
+      cy.wait('@communitySearch').then((res) => {
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
+      });
+    });
 
-//     it('Title check', () => {
-//       cy.contains(`Senior Living Communities in ${cityName}`);
-//     });
+    it('Title check', () => {
+      cy.contains(`Senior Living Communities in ${cityName}`);
+    });
 
-//     it('Filter section check', () => {
-//       cy.get('div[class*="FilterButton__"]')
-//         .its('length')
-//         .should('greaterThan', 4);
-//     });
-//     it('Results text check', () => {
-//       // Results text
-//       validateResultSetCount(currentList, totalResultCount);
-//     });
+    it('Filter section check', () => {
+      cy.get('div[class*="FilterButton__"]')
+        .its('length')
+        .should('greaterThan', 4);
+    });
+    it('Results text check', () => {
+      // Results text
+      validateResultSetCount(currentList, totalResultCount);
+    });
 
-//     it('Verify AD Tile', () => {
-//       checkForADTile(currentList);
-//     });
-//     it('List section check', () => {
-//       checkForListCount(20);
-//     });
-//     it('Map section check', () => {
-//       mapCheck(currentList, 'Markers');
-//     });
-//   });
-// });
+    it('Verify AD Tile', () => {
+      checkForADTile(currentList);
+    });
+    it('List section check', () => {
+      checkForListCount(20);
+    });
+    it('Map section check', () => {
+      mapCheck(currentList, 'Markers');
+    });
+  });
+});
 
 // ! Second Set
-// describe('Search Page Sections', () => {
-//   let currentList = [];
-//   let totalResultCount = 0;
-//   beforeEach(() => {
-//     Cypress.on('uncaught:exception', () => {
-//       // returning false here prevents Cypress from
-//       // failing the test
-//       return false;
-//     });
-//     cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
-//     cy.intercept('GET', '**/search?**').as('searchRequest');
-//     cy.intercept('GET', '**/users/**').as('getUsers');
-//     cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
-//     cy.intercept('GET', '**platform/geo-guides?**').as('geoGuide');
-//   });
+describe('Search Page Sections', () => {
+  let currentList = [];
+  let totalResultCount = 0;
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search?**').as('searchRequest');
+    cy.intercept('GET', '**/users/**').as('getUsers');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
+    cy.intercept('GET', '**platform/geo-guides?**').as('geoGuide');
+  });
 
-//   responsive((viewport) => {
-//     it('Navigate to search page', () => {
-//       cy.visit('/');
-//       cy.wait('@getUsers');
-//       cy.wait('@getUuid');
-//       toSearchPage(searchText);
-//       // Url check
-//       cy.url().should('have.string', urlCity);
-//       cy.wait('@communitySearch').then((res) => {
-//         const responseBody = res.response.body;
-//         if (responseBody.data && responseBody.data.length) {
-//           currentList = responseBody.data;
-//           totalResultCount = responseBody.meta['filtered-count'];
-//         }
-//       });
-//     });
+  responsive((viewport) => {
+    it('Navigate to search page', () => {
+      cy.visit('/');
+      cy.wait('@getUsers');
+      cy.wait('@getUuid');
+      toSearchPage(searchText);
+      // Url check
+      cy.url().should('have.string', urlCity);
+      cy.wait('@communitySearch').then((res) => {
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
+      });
+    });
 
-//     it('Care types explanation check', () => {
-//       cy.get('section h3')
-//         .contains('Explore other types of communities')
-//         .parent()
-//         .children()
-//         .find('article')
-//         .each((element) => {
-//           cy.wrap(element)
-//             .invoke('text')
-//             .then((text) => {
-//               expect(text.length).to.be.at.least(10);
-//             });
-//         });
-//     });
+    it('Care types explanation check', () => {
+      cy.get('section h3')
+        .contains('Explore other types of communities')
+        .parent()
+        .children()
+        .find('article')
+        .each((element) => {
+          cy.wrap(element)
+            .invoke('text')
+            .then((text) => {
+              expect(text.length).to.be.at.least(10);
+            });
+        });
+    });
 
-//     it('List check for 20 elements', () => {
-//       checkForListCount(20);
-//     });
+    it('List check for 20 elements', () => {
+      checkForListCount(20);
+    });
 
-//     it('Care Type Filter Check', () => {
-//       applyGenericFilter(FilterNames.CommunityType, [
-//         CommunityTypes.AssistedLiving,
-//       ], viewport);
-//       // check for title change
-//       checkForTitle(CommunityTypes.AssistedLiving.uiText);
-//       validateChangeInResultSet(totalResultCount);
-//       clearGenericTypeFilter(
-//         FilterNames.CommunityType,
-//         CommunityTypes.AssistedLiving, viewport,
-//       );
-//     });
+    it('Care Type Filter Check', () => {
+      applyGenericFilter(FilterNames.CommunityType, [
+        CommunityTypes.AssistedLiving,
+      ], viewport);
+      // check for title change
+      checkForTitle(CommunityTypes.AssistedLiving.uiText);
+      validateChangeInResultSet(totalResultCount);
+      clearGenericTypeFilter(
+        FilterNames.CommunityType,
+        CommunityTypes.AssistedLiving, viewport,
+      );
+    });
 
-//     it('Size Type Filter Check', () => {
-//       applyGenericFilter(FilterNames.Size, [SizeFilters.Small], viewport);
-//       validateChangeInResultSet(totalResultCount);
-//       clearGenericTypeFilter(FilterNames.Size, SizeFilters.Small, viewport);
-//     });
+    it('Size Type Filter Check', () => {
+      applyGenericFilter(FilterNames.Size, [SizeFilters.Small], viewport);
+      validateChangeInResultSet(totalResultCount);
+      clearGenericTypeFilter(FilterNames.Size, SizeFilters.Small, viewport);
+    });
 
-//     it('Prize Type Filter Check', () => {
-//       applyGenericFilter(FilterNames.Price, [PriceFilter.Range1], viewport);
-//       validateChangeInResultSet(totalResultCount);
-//       clearGenericTypeFilter(FilterNames.Price, PriceFilter.Range1, viewport);
-//     });
+    it('Prize Type Filter Check', () => {
+      applyGenericFilter(FilterNames.Price, [PriceFilter.Range1], viewport);
+      validateChangeInResultSet(totalResultCount);
+      clearGenericTypeFilter(FilterNames.Price, PriceFilter.Range1, viewport);
+    });
 
-//     it('More Filter Check', () => {
-//       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
-//       validateChangeInResultSet(totalResultCount);
-//       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
-//     });
+    it('More Filter Check', () => {
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
+      validateChangeInResultSet(totalResultCount);
+      clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
+    });
 
-//     it('More Filter Check - No results', () => {
-//       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.TransportArrangememt, MoreFilters.CareServices.MedicationManagement], viewport);
-//       validateNoResultCheck();
-//       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
-//     });
-//     it('check list', () => {
-//       checkPopulationOfList(currentList);
-//     });
-//     it('map check', () => {
-//       mapCheck(currentList, 'CONTENT');
-//     });
+    it('More Filter Check - No results', () => {
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.TransportArrangememt, MoreFilters.CareServices.MedicationManagement], viewport);
+      validateNoResultCheck();
+      clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
+    });
+    it('check list', () => {
+      checkPopulationOfList(currentList);
+    });
+    it('map check', () => {
+      mapCheck(currentList, 'CONTENT');
+    });
 
 
-//     it('Navigate to page 2', () => {
-//       cy.get('div[class*="Pagination"]').find('button').contains('2').click({ force: true });
-//       cy.wait('@communitySearch').then((res) => {
-//         const responseBody = res.response.body;
-//         if (responseBody.data && responseBody.data.length) {
-//           currentList = responseBody.data;
-//           totalResultCount = responseBody.meta['filtered-count'];
-//         }
-//       });
-//     });
+    it('Navigate to page 2', () => {
+      cy.get('div[class*="Pagination"]').find('button').contains('2').click({ force: true });
+      cy.wait('@communitySearch').then((res) => {
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
+      });
+    });
 
-//     it('check contents of page 2', () => {
-//       // Here wait untill second list populates
-//       cy.get('a article h3').contains('21.');
-//       checkPopulationOfList(currentList);
-//     });
+    it('check contents of page 2', () => {
+      // Here wait untill second list populates
+      cy.get('a article h3').contains('21.');
+      checkPopulationOfList(currentList);
+    });
 
-//     it('map check - page 2', () => {
-//       mapCheck(currentList, 'CONTENT');
-//     });
-//   });
-// });
+    it('map check - page 2', () => {
+      mapCheck(currentList, 'CONTENT');
+    });
+  });
+});
 
 
 //! Third Set
