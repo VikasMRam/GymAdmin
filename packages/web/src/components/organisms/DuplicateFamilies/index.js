@@ -5,7 +5,7 @@ import { generatePath } from 'react-router';
 
 import { size } from 'sly/common/components/themes';
 import clientPropType from 'sly/common/propTypes/client';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Link, Block } from 'sly/common/components/atoms';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';

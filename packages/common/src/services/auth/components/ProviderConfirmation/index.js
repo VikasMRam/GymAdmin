@@ -2,7 +2,7 @@ import React from 'react';
 import { string, func } from 'prop-types';
 
 import { Heading, Button, Paragraph, Block } from 'sly/common/components/atoms';
-import { DASHBOARD_COMMUNITIES_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { DASHBOARD_COMMUNITIES_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 const ProviderConfirmation = ({ mode, onSubmit }) => (
   <>

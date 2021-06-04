@@ -35,101 +35,52 @@ function clearInputFile(f) {
 
 export default class S3Uploader extends React.Component {
   static propTypes = {
-    signingUrl: PropTypes.string,
-    preprocess: PropTypes.func,
-    onSignedUrl: PropTypes.func,
-    onProgress: PropTypes.func,
     onFinish: PropTypes.func,
     onError: PropTypes.func,
-    signingUrlMethod: PropTypes.string,
-    signingUrlHeaders: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.func,
-    ]),
-    signingUrlQueryParams: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.func,
-    ]),
-    signingUrlWithCredentials: PropTypes.bool,
-    uploadRequestHeaders: PropTypes.object,
-    contentDisposition: PropTypes.string,
-    server: PropTypes.string,
-    scrubFilename: PropTypes.func,
-    s3path: PropTypes.string,
-    inputRef: PropTypes.func,
-    autoUpload: PropTypes.bool,
   };
 
   static defaultProps = {
-    preprocess(file, next) {
-      next(file);
-    },
-    onSignedUrl(signingServerResponse) {
-      console.log('Signing server response: ', signingServerResponse);
-    },
-    onProgress(percent, message, file) {
-      console.log(`Upload progress: ${percent}% ${message}`);
-    },
-    onFinish(signResult) {
-      console.log(`Upload finished: ${signResult.publicUrl}`);
-    },
-    onError(message) {
-      console.log(`Upload error: ${message}`);
-    },
-    server: '',
-    signingUrlMethod: 'GET',
-    scrubFilename(filename) {
-      return filename.replace(/[^\w\d_\-\.]+/ig, '');
-    },
-    s3path: '',
     autoUpload: true,
   };
 
   ref = this.props.inputRef || React.createRef();
 
   state = {
-    fileName: null,
     percent: 0,
   };
 
-  preprocess = (file, next) => {
-    const { preprocess } = this.props;
+  progress = (percent, i) => {
+    this.myProgress[i] = percent;
     this.setState({
-      fileName: file.name,
-    }, () => preprocess(file, next))
-  };
-
-  progress = (percent, message, file) => {
-    const { onProgress } = this.props;
-    this.setState({
-      percent,
-    }, () => onProgress(percent, message, file));
-  };
-
-  uploadFile = () => {
-    this.myUploader = new S3Upload({
-      fileElement: this.ref.current,
-      signingUrl: this.props.signingUrl,
-      getSignedUrl,
-      preprocess: this.preprocess,
-      onSignedUrl: this.props.onSignedUrl,
-      onProgress: this.progress,
-      onFinishS3Put: this.props.onFinish,
-      onError: this.props.onError,
-      signingUrlMethod: this.props.signingUrlMethod,
-      signingUrlHeaders: this.props.signingUrlHeaders,
-      signingUrlQueryParams: this.props.signingUrlQueryParams,
-      signingUrlWithCredentials: this.props.signingUrlWithCredentials,
-      uploadRequestHeaders: this.props.uploadRequestHeaders,
-      contentDisposition: this.props.contentDisposition,
-      server: this.props.server,
-      scrubFilename: this.props.scrubFilename,
-      s3path: this.props.s3path,
+      percent: this.myProgress.reduce((acc, progress) => acc + (progress / this.myProgress.length)),
     });
   };
 
+  uploadFile = (e) => {
+    const files = Array.from(e.target.files);
+
+    this.myUploader = [];
+    this.myProgress = Array(files.length).fill(0);
+
+    const promises = files.map((file, i) => new Promise((resolve, reject) => {
+      this.myUploader[i] = new S3Upload({
+        files: [file],
+        getSignedUrl,
+        onProgress: (percent) => this.progress(percent, i),
+        onFinishS3Put: (result) => resolve({ path: result.path, name: file.name }),
+        onError: reject,
+        uploadRequestHeaders: {},
+      });
+      this.myUploader[i].progress = 0;
+    }));
+
+    Promise.all(promises)
+      .then(this.props.onFinish)
+      .catch(this.props.onError);
+  };
+
   abort = () => {
-    this.myUploader && this.myUploader.abortUpload();
+    this.myUploader && this.myUploader.forEach(up => up.abortUpload());
   };
 
   clear = () => {
@@ -163,10 +114,9 @@ export default class S3Uploader extends React.Component {
   };
 
   render = () => {
-    const { trigger, percent } = this.state;
+    const { percent } = this.state;
     return (
       <FileField
-        trigger={trigger}
         percent={percent}
         {...this.getInputProps()}
       />

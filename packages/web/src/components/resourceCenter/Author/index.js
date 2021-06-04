@@ -6,7 +6,7 @@ import 'isomorphic-fetch';
 import { object } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';

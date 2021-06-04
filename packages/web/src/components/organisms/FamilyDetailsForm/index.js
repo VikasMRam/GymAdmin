@@ -25,7 +25,7 @@ import {
   SectionActions,
   SectionForm,
   SectionHeader, Warning,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import FieldRow from 'sly/web/components/molecules/FieldRow';
 
 const showSummaryStages = [FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST];

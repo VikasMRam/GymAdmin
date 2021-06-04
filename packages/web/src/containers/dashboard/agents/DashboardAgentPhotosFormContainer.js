@@ -10,7 +10,7 @@ import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
 import { query, prefetch, withUser } from 'sly/web/services/api';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
-import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm'; // Currently
+import DashboardCommunityPhotosForm from 'sly/web/dashboard/communities/DashboardCommunityPhotosForm'; // Currently
 // its the same form for agents and communities
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 

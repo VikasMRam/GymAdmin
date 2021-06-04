@@ -11,7 +11,7 @@ import { query, prefetch } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
-import DashboardCommunityPhotosForm from 'sly/web/components/organisms/DashboardCommunityPhotosForm';
+import DashboardCommunityPhotosForm from 'sly/web/dashboard/communities/DashboardCommunityPhotosForm';
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
@@ -123,7 +123,6 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     return {
       images,
       changes,
-      savePromise: Promise.resolve(),
     };
   };
 
@@ -151,47 +150,35 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
       .then(() => updateCommunity({ id }, community))
       .then(() => notifyInfo(`Details for ${community.attributes.name} saved correctly`))
       .catch(() => notifyError(`Details for ${community.attributes.name} could not be saved`))
-      .then(this.reloadImages);
+      .then(status.community.refetch);
   };
 
-  addImage = ({ name, path }) => {
-    const { savePromise } = this.state;
+  addImages = (result) => {
+    const { status } = this.props;
+    const { images } = this.state;
+    const resultImages = result.map(({ name, path }) => ({
+      type: 'Image',
+      relationships: {
+        gallery: status.community.result.relationships.gallery,
+      },
+      attributes: {
+        sortOrder: images.length,
+        name,
+        path,
+      },
+    }))
 
-    this.setState({
-      savePromise: savePromise.then(() => {
-        const { status } = this.props;
-        const { images } = this.state;
-        const newImage = {
-          type: 'Image',
-          relationships: {
-            gallery: status.community.result.relationships.gallery,
-          },
-          attributes: {
-            sortOrder: images.length,
-            name,
-            path,
-          },
-        };
+    const newImages = [
+      ...images,
+      ...resultImages,
+    ];
 
-        const newImages = [
-          ...images,
-          newImage,
-        ];
-
-        return this.updateCommunityImages(newImages);
-      }),
-    });
-  };
-
-  onUpload = (result, file) => {
-    this.addImage({
-      name: file.name,
-      path: result.path,
-    });
+    return this.updateCommunityImages(newImages);
   };
 
   onUploadError = (error) => {
     const { notifyError, community } = this.props;
+    console.error(error);
     notifyError(`Photos for ${community.name} could not be uploaded to the CDN`);
   };
 
@@ -253,7 +240,7 @@ export default class DashboardCommunityPhotosFormContainer extends Component {
     return (
       <DashboardCommunityPhotosForm
         {...props}
-        onUpload={this.onUpload}
+        onUpload={this.addImages}
         onUploadError={this.onUploadError}
         saveImage={this.saveImage}
         deleteImage={this.deleteImage}

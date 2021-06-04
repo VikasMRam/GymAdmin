@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { object } from 'prop-types';
 import { generatePath, useRouteMatch } from 'react-router';
 
-import { DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import {
   CardRow,
   CellWithLabel,

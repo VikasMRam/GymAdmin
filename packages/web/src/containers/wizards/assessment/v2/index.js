@@ -10,7 +10,7 @@ import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import { objectToURLQueryParams } from 'sly/web/services/helpers/url';
 import { getWizardContentFromCta, getModalFromEntry  } from 'sly/web/services/helpers/wizard';
 import { NOTIFY_AGENT_MATCHED, NOTIFY_AGENT_MATCHED_TIMEOUT } from 'sly/web/constants/notifications';
-import { FAMILY_DASHBOARD_HOME_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_HOME_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,

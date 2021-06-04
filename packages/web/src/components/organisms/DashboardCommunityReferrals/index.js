@@ -6,7 +6,7 @@ import { generatePath } from 'react-router';
 import { size, palette } from 'sly/common/components/themes';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/dashboard/dashboardAppPaths';
 import { Block, Button } from 'sly/web/components/atoms';
 import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
 import { FAMILIES_INTERESTED_COMMUNITY_TITLE } from 'sly/web/constants/referrals';

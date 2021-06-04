@@ -1,6 +1,6 @@
 import { NOTIFY_MESSAGE_NEW } from 'sly/web/constants/notifications';
 import { AGENT_ND_ROLE, CUSTOMER_ROLE } from 'sly/common/constants/roles';
-import { AGENT_DASHBOARD_MESSAGES_PATH, FAMILY_DASHBOARD_MESSAGES_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_MESSAGES_PATH, FAMILY_DASHBOARD_MESSAGES_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 const getNewMessageLink = (roleId, conversationId) => {
   switch (roleId) {

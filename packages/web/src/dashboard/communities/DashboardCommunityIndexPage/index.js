@@ -12,7 +12,7 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import Th from 'sly/web/components/molecules/Th';
 import CommunityRowCard from 'sly/web/components/organisms/CommunityRowCard';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { Loading, Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { Loading, Section, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Role from 'sly/web/components/common/Role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';

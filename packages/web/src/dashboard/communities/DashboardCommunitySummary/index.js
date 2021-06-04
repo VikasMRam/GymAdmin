@@ -9,8 +9,8 @@ import {
   SummaryRow,
   SummarySection, SummarySectionBody,
   SummarySectionHeader,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
-import { DASHBOARD_COMMUNITIES_DETAIL_PATH, PROFILE } from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
+import { DASHBOARD_COMMUNITIES_DETAIL_PATH, PROFILE } from 'sly/web/dashboard/dashboardAppPaths';
 
 export default class DashboardCommunitySummary extends React.Component {
   static propTypes = {

@@ -35,7 +35,7 @@ import { isAfter } from 'sly/web/services/helpers/date';
 import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { Block, Button, Link } from 'sly/common/components/atoms';
 import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
