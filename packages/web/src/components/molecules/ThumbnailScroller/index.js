@@ -57,7 +57,13 @@ class ThumbnailScroller extends React.Component {
     return (
       <Wrapper innerRef={(r) => { this.wrapperRef = r; }}>
         {this.props.thumbnails.map((thumbnail, i) => (
-          <li onClick={() => { if (this.props.onClick) this.props.onClick(i); }} key={thumbnail.path} ref={(r) => { this.thumbnailRefs[i] = r; }}>
+          <li
+            onClick={() => { if (this.props.onClick) this.props.onClick(i); }}
+            key={thumbnail.path}
+            ref={(r) => { this.thumbnailRefs[i] = r; }}
+            aria-hidden="true"
+            className="thumbnail-scroller"
+          >
             <Thumbnail
               palette={this.props.palette}
               selected={i === this.props.selected}
