@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://www.lvh.me",
+  "baseUrl": "http://www.seniorly.dev",
   "reporter": "cypress-multi-reporters",
   "ignoreTestFiles": "**/*/!(*v2*|*ProfileSections*|*communityReferral*|*searchPage*).js",
   "video": false,
@@ -7,4 +7,3 @@
     "configFile": "reporter-config.json"
   }
 }
-
