@@ -118,7 +118,7 @@ const GetAssessmentBoxContainer = ({
           buttonProps={buttonProps}
         />
       )}
-      <Modal isOpen={modalOpened} onClose={toggleModal}>
+      {modalOpened && <Modal isOpen={modalOpened} onClose={toggleModal}>
         <HeaderWithClose icon="check" onClose={toggleModal} marginBottom="large">Success!</HeaderWithClose>
         <PaddedHeaderWithCloseBody>
           {agent && (
@@ -145,7 +145,7 @@ const GetAssessmentBoxContainer = ({
             </PostConversionGreetingForm>
           )}
         </PaddedHeaderWithCloseBody>
-      </Modal>
+      </Modal>}
     </div>
   );
 };

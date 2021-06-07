@@ -44,6 +44,8 @@ export default class ChatBoxContainer extends Component {
   render() {
     const { location: { pathname } } = this.props;
     const { footerReached } = this.state;
+
+
     this.matched = ENABLED_ROUTES.find(r => !!matchPath(pathname, {
       path: r,
     }));

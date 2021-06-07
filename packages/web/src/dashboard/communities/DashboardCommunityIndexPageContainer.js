@@ -3,19 +3,20 @@ import { object, func, arrayOf } from 'prop-types';
 import { generatePath } from 'react-router';
 
 
-import AddCommunityFormContainer from 'sly/web/containers/dashboard/AddCommunityFormContainer'
 import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import SlyEvent from 'sly/web/services/helpers/events';
+import withDatatable from 'sly/web/services/datatable/components/withDatatable';
+import { prefetch, withUser } from 'sly/web/services/api';
+import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
+import communityPropType from 'sly/common/propTypes/community';
+
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PROFILE,
-} from 'sly/web/constants/dashboardAppPaths';
-import withDatatable from 'sly/web/services/datatable/components/withDatatable';
-import { prefetch, withUser } from 'sly/web/services/api';
-import DashboardCommunityIndexPage from 'sly/web/components/pages/DashboardCommunityIndexPage';
-import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
-import communityPropType from 'sly/common/propTypes/community';
+} from 'sly/web/dashboard/dashboardAppPaths';
+import AddCommunityFormContainer from 'sly/web/dashboard/communities/AddCommunityFormContainer'
+import DashboardCommunityIndexPage from 'sly/web/dashboard/communities/DashboardCommunityIndexPage';
 
 @withNotification
 @withModal

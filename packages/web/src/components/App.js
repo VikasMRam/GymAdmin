@@ -8,12 +8,14 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import Modal from 'react-modal';
 
-//import { hideChatbox } from 'sly/web/config';
+import { hideChatbox } from 'sly/web/config';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
-//import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
+import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
 import {
   RESOURCE_CENTER_PATH,
   RESOURCE_CENTER_AUTHOR_PATH,
@@ -21,18 +23,16 @@ import {
   RESOURCE_CENTER_TOPIC_PATH,
   RESOURCE_CENTER_SEARCH_PATH,
   RESOURCE_CENTER_SITEMAP_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
-
+} from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
-import { ThemeProvider } from 'styled-components';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 import { NotificationProvider } from 'sly/web/components/helpers/notification';
 import { IconContext } from 'sly/common/system/Icon';
 import { ApiProvider } from 'sly/web/services/api';
 import theme from 'sly/common/system/theme';
-import Modal from 'react-modal';
+
 
 Modal.setAppElement('#app');
 
@@ -59,7 +59,7 @@ const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emai
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
-const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/components/Dashboard'));
+const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/dashboard/Dashboard'));
 
 // community profile
 const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
@@ -297,7 +297,7 @@ export default class App extends Component {
               <BreakpointProvider>
                 <NotificationProvider>
                   <PageEventsContainer />
-                  <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters={true}>
+                  <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
                     <title>Find The Best Senior Living Options Near You</title>
                     <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -357,7 +357,7 @@ export default class App extends Component {
                     {routeComponents}
                     <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
                   </Switch>
-                    {/*!hideChatbox && <ChatBoxContainer />*/}
+                  {!hideChatbox && <ChatBoxContainer />}
                 </NotificationProvider>
               </BreakpointProvider>
             </IconContext.Provider>

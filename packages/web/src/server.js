@@ -21,7 +21,7 @@ import ErrorComponent from 'sly/web/components/Error';
 import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConfigs';
 import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 import endpoints from 'sly/web/services/api/endpoints';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { createStore } from 'sly/web/services/api/context';
 
 const convertAnsi = new ConvertAnsi();
@@ -119,7 +119,6 @@ app.use(clientConfigsMiddleware());
 
 // non ssr apps
 app.use((req, res, next) => {
-  console.log('came to here');
   const { ssr, extractor } = req.clientConfig;
   if (!ssr) {
     res.send(renderHtml({

@@ -24,7 +24,7 @@ export function purgeFromRelationships(call, params, relationship) {
 
 export const API_CALL = 'SLY_API_CALL';
 export function apiCall(call, params) {
-  const { placeholders, path, options, actionName } = params;
+  const { placeholders, path, options, actionName, isJsonApi } = params;
 
   return ({
     type: API_CALL,
@@ -34,6 +34,7 @@ export function apiCall(call, params) {
       placeholders,
       options,
       actionName,
+      isJsonApi,
     },
   });
 }

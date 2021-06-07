@@ -280,7 +280,7 @@ const CommunityPricingTable = ({
             90% of Skilled Nursing Facilities in the United States are Medicare-certified. Some also accept Medicaid. To learn about pricing at {name}, click the button below.
           </Paragraph>
         )}
-        {!hasCCRC && !isActiveAdult && !hasSNF && (pricesList.length > 0 || estimatedPriceList.length > 0) &&
+        {!hasCCRC && !isActiveAdult && !hasSNF && (pricesList.length > 0 || estimatedPriceList.length > 0 || newPricesList.length > 0) &&
           <Paragraph>
             Your total monthly costs will vary depending on room type and the level of care needed. Click the button below to connect with your Seniorly Local Advisor for more accurate pricing.
           </Paragraph>

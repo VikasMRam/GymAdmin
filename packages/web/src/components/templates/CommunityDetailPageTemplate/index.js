@@ -2,14 +2,17 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
+import loadable from '@loadable/component';
 
 import { size } from 'sly/common/components/themes';
-import { withHydration } from 'sly/web/services/partialHydration';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
 import FooterOrganism from 'sly/web/components/organisms/Footer/communityFooter';
+import { withHydration } from 'sly/web/services/partialHydration';
 
-const HeaderContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
-const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'), { alwaysHydrate: true });
+
+const HeaderContainer = loadable(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
+const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'));
+
 
 export const CommunityDetailPageTemplate = styled.main`
   .overlayWrapper {

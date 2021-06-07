@@ -11,7 +11,7 @@ import borderRadius from 'sly/web/components/helpers/borderRadius';
 import { Link } from 'sly/common/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/web/services/helpers/communityReferral';
-import { DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { DASHBOARD_COMMUNITIES_DETAIL_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Block from 'sly/web/components/atoms/Block';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`

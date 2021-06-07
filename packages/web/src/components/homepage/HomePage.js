@@ -67,6 +67,8 @@ const HomePage = ({
           `}
           sources={[120, 240, 480]}
           sizes="30vw"
+          shouldPreload
+          loading="eager"
         />
         <Section
           display="flex"
@@ -134,6 +136,8 @@ const HomePage = ({
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
                 sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
+                shouldPreload
+                loading="eager"
               />
               <Image
                 path="react-assets/home/hero-2.webp"
@@ -141,6 +145,8 @@ const HomePage = ({
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
                 sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
+                shouldPreload
+                loading="eager"
               />
             </Grid>
             <Grid
@@ -153,6 +159,8 @@ const HomePage = ({
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
                 sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
+                shouldPreload
+                loading="eager"
               />
               <Image
                 path="react-assets/home/hero-4.webp"
@@ -160,6 +168,8 @@ const HomePage = ({
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
                 sizes={['calc((100vw - 3rem) / 2)', 150, 180]}
+                shouldPreload
+                loading="eager"
               />
             </Grid>
           </Grid>

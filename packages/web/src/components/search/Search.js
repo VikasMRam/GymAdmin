@@ -197,6 +197,7 @@ const Search = ({
                 setHoveredCommunity={setHoveredCommunity}
                 index={cursor + i}
                 community={community}
+                loading={i <= 2 ? 'eager' : 'lazy'}
               />
               {!isInternational && !showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
                 <Block

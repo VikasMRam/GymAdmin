@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import { object } from 'prop-types';
 import styled from 'styled-components';
 
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import {
   ARTICLES_RANGE_FOR_PAGINATION,
   getSearchItem,

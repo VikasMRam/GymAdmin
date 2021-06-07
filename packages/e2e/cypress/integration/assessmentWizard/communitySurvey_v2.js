@@ -210,7 +210,7 @@ describe('Community survey', () => {
   responsive(() => {
     it('Visit community page', () => {
       cy.visit(`/assisted-living/california/placerville/${community.id}`);
-
+      cy.wait('@postUuidActions');
       waitForHydration(cy.get('div[data-testid*=GetAssessmentBox]')).within(() => {
         cy.get('div').contains('Need help finding senior living options?').should('exist');
         cy.get('a').contains('Take the quiz').click();

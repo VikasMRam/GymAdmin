@@ -3,7 +3,7 @@ import { bool, node } from 'prop-types';
 import styled from 'styled-components';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Link from 'sly/common/system/Link';
 import { Logo, Menu, Chevron, ArrowDrop, Close } from 'sly/common/icons/index';
 import Block from 'sly/common/system/Block';

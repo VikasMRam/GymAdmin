@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Measure from 'react-measure';
 import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -111,27 +110,28 @@ export default class CollapsibleBlock extends Component {
     );
     const ReadMoreComponent = expandTo === 'top' ? ReadMore : PaddedReadMore;
 
+    const measureRef = () => {};
+
     return (
-      <Measure onResize={this.onResize} margin>
-        {({ measureRef }) => (
-          <div className={blockClassName}>
-            {expandTo === 'top' && getContent(measureRef)}
-            {maxHeight > collapsibleMinHeight &&
-              <ReadMoreComponent
-                onClick={this.toggle}
-                chevronOnLeft={chevronOnLeft}
-                moreLabelOn={moreLabelOn}
-              >
-                <Block size="caption" palette="primary">
-                  {collapsed ? collapsedLabel : notCollapsedLabel}
-                </Block>
-                <Icon icon="chevron" palette="primary" size="body" flip={!collapsed} />
-              </ReadMoreComponent>
+
+
+      <div className={blockClassName}>
+        {expandTo === 'top' && getContent(measureRef)}
+        {maxHeight > collapsibleMinHeight &&
+        <ReadMoreComponent
+          onClick={this.toggle}
+          chevronOnLeft={chevronOnLeft}
+          moreLabelOn={moreLabelOn}
+        >
+          <Block size="caption" palette="primary">
+            {collapsed ? collapsedLabel : notCollapsedLabel}
+          </Block>
+          <Icon icon="chevron" palette="primary" size="body" flip={!collapsed} />
+        </ReadMoreComponent>
             }
-            {expandTo === 'bottom' && getContent(measureRef)}
-          </div>
-        )}
-      </Measure>
+        {expandTo === 'bottom' && getContent(measureRef)}
+      </div>
+
     );
   }
 }

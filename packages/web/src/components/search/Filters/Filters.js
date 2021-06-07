@@ -115,7 +115,6 @@ const Filters = forwardRef(({
     sendEvent('clear-filters', isOpen.toString());
     typeof isOpen === 'string' ? onClearFilters([...PAGINATION_FILTERS, isOpen]) : onClearFilters([...PAGINATION_FILTERS, ...isOpen]);
   }, [isOpen]);
-  const openFilters = useCallback((section = true) => sendEvent('open-filter', section.toString()) || setIsOpen(section), []);
   const breakpoint = useBreakpoint();
   const showIf = useCallback(
     type => Boolean(isOpen === type || (breakpoint?.isMobile() && isOpen)),
@@ -124,7 +123,6 @@ const Filters = forwardRef(({
   const [priceButtonRef, priceButtonCoords] = useDimensions();
   const [sizeButtonRef, sizeButtonCoords] = useDimensions();
   const popOverCss = useMemo(() => {
-    console.log('breakpoint', breakpoint);
     if (breakpoint?.atLeastTablet() && [BUDGET, SIZE].includes(isOpen)) {
       const coords = ({
         [BUDGET]: priceButtonCoords,
@@ -156,6 +154,12 @@ const Filters = forwardRef(({
   const onBudgetFilterChange = useCallback((filter, value) => {
     onFilterChange(filter, value.length === 0 ? null : value);
   }, [currentFilters]);
+
+  const createOpenFilters = (section = true) => (e) => {
+    e.stopPropagation();
+    sendEvent('open-filter', section.toString());
+    setIsOpen(section);
+  };
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
 
@@ -303,7 +307,7 @@ const Filters = forwardRef(({
         <FilterButton
           dispaly="flex"
           sx$tablet={{ display: 'none' }}
-          onClick={() => openFilters(ALL_FILTERS)}
+          onClick={createOpenFilters(ALL_FILTERS)}
           number={totalNumberOfFilters}
         >
           Filters
@@ -315,7 +319,7 @@ const Filters = forwardRef(({
               display: 'flex',
             }}
 
-            onClick={() => openFilters(TOC)}
+            onClick={createOpenFilters(TOC)}
             selected={Boolean(currentTocText)}
           >
             {currentTocText || 'Community type'}
@@ -327,7 +331,7 @@ const Filters = forwardRef(({
           sx$tablet={{
             display: 'flex',
             }}
-          onClick={() => openFilters(SIZE)}
+          onClick={createOpenFilters(SIZE)}
           selected={Boolean(currentSizeText)}
         >
           {currentSizeText || 'Size'}
@@ -338,7 +342,7 @@ const Filters = forwardRef(({
           sx$tablet={{
             display: 'flex',
             }}
-          onClick={() => openFilters(BUDGET)}
+          onClick={createOpenFilters(BUDGET)}
           selected={Boolean(currentBudgetText)}
         >
           {currentBudgetText || 'Price'}
@@ -348,7 +352,7 @@ const Filters = forwardRef(({
           sx$tablet={{
             display: 'flex',
           }}
-          onClick={() => openFilters(MORE_FILTERS)}
+          onClick={createOpenFilters(MORE_FILTERS)}
           number={totalMoreFilters}
         >
           More filters

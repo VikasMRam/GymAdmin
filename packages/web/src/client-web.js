@@ -12,7 +12,7 @@ import AppWrapper from 'sly/web/components/AppWrapper';
 import configureStore from 'sly/web/store/configure';
 import { createStore } from 'sly/web/services/api';
 import { isDev } from 'sly/web/config';
-import { requestIdleCallback } from 'sly/web/requestIdleCallback';
+
 
 // For Lazy loading images, used in ResponsiveImage
 require('sly/web/services/yall');
@@ -44,13 +44,9 @@ if (typeof window.queueMicrotask !== 'function') {
 }
 
 window.addEventListener('load', () => {
-  requestIdleCallback(() => {
-    loadableReady(() => {
-      queueMicrotask(() => {
-        console.log('run hydrate');
-        const rootElement = document.getElementById('app');
-        ReactDOM.createRoot(rootElement, { hydrate: true }).render(<AppRenderer />);
-      });
-    });
+  loadableReady(() => {
+    const rootElement = document.getElementById('app');
+    ReactDOM.hydrate(<AppRenderer />, rootElement);
   });
 });
+
