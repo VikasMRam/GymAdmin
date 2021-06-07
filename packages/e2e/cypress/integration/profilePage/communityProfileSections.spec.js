@@ -562,4 +562,5 @@ describe('Community Profile Sections', () => {
   });
 
   // http://www.lvh.me/assisted-living/california/san-francisco/buena-vista-manor-house
+  // http://www.seniorly.dev/assisted-living/california/san-francisco/buena-vista-manor-house
 });
