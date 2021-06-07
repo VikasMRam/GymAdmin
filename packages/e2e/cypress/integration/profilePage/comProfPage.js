@@ -3,10 +3,10 @@ import {
   isNotVisibleXpath,
   isAbsentXpath,
   domElement,
-  isVisible,
-  isNoVisible,
 } from '../../helpers/domElements';
+
 import { waitForHydration } from '../../helpers/tests';
+
 import { baseUrl } from '../../../cypress';
 //=========Selectors static=========
 const getPriceFooter =
@@ -224,4 +224,8 @@ export const navigationBreadcrumbs = communityId => {
       cy.get(map).should('be.visible');
     }
   });
+};
+
+export const clickTagUnderAddress = tagName => {
+  waitForHydration(domElement(`//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`)).click();
 };

@@ -13,7 +13,6 @@ import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
 import * as communityPage from './comProfPage';
 import randomUser from '../../helpers/randomUser';
-import {object} from "prop-types";
 
 const randHash = () =>
   Math.random()
@@ -556,9 +555,25 @@ describe('Community Profile Sections', () => {
     communityPage.scrollFilmStripToLastPicture();
   });
 
-  it.only('Navigation Breadcrumbs. Click "Home-City" (row 12-15)', function() {
+  it('Navigation Breadcrumbs. Click "Home-City" (row 12-15)', function() {
     cy.viewport(1920, 1200);
     communityPage.navigationBreadcrumbs(community.id);
+  });
+
+  it.only('Care tag navigation: navigate to city page with care type applied (row 16)', function() {
+    cy.viewport(1920, 1200);
+    cy.getCommunity(BUENA_VISTA_COMMUNITY).then(response => {
+      community = response;
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`, {
+        onBeforeLoad(win) {
+          cy.stub(win, 'open')
+        }
+      });
+    });
+    communityPage.clickTagUnderAddress('Assisted Living');
+    cy.contains('Assisted Living Facilities in San Francisco, CA', {
+      timeout: 10000,
+    }).should('be.visible');
   });
 
   // http://www.lvh.me/assisted-living/california/san-francisco/buena-vista-manor-house
