@@ -5,7 +5,7 @@ import { isBrowser } from 'sly/web/config';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,
-} from 'sly/web/constants/wizards/assessment';
+} from 'sly/web/assessment/constants';
 import { PROFILE_CONTACTED } from 'sly/web/services/api/constants';
 import communityPropType from 'sly/common/propTypes/community';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';

@@ -3,7 +3,7 @@ import { TEST_COMMUNITY, LOOKING_FOR, SEARCH_FEELING, HELP_REQUIRED, FORGETFULNE
   from '../../constants/community';
 
 import { WHO_PERSON_OPTIONS, FEELING_OPTIONS, ADL_OPTIONS, DEMENTIA_FORGETFUL_DEFAULT_OPTIONS, DEMENTIA_FORGETFUL_OPTIONS, TIMING_OPTIONS, CURRENT_LIVING_OPTIONS, CURRENT_LIVING_DEFAULT_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS }
-  from 'sly/web/constants/wizards/assessment';
+  from 'sly/web/assessment/constants';
 
 describe('Community survey', () => {
   let community;
