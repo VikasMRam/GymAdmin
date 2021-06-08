@@ -24,7 +24,7 @@ import {
   DASHBOARD_ACCOUNT_PATH, DASHBOARD_COMMUNITIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
   FAMILY_DASHBOARD_HOME_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import {
   AGENT_ADMIN_ROLE,
   AGENT_ND_ROLE,

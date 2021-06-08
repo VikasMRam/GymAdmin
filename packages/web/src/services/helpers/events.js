@@ -27,6 +27,9 @@ const getReferrer = () => {
   return referrer;
 };
 
+global.SLY_EVENT_ENV = isProd
+  ? 'production'
+  : 'development';
 
 export const objectToEventLabel = (obj) => {
   return stringify(obj, ';', ':');

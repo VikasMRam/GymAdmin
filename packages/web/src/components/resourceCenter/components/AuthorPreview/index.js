@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { string } from 'prop-types';
 
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Image from 'sly/common/system/Image';
 import Chevron from 'sly/common/icons/Chevron';
 import Link from 'sly/common/system/Link';

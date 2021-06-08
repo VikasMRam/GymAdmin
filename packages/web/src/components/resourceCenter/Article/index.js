@@ -7,7 +7,7 @@ import { bool, object } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { formatDate } from 'sly/web/services/helpers/date';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { assetPath } from 'sly/web/components/themes';
 import { cmsUrl } from 'sly/web/config';
 import apiFetch from 'sly/web/services/api/apiFetch';
@@ -20,13 +20,16 @@ import Link from 'sly/common/system/Link';
 import Image from 'sly/common/system/Image';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
-import AuthorPreview from 'sly/web/components/resourceCenter/components/AuthorPreview';
+import { withHydration } from 'sly/web/services/partialHydration';
 import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
-import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
-import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
-import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+
+const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
+const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
+const ArticleTags = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticleTags" */ 'sly/web/components/resourceCenter/components/ArticleTags'));
+const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/components/resourceCenter/components/SuscribeEmails'));
+
 
 const BlockHr = ({ hideOnMobile }) => (
   <Hr
@@ -88,6 +91,7 @@ const ArticlePage = ({ match }) => {
     );
   }
 
+
   return (
     <>
       <Helmet
@@ -143,6 +147,8 @@ const ArticlePage = ({ match }) => {
           <Image
             path={requestInfo?.result?.[0]?.mainImg?.path}
             alt={requestInfo?.result?.[0]?.mainImg?.alternativeText}
+            shouldPreload
+            loading="eager"
             aspectRatio="3:2"
             sources={[
               288,

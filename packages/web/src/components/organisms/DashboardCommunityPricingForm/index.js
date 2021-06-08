@@ -3,7 +3,7 @@ import { func, bool, object } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
-import { Section, SectionActions, SectionHeader, SectionForm } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { Section, SectionActions, SectionHeader, SectionForm } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const trueFalseOptions = [
   { label: 'Yes', value: true },

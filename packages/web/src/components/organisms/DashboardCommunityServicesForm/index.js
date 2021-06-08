@@ -8,7 +8,7 @@ import {
   SectionActions,
   SectionForm,
   SectionHeader,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import communityPropType from 'sly/common/propTypes/community';
 
 const nonCareServicesOptions = [

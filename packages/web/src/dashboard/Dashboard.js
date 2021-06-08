@@ -22,8 +22,8 @@ const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChu
 const DashboardAgentTasksPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/web/components/pages/DashboardAgentTasksPage'));
 const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentContacts" */ 'sly/web/components/pages/DashboardAgentContactsPage'));
 const DashboardAgentsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/dashboard/agents/DashboardAgentsIndexPageContainer'));
-const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/containers/DashboardCommunityIndexPageContainer'));
-const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/containers/DashboardCommunityDetailsPageContainer'));
+const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/dashboard/communities/DashboardCommunityIndexPageContainer'));
+const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/communities/DashboardCommunityDetailsPageContainer'));
 
 import themeWithLegacy from 'sly/common/components/themes/themeWithLegacy';
 
@@ -40,13 +40,12 @@ import {
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
-  ADMIN_DASHBOARD_CALLS_PATH,
-  ADMIN_DASHBOARD_CALL_DETAILS_PATH, AGENT_DASHBOARD_CONTACTS_PATH,
+  AGENT_DASHBOARD_CONTACTS_PATH,
   ADMIN_DASHBOARD_AGENTS_PATH,
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 
 const routes = [
   {

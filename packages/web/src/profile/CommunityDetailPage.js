@@ -48,7 +48,6 @@ import ModalContainer from 'sly/web/containers/ModalContainer';
 import  ChatBox1  from 'sly/web/services/chatbox/chatBox1';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
-const PageEventsContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageEvents" */ 'sly/web/containers/PageEventsContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
 const CommunitySummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
 const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
@@ -231,7 +230,6 @@ export default class CommunityDetailPage extends PureComponent {
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
-        <PageEventsContainer />
         <Block pad="large">
           <Header noBottomMargin />
         </Block>

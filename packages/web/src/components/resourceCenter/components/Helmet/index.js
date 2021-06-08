@@ -3,7 +3,7 @@ import React from 'react';
 import { bool, object, string } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 const stringifyReplacer = (k, v) => {
   if (k === 'hash' || k === 'key') {

@@ -24,10 +24,11 @@ import {
   RESOURCE_CENTER_TOPIC_PATH,
   RESOURCE_CENTER_SEARCH_PATH,
   RESOURCE_CENTER_SITEMAP_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
+import UserCookiesContainer from 'sly/web/containers/UserCookiesContainer';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 import { NotificationProvider } from 'sly/web/components/helpers/notification';
 import { IconContext } from 'sly/common/system/Icon';
@@ -60,7 +61,7 @@ const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emai
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
-const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/components/Dashboard'));
+const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/dashboard/Dashboard'));
 
 // community profile
 const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
@@ -295,17 +296,17 @@ export default class App extends Component {
         <Provider store={reduxStore}>
           <ThemeProvider theme={theme}>
             <IconContext.Provider value={iconsContext}>
-              <ChatBotProvider>
-                <BreakpointProvider>
-                  <NotificationProvider>
-                    <PageEventsContainer />
-                    <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
-                      <title>Find The Best Senior Living Options Near You</title>
-                      <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-                      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                      <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-                      <meta content="Seniorly" property="author" />
-                      <meta content="English" property="language" />
+              <BreakpointProvider>
+                <NotificationProvider>
+                  <PageEventsContainer />
+                  <UserCookiesContainer />
+                  <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
+                    <title>Find The Best Senior Living Options Near You</title>
+                    <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                    <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+                    <meta content="Seniorly" property="author" />
+                    <meta content="English" property="language" />
 
                       {/*
                       Open graph

@@ -11,7 +11,7 @@ import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   FAMILY_DETAILS,
   MESSAGES,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { withUser } from 'sly/web/services/api';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import AcceptAndContactFamilyForm from 'sly/web/components/organisms/AcceptAndContactFamilyForm';

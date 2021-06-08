@@ -11,7 +11,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import {
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   AGENT_DETAILS,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 
 @withNotification
 @withModal

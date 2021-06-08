@@ -16,7 +16,7 @@ import {
   ARTICLES_RANGE_FOR_PAGINATION,
 } from 'sly/web/components/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import { sx, space, border, color } from 'sly/common/system/sx';

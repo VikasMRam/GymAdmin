@@ -11,7 +11,7 @@ function getDisplayName(WrappedComponent) {
 }
 
 export const useUser = () => {
-  const uuidAux = usePrefetch('getUuidAux', { id: 'me' });
+  const uuidAux = usePrefetch('getUuidAux', { id: 'me' }, { loggedInOnly: true });
   const user = usePrefetch('getUser', { id: 'me' });
   const getCurrentUser = useCallback(() => user.getCurrentRequestInfo().normalized);
 
@@ -35,7 +35,7 @@ export const useUser = () => {
 };
 
 export default function withUser(InnerComponent) {
-  const Wrapper = ({ status={}, ...props }) => {
+  const Wrapper = ({ status = {}, ...props }) => {
     const { user, uuidAux, fetchUser, invalidateUser, fetchUuidAux, invalidateUuidAux, info, getCurrentUser } = useUser();
 
     const userHas = useCallback((fields) => {

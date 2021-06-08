@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
-import Cookies from 'universal-cookie';
 
-import { host, domain } from 'sly/web/config';
+import { host } from 'sly/web/config';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/web/external/constants/steps';
 import { connectController } from 'sly/web/controllers';
@@ -90,18 +89,6 @@ export default class Controller extends Component {
       }
       if (params.clickid) {
         clickID = params.clickid;
-      }
-      if (params.utm_campaign) {
-        this.providedUtmParams = {
-          campaign: params.utm_campaign,
-          source: params.utm_source || 'external',
-          medium: params.utm_medium || 'widget',
-          term: clickID,
-        };
-        const utm = this.providedUtmParams;
-        const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
-        const cookies = new Cookies();
-        cookies.set('utm', utmStr, { domain, path: '/', maxAge: 27000000 });
       }
 
       if (params.pixel) {

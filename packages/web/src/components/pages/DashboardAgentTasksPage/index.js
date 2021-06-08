@@ -5,7 +5,7 @@ import { parse } from 'query-string';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import DashboardAgentTasksSectionContainer from 'sly/web/containers/dashboard/DashboardAgentTasksSectionContainer';
 import { Datatable } from 'sly/web/services/datatable';
-import { AGENT_DASHBOARD_TASKS_PATH, TODAY } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_TASKS_PATH, TODAY } from 'sly/web/dashboard/dashboardAppPaths';
 
 const DashboardAgentTasksPage = ({ location, match }) => {
   const { 'page-number': pageNumber, ...filters } = parse(location.search);
