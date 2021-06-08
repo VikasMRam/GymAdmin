@@ -52,6 +52,13 @@ const checkPopulationOfList = (data) => {
     });
 };
 
+
+const genericCheckPopulationOfList = () => {
+  cy.get('a article h3').then((matchedCards) => {
+    expect(matchedCards.length).to.greaterThan(0);
+  });
+};
+
 // Validates expected list count to renered list count
 const checkForListCount = (count) => {
   cy.get('a article img').should('have.length', count);
@@ -234,6 +241,8 @@ const countMapMarkers = (list) => {
   });
   closeMapView();
 };
+
+
 const navigateAndCheckTitles  = (data) => {
   let currentUrl;
   cy.url().then((url) => {
@@ -246,36 +255,6 @@ const navigateAndCheckTitles  = (data) => {
         cy.visit(currentUrl);
       }
     });
-  });
-};
-
-const markerNavigation = (list) => {
-  const urlData = [];
-  cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
-  cy.get('div[class*="Marker__"]').each((marker) => {
-    cy.wrap(marker).find('svg').click({ force: true });
-  });
-  // Wait untill zoom button loads, here no api calls happening so
-  // We have to give timeout option before cy.get resolves
-  cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
-  cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
-    cy.wrap(marker).find('svg').click({ force: true })
-      .invoke('text')
-      .then((text) => {
-        const markerIndex = ((Number(text)) - 1) % 20;
-        cy.get("a[href*='map']")
-          .find('h5')
-          .contains(list[markerIndex].attributes.name.replace(/ +(?= )/g, '').trim()).parents("a[href*='map']")
-          .each((aTag) => {
-            urlData.push({
-              url: aTag[0].href,
-              title: list[markerIndex].attributes.name.replace(/ +(?= )/g, '').trim(),
-            });
-            if (markersIndex === markers.length - 1) {
-              navigateAndCheckTitles(urlData);
-            }
-          });
-      });
   });
 };
 
@@ -323,6 +302,46 @@ const openMapView = () => {
       });
   });
 };
+
+const checkForPresenceOfMarkers = () => {
+  openMapView();
+  cy.get('div[class*="Marker__"]').then((markers) => {
+    expect(markers.length).to.greaterThan(0);
+  });
+  closeMapView();
+};
+
+
+const genericMarkerNavigation = () => {
+  openMapView();
+  const urlData = [];
+  // cy.get('div[class*="Marker__Wra"]').should('have.length', list.length);
+  cy.get('div[class*="Marker__"]').each((marker) => {
+    cy.wrap(marker).find('svg').click({ force: true });
+  });
+  // Wait untill zoom button loads, here no api calls happening so
+  // We have to give timeout option before cy.get resolves
+  cy.get('button[title="Zoom in"]').click({ force: true, timeout: 10000 });
+  cy.get('div[class*="Marker__"]').each((marker, markersIndex, markers) => {
+    cy.wrap(marker).find('svg').click({ force: true })
+      .then(() => {
+        cy.get("a[href*='map']")
+          .find('h5').then((element) => {
+            const communityName = element.text().split('.')[1].replace(/ +(?= )/g, '').trim();
+            cy.wrap(element).parents('a').then((aTags) => {
+              urlData.push({
+                url: aTags[0].href,
+                title: communityName,
+              });
+              if (markersIndex === markers.length - 1) {
+                navigateAndCheckTitles(urlData);
+              }
+            });
+          });
+      });
+  });
+};
+
 const mapCheck = (list, mode) => {
   // Check if is map view filter button present or not
   // If it is present then click that button else continue assertions
@@ -330,11 +349,13 @@ const mapCheck = (list, mode) => {
   if (mode === 'Markers') {
     countMapMarkers(list);
   } else if (mode === 'MARKER_NAVIGATION') {
-    markerNavigation(list);
+    genericMarkerNavigation();
   } else {
     mapAssertions(list);
   }
 };
+
+
 //* Helper Functions End
 
 const searchText = 'San Francisco, CA';
@@ -545,15 +566,13 @@ describe('Assisted Search Page Sections', () => {
       toSearchPageFromCity('San Francisco');
     });
 
-    // !To DO
-    // it('List population check', () => {
-    //   checkPopulationOfList(currentList);
-    // });
+    it('List population check', () => {
+      genericCheckPopulationOfList();
+    });
 
-    // !To DO
-    // it('map check', () => {
-    //   mapCheck(currentList, 'CONTENT');
-    // });
+    it('map check', () => {
+      checkForPresenceOfMarkers();
+    });
 
     // it('Geo Guide', () => {
     //   cy.get('h2')
@@ -567,13 +586,9 @@ describe('Assisted Search Page Sections', () => {
     //     .should('exist');
     // });
 
-    // !To DO
-    // it('Navigate from map popover', () => {
-    //   cy.window().then((win) => {
-    //     cy.stub(win, 'open').as('windowOpen');
-    //   });
-    //   mapCheck(currentList, 'MARKER_NAVIGATION');
-    // });
+    it('Navigate from map popover', () => {
+      mapCheck([], 'MARKER_NAVIGATION');
+    });
   });
 });
 
