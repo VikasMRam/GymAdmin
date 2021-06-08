@@ -8,6 +8,7 @@ import {
 import { waitForHydration } from '../../helpers/tests';
 
 import { baseUrl } from '../../../cypress';
+
 //=========Selectors static=========
 const getPriceFooter =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[last()]";
@@ -227,5 +228,9 @@ export const navigationBreadcrumbs = communityId => {
 };
 
 export const clickTagUnderAddress = tagName => {
-  waitForHydration(domElement(`//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`)).click();
+  // Cypress can not handle different tabs or windows, so better take href and open in current window
+  domElement(`//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`).first().invoke('attr', 'href').then(href => {
+    console.log(href);
+    cy.visit(`${baseUrl}${href}`);
+  });
 };
