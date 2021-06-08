@@ -47,7 +47,9 @@ const buttonText = text => `//button[text()="${text}"]`;
 
 const h3Text = text => `//h3[text()='${text}']`;
 
-const h1Text = text => `//h1[text()='${text}']`;
+export const h1Text = text => `//h1[text()='${text}']`;
+
+export const h2Text = text => `//h2[text()='${text}']`;
 
 const universalLabelFormInput = label =>
   `//label[text()='${label}']/parent::div/parent::div//input`;
@@ -229,8 +231,26 @@ export const navigationBreadcrumbs = communityId => {
 
 export const clickTagUnderAddress = tagName => {
   // Cypress can not handle different tabs or windows, so better take href and open in current window
-  domElement(`//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`).first().invoke('attr', 'href').then(href => {
-    console.log(href);
-    cy.visit(`${baseUrl}${href}`);
-  });
+  domElement(
+    `//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`,
+  )
+    .first()
+    .invoke('attr', 'href')
+    .then(href => {
+      console.log(href);
+      cy.visit(`${baseUrl}${href}`);
+    });
+};
+
+export const nameIsPresent = name =>
+  cy.xpath(h1Text(name)).should('be.visible');
+
+export const addressIsPresent = (city, line1, state, zip) => {
+  cy.get('div[class*=CommunityDetailPage__StyledCommunitySummary]>h2').should(
+    h2 => {
+      const actualAddr = h2.text().replace(/\s+/g, ' ');
+      const expectedAddress = `${line1}, ${city}, ${state} ${zip}`;
+      expect(actualAddr).to.equal(expectedAddress);
+    },
+  );
 };
