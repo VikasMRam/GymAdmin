@@ -391,7 +391,6 @@ describe('Community Profile Sections', () => {
       cy.get('input[value="San Francisco, CA"]').should('exist');
     });
   });
-
 });
 
 describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {

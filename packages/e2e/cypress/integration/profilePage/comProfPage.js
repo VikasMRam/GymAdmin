@@ -133,11 +133,15 @@ export const galleryIsClosed = () => isNotVisibleXpath(gallery);
 export const closeGalleryBtn = () =>
   waitForHydration(cy.xpath(mediaGalleryBtnClose)).click({ force: true });
 
-export const clickGalleryRight = () =>
+export const clickGalleryRight = () => {
   waitForHydration(cy.xpath(mediaGalleryBtnRight)).click({ force: true });
+  cy.wait(1000);
+};
 
-export const clickGalleryLeft = () =>
+export const clickGalleryLeft = () => {
   waitForHydration(cy.xpath(mediaGalleryBtnLeft)).click({ force: true });
+  cy.wait(1000);
+};
 
 export const leftRightGalleryButtonIsWorks = () => {
   let pic1 = null;
