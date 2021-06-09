@@ -482,7 +482,7 @@ describe('Community Profile Sections', () => {
     communityPage.successModalIsSeenAndClosed();
   });
 
-  it.skip('Agent Block CTA (ComPrfPage - row 7)', function() {
+  it('Agent Block CTA (ComPrfPage - row 7)', function() {
     const user = randomUser();
     const question = `Auto test ${user.lastName}`;
     const expectedActionType = 'agentAskQuestions';
