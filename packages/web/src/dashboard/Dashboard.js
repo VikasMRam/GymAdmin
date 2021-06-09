@@ -4,7 +4,7 @@ import loadable from '@loadable/component';
 
 import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
 import WSProvider from 'sly/web/services/ws/WSProvider';
-import Router from 'sly/web/components/molecules/Router';
+import Router from 'sly/web/dashboard/Router';
 import { ThemeProvider } from 'styled-components';
 
 // Dashboard
@@ -141,7 +141,7 @@ const routeComponents = routes.map(({ component: Component, ...route }) => (
 
 const Dashboard = () => (
   <ThemeProvider theme={themeWithLegacy}>
-    <Router requiresAuth={[/^\/dashboard/]}>
+    <Router>
       <WSProvider>
         <NotificationSubscriptions>
           <Switch>
