@@ -17,7 +17,7 @@
 
 import './commands';
 import 'cypress-xpath';
-import "cypress-real-events/support";
+import 'cypress-real-events/support';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

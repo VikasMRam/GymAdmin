@@ -1,4 +1,5 @@
 import isMobilePhone from 'validator/lib/isMobilePhone';
+
 const randChars = (characters, length = 1) => {
   let result = '';
   while (length > 0 && length--) {
@@ -28,6 +29,6 @@ export default function randomUser() {
     email,
     phone,
     formattedPhone: formatPhone(phone),
-    lastName
+    lastName,
   };
 }

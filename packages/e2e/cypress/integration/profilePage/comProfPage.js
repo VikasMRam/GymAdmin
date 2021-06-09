@@ -4,12 +4,11 @@ import {
   isAbsentXpath,
   domElement,
 } from '../../helpers/domElements';
-
 import { waitForHydration } from '../../helpers/tests';
-
+// eslint-disable-next-line import/extensions
 import { baseUrl } from '../../../cypress';
 
-//=========Selectors static=========
+//= ========Selectors static=========
 const getPriceFooter =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[last()]";
 const getPriceTable =
@@ -35,7 +34,7 @@ const filmstripPictures = '//ul/li/picture';
 
 const map = 'div[aria-label="Map"]';
 
-//=========Selectors dynamic=========
+//= ========Selectors dynamic=========
 const imageByScr = src => `(//img[@src='${src}'])[last()]`;
 
 const divText = text => `//div[text()='${text}']`;
@@ -48,7 +47,7 @@ export const h1Text = text => `//h1[text()='${text}']`;
 
 const spanText = text => `//span[text()='${text}']`;
 
-//=========Methods=========
+//= ========Methods=========
 export const getPriceBtnFooter = () =>
   waitForHydration(cy.xpath(getPriceFooter)).click({ force: true });
 
@@ -100,7 +99,7 @@ export const askQuestBtn = () => {
   cy.xpath(buttonText('Ask a Question')).click();
 };
 
-export const askExpertBtn = () =>{
+export const askExpertBtn = () => {
   waitForHydration(cy.get('button[type="expert"]'));
   cy.wait(1500);
   cy.get('button[type="expert"]').click({ force: true });
@@ -146,14 +145,14 @@ export const leftRightGalleryButtonIsWorks = () => {
   let pic3 = null;
   domElement(currentDisplayingImage)
     .invoke('attr', 'src')
-    .then(src => {
+    .then((src) => {
       pic1 = src;
       isVisibleXpath(imageByScr(pic1));
     });
   clickGalleryRight();
   domElement(currentDisplayingImage)
     .invoke('attr', 'src')
-    .then(src => {
+    .then((src) => {
       pic2 = src;
       isVisibleXpath(imageByScr(pic2));
       expect(pic1).to.not.equal(pic2);
@@ -161,7 +160,7 @@ export const leftRightGalleryButtonIsWorks = () => {
   clickGalleryRight();
   domElement(currentDisplayingImage)
     .invoke('attr', 'src')
-    .then(src => {
+    .then((src) => {
       pic3 = src;
       isVisibleXpath(imageByScr(pic3));
       expect(pic1).to.not.equal(pic3);
@@ -170,7 +169,7 @@ export const leftRightGalleryButtonIsWorks = () => {
   clickGalleryLeft();
   domElement(currentDisplayingImage)
     .invoke('attr', 'src')
-    .then(backToPicture2 => {
+    .then((backToPicture2) => {
       isVisibleXpath(imageByScr(backToPicture2));
       expect(pic2).equal(backToPicture2);
     });
@@ -180,7 +179,7 @@ export const scrollFilmStripToLastPicture = () => {
   domElement(filmstripPictures)
     .first()
     .realSwipe('toLeft', { length: 5000 });
-  domElement(filmstripPictures).then(list => {
+  domElement(filmstripPictures).then((list) => {
     const lastPicture = list.length;
     isVisibleXpath(`(${filmstripPictures})[${lastPicture}]`);
   });
@@ -188,29 +187,29 @@ export const scrollFilmStripToLastPicture = () => {
 };
 
 const BREADCRUMBS_OPTIONS = {
-  ['Home']: {
+  Home: {
     url: `${baseUrl}/`,
     expectUI: 'Find a senior living community you’ll love.',
   },
-  ['Assisted Living']: {
+  'Assisted Living': {
     url: `${baseUrl}/assisted-living`,
     expectUI: 'What is Assisted Living?',
   },
 
-  ['California']: {
+  California: {
     url: `${baseUrl}/assisted-living/california`,
     expectUI: 'Assisted Living Facilities in CA',
     mapPresent: true,
   },
-  ['San Francisco']: {
+  'San Francisco': {
     url: `${baseUrl}/assisted-living/california/san-francisco`,
     expectUI: 'Assisted Living Facilities in San Francisco, CA',
     mapPresent: true,
   },
 };
 
-export const navigationBreadcrumbs = communityId => {
-  cy.wrap(Object.keys(BREADCRUMBS_OPTIONS)).each(option => {
+export const navigationBreadcrumbs = (communityId) => {
+  cy.wrap(Object.keys(BREADCRUMBS_OPTIONS)).each((option) => {
     cy.visit(`/assisted-living/california/san-francisco/${communityId}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
 
@@ -225,15 +224,14 @@ export const navigationBreadcrumbs = communityId => {
   });
 };
 
-export const clickTagUnderAddress = tagName => {
+export const clickTagUnderAddress = (tagName) => {
   // Cypress can not handle different tabs or windows, so better take href and open in current window
   domElement(
     `//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`,
   )
     .first()
     .invoke('attr', 'href')
-    .then(href => {
-      console.log(href);
+    .then((href) => {
       cy.visit(`${baseUrl}${href}`);
     });
 };
@@ -243,7 +241,7 @@ export const nameIsPresent = name =>
 
 export const addressIsPresent = (city, line1, state, zip) => {
   cy.get('div[class*=CommunityDetailPage__StyledCommunitySummary]>h2').should(
-    h2 => {
+    (h2) => {
       const actualAddr = h2.text().replace(/\s+/g, ' ');
       const expectedAddress = `${line1}, ${city}, ${state} ${zip}`;
       expect(actualAddr).to.equal(expectedAddress);
