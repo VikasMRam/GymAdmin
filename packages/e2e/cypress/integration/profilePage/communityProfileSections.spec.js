@@ -402,7 +402,7 @@ describe('Community Profile Sections', () => {
     });
   });
 
-  it.skip('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', function() {
+  it('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', function() {
     // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
     cy.viewport(1920, 1200);
     const user = randomUser();
@@ -450,7 +450,7 @@ describe('Community Profile Sections', () => {
     cy.url().should('include', 'cta=pricing&entry=pricingTable');
   });
 
-  it.skip('About section CTA (ComPrfPage - row 6)', function() {
+  it('About section CTA (ComPrfPage - row 6)', function() {
     const user = randomUser();
     const question = `Auto test ${user.lastName}`;
     const expectedActionType = 'profileAskQuestion';
