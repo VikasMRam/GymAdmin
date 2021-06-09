@@ -21,6 +21,10 @@ export const isNotVisibleXpath = (selector, timeout = 5000) => {
   cy.xpath(selector, { timeout }).should('not.be.visible');
 };
 
+export const isNotExistXpath = (selector, timeout = 5000) => {
+  cy.xpath(selector, { timeout }).should('not.exist');
+};
+
 export const isAbsentXpath = (selector, timeout = 5000) => {
   cy.xpath(selector, { timeout }).should('not.be.visible');
 };

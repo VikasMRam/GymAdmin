@@ -3,6 +3,7 @@ import {
   isNotVisibleXpath,
   isAbsentXpath,
   domElement,
+  isNotExistXpath,
 } from '../../helpers/domElements';
 import { waitForHydration } from '../../helpers/tests';
 // eslint-disable-next-line import/extensions
@@ -120,7 +121,7 @@ export const successModalIsSeenAndClosed = () => {
     divText('Your request has been sent and we will connect with you shortly.'),
   );
   waitForHydration(cy.xpath(finishBtn)).click();
-  isNotVisibleXpath(finishBtn);
+  isNotExistXpath(finishBtn);
 };
 
 export const viewPhotos = () =>
