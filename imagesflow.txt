@@ -1,0 +1,10 @@
+
+
+GET /images/500x500/testimage.jpeg
+  -> cloufront / s3
+  x> gateway API => lambda function
+     1. reshape the image with args
+     2. store it for later in s3 /images/500x500/testimage.jpeg
+     3. serve it directly
+
+/thumbnail/

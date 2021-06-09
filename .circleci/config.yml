@@ -150,7 +150,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/python:2.7
+      - image: circleci/python:3.9.3
     resource_class: xlarge
 
     working_directory: ~/project

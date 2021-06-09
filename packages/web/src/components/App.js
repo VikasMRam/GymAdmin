@@ -27,6 +27,7 @@ import {
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
+import UserCookiesContainer from 'sly/web/containers/UserCookiesContainer';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 import { NotificationProvider } from 'sly/web/components/helpers/notification';
 import { IconContext } from 'sly/common/system/Icon';
@@ -65,7 +66,7 @@ const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */
 const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
 
 // wizards
-const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
+const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/assessment/AssessmentWizardPageContainer'));
 
 const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/resourceCenter'));
 const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/components/resourceCenter/Author'));
@@ -297,6 +298,7 @@ export default class App extends Component {
               <BreakpointProvider>
                 <NotificationProvider>
                   <PageEventsContainer />
+                  <UserCookiesContainer />
                   <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
                     <title>Find The Best Senior Living Options Near You</title>
                     <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />

@@ -3,7 +3,7 @@ import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
 import { LOCAL_EXPERT_OPTIONS, LIVE_SEARCH_STATE, PRODUCTS_OPTIONS, SERVICES_OPTIONS, AGE_OPTIONS, WORKING_WITH_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS }
-  from 'sly/web/constants/wizards/assessment';
+  from 'sly/web/assessment/constants';
 
 Cypress.on('uncaught:exception', () => {
   return false;
