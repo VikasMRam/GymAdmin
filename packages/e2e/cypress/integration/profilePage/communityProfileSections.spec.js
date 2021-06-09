@@ -48,7 +48,7 @@ export const buildEstimatedPriceList = community => {
   return priceList;
 };
 
-describe.skip('Community Profile Sections', () => {
+describe('Community Profile Sections', () => {
   let community;
   const retries = 10;
 
