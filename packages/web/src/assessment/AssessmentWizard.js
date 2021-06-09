@@ -22,14 +22,11 @@ import SlyEvent from 'sly/web/services/helpers/events';
 /* Wizard Step Imports */
 import {
   Location,
-  Who,
-  Timing,
   ADL,
   Budget,
   Conversion,
   End,
   Medicaid,
-  Services,
 } from 'sly/web/assessment/steps';
 import Intro from 'sly/web/assessment/steps/Intro/IntroFormContainer';
 import { ProgressBarWrapper } from 'sly/web/assessment/Template';
@@ -110,13 +107,17 @@ export default class AssessmentWizard extends Component {
     ws.pubsub.on(NOTIFY_AGENT_MATCHED, this.onMessage, { capture: true });
   };
 
-  handleStepChange = ({ currentStep, goto, data: { whatToDoNext } }) => {
+  handleStepChange = ({ currentStep, goto, data: { whatToDoNext, medicaid } }) => {
     SlyEvent.getInstance().sendEvent({
       category: 'assessmentWizard',
       action: 'step-completed',
       label: currentStep,
     });
     this.scrollToTop();
+
+    if (currentStep === 'Medicaid' && medicaid !== 'yes') {
+      return goto('Auth');
+    }
 
     if (currentStep === 'Intro' && whatToDoNext === 'no-thanks') {
       this.skipped = true;
@@ -213,42 +214,38 @@ export default class AssessmentWizard extends Component {
           }
           return (
             <section className={className}>
-              {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) &&
-              <ProgressBarWrapper>
-                <ProgressBar totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
-              </ProgressBarWrapper>
-              }
+              {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) && (
+                <ProgressBarWrapper>
+                  <ProgressBar totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
+                </ProgressBarWrapper>
+              )}
               <WizardSteps {...props}>
-                {!skipIntro && <WizardStep
-                  component={Intro}
-                  name="Intro"
-                  skipOptionText={skipOptionText}
-                  {...intro}
-                />}
-                {hadNoLocation &&
-                <WizardStep
-                  component={Location}
-                  name="Location"
-                  hasTip={hasTip}
-                />
-                }
-                <WizardStep
-                  component={Who}
-                  name="Who"
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Timing}
-                  name="Timing"
-                  hasTip={hasTip}
-                  onBackClick={previous}
-                  onSkipClick={next}
-                />
+                {!skipIntro && (
+                  <WizardStep
+                    component={Intro}
+                    name="Intro"
+                    skipOptionText={skipOptionText}
+                    {...intro}
+                  />
+                )}
+                {hadNoLocation && (
+                  <WizardStep
+                    component={Location}
+                    name="Location"
+                    hasTip={hasTip}
+                  />
+                )}
                 <WizardStep
                   component={ADL}
                   name="ADL"
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                  onSkipClick={next}
+                  onBackClick={previous}
+                />
+                <WizardStep
+                  component={Medicaid}
+                  name="Medicaid"
                   whoNeedsHelp={data.lookingFor}
                   hasTip={hasTip}
                   onSkipClick={next}
@@ -266,26 +263,10 @@ export default class AssessmentWizard extends Component {
                   onBackClick={previous}
                 />
                 <WizardStep
-                  component={Medicaid}
-                  name="Medicaid"
-                  whoNeedsHelp={data.lookingFor}
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
-                  component={Services}
-                  name="Services"
-                  whoNeedsHelp={data.lookingFor}
-                  hasTip={hasTip}
-                  onSkipClick={next}
-                  onBackClick={previous}
-                />
-                <WizardStep
                   component={Conversion}
                   name="Auth"
-                  signUpHeading={data.whatToDoNext === 'start' ?
-                    'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                  signUpHeading={data.whatToDoNext === 'start'
+                    ?  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                     : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                   onAuthSuccess={next}
                   onSubmit={next}
@@ -312,3 +293,4 @@ export default class AssessmentWizard extends Component {
     );
   }
 }
+
