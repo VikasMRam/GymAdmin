@@ -40,19 +40,11 @@ const imageByScr = src => `(//img[@src='${src}'])[last()]`;
 
 const divText = text => `//div[text()='${text}']`;
 
-const divContainText = containText =>
-  `//div[contains(text(),'${containText}')]`;
-
 const buttonText = text => `//button[text()="${text}"]`;
 
 const h3Text = text => `//h3[text()='${text}']`;
 
 export const h1Text = text => `//h1[text()='${text}']`;
-
-export const h2Text = text => `//h2[text()='${text}']`;
-
-const universalLabelFormInput = label =>
-  `//label[text()='${label}']/parent::div/parent::div//input`;
 
 const spanText = text => `//span[text()='${text}']`;
 
@@ -82,14 +74,14 @@ export const getPriceWizardInfoIsPresent = () => {
 };
 
 export const nameEmailPhoneInput = (name, lastName, email, phone) => {
-  waitForHydration(domElement(universalLabelFormInput('First Name'))).type(
+  waitForHydration(domElement('#firstName')).type(
     name,
   );
-  waitForHydration(cy.xpath(universalLabelFormInput('Last Name'))).type(
+  waitForHydration(cy.get('#lastName')).type(
     lastName,
   );
-  waitForHydration(cy.xpath("(//input[@id='email'])[1]")).type(email);
-  waitForHydration(cy.xpath(universalLabelFormInput('Phone'))).type(phone);
+  waitForHydration(cy.get('#email')).type(email);
+  waitForHydration(cy.get('input[label="Phone"]')).type(phone);
 };
 
 export const justWantToSeePricing = ({ ...props }) => {
@@ -97,19 +89,23 @@ export const justWantToSeePricing = ({ ...props }) => {
   waitForHydration(
     domElement(buttonText('No thanks, I just want to see pricing.')),
   )
-    .click()
     .click();
   nameEmailPhoneInput(name, lastName, email, phone);
   waitForHydration(cy.xpath(buttonText('Get pricing'))).click();
 };
 
-export const askQuestBtn = () =>
-  waitForHydration(cy.xpath(buttonText('Ask a Question'))).click({
-    force: true,
-  });
+export const askQuestBtn = () => {
+  waitForHydration(cy.xpath(buttonText('Ask a Question')));
+  cy.wait(1500);
+  cy.xpath(buttonText('Ask a Question')).click();
+};
 
-export const askExperttBtn = () =>
-  waitForHydration(cy.get('button[type="expert"]')).click({ force: true });
+export const askExpertBtn = () =>{
+  waitForHydration(cy.get('button[type="expert"]'));
+  cy.wait(1500);
+  cy.get('button[type="expert"]').click({ force: true });
+};
+
 
 export const sendAskForm = ({ ...props }) => {
   const { name, lastName, email, phone, question } = props;
