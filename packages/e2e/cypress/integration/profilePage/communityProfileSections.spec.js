@@ -478,7 +478,7 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.url().should('include', 'cta=pricing&entry=pricingTable');
   });
 
-  it.only('About section CTA (ComPrfPage - row 6)', () => {
+  it('About section CTA (ComPrfPage - row 6)', () => {
     const user = randomUser();
     const question = `Auto test ${user.lastName}`;
     const expectedActionType = 'profileAskQuestion';
