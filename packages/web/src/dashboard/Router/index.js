@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, node, array } from 'prop-types';
+import { object, node, array, bool } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
 import { withRouter } from 'react-router';
@@ -22,17 +22,16 @@ const bumpOnSearch = (prev, next) => searchWhitelist
 
 export default class Router extends Component {
   static propTypes = {
-    requiresAuth: array.isRequired,
     location: object,
     children: node,
     status: object,
     history: object,
     staticContext: object,
     apiContext: apiContextPropType,
+    isLoggedIn: bool,
   };
 
   static defaultProps = {
-    requiresAuth: [],
     children: null,
   };
 
@@ -51,29 +50,26 @@ export default class Router extends Component {
 
   render() {
     const {
-      requiresAuth,
-      status,
       location,
       children,
       staticContext,
       apiContext,
+      isLoggedIn,
     } = this.props;
 
-    if (requiresAuth.some(regex => regex.test(location.pathname))) {
-      if (status.user.status === 401) {
-        const afterLogin = `${location.pathname}${location.search}${location.hash}`;
-        const url = `/?${stringify({ loginRedirect: afterLogin })}`;
-        if (isServer) {
-          staticContext.status = 302;
-        }
-        return <Redirect to={url} />;
-        // return <LoginRedirect />;
-      } else if (isServer) {
-        // we do this because we don't want to prefetch in the server
-        // all of dashboard (or any other section that requires auth)
-        // all the api queries as they are not seo pages.
-        apiContext.skipApiCalls = true;
+    if (isLoggedIn === false) {
+      const afterLogin = `${location.pathname}${location.search}${location.hash}`;
+      const url = `/?${stringify({ loginRedirect: afterLogin })}`;
+      if (isServer) {
+        staticContext.status = 302;
       }
+      return <Redirect to={url} />;
+      // return <LoginRedirect />;
+    } else if (isServer) {
+      // we do this because we don't want to prefetch in the server
+      // all of dashboard (or any other section that requires auth)
+      // all the api queries as they are not seo pages.
+      apiContext.skipApiCalls = true;
     }
 
     return children;

@@ -88,7 +88,7 @@ function getImages({ gallery = {}, mainImage, propInfo = {} }) {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': match.params.communitySlug,
   }, {
-    loggedInOnly: true,
+    sessionOnly: true,
   }),
 )
 @query('updateOldUserSave')
