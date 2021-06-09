@@ -45,7 +45,7 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
-import  ChatBox1  from 'sly/web/services/chatbox/chatBox1';
+import  TriggerChatBoxEvent  from 'sly/web/services/chatbox/TriggerChatBoxEvent';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
@@ -226,7 +226,7 @@ export default class CommunityDetailPage extends PureComponent {
     return (
       <>
         {/* {!isInternational && <Chatbox community={community} /> } */}
-        <ChatBox1 eventName="Test Trigger 1" />
+        <TriggerChatBoxEvent eventName="Test Trigger 1" />
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />

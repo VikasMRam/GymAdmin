@@ -11,12 +11,13 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import Modal from 'react-modal';
 
+import ChatBotProvider from '../services/chatbox/chatbotContext';
+
 import { hideChatbox } from 'sly/web/config';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
-// import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
-import ChatBotProvider from 'sly/web/services/chatbox/chatbotContext';
+import ChatBoxContainer from 'sly/web/containers/ChatBoxContainer';
 import {
   RESOURCE_CENTER_PATH,
   RESOURCE_CENTER_AUTHOR_PATH,
@@ -296,17 +297,18 @@ export default class App extends Component {
         <Provider store={reduxStore}>
           <ThemeProvider theme={theme}>
             <IconContext.Provider value={iconsContext}>
-              <BreakpointProvider>
-                <NotificationProvider>
-                  <PageEventsContainer />
-                  <UserCookiesContainer />
-                  <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
-                    <title>Find The Best Senior Living Options Near You</title>
-                    <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                    <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-                    <meta content="Seniorly" property="author" />
-                    <meta content="English" property="language" />
+              <ChatBotProvider>
+                <BreakpointProvider>
+                  <NotificationProvider>
+                    <PageEventsContainer />
+                    <UserCookiesContainer />
+                    <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
+                      <title>Find The Best Senior Living Options Near You</title>
+                      <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                      <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+                      <meta content="Seniorly" property="author" />
+                      <meta content="English" property="language" />
 
                       {/*
                       Open graph
