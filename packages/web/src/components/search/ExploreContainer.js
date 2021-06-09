@@ -6,7 +6,7 @@ import { isBrowser } from 'sly/web/config';
 import { getKey } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
-  from 'sly/web/constants/wizards/assessment';
+  from 'sly/web/assessment/constants';
 import { Grid } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';

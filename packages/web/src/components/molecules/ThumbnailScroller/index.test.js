@@ -25,7 +25,7 @@ describe('ThumbnailScroller', () => {
   it('onClick called', () => {
     const onClick = jest.fn();
     const wrapper = wrap({ thumbnails, onClick });
-    wrapper.find(Thumbnail).at(4).simulate('click');
+    wrapper.find('.thumbnail-scroller').at(4).simulate('click');
     expect(onClick).toHaveBeenCalledWith(4);
   });
 });

@@ -8,7 +8,6 @@ const SeoLinks = ({ title, links, ...props }) => (
   <Block as="section" {...props}>
     <Heading font="title-m" pad="l">{title}</Heading>
     <Grid
-      gridTemplateColumns="auto!important"
       gridGap="m"
       sx$tablet={{
         gridTemplateColumns: '50% 50%',
@@ -17,6 +16,7 @@ const SeoLinks = ({ title, links, ...props }) => (
       {links.map(link => (
         <Link
           key={link.to}
+          onClick={() => window.scrollTo(0, 0)}
           {...link}
         >
           {link.title}

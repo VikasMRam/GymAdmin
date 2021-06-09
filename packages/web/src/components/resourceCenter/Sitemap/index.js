@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { host } from 'sly/web/config';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
 import { sx, sx$tablet, space, layout } from 'sly/common/system/sx';
 import Image from 'sly/common/system/Image';

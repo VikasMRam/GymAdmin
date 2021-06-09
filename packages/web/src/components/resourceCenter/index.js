@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { sx, layout, space } from 'sly/common/system/sx';

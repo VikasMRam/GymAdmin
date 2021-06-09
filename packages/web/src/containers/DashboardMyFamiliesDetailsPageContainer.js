@@ -16,7 +16,7 @@ import {
   FAMILY_DETAILS,
   SUMMARY,
   MESSAGES, ACTIVITY,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { FAMILY_STAGE_ORDERED } from 'sly/web/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/web/constants/notes';
 import { NOTE_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';

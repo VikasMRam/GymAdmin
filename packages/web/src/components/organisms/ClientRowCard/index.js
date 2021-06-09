@@ -16,7 +16,7 @@ import {
 } from 'sly/web/components/atoms/Table';
 import Stage from 'sly/web/components/molecules/Stage';
 import { FAMILY_STATUS_ON_PAUSE } from 'sly/web/constants/familyDetails';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/web/dashboard/dashboardAppPaths';
 import clientPropType from 'sly/common/propTypes/client';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import SlyEvent from 'sly/web/services/helpers/events';

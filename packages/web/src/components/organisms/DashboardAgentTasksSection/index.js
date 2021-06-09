@@ -20,7 +20,7 @@ import TaskRowCard from 'sly/web/components/organisms/TaskRowCard';
 import AddOrEditTaskFormContainer from 'sly/web/containers/AddOrEditTaskFormContainer';
 import {
   AGENT_DASHBOARD_TASKS_PATH, AGENT_DASHBOARD_CONTEXT_TASKS_PATH, TODAY, OVERDUE, UPCOMING, COMPLETED,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { stripPageNumber } from 'sly/web/services/helpers/appPaths';
 import { textAlign } from 'sly/web/components/helpers/text';
 

@@ -74,7 +74,6 @@ describe('Community Profile Sections', () => {
     Cypress.Commands.add('adminLogin', () => {
       cy.get('button').then(($a) => {
         if ($a.text().includes('Log In')) {
-          cy.wait('@getUser');
           cy.wait('@getUuid');
           waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
           waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');

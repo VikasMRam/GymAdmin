@@ -23,7 +23,7 @@ import {
   // WHAT_TO_NEXT_OPTIONS,
 } from 'sly/web/constants/pricingForm';
 import { getIsCCRC } from 'sly/web/services/helpers/community';
-import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAVORITES_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import CommunityBookATourContactFormContainer from 'sly/web/containers/CommunityBookATourContactFormContainer';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import CommunityPWEstimatedPricingFormContainer from 'sly/web/containers/CommunityPWEstimatedPricingFormContainer';
