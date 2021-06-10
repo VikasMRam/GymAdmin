@@ -601,7 +601,7 @@ describe('Assisted Search Page Sections', () => {
     //     .should('exist');
     // });
 
-    it('Navigate from map popover', () => {
+    it.skip('Navigate from map popover', () => {
       mapCheck([], 'MARKER_NAVIGATION');
     });
   });
