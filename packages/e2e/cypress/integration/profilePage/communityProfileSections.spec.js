@@ -78,20 +78,12 @@ describe('Community Profile Sections', () => {
     Cypress.Commands.add('login', () => {
       cy.get('button').then(($a) => {
         if ($a.text().includes('Log In')) {
-          waitForHydration(
-            cy.get('div[class*=Header__HeaderItems]').contains('Log In'),
-          ).click({ force: true });
+          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
           const rand = randHash();
           cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
-          waitForHydration(cy.get('form input[name="email"]'))
-            .type(`fonz+e2e+${rand}@seniorly.com`)
-            .should('have.value', `fonz+e2e+${rand}@seniorly.com`);
-          waitForHydration(cy.get('form input[name="password"]'))
-            .type('nopassword')
-            .should('have.value', 'nopassword');
-          waitForHydration(
-            cy.get('button[type="submit"]').contains('Log in'),
-          ).click();
+          waitForHydration(cy.get('form input[name="email"]')).type(`fonz+e2e+${rand}@seniorly.com`).should('have.value', `fonz+e2e+${rand}@seniorly.com`);
+          waitForHydration(cy.get('form input[name="password"]')).type('nopassword').should('have.value', 'nopassword');
+          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click();
         }
       });
     });
@@ -99,24 +91,16 @@ describe('Community Profile Sections', () => {
     Cypress.Commands.add('adminLogin', () => {
       cy.get('button').then(($a) => {
         if ($a.text().includes('Log In')) {
-          cy.wait('@getUser');
           cy.wait('@getUuid');
-          waitForHydration(
-            cy.get('div[class*=Header__HeaderItems]').contains('Log In'),
-          ).click({ force: true });
-          waitForHydration(cy.get('form input[name="email"]')).type(
-            'slytest+admin@seniorly.com',
-          );
-          waitForHydration(cy.get('form input[name="password"]')).type(
-            'nopassword',
-          );
-          waitForHydration(
-            cy.get('button[type="submit"]').contains('Log in'),
-          ).click({ force: true });
+          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
+          waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
+          waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
+          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click({ force: true });
         }
       });
     });
   });
+
 
   responsive(() => {
     it('Should see community details', () => {
@@ -155,6 +139,7 @@ describe('Community Profile Sections', () => {
     });
 
     it('should show pricing section', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
@@ -164,9 +149,8 @@ describe('Community Profile Sections', () => {
       buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
-      cy.wait('@getUser');
-      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability')
-        .click();
+      cy.waitForPageViewEvent();
+      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability').click();
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
@@ -307,6 +291,7 @@ describe('Community Profile Sections', () => {
       cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
       cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions').then((xhr) => {
         expect(xhr.requestBody).to.deep.equal({
@@ -322,9 +307,13 @@ describe('Community Profile Sections', () => {
           },
         });
       });
-      cy.wait('@getUser');
+      cy.waitForPageViewEvent();
 
-      waitForHydration(cy.get('button').contains('Ask a Question')).click();
+
+      waitForHydration(cy.get('button').contains('Ask a Question'));
+      cy.wait(1000);
+      cy.contains('Ask a Question').click();
+
       select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
 
       const firstName = `Lead${randHash()}`;
