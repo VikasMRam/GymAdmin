@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import Modal from 'react-modal';
 
-import ChatBotProvider from '../services/chatbox/chatbotContext';
+import ChatBotProvider from '../services/chatbox/NewChatBotContext';
 
 import { hideChatbox } from 'sly/web/config';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';

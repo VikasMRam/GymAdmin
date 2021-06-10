@@ -1,6 +1,6 @@
 import React, { PureComponent, useContext } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
@@ -45,7 +45,8 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
-import  TriggerChatBoxEvent  from 'sly/web/services/chatbox/TriggerChatBoxEvent';
+// import  TriggerChatBoxEvent  from 'sly/web/services/chatbox/TriggerChatBoxEvent';
+import  withChatbox  from 'sly/web/services/chatbox/withChatBox';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
@@ -140,11 +141,19 @@ const getAssessmentBoxModes = {
   communitySidebar: { cta: 'pricing', entry: 'communitySidebar' },
 };
 
+@withChatbox
 export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
     location: object.isRequired,
+    triggerChatboxEvent: func,
   };
+
+  componentDidMount() {
+    const { triggerChatboxEvent } = this.props;
+    console.log(triggerChatboxEvent);
+    triggerChatboxEvent('Test Trigger 1');
+  }
 
   render() {
     const {
@@ -226,7 +235,7 @@ export default class CommunityDetailPage extends PureComponent {
     return (
       <>
         {/* {!isInternational && <Chatbox community={community} /> } */}
-        <TriggerChatBoxEvent eventName="Test Trigger 1" />
+        {/* <TriggerChatBoxEvent eventName="Test Trigger 1" /> */}
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />

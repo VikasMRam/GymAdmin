@@ -13,6 +13,15 @@ const ChatBotProvider = (props) => {
     setCurrentEvent(eventName);
   };
 
+  const handleEventTrigger = (eventName) => {
+    if (eventName == 'Test Trigger 1') {
+      // setTimeout(() => {
+      //   if(location.sear)
+
+      // }, 30000);
+    }
+  };
+
   const contextValue = {
     triggerChatBot: triggerChatBot1,
   };
