@@ -151,7 +151,7 @@ jobs:
   deploy:
     docker:
       - image: circleci/python:3.9.3
-    resource_class: 2xlarge
+    resource_class: xlarge
 
     working_directory: ~/project
 
@@ -309,7 +309,7 @@ jobs:
           POSTGRES_DB: slydev
           SLY_APIRATELIMITENABLED: false
     parallelism: 3
-    resource_class: xlarge
+    resource_class: 2xlarge
 
     working_directory: ~/project
 
