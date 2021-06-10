@@ -63,6 +63,7 @@ export const Wrapper = styled.section`
   padding: ${size('spacing.xLarge')};
   height: fit-content;
   width: 360px;
+  max-widht:100%;
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: 504px;
