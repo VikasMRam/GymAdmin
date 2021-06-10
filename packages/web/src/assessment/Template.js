@@ -16,6 +16,7 @@ export const PageWrapper = styled.section`
   display: grid;
   justify-items: center;
   grid-gap: ${size('spacing.xLarge')};
+  justify-content: space-evenly;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${ifProp('hasSecondColumn', css`
     justify-content: center;

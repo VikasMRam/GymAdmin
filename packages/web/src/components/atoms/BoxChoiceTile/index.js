@@ -40,6 +40,12 @@ const BoxChoiceTile = ({
     highlightedPalette={palette}
     highlighted={selected}
     onClick={onClick}
+    display="flex"
+    alignItems="center"
+    css={css`
+      font-weight : 400
+    `}
+    
   >
     {!selected && hasCheckbox && <StyledIcon icon="checkbox-empty" palette="grey" variation="filler" />}
     {selected && hasCheckbox && <StyledIcon icon="checkbox" palette={palette} variation="base" />}
