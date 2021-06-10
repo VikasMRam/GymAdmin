@@ -483,8 +483,7 @@ const NearMePage = ({
                   Veterans Assistance
                 </Link>
                 {' '}can be valuable tools in making
-                Assisted Living affordable. Many communities also offer special payment plans, programs, and other
-                strategies to help your loved one live in their ideal community.
+                Assisted Living affordable.
               </div>
             </ListItem>
             <ListItem icon="checkmark-circle" iconPalette="primary" iconVariation="base">
