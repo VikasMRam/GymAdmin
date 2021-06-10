@@ -9,8 +9,7 @@ import {
   ServicesAmenitiesFilters,
 } from '../../constants/community';
 import randomUser from '../../helpers/randomUser';
-
-import * as communityPage from './comProfPage';
+import * as communityPage from '../../helpers/comProfPage';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';

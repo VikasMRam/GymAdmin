@@ -1,13 +1,15 @@
+// eslint-disable-next-line import/extensions
+import { baseUrl } from '../../cypress';
+
 import {
   isVisibleXpath,
   isNotVisibleXpath,
   isAbsentXpath,
   domElement,
   isNotExistXpath,
-} from '../../helpers/domElements';
-import { waitForHydration } from '../../helpers/tests';
-// eslint-disable-next-line import/extensions
-import { baseUrl } from '../../../cypress';
+} from './domElements';
+import { waitForHydration } from './tests';
+
 
 //= ========Selectors static=========
 const getPriceFooter =
