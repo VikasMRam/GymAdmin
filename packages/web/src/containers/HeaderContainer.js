@@ -140,9 +140,7 @@ export default function HeaderContainer(props) {
     if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
         .then(() => {
-          history.replace(decodeURIComponent(loginRedirect));
-          // temp fix for issues with redirect not working.
-          window.location.reload(false);
+          history.push(decodeURIComponent(loginRedirect));
         })
         .catch(() => {
           const params = removeQueryParamFromURL('loginRedirect', search);

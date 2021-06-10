@@ -5,7 +5,7 @@ import { isBrowser } from 'sly/web/config';
 import {
   ASSESSMENT_WIZARD_MATCHED_AGENT,
   ASSESSMENT_WIZARD_COMPLETED,
-} from 'sly/web/constants/wizards/assessment';
+} from 'sly/web/assessment/constants';
 import { PROFILE_CONTACTED } from 'sly/web/services/api/constants';
 import communityPropType from 'sly/common/propTypes/community';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
@@ -18,7 +18,7 @@ const GetAssessmentBoxContainerHydrator = (props) => {
   const { requestInfo: { normalized: uuidActions } } = usePrefetch('getUuidActions', {
     'filter[actionType]': PROFILE_CONTACTED,
     'filter[actionInfo-slug]': params.communitySlug,
-  }, { loggedInOnly: true });
+  }, { sessionOnly: true });
 
   const hasAlreadyRequestedPricing = useHasPricingRequest(uuidActions);
   const completedAssessment = isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED);

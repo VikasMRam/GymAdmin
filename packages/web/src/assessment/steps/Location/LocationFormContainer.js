@@ -1,0 +1,63 @@
+import React, { Component } from 'react';
+import { reduxForm } from 'redux-form';
+import { func, object } from 'prop-types';
+import { withRouter } from 'react-router';
+
+import { query } from 'sly/web/services/api';
+import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
+import Location from 'sly/web/assessment/steps/Location';
+import { createValidator, required } from 'sly/web/services/validation';
+
+const validate = createValidator({
+  location: [required],
+});
+
+const ReduxForm = reduxForm({
+  form: 'LocationForm',
+  destroyOnUnmount: false,
+  validate,
+})(Location);
+
+@withRouter
+@query('createAction', 'createUuidAction')
+
+export default class LocationFormContainer extends Component {
+  static propTypes = {
+    createAction: func.isRequired,
+    location: object.isRequired,
+    onSubmit: func.isRequired,
+  };
+
+  handleSubmit = (data) => {
+    const { createAction, location: { pathname }, onSubmit } = this.props;
+    if (data.location) {
+      data.name = data.location.name;
+      if (data.location.searchParams) {
+        data.city = data.location.searchParams.city;
+        data.state = data.location.searchParams.state;
+      }
+    }
+    return createAction({
+      type: 'UUIDAction',
+      attributes: {
+        actionType: WIZARD_STEP_COMPLETED,
+        actionPage: pathname,
+        actionInfo: {
+          stepName: 'step-1:Location',
+          wizardName: 'assessmentWizard',
+          data,
+        },
+      },
+    })
+      .then(onSubmit);
+  };
+
+  render() {
+    return (
+      <ReduxForm
+        {...this.props}
+        onSubmit={this.handleSubmit}
+      />
+    );
+  }
+}

@@ -24,7 +24,7 @@ import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTileContainer';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
-  from 'sly/web/constants/wizards/assessment';
+  from 'sly/web/assessment/constants';
 import { isBrowser } from 'sly/web/config';
 import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
 import { getStateAbbr, isInternationalPath, isCanadaPath } from 'sly/web/services/helpers/url';
