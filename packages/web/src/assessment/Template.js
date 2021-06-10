@@ -58,7 +58,7 @@ PageWrapper.propTypes = {
 // Tip: 360px
 // Step component wrapper
 export const Wrapper = styled.section`
-  background-color: ${palette('white', 'background')};    
+  background-color: ${palette('white', 'background')};
   border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.xLarge')};
   height: fit-content;
