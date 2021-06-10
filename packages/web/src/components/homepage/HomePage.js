@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { css } from 'styled-components';
 import { func, string, object } from 'prop-types';
 
@@ -14,6 +14,7 @@ import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import { Hr, Heading, Block, Button, Grid, Image, sx$laptop, sx$tablet, space  } from 'sly/common/system';
 import Footer from 'sly/web/components/organisms/Footer';
 import ModalContainer from 'sly/web/containers/ModalContainer';
+import { useChatbox } from 'sly/web/services/chatbox/ChatBoxContext';
 
 
 const blockPad = css`
@@ -35,6 +36,10 @@ const Separator = forwardRef((props, ref) => (
 const HomePage = ({
   showModal, hideModal, onLocationSearch,
 }) => {
+  const { triggerChatBot } = useChatbox();
+  useEffect(() => {
+    triggerChatBot('Test Trigger 2');
+  }, []);
   return (
     <>
       <ModalContainer />

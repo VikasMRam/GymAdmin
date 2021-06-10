@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import Modal from 'react-modal';
 
-import ChatBotProvider from '../services/chatbox/NewChatBotContext';
+import ChatBoxProvider from '../services/chatbox/ChatBoxContext';
 
 import { hideChatbox } from 'sly/web/config';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
@@ -297,7 +297,7 @@ export default class App extends Component {
         <Provider store={reduxStore}>
           <ThemeProvider theme={theme}>
             <IconContext.Provider value={iconsContext}>
-              <ChatBotProvider>
+              <ChatBoxProvider>
                 <BreakpointProvider>
                   <NotificationProvider>
                     <PageEventsContainer />
@@ -365,7 +365,7 @@ export default class App extends Component {
                     {/* {!hideChatbox && <ChatBoxContainer />} */}
                   </NotificationProvider>
                 </BreakpointProvider>
-              </ChatBotProvider>
+              </ChatBoxProvider>
             </IconContext.Provider>
           </ThemeProvider>
         </Provider>

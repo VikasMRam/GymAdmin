@@ -7,7 +7,7 @@ import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/web/config';
 
 
-export const ChatBotContext = React.createContext({ triggerChatBot: () => {} });
+export const ChatBoxContext = React.createContext({ triggerChatBot: () => {} });
 
 const loadJsScript = () => {
   return new Promise((resolve, reject) => {
@@ -37,21 +37,34 @@ const loadJsScript = () => {
   });
 };
 
+const canEventTrigger = (location, eventName) => {
+  if (eventName === 'Test Trigger 1') {
+    if (location.pathname.indexOf('assisted-living') >= 0) {
+      return true;
+    }
+    return false;
+  } else if (eventName === 'Test Trigger 2') {
+    return true;
+  }
+};
 
-export const ChatBotProvider = (props) => {
+
+export const ChatBoxProvider = (props) => {
   // const [currentEvent, setCurrentEvent] = useState();
   const [isChatboxLoaded, setChatboxLoaded] = useState(false);
 
   const location = useLocation();
   const currentTimer = useRef(0);
+  const currentEvent = useRef(0);
 
 
   const tc = (eventName) => {
     console.log(location);
-    if (location.pathname.indexOf('assisted-living') >= 0) {
+    if (canEventTrigger(location, eventName)) {
       if (typeof window !== 'undefined' && window.RokoInstabot) {
         console.log('ttriggering vikas', eventName);
         window.RokoInstabot.trigger(eventName);
+        currentTimer.current = null;
       } else {
         console.log('re nav');
       }
@@ -61,19 +74,24 @@ export const ChatBotProvider = (props) => {
   useEffect(() => {
     console.log(location);
     if (currentTimer.current) {
-      console.log('clearing');
-      clearTimeout(currentTimer.current);
-      currentTimer.current = null;
+      if (!canEventTrigger(location, currentEvent.current)) {
+        clearTimeout(currentTimer.current);
+        console.log('clearing');
+        currentTimer.current = null;
+      }
     }
   }, [location]);
 
 
   const triggerChatBotEvent = (eventName) => {
+    currentTimer.current = null;
     if (eventName === 'Test Trigger 1') {
       console.log('set TimeOut');
       currentTimer.current = setTimeout(() => {
         tc(eventName);
       }, 10000);
+    } else if (eventName === 'Test Trigger 2') {
+      tc(eventName);
     }
   };
 
@@ -86,7 +104,7 @@ export const ChatBotProvider = (props) => {
         triggerChatBotEvent(eventName);
       });
     } else {
-      // triggerChatBotEvent(eventName);
+      triggerChatBotEvent(eventName);
     }
   };
 
@@ -97,22 +115,22 @@ export const ChatBotProvider = (props) => {
 
   return (
     <>
-      <ChatBotContext.Provider value={contextValue}>
+      <ChatBoxContext.Provider value={contextValue}>
         {isChatboxLoaded && (
           <Helmet>
             <style type="text/css">{ChatBoxGlobalStyle}</style>
           </Helmet>
      )}
         {props.children}
-      </ChatBotContext.Provider>
+      </ChatBoxContext.Provider>
 
     </>
   );
 };
 
 export const useChatbox = () => {
-  return useContext(ChatBotContext);
+  return useContext(ChatBoxContext);
 };
 
 
-export default ChatBotProvider;
+export default ChatBoxProvider;

@@ -1,7 +1,7 @@
 import React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import { useChatbox } from './NewChatBotContext';
+import { useChatbox } from './ChatBoxContext';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
