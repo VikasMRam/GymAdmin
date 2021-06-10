@@ -111,10 +111,12 @@ Cypress.Commands.add('waitForPageViewEvent', () => {
       cy.wait('@getEvent');
     } else {
       cy.waitUntil(() => {
-        return global.infoSpy.getCalls().some((call) => {
-          cy.log('args', call.args);
+        const result = global.infoSpy.getCalls().some((call) => {
           return call.args[0] === 'EVENT pageview';
         });
+        return result
+          ? Promise.resolve(true)
+          : Promise.reject();
       });
     }
   });

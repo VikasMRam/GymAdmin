@@ -248,14 +248,29 @@ const navigateAndCheckTitles  = (data) => {
   cy.url().then((url) => {
     // extract only relative url , as environment changes
     currentUrl = url.substr(url.indexOf('assisted'));
-    [data[0]].forEach((dataObj, index) => {
-      cy.visit(dataObj.url);
-      checkForTitle(dataObj.title);
-      if (index === data.length - 1) {
-        cy.visit(currentUrl);
-      }
-    });
+    // [data[0]].forEach((dataObj, index) => {
+    //   cy.visit(dataObj.url).then(() => {
+    //     cy.waitForPageViewEvent();
+    //   });
+    //   checkForTitle(dataObj.title);
+    //   if (index === data.length - 1) {
+    //     cy.visit(currentUrl);
+    //   }
+    // });
   });
+  // [data[0]].forEach((dataObj, index) => {
+  //   cy.visit(dataObj.url).then(() => {
+  //     cy.waitForPageViewEvent();
+  //   });
+  //   checkForTitle(dataObj.title);
+  //   if (index === data.length - 1) {
+  //     cy.visit(currentUrl);
+  //   }
+  // });
+  cy.visit(data[0].url);
+  cy.waitForPageViewEvent();
+  checkForTitle(data[0].title);
+  cy.visit(currentUrl);
 };
 
 
@@ -586,7 +601,7 @@ describe('Assisted Search Page Sections', () => {
     //     .should('exist');
     // });
 
-    it('Navigate from map popover', () => {
+    it.skip('Navigate from map popover', () => {
       mapCheck([], 'MARKER_NAVIGATION');
     });
   });
