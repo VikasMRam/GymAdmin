@@ -32,4 +32,4 @@ export { default as withAuth, useAuth } from './withAuth';
 export { default as renderToString } from './renderAndPrefetch';
 export { default as withPrefetchWait } from './withPrefetchWait';
 
-export { normalizeResponse } from './helpers';
+export { normalizeResponse, hasSession } from './helpers';

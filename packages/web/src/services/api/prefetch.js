@@ -4,6 +4,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/web/config';
 import api from 'sly/web/services/api/apiInstance';
+import { hasSession } from 'sly/web/services/api/helpers';
 import { defaultRequest, getRelationship as selectRelationship } from 'sly/web/services/api/selectors';
 import { useApi } from 'sly/web/services/api/context';
 import { invalidateRequests, purgeFromRelationships as purgeFromRelationshipsAction } from 'sly/web/services/api/actions';
@@ -15,8 +16,6 @@ function getDisplayName(WrappedComponent) {
       || WrappedComponent.name
       || 'Component';
 }
-
-const isLoggedIn = () => (typeof document !== 'undefined' && document.cookie || '').indexOf('sly-session') !== -1;
 
 export function usePrefetch(apiCall, ...args) {
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
@@ -41,7 +40,7 @@ export function usePrefetch(apiCall, ...args) {
 
   const getRelationship = useCallback((entity, relationship) => selectRelationship(request.entities, entity, relationship), [request]);
 
-  const shouldBail = options.loggedInOnly && !isLoggedIn();
+  const shouldBail = options.sessionOnly && !hasSession();
 
   useEffect(() => {
     store.on(apiCall, argsKey, setRequest);
