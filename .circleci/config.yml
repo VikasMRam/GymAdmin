@@ -259,7 +259,6 @@ jobs:
   e2e:
     docker:
       - image: cypress/included:7.4.0
-        ipc: host
         environment:
           # this enables colors in the output
           TERM: xterm
@@ -375,7 +374,7 @@ jobs:
           working_directory: ~/project/packages/e2e
           command: |
             TESTFILES=$(circleci tests glob "cypress/integration/**/*.js" | circleci tests split --split-by=timings | xargs | sed -e 's/ /,/g')
-            cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec $TESTFILES
+            cypress run --reporter cypress-multi-reporters --reporter-options "configFile=reporter-config.json" --spec $TESTFILES --browser chrome
       - run:
           name: Format Test Results
           working_directory: ~/project/packages/e2e
