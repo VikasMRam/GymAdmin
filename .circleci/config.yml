@@ -308,7 +308,7 @@ jobs:
           POSTGRES_USER: slydev
           POSTGRES_DB: slydev
           SLY_APIRATELIMITENABLED: false
-    parallelism: 4
+    parallelism: 3
     resource_class: xlarge
 
     working_directory: ~/project
