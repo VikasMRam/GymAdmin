@@ -259,6 +259,7 @@ jobs:
   e2e:
     docker:
       - image: cypress/included:7.4.0
+        ipc: host
         environment:
           # this enables colors in the output
           TERM: xterm
