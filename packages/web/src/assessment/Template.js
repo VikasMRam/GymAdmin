@@ -16,6 +16,7 @@ export const PageWrapper = styled.section`
   display: grid;
   justify-items: center;
   grid-gap: ${size('spacing.xLarge')};
+  justify-content: space-evenly;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${ifProp('hasSecondColumn', css`
     justify-content: center;
@@ -57,11 +58,12 @@ PageWrapper.propTypes = {
 // Tip: 360px
 // Step component wrapper
 export const Wrapper = styled.section`
-  background-color: ${palette('white', 'background')};    
+  background-color: ${palette('white', 'background')};
   border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.xLarge')};
   height: fit-content;
   width: 360px;
+  max-widht:100%;
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: 504px;
