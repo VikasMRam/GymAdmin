@@ -57,6 +57,11 @@ function addcommContact() {
 }
 
 describe('Sending Referral to Community', () => {
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('sly_uuid', 'sly_sid', 'sly-session');
+    cy.intercept('GET', '**/users/me').as('getUser');
+  });
+
   responsive(() => {
     it('Add Test community', () => {
       cy.login();
@@ -73,14 +78,13 @@ describe('Sending Referral to Community', () => {
     });
 
     it('Add multiple contacts to Test community', () => {
-      cy.login();
       cy.intercept('GET', '**/marketplace/communities*', (req) => {
         if (req.url.indexOf(encodeURIComponent(community.name)) !== -1) {
           req.alias = 'getNewCommunity';
         }
       });
       cy.visit('/dashboard/communities');
-      cy.waitForUser();
+      cy.wait('@getUser');
       cy.get('input[class*=SearchTextInput]').scrollIntoView().type(community.name,  { delay: 50 }).should('have.value', community.name);
       cy.wait('@getNewCommunity');
       cy.get('table').find('tbody').find('tr a[class*=Root]').contains(community.name)
@@ -95,7 +99,6 @@ describe('Sending Referral to Community', () => {
     });
 
     it('Create lead', () => {
-      cy.login();
       cy.intercept('POST', '**/clients').as('createLead');
       cy.intercept('GET', '**/clients/*').as('getLead');
       cy.intercept('GET', '**/notes*').as('getNotes');
@@ -110,7 +113,6 @@ describe('Sending Referral to Community', () => {
     });
 
     it('Send referral to community', () => {
-      cy.login();
       cy.intercept('GET', '**/communities*').as('searchCommunities');
       cy.intercept('POST', '**/clients').as('sendReferral');
       cy.intercept('GET', '**/clients/*').as('getReferral');

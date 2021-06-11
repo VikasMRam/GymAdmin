@@ -10,7 +10,9 @@
     "fixresults": "node cypress/scripts/fix-junit-xml.js"
   },
   "devDependencies": {
-    "cypress": "7.4.0"
+    "cypress": "7.4.0",
+    "cypress-real-events": "^1.4.0",
+    "cypress-xpath": "^1.6.2"
   },
   "dependencies": {
     "@cypress/webpack-preprocessor": "5.9.0",
