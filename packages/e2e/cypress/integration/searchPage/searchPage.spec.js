@@ -83,9 +83,9 @@ const checkForADTile = (currentList) => {
 const clickFilterButtons  = (viewPort, buttonName) => {
   if (viewPort === 'mobile') {
     if (buttonName === 'Save') {
-      cy.get('div[class*="NewModal"]').find('button').contains('Save').click();
+      cy.get('div[class*="NewModal"]').find('button').contains('Save').click({ force: true });
     } else if (buttonName === 'Clear') {
-      cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click();
+      cy.get('div[class*="NewModal"]').find('button').contains('Clear all').click({ force: true });
     }
   } else if (buttonName === 'Save') {
     cy.get('button')
@@ -94,7 +94,7 @@ const clickFilterButtons  = (viewPort, buttonName) => {
   } else if (buttonName === 'Clear') {
     cy.get('button') // Click on clear all
       .contains('Clear all')
-      .click();
+      .click({ force: true });
   }
 };
 
@@ -104,14 +104,14 @@ const applyFilter = (filterName, viewPort) => {
       .invoke('text')
       .then((text) => {
         if (text.includes('Filters') && filterButton.is(':visible')) {
-          cy.wrap(filterButton).click();
+          cy.wrap(filterButton).click({ force: true });
         }
       });
   }).then(() => {
     if (viewPort === 'mobile') {
-      cy.get('div[class*="Collapsible__Header"]').contains(filterName.mobileUiText).click();
+      cy.get('div[class*="Collapsible__Header"]').contains(filterName.mobileUiText).click({ force: true });
     } else {
-      cy.get('div[class*="FilterButton"]').contains(filterName.uiText).click();
+      cy.get('div[class*="FilterButton"]').contains(filterName.uiText).click({ force: true });
     }
   });
 };
