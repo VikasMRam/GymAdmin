@@ -2,7 +2,7 @@ import React from 'react';
 import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { ADL_OPTIONS, COEXISTING_ADL_OPTIONS, EXPERIMENT_ADL_OPTIONS } from 'sly/web/assessment/constants';
+import { COEXISTING_ADL_OPTIONS, EXPERIMENT_ADL_OPTIONS } from 'sly/web/assessment/constants';
 import { PageWrapper, Wrapper, Footer, TipBoxWrapper } from 'sly/web/assessment/Template';
 import { Heading, Block } from 'sly/web/components/atoms';
 import TipBox from 'sly/web/components/molecules/TipBox';
@@ -30,7 +30,7 @@ const generateHeading = (whoNeedsHelp) => {
 const ADL = ({
   handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip, change, stepName,
 }) => {
-  let opts = stepName === 'step-2:ADL-New_Steps' ? EXPERIMENT_ADL_OPTIONS : ADL_OPTIONS;
+  let opts =  EXPERIMENT_ADL_OPTIONS;
   if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
     opts = opts.filter(e => !e.value.match(/memory-care/));
   }
