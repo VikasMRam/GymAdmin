@@ -24,7 +24,7 @@ describe('Community survey', () => {
           other: 'Do you need help with any of the following?',
         },
         Options: EXPERIMENT_ADL_OPTIONS,
-        maxSelect: 4,
+        maxSelect: 1,
         optionsId: 'adl',
         skipAllowed: true,
         backAllowed: true,
