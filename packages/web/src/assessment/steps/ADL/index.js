@@ -28,7 +28,7 @@ const generateHeading = (whoNeedsHelp) => {
 };
 
 const ADL = ({
-  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip, change, stepName,
+  handleSubmit, onBackClick, onSkipClick, whoNeedsHelp, invalid, submitting, hasTip, change,
 }) => {
   let opts =  EXPERIMENT_ADL_OPTIONS;
   if (whoNeedsHelp && whoNeedsHelp.match(/myself/)) {
