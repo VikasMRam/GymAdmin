@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 
-import { /* isBrowser, olarkSiteId, */ rokoApiKey } from 'sly/web/config';
+import { /* isBrowser, olarkSiteId, */ rokoApiKey, hideChatbox } from 'sly/web/config';
 
 
 export const ChatBoxContext = React.createContext({ triggerChatBot: () => {} });
@@ -98,6 +98,9 @@ export const ChatBoxProvider = (props) => {
   };
 
   const triggerEvent = (eventName) => {
+    if (hideChatbox) {
+      return;
+    }
     if (!isChatboxLoaded) {
       loadJsScript().then(() => {
         if (!isChatboxLoaded) {
