@@ -64,7 +64,6 @@ const canEventTrigger = (location, eventName) => {
 
 
 export const ChatBoxProvider = (props) => {
-  // const [currentEvent, setCurrentEvent] = useState();
   const [isChatboxLoaded, setChatboxLoaded] = useState(false);
 
   const location = useLocation();
