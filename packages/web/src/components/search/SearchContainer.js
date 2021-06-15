@@ -57,7 +57,7 @@ export default function SearchContainer() {
 
   const { triggerChatBot } = useChatbox();
   useEffect(() => {
-    triggerChatBot('Test Trigger 2');
+    triggerChatBot('Bot reintro');
   }, []);
 
   return (

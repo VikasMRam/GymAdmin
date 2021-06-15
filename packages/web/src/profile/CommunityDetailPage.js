@@ -150,9 +150,13 @@ export default class CommunityDetailPage extends PureComponent {
   };
 
   componentDidMount() {
-    const { triggerChatboxEvent } = this.props;
-    console.log(triggerChatboxEvent);
-    triggerChatboxEvent('Test Trigger 1');
+    const { community } = this.props;
+    const { address } = community;
+    const isInternational = address.country !== 'United States';
+    if (!isInternational) {
+      const { triggerChatboxEvent } = this.props;
+      triggerChatboxEvent('Bot reintro');
+    }
   }
 
   render() {

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState, useRef, useCallback, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 
@@ -38,14 +38,27 @@ const loadJsScript = () => {
 };
 
 const canEventTrigger = (location, eventName) => {
-  if (eventName === 'Test Trigger 1') {
-    if (location.pathname.indexOf('assisted-living') >= 0) {
-      return true;
+  if (eventName === 'Bot reintro') {
+    if (location.pathname.indexOf('wizard') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('resources') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('seniorly.com/dashboard') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('veterans-benefit') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('in-home-care') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('respite-care') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('nursing-homes') !== -1) {
+      return false;
+    } else if (location.pathname.indexOf('active-adult') !== -1) {
+      return false;
     }
-    return false;
-  } else if (eventName === 'Test Trigger 2') {
     return true;
   }
+  return false;
 };
 
 
@@ -59,24 +72,21 @@ export const ChatBoxProvider = (props) => {
 
 
   const tc = (eventName) => {
-    console.log(location);
     if (canEventTrigger(location, eventName)) {
       if (typeof window !== 'undefined' && window.RokoInstabot) {
-        console.log('ttriggering vikas', eventName);
+        console.log('triggering vikas', eventName);
         window.RokoInstabot.trigger(eventName);
         currentTimer.current = null;
       } else {
-        console.log('re nav');
+        // console.log('re nav');
       }
     }
   };
 
   useEffect(() => {
-    console.log(location);
     if (currentTimer.current) {
       if (!canEventTrigger(location, currentEvent.current)) {
         clearTimeout(currentTimer.current);
-        console.log('clearing');
         currentTimer.current = null;
       }
     }
@@ -84,14 +94,12 @@ export const ChatBoxProvider = (props) => {
 
 
   const triggerChatBotEvent = (eventName) => {
+    console.log('Event : ', eventName);
     currentTimer.current = null;
-    if (eventName === 'Test Trigger 1') {
-      console.log('set TimeOut');
+    if (eventName === 'Bot reintro') {
       currentTimer.current = setTimeout(() => {
         tc(eventName);
-      }, 10000);
-    } else if (eventName === 'Test Trigger 2') {
-      tc(eventName);
+      }, 30000);
     }
   };
 
