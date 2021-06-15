@@ -40,8 +40,8 @@ const getSrcsetForPath = (imagePath, { sources, aspectRatio }) => sources.map((s
 
 // only doing 3:2 for now
 export const getSrcset = (imagePath, config) => ({
-  src: getImagePath(imagePath.replace(/\.jpe?g$/i, '.jpg'), { width: 768, aspectRatio: config.aspectRatio }),
-  jpegSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.webp)$/i, '.jpg'), config),
-  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g$/i, '.webp'), config),
+  src: getImagePath(imagePath.replace(/(\.jpe?g|\.png)$/i, '.jpg'), { width: 768, aspectRatio: config.aspectRatio }),
+  jpegSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.webp|\.png)$/i, '.jpg'), config),
+  webpSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.png)$/i, '.webp'), config),
 });
 
