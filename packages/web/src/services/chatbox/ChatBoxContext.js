@@ -26,7 +26,6 @@ const loadJsScript = () => {
           resolve(true);
         };
         script.onerror = (err) => {
-          console.log(err);
           reject(new Error());
         };
       }
@@ -38,7 +37,6 @@ const loadJsScript = () => {
 };
 
 const canEventTrigger = (location, eventName) => {
-  console.log(location);
   if (eventName === 'Bot reintro') {
     if (location.pathname.indexOf('wizard') !== -1) {
       return false;
@@ -74,11 +72,8 @@ export const ChatBoxProvider = (props) => {
   const tc = (eventName) => {
     if (canEventTrigger(location, eventName)) {
       if (typeof window !== 'undefined' && window.RokoInstabot) {
-        console.log('triggering vikas', eventName);
         window.RokoInstabot.trigger(eventName);
         currentTimer.current = null;
-      } else {
-        // console.log('re nav');
       }
     }
   };
@@ -94,7 +89,6 @@ export const ChatBoxProvider = (props) => {
 
 
   const triggerChatBotEvent = (eventName) => {
-    console.log('Event : ', eventName);
     currentTimer.current = null;
     if (eventName === 'Bot reintro') {
       currentTimer.current = setTimeout(() => {
