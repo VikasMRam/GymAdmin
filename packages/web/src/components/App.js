@@ -362,7 +362,6 @@ export default class App extends Component {
                       {routeComponents}
                       <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
                     </Switch>
-                    {/* {!hideChatbox && <ChatBoxContainer />} */}
                   </NotificationProvider>
                 </BreakpointProvider>
               </ChatBoxProvider>

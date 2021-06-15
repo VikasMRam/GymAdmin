@@ -38,6 +38,7 @@ const loadJsScript = () => {
 };
 
 const canEventTrigger = (location, eventName) => {
+  console.log(location);
   if (eventName === 'Bot reintro') {
     if (location.pathname.indexOf('wizard') !== -1) {
       return false;
