@@ -136,8 +136,8 @@ export default class DashboardCommunityAdminForm extends Component {
                 name="rgsAux.rgsInfo.contract_info.contractType"
                 type="choice"
                 options={[
-                   { value: 'Flat Rate', label: 'Flat rate' },
-                   { value: 'Percentage', label: 'Percentage' },
+                  { value: 'Flat Rate', label: 'Flat rate' },
+                  { value: 'Percentage', label: 'Percentage' },
                  ]}
                 readOnly={!canEdit}
               />
