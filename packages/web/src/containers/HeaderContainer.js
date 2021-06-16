@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { stringify, parse } from 'query-string';
 
-import { withHydration } from '../services/partialHydration';
+import { withHydration } from 'sly/web/services/partialHydration';
 
 import { useAuth } from 'sly/web/services/api';
 import { generateSearchUrl, isInternationalPath,

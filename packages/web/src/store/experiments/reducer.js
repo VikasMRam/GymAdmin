@@ -1,3 +1,5 @@
 import { initialState } from './selectors';
 
-export default (state = initialState) => state;
+const reducer = (state = initialState) => state;
+
+export default reducer;

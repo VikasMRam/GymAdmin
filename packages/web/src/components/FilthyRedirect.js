@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { object, func, bool } from 'prop-types';
 import loadable from '@loadable/component';
+import { useLocation } from 'react-router';
 
 import { isBrowser } from 'sly/web/config';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/web/services/helpers/url';
@@ -12,9 +13,12 @@ const CareAssessmentController = loadable(() => import(/* webpackChunkName: "chu
 const CommunityAddRatingFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityAddRatingFormContainer" */'sly/web/containers/CommunityAddRatingFormContainer'));
 
 const FilthyRedirect = ({
-  location, isModalOpen, showModal,
+  isModalOpen, showModal,
 }) => {
+  const location = useLocation();
+
   if (isModalOpen) return null;
+
   const { search } = location;
   const qp = parseURLQueryParams(search);
   const newQp = { ...qp };
