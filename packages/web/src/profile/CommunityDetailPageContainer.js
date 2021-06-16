@@ -1,29 +1,23 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useParams, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import CommunityDetailPage from './CommunityDetailPage';
 
-import { usePrefetch } from 'sly/web/services/api';
+import useCommunity from 'sly/web/profile/hooks/useCommunity';
 import { getLastSegment, replaceLastSegment } from 'sly/web/services/helpers/url';
 import { Image, Flex } from 'sly/common/system';
 import { assetPath } from 'sly/web/components/themes';
 
 
 const CommunityDetailPageContainer = () => {
-  const { communitySlug } = useParams();
   const location = useLocation() || {};
 
   const {
-    requestInfo: {
-      normalized: community,
-      status: communityStatus,
-      headers: { location: communityLocation },
-    },
-  } = usePrefetch('getCommunity', {
-    id: communitySlug,
-    include: 'similar-communities,questions,agents',
-  });
+    community,
+    communityStatus,
+    communityLocation,
+  } = useCommunity();
 
   if (communityStatus === 301) {
     const newSlug = getLastSegment(communityLocation);
@@ -58,4 +52,6 @@ const CommunityDetailPageContainer = () => {
   );
 };
 
-export default React.memo(CommunityDetailPageContainer, () => true);
+//export default React.memo(CommunityDetailPageContainer, () => true);
+export default CommunityDetailPageContainer;
+

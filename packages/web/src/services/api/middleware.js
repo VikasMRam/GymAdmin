@@ -2,7 +2,7 @@ import { API_CALL } from './actions';
 
 import { logWarn } from 'sly/web/services/helpers/logging';
 
-export default (pendingPromises={}) => next => (action) => {
+const makeMiddleware = (pendingPromises, next) => (action) => {
   const {
     payload: {
       call,
@@ -66,3 +66,5 @@ export default (pendingPromises={}) => next => (action) => {
 
   return promise;
 };
+
+export default makeMiddleware;

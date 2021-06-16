@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import 'intersection-observer';
-import 'react-hot-loader/patch';
 import 'isomorphic-fetch';
 
 import React from 'react';
@@ -10,7 +9,7 @@ import { loadableReady } from '@loadable/component';
 
 import AppWrapper from 'sly/web/components/AppWrapper';
 import configureStore from 'sly/web/store/configure';
-import { createStore } from 'sly/web/services/api';
+import { createApiClient } from 'sly/web/services/api';
 import { isDev } from 'sly/web/config';
 
 
@@ -19,11 +18,14 @@ require('sly/web/services/yall');
 
 const initialState = window.__INITIAL_STATE__;
 const apiState = window.__API_STATE__;
-const apiContext = { store: createStore(apiState) };
+const apiContext = {
+  apiClient: createApiClient({ initialState: apiState }),
+  skipApiCalls: false,
+};
 if (isDev) {
   window.apiStore = apiContext.store;
 }
-const store = configureStore(initialState, { apiStore: apiContext.store });
+const store = configureStore(initialState, { apiStore: apiContext.apiClient.store });
 
 const AppRenderer = () => (
   <BrowserRouter>

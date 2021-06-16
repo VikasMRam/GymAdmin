@@ -13,7 +13,6 @@ import { withHydration } from 'sly/web/services/partialHydration';
 const HeaderContainer = loadable(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
 const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'));
 
-
 export const CommunityDetailPageTemplate = styled.main`
   .overlayWrapper {
     margin: auto;

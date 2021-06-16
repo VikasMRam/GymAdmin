@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonJS",
+    "jsx": "react",
+    "checkJs": true,
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "sly/web/*": ["../../packages/web/src/*"],
+      "sly/next/*": ["./*"],
+      "sly/common/*": ["../../packages/common/src/*"]
+    }
+  }
+}

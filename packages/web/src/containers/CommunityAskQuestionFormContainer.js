@@ -4,7 +4,6 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
 import { withRouter } from 'react-router';
-import api from 'sly/web/services/api/apiInstance';
 import { createValidator, required } from 'sly/web/services/validation';
 import CommunityAskQuestionForm from 'sly/web/components/organisms/CommunityAskQuestionForm';
 import Thankyou from 'sly/web/components/molecules/Thankyou';

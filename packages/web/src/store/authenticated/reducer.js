@@ -4,7 +4,7 @@ export const initialState = {
   loggingIn: false,
 };
 
-export default (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case AUTHENTICATE: return { loggingIn: true, reason: payload.reason, options: payload.options };
     case AUTHENTICATE_SUCCESS:
@@ -12,3 +12,5 @@ export default (state = initialState, { type, payload }) => {
     default: return state;
   }
 };
+
+export default reducer;

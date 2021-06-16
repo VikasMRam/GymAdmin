@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { string, object } from 'prop-types';
+import { Link as RRLink } from 'react-router-dom';
 
 import Root from './Root';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
+import { createRRAnchor } from 'sly/common/components/helpers';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const RRLinkAnchor = createRRAnchor(Root);

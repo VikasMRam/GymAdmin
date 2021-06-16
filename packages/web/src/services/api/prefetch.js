@@ -3,7 +3,6 @@ import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/web/config';
-import api from 'sly/web/services/api/apiInstance';
 import { hasSession } from 'sly/web/services/api/helpers';
 import { defaultRequest, getRelationship as selectRelationship } from 'sly/web/services/api/selectors';
 import { useApi } from 'sly/web/services/api/context';
@@ -18,19 +17,19 @@ function getDisplayName(WrappedComponent) {
 }
 
 export function usePrefetch(apiCall, ...args) {
+  const { skipApiCalls, apiClient: { store, api }} = useApi();
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
 
-  const { store, dispatch, skipApiCalls } = useApi();
-  const fetch = useCallback(() => dispatch(
+  const fetch = useCallback(() => store.dispatch(
     api[apiCall].asAction(placeholders, options),
   ), [apiCall, argsKey]);
 
-  const invalidate = useCallback(() => dispatch(
+  const invalidate = useCallback(() => store.dispatch(
     invalidateRequests(apiCall, placeholders),
   ), [apiCall, argsKey]);
 
-  const purgeFromRelationships = useCallback((relationship) => dispatch(
+  const purgeFromRelationships = useCallback((relationship) => store.dispatch(
     purgeFromRelationshipsAction(apiCall, placeholders, relationship),
   ), [apiCall, argsKey]);
 

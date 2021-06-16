@@ -105,10 +105,12 @@ export default class Image extends React.Component {
   };
 
   failedLoadImageHandler = () => {
-    const { onLoadFailed } = this.props;
-    this.setState({
-      failed: true,
-    }, onLoadFailed);
+    if (this.props.src) {
+      const { onLoadFailed } = this.props;
+      this.setState({
+        failed: true,
+      }, onLoadFailed);
+    }
   };
 
   render() {
@@ -123,9 +125,9 @@ export default class Image extends React.Component {
     const className = loading === 'lazy' ? 'lazy' : '';
 
     const actualPlaceholder = placeholder || assetPath('images/img-placeholder.png');
-    const imgSrc = this.state.failed
+    const imgSrc = src && this.state.failed
       ? actualPlaceholder
-      : src || actualPlaceholder;
+      : src;
 
     const imageProps = {
       src: imgSrc,

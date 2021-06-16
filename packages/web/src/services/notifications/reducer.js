@@ -2,7 +2,7 @@ import { ADD, REMOVE } from './actions';
 
 const initialState = { messages: [] };
 
-export default (state = initialState, { type, payload }) => {
+const notificationsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD: {
       const { messages } = state;
@@ -21,3 +21,5 @@ export default (state = initialState, { type, payload }) => {
     default: return state;
   }
 };
+
+export default notificationsReducer;

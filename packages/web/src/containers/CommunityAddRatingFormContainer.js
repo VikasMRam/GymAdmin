@@ -4,7 +4,6 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { func, object } from 'prop-types';
 
 import { withRouter } from 'react-router';
-import api from 'sly/web/services/api/apiInstance';
 import { withUser, prefetch, query } from 'sly/web/services/api';
 
 import {
@@ -36,6 +35,7 @@ const ReduxForm = reduxForm({
 
 @withUser
 
+@query('createRating', 'createRating')
 @query('createAction', 'createUuidAction')
 
 @prefetch('community', 'getCommunity', (req, { match }) => req({
@@ -51,11 +51,12 @@ export default class CommunityAddRatingFormContainer extends Component {
     status: object.isRequired,
     showModal: func,
     createAction: func,
+    createRating: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      community, status, showModal, createAction, match,
+      community, status, showModal, createRating, createAction, match,
     } = this.props;
     const {
       comments, value, name, email,
@@ -68,7 +69,7 @@ export default class CommunityAddRatingFormContainer extends Component {
       email,
     };
 
-    return api.createRating(payload)
+    return createRating(payload)
       .then(({ body }) => createAction({
         type: 'UUIDAction',
         attributes: {

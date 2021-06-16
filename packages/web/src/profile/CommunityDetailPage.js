@@ -4,6 +4,7 @@ import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
+import { withHydration } from 'sly/web/services/partialHydration';
 import { size, palette } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import {
@@ -18,7 +19,6 @@ import {
   buildNewPriceList,
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
-import { withHydration } from 'sly/web/services/partialHydration';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button, Block, Heading, Hr, Link } from 'sly/common/components/atoms';
@@ -45,7 +45,7 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
-import  withChatbox  from 'sly/web/services/chatbox/withChatBox';
+import withChatbox from 'sly/web/services/chatbox/withChatBox';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
