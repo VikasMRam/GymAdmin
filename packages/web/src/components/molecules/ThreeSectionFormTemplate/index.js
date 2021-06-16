@@ -6,7 +6,8 @@ import { ifNotProp, ifProp, prop } from 'styled-tools';
 import { size, palette } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Heading, Button, Block, Icon, Hr } from 'sly/common/components/atoms';
+import { Block, Icon } from 'sly/common/components/atoms';
+import { Heading, Button, space, sx, Hr } from 'sly/common/system';
 import cursor from 'sly/web/components/helpers/cursor';
 
 const Head = styled.div`
@@ -16,15 +17,13 @@ const Head = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 0 ${size('spacing.xLarge')};
-  padding-bottom: ${size('spacing.xLarge')};
+  padding-bottom: ${space('m')};
   overflow-y: auto;
   max-height: 70vh;
 `;
 
 const Bottom = styled.div`
-  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
-  background: ${ifNotProp('noFooter', palette('grey.background'))};
+  padding: ${space('spacing.large')} ${size('spacing.xLarge')};
   border-top: ${ifNotProp('noFooter', css`${size('border.regular')} solid ${palette('grey.stroke')}`)};
   display: flex;
   justify-content: space-between;
@@ -34,6 +33,7 @@ const ActionButtonsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(${prop('noOfColumns')}, auto);
   grid-gap: ${size('spacing.large')};
+  width:100%;
 `;
 
 const FullWidthActionButtonsWrapper = fullWidth(ActionButtonsWrapper);
@@ -55,13 +55,13 @@ const ThreeSectionFormTemplate = ({
     <form onSubmit={onSubmit}>
       <Head noTopSpacing={noTopSpacing}>
         <div>
-          {!description && <Heading size="subtitle">{heading}</Heading>}
+          {!description && <Heading pad="l" font="title-m">{heading}</Heading>}
           {description && <PaddedHeading size="subtitle">{heading}</PaddedHeading>}
           {description && <Block size="caption">{description}</Block>}
         </div>
         {topRightIcon && topRightIconOnClick && <TopRightIconButton onClick={topRightIconOnClick} icon={topRightIcon} palette={topRightIconPalette} />}
       </Head>
-      <Hr marginTop="0" />
+      <Hr pad="l" marginX={sx`-${space('l')}`} marginTop="0" />
       <Wrapper>
         {children}
       </Wrapper>
@@ -69,7 +69,7 @@ const ThreeSectionFormTemplate = ({
         {hasCancel && <Button secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
         {!hasCancel && <div />}
         <ACWrapperComponent buttonsFullWidth={buttonsFullWidth} noOfColumns={hasSubmit ? extraActionButtonsAfterSubmit.length + 1 : extraActionButtonsAfterSubmit.length}>
-          {hasSubmit && <Button ghost={extraActionButtonsAfterSubmit.length > 0} type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
+          {hasSubmit && <Button width="100%" sx$tablet={{ width: 'initial' }} variant={extraActionButtonsAfterSubmit.length > 0 ? 'neutral' : 'primary'} type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
           {extraActionButtonsAfterSubmit.map(b => <Button key={b.text} disabled={submitting} onClick={b.onClick}>{b.text}</Button>)}
         </ACWrapperComponent>
       </Bottom>

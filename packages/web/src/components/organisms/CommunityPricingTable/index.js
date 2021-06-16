@@ -17,6 +17,7 @@ const Table = forwardRef(({ children, ...props }, ref) => {
     <Block
       ref={ref}
       as="table"
+      font="body-m"
       sx={{
         display: 'table',
         border: 'box',
@@ -136,7 +137,7 @@ const Td = forwardRef(({  ...props }, ref) => (
 
 const StyledBlockNp = styled(Block)`
    padding-top: 0px;
-   padding-bottom: ${space('l')};
+   padding-bottom: ${space('m')};
 `;
 
 const StyledGetPricingButton = styled(fullWidth(GetCustomPricingButtonContainer))`
@@ -287,6 +288,7 @@ const CommunityPricingTable = ({
         }
         <StyledGetPricingButton
           {...buttonProps}
+          type="pricing"
           hasAlreadyRequestedPricing={isAlreadyPricingRequested}
           locTrack={locTrack}
           community={community}

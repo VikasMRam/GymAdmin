@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
 import { withHydration } from 'sly/web/services/partialHydration';
-import { size, palette } from 'sly/common/components/themes';
+import { size } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import {
   getBreadCrumbsForCommunity,
@@ -21,7 +21,8 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
-import { Button, Block, Heading, Hr, Link } from 'sly/common/components/atoms';
+import { Button, Link } from 'sly/common/components/atoms';
+import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -29,7 +30,6 @@ import {
   makeBody,
   makeColumn,
   makeFooter,
-  makeGallery,
   makeHeader,
   makeTwoColumn,
   makeWrapper,
@@ -45,9 +45,11 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
+import StickyHeader from 'sly/web/profile/StickyHeader';
+import Chatbox from 'sly/web/profile/Chatbox';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
-const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/containers/CommunityMediaGalleryContainer'));
+const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
 const CommunitySummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
 const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkGetAssessmentBox" */ 'sly/web/profile/GetAssessmentBoxContainerHydrator'));
 
@@ -57,12 +59,13 @@ const OfferNotificationContainer = withHydration(/* #__LOADABLE__ */ () => impor
 const TrackedSimilarCommunitiesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/TrackedSimilarCommunitiesContainer'));
 const HowSlyWorksVideoContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkHowSlyWorksVideo" */ 'sly/web/containers/HowSlyWorksVideoContainer'));
 const CommunityReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/containers/CommunityReviewsContainer'));
-const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
+// const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
 const AskAgentQuestionButtonContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAskAgentQuestionButton" */ 'sly/web/containers/AskAgentQuestionButtonContainer'));
-const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/containers/CommunityMorePicturesContainer'));
+const CommunityMorePicturesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityCommunityMorePictures" */ 'sly/web/profile/CommunityMorePictures/CommunityMorePicturesContainer'));
 
 const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrustScore" */ 'sly/web/containers/communityProfile/TrustScoreContainer'));
-const Chatbox = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkChatbox" */ 'sly/web/profile/Chatbox'), { alwaysHydrate: true });
+
+
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
 
 
@@ -71,10 +74,9 @@ const BackToSearch = styled.div`
 `;
 
 const StyledCommunitySummary = styled(CommunitySummaryContainer)`
-  margin-bottom: ${size('spacing.xLarge')};
-  margin-top: ${size('spacing.xLarge')};
+  margin-bottom: ${space('s')};
   position: relative;
-  background: ${palette('white', 'base')};
+  background: ${color('white.base')};
   z-index: 1;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -89,16 +91,34 @@ const IconItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const StyledOfferNotification = styled(OfferNotificationContainer)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
-  margin-bottom: ${ifProp('extraBottomMargin', size('spacing.xxxLarge'), size('spacing.xLarge'))};
+  margin-bottom:  ${space('s')};
+  ${ifProp('hasNoBottomHr', sx$tablet({
+    marginBottom: 'm',
+    paddingBottom: 'm',
+    paddingTop: '0',
+  }), sx$tablet({
+    marginBottom: '0',
+    paddingBottom: '0',
+    paddingTop: '0',
+  }))}
+
+  ${sx$laptop({
+    paddingX: '0',
+  })}
+  font:${font('body-l')};
 `;
 
 const StyledSection = styled(Section)`
-  margin-bottom: ${size('spacing.xxxLarge')}!important;
+  padding:${space('l')} ${space('m')} ;
+  margin-bottom:${space('s')};
+  margin-left:auto;
+  margin-right:auto;
+  background:${color('white.base')};
+  ${sx$tablet({
+    paddingY: '0',
+  })}
+  font:${font('body-l')};
 `;
 
 const StyledButton = styled(Button)`
@@ -119,7 +139,7 @@ const EventsWrapper = styled(CollapsibleBlock)`
 
 const StickToTop = styled.div`
   position: sticky;
-  top: 24px;
+  top: 74px;
 `;
 
 const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
@@ -130,7 +150,6 @@ const Body = makeBody('div');
 const Column = makeColumn('aside');
 const Footer = makeFooter('footer');
 const Wrapper = makeWrapper('div');
-const Gallery = makeGallery('div');
 
 const getAssessmentBoxModes = {
   pricingTable: { cta: 'pricing', entry: 'pricingTable' },
@@ -205,6 +224,17 @@ export default class CommunityDetailPage extends PureComponent {
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
 
+
+    const {
+      line1, line2, city, state, zip,
+    } = address;
+    const formattedAddress = `${line1}, ${line2}, ${city},
+    ${state}
+    ${zip}`
+      .replace(/, null,/g, ',')
+      .replace(/\s/g, ' ')
+      .replace(/, ,/g, ', ');
+
     const newPricesList = buildNewPriceList(community);
     const pricesList = buildPriceList(community);
     const estimatedPriceList = buildEstimatedPriceList(community);
@@ -214,37 +244,45 @@ export default class CommunityDetailPage extends PureComponent {
         : 'Pricing';
 
     const similarCommunityStyle = {
-      layout: 'column',
+      layout: 'row',
       imageSize: 'regular',
       showDescription: true,
     };
+
+
+    const stickyHeaderSections = {
+      photos: true,
+      pricing: !isActiveAdult && !isInternational,
+      advisor: !!partnerAgent,
+      about: !!(communityDescription || rgsAux.communityDescription ||
+        staffDescription || residentDescription || ownerExperience),
+      amenities: true,
+      reviews: reviews && reviews.length > 0,
+    };
+
 
     return (
       <>
         {!isInternational && <Chatbox community={community} /> }
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
+
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: community.id }} />
-        <Block pad="large">
+        <Block pad="m">
           <Header noBottomMargin />
         </Block>
+        <Block mx="m" sx$tablet={{ width: 'col8', mx: 'l' }} sx$laptop={{ width: 'col12', mx: 'auto' }}>
+          <BreadCrumb pad="m" background="white.base" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
+        </Block>
+        <Block id="gallery" mb="l" sx$laptop={{ width: 'col12', mx: 'auto' }}>
+          <CommunityMediaGalleryContainer />
+        </Block>
         <CommunityDetailPageTemplate>
+          <StickyHeader sections={stickyHeaderSections} />
           <Wrapper>
-            <BreadCrumb pad="m" items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
             <TwoColumn>
               <Body>
-                <Gallery>
-                  <CommunityMediaGalleryContainer />
-                </Gallery>
-                <StyledCommunitySummary />
-                {(promoDescription || promoTitle) && (
-                  <StyledOfferNotification
-                    palette="warning"
-                    title={promoTitle}
-                    description={promoDescription}
-                    community={community}
-                  />
-                )}
+                <StyledCommunitySummary formattedAddress={formattedAddress} />
                 {communityInsights &&
                   communityInsights.length > 0 && (
                     <StyledHeadingBoxSection heading={`Community Insights at ${name}`}>
@@ -279,75 +317,89 @@ export default class CommunityDetailPage extends PureComponent {
                       newPricesList,
                     }}
                   />
+                  {(promoDescription || promoTitle) && (
+                    <OfferNotificationContainer
+                      mt="s"
+                      sx$laptop={{ display: 'none' }}
+                      title={promoTitle}
+                      description={promoDescription}
+                      community={community}
+                    />
+                  )}
                 </StyledHeadingBoxSection>
                 }
                 {partnerAgent && (
-                  <StyledHeadingBoxSection heading={`Your Seniorly Local Advisor in ${address.city}, ${address.state}`}>
-                    <CommunityAgentSection agent={partnerAgent} pad="xLarge" />
-                    <AskAgentQuestionButtonContainer
-                      agent={partnerAgent}
-                      width="100%"
-                      community={community}
-                      type="expert"
-                      ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
-                    />
-                  </StyledHeadingBoxSection>
+                  <>
+                    <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you.">
+                      <CommunityAgentSection agent={partnerAgent} pad="l" />
+                      <AskAgentQuestionButtonContainer
+                        agent={partnerAgent}
+                        width="100%"
+                        community={community}
+                        type="expert"
+                        ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
+                      />
+                    </StyledHeadingBoxSection>
+
+                  </>
                 )}
 
                 {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||
                   staffDescription || residentDescription || ownerExperience) && (
-                    <StyledHeadingBoxSection heading={`About ${name}`}>
-                      <CommunityAbout
-                        id={community.id}
-                        communityName={name}
-                        communityDescription={communityDescription}
-                        rgsAuxDescription={rgsAux.communityDescription}
-                        staffDescription={staffDescription}
-                        residentDescription={residentDescription}
-                        ownerExperience={ownerExperience}
-                        city={address.city}
-                        state={address.state}
-                        twilioNumber={twilioNumber}
-                        guideUrl={guideUrl}
-                        communityUser={community.user}
-                        isActiveAdult={isActiveAdult}
-                        isInternational={isInternational}
-                        pad="large"
-                      />
-                      <Hr />
-                      <Heading pad="large" level="subtitle" size="body">
-                        Have a question about this community?
-                      </Heading>
-                      <AskAgentQuestionButtonContainer
-                        ghost
-                        width="100%"
-                        community={community}
-                        type="profile-content-question"
-                        ctaText="Ask a Question"
-                      />
-                    </StyledHeadingBoxSection>
+                  <StyledHeadingBoxSection id="community-about" heading={`About ${name}`}>
+                    <CommunityAbout
+                      id={community.id}
+                      communityName={name}
+                      communityDescription={communityDescription}
+                      rgsAuxDescription={rgsAux.communityDescription}
+                      staffDescription={staffDescription}
+                      residentDescription={residentDescription}
+                      ownerExperience={ownerExperience}
+                      city={address.city}
+                      state={address.state}
+                      twilioNumber={twilioNumber}
+                      guideUrl={guideUrl}
+                      communityUser={community.user}
+                      isActiveAdult={isActiveAdult}
+                      isInternational={isInternational}
+                      pad="m"
+                    />
+                    {/* <Hr />
+                    <Heading pad="m" font="title-m">
+                      Have a question about this community?
+                    </Heading>
+                    <AskAgentQuestionButtonContainer
+                      ghost
+                      width="100%"
+                      community={community}
+                      type="profile-content-question"
+                      ctaText="Ask a Question"
+                    /> */}
+                  </StyledHeadingBoxSection>
                 )}
                 {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
                 <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>
                   <TrustScoreTile community={community} />
                 </StyledHeadingBoxSection>
                 }
-                <StyledHeadingBoxSection heading="Services and Amenities">
+                <StyledHeadingBoxSection id="amenities-section" heading="Amenities">
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
                 {!isActiveAdult && !isInternational &&
-                  <StyledHeadingBoxSection heading={`How Seniorly Works in ${address.city}, ${address.state}`} hasNoBodyPadding>
+                  <StyledHeadingBoxSection heading="How Seniorly Works" hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
+
+                    <PaddedGetAssessmentBoxContainerHydrator
+                      startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                      community={community}
+                      mode={getAssessmentBoxModes.profileSection}
+                      mt="m"
+                    />
+
                   </StyledHeadingBoxSection>
                 }
-                {!isActiveAdult && !isInternational &&
-                <PaddedGetAssessmentBoxContainerHydrator
-                  startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
-                  community={community}
-                  mode={getAssessmentBoxModes.profileSection}
-                />
-                }
+
                 {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
                   <StyledHeadingBoxSection
                     heading={`Helpful ${typeOfCare} Resources`}
@@ -380,7 +432,7 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 }
 
-                <CommunityQuestionAnswersContainer />
+                {/* <CommunityQuestionAnswersContainer /> */}
 
                 {plusCommunity && eventsLink && sampleEvents &&
                 <StyledHeadingBoxSection heading={`Events at ${name}`}>
@@ -408,34 +460,28 @@ export default class CommunityDetailPage extends PureComponent {
                   <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
                 </StyledHeadingBoxSection>
                 }
-                <CommunityDisclaimerSection
-                  title="Disclaimer"
-                  phone={twilioNumber?.numbers?.[0] || '8558664515'}
-                  isClaimed={isClaimed}
-                  id={community.id}
-                  city={address.city}
-                  name={name}
-                  agent={partnerAgent}
-                />
-                <StyledHeadingBoxSection
-                  heading={`Similar ${typeOfCare} Communities`}
-                  id="sticky-sidebar-boundary"
-                  extraBottomMargin
-                >
-                  <TrackedSimilarCommunitiesContainer
-                    communities={similarProperties}
-                    communityStyle={similarCommunityStyle}
-                  />
-                  <BackToSearch>
-                    <Button
-                      href={getCitySearchUrl({ propInfo, address })}
-                      event={{ action: 'click', category: 'backToSearch', label: community.id }}
-                      ghost
-                    >
-                      Communities In {address.city}
-                    </Button>
-                  </BackToSearch>
-                </StyledHeadingBoxSection>
+
+                {!!similarProperties?.length && (
+                  <StyledHeadingBoxSection
+                    heading="Recommended communities"
+                    id="sticky-sidebar-boundary"
+                    sx$tablet={{ padding: 0 }}
+                  >
+                    <TrackedSimilarCommunitiesContainer
+                      communities={similarProperties}
+                      communityStyle={similarCommunityStyle}
+                    />
+                    <BackToSearch>
+                      <Button
+                        href={getCitySearchUrl({ propInfo, address })}
+                        event={{ action: 'click', category: 'backToSearch', label: community.id }}
+                        width="100%"
+                      >
+                        Communities In {address.city}
+                      </Button>
+                    </BackToSearch>
+                  </StyledHeadingBoxSection>
+                )}
                 {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
@@ -449,41 +495,110 @@ export default class CommunityDetailPage extends PureComponent {
               <Column>
                 <StickToTop>
                   {!isInternational &&
-                  <GetAssessmentBoxContainerHydrator
-                    startLink={`/wizards/assessment/community/${community.id}`}
-                    community={community}
-                    mode={getAssessmentBoxModes.communitySidebar}
-                    layout="sidebar"
-                  />
+                    <GetAssessmentBoxContainerHydrator
+                      startLink={`/wizards/assessment/community/${community.id}`}
+                      community={community}
+                      mode={getAssessmentBoxModes.communitySidebar}
+                      layout="sidebar"
+                    >
+                      {(promoDescription || promoTitle) && (
+                        <OfferNotificationContainer
+                          sx={{
+                            m: 'l -l -l',
+                            p: 'l',
+                            borderTopLeftRadius: 'unset',
+                            borderTopRightRadius: 'unset',
+                          }}
+                          sx$laptop={{ display: 'flex' }}
+                          title={promoTitle}
+                          description={promoDescription}
+                          community={community}
+                        />
+                      )}
+                    </GetAssessmentBoxContainerHydrator>
                   }
                 </StickToTop>
               </Column>
             </TwoColumn>
+            <StyledSection
+              headingMargin="l"
+              title="Location"
+              headingFont="title-m"
+            >
+              <LazyCommunityMap id="map" />
+              <Block>{formattedAddress}</Block>
+              <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
+            </StyledSection>
+            {/* <StyledHeadingBoxSection */}
+            {/*  heading="Active senior living communities" */}
+            {/*  id="sticky-sidebar-boundary" */}
+            {/*  sx$tablet={{ padding: 0 }} */}
+            {/* > */}
+            {/*  <TrackedSimilarCommunitiesContainer */}
+            {/*    communities={[...similarProperties, ...similarProperties]} */}
+            {/*    communityStyle={similarCommunityStyle} */}
+            {/*  /> */}
+            {/* </StyledHeadingBoxSection> */}
+            {/* <StyledHeadingBoxSection */}
+            {/*  heading="Senior living communities for those on a budget" */}
+            {/*  id="sticky-sidebar-boundary" */}
+            {/*  sx$tablet={{ padding: 0 }} */}
+            {/* > */}
+            {/*  <TrackedSimilarCommunitiesContainer */}
+            {/*    communities={[...similarProperties, ...similarProperties]} */}
+            {/*    communityStyle={similarCommunityStyle} */}
+            {/*  /> */}
+            {/* </StyledHeadingBoxSection> */}
+            {/* <StyledHeadingBoxSection */}
+            {/*  heading="Luxury senior living communities" */}
+            {/*  id="sticky-sidebar-boundary" */}
+            {/*  sx$tablet={{ padding: 0 }} */}
+            {/* > */}
+            {/*  <TrackedSimilarCommunitiesContainer */}
+            {/*    communities={[...similarProperties, ...similarProperties]} */}
+            {/*    communityStyle={similarCommunityStyle} */}
+            {/*  /> */}
+            {/* </StyledHeadingBoxSection> */}
             {showMoreImages && (
               <StyledSection
                 title={`More Photos of ${name}`}
-                titleSize="subtitle"
+                headingFont="title-l"
+                headingMargin="l"
+                sx$tablet={{ px: 0 }}
               >
                 <CommunityMorePicturesContainer />
+                <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
               </StyledSection>
             )}
-            <Section title={`Map View of ${name}`} titleSize="subtitle" />
+            <StyledHeadingBoxSection
+              heading="Disclaimer"
+              headingFont="title-m"
+              hasNoBottomHr
+            >
+              <CommunityDisclaimerSection
+                phone={twilioNumber?.numbers?.[0] || '8558664515'}
+                isClaimed={isClaimed}
+                id={community.id}
+                city={address.city}
+                name={name}
+                agent={partnerAgent}
+              />
+            </StyledHeadingBoxSection>
           </Wrapper>
-          <StyledSection>
-            <LazyCommunityMap id="map" />
-          </StyledSection>
+
 
           {nearbyCities &&
             nearbyCities.length > 0 && (
               <Wrapper>
+                <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
                 <SeoLinks
-                  title={`Top Cities Near ${name}`}
+                  title={`Explore top cities near ${name}`}
                   links={nearbyCities}
                 />
               </Wrapper>
             )}
         </CommunityDetailPageTemplate>
-        <Footer />
+        <Footer sx={{ marginBottom: '81px' }} sx$laptop={{ marginBottom: '0px' }} />
       </>
     );
   }

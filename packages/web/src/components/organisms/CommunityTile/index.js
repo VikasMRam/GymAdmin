@@ -1,13 +1,13 @@
 import React from 'react';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
+import styled from 'styled-components';
 
-import { size, getKey } from 'sly/common/components/themes';
+import { getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid, Image, space, sx } from 'sly/common/system';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
-import MediaGallery from 'sly/web/components/molecules/MediaGallery';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 
@@ -23,10 +23,20 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
   </Button>
 ));
 
+const StyledIcon = styled(Block)`
+  z-index: 10;
+  top: 0.5rem;
+  right: 0.5rem;
+  transition: transform 250ms;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 const CommunityTile = ({
-  community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
-  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, noGallery,
-  layout, showFloorPlan, canFavourite, lazyLoadImage, event, type, imageAspectRatio, imageMargin, index, ...props
+  community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite, onFavouriteClick,
+  onUnfavouriteClick, onSlideChange, currentSlide, layout, showFloorPlan, canFavourite, lazyLoadImage, event, type,
+  imageAspectRatio, imageMargin, index, ...props
 }) => {
   const {
     name, gallery, communitySize, plusCategory,
@@ -40,10 +50,6 @@ const CommunityTile = ({
   const iconPalette = isFavourite ? 'primary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
   const hasImages = galleryImages.length > 0;
-  // one image only, don't show gallery
-  if (galleryImages.length < 2) {
-    noGallery = true;
-  }
   const placeholder = communityDefaultImages[communitySize || 'up to 20 Beds'];
   let imagePath;
   let imageSrc;
@@ -53,7 +59,7 @@ const CommunityTile = ({
     imagePath = galleryImages[0].path;
   }
   const topRightSection = canFavourite
-    ? () => <IconButton transparent icon={icon} iconSize="body" palette={iconPalette} onClick={onIconClick} />
+    ? <IconButton transparent icon={icon} iconSize="body" palette={iconPalette} onClick={onIconClick} />
     : null;
 
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
@@ -81,79 +87,65 @@ const CommunityTile = ({
         borderRadius="xxs"
         border="s"
         borderColor="slate.lighter-90"
-        // dimensions={[type === 'list' ? COLUMN_LAYOUT_IMAGE_WIDTH : COLUMN_LAYOUT_IMAGE_WIDTH_SMALL, 'auto']}
         sx$laptop={type === 'list' ? null : {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto !important`,
+          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto !important`,
+          gridTemplateRows: layout === 'row' && 'auto 1fr',
           gridGap: 'xs',
         }}
-
         sx$tablet={type === 'list' ?
         {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
+          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
+          gridTemplateRows: layout === 'row' && 'auto 1fr',
           gridGap: '0px',
         }
         : {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto`,
+          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto`,
+          gridTemplateRows: layout === 'row' && 'auto 1fr',
           gridGap: 'xs',
         }}
         // no column layout support below tablet
         sx={type === 'list' ? {
           gridTemplateColumns: 'auto',
           gridGap: 'm',
+          height: '100%',
         } : {
           gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto`,
           gridGap: 'xs',
         }}
       >
-        {!noGallery &&
-          <MediaGallery
-            images={galleryImages}
-            sizes={mediaSizes}
-            topRightSection={topRightSection}
-            onSlideChange={onSlideChange}
-            currentSlide={currentSlide}
-            borderRadius="small"
-            snap={layout === 'row' ? 'bottom' : imageSnap}
-            transparent
-          />
-        }
-        {noGallery &&
-          <Image
-            flexDirection={layout}
-            path={imagePath}
-            src={imageSrc}
-            placeholder={placeholder}
-            sizes={mediaSizes}
-            aspectRatio={imageAspectRatio}
 
-            margin={type === 'map' ? imageMargin : 0}
-            snap={layout === 'row' ? 'bottom' : imageSnap}
-            loading={loading}
-            borderRadius="xxs"
-            borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
-            borderBottomRightRadius={type === 'map' ? null : '0px !important'}
-            sx$tablet={{
-              borderBottomLeftRadius: sx`${space('xxs')}!important`,
-              borderTopRightRadius: type === 'map' ? null : '0px !important',
-              margin: imageMargin,
-            }}
-            // upToTablet={type === 'map' ? null : {
-            //   borderRadius: size('spacing.small'),
-            //   borderBottomLeftRadius: 0,
-            //   borderBottomRightRadius: 0,
-            //   margin: 0,
-            // }}
-          >
-            {topRightSection &&
-              <Block position="absolute" top="regular" right="regular" zIndex={1}>
-                {topRightSection()}
-              </Block>
-            }
-          </Image>
-        }
+
+        <Image
+          flexDirection={layout}
+          path={imagePath}
+          src={imageSrc}
+          placeholder={placeholder}
+          sizes={mediaSizes}
+          aspectRatio={imageAspectRatio}
+
+          margin={type === 'map' ? imageMargin : 0}
+          snap={layout === 'row' ? 'bottom' : imageSnap}
+          loading={loading}
+          borderRadius="xxs"
+          borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
+          borderBottomRightRadius={type === 'map' ? null : '0px !important'}
+          sx$tablet={{
+            borderBottomLeftRadius: sx`${space('xxs')}!important`,
+            borderTopRightRadius: type === 'map' ? null : '0px !important',
+            margin: imageMargin,
+          }}
+        >
+          {topRightSection &&
+            <StyledIcon position="absolute" top="regular" right="regular" zIndex={10}>
+              {topRightSection}
+            </StyledIcon>
+          }
+        </Image>
         <Block
           overflow="hidden"
-
+          display="flex"
+          height="100%"
+          flexDirection="column"
           // eslint-disable-next-line no-nested-ternary
           sx={type === 'map' ?
             {
@@ -178,34 +170,28 @@ const CommunityTile = ({
             pad={actionButtons.length ? 'm' : undefined}
             swapRatingPrice={layout === 'row'}
             index={index}
+            height="100%"
           />
           {buildActionButtons(actionButtons)}
           {(note || addNote) && <Hr />}
           {note &&
             <>
               <Block
-                display="inline"
-                size="body-s"
-                marginRight="xxxs"
-                testID="Note"
-              >
-                {note}
-              </Block>
-              <Button
-                transparent
-                padding="0"
+                textAlign="center"
                 color="primary"
                 size="body-s"
                 testID="EditNote"
+                marginTop="s"
                 onClick={onEditNoteClick}
               >
                 Edit note
-              </Button>
+              </Block>
             </>
           }
           {!note && addNote &&
             <Block
               textAlign="center"
+              marginTop="s"
               color="primary"
               size="body-s"
               testID="AddNote"
@@ -238,7 +224,6 @@ CommunityTile.propTypes = {
   onSlideChange: func,
   currentSlide: number,
   className: string,
-  noGallery: bool,
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']).isRequired,
   type: oneOf(['list', 'map']).isRequired,

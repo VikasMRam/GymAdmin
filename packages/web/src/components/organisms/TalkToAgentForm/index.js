@@ -9,12 +9,12 @@ import userPropType from 'sly/common/propTypes/user';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Button, Block, Heading, ResponsiveImage } from 'sly/web/components/atoms';
+import { Button, ResponsiveImage } from 'sly/web/components/atoms';
 import TosAndPrivacy from 'sly/web/components/molecules/TosAndPrivacy';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
+import { Heading, Hr, space, sx, Block } from 'sly/common/system';
 
-const StyledHeading = textAlign(pad(Heading, 'large'), 'left');
 
 const CenteredTosAndPrivacy = textAlign(TosAndPrivacy);
 
@@ -99,7 +99,8 @@ export default class TalkToAgentForm extends Component {
     return (
       <section>
         {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
-        <StyledHeading size="subtitle">{heading}</StyledHeading>
+        <Heading pad="l" font="title-m">{heading}</Heading>
+        <Hr marginX={sx`-${space('xl')}`} pad="l" />
         {showDesc && <StyledDesc>{description}</StyledDesc>}
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && !hideMessage && messageField}
@@ -156,7 +157,7 @@ export default class TalkToAgentForm extends Component {
           </StyledButton>
           {showTos && <CenteredTosAndPrivacy />}
         </form>
-        {error && <Block palette="danger">{error}</Block>}
+        {error && <Block color="danger">{error}</Block>}
       </section>
     );
   }

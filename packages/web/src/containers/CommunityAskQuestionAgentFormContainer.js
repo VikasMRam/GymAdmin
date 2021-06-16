@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string } from 'prop-types';
-
 import { withRouter } from 'react-router';
+
 import SlyEvent from 'sly/web/services/helpers/events';
 import { query, withUser } from 'sly/web/services/api';
 import {
@@ -61,7 +61,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
   handleOnSubmit = (data) => {
     const {
       notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
-      community, createAction, match, type
+      community, createAction, match, type,
     } = this.props;
     const { id } = community;
 
@@ -102,8 +102,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
       question,
     };
     if (user) {
-
-      [firstName, lastName] = user.name ? user.name.split(" ") : ["",""];
+      const [firstName, lastName] = user.name ? user.name.split(' ') : ['', ''];
       initialValues = {
         ...initialValues,
         full_name: user.name,

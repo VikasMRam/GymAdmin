@@ -28,7 +28,7 @@ export const orderedLabels = [
   'One Bedroom',
   'Two Bedroom',
   'Private Room',
-  'Shared Bedroom',
+  'Shared Room',
   'Additional levels of care',
   'Second person fee',
 ];

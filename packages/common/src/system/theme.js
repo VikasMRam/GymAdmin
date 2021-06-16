@@ -21,6 +21,7 @@ theme.color = {
   yellow     : makeColor('#f1ab31'),
   blue       : makeColor('#186dc5'),
   harvest    : makeColor('#9f8352'),
+  black      : makeColor('#000000'),
   white      : {
     base: '#fff',
   },

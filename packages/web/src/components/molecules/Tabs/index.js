@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { instanceOf, string, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { Box } from 'sly/web/components/atoms';
+import { Box } from 'sly/common/system';
 import { upTo } from 'sly/common/components/helpers';
 
 const Wrapper = styled(Box)`
@@ -22,6 +22,7 @@ Wrapper.defaultProps = {
   background: 'white',
   padding: [0, 0, 0, 'xLarge'],
   snap: 'bottom',
+  paddingX: 'm',
 };
 
 const getDefaultActiveTab = (children) => {

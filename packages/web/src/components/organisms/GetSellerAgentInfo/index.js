@@ -36,14 +36,13 @@ export const ZillowComp = ({ buttonTo, onClick,  communityId }) => (
   </>
 );
 
-const GetSellerAgentInfo = ({ title, subtitle, isZillowAd, community, buttonTo, onClick }) => (
+const GetSellerAgentInfo = ({ title, subtitle, isZillowAd, community, buttonTo, onClick, children }) => (
   <Box>
     <PaddedHeading level="title" size="subtitle">{title}</PaddedHeading>
     {isZillowAd && <ZillowComp communityId={community.id} buttonTo={buttonTo} onClick={onClick} /> }
     {!isZillowAd && <MarginedDiv>{subtitle}</MarginedDiv> }
-    {!isZillowAd && <StyledRequestInfo type="aa-sidebar" onClick={onClick} ctaText="Request Info" event={onClickEvent(community.id)} ackCTA community={community} />
-    }
-
+    {!isZillowAd && <StyledRequestInfo type="aa-sidebar" onClick={onClick} ctaText="Request Info" event={onClickEvent(community.id)} ackCTA community={community} />}
+    {children}
   </Box>
 );
 
