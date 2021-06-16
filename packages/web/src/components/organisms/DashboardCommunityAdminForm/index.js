@@ -130,51 +130,51 @@ export default class DashboardCommunityAdminForm extends Component {
             readOnly={!canEdit}
           />
           {contractInfo?.hasContract && (
-          <>
-            <EditField
-              label="Type of contract"
-              name="rgsAux.rgsInfo.contract_info.contractType"
-              type="choice"
-              options={[
-                 { value: 'Flat Rate', label: 'Flat rate' },
-                 { value: 'Percentage', label: 'Percentage' },
-               ]}
-              readOnly={!canEdit}
-            />
-            <EditField
-              label={valueLabel}
-              name="rgsAux.rgsInfo.contract_info.value"
-              type="number"
-              inputmode="numeric"
-              readOnly={!canEdit}
-              parse={value => Number.isNaN(value) ? null : Number(value)}
-              validate={contractValueValidators}
-            />
-            <EditField
-              label="Contract Url"
-              name="rgsAux.rgsInfo.contract_info.url"
-              type="text"
-            />
-            <EditField
-              label="Contract Notes"
-              name="rgsAux.rgsInfo.contract_info.notes"
-              type="textarea"
-              readOnly={!canEdit}
-            />
-            <EditField
-              label="Contract Status"
-              name="rgsAux.rgsInfo.contract_info.contractStatus"
-              type="select"
-              readOnly={!canEdit}
-              Only={!canEdit}
-            >
-              <option value="" disabled>Select an option</option>
-              <option value="No contract">No contract</option>
-              <option value="Pending">Pending</option>
-              <option value="Signed">Signed</option>
-            </EditField>
-          </>
-         )}
+            <>
+              <EditField
+                label="Type of contract"
+                name="rgsAux.rgsInfo.contract_info.contractType"
+                type="choice"
+                options={[
+                   { value: 'Flat Rate', label: 'Flat rate' },
+                   { value: 'Percentage', label: 'Percentage' },
+                 ]}
+                readOnly={!canEdit}
+              />
+              <EditField
+                label={valueLabel}
+                name="rgsAux.rgsInfo.contract_info.value"
+                type="number"
+                inputmode="numeric"
+                readOnly={!canEdit}
+                parse={value => Number.isNaN(value) ? null : Number(value)}
+                validate={contractValueValidators}
+              />
+              <EditField
+                label="Contract Url"
+                name="rgsAux.rgsInfo.contract_info.url"
+                type="text"
+              />
+              <EditField
+                label="Contract Notes"
+                name="rgsAux.rgsInfo.contract_info.notes"
+                type="textarea"
+                readOnly={!canEdit}
+              />
+              <EditField
+                label="Contract Status"
+                name="rgsAux.rgsInfo.contract_info.contractStatus"
+                type="select"
+                readOnly={!canEdit}
+                Only={!canEdit}
+              >
+                <option value="" disabled>Select an option</option>
+                <option value="No contract">No contract</option>
+                <option value="Pending">Pending</option>
+                <option value="Signed">Signed</option>
+              </EditField>
+            </>
+          )}
         </SectionForm>
         <SectionActions>
           <Button type="submit" disabled={!canEdit || invalid || submitting}>
