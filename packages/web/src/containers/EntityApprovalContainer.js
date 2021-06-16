@@ -7,7 +7,6 @@ import EntityApprovalPage from 'sly/web/components/pages/EntityApprovalPage/inde
 import { titleize } from 'sly/web/services/helpers/strings';
 import { logError } from 'sly/web/services/helpers/logging';
 import withAuth from 'sly/web/services/api/withAuth';
-import api from 'sly/web/services/api/apiInstance';
 
 const getApiFor = (entity, { updateContent, updateRating }) => {
   switch (entity) {

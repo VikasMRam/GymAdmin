@@ -3,7 +3,7 @@
 import { initialState } from './selectors';
 import { MODAL_SHOW, MODAL_HIDE } from './actions';
 
-export default (state = initialState, { type, payload = {} }) => {
+const reducer = (state = initialState, { type, payload = {} }) => {
   // #CONSOLE. LOG
   // console.log('Seeing modal and state',state);
   // console.log('Seeing modal type',type);
@@ -26,3 +26,5 @@ export default (state = initialState, { type, payload = {} }) => {
       return state;
   }
 };
+
+export default reducer;

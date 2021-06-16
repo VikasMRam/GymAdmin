@@ -30,7 +30,7 @@ const isLoggedIn = (userInfo) => {
 };
 
 export const useAuth = () => {
-  const { api, dispatch } = useApi();
+  const { apiClient: { store, api }} = useApi();
   const {
     user,
     info: { user: userInfo },
@@ -52,9 +52,9 @@ export const useAuth = () => {
     'otpLoginUser',
     'sendOtpCode',
   ].reduce((acc, method) => {
-    acc[method] = (...args) => dispatch(api[method].asAction(...args));
+    acc[method] = (...args) => store.dispatch(api[method].asAction(...args));
     return acc;
-  }, {}), [api, dispatch]);
+  }, {}), [api, store]);
 
   const registerUser = useCallback((options = {}) => {
     const { ignoreExisting, ...data } = options;

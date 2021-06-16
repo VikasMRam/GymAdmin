@@ -10,6 +10,7 @@
     "baseUrl": "./",
     "paths": {
       "sly/web/*": ["./packages/web/src/*"],
+      "sly/next/*": ["./packages/next/*"],
       "sly/common/*": ["./packages/common/src/*"],
       "sly/storybook/*": ["./packages/storybook/src/*"]
     }

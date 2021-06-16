@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bool, string, oneOf, object } from 'prop-types';
+import { Link as RRLink } from 'react-router-dom';
 
 import Root from './Root';
 
@@ -7,7 +8,7 @@ import { getKey } from 'sly/common/components/themes';
 import { isReactNative } from 'sly/common/constants/utils';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
+import { createRRAnchor } from 'sly/common/components/helpers';
 // todo: most probably should be common in future
 import SlyEvent from 'sly/web/services/helpers/events';
 import { isString } from 'sly/common/services/helpers/utils';

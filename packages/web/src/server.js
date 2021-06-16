@@ -22,7 +22,7 @@ import { clientConfigsMiddleware, clientDevMiddleware } from 'sly/web/clientConf
 import renderAndPrefetch from 'sly/web/services/api/renderAndPrefetch';
 import endpoints from 'sly/web/services/api/endpoints';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
-import { createStore } from 'sly/web/services/api/context';
+import { createApiClient } from 'sly/web/services/api';
 
 const convertAnsi = new ConvertAnsi();
 const getErrorContent = (err) => {
@@ -141,12 +141,11 @@ app.use(async (req, res, next) => {
     const sheet = new ServerStyleSheet();
     const context = {};
     const apiContext = {
-      store: createStore({}),
-      promises: [],
+      apiClient: createApiClient(),
       skipApiCalls: false,
     };
     const iconsContext = {};
-    const store = configureStore({ experiments: {} }, { apiStore: apiContext.store });
+    const store = configureStore({ experiments: {} }, { apiStore: apiContext.apiClient.store });
 
     const app = sheet.collectStyles(extractor.collectChunks((
       <StaticRouter context={context} location={req.url}>
@@ -169,7 +168,7 @@ app.use(async (req, res, next) => {
       res.redirect(301, context.url);
     } else {
       const initialState = store.getState();
-      const apiState = apiContext.store.getState();
+      const apiState = apiContext.apiClient.store.getState();
       res.header('Cache-Control', [
         'max-age=0, private, must-revalidate',
         'no-cache="set-cookie"',
