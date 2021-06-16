@@ -14,16 +14,10 @@ const wrap = (props = {}) => shallow(<CommunityTile community={RhodaGoldmanPlaza
 describe('CommunityTile', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('MediaGallery')).toHaveLength(1);
     expect(wrapper.find('CommunityInfo')).toHaveLength(1);
     expect(wrapper.find('Button')).toHaveLength(0);
     expect(wrapper.find('[testID="EditNote"]')).toHaveLength(0);
     expect(wrapper.find('[testID="AddNote"]')).toHaveLength(0);
-  });
-
-  it('renders note', () => {
-    const wrapper = wrap({ note });
-    expect(wrapper.find('[testID="Note"]').text()).toContain(note);
   });
 
   it('onEditNoteClick gets called', () => {

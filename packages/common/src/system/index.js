@@ -18,3 +18,4 @@ export { default as SearchInput } from './SearchInput';
 export { default as Span } from './Span';
 export { DoubleLineTd, LinkTd, Td, TextTd, TBody, THead, Table, Th, Tr } from './Table';
 export { default as ToggleButton } from './ToggleButton';
+export { default as IconWithTextWrapper } from './IconWithTextWrapper';

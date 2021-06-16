@@ -10,7 +10,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const buttonBaseStyles = {
-  height: 'm',
+  minHeight: 'm',
   padding: 's l',
   font: 'body-m',
   whiteSpace: 'nowrap',

@@ -3,27 +3,10 @@ import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { size, palette } from 'sly/common/components/themes';
-import { Icon, Link } from 'sly/common/components/atoms';
-import { Span } from 'sly/web/components/atoms';
+import { size } from 'sly/common/components/themes';
+import Offer from 'sly/common/icons/Offer';
+import { Block, Span, Link, Flex } from 'sly/common/system';
 import GetCustomPricingContainer from 'sly/web/containers/GetCustomPricingContainer';
-
-const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
-
-const Wrapper = styled.div`
-  padding: ${size('spacing.large')};
-  display: flex;
-  background-color: ${getColor};
-  border-radius: ${size('spacing.small')};
-`;
-
-const LoyaltyIcon = styled(Icon)`
-  margin-right: ${size('spacing.large')};
-`;
-
-const TopWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-`;
 
 const SmallScreenLearnMore = styled(Link)`
   font-weight: ${size('weight.medium')};
@@ -41,30 +24,30 @@ const BigScreenLearnMore = styled(Link)`
 `;
 
 const OfferNotification = ({
-  palette: paletteProp,
   title,
   description,
   hasLearnMore,
   className,
   hasAlreadyRequestedPricing,
+  ...props
 }) => (
-  <Wrapper palette={paletteProp} className={className}>
-    <LoyaltyIcon
-      icon="baseline-loyalty"
-      size="hero"
-      palette={paletteProp}
-      variation="dark"
-    />
+  <Flex
+    background="yellow.lighter-80"
+    p="m"
+    border="box"
+    justifyContent="space-between"
+    borderColor="yellow.lighter-80"
+    {...props}
+  >
     <div>
-      <TopWrapper>
+      <Block>
         {title && (
-          <Span weight="medium" size="body">
+          <Block mb="xxs" font="title-xs-azo">
             {title}
-          </Span>
+          </Block>
         )}
-        {title && description && <>&nbsp;-&nbsp;</>}
         {description && <Span>{description}</Span>}
-      </TopWrapper>
+      </Block>
       {hasLearnMore && (
         <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack="offer">
           {getPricing => (
@@ -80,7 +63,8 @@ const OfferNotification = ({
         </GetCustomPricingContainer>
       )}
     </div>
-  </Wrapper>
+    <Offer color="yellow" ml="xs" />
+  </Flex>
 );
 
 OfferNotification.propTypes = {

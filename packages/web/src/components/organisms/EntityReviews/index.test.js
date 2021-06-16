@@ -25,9 +25,11 @@ const reviewRatings = [reviewRating, reviewRating];
 const reviews = [review, review, review];
 
 const wrap = (props = {}) =>
-  shallow(<EntityReviews
-    {...props}
-  />);
+  shallow(
+    <EntityReviews
+      {...props}
+    />,
+  );
 
 describe('EntityReviews', () => {
   it('does not renders children when passed in', () => {
@@ -43,8 +45,9 @@ describe('EntityReviews', () => {
 
   it('renders Reviews Value only when reviewsValue is passed', () => {
     const wrapper = wrap({ reviewsValue });
-    expect(wrapper.find('ReviewValueSection').childAt(1).dive().render()
-      .text()).toEqual(' 3.4');
+
+    expect(wrapper.find('CommunityRating').dive().find('Block')
+      .contains('3.4'));
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
     expect(wrapper.find(EntityReview)).toHaveLength(0);
   });

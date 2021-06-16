@@ -6,7 +6,6 @@ import { size } from 'sly/common/components/themes';
 import GetCustomPricingButtonContainer from 'sly/web/containers/GetCustomPricingButtonContainer';
 
 const GetPricingButton = styled(GetCustomPricingButtonContainer)`
-    width: 100%;
     margin-left: ${size('spacing.large')}
   `;
 
@@ -15,7 +14,6 @@ const CommunityActions = ({ isAlreadyPricingRequested, locTrack, ...props }) => 
     <GetPricingButton
       hasAlreadyRequestedPricing={isAlreadyPricingRequested}
       locTrack={locTrack}
-      ghost={isAlreadyPricingRequested}
       {...props}
     >
       {isAlreadyPricingRequested ? 'Pricing requested' : 'Get Detailed Pricing'}

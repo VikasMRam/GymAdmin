@@ -13,8 +13,7 @@ describe('GetAssessmentBox', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-
-    expect(wrapper.find('Block').text('Need help'));
+    expect(wrapper.find('Box').text('Need help'));
     expect(wrapper.find('Button')).toHaveLength(1);
   });
 });

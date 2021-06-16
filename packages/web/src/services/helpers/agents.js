@@ -26,7 +26,7 @@ export const generateAskAgentQuestionContents = (name, city, type) => {
     heading = `Ask your Seniorly Local Advisor about services provided at ${name}`;
     question = `Hi, I would like more information about ${name}'s amenities.`;
   } else if (type === 'expert') {
-    heading = 'Get help from an Expert';
+    heading = 'Get help from an expert';
     question = `Hi, I would like more information about ${name}`;
   } else if (type === 'covid-banner') {
     heading = `We are excited to provide you a virtual tour of ${name}`;

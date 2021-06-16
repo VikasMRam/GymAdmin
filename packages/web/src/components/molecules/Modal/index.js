@@ -65,14 +65,18 @@ const ModalContext = styled.article`
   right: auto;
   bottom: auto;
   overflow: auto;
-  max-height: calc(100% - ${size('spacing.small')});
-  border-radius: ${size('spacing.small')};
-  width: calc(100% - ${size('spacing.xxLarge')});
+  width: 100%;
+  border-radius: 0;
+  height: 100%;
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     width: ${size('layout.col4')};
+    height:auto;
+    width: calc(100% - ${size('spacing.xxLarge')});
+    border-radius: ${size('spacing.small')};
   }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.col6')};
+    height:auto;
   }
 
   ${switchProp('layout', {
@@ -160,7 +164,7 @@ const BottomIconClose = styled.div`
 `;
 
 const Modal = ({
-  children, closeable, layout, onClose, isOpen, ...props
+  children, closeable, layout, onClose, isOpen, header, ...props
 }) => {
   const noPadding = noPaddingLayouts.includes(layout) || closeButtonOutsideLayouts.includes(layout);
   const iconClose = (palette = 'slate') => (
@@ -195,6 +199,7 @@ const Modal = ({
       </Helmet>
       {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
+          {header}
           {iconClose('white')}
         </Head>
       )}
@@ -220,6 +225,7 @@ const Modal = ({
 Modal.propTypes = {
   layout: oneOf(['letsmovetothismodaltypealltheothermodals', 'default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer', 'eBook', 'noPaddingWithOverflow']).isRequired,
   children: node,
+  header: node,
   isOpen: bool,
   closeable: bool,
   onClose: func.isRequired,

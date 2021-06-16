@@ -15,12 +15,12 @@ const Wrapper = styled(Block)`
     list-style-type: none;
     margin: 0;
     padding: 0;
-    font-size: ${getSize};
+    font: ${getSize};
 
     li {
       display: inline-block;
       text-transform: capitalize;
-      font-size: ${getSize};
+      font: ${getSize};
 
       .separator {
         margin: 0 ${space('xs')};

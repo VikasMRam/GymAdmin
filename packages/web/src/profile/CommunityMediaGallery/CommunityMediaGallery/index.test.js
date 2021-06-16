@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import CommunityMediaGallery from 'sly/web/profile/CommunityMediaGallery/CommunityMediaGallery';
+import FullscreenMediaGallery from 'sly/web/profile/CommunityMediaGallery/FullscreenMediaGallery';
+import MediaGallery from 'sly/web/profile/CommunityMediaGallery/MediaGallery/index';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import MediaGallery from 'sly/web/components/molecules/MediaGallery';
-import FullscreenMediaGallery from 'sly/web/components/molecules/FullscreenMediaGallery';
-import CommunityMediaGallery from 'sly/web/components/organisms/CommunityMediaGallery';
 
 const wrap = (props = {}) => shallow(<CommunityMediaGallery {...props} />);
 

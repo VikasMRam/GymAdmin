@@ -6,9 +6,12 @@ import { size } from 'sly/common/components/themes';
 import Span from 'sly/web/components/atoms/Span';
 import Link from 'sly/common/components/atoms/Link';
 
-const MaybeLink = ({ to, target, children, ...props }) => {
+const MaybeLink = ({ to, target, href, children, ...props }) => {
   if (to) {
     return <Link to={to} target={target} {...props}>{children}</Link>;
+  }
+  if (href) {
+    return <Link href={href} target={target} {...props}>{children}</Link>;
   }
   return <Span {...props}>{children}</Span>;
 };
@@ -17,6 +20,7 @@ MaybeLink.propTypes = {
   to: string,
   target: string,
   children: any,
+  href: string,
 };
 
 const Tab = styled(({

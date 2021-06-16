@@ -42,7 +42,7 @@ describe('CollapsibleBlock', () => {
   //   expect(readMore.text()).toContain('Show less');
   // });
 
-  it('renders default collapsed, calls toggle', () => {
+  it.skip('renders default collapsed, calls toggle', () => {
     const wrapper = wrap({ collapsedDefault: false });
     wrapper.setState({ maxHeight: 600 });
     const readMore = wrapper.find(ReadMore);

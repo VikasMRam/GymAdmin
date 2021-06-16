@@ -3,11 +3,11 @@ import { object, string } from 'prop-types';
 
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { Block, Box, Grid, Button } from 'sly/common/system';
+import { Block, Box, Grid, Button, space } from 'sly/common/system';
 
 
 const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, ...props }) => (
-  <Box {...props}>
+  <Box sx={{ padding: 'l !important' }} {...props}>
     <Grid
       gridTemplateColumns="auto"
       sx$tablet={{
@@ -20,7 +20,7 @@ const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, 
     >
 
       <Block
-        marginBottom="m"
+        marginBottom="l"
         sx$tablet={{
             marginRight: layout === 'column' ? 'l' : null,
             marginBottom: layout === 'row' ? 'l' : '0',
@@ -28,8 +28,8 @@ const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, 
         color={color}
       >
 
-        Need help finding senior living options?
-        Complete this 2-minute quiz to get personalized senior living and care options.
+        <Block font="title-xs-azo">Need help finding senior living options?</Block>
+        Take our quiz to get personalized senior living and care options.
 
       </Block>
       <Button
@@ -60,7 +60,7 @@ GetAssessmentBox.propTypes = {
 GetAssessmentBox.defaultProps = {
   layout: 'column',
   buttonProps: {},
-  background: 'blue',
+  background: 'primary',
   color: 'white',
   padding: 'xl xxl',
   'data-testid': 'GetAssessmentBox',

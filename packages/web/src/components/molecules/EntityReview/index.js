@@ -3,22 +3,21 @@ import { string, number } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { size } from 'sly/common/components/themes';
-import { Hr, Block } from 'sly/common/components/atoms';
+import { space, Block } from 'sly/common/system';
 import Rating from 'sly/web/components/molecules/Rating';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${space('xl')};
 `;
 
 const RatingIconDiv = styled.div`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${space('xs')};
 `;
 
 const ReviewHeadingText = styled(Block)`
-  margin-right: ${size('spacing.large')};
+  margin-right: ${space('s')};
 `;
 
 const BottomSection = styled.div`
@@ -26,7 +25,7 @@ const BottomSection = styled.div`
 `;
 
 const CommentBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${space('xs')};
 `;
 
 const EntityReview = ({
@@ -34,14 +33,13 @@ const EntityReview = ({
 }) => (
   <Wrapper>
     <RatingIconDiv>
-      <Rating value={value} palette="primary" variation="base" />
+      <Rating value={value} color="primary" variation="base" />
     </RatingIconDiv>
     <CommentBlock>{comments}</CommentBlock>
     <BottomSection>
-      <ReviewHeadingText size="caption" palette="grey">{`By ${author}`}</ReviewHeadingText>
-      <ReviewHeadingText size="caption" palette="grey">{dayjs(createdAt).format('MMMM YYYY')}</ReviewHeadingText>
+      <ReviewHeadingText font="body-s" color="grey">{author}</ReviewHeadingText>
+      <ReviewHeadingText font="body-s" color="grey">{dayjs(createdAt).format('MMMM YYYY')}</ReviewHeadingText>
     </BottomSection>
-    <Hr />
   </Wrapper>
 );
 
