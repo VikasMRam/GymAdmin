@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import Modal from 'sly/web/components/molecules/Modal';
-import FullscreenMediaGallery, { StyledMediaGallery } from 'sly/web/components/molecules/FullscreenMediaGallery';
+import FullscreenMediaGallery, { StyledModal } from 'sly/web/profile/CommunityMediaGallery/FullscreenMediaGallery';
+import MediaGallery from 'sly/web/profile/CommunityMediaGallery/MediaGallery';
 
 const wrap = (props = {}) => shallow(<FullscreenMediaGallery {...props} />);
 
@@ -37,13 +37,19 @@ const galleryVideos = videos.map((vid) => {
   return { ...vid, src, thumb: vid.thumbUrl };
 });
 
+const originConsoleError = console.error;
+
 describe('FullscreenMediaGallery', () => {
   it('default', () => {
+    console.error = jest.fn();
+
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
+      images: galleryImages, videos: galleryVideos, onClose, onSlideChange,
     });
-    const modal = wrapper.find(Modal);
+    const modal = wrapper.find(StyledModal);
     expect(modal.exists()).toBe(true);
-    expect(modal.find(StyledMediaGallery).exists()).toBe(true);
+    expect(modal.find(MediaGallery).exists()).toBe(true);
+
+    console.error = originConsoleError;
   });
 });

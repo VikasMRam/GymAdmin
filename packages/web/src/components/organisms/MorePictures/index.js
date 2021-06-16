@@ -1,52 +1,51 @@
 import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
-import styled from 'styled-components';
 
-import { size, getKey } from 'sly/common/components/themes';
-import { ResponsiveImage } from 'sly/web/components/atoms';
-
-const Wrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-  > *:hover {
-    cursor: pointer;
-  }
-
-  display: grid;
-  grid-gap: ${size('mobileLayout.gutter')};
-  grid-template-columns: auto auto;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-gap: ${size('tabletLayout.gutter')};
-    grid-template-columns: ${size('tabletLayout.col4')} ${size(
-  'tabletLayout.col4',
-)};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-gap: ${size('layout.gutter')};
-    grid-template-columns: ${size('layout.col3')} ${size('layout.col3')} ${size(
-  'layout.col3',
-)} ${size('layout.col3')};
-  }
-`;
-
-const thumbSizes = getKey('imageFormats.thumbGallery').sizes;
+import { color, Grid, Image, sx } from "sly/common/system";
+import Block from "sly/common/system/Block";
 
 export default function MorePictures({ images = [], onPictureClick }) {
   return (
-    <Wrapper>
+    <Grid
+      gridTemplateColumns="1fr 1fr"
+      gridGap="xs"
+      sx$laptop={{
+        gridTemplateColumns: 'repeat(4, 1fr)'
+      }}
+    >
       {images.map((image, i) => (
-        <ResponsiveImage
+        <Image
           key={image.id}
           onClick={() => onPictureClick(image, i)}
           path={image.path}
-          aspectRatio="4:3"
+          aspectRatio="3:2"
           alt={image.alt}
-          sizes={thumbSizes}
+          sizes="(max-width: 727px) 100vw, (max-width: 1079px) 334px, 250px"
+          suorces={[
+            138,
+            186,
+            250,
+            334,
+          ]}
           loading="lazy"
-        />
+          border="box"
+        >
+          <Block
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              '&:hover': {
+                backgroundColor: sx`${color('black.base')}33`,
+                cursor: 'pointer',
+              }
+            }}
+          />
+        </Image>
       ))}
-    </Wrapper>
+    </Grid>
   );
 }
 
@@ -56,6 +55,7 @@ MorePictures.propTypes = {
       id: string.isRequired,
       path: string.isRequired,
       alt: string.isRequired,
+      description: string,
     }),
   ),
   onPictureClick: func.isRequired,

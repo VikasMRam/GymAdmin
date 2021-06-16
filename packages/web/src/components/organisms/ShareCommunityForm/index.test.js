@@ -4,7 +4,9 @@ import { Field } from 'redux-form';
 
 import ShareCommunityForm from 'sly/web/components/organisms/ShareCommunityForm';
 
-const wrap = (props = {}) => shallow(<ShareCommunityForm {...props} />);
+const onCancelClick = jest.fn();
+
+const wrap = (props = {}) => shallow(<ShareCommunityForm onCancelClick={onCancelClick} {...props} />);
 
 describe('ShareCommunityForm', () => {
   it('renders', () => {

@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="Cypress" />
+
 import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';

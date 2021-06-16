@@ -22,8 +22,7 @@ describe('CommunityDetails', () => {
     const wrapper = wrap({
       community: noInfoCommunity,
     });
-
-    expect(wrapper.find('Paragraph').dive().dive().render()
+    expect(wrapper.find('Paragraph').render()
       .text()).toContain('No information about details currently available');
   });
 

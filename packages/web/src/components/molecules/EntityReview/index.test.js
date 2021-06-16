@@ -21,7 +21,7 @@ describe('EntityReview', () => {
     const wrapper = wrap();
     expect(wrapper.find('Rating[value=3.5]')).toHaveLength(1);
     expect(wrapper.contains('Best Community')).toBeTruthy();
-    expect(wrapper.contains('By Pranesh')).toBeTruthy();
+    expect(wrapper.contains('Pranesh')).toBeTruthy();
     expect(wrapper.contains('April 2018')).toBeTruthy();
   });
 });

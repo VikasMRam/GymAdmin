@@ -3,7 +3,6 @@ import { baseUrl } from '../../cypress';
 
 import {
   isVisibleXpath,
-  isNotVisibleXpath,
   isAbsentXpath,
   domElement,
   isNotExistXpath,
@@ -18,22 +17,22 @@ const getPriceTable =
   "(//button[@data-buttonid='GetCommunityPricingAndAvailability'])[1]";
 
 const getPricingAndAvailabilitySectionBtn =
-  '//h2[text()="Get Pricing and Availability"]/parent::div//button';
+  "//div[contains(@class,'CommunityDetailPage__StickToTop')]//button";
 
-const gallery = '//div[contains(@class, "Modal__Body")]';
+const gallery = '//div[contains(@class, "CarrousselButton")]';
 
 const mediaGalleryBtnClose =
-  "(//div[@class='ReactModalPortal']/div//button)[1]";
+  "(//div[contains(@class, 'Modal__Head')]//button)[2]";
 
-const mediaGalleryBtnLeft = "(//div[@class='ReactModalPortal']/div//button)[2]";
+const mediaGalleryBtnLeft = "(//div[contains(@class, 'CarrousselButton')])[1]";
 
 const mediaGalleryBtnRight =
-  "(//div[@class='ReactModalPortal']/div//button)[3]";
+"(//div[contains(@class, 'CarrousselButton')])[2]";
 
 const currentDisplayingImage =
   "(//div[@aria-hidden='false'])[last()]//picture/img";
 
-const filmstripPictures = '//ul/li/picture';
+const filmstripPictures = "//div[contains(@class, 'Modal__Body')]//picture";
 
 const map = 'div[aria-label="Map"]';
 
@@ -42,7 +41,7 @@ const imageByScr = src => `(//img[@src='${src}'])[last()]`;
 
 const divText = text => `//div[text()='${text}']`;
 
-const buttonText = text => `//button[text()="${text}"]`;
+const buttonText = text => `//button[contains(text(), "${text}")]`;
 
 const h3Text = text => `//h3[text()='${text}']`;
 
@@ -127,11 +126,11 @@ export const successModalIsSeenAndClosed = () => {
 };
 
 export const viewPhotos = () =>
-  waitForHydration(cy.xpath(buttonText('View Photos'))).click({ force: true });
+  waitForHydration(cy.xpath(buttonText('See all'))).click({ force: true });
 
 export const galleryIsOpen = () => isVisibleXpath(gallery);
 
-export const galleryIsClosed = () => isNotVisibleXpath(gallery);
+export const galleryIsClosed = () => isNotExistXpath(gallery);
 
 export const closeGalleryBtn = () =>
   waitForHydration(cy.xpath(mediaGalleryBtnClose)).click({ force: true });
@@ -185,7 +184,7 @@ export const leftRightGalleryButtonIsWorks = () => {
 export const scrollFilmStripToLastPicture = () => {
   domElement(filmstripPictures)
     .first()
-    .realSwipe('toLeft', { length: 5000 });
+    .realSwipe('toLeft', { length: 9000 });
   domElement(filmstripPictures).then((list) => {
     const lastPicture = list.length;
     isVisibleXpath(`(${filmstripPictures})[${lastPicture}]`);
@@ -234,7 +233,7 @@ export const navigationBreadcrumbs = (communityId) => {
 export const clickTagUnderAddress = (tagName) => {
   // Cypress can not handle different tabs or windows, so better take href and open in current window
   domElement(
-    `//div[@class='overlayGallery']/parent::div//a[text()='${tagName}']`,
+    `//div[@class='overlayBody']/parent::div//a[text()='${tagName}']`,
   )
     .first()
     .invoke('attr', 'href')
@@ -247,9 +246,9 @@ export const nameIsPresent = name =>
   cy.xpath(h1Text(name)).should('be.visible');
 
 export const addressIsPresent = (city, line1, state, zip) => {
-  cy.get('div[class*=CommunityDetailPage__StyledCommunitySummary]>h2').should(
-    (h2) => {
-      const actualAddr = h2.text().replace(/\s+/g, ' ');
+  cy.get('div[class*=CommunityDetailPage__StyledCommunitySummary]').find('div').eq(0).should(
+    (div) => {
+      const actualAddr = div.text().replace(/\s+/g, ' ');
       const expectedAddress = `${line1}, ${city}, ${state} ${zip}`;
       expect(actualAddr).to.equal(expectedAddress);
     },

@@ -31,6 +31,8 @@ const GetAssessmentBoxContainer = ({
   boxLayout,
   extraProps,
   agentId,
+  children,
+  ...props
 }) => {
   const [agent, setAgent] = useState(null);
   const [modalOpened, setModalOpened] = useState(false);
@@ -102,10 +104,12 @@ const GetAssessmentBoxContainer = ({
   return (
     <div className={className}>
       {layout === 'box' && !completedAssessment && (
-        <GetAssessmentBox layout={boxLayout} buttonProps={buttonProps} />
+        <GetAssessmentBox layout={boxLayout} buttonProps={buttonProps} {...props} />
       )}
       {layout === 'sidebar' && (
-        <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />
+        <SidebarCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing}>
+          {children}
+        </SidebarCTAContainer>
       )}
       {layout === 'footer' && (
         <StickyFooterCTAContainer community={community} buttonProps={buttonProps} completedCTA={completedPricing} />

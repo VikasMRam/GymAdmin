@@ -2,8 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import SwipeableViews from 'react-swipeable-views';
 
-import ThumbnailScroller from 'sly/web/components/molecules/ThumbnailScroller';
-import MediaGallery from 'sly/web/components/molecules/MediaGallery';
+import MediaGallery from 'sly/web/profile/CommunityMediaGallery/MediaGallery';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => mount(<MediaGallery {...props} />);
@@ -46,7 +45,6 @@ describe.skip('MediaGallery', () => {
     });
     expect(wrapper.find('Image')).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
-    expect(wrapper.find(ThumbnailScroller)).toHaveLength(0);
   });
 
   it('with thumbnail scroller enabled', () => {
@@ -55,7 +53,6 @@ describe.skip('MediaGallery', () => {
     });
     expect(wrapper.find(SwipeableViews).find('Image')).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
-    expect(wrapper.find(ThumbnailScroller)).toHaveLength(1);
   });
 
   it('setLoadedImages without currentSlide property passed', () => {

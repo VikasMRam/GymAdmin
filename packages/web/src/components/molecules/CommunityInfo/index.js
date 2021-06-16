@@ -39,7 +39,7 @@ export default class CommunityInfo extends Component {
 
   static defaultProps = {
     display: 'flex',
-    height: '100%',
+    alignItems: 'stretch',
     justifyContent: 'space-between',
     flexDirection: 'column',
     priceTextSize: 'title-xs-azo',

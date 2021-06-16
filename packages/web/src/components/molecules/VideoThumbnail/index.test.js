@@ -10,7 +10,6 @@ describe('VideoThumbnail', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Icon').prop('icon')).toEqual('play');
     expect(wrapper.find('StyledImage').prop('src')).toEqual(src);
   });
 
@@ -19,6 +18,7 @@ describe('VideoThumbnail', () => {
     const wrapper = wrap({ onClick });
 
     wrapper.find('CenterContent').simulate('click');
+
     expect(onClick).toHaveBeenCalled();
   });
 });

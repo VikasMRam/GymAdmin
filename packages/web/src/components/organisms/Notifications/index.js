@@ -3,18 +3,23 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, key } from 'sly/common/components/themes';
+import { key } from 'sly/common/components/themes';
 import Notification from 'sly/web/components/molecules/Notification';
+import { sx$laptop, space } from 'sly/common/system';
 
 const transitionName = 'slide';
 
 const StyledTransitionGroup = styled(TransitionGroup)`
   z-index: ${key('zIndexes.notifications')};
   position: fixed;
-  bottom: ${size('spacing.large')};
-  right: ${size('spacing.large')};
+  bottom: 0px;
+  width:100%;
   display: flex;
   flex-direction: column;
+
+  ${sx$laptop({
+    bottom: space('l'),
+  })}
 
   .${transitionName}-enter {
     transform: translate(100%);
@@ -33,7 +38,7 @@ const StyledTransitionGroup = styled(TransitionGroup)`
 
   > * {
     align-self: flex-end;
-    margin-bottom: ${size('spacing.regular')};
+    margin-bottom: ${space('xs')};
   }
 
   > *:last-child {

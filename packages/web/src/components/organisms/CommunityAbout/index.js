@@ -2,20 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/common/components/themes';
-import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
+import { Heading, Link, Paragraph, space, color } from 'sly/common/system';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${space('m')};
 `;
 
 const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${space('l')};
   &:last-of-type {
     margin-bottom: 0;
     p {
-      margin-bottom: ${size('spacing.regular')};
+      margin-bottom: ${space('xs')};
     }
   }
 `;
@@ -23,15 +22,15 @@ const StyledArticle = styled.article`
 const LegacyContent = styled.div`
   a {
     text-decoration: none;
-    color: ${palette('base')};
+    color: ${color('primary')};
 
     &:hover {
-      color: ${palette('filler')};
+      color: ${color('slate')};
       cursor: pointer;
     }
 
     &:active {
-      color: ${palette('base')};
+      color: ${color('primary')};
     }
 
     &:focus {
@@ -40,14 +39,14 @@ const LegacyContent = styled.div`
   }
 `;
 LegacyContent.defaultProps = {
-  palette: 'primary',
+  color: 'primary',
 };
 
 const CommunityAbout = ({
   id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription,
   ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult, isInternational, ...props
 }) => (
-  <CollapsibleBlock {...props} collapsedDefault={false}>
+  <CollapsibleBlock showChevron={false} collapsedLabel="Read More" notCollapsedLabel="Read Less" {...props} collapsedDefault>
     {communityDescription && (
       <StyledArticle>
         {communityDescription.split('\n\n')
@@ -62,7 +61,7 @@ const CommunityAbout = ({
     )}
     {ownerExperience && (
       <StyledArticle>
-        <StyledHeading level="subtitle" size="body">
+        <StyledHeading font="title-m">
           Owners Story
         </StyledHeading>
         {ownerExperience.split('\n\n')
@@ -72,7 +71,7 @@ const CommunityAbout = ({
     )}
     {staffDescription && (
       <StyledArticle>
-        <StyledHeading level="subtitle" size="body">
+        <StyledHeading font="title-m">
           About the Staff at {communityName}
         </StyledHeading>
         {staffDescription.split('\n\n')
@@ -82,7 +81,7 @@ const CommunityAbout = ({
     )}
     {residentDescription && (
       <StyledArticle>
-        <StyledHeading level="subtitle" size="body">
+        <StyledHeading font="title-m">
           About the Residents at {communityName}
         </StyledHeading>
         {residentDescription.split('\n\n')
@@ -100,9 +99,9 @@ const CommunityAbout = ({
         </Paragraph>
       </StyledArticle>
     }
-    {!isActiveAdult && !isInternational &&
+    {false && !isActiveAdult && !isInternational &&
       <StyledArticle>
-        <StyledHeading level="subtitle" size="body">
+        <StyledHeading font="title-m">
           What is a Seniorly Local Advisor in {city}, {state}?
         </StyledHeading>
         <Paragraph>
@@ -117,7 +116,7 @@ const CommunityAbout = ({
     }
     {isActiveAdult &&
       <StyledArticle>
-        <StyledHeading level="subtitle" size="body">
+        <StyledHeading font="title-m">
           What are Active Adult Communities in {city}, {state}?
         </StyledHeading>
         <Paragraph>

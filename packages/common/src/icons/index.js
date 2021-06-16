@@ -80,6 +80,7 @@ export { default as Shopping } from './Shopping';
 export { default as Spa } from './Spa';
 export { default as SqFt } from './SqFt';
 export { default as Star } from './Star';
+export { default as ThumbsUp } from './ThumbsUp';
 export { default as Time } from './Time';
 export { default as Toggle } from './Toggle';
 export { default as Transportation } from './Transportation';

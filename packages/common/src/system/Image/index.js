@@ -91,6 +91,7 @@ export default class Image extends React.Component {
     children: any,
     onLoadFailed: func,
     aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '7:6', '1:1']),
+    crop: bool,
   };
 
   static defaultProps = {
@@ -98,6 +99,7 @@ export default class Image extends React.Component {
     loading: 'lazy',
     sizes: '(max-width: 1079px) 100vw, 680px',
     onLoadFailed: () => {},
+    crop: true,
   };
 
   state = {
@@ -115,7 +117,7 @@ export default class Image extends React.Component {
 
   render() {
     const {
-      src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, shouldPreload, onLoadFailed, ...props
+      src, path, placeholder, sizes, sources, height, alt, loading, className: classNameProp, aspectRatio, children, shouldPreload, onLoadFailed, crop, ...props
     } = this.props;
 
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
@@ -163,6 +165,7 @@ export default class Image extends React.Component {
       const { jpegSrcset, webpSrcset, src } = getSrcset(encodeURI(path), {
         aspectRatio: aspectRatioValue,
         sources: sourcesAry,
+        ...(!crop && { crop }),
       });
 
       // override imageProps src, as it's undefined

@@ -46,7 +46,6 @@ const FamilyHomePage = ({
           <StyledLink to={community.url} key={community.id}>
             <CommunityTile
               isFavourite
-              noGallery
               layout="column"
               key={community.id}
               community={community}

@@ -4,25 +4,24 @@ import styled from 'styled-components';
 import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/common/components/themes';
-import { Heading, Button, Block } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
+import { Close } from 'sly/common/icons';
+import { Flex, Heading, Button, space, Block, Hr, sx } from 'sly/common/system';
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')}
-`;
 
 const StyledButton = styled(Button)`
-  margin-bottom: ${ifProp('error', size('spacing.large'), 0)};
+  margin-top:${space('m')};
+  margin-bottom: ${ifProp('error', space('m'), 0)};
   width: 100%;
 `;
 StyledButton.displayName = 'StyledButton';
 
 const ShareCommunityForm = ({
-  submitting, fromEnabled, handleSubmit, error,
+  submitting, fromEnabled, handleSubmit, error, onCancelClick,
 }) => (
   <section>
-    <StyledHeading size="subtitle">Share this community</StyledHeading>
+    <Flex pad="l"><Heading font="title-m">Share this community</Heading> <Close onClick={onCancelClick} ml="auto" /> </Flex>
+    <Hr  pad="l" marginX={sx`-${space('l')}`} />
     <form onSubmit={handleSubmit}>
       <Field
         type="text"
@@ -48,11 +47,11 @@ const ShareCommunityForm = ({
         placeholder="I wanted to share this community with you..."
         component={ReduxField}
       />
-      <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
-        Send
+      <StyledButton error={error} type="submit" disabled={submitting}>
+        Send Email
       </StyledButton>
     </form>
-    {error && <Block palette="danger">{error}</Block>}
+    {error && <Block color="danger">{error}</Block>}
   </section>
 );
 
@@ -61,6 +60,7 @@ ShareCommunityForm.propTypes = {
   fromEnabled: bool,
   submitting: bool,
   error: string,
+  onCancelClick: func.isRequired,
 };
 
 ShareCommunityForm.defaultProps = {

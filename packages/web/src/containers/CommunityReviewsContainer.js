@@ -12,8 +12,7 @@ const CommunityReviewsContainer = () => {
     id: communitySlug,
     include: 'similar-communities,questions,agents',
   });
-
-  const { id, reviews, propRatings: { reviewsValue, ratingsArray } } = community || {};
+  const { id, reviews, propRatings: { reviewsValue, ratingsArray, numReviews } } = community || {};
 
   const onReviewLinkClicked = useCallback((name) => {
     SlyEvent.getInstance().sendEvent({
@@ -27,6 +26,7 @@ const CommunityReviewsContainer = () => {
   return (
     <EntityReviews
       reviewsValue={reviewsValue}
+      numReviews={numReviews}
       reviews={reviews || []}
       reviewRatings={ratingsArray || []}
       onReviewLinkClicked={onReviewLinkClicked}

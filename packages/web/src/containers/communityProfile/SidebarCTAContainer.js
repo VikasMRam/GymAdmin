@@ -10,7 +10,7 @@ import { EXTERNAL_LINK_CLICK } from 'sly/web/services/api/constants';
 import GetSellerAgentInfo from 'sly/web/components/organisms/GetSellerAgentInfo';
 import GetCommunityPricingAndAvailability from 'sly/web/components/organisms/GetCommunityPricingAndAvailability';
 
-const SidebarCTAContainer = ({ community, buttonProps, completedCTA }) => {
+const SidebarCTAContainer = ({ community, buttonProps, completedCTA, children }) => {
   const { pathname } = useLocation();
 
   const createAction = useQuery('createUuidAction');
@@ -55,7 +55,9 @@ const SidebarCTAContainer = ({ community, buttonProps, completedCTA }) => {
         subtitle={subtitle}
         completedCTA={completedCTA}
         isZillowAd={showZillowProfileAd}
-      />
+      >
+        {children}
+      </GetSellerAgentInfo>
     );
   } else if (isSellerAgentCtaCommunity) {
     const title =
@@ -69,7 +71,9 @@ const SidebarCTAContainer = ({ community, buttonProps, completedCTA }) => {
         subtitle={subtitle}
         completedCTA={completedCTA}
         isZillowAd={showZillowProfileAd}
-      />
+      >
+        {children}
+      </GetSellerAgentInfo>
     );
   }
 
@@ -78,7 +82,9 @@ const SidebarCTAContainer = ({ community, buttonProps, completedCTA }) => {
       community={community}
       completedAssessment={completedCTA}
       {...buttonProps}
-    />
+    >
+      {children}
+    </GetCommunityPricingAndAvailability>
   );
 };
 

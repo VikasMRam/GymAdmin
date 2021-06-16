@@ -13,21 +13,21 @@ const wrap = (props = {}) => shallow(<OfferNotification title={title} {...props}
 describe('OfferNotification', () => {
   it('renders', () => {
     const wrapper = wrap({ description });
-    const tWRapper = wrapper.find('TopWrapper');
+    const top = wrapper.find('Flex');
 
-    expect(tWRapper).toHaveLength(1);
-    expect(tWRapper.contains(title)).toBe(true);
-    expect(tWRapper.contains(description)).toBe(true);
+    expect(top).toHaveLength(1);
+    expect(top.contains(title)).toBe(true);
+    expect(top.contains(description)).toBe(true);
     expect(wrapper.find('BigScreenLearnMore')).toHaveLength(0);
   });
 
   it('renders with hasLearnMore', () => {
     const wrapper = wrap({ description, hasLearnMore: true });
-    const tWRapper = wrapper.find('TopWrapper');
+    const top = wrapper.find('Flex');
 
-    expect(tWRapper).toHaveLength(1);
-    expect(tWRapper.contains(title)).toBe(true);
-    expect(tWRapper.contains(description)).toBe(true);
+    expect(top).toHaveLength(1);
+    expect(top.contains(title)).toBe(true);
+    expect(top.contains(description)).toBe(true);
     expect(wrapper.find(GetCustomPricingContainer)).toHaveLength(1);
   });
 });
