@@ -138,7 +138,7 @@ export default class DashboardCommunityAdminForm extends Component {
                 options={[
                   { value: 'Flat Rate', label: 'Flat rate' },
                   { value: 'Percentage', label: 'Percentage' },
-                 ]}
+                ]}
                 readOnly={!canEdit}
               />
               <EditField
