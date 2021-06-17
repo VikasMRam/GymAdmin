@@ -43,9 +43,9 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
           overflow: 'auto',
         }}
         sx$tablet={{
-          width: '100%',
-          px: 0,
-          mx: 0,
+          width: sx`calc(100% + ${space('l')})`,
+          padding: 's',
+          m: '-s -s s',
           gridTemplateColumns: `repeat(${communities?.length}, 20.5rem)`,
           gridTemplateRows: '25.3rem',
           gridColumnGap: 'l',
@@ -69,7 +69,7 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
           <CarrousselButton
             onClick={() => move(-1)}
             display="none!important"
-            sx$tablet={{ display: 'flex!important', position: 'absolute', top: '50%', left: 0, transform:'translate(-50%, -50%)' }}
+            sx$tablet={{ display: 'flex!important', position: 'absolute', top: '50%', left: 0, transform: 'translate(-50%, -50%)' }}
             rotation={270}
             {...((position === 0) && { color: 'slate.lighter-90' })}
           />

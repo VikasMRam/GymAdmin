@@ -5,7 +5,7 @@ import { bool, string } from 'prop-types';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { size } from 'sly/common/components/themes';
 import Offer from 'sly/common/icons/Offer';
-import { Block, Span, Link, Flex } from 'sly/common/system';
+import { Block, Span, Link, Flex, space, sx } from 'sly/common/system';
 import GetCustomPricingContainer from 'sly/web/containers/GetCustomPricingContainer';
 
 const SmallScreenLearnMore = styled(Link)`
@@ -63,7 +63,7 @@ const OfferNotification = ({
         </GetCustomPricingContainer>
       )}
     </div>
-    <Offer color="yellow" ml="xs" />
+    <Offer color="yellow" ml="xs" minWidth={sx`${space('l')}`} />
   </Flex>
 );
 
