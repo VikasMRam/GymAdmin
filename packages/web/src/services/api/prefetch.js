@@ -17,7 +17,7 @@ function getDisplayName(WrappedComponent) {
 }
 
 export function usePrefetch(apiCall, ...args) {
-  const { skipApiCalls, apiClient: { store, api }} = useApi();
+  const { skipApiCalls, apiClient: { store, api } } = useApi();
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
 
@@ -29,7 +29,7 @@ export function usePrefetch(apiCall, ...args) {
     invalidateRequests(apiCall, placeholders),
   ), [apiCall, argsKey]);
 
-  const purgeFromRelationships = useCallback((relationship) => store.dispatch(
+  const purgeFromRelationships = useCallback(relationship => store.dispatch(
     purgeFromRelationshipsAction(apiCall, placeholders, relationship),
   ), [apiCall, argsKey]);
 
@@ -87,7 +87,7 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
       };
 
       return <InnerComponent {...innerProps} />;
-    }
+    };
 
     hoistNonReactStatic(Wrapper, InnerComponent);
 

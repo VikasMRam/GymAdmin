@@ -1,4 +1,5 @@
 import { get, patch, put, post, destroy } from './httpMethods';
+
 import { cmsUrl } from 'sly/web/config';
 
 // method names should start with `get`, `create`, `update`, `delete`
@@ -46,6 +47,10 @@ export default {
   updateRgsAux: { method: patch, path: '/marketplace/rgsAux/:id' },
   approveEdit: { method: post, path: '/platform/suggested-edits/:id/approve' },
   rejectEdit: { method: post, path: '/platform/suggested-edits/:id/reject' },
+
+  getListings: { method: get, path: '/marketplace/listings' },
+  updateListing: { method: patch, path: '/marketplace/listings/:id' },
+  createListing: { method: post, path: '/marketplace/listings' },
 
   createImage: { method: post, path: '/platform/images' },
   updateImage: { method: patch, path: '/platform/images/:id' },
