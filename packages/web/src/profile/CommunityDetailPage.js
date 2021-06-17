@@ -383,7 +383,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <TrustScoreTile community={community} />
                 </StyledHeadingBoxSection>
                 }
-                <StyledHeadingBoxSection id="amenities-section" heading="Amenities">
+                <StyledHeadingBoxSection id="amenities-section" heading={`Amenities at ${community.name}`}>
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
                 {!isActiveAdult && !isInternational &&
@@ -523,10 +523,10 @@ export default class CommunityDetailPage extends PureComponent {
             <StyledSection
               headingMargin="l"
               title="Location"
-              headingFont="title-m"
+              headingFont="title-l"
             >
               <LazyCommunityMap id="map" />
-              <Block>{formattedAddress}</Block>
+              <Block font="body-m" >{formattedAddress}</Block>
               <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
             </StyledSection>
             {/* <StyledHeadingBoxSection */}

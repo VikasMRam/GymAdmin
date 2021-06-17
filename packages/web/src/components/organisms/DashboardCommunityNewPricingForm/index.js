@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { func, bool, object, string, number, array } from 'prop-types';
 import styled from 'styled-components';
-
+import { Prompt } from 'react-router';
 
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
 import { Section, SectionActions, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
-import { space, color, Block, Grid, Span } from 'sly/common/system/index';
+import { space, color, Block, Grid, Span, sx$tablet } from 'sly/common/system/index';
 import CollapsibleSection, { MainSection } from 'sly/web/components/molecules/CollapsibleSection';
 import { size } from 'sly/common/components/themes';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
@@ -15,9 +15,8 @@ import {  costSectionOptions, costTypeOptions, memoryCareCostTypeOptions } from 
 
 
 const StyledCollapsibleSection = styled(CollapsibleSection)`
-  margin-bottom: 0;
   border-radius:${space('xxs')};
-  margin-bottom:${space('l')};
+  margin-bottom:${space('m')};
   background:${color('slate.lighter-95')};
   &:first-child {
     border-top-left-radius: ${size('border.xxLarge')};
@@ -29,7 +28,11 @@ const StyledCollapsibleSection = styled(CollapsibleSection)`
     border-bottom-left-radius: ${size('border.xxLarge')};
     border-bottom-right-radius: ${size('border.xxLarge')};
   }
+  ${sx$tablet({
+    marginBottom: 'l',
+  })}
 `;
+
 
 StyledCollapsibleSection.defaultProps = {
   headingFont: 'title-s',
@@ -49,15 +52,35 @@ export default class DashboardCommunityPricingForm extends Component {
     onUpdatePricingClick: func,
     careTypes: array,
     onJoinWaitListClick: func,
+    shouldBlockNavigation: bool,
   };
+
+  // TO DO: Add changes not saved logic
+  componentDidUpdate() {
+    const { shouldBlockNavigation } = this.props;
+    if (shouldBlockNavigation) { window.addEventListener('beforeunload', this.beforeunload.bind(this)); }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.beforeunload.bind(this));
+  }
+
+  beforeunload(e) {
+    const { shouldBlockNavigation } = this.props;
+    if (shouldBlockNavigation) {
+      e.preventDefault();
+      e.returnValue = true;
+    }
+  }
 
   render() {
     const {
-      handleSubmit, invalid, submitting, canEdit, currentValues, careTypes, hasNewPricing,
+      handleSubmit,  submitting, canEdit, currentValues, careTypes, hasNewPricing,
       eligibleForNewPricing,
       newPricingOnWaitlist,
       onUpdatePricingClick,
       onJoinWaitListClick,
+      shouldBlockNavigation,
     } = this.props;
 
 
@@ -70,7 +93,10 @@ export default class DashboardCommunityPricingForm extends Component {
         as="form"
         onSubmit={handleSubmit}
       >
-
+        <Prompt
+          when={shouldBlockNavigation}
+          message="You have unsaved changes, are you sure you want to leave?"
+        />
         {!hasNewPricing && eligibleForNewPricing &&
         <DashboardCommunityCTAPricingBox buttonProps={{ onClick: onUpdatePricingClick }} />}
 
@@ -140,7 +166,7 @@ export default class DashboardCommunityPricingForm extends Component {
             </StyledCollapsibleSection>
             ))}
           <SectionActions>
-            <Button type="submit" disabled={!canEdit || invalid || submitting}>
+            <Button type="submit" disabled={!canEdit ||  submitting}>
               Save changes
             </Button>
           </SectionActions>
@@ -196,20 +222,22 @@ const DashboardCommunityPricingRow = ({ section, roomType, range, disabled, to, 
           disabled={disabled}
           name={`prices.${index}.attributes.info.prices.${roomType.value}.from`}
           type="number"
-          placeholder="4000"
           component={ReduxField}
           readOnly={!canEdit}
-          dollars
-          snap={range ? 'horizontal' : 'left'}
+          dollars={!disabled}
+          showIcon={false}
+          noLeftMarginStyledInputMessage
+          snap={range ? 'horizontalWithBorder' : 'leftWithBorder'}
         />
         {range && <EditField
           disabled={disabled}
-          placeholder="6000"
+          dollars={!disabled}
           name={`prices.${index}.attributes.info.prices.${roomType.value}.to`}
           type="number"
+          showIcon={false}
           component={ReduxField}
           readOnly={!canEdit}
-          dollars
+          noLeftMarginStyledInputMessage
           snap="left"
         />}
       </Grid>
@@ -228,51 +256,3 @@ DashboardCommunityPricingRow.propTypes = {
   canEdit: bool,
 };
 
-{ /* <EditField
-            name="propInfo.ratesText"
-            label="Rates starting at"
-            type="text"
-            readOnly={!canEdit}
-            placeholder="Starting rates"
-            wideWidth
-          />
-          <EditField
-            name="propInfo.sharedSuiteRate"
-            label="Shared suite"
-            type="text"
-            readOnly={!canEdit}
-            placeholder="2,000"
-            wideWidth
-          />
-          <EditField
-            name="propInfo.privateSuiteRate"
-            label="Private suite"
-            type="text"
-            readOnly={!canEdit}
-            placeholder="3,000"
-            wideWidth
-          />
-          <EditField
-            name="propInfo.studioApartmentRate"
-            label="Studio apartment"
-            type="text"
-            readOnly={!canEdit}
-            placeholder="5,000"
-            wideWidth
-          />
-          <EditField
-            name="propInfo.oneBedroomApartmentRate"
-            label="One bedroom apartment"
-            type="text"
-            readOnly={!canEdit}
-            placeholder=""
-            wideWidth
-          />
-          <EditField
-            name="propInfo.twoBedroomApartmentRate"
-            label="Two bedroom apartment"
-            type="text"
-            readOnly={!canEdit}
-            placeholder=""
-            wideWidth
-          /> */ }
