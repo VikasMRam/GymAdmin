@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 
 
 import {
-  DASHBOARD_COMMUNITIES_PATH,
+  DASHBOARD_LISTINGS_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   SUMMARY,
   PROFILE,
@@ -16,7 +16,7 @@ import {
   CLIENTS,
   EDITS,
   ADMIN,
-  DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH,
+  DASHBOARD_LISTINGS_DETAIL_EDIT_PATH,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import communityPropType from 'sly/common/propTypes/community';
@@ -52,26 +52,26 @@ const makeClientsBasePath = ({ id, tab }) => {
 };
 
 export default class DashboardListingDetailsPage extends Component {
-  static propTypes = {
-    match: shape({
-      url: string,
-    }),
-    community: communityPropType,
-    currentTab: string,
-    showModal: func,
-    hideModal: func,
-    notifyError: func,
-    notifyInfo: func,
-    communityIsLoading: bool,
-    currentEdit: object,
-    suggestedEdits: arrayOf(object),
-    user: userPropType,
-  };
+  // static propTypes = {
+  //   match: shape({
+  //     url: string,
+  //   }),
+  //   community: communityPropType,
+  //   currentTab: string,
+  //   showModal: func,
+  //   hideModal: func,
+  //   notifyError: func,
+  //   notifyInfo: func,
+  //   communityIsLoading: bool,
+  //   currentEdit: object,
+  //   suggestedEdits: arrayOf(object),
+  //   user: userPropType,
+  // };
 
   getTabsForUser = () => {
-    const { user, community } = this.props;
+    const { user, listing } = this.props;
     const { roleID } = user;
-    const { id } = community;
+    const { id } = listing;
 
     const tabs = {
       Profile: PROFILE,
@@ -118,11 +118,11 @@ export default class DashboardListingDetailsPage extends Component {
   render() {
     const {
       match,
-      community,
+      listing,
       currentEdit,
       suggestedEdits,
       currentTab,
-      communityIsLoading,
+      listingIsLoading,
       user,
       notifyInfo,
       notifyError,
@@ -130,7 +130,7 @@ export default class DashboardListingDetailsPage extends Component {
       hideModal,
     } = this.props;
 
-    if (communityIsLoading) {
+    if (listingIsLoading) {
       return (
         <Loading activeMenuItem="Communities">
           Loading...
@@ -139,8 +139,8 @@ export default class DashboardListingDetailsPage extends Component {
     }
 
     const backLink = {
-      path: generatePath(DASHBOARD_COMMUNITIES_PATH),
-      label: 'Back to communities',
+      path: generatePath(DASHBOARD_LISTINGS_PATH),
+      label: 'Back to listings',
       event: {
         category: 'fdetails',
         label: 'Back to Communities',
@@ -148,35 +148,35 @@ export default class DashboardListingDetailsPage extends Component {
       },
     };
 
-    if (!community) {
+    if (!listing) {
       return (
         <Loading activeMenuItem="Communities" backLink={backLink}>
-          Community not found!
+          Listing not found!
         </Loading>
       );
     }
 
     const breadCrumbItems = [
-      { ...backLink, label: 'Communities' },
+      { ...backLink, label: 'Listings' },
       {
-        label: community.name,
+        label: listing.name,
       },
     ];
 
     const userIsAdmin = userIs(user, PLATFORM_ADMIN_ROLE);
-    const communityOrgId = community.organization?.id;
+    const listingOrgId = listing.organization?.id;
     const userOrgId = user.organization?.id;
-    const isOfDifferentOrg = !userIsAdmin && (userOrgId !== communityOrgId);
+    const isOfDifferentOrg = !userIsAdmin && (userOrgId !== listingOrgId);
 
-    const pendingChangesUrl = currentEdit?.isPending && generatePath(DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH, { id: community.id, editId: currentEdit.id });
+    const pendingChangesUrl = currentEdit?.isPending && generatePath(DASHBOARD_LISTINGS_DETAIL_EDIT_PATH, { id: listing.id, editId: currentEdit.id });
 
     const sectionFilters = {
       include: 'entities',
-      'filter[community-id]': community.id,
+      'filter[listing-id]': listing.id,
     };
 
     const clientsSectionFilters = {
-      'filter[community]': community.id,
+      'filter[listing]': listing.id,
       client_type: match.params.clientType,
     };
 
@@ -199,33 +199,34 @@ export default class DashboardListingDetailsPage extends Component {
         palette: 'primary',
         content: (
           <>
-            This Family belongs to a different organization named <i>{community.organization?.name || 'Unknown'}</i>
+            This Family belongs to a different organization named <i>{listing.organization?.name || 'Unknown'}</i>
           </>
         ),
       });
     }
 
-    const headerActions = community.url && <Link to={community.url}>View profile</Link>;
+    const headerActions = listing.url && <Link to={listing.url}>View profile</Link>;
 
     return (
+
       <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
         <Top>
           <BreadCrumb items={breadCrumbItems} />
         </Top>
 
-        <Left heading={community.name} actions={headerActions}>
+        <Left heading={listing.name} actions={headerActions}>
           {(notifications.length || null) && (
-            <LeftNotifications>
-              {notifications.map(({ palette, content }) => (
-                <BannerNotification
-                  key={content}
-                  palette={palette}
-                >
-                  {content}
-                </BannerNotification>
-              ))}
-            </LeftNotifications>
-          )}
+          <LeftNotifications>
+            {notifications.map(({ palette, content }) => (
+              <BannerNotification
+                key={content}
+                palette={palette}
+              >
+                {content}
+              </BannerNotification>
+            ))}
+          </LeftNotifications>
+        )}
         </Left>
 
         <Right>
@@ -233,86 +234,86 @@ export default class DashboardListingDetailsPage extends Component {
             {this.getTabsForUser()}
           </Tabs>
 
-          {currentTab === PROFILE && (
-            <DashboardCommunityDetailsFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === SERVICES && (
-            <DashboardCommunityServicesFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === PRICING && (
-            <DashboardCommunityPricingFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === NEWPRICING && (
-            <DashboardCommunityNewPricingFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === PHOTOS && (
-            <DashboardCommunityPhotosFormContainer
-              showModal={showModal}
-              hideModal={hideModal}
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === CONTACTS && (
-            <DashboardContactsSectionContainer
-              id="contacts"
-              sectionFilters={sectionFilters}
-              entityType={PROPERTY_ENTITY_TYPE}
-              entityId={community.id}
-              entityName={community.name}
-            />
-          )}
-          {currentTab === ADMIN && (
-            <DashboardCommunityAdminFormContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-            />
-          )}
-          {currentTab === CLIENTS && (
-            <DashboardAgentFamilyOverviewSectionContainer
-              basePath={makeClientsBasePath(match.params)}
-              sectionFilters={clientsSectionFilters}
-            />
-          )}
-          {currentTab === EDITS && (
-            <DashboardCommunityEditsContainer
-              notifyInfo={notifyInfo}
-              notifyError={notifyError}
-              community={community}
-              currentEdit={currentEdit}
-              suggestedEdits={suggestedEdits}
-            />
-          )}
+          {/* {currentTab === PROFILE && (
+          <DashboardCommunityDetailsFormContainer
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+          />
+        )}
+        {currentTab === SERVICES && (
+          <DashboardCommunityServicesFormContainer
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+          />
+        )}
+        {currentTab === PRICING && (
+          <DashboardCommunityPricingFormContainer
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+          />
+        )}
+        {currentTab === NEWPRICING && (
+          <DashboardCommunityNewPricingFormContainer
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+          />
+        )}
+        {currentTab === PHOTOS && (
+          <DashboardCommunityPhotosFormContainer
+            showModal={showModal}
+            hideModal={hideModal}
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+          />
+        )}
+        {currentTab === CONTACTS && (
+          <DashboardContactsSectionContainer
+            id="contacts"
+            sectionFilters={sectionFilters}
+            entityType={PROPERTY_ENTITY_TYPE}
+            entityId={community.id}
+            entityName={community.name}
+          />
+        )}
+        {currentTab === ADMIN && (
+          <DashboardCommunityAdminFormContainer
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+          />
+        )}
+        {currentTab === CLIENTS && (
+          <DashboardAgentFamilyOverviewSectionContainer
+            basePath={makeClientsBasePath(match.params)}
+            sectionFilters={clientsSectionFilters}
+          />
+        )}
+        {currentTab === EDITS && (
+          <DashboardCommunityEditsContainer
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            community={community}
+            currentEdit={currentEdit}
+            suggestedEdits={suggestedEdits}
+          />
+        )} */}
         </Right>
 
-        <DashboardCommunitySummary
+        {/* <DashboardCommunitySummary
           className={currentTab === SUMMARY ? 'selected' : ''}
           community={community}
-        />
+        /> */}
       </DashboardWithSummaryPageTemplate>
     );
   }

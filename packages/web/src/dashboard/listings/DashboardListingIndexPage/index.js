@@ -10,7 +10,7 @@ import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/web/components/atom
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Th from 'sly/web/components/molecules/Th';
-import CommunityRowCard from 'sly/web/components/organisms/CommunityRowCard';
+import ListingRowCard from 'sly/web/dashboard/listings/ListingRowCard';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { Loading, Section, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
@@ -48,20 +48,20 @@ const NoResultMessage = styled(textAlign(Block))`
 `;
 
 export default class DashboardListingIndexPage extends Component {
-  static propTypes = {
-    datatable: object,
-    listings: arrayOf(communityPropType),
-    pagination: object,
-    isPageLoading: bool,
-    onAddListing: func,
-    meta: object,
-  };
+  // static propTypes = {
+  //   datatable: object,
+  //   listings: arrayOf(communityPropType),
+  //   pagination: object,
+  //   isPageLoading: bool,
+  //   onAddListing: func,
+  //   meta: object,
+  // };
 
-  handleCommunityClick = (listing) => {
+  handleListingClick = (listing) => {
     const event = {
       category: 'AdminDashboardListing',
       action: 'click',
-      label: 'viewCommunity',
+      label: 'viewListing',
       value: listing.id,
     };
     SlyEvent.getInstance().sendEvent(event);
@@ -72,8 +72,8 @@ export default class DashboardListingIndexPage extends Component {
     const {
       listings, pagination, isPageLoading, onAddListing, meta, datatable,
     } = this.props;
-    const noResultMessage = 'Click Add Community on the top right corner to add a new community';
-    const modelConfig = { name: 'Community', defaultSearchField: 'name' };
+    const noResultMessage = 'Click Add Listing on the top right corner to add a new listing';
+    const modelConfig = { name: 'Listing', defaultSearchField: 'name' };
 
     const actions = (
       <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
@@ -125,8 +125,8 @@ export default class DashboardListingIndexPage extends Component {
               </Tr>
             </THead>
             <TBody>
-              {listings.map(community => (
-                <CommunityRowCard key={community.id} community={community} onCommunityClick={() => this.handleCommunityClick(community)} />
+              {listings.map(listing => (
+                <ListingRowCard key={listing.id} listing={listing} onLisitngClick={() => this.handleListingClick(listing)} />
               ))}
               {listings.length === 0 &&
                 <Tr>

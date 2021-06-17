@@ -9,7 +9,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import withDatatable from 'sly/web/services/datatable/components/withDatatable';
 import { prefetch, withUser } from 'sly/web/services/api';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
-import communityPropType from 'sly/common/propTypes/community';
+import listingPropType from 'sly/common/propTypes/listing';
 import {
   DASHBOARD_LISTINGS_DETAIL_PATH,
   PROFILE,
@@ -24,6 +24,18 @@ import DashboardListingIndexPage from 'sly/web/dashboard/listings/DashboardListi
 @prefetch('listings', 'getListings', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardListingIndexPageContainer extends Component {
+  static propTypes = {
+    location: object,
+    // listings: arrayOf(listingPropType), todo
+    showModal: func.isRequired,
+    hideModal: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
+    status: object,
+    datatable: object,
+    history: object,
+  };
+
   onAddListingSuccess= (resp) => {
     const { history } = this.props;
     const { id } = resp;
@@ -58,6 +70,7 @@ export default class DashboardListingIndexPageContainer extends Component {
   };
   render() {
     const { status, location, datatable, notifyInfo, notifyError, ...props } = this.props;
+    console.log('status', status);
     const { error, meta, hasFinished, normalized: listings } = status.listings;
 
     if (error) {

@@ -48,6 +48,7 @@ export default {
   approveEdit: { method: post, path: '/platform/suggested-edits/:id/approve' },
   rejectEdit: { method: post, path: '/platform/suggested-edits/:id/reject' },
 
+  getListing: { method: get, path: '/marketplace/listings/:id' },
   getListings: { method: get, path: '/marketplace/listings' },
   updateListing: { method: patch, path: '/marketplace/listings/:id' },
   createListing: { method: post, path: '/marketplace/listings' },

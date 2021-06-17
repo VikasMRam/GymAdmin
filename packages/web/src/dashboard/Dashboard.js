@@ -25,6 +25,7 @@ const DashboardAgentsIndexPageContainer = loadable(() => import(/* webpackChunkN
 const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/dashboard/communities/DashboardCommunityIndexPageContainer'));
 const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/communities/DashboardCommunityDetailsPageContainer'));
 const DashboardListingIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/dashboard/listings/DashboardListingIndexPageContainer'));
+const DashboardLisitingDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/listings/DashboardListingDetailsPageContainer'));
 
 import themeWithLegacy from 'sly/common/components/themes/themeWithLegacy';
 import {
@@ -46,6 +47,7 @@ import {
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   DASHBOARD_LISTINGS_PATH,
+  DASHBOARD_LISTINGS_DETAIL_PATH,
 } from 'sly/web/dashboard/dashboardAppPaths';
 
 const routes = [
@@ -129,6 +131,10 @@ const routes = [
   {
     path: DASHBOARD_COMMUNITIES_PATH,
     component: DashboardCommunityIndexPageContainer,
+  },
+  {
+    path: DASHBOARD_LISTINGS_DETAIL_PATH,
+    component: DashboardLisitingDetailPageContainer,
   },
   {
     path: DASHBOARD_LISTINGS_PATH,
