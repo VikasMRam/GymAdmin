@@ -6,7 +6,7 @@ import omit from 'lodash/omit';
 
 import { SET, UNSET, RESET } from './actions';
 
-export default (state = {}, { type, payload }) => {
+const reducer = (state = {}, { type, payload }) => {
   switch (type) {
     case SET: {
       const { data, controller } = payload;
@@ -32,3 +32,5 @@ export default (state = {}, { type, payload }) => {
     }
   }
 };
+
+export default reducer;

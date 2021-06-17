@@ -6,16 +6,16 @@ import { isBrowser } from 'sly/web/config';
 import { getKey } from 'sly/common/components/themes';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
-  from 'sly/web/constants/wizards/assessment';
+  from 'sly/web/assessment/constants';
 import { Grid } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import GetAssessmentBoxContainer from 'sly/web/containers/GetAssessmentBoxContainer';
 import SearchExploreTypes from 'sly/web/components/organisms/SearchExploreTypes';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/components/search/helpers';
+import ResourceLinks from './ResourceLinks'
 
 const citiesToShowGeoGuide = ['new-york', 'miami', 'las-vegas', 'san-francisco', 'madison', 'scottsdale', 'skokie', 'columbus', 'orlando', 'atlanta', 'san-jose', 'kendall'];
-
 
 function ExploreContainer({ filters }) {
   const { requestInfo } = usePrefetch('getGeoGuides', filters, { encode: false });
@@ -49,14 +49,15 @@ function ExploreContainer({ filters }) {
         paddingY: 'xxl',
       }}
     >
-      {guide && <div dangerouslySetInnerHTML={{ __html: guide }} />}
+      <SearchExploreTypes title={`Explore other types of communities in  ${title}`} city={filters.city} state={filters.state} />
+      <ResourceLinks toc={filters.toc}/>
       {seoLinks && (
         <SeoLinks
           title={`${tocLabel} near ${title}`}
           links={seoLinks}
         />
       )}
-      <SearchExploreTypes title={`Explore other types of communities in  ${title}`} city={filters.city} state={filters.state} />
+      {guide && <div dangerouslySetInnerHTML={{ __html: guide }} />}
       { filters.city &&
       <GetAssessmentBoxContainer
         completedAssessment={isBrowser && !!localStorage.getItem(ASSESSMENT_WIZARD_COMPLETED)}

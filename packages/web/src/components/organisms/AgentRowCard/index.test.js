@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 
 import agent from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 import AgentRowCard from 'sly/web/components/organisms/AgentRowCard';
@@ -10,7 +11,9 @@ const defaultValues = {
   onAgentClick,
 };
 
-const wrap = (props = {}) => shallow(<AgentRowCard {...defaultValues} {...props} />);
+const wrap = (props = {}) => mount(<BrowserRouter><AgentRowCard {...defaultValues} {...props} /></BrowserRouter>, {
+  attachTo: document.createElement('tbody'),
+});
 
 describe('AgentRowCard', () => {
   it('does not render children when passed in', () => {
@@ -20,9 +23,8 @@ describe('AgentRowCard', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-
     expect(wrapper.find('NameCell')).toHaveLength(1);
-    expect(wrapper.find('NameCell').render().text()).toContain(agent.name);
+    expect(wrapper.find('NameCell').text()).toContain(agent.name);
     expect(wrapper.find('DisplayNameCell').find('span').at(0).text()).toEqual('Display Name');
     expect(wrapper.find('DisplayNameCell').find('span').at(1).text()).toEqual(agent.info.displayName);
     expect(wrapper.find('AddressCell').find('span').at(0).text()).toEqual('Address');

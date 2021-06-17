@@ -25,6 +25,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import 'cypress-wait-until';
 
 import { select } from '../helpers/tests';
 import { toJson } from '../helpers/request';
@@ -91,3 +92,56 @@ Cypress.Commands.add('getCommunity', (community) => {
     .then(toJson)
     .then(normalizeResponse);
 });
+
+
+Cypress.Commands.add('waitForPageViewEvent', () => {
+  let ENV = null;
+  cy.waitUntil(() => {
+    return cy.window().then((win) => {
+      if (!win.SLY_EVENT_ENV) {
+        return Cypress.Promise.reject();
+      }
+      cy.log('win ENV', win.SLY_EVENT_ENV);
+      ENV = win.SLY_EVENT_ENV;
+      return Cypress.Promise.resolve();
+    });
+  });
+  cy.then(() => {
+    if (ENV === 'production') {
+      cy.wait('@getEvent');
+    } else {
+      cy.waitUntil(() => {
+        const result = global.infoSpy.getCalls().some((call) => {
+          return call.args[0] === 'EVENT pageview';
+        });
+        return result
+          ? Promise.resolve(true)
+          : Promise.reject();
+      });
+    }
+  });
+});
+
+Cypress.Commands.add('login', () => {
+  cy.intercept('POST', '**/auth/login').as('login');
+  cy.intercept('GET', '**/users/me').as('getUser');
+  cy.intercept('GET', '**/events/new*').as('getEvent');
+  cy.clearCookie('sly_sid');
+  cy.clearCookie('sly_uuid');
+  cy.clearCookie('sly-session');
+  cy.visit('/');
+
+  cy.waitForPageViewEvent();
+
+  cy.get('div[class*=Header__HeaderItems]').contains('Log In').scrollIntoView().click({ force: true });
+  cy.get('form input[name="email"]').type('slytest+admin@seniorly.com');
+  cy.get('form input[name="password"]').type('nopassword');
+  cy.get('button[type="submit"]').contains('Log in').click();
+  cy.wait('@login');
+  cy.wait('@getUser');
+});
+
+Cypress.Commands.add('waitForUser', () => {
+  cy.wait('@getUser');
+});
+

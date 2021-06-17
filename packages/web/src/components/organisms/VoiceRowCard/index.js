@@ -8,7 +8,7 @@ import taskPropType from 'sly/common/propTypes/task';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
-import { ADMIN_DASHBOARD_CALL_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { ADMIN_DASHBOARD_CALL_DETAILS_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { Link, ClampedText } from 'sly/web/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 

@@ -1,48 +1,36 @@
-import { Component } from 'react';
-import { withRouter } from 'react-router';
+import { useCallback, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import SlyEvent from 'sly/web/services/helpers/events';
 import { extractEventFromQuery } from 'sly/web/services/helpers/queryParamEvents';
 
-@withRouter
-export default class PageEventsContainer extends Component {
-  static typeHydrationId = 'PageEventsContainer';
+const PageEventsContainer = () => {
+  const { replace } = useHistory();
+  const location = useLocation();
 
-  sendQueryEvents() {
-    const { history, location: { pathname, search, hash } } = this.props;
+  const sendQueryEvents = useCallback(() => {
+    const { pathname, search, hash } = location;
 
     const { event, search: searchWithoutEvent } = extractEventFromQuery(search);
     if (event) {
       SlyEvent.getInstance().sendEvent(event);
-      history.replace(pathname + searchWithoutEvent + hash);
+      replace(pathname + searchWithoutEvent + hash);
       return true;
     }
     return false;
-  }
+  }, [location]);
 
-  componentDidMount() {
-    const { location: { pathname, search } } = this.props;
+  useEffect(() => {
+    const { pathname, search } = location;
 
-    if (this.sendQueryEvents()) {
-      return;
-    }
+    if (sendQueryEvents()) return;
 
     SlyEvent.getInstance().sendPageView(pathname, search);
-  }
+  }, [location]);
 
-  componentDidUpdate(prevProps) {
-    const { location } = this.props;
+  return null;
+};
 
-    if (prevProps.location !== location) {
-      if (this.sendQueryEvents()) {
-        return;
-      }
+PageEventsContainer.typeHydrationId = 'PageEventsContainer';
 
-      SlyEvent.getInstance().sendPageView(location.pathname, location.search);
-    }
-  }
-
-  render() {
-    return null;
-  }
-}
+export default PageEventsContainer;

@@ -3,7 +3,7 @@ import { object } from 'prop-types';
 
 import { withUser } from 'sly/web/services/api';
 import DashboardMessageDetailsPage from 'sly/web/components/pages/DashboardMessageDetailsPage';
-import { FAMILY_DASHBOARD_MESSAGES_PATH, AGENT_DASHBOARD_MESSAGES_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_MESSAGES_PATH, AGENT_DASHBOARD_MESSAGES_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import userPropType from 'sly/common/propTypes/user';
 import { userIs } from 'sly/web/services/helpers/role';
 import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/common/constants/roles';

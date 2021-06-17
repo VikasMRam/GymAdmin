@@ -54,8 +54,6 @@ export default class CommunityPartnersPageContainer extends PureComponent {
 
   onRegisterClick = () => {
     const { ensureAuthenticated, user, notifyError } = this.props;
-    console.log('===>', notifyError);
-    notifyError('Cannot create an account as user is already logged in.');
     const { community } = this.state;
     if (user) {
       notifyError('Cannot create an account as user is already logged in.');
@@ -73,8 +71,9 @@ export default class CommunityPartnersPageContainer extends PureComponent {
   };
 
   render() {
+    const { user } = this.props;
     return (
-      <CommunityPartnersPage onRegisterClick={this.onRegisterClick} />
+      <CommunityPartnersPage onRegisterClick={this.onRegisterClick} user={user}/>
     );
   }
 }

@@ -12,7 +12,7 @@ import { Link, ClampedText } from 'sly/web/components/atoms';
 import { Td, Tr } from 'sly/web/components/atoms/Table';
 import { buildAddressDisplay } from 'sly/web/services/helpers/communityReferral';
 import { AGENT_STATUS_NAME_MAP } from 'sly/web/constants/agents';
-import { ADMIN_DASHBOARD_AGENT_DETAILS_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { ADMIN_DASHBOARD_AGENT_DETAILS_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 const Wrapper = mobileOnly(borderRadius(pad(Tr, 'large'), 'small'), css`
   display: flex;

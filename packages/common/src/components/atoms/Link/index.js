@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { string, object } from 'prop-types';
+import { Link as RRLink } from 'react-router-dom';
 
 import Root from './Root';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { routes as routesPropType } from 'sly/common/propTypes/routes';
-import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
-import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
+import { createRRAnchor } from 'sly/common/components/helpers';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const RRLinkAnchor = createRRAnchor(Root);
@@ -28,17 +27,12 @@ export default class Link extends Component {
     cursor: 'pointer',
   };
 
-  static contextTypes = {
-    routes: routesPropType,
-  };
-
   static displayName = 'Link';
 
   checkPropsForLinks() {
-    const { to, href: hrefprop, event, ...props } = this.props;
-    const { routes } = this.context;
+    const { to, href, event, ...props } = this.props;
 
-    if (to && isPathInRoutes(routes, to)) {
+    if (to && !to.match(/^https?:\/\//)) {
       return {
         ...props,
         // flip the order on which we present the components
@@ -48,7 +42,6 @@ export default class Link extends Component {
       };
     }
 
-    const href = to || hrefprop;
     const target = href && href.match(/https?:\/\//)
       ? { target: '_blank', rel: 'noopener' }
       : {};

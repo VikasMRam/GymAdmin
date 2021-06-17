@@ -1,8 +1,8 @@
 import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
 import apiFetch from './apiFetch';
+import { apiCall } from './actions';
 
 import { cmsUrl } from 'sly/web/config';
-import makeApiCallAction from 'sly/web/services/api/makeApiCallAction';
 
 const defaultConfigure = options => options;
 
@@ -67,7 +67,7 @@ export default function buildApi(endpoints, config = {}) {
     acc[key].method = method;
     acc[key].asAction = (...args) => {
       const { placeholders, options } = normalizeArguments(...args);
-      return makeApiCallAction(request(endpointBaseUrl), { placeholders, path, options, actionName: key });
+      return apiCall(request(endpointBaseUrl), { placeholders, path, options, actionName: key, isJsonApi: jsonApi });
     };
     acc[key].ssrIgnore = ssrIgnore;
     acc[key].isJsonApi = jsonApi;

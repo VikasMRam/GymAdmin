@@ -1,7 +1,6 @@
 import { publicPath } from 'sly/web/config';
-import styles from 'sly/common/components/themes/default';
 
-const baseColor = styles.palette.slate.base;
+const baseColor = '#121c2b';
 
 export default `
   @font-face {
@@ -57,6 +56,11 @@ export default `
 
   body {
     font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
+  }
+
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
   }
 
   pre, code {

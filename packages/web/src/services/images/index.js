@@ -25,7 +25,7 @@ export const getImagePath = (path, format) => {
   return `${assetsUrl}/uploads/${path}`;
 };
 
-const getSrcsetForPath = (imagePath, { sources, aspectRatio }) => sources.map((source) => {
+const getSrcsetForPath = (imagePath, { sources, aspectRatio, crop }) => sources.map((source) => {
   let width;
   let height;
   if (Array.isArray(source)) {
@@ -34,14 +34,17 @@ const getSrcsetForPath = (imagePath, { sources, aspectRatio }) => sources.map((s
     width = source;
   }
 
-  const format = { width, height, aspectRatio };
+  const format = { width, height, aspectRatio, ...(crop === false && { crop }) };
   return `${getImagePath(imagePath, format)} ${width}w`;
 }).join(', ');
 
 // only doing 3:2 for now
 export const getSrcset = (imagePath, config) => ({
-  src: getImagePath(imagePath.replace(/\.jpe?g$/i, '.jpg'), { width: 768, aspectRatio: config.aspectRatio }),
-  jpegSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.webp)$/i, '.jpg'), config),
-  webpSrcset: getSrcsetForPath(imagePath.replace(/\.jpe?g$/i, '.webp'), config),
+  src: getImagePath(
+    imagePath.replace(/(\.jpe?g|\.png)$/i, '.jpg'),
+    { width: 768, aspectRatio: config.aspectRatio, ...(config.crop === false && { crop: config.crop }) },
+  ),
+  jpegSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.webp|\.png)$/i, '.jpg'), config),
+  webpSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.png)$/i, '.webp'), config),
 });
 

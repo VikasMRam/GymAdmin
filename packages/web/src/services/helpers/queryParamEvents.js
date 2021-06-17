@@ -1,4 +1,4 @@
-import { parse as parseUrl } from 'url';
+import url from 'url';
 
 import { stringify, parse } from 'query-string';
 
@@ -41,7 +41,7 @@ export function extractEventFromQuery(search) {
 }
 
 export function addEventToQueryString(search, event) {
-  if (!event || !event.action) {
+  if (!event?.action) {
     return search;
   }
 
@@ -65,9 +65,8 @@ export function addEventToUrl(urlString, event) {
     return urlString;
   }
 
-  const url = parseUrl(urlString);
+  const parsed = url.parse(urlString);
+  parsed.search = addEventToQueryString(parsed.search || '', event);
 
-  url.search = addEventToQueryString(url.search || '', event);
-
-  return url.format();
+  return url.format(parsed);
 }

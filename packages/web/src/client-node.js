@@ -1,21 +1,20 @@
 import React from 'react';
 import { object } from 'prop-types';
 
-import App from 'sly/web/components/App';
-import { ApiProvider } from 'sly/web/services/api';
-import { IconContext } from 'sly/common/system/Icon';
+import AppWrapper from 'sly/web/components/AppWrapper';
 
-export default function ClientApp({ apiContext, iconsContext }) {
+export default function ClientApp({ apiContext, iconsContext, reduxStore }) {
   return (
-    <IconContext.Provider value={iconsContext} >
-      <ApiProvider value={apiContext}>
-        <App />
-      </ApiProvider>
-    </IconContext.Provider>
+    <AppWrapper
+      apiContext={apiContext}
+      iconsContext={iconsContext}
+      reduxStore={reduxStore}
+    />
   );
 }
 
 ClientApp.propTypes = {
   apiContext: object,
   iconsContext: object,
+  reduxStore: object,
 };

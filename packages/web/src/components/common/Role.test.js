@@ -2,14 +2,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { createStore, ApiProvider } from 'sly/web/services/api';
+import { createApiClient, ApiProvider } from 'sly/web/services/api';
 import Role from 'sly/web/components/common/Role';
 
-const apiStore = createStore({});
-window.apiStore = apiStore;
+const apiContext = {
+  apiClient: createApiClient({ initialState: {} }),
+  skipApiCalls: false,
+};
+
+window.apiStore = apiContext.apiClient.store;
 
 const wrap = (props = {}, children) => mount(
-  <ApiProvider value={{ store: apiStore }}>
+  <ApiProvider value={apiContext}>
     <Role
       {...props}
     >

@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { Icon, Block } from 'sly/common/components/atoms';
-import { ResponsiveImage } from 'sly/web/components/atoms';
+import Image from 'sly/common/system/Image';
+import Block from 'sly/common/system/Block';
+import Flex from 'sly/common/system/Flex';
+import Play from 'sly/common/icons/Play';
 
-const Wrapper = styled.div`
-  position: relative;
-  height: inherit;
-`;
-
-const CenterContent = styled.div`
+const CenterContent = styled(Flex)`
   width: 100%;
   z-index: 1;
   margin: auto;
@@ -18,15 +15,13 @@ const CenterContent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 `;
 
-const StyledImage = styled(ResponsiveImage)`
+const StyledImage = styled(Image)`
   width: 100%;
-  object-fit: cover;
   height: inherit;
 `;
 
@@ -38,6 +33,7 @@ export default class VideoThumbnail extends Component {
     src: string,
     onClick: func,
     aspectRatio: string,
+    className: string,
   };
 
   static defaultProps = {
@@ -45,22 +41,22 @@ export default class VideoThumbnail extends Component {
   };
 
   render() {
-    const { src, path, onClick, aspectRatio } = this.props;
+    const { src, path, onClick, aspectRatio, className, ...props } = this.props;
 
     return (
-      <Wrapper>
+      <Block className={className} position="relative" height="inherit">
         <CenterContent onClick={onClick}>
-          <Icon
-            icon="play"
-            size="72px"
-            palette="white"
+          <Play
+            size="xxl"
+            color="white"
+            mr="s"
           />
-          <Block size="subtitle" weight="medium" palette="white">
+          <Block fontSize="20px" /* TODO: Should add style to set 20px on all screens? */ lineHeight="title-s" color="white">
             Watch Video
           </Block>
         </CenterContent>
-        <StyledImage src={src} path={path} aspectRatio={aspectRatio} loading="auto" />
-      </Wrapper>
+        <StyledImage src={src} path={path} aspectRatio={aspectRatio} {...props} />
+      </Block>
     );
   }
 }

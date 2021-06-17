@@ -1,6 +1,6 @@
 import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 
-export default (routes, history) => (path, replace) =>  {
+const makeRedirectTo = (routes, history) => (path, replace) =>  {
   if (isPathInRoutes(routes, path)) {
     if (replace) {
       history.replace(path);
@@ -13,3 +13,5 @@ export default (routes, history) => (path, replace) =>  {
     window.location.assign(path);
   }
 };
+
+export default makeRedirectTo;

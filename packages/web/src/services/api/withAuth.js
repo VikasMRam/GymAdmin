@@ -6,12 +6,31 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 
 import { useUser } from './withUser';
-import { useApi } from 'sly/web/services/api';
+import { isServer } from 'sly/web/config';
+import { useApi, hasSession } from 'sly/web/services/api';
 
 import { ensureAuthenticated as ensureAuthenticatedAction } from 'sly/web/store/actions';
 
+// returns null on server and when there is no response from the user/me resource yet
+// false when there is no session or user is not authorised and true when logged in
+const isLoggedIn = (userInfo) => {
+  if (isServer) {
+    return null;
+  }
+
+  if (!hasSession()) {
+    return false;
+  }
+
+  if (!userInfo.hasFinished) {
+    return null;
+  }
+
+  return userInfo.status === 200;
+};
+
 export const useAuth = () => {
-  const { api, dispatch } = useApi();
+  const { apiClient: { store, api }} = useApi();
   const {
     user,
     info: { user: userInfo },
@@ -33,9 +52,9 @@ export const useAuth = () => {
     'otpLoginUser',
     'sendOtpCode',
   ].reduce((acc, method) => {
-    acc[method] = (...args) => dispatch(api[method].asAction(...args));
+    acc[method] = (...args) => store.dispatch(api[method].asAction(...args));
     return acc;
-  }, {}), [api, dispatch]);
+  }, {}), [api, store]);
 
   const registerUser = useCallback((options = {}) => {
     const { ignoreExisting, ...data } = options;
@@ -145,7 +164,7 @@ export const useAuth = () => {
   }, []);
 
   return {
-    isLoggedIn: userInfo.status === 200,
+    isLoggedIn: isLoggedIn(userInfo),
     user,
     userInfo,
     fetchUser,

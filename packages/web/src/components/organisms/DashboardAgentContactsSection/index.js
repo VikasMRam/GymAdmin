@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import { Route } from 'react-router';
+import { Route, generatePath } from 'react-router';
 
 import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
@@ -18,7 +18,7 @@ import AddOrEditContactFormContainer from 'sly/web/containers/AddOrEditContactFo
 import IconButton from 'sly/common/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const TABLE_HEADINGS = [{ text: 'Contact name' }, { text: 'Entity' }, { text: 'Email' }, { text: 'Phone number' }, { text: 'Delete' }];
 
@@ -145,6 +145,7 @@ export default class DashboardAgentContactsSection extends Component {
       datatable,
       refetchContacts,
       match,
+      location,
       history,
       redirectTo,
       entityId,
@@ -168,7 +169,13 @@ export default class DashboardAgentContactsSection extends Component {
         Add contact
       </IconButton>
     );
-
+    const closeModal = () => {
+      if (history.action === 'PUSH') {
+        history.goBack();
+      } else {
+        redirectTo(match.url, true);
+      }
+    };
     return (
       <Section>
         <SectionHeader actions={actions}>

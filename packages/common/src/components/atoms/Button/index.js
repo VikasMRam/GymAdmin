@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { bool, string, oneOf, object } from 'prop-types';
+import { Link as RRLink } from 'react-router-dom';
 
 import Root from './Root';
 
 import { getKey } from 'sly/common/components/themes';
 import { isReactNative } from 'sly/common/constants/utils';
-import { routes as routesPropType } from 'sly/common/propTypes/routes';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
-import { createRRAnchor, RRLink } from 'sly/common/components/helpers';
+import { createRRAnchor } from 'sly/common/components/helpers';
 // todo: most probably should be common in future
 import SlyEvent from 'sly/web/services/helpers/events';
 import { isString } from 'sly/common/services/helpers/utils';
-import isPathInRoutes from 'sly/common/services/helpers/isPathInRoutes';
 import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const getTarget = (href) => {
@@ -75,10 +74,6 @@ export default class Button extends Component {
     textDecoration: 'none',
     cursor: 'pointer',
     clamped: true,
-  };
-
-  static contextTypes = {
-    routes: routesPropType,
   };
 
   getStyleProps() {
@@ -170,11 +165,10 @@ export default class Button extends Component {
     const {
       to, href: hrefprop, event, ...props
     } = this.props;
-    const { routes } = this.context;
     const styleProps = this.getStyleProps();
     styleProps.isTextChildren = isString(props.children);
 
-    if (to && isPathInRoutes(routes, to)) {
+    if (to && !to.match(/^https?:\/\//)) {
       return {
         ButtonComponent: RRLink,
         ...props,

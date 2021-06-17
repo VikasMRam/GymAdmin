@@ -1,5 +1,7 @@
 import build from 'redux-object';
 
+export const hasSession = () => (typeof document !== 'undefined' && document.cookie || '').indexOf('sly-session') !== -1;
+
 export const normalizeResponse = ({ data, included = [] }) => {
   if (!data) return data;
 

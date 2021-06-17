@@ -1,6 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 
+import { IconContext } from 'sly/common/system/Icon';
 import CommunitySummary from 'sly/web/components/organisms/CommunitySummary';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import { CONTINUING_CARE_RETIREMENT_COMMUNITY } from 'sly/web/constants/tags';
@@ -12,10 +14,28 @@ const searchParams = {
   toc: 'assisted-living',
 };
 
-const wrap = (props = {}) => shallow(<CommunitySummary {...props} searchParams={searchParams} />);
+const defaultProps = { formattedAddress: '2180 Post Street, San Francisco, CA 94115' };
+
+
+const icons = jest.fn();
+
+
+const wrap = (props = {}) => mount(<BrowserRouter><IconContext.Provider value={icons}><CommunitySummary {...defaultProps} {...props} searchParams={searchParams} /></IconContext.Provider></BrowserRouter>);
 
 const getCommunity = (state, tag) => {
   const community = { ...RhodaGoldmanPlaza };
+
+
+  const {
+    line1, line2, city, zip,
+  } = community.address;
+
+  const formattedAddress = `${line1}, ${line2}, ${city},
+    ${state}
+    ${zip}`
+    .replace(/, null,/g, ',')
+    .replace(/\s/g, ' ')
+    .replace(/, ,/g, ', ');
 
   community.address.state = state;
 
@@ -23,7 +43,7 @@ const getCommunity = (state, tag) => {
     community.care = [...community.care, tag];
   }
 
-  return community;
+  return { community, formattedAddress };
 };
 
 const verify = (wrapper) => {
@@ -33,14 +53,14 @@ const verify = (wrapper) => {
   const {
     line1, line2, city, state, zip,
   } = address;
-  const renderedAddress = wrapper.find('Heading[level="title"]').render().text();
 
+  const renderedAddress = wrapper.find('Block[pad="xs"]').at(1).render().text();
   expect(renderedAddress).toContain(line1);
   expect(renderedAddress).toContain(line2);
   expect(renderedAddress).toContain(city);
   expect(renderedAddress).toContain(state);
   expect(renderedAddress).toContain(zip);
-  expect(wrapper.find('Heading[level="hero"]').render().text()).toContain(name);
+  expect(wrapper.find('h1').render().text()).toContain(name);
 };
 
 describe('CommunitySummary', () => {
@@ -48,6 +68,7 @@ describe('CommunitySummary', () => {
     const wrapper = wrap({
       community: RhodaGoldmanPlaza,
     });
+
     verify(wrapper);
   });
 
@@ -57,13 +78,13 @@ describe('CommunitySummary', () => {
       isAdmin: true,
     });
     verify(wrapper);
-    expect(wrapper.find('Heading[level="hero"] Link')).toHaveLength(1);
+    expect(wrapper.find('h1 Link')).toHaveLength(2);
   });
 
   it('Should render the care types tags for state Delaware', () => {
     const community = getCommunity('DE');
     const wrapper = wrap({
-      community,
+      ...community,
     });
     const styledTags = wrapper.find('Tag');
 
@@ -78,7 +99,7 @@ describe('CommunitySummary', () => {
   it('Should render the care types tags for state Pennsylvania', () => {
     const community = getCommunity('PA');
     const wrapper = wrap({
-      community,
+      ...community,
     });
     const styledTags = wrapper.find('Tag');
 
@@ -93,7 +114,7 @@ describe('CommunitySummary', () => {
   it('Should render the care types tags for state Georgia', () => {
     const community = getCommunity('GA');
     const wrapper = wrap({
-      community,
+      ...community,
     });
     const styledTags = wrapper.find('Tag');
 
@@ -108,7 +129,7 @@ describe('CommunitySummary', () => {
   it('Should render the care types tags for state Kentucky', () => {
     const community = getCommunity('KY');
     const wrapper = wrap({
-      community,
+      ...community,
     });
     const styledTags = wrapper.find('Tag');
 
@@ -123,8 +144,10 @@ describe('CommunitySummary', () => {
   it('Should render CCRC', () => {
     const community = getCommunity('DE', CONTINUING_CARE_RETIREMENT_COMMUNITY);
     const wrapper = wrap({
-      community,
+      ...community,
     });
+
+
     const styledTags = wrapper.find('Tag');
 
     expect(styledTags.at(0).render().text()).toBe('Assisted Living');

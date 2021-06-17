@@ -7,7 +7,7 @@ import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import PricingWizardPage from 'sly/web/components/pages/PricingWizardPage';
 import { medicareToBool } from 'sly/web/services/helpers/userDetails';
-import { prefetch, query, withAuth } from 'sly/web/services/api';
+import { prefetch, query, withAuth, withUser } from 'sly/web/services/api';
 import withWS from 'sly/web/services/ws/withWS';
 import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/web/services/api/constants';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
@@ -23,6 +23,7 @@ const eventCategory = 'PricingWizard';
 
 @withWS
 @withAuth
+@withUser
 @query('updateUuidAux', 'updateUuidAux')
 @query('createAction', 'createUuidAction')
 @query('getAgent', 'getAgent')

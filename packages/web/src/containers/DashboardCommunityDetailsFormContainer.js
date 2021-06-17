@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import userProptype from 'sly/common/propTypes/user';
-import { query, prefetch, getRelationship, connectApi } from 'sly/web/services/api';
+import { query, prefetch } from 'sly/web/services/api';
 import DashboardCommunityDetailsForm from 'sly/web/components/organisms/DashboardCommunityDetailsForm';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import { patchFormInitialValues } from 'sly/web/services/edits';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 const validate = createValidator({
   name: [required]
@@ -37,8 +38,8 @@ const formValue = formValueSelector(formName);
 @connect((state, { status }) => ({
   respiteAllowed: formValue(state, 'attributes.propInfo.respiteAllowed'),
 }))
-@connectApi((state, { status }) => ({
-  address: getRelationship(state, status.community.result, 'address'),
+@withProps(({ status }) => ({
+  address: status.community.getRelationship(status.community.result, 'address'),
 }))
 export default class DashboardCommunityDetailsFormContainer extends Component {
   static propTypes = {

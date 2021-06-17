@@ -27,9 +27,6 @@ import {
 import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import { ResponsiveImage } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/web/components/search/helpers';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
-
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
@@ -55,21 +52,9 @@ const ListWrapper = makeOneColumnListWrapper('div');
 
 const IndependentLivingNearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('independent-living');
-
-
   const ilRef = React.createRef();
   const costRef = React.createRef();
   const typesRef = React.createRef();
@@ -79,7 +64,6 @@ const IndependentLivingNearMePage = ({
   const chooseRef = React.createRef();
   const faqRef = React.createRef();
   const nextRef = React.createRef();
-  const nearRef = React.createRef();
 
   const tocList = [
     {
@@ -128,13 +112,7 @@ const IndependentLivingNearMePage = ({
       id: "next",
       ref: nextRef
 
-    },
-    {
-      title: "Browse Independent Living Near You",
-      id: "near",
-      ref: nearRef
-
-    },
+    }
 
   ];
 
@@ -220,7 +198,6 @@ const IndependentLivingNearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={ilRef} >
-            What Is Independent Living?
           </Heading>
           <Paragraph>
             <Link href="http://blog.aarp.org/2012/01/30/taking-a-closer-look-at-independent-living/">
@@ -264,14 +241,12 @@ const IndependentLivingNearMePage = ({
           <Heading level="title" size="title" ref={costRef}>
             The Cost of Independent Living
           </Heading>
+
           <Paragraph>
-            The cost of an Independent Living community near you varies greatly.
-            This depends on the type of community, the location, and the amenities offered.
-          </Paragraph>
-          <Paragraph>
-            In some Independent Living communities, residents may have the option to buy their homes rather than
-            renting. This is most common in active adult communities or age-restricted communities.
-            In some rental communities, a buy-in fee is required to join the community.
+            The cost of independent living varies based upon factors such as location, amenities and other features.
+            In some Independent Living communities, residents may have the option to buy their homes rather than renting.
+            This is most common in active adult communities or age-restricted communities. In some rental communities, a
+            buy-in fee is required to join the community.
           </Paragraph>
           <Paragraph>
             Costs can range as low as $1,000 in Independent Living communities designated for low-income
@@ -324,7 +299,10 @@ const IndependentLivingNearMePage = ({
             Active Adult Communities
           </Heading>
           <Paragraph>
-            Active adult communities are aimed at people who are aged 55 and older.
+            <Link href="https://www.seniorly.com/active-adult">
+              Active adult communities
+            </Link>
+            {' '}are aimed at people who are aged 55 and older.
             They're targeted to appeal to baby boomers. This senior living option may consist of single-family homes,
             multi-family homes, townhomes, condos, or a mixture of different housing types.
           </Paragraph>
@@ -724,7 +702,7 @@ const IndependentLivingNearMePage = ({
           </Heading>
 
           <Paragraph>
-            If you're considering an Independent Living community near you start by determining which type of community
+            If you're considering an Independent Living community start by determining which type of community
             is the best choice.  Options include an active adult community, co-housing, a CCRC, or other choices.
             Research the communities available in your chosen location, comparing their costs and amenities.
             Paying a visit is also highly recommended.
@@ -844,9 +822,8 @@ const IndependentLivingNearMePage = ({
     );
   };
 
-  const title = 'Find the Best Independent Living Near You ';
+  const title = 'What is independent living?';
   const description = 'What is independent living? Learn about the types of independent living communities for seniors, costs of independent living and how to choose the right place.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -859,7 +836,7 @@ const IndependentLivingNearMePage = ({
       </Helmet>
       <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
          toc="independent living"
-         heading="What is Independent Living Near You?"
+         heading="What is Independent Living?"
          label="Use our free search to find independent living nearby"
          onCurrentLocation={onCurrentLocation}
          onLocationSearch={onLocationSearch} />
@@ -873,18 +850,6 @@ const IndependentLivingNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" ref={nearRef}>
-              {heading}
-            </Heading>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && communityList && communityList.length > 0 && (
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
             </Body>
           </TwoColumn>
         </Wrapper>
@@ -898,12 +863,7 @@ const IndependentLivingNearMePage = ({
 
 IndependentLivingNearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
   onCurrentLocation: func,
 };
 

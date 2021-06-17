@@ -23,6 +23,6 @@ describe('CommunityAgentSection', () => {
       name: LindaIwamota.info.displayName,
       picture: { src: (`${getImagePath(LindaIwamota.gallery.images[0].path)}`) },
     });
-    expect(wrapper.find('IconItem').at(1).dive().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
+    expect(wrapper.find('Block').at(3).dive().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
   });
 });

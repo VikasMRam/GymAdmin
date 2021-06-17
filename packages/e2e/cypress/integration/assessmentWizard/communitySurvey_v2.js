@@ -1,9 +1,11 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="Cypress" />
+
 import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
-import { SERVICES_OPTIONS, WHO_PERSON_OPTIONS, ADL_OPTIONS, TIMING_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS }
-  from 'sly/web/constants/wizards/assessment';
+import { EXPERIMENT_ADL_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/assessment/constants';
 
 Cypress.on('uncaught:exception', () => {
   return false;
@@ -11,105 +13,68 @@ Cypress.on('uncaught:exception', () => {
 
 describe('Community survey', () => {
   let community;
-  let lookingFor;
+  const lookingFor = 'other';
   const wizardVersion = 'Wizard_V1';
-  const wizardSteps = 6;
+  const retries = 10;
   const WizardConfiguration = {
     Wizard_V1:
-          [{ name: 'step-2:Who',
-            title: 'Are you looking for yourself or someone else?',
-            Options: WHO_PERSON_OPTIONS,
-            maxSelect: 4,
-            optionsId: 'lookingFor',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: true,
-            multipleselectionAllowed: false,
-            istitleNested: false,
-          },
-          { name: 'step-3:Timing',
-            title: 'What’s your timeframe?',
-            Options: TIMING_OPTIONS,
-            maxSelect: 3,
-            skipAllowed: false,
-            backAllowed: false,
-            submitText: 'Continue',
-            optionsId: 'timing',
-            isSelect: false,
-            multipleselectionAllowed: false,
-            istitleNested: false,
-          },
-          { name: 'step-4:ADL',
-            title: {
-              spouse: 'Does your spouse or partner need help with any of the following?',
-              myself: 'Do you need help with any of the following?',
-              parents: 'Does your parent need help with any of the following?',
-              other: 'Do you need help with any of the following?',
-            },
-            Options: ADL_OPTIONS,
-            maxSelect: 4,
-            optionsId: 'adl',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: false,
-            multipleselectionAllowed: true,
-            istitleNested: true,
-          },
-          { name: 'step-5:Budget',
-            title: {
-              spouse: 'Does your spouse or partner have access to any of these benefits?',
-              myself: 'Do you have access to any of these benefits?',
-              parents: 'Does your parent have access to any of these benefits?',
-              other: 'Do you have access to any of these benefits?',
-            },
-            Options: BUDGET_OPTIONS,
-            maxSelect: 5,
-            optionsId: 'budget',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: false,
-            multipleselectionAllowed: true,
-            istitleNested: true,
-          },
-          { name: 'step-6:Medicaid',
-            title: {
-              spouse: 'Does your spouse or partner qualify for Medicaid?',
-              myself: 'Do you qualify for Medicaid?',
-              parents: 'Does your parent qualify for Medicaid?',
-              other: 'Does the person you are looking for qualify for Medicaid?',
-            },
-            Options: MEDICAID_OPTIONS,
-            maxSelect: 3,
-            optionsId: 'medicaid',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: false,
-            multipleselectionAllowed: false,
-            istitleNested: true,
-          },
-          { name: 'step-7:Services',
-            title: {
-              spouse: 'Would your spouse or partner be interested in any of these other services?',
-              myself: 'Would you be interested in any of these other services?',
-              parents: 'Would your parent be interested in any of these other services?',
-              other: 'Would you be interested in any of these other services?',
-            },
-            Options: SERVICES_OPTIONS,
-            maxSelect: 5,
-            optionsId: 'services',
-            skipAllowed: true,
-            backAllowed: true,
-            submitText: 'Continue',
-            isSelect: false,
-            multipleselectionAllowed: true,
-            istitleNested: true,
-          },
-          ],
+      [{
+        name: 'step-4:ADL',
+        title: {
+          spouse: 'Does your spouse or partner need help with any of the following?',
+          myself: 'Do you need help with any of the following?',
+          parents: 'Does your parent need help with any of the following?',
+          other: 'Do you need help with any of the following?',
+        },
+        Options: EXPERIMENT_ADL_OPTIONS,
+        maxSelect: 1,
+        optionsId: 'adl',
+        skipAllowed: true,
+        backAllowed: true,
+        submitText: 'Continue',
+        isSelect: false,
+        multipleselectionAllowed: true,
+        istitleNested: true,
+      },
+      {
+        name: 'step-6:Medicaid',
+        title: {
+          spouse: 'Does your spouse or partner qualify for Medicaid?',
+          myself: 'Do you qualify for Medicaid?',
+          parents: 'Does your parent qualify for Medicaid?',
+          other: 'Does the person you are looking for qualify for Medicaid?',
+        },
+        Options: MEDICAID_OPTIONS,
+        maxSelect: 3,
+        optionsId: 'medicaid',
+        skipAllowed: true,
+        backAllowed: true,
+        submitText: 'Continue',
+        isSelect: false,
+        multipleselectionAllowed: false,
+        istitleNested: true,
+      },
+      {
+        name: 'step-5:Budget',
+        title: {
+          spouse: 'Does your spouse or partner have access to any of these benefits?',
+          myself: 'Do you have access to any of these benefits?',
+          parents: 'Does your parent have access to any of these benefits?',
+          other: 'Do you have access to any of these benefits?',
+        },
+        Options: BUDGET_OPTIONS,
+        maxSelect: 5,
+        optionsId: 'budget',
+        skipAllowed: true,
+        backAllowed: true,
+        submitText: 'Continue',
+        isSelect: false,
+        multipleselectionAllowed: true,
+        istitleNested: true,
+      }],
   };
+
+  const wizardSteps = WizardConfiguration[wizardVersion].length;
 
   // Generates 'qty' number of unique random integer numbers between min and max
   function getuniqueRandoms(qty, min, max) {
@@ -127,10 +92,6 @@ describe('Community survey', () => {
   function getminIndex(name) {
     if (name === 'step-4:ADL' && (lookingFor === 'myself')) { return 1; }
     return 0;
-  }
-
-  function setlookingFor(value) {
-    lookingFor = value;
   }
 
   function getlookingFor() {
@@ -164,8 +125,11 @@ describe('Community survey', () => {
       const minSelect = getminIndex(name);
       if (!multipleselectionAllowed) {
         const rand = getuniqueRandoms(1, minSelect, maxSelect);
-        const { label, value } = Options[rand];
-        if (name === 'step-2:Who') setlookingFor(value);
+        let { label, value } = Options[rand];
+        if (name === 'step-6:Medicaid') {
+          label = 'Yes';
+          value = 'yes';
+        }
         waitForHydration(cy.get(`div[id*=${optionsId}]`).contains(label)).click();
         waitForHydration(cy.get('button').contains(submitText)).click();
         verifypostUuidActions(name, optionsId, value);
@@ -192,22 +156,39 @@ describe('Community survey', () => {
       url: '**/uuid-actions',
       response: {},
     }).as('postUuidActions');
+    let attempts = 0;
+    while (!community?.id && attempts < retries) {
+      // eslint-disable-next-line no-loop-func
+      cy.getCommunity(TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+      // eslint-disable-next-line no-loop-func
+      attempts++;
+    }
 
-    cy.getCommunity(TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+
     Cypress.Cookies.preserveOnce('sly_uuid', 'sly_sid');
   });
 
   responsive(() => {
     it('Visit community page', () => {
       cy.visit(`/assisted-living/california/placerville/${community.id}`);
-
+      cy.wait('@postUuidActions');
       waitForHydration(cy.get('div[data-testid*=GetAssessmentBox]')).within(() => {
         cy.get('div').contains('Need help finding senior living options?').should('exist');
         cy.get('a').contains('Take the quiz').click();
+        cy.wait('@postUuidActions').then((xhr) => {
+          const request = xhr.requestBody;
+          const attrs = request.data.attributes;
+          expect(request.data).to.have.property('type', 'UUIDAction');
+          expect(attrs.actionInfo).to.have.property('stepName', 'step-0:profileSection');
+          expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+          expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
+          expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
+        });
       });
     });
+
 
     for (let i = 0; i < wizardSteps; i++) {
       verifywizardStep(i);
@@ -227,7 +208,7 @@ describe('Community survey', () => {
         const attrs = request.data.attributes;
         const contactType = 'pricingRequest';
         const slug = community.id;
-        expect(attrs.actionInfo).to.deep.equal({ contactType, email,  name,  phone, slug });
+        expect(attrs.actionInfo).to.deep.equal({ contactType, email, name, phone, slug });
         expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
         expect(attrs).to.have.property('actionType', 'profileContacted');
       });
@@ -245,4 +226,3 @@ describe('Community survey', () => {
     });
   });
 });
-

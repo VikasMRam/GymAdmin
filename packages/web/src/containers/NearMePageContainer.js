@@ -65,25 +65,6 @@ export default class NearMePageContainer extends Component {
     redirectTo: func.isRequired,
   };
 
-  state = {
-    communityList: [],
-    isFetchingResults: true,
-    requestMeta: {},
-
-  };
-
-  componentDidMount() {
-    const { searchCommunities, searchParams } = this.props;
-
-    searchCommunities(searchParams).then(({ body: result }) => {
-      const communities = normalizeResponse(result);
-      this.setState({ isFetchingResults: false, requestMeta: result.meta, communityList: communities });
-    }).catch((err) => {
-      // todo: use correct method for surfacing errors
-      // eslint-disable-next-line no-console
-      this.setState({ isFetchingResults: false });
-    });
-  }
 
   handleOnLocationSearch = (result) => {
     const { searchParams } = this.props;
@@ -118,16 +99,8 @@ export default class NearMePageContainer extends Component {
 
   render() {
     const {
-      searchParams,
-      location,
       match,
     } = this.props;
-
-    const {
-      communityList,
-      isFetchingResults,
-      requestMeta,
-    } = this.state;
 
     const { params } = match;
     const { hub } = params;
@@ -136,12 +109,7 @@ export default class NearMePageContainer extends Component {
       return (
         <NursingHomesNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -149,12 +117,7 @@ export default class NearMePageContainer extends Component {
       return (
         <SNFNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -162,12 +125,7 @@ export default class NearMePageContainer extends Component {
       return (
         <MemoryCareNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -175,12 +133,7 @@ export default class NearMePageContainer extends Component {
       return (
         <IndependentLivingNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -188,12 +141,7 @@ export default class NearMePageContainer extends Component {
       return (
         <SeniorLivingNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -201,12 +149,7 @@ export default class NearMePageContainer extends Component {
       return (
         <BNCNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -214,12 +157,7 @@ export default class NearMePageContainer extends Component {
       return (
         <CCRCNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
@@ -248,24 +186,14 @@ export default class NearMePageContainer extends Component {
       return (
         <ActiveAdultNearMePage
           onLocationSearch={this.handleOnLocationSearch}
-          requestMeta={requestMeta}
-          searchParams={searchParams}
-          communityList={communityList}
-          isFetchingResults={isFetchingResults}
           handleAnchor={handleClick}
-          location={location}
         />
       );
     }
     return (
       <AssistedLivingNearMePage
         onLocationSearch={this.handleOnLocationSearch}
-        requestMeta={requestMeta}
-        searchParams={searchParams}
-        communityList={communityList}
-        isFetchingResults={isFetchingResults}
         handleAnchor={handleClick}
-        location={location}
         onCurrentLocation={this.handleCurrentLocation}
       />
     );

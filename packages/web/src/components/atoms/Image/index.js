@@ -69,7 +69,7 @@ export default class Image extends React.Component {
   };
 
   static defaultProps = {
-    lazy: true,
+    lazy: false,
   };
 
   static generateAlt(src) {

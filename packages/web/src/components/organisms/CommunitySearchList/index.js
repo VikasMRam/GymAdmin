@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import { isBrowser } from 'sly/web/config';
 import { size } from 'sly/common/components/themes';
 import { gridColumns } from 'sly/web/components/themes';
-import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/constants/wizards/assessment';
+import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED } from 'sly/web/assessment/constants';
 import { getPaginationData } from 'sly/web/services/helpers/pagination';
 import { getTocLabel, getLocationLabel } from 'sly/web/components/search/helpers';
 import { shouldShowZillowSearchAd } from 'sly/web/services/helpers/adtiles';
@@ -150,7 +150,6 @@ const CommunitySearchList = ({ communityList, requestMeta, searchParams, locatio
             <CommunityTile
               community={similarProperty}
               layout="column"
-              noGallery
               lazyLoadImage={index !== 0}
               index={index + 1}
               event={{

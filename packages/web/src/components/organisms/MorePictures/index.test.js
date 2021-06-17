@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import MorePictures from 'sly/web/components/organisms/MorePictures';
-import { ResponsiveImage } from 'sly/web/components/atoms';
+import { Image } from 'sly/common/system';
 
 const images = [
   {
@@ -25,7 +25,7 @@ describe('MorePictures', () => {
   it('renders Image properly', () => {
     const wrapper = wrap();
 
-    const tiles = wrapper.find(ResponsiveImage);
+    const tiles = wrapper.find(Image);
     expect(tiles).toHaveLength(2);
     tiles.forEach((tile, i) => {
       expect(tile.prop('path')).toBe(images[i].path);
@@ -36,7 +36,7 @@ describe('MorePictures', () => {
   it('when an image is clicked it calls back the `onPictureClick` prop', () => {
     const wrapper = wrap();
 
-    wrapper.find(ResponsiveImage).at(1).simulate('click');
+    wrapper.find(Image).at(1).simulate('click');
     expect(onPictureClick).toHaveBeenCalledWith(images[1], 1);
   });
 });

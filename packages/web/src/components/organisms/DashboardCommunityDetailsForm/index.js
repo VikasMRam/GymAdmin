@@ -11,7 +11,7 @@ import {
   Section,
   SectionActions,
   SectionHeader,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const getStatesOptions = ( country ) => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
 const getAvailableTags = ( country ) => AVAILABLE_TAGS[country];

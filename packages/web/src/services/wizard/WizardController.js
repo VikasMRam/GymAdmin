@@ -122,7 +122,7 @@ export default class WizardController extends Component {
         to: nextStep,
       };
 
-      onNext({ ...args });
+      onNext(args);
     }
   };
 
@@ -145,11 +145,11 @@ export default class WizardController extends Component {
         from: steps[currentStepIndex],
         to: steps[prevStepIndex],
       };
-      onPrevious({ ...args });
+      onPrevious(args);
     }
   };
 
-  doSubmit = (params = {}) => {
+  doCompleteSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
     const { reset, next, previous } = this;
     params = {
@@ -162,9 +162,9 @@ export default class WizardController extends Component {
     return onComplete(data, params);
   };
 
-  handleSubmit = (params = {}) => {
+  handleStepSubmit = (params = {}) => {
     const {
-      next, previous, doSubmit, isFinalStep,
+      next, previous, doCompleteSubmit, isFinalStep,
     } = this;
     const {
       onStepChange, data, currentStepIndex, steps,
@@ -172,7 +172,7 @@ export default class WizardController extends Component {
     const currentStep = steps[currentStepIndex];
 
     if (isFinalStep()) {
-      return doSubmit(params);
+      return doCompleteSubmit(params);
     }
 
     // if onStepChange returns a promise then wait for it to resolve before
@@ -190,7 +190,7 @@ export default class WizardController extends Component {
         next,
         previous,
         goto,
-        doSubmit,
+        doSubmit: doCompleteSubmit,
       };
       const returnVal = onStepChange(args);
       return Promise.resolve(returnVal)
@@ -211,7 +211,7 @@ export default class WizardController extends Component {
 
   render() {
     const {
-      formOptions, next, previous, goto, handleSubmit, init,
+      formOptions, next, previous, goto, handleStepSubmit, init,
       isFinalStep, reset,
     } = this;
     const {
@@ -220,7 +220,7 @@ export default class WizardController extends Component {
     const currentStep = steps[currentStepIndex];
 
     return children({
-      onSubmit: handleSubmit,
+      onSubmit: handleStepSubmit,
       isFinalStep: isFinalStep(),
       init,
       currentStep,

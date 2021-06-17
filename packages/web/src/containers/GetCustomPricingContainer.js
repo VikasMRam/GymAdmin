@@ -1,18 +1,19 @@
 import React from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { bool, func, string } from 'prop-types';
 
-import { withRouter } from 'react-router';
 import SlyEvent from 'sly/web/services/helpers/events';
 import AskAgentQuestionContainer from 'sly/web/containers/AskAgentQuestionContainer';
-import { withRedirectTo } from 'sly/common/services/redirectTo';
 
 function GetCustomPricingContainer({
-  match: { params: { communitySlug } },
   hasAlreadyRequestedPricing,
-  redirectTo,
   children,
   locTrack,
 }) {
+  const { communitySlug } = useParams();
+
+  const { push } = useHistory();
+
   if (hasAlreadyRequestedPricing) {
     return (
       <AskAgentQuestionContainer type="pricing">
@@ -26,16 +27,15 @@ function GetCustomPricingContainer({
       category: 'PricingWizard',
       label: communitySlug,
     });
-    redirectTo(`/custom-pricing/${communitySlug}`);
+    push(`/custom-pricing/${communitySlug}`);
   };
   return children(onGotoCustomPricing);
 }
 
 GetCustomPricingContainer.propTypes = {
   hasAlreadyRequestedPricing: bool,
-  redirectTo: func.isRequired,
   children: func.isRequired,
   locTrack: string,
 };
 
-export default withRedirectTo(withRouter(GetCustomPricingContainer));
+export default GetCustomPricingContainer;

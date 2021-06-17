@@ -160,7 +160,6 @@ const HomeCareNearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={hcRef} >
-            What is Home Care Near You?
           </Heading>
           <Paragraph>
             Home Care (sometimes also known as in-home care or private duty care) is personal, non-medical senior
@@ -698,7 +697,7 @@ const HomeCareNearMePage = ({
     );
   };
 
-  const title = 'What is Home Care | Guide to In Home Care for Seniors ';
+  const title = 'What is In-Home Care for Seniors? ';
   const description = 'What is home care and when do you need it? Learn about home care for seniors, cost for in home care and how to find the right caregiver for your loved one.';
 
   return (
@@ -712,7 +711,7 @@ const HomeCareNearMePage = ({
       </Helmet>
       <HubHeader imagePath="react-assets/hub/home-care-cover.jpg"
          toc="home care"
-         heading="What is Home Care Near You?"
+         heading="What is In-Home Care for Seniors?"
          showSearch={false}/>
       <HubPageTemplate>
         <Wrapper>

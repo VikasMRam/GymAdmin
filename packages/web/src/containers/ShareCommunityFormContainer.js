@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, string, object } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-
 import { withRouter } from 'react-router';
-import api from 'sly/web/services/api/apiInstance';
+
 import { query } from 'sly/web/services/api';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import ShareCommunityForm from 'sly/web/components/organisms/ShareCommunityForm';
-
 import {
   createValidator,
   required,
@@ -91,12 +89,14 @@ export default class ShareCommunityFormContainer extends Component {
       }))
       .then(() => {
         notifyInfo('Community has been shared.');
-        onSuccess();
       })
       .catch(() => {
         throw new SubmissionError({ _error: 'Failed to share community. Please try again.' });
       })
-      .finally(() => this.setState({ submitting: false })));
+      .finally(() => {
+        this.setState({ submitting: false });
+        onSuccess();
+      }));
   };
 
   render() {
@@ -111,4 +111,3 @@ export default class ShareCommunityFormContainer extends Component {
     );
   }
 }
-

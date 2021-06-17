@@ -14,7 +14,7 @@ const wrap = (props = {}) => shallow(<TrustScoreTile community={RhodaGoldmanPlaz
 describe('TrustTile', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('IconItem')).toHaveLength(3);
+    expect(wrapper.find('PlusIcon')).toHaveLength(3);
     expect(wrapper.find('Link')).toHaveLength(1);
   });
 });

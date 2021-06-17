@@ -1,16 +1,11 @@
-import { arrayOf, object, shape, bool, func } from 'prop-types';
-import React, { useContext, useMemo, useState, useCallback } from 'react';
+import { object, shape, bool } from 'prop-types';
+import React, { useContext, useMemo, useCallback } from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import createMiddleware from 'sly/web/services/api/middleware';
-import apiReducer from 'sly/web/services/api/reducer';
-import createApi from 'sly/web/services/api/createApi';
 import { invalidateRequests, purgeFromRelationships } from 'sly/web/services/api/actions';
 
 export const apiContextPropType = shape({
-  store: object,
-  dispatch: func,
-  promises: arrayOf(object),
+  apiClient: object,
   skipApiCalls: bool,
 });
 
@@ -35,71 +30,29 @@ export default function withApiContext(Component) {
   return WithApiContext;
 }
 
-export const createStore = (initialState) => {
-  let state = initialState;
-  return {
-    getState() {
-      return state;
-    },
-    setState(newState, callback) {
-      state = newState;
-      if (typeof callback === 'function') {
-        callback(state);
-      }
-    },
-  };
-};
-
 export const useApi = () => useContext(ApiContext);
-
-export const useSelector = (selector) => {
-  const { state } = useApi();
-  return useMemo(() => selector(state), [selector, state]);
-};
 
 export const ApiProvider = ({
   value: {
-    store,
-    promises = {},
+    apiClient,
     skipApiCalls = false,
   } = {},
   ...props
 }) => {
-  const [state, setState] = useState(store.getState());
+  const invalidate = useCallback((...args) => apiClient.store.dispatch(
+    invalidateRequests(...args),
+  ), []);
 
-  const reducerDispatch = useCallback((action) => store.setState(apiReducer(store.getState(), action), setState), [store.getState()]);
+  const purgeFromRelationships = useCallback((...args) => apiClient.store.dispatch(
+    purgeFromRelationships(...args),
+  ), []);
 
-  const dispatch = useMemo(
-    () => createMiddleware(promises)(reducerDispatch),
-    [promises, reducerDispatch],
-  );
-
-  const invalidate = useCallback((...args) => dispatch(
-    invalidateRequests(args),
-  ), [dispatch]);
-
-  const purgeFromRelationships = useCallback((...args) => dispatch(
-    purgeFromRelationships(args),
-  ), [dispatch]);
-
-  const api = useMemo(createApi, []);
-
-  const contextValue = useMemo(() => ({
-    state,
-    dispatch,
-    promises,
-    skipApiCalls,
-    api,
-    invalidate,
-    purgeFromRelationships,
-  }), [
-    state,
-    dispatch,
-    promises,
+  const contextValue = {
+    apiClient,
     skipApiCalls,
     invalidate,
     purgeFromRelationships,
-  ]);
+  };
 
   return (
     <ApiContext.Provider value={contextValue} {...props} />

@@ -8,65 +8,92 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import debounce from 'lodash/debounce';
 import { node } from 'prop-types';
 
+import { isBrowser } from 'sly/web/config';
 import theme from 'sly/common/system/theme';
 
 export const MOBILE = 'mobile';
 export const TABLET = 'tablet';
 export const LAPTOP = 'laptop';
 
+export const PORTRAIT = 'portrait';
+export const LANDSCAPE = 'landscape';
+
 const { breakpoint: breakpoints } = theme;
 
-const sizes = Object.keys(breakpoints).reduce((acc, key) => {
-  acc[key] = parseInt(breakpoints[key], 10);
-  return acc;
-}, {});
-
-class Breakpoint {
-  constructor(currentWidth, scrollY) {
+export class Breakpoint {
+  constructor(currentWidth, currentHeight) {
     this.currentWidth = currentWidth;
-    this.scrollY = scrollY;
+    this.currentHeight = currentHeight;
   }
 
   atLeast(breakpoint) {
-    if (!sizes[breakpoint]) {
+    if (!breakpoints[breakpoint] && breakpoint !== MOBILE) {
       throw new Error(`no breakpoint ${breakpoint}`);
     }
-    if (breakpoint === MOBILE) {
-      return this.currentWidth < sizes[TABLET];
-    }
-    return this.currentWidth >= sizes[breakpoint];
+
+    const check = breakpoint === MOBILE
+      ? 0
+      : breakpoints[breakpoint];
+    return this.currentWidth >= check;
   }
 
   atLeastTablet = () => this.atLeast(TABLET);
   atLeastLaptop = () => this.atLeast(LAPTOP);
 
   upTo(breakpoint) {
-    if (!sizes[breakpoint]) {
+    if (!breakpoints[breakpoint] && breakpoint !== MOBILE) {
       throw new Error(`no breakpoint ${breakpoint}`);
     }
-    return this.currentWidth < sizes[breakpoint];
+
+    if (breakpoint === MOBILE) {
+      return false;
+    }
+
+    return this.currentWidth < breakpoints[breakpoint];
   }
 
   upToTablet = () => this.upTo(TABLET);
   upToLaptop = () => this.upTo(LAPTOP);
 
-  is(breakpoint) {
-    if (!sizes[breakpoint]) {
+  is(breakpoint, orientation = PORTRAIT) {
+    if (!breakpoints[breakpoint] && breakpoint !== MOBILE) {
       throw new Error(`no breakpoint ${breakpoint}`);
     }
+    if (breakpoint === LAPTOP && orientation !== PORTRAIT) {
+      throw new Error('Laptop can only be PORTRAIT');
+    }
+
+    let test = this.currentWidth;
+    if ([
+      MOBILE,
+      TABLET,
+    ].includes(breakpoint)) {
+      if (orientation === PORTRAIT) {
+        if (this.currentWidth > this.currentHeight) {
+          return false;
+        }
+      } else {
+        if (this.currentHeight > this.currentWidth) {
+          return false;
+        }
+        test = this.currentHeight;
+      }
+    }
+
     switch (breakpoint) {
-      case MOBILE: return this.currentWidth < sizes[TABLET];
-      case TABLET: return this.currentWidth >= sizes[TABLET] && this.currentWidth < this.sizes[LAPTOP];
-      case LAPTOP: return this.currentWidth >= sizes[LAPTOP];
+      case MOBILE: return test < breakpoints[TABLET];
+      case TABLET: return test >= breakpoints[TABLET] && test < breakpoints[LAPTOP];
+      case LAPTOP: return test >= breakpoints[LAPTOP];
       default: return false;
     }
   }
 
   width = () => this.currentWidth;
+  height = () => this.currentHeight;
 
-  isMobile = () => this.upTo(TABLET);
-  isTablet = () => this.is(TABLET);
-  isLaptop = () => this.is(LAPTOP);
+  isMobile = orientation => this.is(MOBILE, orientation);
+  isTablet = orientation => this.is(TABLET, orientation);
+  isLaptop = () => this.is(LAPTOP, LANDSCAPE); // LANDSCAPE only
 }
 
 function getDisplayName(WrappedComponent) {
@@ -78,22 +105,27 @@ function getDisplayName(WrappedComponent) {
 const BreakpointContext = React.createContext(null);
 
 export const BreakpointProvider = ({ children }) => {
-  const [breakpoint, setBreakpoint] = useState(new Breakpoint(window.innerWidth, window.scrollY));
+  const defaultBreakpoint = useMemo(() => isBrowser
+    ? new Breakpoint(window.innerWidth, window.innerHeight)
+    : undefined
+  , []);
+
+  const [breakpoint, setBreakpoint] = useState(defaultBreakpoint);
 
   const debouncedNewBreakpoint = useMemo(() => debounce(() => {
-    setBreakpoint(new Breakpoint(window.innerWidth, window.scrollY));
+    setBreakpoint(new Breakpoint(window.innerWidth, window.innerHeight));
   }), []);
 
   const newBreakpoint = useMemo(() => () => window.requestAnimationFrame(debouncedNewBreakpoint, 150), []);
 
-  useLayoutEffect(() => {
-    window.addEventListener('resize', newBreakpoint);
-    window.addEventListener('scroll', newBreakpoint);
-    return () => {
-      window.removeEventListener('resize', newBreakpoint);
-      window.removeEventListener('scroll', newBreakpoint);
-    };
-  }, []);
+  if (isBrowser) {
+    useLayoutEffect(() => {
+      window.addEventListener('resize', newBreakpoint);
+      return () => {
+        window.removeEventListener('resize', newBreakpoint);
+      };
+    }, []);
+  }
 
   return (
     <BreakpointContext.Provider value={breakpoint}>

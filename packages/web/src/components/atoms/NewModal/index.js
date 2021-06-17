@@ -28,21 +28,21 @@ const Overlay = styled.div`
 `;
 
 const Modal = styled.div`
-  ${withSpacing};
-
-  border-radius: 6px;
   background-color: ${palette('white', 'base')};
   display: ${ifProp('isOpen', 'flex', 'none')};
   flex-direction: column;
   overflow-y: auto;
-
   width: 100%;
-  max-height: calc(100vh - 1rem);
-  margin-top: 1rem;
+  height:100%;
+  
 
   @media screen and (min-width: 552px) {
+    ${withSpacing};
     max-height: calc(100vh - 48px);
+    height:auto;
+    margin-top: 1rem;
     margin-top: unset;
+    border-radius: 6px;
     max-width: ${size('layout.col6')};
   }
 `;

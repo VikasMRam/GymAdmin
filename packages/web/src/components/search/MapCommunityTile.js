@@ -29,7 +29,6 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       shadowVOffset="small"
       shadowPalette="black.base"
       shadowPaletteOpacity="20"
-      noGallery
       position="absolute"
       sx={{
         zIndex: 1000,

@@ -3,18 +3,13 @@ import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 import * as actions from './actions';
 
 import { isFSA } from 'sly/web/store/actions';
-import { createMemoizedRequestInfoSelector } from 'sly/web/services/api';
 
-const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
-const getUser = state => getMemoizedRequestInfo(
-  state.requests?.['getUser']?.['{"id":"me"}'],
-  state.entities,
-);
+const getUser = state => state['getUser']?.['{"id":"me"}'];
 
 export function* authenticate(apiStore, reason, options) {
   // check if there is an user
   const user = getUser(apiStore.getState());
-  if (user.status === 200) {
+  if (user?.status === 200) {
     return {
       authenticated: true,
       cancel: null,
@@ -23,6 +18,7 @@ export function* authenticate(apiStore, reason, options) {
 
   // otherwise start the login process
   yield put(actions.authenticate(reason, options));
+
   return yield race({
     authenticated: take(actions.AUTHENTICATE_SUCCESS),
     cancel: take(actions.AUTHENTICATE_CANCEL),

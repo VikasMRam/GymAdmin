@@ -1,14 +1,12 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/web/config';
-import api from 'sly/web/services/api/apiInstance';
-import {
-  createMemoizedRequestInfoSelector,
-} from 'sly/web/services/api/selectors';
+import { hasSession } from 'sly/web/services/api/helpers';
+import { defaultRequest, getRelationship as selectRelationship } from 'sly/web/services/api/selectors';
 import { useApi } from 'sly/web/services/api/context';
-import { invalidateRequests } from 'sly/web/services/api/actions';
+import { invalidateRequests, purgeFromRelationships as purgeFromRelationshipsAction } from 'sly/web/services/api/actions';
 
 const defaultDispatcher = call => call();
 
@@ -19,48 +17,50 @@ function getDisplayName(WrappedComponent) {
 }
 
 export function usePrefetch(apiCall, ...args) {
+  const { skipApiCalls, apiClient: { store, api }} = useApi();
   const { placeholders = {}, options = {} } = api[apiCall].method(...args);
   const argsKey = JSON.stringify(placeholders);
 
-  // FIXME: undo when we have only 1 react app in community profile
-  const { /* state, */ state: hookState, dispatch } = useApi();
-  const state = isServer ? hookState : apiStore.getState();
-  const fetch = useCallback(() => dispatch(
+  const fetch = useCallback(() => store.dispatch(
     api[apiCall].asAction(placeholders, options),
-  ), [argsKey]);
+  ), [apiCall, argsKey]);
 
-  const invalidate = useCallback(() => dispatch(
+  const invalidate = useCallback(() => store.dispatch(
     invalidateRequests(apiCall, placeholders),
-  ), [argsKey]);
+  ), [apiCall, argsKey]);
 
-  const getMemoizedRequestInfo = useMemo(createMemoizedRequestInfoSelector, []);
+  const purgeFromRelationships = useCallback((relationship) => store.dispatch(
+    purgeFromRelationshipsAction(apiCall, placeholders, relationship),
+  ), [apiCall, argsKey]);
 
-  const requestInfo = getMemoizedRequestInfo(
-    state.requests?.[apiCall]?.[argsKey],
-    state.entities,
-    api[apiCall].isJsonApi,
-  );
+  const getCurrentRequestInfo = useCallback(() => store.getState()[apiCall]?.[argsKey], [apiCall, argsKey]);
+
+  const [request, setRequest] = useState(getCurrentRequestInfo() || { ...defaultRequest });
+
+  const getRelationship = useCallback((entity, relationship) => selectRelationship(request.entities, entity, relationship), [request]);
+
+  const shouldBail = options.sessionOnly && !hasSession();
+
+  useEffect(() => {
+    store.on(apiCall, argsKey, setRequest);
+    const currentRequest = getCurrentRequestInfo() || defaultRequest;
+    if (!shouldBail && currentRequest !== request) {
+      fetch();
+    }
+    return () => store.off(apiCall, argsKey, setRequest);
+  }, [apiCall, argsKey, shouldBail]);
 
   const prefetch = useMemo(() => (
-    { requestInfo, fetch, invalidate }
-  ), [requestInfo, fetch, invalidate]);
+    { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships, getCurrentRequestInfo }
+  ), [request, apiCall, argsKey]);
 
-  const { hasStarted, isInvalid } = requestInfo;
-  // initial fetch
-  // red flag here having a hook inside a conditional, but hoping that it's ok
-  // as this branch will always be accessed or not consistently for the env
+  // initial server fetch, server does not run the effects
   if (isServer) {
-    const apiContext = useApi();
-    const shouldSkip = apiContext.skipApiCalls || api[apiCall].ssrIgnore;
+    const { hasStarted, isInvalid } = request;
+    const shouldSkip = skipApiCalls || api[apiCall].ssrIgnore;
     if (isInvalid || (!shouldSkip && !hasStarted)) {
       fetch();
     }
-  } else {
-    useEffect(() => {
-      if (isInvalid || !hasStarted) {
-        fetch();
-      }
-    }, [requestInfo]);
   }
 
   return prefetch;
@@ -69,7 +69,7 @@ export function usePrefetch(apiCall, ...args) {
 function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const Wrapper = ({ status = {}, ...props }) => {
-      const { requestInfo: request, fetch, invalidate } = usePrefetch(apiCall, ...dispatcher((...args) => args, props));
+      const { requestInfo: request, fetch, invalidate, getRelationship, purgeFromRelationships } = usePrefetch(apiCall, ...dispatcher((...args) => args, props));
 
       const innerProps = {
         ...props,
@@ -80,6 +80,8 @@ function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
             ...request,
             refetch: fetch,
             invalidate,
+            getRelationship,
+            purgeFromRelationships,
           },
         },
       };

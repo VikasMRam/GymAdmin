@@ -15,13 +15,11 @@ const wrap = (props = {}) =>
 describe('CommunityPricing', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap();
-
-    expect(wrapper.contains('test')).toBeFalsy();
+    expect(wrapper.find('StyledCommunityPricingWrapper Block').contains(('$4,300/month')));
   });
 
   it('renders price and fixed rating', () => {
     const wrapper = wrap();
-
-    expect(wrapper.find('StyledCommunityPricingWrapper Block').text()).toEqual('$4,300/month');
+    expect(wrapper.find('StyledCommunityPricingWrapper Block').contains(('$4,300/month')));
   });
 });

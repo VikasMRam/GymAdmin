@@ -329,6 +329,10 @@ export const ICONS = [
     "time"
   ],
   [
+    "ThumbsUp",
+    "thumbs-up"
+  ],
+  [
     "Toggle",
     "toggle"
   ],

@@ -22,9 +22,7 @@
     "open:e2e": "npm --prefix=packages/e2e run open",
     "start:web": "npm --prefix=packages/web run ${SLY_ENV:-dev}",
     "start:web:prod": "npm --prefix=packages/web run start:prod",
-    "start:mobile": "npm --prefix=packages/mobile run ${PLATFORM:-ios}",
-    "start:storybook": "npm --prefix=packages/storybook start",
-    "start:storybook:mobile": "npm --prefix=packages/storybook run start:mobile:${PLATFORM:-ios}"
+    "start:storybook": "npm --prefix=packages/storybook start"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -38,6 +36,7 @@
     "@babel/plugin-syntax-dynamic-import": "7.8.3",
     "@babel/preset-env": "7.9.0",
     "@babel/preset-react": "7.9.4",
+    "@wojtekmaj/enzyme-adapter-react-17": "0.6.1",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.1.0",
     "babel-plugin-module-resolver": "4.0.0",
@@ -61,17 +60,21 @@
     "redux-mock-store": "1.5.4"
   },
   "dependencies": {
-    "lerna": "3.22.1",
+    "@loadable/component": "file:./private/loadable-component",
     "cross-env": "7.0.2",
     "hoist-non-react-statics": "3.3.2",
+    "http-proxy-middleware": "2.0.0",
+    "lerna": "3.22.1",
+    "mitt": "2.1.0",
     "npm-run-all": "4.1.5",
     "prop-types": "15.7.2",
-    "react": "16.14.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-redux": "7.2.2",
     "react-router": "5.2.0",
     "redux": "4.0.5",
     "redux-form": "8.3.6",
-    "styled-components": "5.2.0",
+    "styled-components": "5.3.0",
     "styled-theme": "0.3.3",
     "styled-tools": "1.7.1"
   }

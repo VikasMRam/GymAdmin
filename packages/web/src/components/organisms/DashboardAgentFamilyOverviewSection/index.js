@@ -13,7 +13,7 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import Tabs from 'sly/web/components/molecules/Tabs';
 import Tab from 'sly/web/components/molecules/Tab';
 import clientPropType, { meta as clientMetaPropType } from 'sly/common/propTypes/client';
-import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_PATH, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED, WON } from 'sly/web/dashboard/dashboardAppPaths';
 import Th from 'sly/web/components/molecules/Th';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import ClientRowCard from 'sly/web/components/organisms/ClientRowCard';

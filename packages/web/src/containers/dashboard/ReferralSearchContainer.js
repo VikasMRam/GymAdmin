@@ -163,7 +163,7 @@ export default class ReferralSearchContainer extends Component {
   getGeoFromLocationValue = (value) => {
     const { radius } = this.props;
     if (value && value.searchParams) {
-      return value.searchParams.geo
+      return value.searchParams.geo;
     }
 
     if (value && value.info) {
@@ -195,14 +195,13 @@ export default class ReferralSearchContainer extends Component {
     const filters = {};
     if (name) {
       filters['filter[name]'] = name;
-    }
-    else if (geo) {
+    } else if (geo) {
       filters['filter[geo]'] = this.getGeoFromLocationValue(geo);
     }
 
     return getAgents(filters).then((resp) => {
       const allAgents = normJsonApi(resp);
-      const agents = allAgents.filter(e => !e.info.excludeFromMap);
+      const agents = allAgents.filter(e => !e.info.excludeFromMap && e.info.canReceiveReferrals);
       this.setState({
         agents,
       });
@@ -260,11 +259,11 @@ export default class ReferralSearchContainer extends Component {
     } = this.props;
     const { communitiesInterested, children: childrenClients, clientInfo, recommendedAgents: allRecommendedAgents, uuidAux } = parentClient;
     let { slyCommunityMessage: communityMessage, slyAgentMessage: agentMessage } = clientInfo;
-    if (communityMessage === undefined || communityMessage === "") {
-      communityMessage = "I look forward to working with you to help meet this client's needs."
+    if (communityMessage === undefined || communityMessage === '') {
+      communityMessage = "I look forward to working with you to help meet this client's needs.";
     }
-    if (agentMessage === undefined || agentMessage === "") {
-      agentMessage = "We look forward to working with you to help meet this client's needs."
+    if (agentMessage === undefined || agentMessage === '') {
+      agentMessage = "We look forward to working with you to help meet this client's needs.";
     }
 
     const { uuidInfo } = uuidAux;

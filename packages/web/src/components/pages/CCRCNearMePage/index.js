@@ -12,7 +12,6 @@ import NextSteps from 'sly/web/components/molecules/NextSteps';
 import ADLChart from 'sly/web/components/molecules/ADLChart';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import {
   HubPageTemplate,
   makeBody,
@@ -26,8 +25,6 @@ import {
 } from 'sly/web/components/templates/HubPageTemplate';
 import { Heading, Paragraph, Link } from 'sly/common/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/web/components/search/helpers';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 
 const StyledLink = styled(Link)`
   margin-bottom: ${size('spacing.large')};
@@ -46,21 +43,9 @@ const ListWrapper = makeOneColumnListWrapper('div');
 
 const CCRCNearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('continuing-care-retirement-community');
-
-
   const ccrcRef = React.createRef();
   const proconRef = React.createRef();
   const careRef = React.createRef();
@@ -70,7 +55,6 @@ const CCRCNearMePage = ({
   const chooseRef = React.createRef();
   const faqRef = React.createRef();
   const nextRef = React.createRef();
-  const nearRef = React.createRef();
 
   const tocList = [
     {
@@ -118,11 +102,6 @@ const CCRCNearMePage = ({
       title: "Next Steps",
       id: "next",
       ref: nextRef
-    },
-    {
-      title: "Browse CCRC Near You",
-      id: "near",
-      ref: nearRef
     },
 
   ];
@@ -207,7 +186,6 @@ const CCRCNearMePage = ({
     <>
       <StyledArticle>
         <Heading level="title" size="title" ref={ccrcRef} >
-          What is a Continuing Care Retirement Community (CCRC)?
         </Heading>
         <Paragraph>
           A CCRC (continuing care retirement community), also known as a Life Plan Community,
@@ -465,7 +443,10 @@ const CCRCNearMePage = ({
       </StyledArticle>
       <StyledArticle>
         <Heading level="title" size="title" ref={ccrcvsalRef} >
-          CCRC vs. Assisted Living
+          CCRC vs.{' '}
+          <Link href="https://www.seniorly.com/assisted-living">
+            Assisted Living
+          </Link>
         </Heading>
 
         <Paragraph>
@@ -610,14 +591,13 @@ const CCRCNearMePage = ({
       </StyledArticle>
       <StyledArticle>
         <Heading level="title" size="title" ref={ccrcvshcRef} >
-          CCRC vs. Home Care
+          CCRC vs.{' '}
+          <Link href="https://www.seniorly.com/in-home-care">
+            Home Care
+          </Link>
         </Heading>
         <Paragraph>
-          With{' '}
-          <Link href="https://www.seniorly.com/in-home-care">
-            home care
-          </Link>
-          , services can vary based on unique needs. These may include medication monitoring, help
+          With home care, services can vary based on unique needs. These may include medication monitoring, help
           with self-care, meal delivery, housekeeping, transportation, companionship, and minor
           health care services. However, once more advanced medical care is needed, other options
           may need to be considered.
@@ -802,7 +782,7 @@ const CCRCNearMePage = ({
           CCRC FAQs
         </Heading>
         <Paragraph>
-          Below you will find a sampling of the 5 most frequently asked questions we get regarding CCRC’s.  For a comprehensive list of CCRC frequently asked questions, click through to our{' '}
+          Below you will find a sampling of the 5 most frequently asked questions we get regarding CCRC’s. For a comprehensive list of CCRC frequently asked questions, click through to our{' '}
           <Link href="https://www.seniorly.com/continuing-care-retirement-community/articles/seniorly-continuing-care-retirement-community-ccrc-faqs">
             CCRC FAQ section
           </Link>.
@@ -847,9 +827,8 @@ const CCRCNearMePage = ({
   </>
 );
 
-  const title = 'Find the Best CCRC Near You ';
+  const title = 'What is a Continuing Care Retirement Community (CCRC)?';
   const description = 'Find the best continuing care retirement community(CCRC) near you with local senior living communities & providers. Browse CCRC nearby with prices, reviews & photos.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -862,7 +841,7 @@ const CCRCNearMePage = ({
       </Helmet>
       <HubHeader imagePath="react-assets/hub/independent-living-cover.jpg"
          toc="CCRC"
-         heading="What is Continuing Care Retirement Community (CCRC) Near You?"
+         heading="What is a Continuing Care Retirement Community(CCRC)?"
          label="Use our free search to find CCRC nearby"
          onCurrentLocation={onCurrentLocation}
          onLocationSearch={onLocationSearch} />
@@ -876,18 +855,6 @@ const CCRCNearMePage = ({
             </Column>
             <Body>
             {SEOContent()}
-            <Heading level="title" size="title" ref={nearRef}>
-              {heading}
-            </Heading>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && communityList && communityList.length > 0 && (
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
             </Body>
           </TwoColumn>
         </Wrapper>
@@ -901,12 +868,7 @@ const CCRCNearMePage = ({
 
 CCRCNearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
   onCurrentLocation: func,
 };
 
