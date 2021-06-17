@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import { string, func,  bool, arrayOf, object } from 'prop-types';
 
 
-import { Toggle } from 'sly/common/icons';
+import { Toggle as ToggleIcon } from 'sly/common/icons';
 import { space } from 'sly/common/system';
 
-const StyledToggle = styled(Toggle)`
+const StyledToggle = styled(ToggleIcon)`
   margin-right: ${space('xs')};
   cursor:pointer;
 `;
 
 
-export default class CheckboxInput extends Component {
+export default class Toggle extends Component {
   static propTypes = {
     value: bool,
     onChange: func,
