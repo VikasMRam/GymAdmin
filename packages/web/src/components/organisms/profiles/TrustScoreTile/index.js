@@ -76,7 +76,7 @@ const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
 
       </Wrapper>
       <Block
-        marginBottom="xxs"
+        marginBottom="xs"
         font="title-s"
       >
         What is Seniorly Trust Score?
