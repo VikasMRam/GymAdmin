@@ -312,7 +312,7 @@ export default class App extends Component {
 
                       {/*
                       Open graph
-                    */}
+                      */}
                       <meta property="og:site_name" content="Seniorly" />
                       <meta property="og:site_url" content="https://www.seniorly.com" />
                       <meta property="og:type" content="website" />

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect, useCallback } from 'react';
 import Helmet from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ const loadJsScript = () => {
           resolve(true);
         };
         script.onerror = (err) => {
-          reject(new Error());
+          reject(err);
         };
       }
       if (existingScript) resolve(true);
@@ -36,82 +36,57 @@ const loadJsScript = () => {
   });
 };
 
-const canEventTrigger = (location, eventName) => {
-  if (eventName === 'Bot reintro') {
-    if (location.pathname.indexOf('wizard') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('resources') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('seniorly.com/dashboard') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('veterans-benefit') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('in-home-care') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('respite-care') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('nursing-homes') !== -1) {
-      return false;
-    } else if (location.pathname.indexOf('active-adult') !== -1) {
-      return false;
-    }
-    return true;
-  }
-  return false;
-};
-
 
 export const ChatBoxProvider = (props) => {
   const [isChatboxLoaded, setChatboxLoaded] = useState(false);
 
   const location = useLocation();
   const currentTimer = useRef(0);
-  const currentEvent = useRef(0);
 
 
   const tc = (eventName) => {
-    if (canEventTrigger(location, eventName)) {
-      if (typeof window !== 'undefined' && window.RokoInstabot) {
-        window.RokoInstabot.trigger(eventName);
-        currentTimer.current = null;
-      }
+    if (typeof window !== 'undefined' && window.RokoInstabot) {
+      window.RokoInstabot.trigger(eventName);
+      currentTimer.current = null;
     }
   };
 
   useEffect(() => {
     if (currentTimer.current) {
-      if (!canEventTrigger(location, currentEvent.current)) {
-        clearTimeout(currentTimer.current);
-        currentTimer.current = null;
-      }
+      clearTimeout(currentTimer.current);
+      currentTimer.current = null;
     }
   }, [location]);
 
 
   const triggerChatBotEvent = (eventName) => {
+    clearTimeout(currentTimer.current);
     currentTimer.current = null;
     if (eventName === 'Bot reintro') {
       currentTimer.current = setTimeout(() => {
         tc(eventName);
-      }, 30000);
+      }, 20000);
     }
   };
 
-  const triggerEvent = (eventName) => {
-    if (hideChatbox) {
-      return;
-    }
-    if (!isChatboxLoaded) {
-      loadJsScript().then(() => {
-        if (!isChatboxLoaded) {
-          setChatboxLoaded(true);
-        }
-        triggerChatBotEvent(eventName);
-      });
-    } else {
-      triggerChatBotEvent(eventName);
-    }
-  };
+  const triggerEvent = useCallback(
+    (eventName) => {
+      if (hideChatbox) {
+        return;
+      }
+      setTimeout(() => {
+        loadJsScript().then(() => {
+          if (!isChatboxLoaded) {
+            setChatboxLoaded(true);
+          }
+          triggerChatBotEvent(eventName);
+        }).catch((err) => {
+          console.log(err);
+        });
+      }, 10000);
+    },
+    [isChatboxLoaded],
+  );
 
 
   const contextValue = {
