@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
-import { object, func, array } from 'prop-types';
+import { reduxForm, SubmissionError, isDirty, initialize } from 'redux-form';
+import { object, func, array, bool } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
-
 import clientPropType from 'sly/common/propTypes/client';
 import userProptype from 'sly/common/propTypes/user';
-import { query, prefetch } from 'sly/web/services/api';
+import { query, prefetch, normalizeResponse } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import DashboardCommunityNewPricingForm from 'sly/web/components/organisms/DashboardCommunityNewPricingForm';
 import { patchFormInitialValues } from 'sly/web/services/edits';
-import {  costSections, costSectionOptions } from 'sly/web/constants/communityPricing';
+import {  costSections, costSectionOptions, defaultInitialValues } from 'sly/web/constants/communityPricing';
 
 
 let defaultValues = [];
@@ -30,6 +29,10 @@ const ReduxForm = reduxForm({
 
 const dashboardCommunityCareSorter = (a, b) => {
   return costSections.indexOf(a.attributes.title) - costSections.indexOf(b.attributes.title);
+};
+
+const dashboardUpdateCommunityCareSorter = (a, b) => {
+  return costSections.indexOf(a.title) - costSections.indexOf(b.title);
 };
 
 
@@ -51,6 +54,7 @@ const dashboardCommunityCareSorter = (a, b) => {
 @connect((state) => {
   return {
     currentValues: state.form[formName]?.values,
+    shouldBlockNavigation: isDirty('DashboardCommunityNewPricingForm')(state),
   };
 })
 
@@ -67,6 +71,8 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     status: object,
     prices: array,
     rgsAux: object,
+    propInfo: object,
+    shouldBlockNavigation: bool,
   };
 
 
@@ -74,6 +80,7 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     hasNewPricing: !!this.props.prices[0],
     newPricingOnWaitlist: !!this.props?.rgsAux?.attributes?.rgsInfo?.availabilityInfo?.onNewPricingWaitlist,
     eligibleForNewPricing: this.props.community.care.some(careType => costSections.includes(careType)),
+    shouldBlockNavigation: this.props.shouldBlockNavigation,
   }
 
 
@@ -105,15 +112,11 @@ export default class DashboardCommunityPricingFormContainer extends Component {
         },
     },
     )
-      .then(() => {
-        notifyInfo(`${community.name} added to waitlist`);
-        this.setState({ newPricingOnWaitlist: true });
-      },
-      )
+      .then(() =>  notifyInfo(`${community.name} added to waitlist`))
       .catch(() => notifyError(`${community.name} could not be added to waitlist`));
   }
 
-  handleSubmit = (values) => {
+  handleSubmit = (values, dispatch) => {
     const { match, updateCommunity, community, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
     const { prices, ...attributes } = values;
@@ -123,24 +126,39 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     // Check that at least one pricing type that isn't additional costs is filled and that the correct inputs are filled for to and from pricing types
     let atLeastOne = false;
     let error = '';
+    const errors = [];
 
 
-    valuesArray.every((entityPrice) => {
-      Object.values(entityPrice.attributes.info.prices).forEach((room) => {
+    valuesArray.every((entityPrice, index) => {
+      errors[index] = {};
+      errors[index].attributes = {};
+      errors[index].attributes.info = {};
+      errors[index].attributes.info.prices = {};
+      Object.keys(entityPrice.attributes.info.prices).forEach((roomLabel) => {
+        const room = entityPrice.attributes.info.prices[roomLabel];
+
+        errors[index].attributes.info.prices[roomLabel] = {};
+        const roomError = errors[index].attributes.info.prices[roomLabel];
+
         if (room.type !== 'disabled' && entityPrice.title !== 'Additonal Costs') {
           atLeastOne = true;
         }
-        if (room.type === 'range' && !room.to && !room.from) {
-          error = 'For "range" pricing "to" and "from" values must both be filled';
+        if (room.type === 'range' && (!room.to || !room.from)) {
+          roomError.to = true;
+          roomError.from = true;
+          error = 'Please fill out the required fields.';
           return false;
         }
         if (room.type === 'range' && room.to <= room.from) {
-          error = 'For "range" pricing "to" value must be greater than "from"';
+          roomError.to = true;
+          roomError.from = true;
+          error = 'Starting price must be smaller than the ending price.';
           return false;
         }
 
         if (room.type === 'from' && !room.from) {
-          error = 'For "from" pricing "from" value must be filled';
+          roomError.from = true;
+          error = 'Please fill out the required fields.';
           return false;
         }
       });
@@ -148,13 +166,13 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     });
 
     if (!atLeastOne) {
-      notifyError('All pricing types cannot be disabled');
+      notifyError('You must have pricing for at least 1 room.');
       return null;
     }
 
     if (error) {
       notifyError(error);
-      return null;
+      throw new SubmissionError({ prices: errors });
     }
 
     return updateCommunity({ id }, {
@@ -168,14 +186,17 @@ export default class DashboardCommunityPricingFormContainer extends Component {
           },
         },
     })
-      .then(() => notifyInfo(`Details for ${community.name} saved correctly`))
-      .catch(() => notifyError(`Details for ${community.name} could not be saved`));
+      .then(() => {
+        // Updates prices in redux so isDirty will be false and use can navigated without prompt
+        dispatch(initialize('DashboardCommunityNewPricingForm', { prices }, false, { keepSubmitSucceeded: true }));
+        notifyInfo('Pricing successfully saved.');
+      })
+      .catch(() => notifyError(`Pricing for ${community.name} could not be saved`));
   };
 
   render() {
     const { community, status, prices, currentEdit, user, currentValues, ...props } = this.props;
-    const { hasNewPricing, eligibleForNewPricing, newPricingOnWaitlist } = this.state;
-
+    const { hasNewPricing, eligibleForNewPricing, newPricingOnWaitlist, shouldBlockNavigation } = this.state;
 
     // filter care for only pricing types available in constants and add Additonal Costs
     const validatedCareTypes = community.care.filter(careType => costSections.includes(careType));
@@ -184,7 +205,6 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     const canEdit = !currentEdit?.isPendingForAdmin
       && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
-    console.log(prices);
     const sortedPrices = { prices: prices.sort(dashboardCommunityCareSorter) };
 
 
@@ -214,7 +234,17 @@ export default class DashboardCommunityPricingFormContainer extends Component {
         };
         costSectionOptions[careType].costTypes.forEach((roomType) => {
           entityPrice.attributes.info.prices[roomType.value] = {};
-          entityPrice.attributes.info.prices[roomType.value].type = 'range';
+          if (defaultInitialValues[careType]) {
+            const capacities = Object.keys(defaultInitialValues[careType]);
+            const key = capacities.find(capacity => capacity <= community.propInfo?.capacity);
+            if (defaultInitialValues?.[careType]?.[key].includes(roomType.value)) {
+              entityPrice.attributes.info.prices[roomType.value].type = 'range';
+            } else {
+              entityPrice.attributes.info.prices[roomType.value].type = 'disabled';
+            }
+          } else {
+            entityPrice.attributes.info.prices[roomType.value].type = 'disabled';
+          }
         });
         return entityPrice;
       });
@@ -248,6 +278,7 @@ export default class DashboardCommunityPricingFormContainer extends Component {
         newPricingOnWaitlist={newPricingOnWaitlist}
         onUpdatePricingClick={this.onUpdatePricingClick}
         onJoinWaitListClick={this.onJoinWaitListClick}
+        shouldBlockNavigation={shouldBlockNavigation}
         {...props}
       />
     );

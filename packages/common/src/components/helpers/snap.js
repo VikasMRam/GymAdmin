@@ -19,6 +19,11 @@ export const leftSnap = css`
   border-bottom-left-radius: 0;
 `;
 
+export const leftSnapWithBorder = css`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+`;
+
 // won't remove border
 export const rightSnap = css`
   border-bottom-right-radius: 0;
@@ -36,6 +41,8 @@ export const withSnap = switchProp('snap', {
   left: leftSnap,
   right: rightSnap,
   all: allSnap,
+  leftWithBorder: leftSnapWithBorder,
+  horizontalWithBorder: `${leftSnapWithBorder} ${rightSnap}`,
   vertical: `${topSnap} ${bottomSnap}`,
   horizontal: `${leftSnap} ${rightSnap}`,
 });

@@ -41,7 +41,7 @@ const CommunityAgentSection = ({
         </Block>
       </Grid>
 
-      <Heading font="title-s">What is a Seniorly Local Advisor?</Heading>
+      <Heading pad="xs" font="title-s">What is a Seniorly Local Advisor?</Heading>
       <Block>
         Our Seniorly Local Advisors specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
       </Block>
