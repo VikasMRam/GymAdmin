@@ -63,6 +63,11 @@ const Wrapper = styled(Block)`
     }
   }
 
+
+  .react-select__control--is-disabled {
+    background-color: ${palette('slate.lighter-90')};
+  }
+
   .react-select__menu-list {
     padding-top: 0px;
     padding-bottom: 0px;
