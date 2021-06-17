@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { arrayOf, func, object, bool } from 'prop-types';
+import React, { useCallback, useState } from 'react';
+import { arrayOf, func, object, bool, string, number } from 'prop-types';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import { Block, Link } from "sly/common/system";
-import { useAuth, usePrefetch, useQuery } from "sly/web/services/api";
-import { COMMUNITY_ENTITY_TYPE } from "sly/web/constants/entityTypes";
-import { getCommunityUserSave, isCommunityAlreadySaved } from "sly/web/profile/helpers";
-import { USER_SAVE_DELETE_STATUS } from "sly/web/constants/userSave";
+import { Block, Link, space, sx } from 'sly/common/system';
+import { useAuth, usePrefetch, useQuery } from 'sly/web/services/api';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+import { getCommunityUserSave, isCommunityAlreadySaved } from 'sly/web/profile/helpers';
+import { USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
-  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS
-} from "sly/web/constants/notifications";
-import SlyEvent from "sly/web/services/helpers/events";
-import { useNotification } from "sly/web/components/helpers/notification";
-import Modal, { ModalBody } from "sly/web/components/atoms/NewModal";
-import { withHydration } from "sly/web/services/partialHydration";
+  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
+} from 'sly/web/constants/notifications';
+import SlyEvent from 'sly/web/services/helpers/events';
+import { useNotification } from 'sly/web/components/helpers/notification';
+import Modal, { ModalBody } from 'sly/web/components/atoms/NewModal';
+import { withHydration } from 'sly/web/services/partialHydration';
 
 const SaveCommunityContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/web/containers/SaveCommunityContainer'));
 
@@ -96,7 +96,8 @@ const CommunityTileContainer = ({
         sx={{
           '&:hover': {
             textDecoration: 'none',
-          }
+            boxShadow: sx`0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1)`,
+          },
         }}
       >
         <CommunityTile
@@ -108,6 +109,7 @@ const CommunityTileContainer = ({
             h3: { mb: 's' },
             height: '100%',
             '& > div > div:last-child': {  p: 'l' },
+            'button svg': { color: isCommunityAlreadySaved(communityInfo, userSaves) && 'red.lighter-20' },
           }}
           canFavourite={canFavourite}
           onUnfavouriteClick={handleFavouriteClick}
@@ -127,7 +129,16 @@ const CommunityTileContainer = ({
         </ModalBody>
       </Modal>
     </>
-  )
+  );
+};
+
+CommunityTileContainer.propTypes = {
+  community: object,
+  layout: string,
+  getEvent: func,
+  canFavourite: bool,
+  index: number,
+  onCommunityClick: func,
 };
 
 const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, getEvent, canFavourite }) => {
@@ -156,7 +167,7 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, get
             sx={{
               '&:hover': {
                 textDecoration: 'none',
-              }
+              },
             }}
           >
             <CommunityTile community={community} layout={layout} event={getEvent(community, index)} />
@@ -164,7 +175,7 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, get
         ))}
       {communities?.length > 1 && <Block />}
     </>
-  )
+  );
 };
 
 SimilarCommunities.propTypes = {
