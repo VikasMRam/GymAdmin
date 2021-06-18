@@ -12,9 +12,9 @@ export const ChatBoxContext = React.createContext({ triggerChatBot: () => {} });
 const loadJsScript = () => {
   return new Promise((resolve, reject) => {
     if (typeof window !== 'undefined') {
-      const existingScript = document.getElementById('instabot');
-      if (!existingScript) {
-        const script = document.createElement('script');
+      let script = document.getElementById('instabot');
+      if (!script) {
+        script = document.createElement('script');
         script.src = 'https://widget.instabot.io/jsapi/rokoInstabot.js';
         script.id = 'instabot';
         script.type = 'text/javascript';
@@ -22,70 +22,100 @@ const loadJsScript = () => {
         script.async = true;
         script.crossOrigin = '';
         document.body.appendChild(script);
-        script.onload = () => {
-          resolve(true);
-        };
-        script.onerror = (err) => {
-          reject(err);
-        };
       }
-      if (existingScript) resolve(true);
+      script.onload = () => {
+        resolve(window.RokoInstabot);
+      };
+      script.onerror = (err) => {
+        reject(err);
+      };
     } else {
-      reject(new Error());
+      reject(new Error('Roko Instabot can\'t be loaded in the server'));
     }
   });
+};
+
+const getTimeoutForEvent = (eventName) => {
+  if (eventName === 'Bot reintro') {
+    return 30000;
+  }
+  return 10000; // default timeout
 };
 
 
 export const ChatBoxProvider = (props) => {
   const [isChatboxLoaded, setChatboxLoaded] = useState(false);
-
   const location = useLocation();
   const currentTimer = useRef(0);
+  const currentEvent = useRef(0);
 
-
-  const tc = (eventName) => {
-    if (typeof window !== 'undefined' && window.RokoInstabot) {
-      window.RokoInstabot.trigger(eventName);
-      currentTimer.current = null;
+  const canEventTrigger = (location, eventName) => {
+    if (eventName === 'Bot reintro') {
+      if (location.pathname.indexOf('wizard') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('resources') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('seniorly.com/dashboard') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('veterans-benefit') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('in-home-care') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('respite-care') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('nursing-homes') !== -1) {
+        return false;
+      } else if (location.pathname.indexOf('active-adult') !== -1) {
+        return false;
+      }
+      return true;
     }
+    return false;
   };
 
+  const clearCurrentTimeOut = useCallback(
+    () => {
+      if (currentTimer.current) {
+        console.log('clearing');
+        clearTimeout(currentTimer.current);
+        currentTimer.current = null;
+      }
+    },
+    [currentTimer.current],
+  );
+
+
   useEffect(() => {
-    if (currentTimer.current) {
-      clearTimeout(currentTimer.current);
-      currentTimer.current = null;
+    console.log('2');
+    if (!canEventTrigger(location, currentEvent.current)) {
+      clearCurrentTimeOut();
     }
   }, [location]);
 
-
-  const triggerChatBotEvent = (eventName) => {
-    clearTimeout(currentTimer.current);
-    currentTimer.current = null;
-    if (eventName === 'Bot reintro') {
-      currentTimer.current = setTimeout(() => {
-        tc(eventName);
-      }, 20000);
-    }
-  };
 
   const triggerEvent = useCallback(
     (eventName) => {
       if (hideChatbox) {
         return;
       }
-      setTimeout(() => {
-        loadJsScript().then(() => {
-          if (!isChatboxLoaded) {
-            setChatboxLoaded(true);
-          }
-          triggerChatBotEvent(eventName);
-        }).catch((err) => {
-          console.log(err);
-        });
-      }, 10000);
+      currentEvent.current = eventName;
+      console.log('1');
+      clearCurrentTimeOut();
+      currentTimer.current = setTimeout(() => {
+        loadJsScript()
+          .then((instance) => {
+            instance.trigger(eventName);
+            clearCurrentTimeOut();
+            if (!isChatboxLoaded) {
+              setChatboxLoaded(true);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }, getTimeoutForEvent(eventName));
     },
-    [isChatboxLoaded],
+    [currentTimer.current],
   );
 
 
@@ -114,3 +144,4 @@ export const useChatbox = () => {
 
 
 export default ChatBoxProvider;
+
