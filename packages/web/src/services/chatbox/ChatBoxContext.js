@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useRef, useCallback } from 'react';
 import Helmet from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 
@@ -47,36 +47,10 @@ export const ChatBoxProvider = (props) => {
   const [isChatboxLoaded, setChatboxLoaded] = useState(false);
   const location = useLocation();
   const currentTimer = useRef(0);
-  const currentEvent = useRef(0);
-
-  const canEventTrigger = (location, eventName) => {
-    if (eventName === 'Bot reintro') {
-      if (location.pathname.indexOf('wizard') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('resources') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('seniorly.com/dashboard') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('veterans-benefit') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('in-home-care') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('respite-care') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('nursing-homes') !== -1) {
-        return false;
-      } else if (location.pathname.indexOf('active-adult') !== -1) {
-        return false;
-      }
-      return true;
-    }
-    return false;
-  };
 
   const clearCurrentTimeOut = useCallback(
     () => {
       if (currentTimer.current) {
-        console.log('clearing');
         clearTimeout(currentTimer.current);
         currentTimer.current = null;
       }
@@ -84,24 +58,16 @@ export const ChatBoxProvider = (props) => {
     [currentTimer.current],
   );
 
-
-  useEffect(() => {
-    console.log('2');
-    if (!canEventTrigger(location, currentEvent.current)) {
-      clearCurrentTimeOut();
-    }
-  }, [location]);
-
-
   const triggerEvent = useCallback(
     (eventName) => {
       if (hideChatbox) {
         return;
       }
-      currentEvent.current = eventName;
-      console.log('1');
       clearCurrentTimeOut();
       currentTimer.current = setTimeout(() => {
+        if (location.pathname !== window.location.pathname) {
+          return;
+        }
         loadJsScript()
           .then((instance) => {
             instance.trigger(eventName);
@@ -115,7 +81,7 @@ export const ChatBoxProvider = (props) => {
           });
       }, getTimeoutForEvent(eventName));
     },
-    [currentTimer.current],
+    [currentTimer.current, location.pathname],
   );
 
 
