@@ -69,8 +69,8 @@ export default class DashboardListingIndexPageContainer extends Component {
     ), null, 'noPadding', false);
   };
   render() {
+    console.log(this.props);
     const { status, location, datatable, notifyInfo, notifyError, ...props } = this.props;
-    console.log('status', status);
     const { error, meta, hasFinished, normalized: listings } = status.listings;
 
     if (error) {

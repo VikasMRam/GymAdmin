@@ -5,7 +5,7 @@ import { generatePath } from 'react-router';
 
 import {
   DASHBOARD_LISTINGS_PATH,
-  DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_LISTINGS_DETAIL_PATH,
   SUMMARY,
   PROFILE,
   PRICING,
@@ -33,7 +33,8 @@ import {
   DashboardWithSummaryPageTemplate, LeftNotifications, Loading,
 } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import DashboardCommunitySummary from 'sly/web/dashboard/communities/DashboardCommunitySummary';
-import DashboardCommunityDetailsFormContainer from 'sly/web/containers/DashboardCommunityDetailsFormContainer';
+import DashboardListingDetailsFormContainer from 'sly/web/dashboard/listings/DashboardListingDetailsFormContainer';
+import DashboardListingPhotosFormContainer from 'sly/web/dashboard/listings/DashboardListingPhotosFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
 import DashboardCommunityNewPricingFormContainer from 'sly/web/containers/DashboardCommunityNewPricingFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
@@ -47,7 +48,7 @@ import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
 const makeClientsBasePath = ({ id, tab }) => {
-  const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
+  const path = generatePath(DASHBOARD_LISTINGS_DETAIL_PATH, { id, tab });
   return `${path}/:clientType`;
 };
 
@@ -76,17 +77,11 @@ export default class DashboardListingDetailsPage extends Component {
     const tabs = {
       Profile: PROFILE,
       Photos: PHOTOS,
-      Pricing: PRICING,
-      'New Pricing': [NEWPRICING, PLATFORM_ADMIN_ROLE],
-      'Services And Amenities': SERVICES,
-      Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
-      Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],
-      Clients: CLIENTS,
-      Edits: EDITS,
+      'Aditional Information': PRICING,
       // ...
     };
 
-    const pathFor = tab => generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab });
+    const pathFor = tab => generatePath(DASHBOARD_LISTINGS_DETAIL_PATH, { id, tab });
     const makeTab = (tab, label, TabComponent) => {
       if (Array.isArray(tab)) {
         let permission;
@@ -234,14 +229,25 @@ export default class DashboardListingDetailsPage extends Component {
             {this.getTabsForUser()}
           </Tabs>
 
-          {/* {currentTab === PROFILE && (
-          <DashboardCommunityDetailsFormContainer
+          {currentTab === PROFILE && (
+          <DashboardListingDetailsFormContainer
             notifyInfo={notifyInfo}
             notifyError={notifyError}
-            community={community}
+            listing={listing}
             currentEdit={currentEdit}
           />
         )}
+          {currentTab === PHOTOS && (
+          <DashboardListingPhotosFormContainer
+            showModal={showModal}
+            hideModal={hideModal}
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            listing={listing}
+            currentEdit={currentEdit}
+          />
+        )}
+          {/*
         {currentTab === SERVICES && (
           <DashboardCommunityServicesFormContainer
             notifyInfo={notifyInfo}
@@ -266,16 +272,7 @@ export default class DashboardListingDetailsPage extends Component {
             currentEdit={currentEdit}
           />
         )}
-        {currentTab === PHOTOS && (
-          <DashboardCommunityPhotosFormContainer
-            showModal={showModal}
-            hideModal={hideModal}
-            notifyInfo={notifyInfo}
-            notifyError={notifyError}
-            community={community}
-            currentEdit={currentEdit}
-          />
-        )}
+
         {currentTab === CONTACTS && (
           <DashboardContactsSectionContainer
             id="contacts"
