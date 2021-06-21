@@ -47,6 +47,9 @@ const InputBlock = styled(Block)`
 
 const StyledInputMessage = styled(InputMessage)`
   ${upTo('tablet', 'margin-left: 0;')}
+  ${ifProp('noLeftMarginStyledInputMessage', css`
+      margin-left: 0 !important;
+    `)}
 `;
 
 const LabelRightWideWidth = styled(Block)`
@@ -77,6 +80,8 @@ const Field = ({
   required,
   pad,
   leftMargin,
+  noLeftMarginStyledInputMessage,
+  showIcon,
   ...props
 }) => {
   const inputProps = {
@@ -149,7 +154,7 @@ const Field = ({
       {!renderInputFirst && labelSection}
       <InputBlock
         position="relative"
-        pad={!hideErrors && message && (invalid || warning) && !renderInputFirst ? 'regular' : undefined}
+        pad={!hideErrors && showIcon && message && (invalid || warning) && !renderInputFirst ? 'regular' : undefined}
         wideWidth={wideWidth}
         display="flex"
         flex={1}
@@ -203,10 +208,12 @@ const Field = ({
         <StyledInputMessage
           name={`${name}${invalid ? 'Error' : 'Warning'}`}
           icon={invalid ? 'close' : 'warning'}
+          showIcon={showIcon}
           palette={invalid ? 'danger' : 'warning'}
           message={message}
           wideWidth={wideWidth}
           marginLeft={wideWidth ? 'large' : undefined}
+          noLeftMarginStyledInputMessage={noLeftMarginStyledInputMessage}
         />
       )}
     </Wrapper>
@@ -233,6 +240,8 @@ Field.propTypes = {
   label: node,
   required: bool,
   showCharacterCount: bool,
+  showIcon: bool,
+  noLeftMarginStyledInputMessage: bool,
   type: oneOf([
     'textarea',
     'select',
@@ -279,6 +288,7 @@ Field.defaultProps = {
   type: 'text',
   widthSpacing: 'tabletLayout.col3',
   pad: 'large',
+  showIcon: true,
 };
 
 export default Field;

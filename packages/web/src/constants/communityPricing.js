@@ -54,3 +54,17 @@ export const costSectionOptions = {
 export const costTypeOptions = [{ value: 'range', label: 'Range' }, { value: 'from', label: 'From' }];
 
 export const memoryCareCostTypeOptions = [{ value: 'range', label: 'Range' }, { value: 'from', label: 'From' }, { value: 'inclusive', label: 'All Inclusive' }];
+
+export const defaultInitialValues = {
+  'Assisted Living': {
+    0: ['privateRoom', 'sharedBedroom'],
+    20: ['privateRoom', 'sharedBedroom', 'studio', 'oneBedroom'],
+    51: ['privateRoom', 'sharedBedroom', 'studio', 'oneBedroom', 'twoBedroom'],
+  },
+  'Independent Living': {
+    0: ['privateRoom', 'sharedBedroom', 'studio', 'oneBedroom', 'twoBedroom'],
+  },
+  'Memory Care': {
+    0: ['privateRoom', 'sharedBedroom'],
+  },
+};

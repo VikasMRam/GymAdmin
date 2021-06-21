@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { string, node, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { Heading, Hr, Block, space, color, border } from 'sly/common/system';
+import { Heading, Hr, Block, space, color, border, sx$tablet } from 'sly/common/system';
 
 const filterProps = Component => ({
   hasNoBodyPadding,
@@ -17,7 +17,10 @@ const StyledSection = filterProps(styled(Block)`
   border:  ${ifProp('hasNoBorder', 'none', border('s'))} ${color('slate.stroke')};
   border-radius: ${ifProp('hasNoBorder', null, space('spacing.xs'))};
   background-color: ${color('white.base')};
-  padding: ${space('m')};
+  padding: ${space('l')} ${space('m')};
+  ${sx$tablet({
+    paddingX: 'm',
+  })}
   padding-left: ${ifProp('hasNoBodyPadding', 0, null)};
   padding-right: ${ifProp('hasNoBodyPadding', 0, null)};
   padding-bottom: ${ifProp('hasNoBodyPadding', 0, null)};

@@ -245,7 +245,7 @@ const CommunityDetails = ({ community }) => {
 
       return (
         <Block key={k}>
-          <Block font="title-s" pad="m">{groupTitles[k]}</Block>
+          <Block font="title-m" pad="m">{groupTitles[k]}</Block>
           <Grid
             gridGap="s"
             gridTemplateColumns="100%"

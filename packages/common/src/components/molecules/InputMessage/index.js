@@ -1,17 +1,20 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 import { Icon, Block } from 'sly/common/components/atoms';
 
 const InputMessage = ({
-  name, icon, iconSize, palette, message, ...props
+  name, showIcon, icon, iconSize, palette, message, ...props
 }) => (
-  <Block {...props}>
-    <Icon marginRight="regular" icon={icon} size={iconSize} palette={palette} />
-    <Block id={name} role="alert" palette={palette} size="caption">
-      {message}
-    </Block>
-  </Block>
+  <>
+    {message &&
+    <Block {...props}>
+      {showIcon && <Icon marginRight="regular" icon={icon} size={iconSize} palette={palette} />}
+      <Block id={name} role="alert" palette={palette} size="caption">
+        {message}
+      </Block>
+    </Block>}
+  </>
 );
 
 InputMessage.propTypes = {
@@ -20,11 +23,13 @@ InputMessage.propTypes = {
   iconSize: string,
   palette: string.isRequired,
   message: string.isRequired,
+  showIcon: bool,
 };
 
 InputMessage.defaultProps = {
   verticalAlign: 'middle',
   display: 'flex',
+  showIcon: true,
 };
 
 export default InputMessage;
