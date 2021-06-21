@@ -40,6 +40,8 @@ const articleDZComponentsNames = {
   listWithIcons: 'list-with-icons',
   advisors: 'advisors',
   linksBlock: 'links-block',
+  video: 'video',
+  youTubeVideoLink: 'you-tube-video-link',
 };
 
 const StyledLink = styled(Link)`
@@ -366,6 +368,45 @@ const ArticleContent = ({ content: data }) => {
                 />
               </Block>
             )
+          }
+          if (componentName === articleDZComponentsNames.video) {
+            return (
+              <Block
+                as="video"
+                title={rest.title}
+                sx={{
+                  height: '315px',
+                  width: sx`calc(100% - (${space('m')} * 2))`,
+                  mx: 'auto',
+                  mb: 'l',
+                }}
+                sx$tablet={{ width: 'col6', mb: 'xl' }}
+                sx$laptop={{ width: 'col8' }}
+                controls
+                controlsList="nodownload"
+                src={rest.video.url}
+              />
+            );
+          }
+          if (componentName === articleDZComponentsNames.youTubeVideoLink) {
+            return (
+              <Block
+                as="iframe"
+                title={rest.title}
+                src={`${rest.src}`}
+                frameBorder="0"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                sx={{
+                  width: sx`calc(100% - (${space('m')} * 2))`,
+                  height: '315px',
+                  mx: 'auto',
+                  mb: 'l',
+                }}
+                sx$tablet={{ width: 'col6', mb: 'xl' }}
+                sx$laptop={{ width: 'col8' }}
+              />
+            );
           }
           return '';
         })}
