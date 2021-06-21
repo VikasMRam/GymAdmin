@@ -8,6 +8,7 @@ import { LISTING_RESOURCE_TYPE, ADDRESS_RESOURCE_TYPE } from 'sly/web/constants/
 import { query } from 'sly/web/services/api';
 import AddListingForm from 'sly/web/dashboard/listings/AddListingForm';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import { DEFAULT_SECTION_ORDER } from 'sly/web/dashboard/listings/constants';
 
 
 const validate = createValidator({
@@ -26,6 +27,12 @@ const ReduxForm = reduxForm({
   form: formName,
   validate,
 })(AddListingForm);
+
+const sections = DEFAULT_SECTION_ORDER.map(section => ({
+  type: section,
+  title: section,
+  data: ' ',
+}));
 
 
 @query('createListing', 'createListing')
@@ -47,7 +54,7 @@ export default class AddListingFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { createListing, notifyError, notifyInfo, onSuccess, onCancel } = this.props;
-    const { name, phoneNumber, line1, line2, city, state, country, zip, slyScore, id, slug: { value } } = data;
+    const { name, phoneNumber, line1, line2, city, state, country, zip, slyScore, id: { value: communitySlug }, slug: { value: agentSlug } } = data;
 
 
     const payload = {
@@ -58,7 +65,8 @@ export default class AddListingFormContainer extends Component {
         status: 2,
         info: {
           phoneNumber,
-          agentSlug: value,
+          agentSlug,
+          sections,
         },
       },
       relationships: {
@@ -78,7 +86,7 @@ export default class AddListingFormContainer extends Component {
         community: {
           data: {
             type: 'Community',
-            id,
+            id: communitySlug,
           },
         },
       },

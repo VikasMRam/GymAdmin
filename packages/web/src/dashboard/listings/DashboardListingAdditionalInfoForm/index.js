@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
+import { Field } from 'redux-form';
 
 import { Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
@@ -47,7 +48,6 @@ export default class DashboardListingAdditionalInfoForm extends Component {
   };
 
   render() {
-    console.log(communityColumn.value);
     const {
       handleSubmit, invalid, submitting, canEdit,
     } = this.props;
@@ -71,7 +71,7 @@ export default class DashboardListingAdditionalInfoForm extends Component {
             wideWidth
           />
           <EditField
-            name="info.diningSection.content"
+            name="info.sections[0].content"
             label="Dining"
             type="richtextarea"
             placeholder=""
@@ -79,7 +79,7 @@ export default class DashboardListingAdditionalInfoForm extends Component {
             widthSpacing="tabletLayout.col5"
           />
           <EditField
-            name="info.neighborhoodSection.content"
+            name="info.sections[1].content"
             label="Neighborhood"
             type="richtextarea"
             placeholder=""

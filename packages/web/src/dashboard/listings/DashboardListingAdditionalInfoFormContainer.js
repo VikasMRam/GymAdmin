@@ -14,6 +14,7 @@ import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import { patchFormInitialValues } from 'sly/web/services/edits';
 import { withProps } from 'sly/web/services/helpers/hocs';
+import { DEFAULT_SECTION_ORDER } from 'sly/web/dashboard/listings/constants';
 
 const formName = 'DashboardCommunityServicesForm';
 
@@ -80,10 +81,23 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
         'info.floorPlan.area',
         'info.description',
         'slyScore',
-        'info.diningSection.content',
-        'info.neighborhoodSection.content',
+        'info.sections',
       ],
     );
+
+    // start - this is redudant logic just to make sure that the order is maintained if someone makes a post request from postman
+    const ordered = [];
+
+    if (initialValues.info.sections) {
+      DEFAULT_SECTION_ORDER.forEach((section) => {
+        if (!ordered.includes(section)) {
+          ordered.push(initialValues.info.sections.find(el => el.type === section));
+        }
+      });
+      initialValues.info.sections = [...ordered];
+    }
+    // end
+
 
     patchFormInitialValues(initialValues, currentEdit);
 

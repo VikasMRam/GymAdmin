@@ -178,7 +178,6 @@ export default class DashboardListingPhotosFormContainer extends Component {
 
   onUploadError = (error) => {
     const { notifyError, listing } = this.props;
-    console.error(error);
     notifyError(`Photos for ${listing.name} could not be uploaded to the CDN`);
   };
 

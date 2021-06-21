@@ -122,7 +122,6 @@ export default class DashboardListingDetailsPageContainer extends Component {
   }
 
   render() {
-    console.log(this);
     const {
       onRejectSuccess, onAddNote, onEditNote,
     } = this;

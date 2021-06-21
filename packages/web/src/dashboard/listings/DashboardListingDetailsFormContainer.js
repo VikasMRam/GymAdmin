@@ -84,7 +84,6 @@ export default class DashboardListingDetailsFormContainer extends Component {
     const { id } = match.params;
 
     const { address, ...attributes } = values;
-    console.log(attributes);
     return updateListing({ id }, {
       attributes,
       relationships: {
@@ -98,7 +97,6 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { listing, status, user, address, respiteAllowed, currentEdit, ...props } = this.props;
 
     const canEdit = !currentEdit?.isPendingForAdmin
