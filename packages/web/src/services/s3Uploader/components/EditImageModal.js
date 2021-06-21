@@ -8,6 +8,9 @@ import { createValidator, required } from 'sly/web/services/validation';
 import { Button } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
+import { imageCategory } from 'sly/web/constants/images';
+
+const imageCategoryOptions = imageCategory.map(s => <option key={s} value={s}>{s}</option>);
 
 const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, invalid, submitting, ...props }) => {
   const imgPath = image?.attributes?.path;
@@ -27,9 +30,20 @@ const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, 
           label="Caption"
           placeholder="Write a caption that explains what families are seeing in this photo. "
           type="textarea"
-          name="description"
+          // name="description"
+          name="attributes.description"
           component={ReduxField}
         />
+        <Field
+          label="Category"
+          placeholder="Image category "
+          type="select"
+          name="relationships.category.data.name"
+          component={ReduxField}
+        >
+          <option>Select an option</option>
+          {imageCategoryOptions}
+        </Field>
       </ModalBody>
       <ModalActions>
         <Button ghost onClick={onClose}>
@@ -65,13 +79,35 @@ const ReduxForm = reduxForm({
 
 export default function EditImageModal({ image, saveImage, onClose, ...props }) {
   const handleSubmit = (data) => {
+    const { attributes, relationships } = data;
     const newImage = {
       ...image,
       attributes: {
         ...image.attributes,
-        description: data.description,
+        description: attributes.description,
       },
     };
+
+    // const newImage = {
+    //   ...image,
+    //   attributes: {
+    //     ...image.attributes,
+    //     description: attributes.description,
+    //   },
+    //   relationships: {
+    //     ...relationships,
+    //     category: {
+    //       data: {
+    //         id: image.relationships.category.data
+    //         type: 'ImageCategory',
+    //         attributes: {
+    //           id: relationships.category.data.attributes.id,
+    //           name: relationships.category.data.attributes.name,
+    //         },
+    //       },
+    //     },
+    //   },
+    // };
     return saveImage(newImage, image).then(onClose);
   };
   return (
@@ -79,7 +115,8 @@ export default function EditImageModal({ image, saveImage, onClose, ...props }) 
       as="form"
       onSubmit={handleSubmit}
       image={image}
-      initialValues={image?.attributes}
+      // initialValues={image?.attributes}
+      initialValues={image}
       onClose={onClose}
       {...props}
     />
