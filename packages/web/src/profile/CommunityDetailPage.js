@@ -482,15 +482,6 @@ export default class CommunityDetailPage extends PureComponent {
                         })}
                       />
                     </SimilarCommunitiesAndSuggestedArticlesContainer>
-                    {rgsAux.rgsInfo?.resourceLinks?.length && (
-                      <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Resources`} sx$tablet={{ padding: 0 }}>
-                        <SimilarCommunitiesAndSuggestedArticlesContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
-                          {rgsAux.rgsInfo.resourceLinks.map(item => (
-                            <ArticlePreview key={item.title} alternativeText={item.title} {...item} customStyles={{ width: '18rem' }} />
-                          ))}
-                        </SimilarCommunitiesAndSuggestedArticlesContainer>
-                      </StyledHeadingBoxSection>
-                    )}
                     <BackToSearch>
                       <Button
                         href={getCitySearchUrl({ propInfo, address })}
@@ -502,6 +493,17 @@ export default class CommunityDetailPage extends PureComponent {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
+
+                {rgsAux.rgsInfo?.resourceLinks?.length && (
+                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Resources`} sx$tablet={{ padding: 0 }}>
+                    <SimilarCommunitiesAndSuggestedArticlesContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
+                      {rgsAux.rgsInfo.resourceLinks.map(item => (
+                        <ArticlePreview key={item.title} alternativeText={item.title} {...item} customStyles={{ width: '18rem' }} />
+                      ))}
+                    </SimilarCommunitiesAndSuggestedArticlesContainer>
+                  </StyledHeadingBoxSection>
+                )}
+
                 {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
