@@ -47,6 +47,8 @@ import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import StickyHeader from 'sly/web/profile/StickyHeader';
 import Chatbox from 'sly/web/profile/Chatbox';
+import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
+import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -56,7 +58,7 @@ const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => imp
 
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const OfferNotificationContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkOfferNotification" */ 'sly/web/profile/OfferNotification/OfferNotificationContainer'));
-const TrackedSimilarCommunitiesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/TrackedSimilarCommunitiesContainer'));
+const SimilarCommunitiesAndSuggestedArticlesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/SimilarCommunitiesAndSuggestedArticlesContainer'));
 const HowSlyWorksVideoContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkHowSlyWorksVideo" */ 'sly/web/containers/HowSlyWorksVideoContainer'));
 const CommunityReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/containers/CommunityReviewsContainer'));
 // const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
@@ -467,10 +469,28 @@ export default class CommunityDetailPage extends PureComponent {
                     id="sticky-sidebar-boundary"
                     sx$tablet={{ padding: 0 }}
                   >
-                    <TrackedSimilarCommunitiesContainer
-                      communities={similarProperties}
-                      communityStyle={similarCommunityStyle}
-                    />
+                    <SimilarCommunitiesAndSuggestedArticlesContainer itemsQty={similarProperties.length}>
+                      <SimilarCommunities
+                        communities={similarProperties}
+                        communityStyle={similarCommunityStyle}
+                        canFavourite
+                        getEvent={(community, index) => ({
+                          action: 'click',
+                          category: 'similarCommunity',
+                          label: index,
+                          value: community.id,
+                        })}
+                      />
+                    </SimilarCommunitiesAndSuggestedArticlesContainer>
+                    {rgsAux.rgsInfo?.resourceLinks?.length && (
+                      <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Resources`} sx$tablet={{ padding: 0 }}>
+                        <SimilarCommunitiesAndSuggestedArticlesContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
+                          {rgsAux.rgsInfo.resourceLinks.map(item => (
+                            <ArticlePreview key={item.title} alternativeText={item.title} {...item} customStyles={{ width: '18rem' }} />
+                          ))}
+                        </SimilarCommunitiesAndSuggestedArticlesContainer>
+                      </StyledHeadingBoxSection>
+                    )}
                     <BackToSearch>
                       <Button
                         href={getCitySearchUrl({ propInfo, address })}
