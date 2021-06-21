@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import hoistNonReactStatic from 'hoist-non-react-statics';
-import { func, string } from 'prop-types';
+import { object, func, string, bool } from 'prop-types';
 
 import { randomHexNumber } from 'sly/web/services/helpers/utils';
 import { set, unset, reset } from 'sly/web/store/controller/actions';
@@ -13,6 +13,12 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+const makeDispatches = (dispatch, actionCreators) => Object.entries(actionCreators)
+  .reduce((acc, [key, actionCreator]) => {
+    acc[key] = (...args) => dispatch(actionCreator(...args));
+    return acc;
+  }, {});
+
 // TODO: tests
 export function connectController(parentMapStateToProps, parentDispatchToProps) {
   if (typeof parentDispatchToProps === 'function' && parentDispatchToProps.length > 1) {
@@ -22,7 +28,14 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
   return function controllerCreator(WrappedComponent) {
     const generatedControllerKey = `${WrappedComponent.name}_${randomHexNumber()}`;
 
-    const mapDispatchToProps = { ...parentDispatchToProps, set, unset, reset };
+    const mapDispatchToProps = (dispatch) => {
+      return makeDispatches(dispatch, {
+        ...parentDispatchToProps,
+        set,
+        unset,
+        reset,
+      });
+    };
 
     const mapStateToProps = (state, ownProps) => {
       const controllerKey = ownProps.controllerKey || generatedControllerKey;
@@ -46,14 +59,31 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
       static WrappedComponent = WrappedComponent.WrappedComponent || WrappedComponent;
 
       static propTypes = {
+        useLocalStorage: bool,
+        defaultData: object,
         set: func.isRequired,
         controllerKey: string.isRequired,
         unset: func.isRequired,
         reset: func.isRequired,
       };
 
+      componentDidMount() {
+        let { defaultData } = this.props;
+        const { useLocalStorage, controllerKey } = this.props;
+        if (useLocalStorage) {
+          defaultData = JSON.parse(localStorage.getItem(controllerKey));
+        }
+        if (defaultData) {
+          this.set(defaultData);
+        }
+      }
+
       set = (data) => {
-        const { set, controllerKey } = this.props;
+        const { set, controllerKey, useLocalStorage } = this.props;
+        if (useLocalStorage) {
+          const currentData = JSON.parse(localStorage.getItem(controllerKey) || '{}');
+          localStorage.setItem(controllerKey, JSON.stringify({ ...currentData, ...data }));
+        }
         return set({
           data,
           controller: controllerKey,
