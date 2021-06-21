@@ -65,6 +65,14 @@ export default class DashboardCommunityDetailsForm extends Component {
             placeholder="(925) 555-5555"
             parens
           />
+          <EditField
+            name="info.description"
+            label="Description"
+            type="richtextarea"
+            placeholder=""
+            wideWidth
+            widthSpacing="tabletLayout.col5"
+          />
         </SectionForm>
         <SectionForm heading="Location">
           <EditField

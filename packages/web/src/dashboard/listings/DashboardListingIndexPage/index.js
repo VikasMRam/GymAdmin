@@ -68,7 +68,6 @@ export default class DashboardListingIndexPage extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {
       listings, pagination, isPageLoading, onAddListing, meta, datatable,
     } = this.props;

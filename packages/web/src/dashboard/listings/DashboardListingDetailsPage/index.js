@@ -17,6 +17,7 @@ import {
   EDITS,
   ADMIN,
   DASHBOARD_LISTINGS_DETAIL_EDIT_PATH,
+  ADDITIONAL_INFO,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import communityPropType from 'sly/common/propTypes/community';
@@ -35,6 +36,7 @@ import {
 import DashboardCommunitySummary from 'sly/web/dashboard/communities/DashboardCommunitySummary';
 import DashboardListingDetailsFormContainer from 'sly/web/dashboard/listings/DashboardListingDetailsFormContainer';
 import DashboardListingPhotosFormContainer from 'sly/web/dashboard/listings/DashboardListingPhotosFormContainer';
+import DashboardListingAdditionalInfoFormContainer from 'sly/web/dashboard/listings/DashboardListingAdditionalInfoFormContainer';
 import DashboardCommunityServicesFormContainer from 'sly/web/containers/DashboardCommunityServicesFormContainer';
 import DashboardCommunityNewPricingFormContainer from 'sly/web/containers/DashboardCommunityNewPricingFormContainer';
 import DashboardCommunityPricingFormContainer from 'sly/web/containers/DashboardCommunityPricingFormContainer';
@@ -77,7 +79,7 @@ export default class DashboardListingDetailsPage extends Component {
     const tabs = {
       Profile: PROFILE,
       Photos: PHOTOS,
-      'Aditional Information': PRICING,
+      'Additional Information': ADDITIONAL_INFO,
       // ...
     };
 
@@ -241,6 +243,14 @@ export default class DashboardListingDetailsPage extends Component {
           <DashboardListingPhotosFormContainer
             showModal={showModal}
             hideModal={hideModal}
+            notifyInfo={notifyInfo}
+            notifyError={notifyError}
+            listing={listing}
+            currentEdit={currentEdit}
+          />
+        )}
+          {currentTab === ADDITIONAL_INFO && (
+          <DashboardListingAdditionalInfoFormContainer
             notifyInfo={notifyInfo}
             notifyError={notifyError}
             listing={listing}

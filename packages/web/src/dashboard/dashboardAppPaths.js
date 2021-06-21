@@ -72,6 +72,7 @@ export const CONTACTS = 'contacts';
 export const EDITS = 'edits';
 export const USERS = 'users';
 export const ADMIN = 'admin';
+export const ADDITIONAL_INFO = 'additional-info';
 
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;

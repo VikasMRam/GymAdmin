@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { func } from 'prop-types';
+import { id } from 'date-fns/locale';
 
 import { required, createValidator } from 'sly/web/services/validation';
 import { LISTING_RESOURCE_TYPE, ADDRESS_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
@@ -46,7 +47,8 @@ export default class AddListingFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { createListing, notifyError, notifyInfo, onSuccess, onCancel } = this.props;
-    const { name, phoneNumber, line1, line2, city, state, country, zip, slyScore } = data;
+    const { name, phoneNumber, line1, line2, city, state, country, zip, slyScore, id, slug: { value } } = data;
+
 
     const payload = {
       type: LISTING_RESOURCE_TYPE,
@@ -56,6 +58,7 @@ export default class AddListingFormContainer extends Component {
         status: 2,
         info: {
           phoneNumber,
+          agentSlug: value,
         },
       },
       relationships: {
@@ -70,6 +73,12 @@ export default class AddListingFormContainer extends Component {
               country,
               zip,
             },
+          },
+        },
+        community: {
+          data: {
+            type: 'Community',
+            id,
           },
         },
       },

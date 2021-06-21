@@ -98,6 +98,7 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   render() {
+    console.log(this.props);
     const { listing, status, user, address, respiteAllowed, currentEdit, ...props } = this.props;
 
     const canEdit = !currentEdit?.isPendingForAdmin
@@ -112,12 +113,13 @@ export default class DashboardListingDetailsFormContainer extends Component {
         'info.floorPlan.bedroomCount',
         'info.floorPlan.bathroomCount',
         'info.floorPlan.area',
+        'info.description',
         'slyScore',
       ],
     );
     initialValues.address =  address.attributes;
 
-    // patchFormInitialValues(initialValues, currentEdit);
+    patchFormInitialValues(initialValues, currentEdit);
 
     return (
       <ReduxForm

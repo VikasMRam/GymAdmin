@@ -9,10 +9,13 @@ import { Block, Button } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import { countries, states } from 'sly/web/constants/geo';
+import { apiUrl } from 'sly/web/config';
 
 const getStatesOptions = country => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
 const getAvailableTags = country => AVAILABLE_TAGS[country];
 const countryOptions = countries.map(s => <option key={s} value={s}>{s}</option>);
+const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[is-plus]=true:true&filter[name]=` }, value: 'community.id' };
+const agentsColumn = { typeInfo: { api: `${apiUrl}/marketplace/agents?filter[name]=cs:` }, value: 'agent.id' };
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -143,6 +146,20 @@ export default class AddListingForm extends Component {
               required
               component={ReduxField}
               wideWidth
+            />
+            <Field
+              name="id"
+              label="Community Slug"
+              type="autocomplete"
+              component={ReduxField}
+              column={communityColumn}
+            />
+            <Field
+              name="slug"
+              label="Agent Slug"
+              type="autocomplete"
+              component={ReduxField}
+              column={agentsColumn}
             />
           </FormSection>
         </div>
