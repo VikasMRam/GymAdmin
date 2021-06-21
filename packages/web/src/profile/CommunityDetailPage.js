@@ -58,7 +58,7 @@ const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => imp
 
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const OfferNotificationContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkOfferNotification" */ 'sly/web/profile/OfferNotification/OfferNotificationContainer'));
-const SimilarCommunitiesAndSuggestedArticlesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/SimilarCommunitiesAndSuggestedArticlesContainer'));
+const SimilarCommunitiesAndSuggestedArticlesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSimilarCommunitiesAndSuggestedArticles" */ 'sly/web/containers/SimilarCommunitiesAndSuggestedArticlesContainer'));
 const HowSlyWorksVideoContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkHowSlyWorksVideo" */ 'sly/web/containers/HowSlyWorksVideoContainer'));
 const CommunityReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/containers/CommunityReviewsContainer'));
 // const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
