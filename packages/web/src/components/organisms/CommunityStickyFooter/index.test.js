@@ -14,6 +14,7 @@ const wrap = (props = {}) =>
 describe('StickyFooter', () => {
   it('renders', () => {
     const wrapper = wrap();
+    console.log(wrapper.debug());
     expect(wrapper.find(CommunityActions)).toHaveLength(1);
   });
 });

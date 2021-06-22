@@ -6,15 +6,19 @@
     "preinstall": "../../scripts/check-install-allowed.sh",
     "lint": "../../node_modules/.bin/eslint .",
     "start": "cypress run",
-    "open": "cypress open"
+    "open": "cypress open",
+    "fixresults": "node cypress/scripts/fix-junit-xml.js"
   },
   "devDependencies": {
-    "cypress": "5.5.0"
+    "cypress": "7.4.0",
+    "cypress-real-events": "^1.4.0",
+    "cypress-xpath": "^1.6.2"
   },
   "dependencies": {
-    "@cypress/webpack-preprocessor": "5.4.8",
-    "cypress-multi-reporters": "1.4.0",
-    "mocha": "8.2.0",
+    "@cypress/webpack-preprocessor": "5.9.0",
+    "cypress-multi-reporters": "1.5.0",
+    "cypress-wait-until": "^1.7.1",
+    "mocha": "8.4.0",
     "mocha-junit-reporter": "2.0.0",
     "rrad": "1.1.0"
   }

@@ -1,12 +1,11 @@
 import { Component } from 'react';
 import { arrayOf, any, func, object, bool, string, number } from 'prop-types';
-import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
+import { isValid, isSubmitting, reset, initialize, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/web/controllers';
 import { selectFormData } from 'sly/common/services/helpers/forms';
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
-  isValid(ownProps.formName)(state);
   const steps = controller.steps || [];
   const initialStepIndex = steps.findIndex(s => s === ownProps.initialStep);
   const defaultInitialStepIndex = initialStepIndex > -1 ? initialStepIndex : 0;
@@ -23,12 +22,14 @@ const mapStateToProps = (state, { controller, ...ownProps }) => {
 
 const mapDispatchToProps = {
   resetForm: reset,
+  initializeForm: initialize,
 };
 
 @connectController(mapStateToProps, mapDispatchToProps)
 
 export default class WizardController extends Component {
   static propTypes = {
+    useLocalStorage: bool,
     progressPath: arrayOf(number).isRequired,
     children: any,
     set: func.isRequired,
@@ -49,6 +50,10 @@ export default class WizardController extends Component {
     formName: 'WizardForm',
   };
 
+  state = {
+    localStorageKey: `wizardForm_${this.props.formName}`,
+  };
+
   constructor(props) {
     super(props);
 
@@ -58,6 +63,22 @@ export default class WizardController extends Component {
       form: formName,
       destroyOnUnmount: false,
     };
+  }
+
+  componentDidMount() {
+    const { formName, initializeForm, useLocalStorage } = this.props;
+    if (useLocalStorage) {
+      let formData;
+      try {
+        formData = JSON.parse(localStorage.getItem(this.state.localStorageKey)) || {};
+      } catch(e) {
+        formData = {};
+      }
+
+      if (Object.keys(formData).length) {
+        initializeForm(formName, formData);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -70,7 +91,7 @@ export default class WizardController extends Component {
     // We set the steps, only when the steps are empty(reset happened) so that we dont want to
     // set steps unnecessarily on each update.
     if (propSteps.length === 0) {
-      set({
+      return set({
         steps,
       });
     }
@@ -79,7 +100,7 @@ export default class WizardController extends Component {
   reset = () => {
     const { resetForm, formName, resetController } = this.props;
     resetForm(formName);
-    resetController();
+    return resetController();
   };
 
   isFinalStep = () => {
@@ -88,8 +109,8 @@ export default class WizardController extends Component {
   };
 
   goto = (nextStep) => {
-    if (nextStep === null) {
-      return;
+    if (nextStep === null || typeof nextStep === 'undefined') {
+      return Promise.resolve();
     }
     const { set, steps, progressPath } = this.props;
     const nextStepIndex = steps.indexOf(nextStep);
@@ -98,7 +119,7 @@ export default class WizardController extends Component {
       progressPath.push(nextStepIndex);
     }
 
-    set({
+    return set({
       currentStepIndex: nextStepIndex,
       progressPath,
     });
@@ -108,22 +129,25 @@ export default class WizardController extends Component {
     const { currentStepIndex, steps } = this.props;
     const nextStep = steps[currentStepIndex + 1];
 
-    this.goto(nextStep);
+    return this.goto(nextStep);
   };
 
   next = () => {
     const { currentStepIndex, steps, onNext } = this.props;
     const nextStep = steps[currentStepIndex + 1];
 
-    this.gotoNext();
-    if (onNext) {
-      const args = {
-        from: steps[currentStepIndex],
-        to: nextStep,
-      };
+    return this.gotoNext().then(async (data) => {
+      if (onNext) {
+        const args = {
+          from: steps[currentStepIndex],
+          to: nextStep,
+        };
 
-      onNext({ ...args });
-    }
+        await onNext(args);
+      }
+
+      return data;
+    });
   };
 
   previous = () => {
@@ -136,20 +160,22 @@ export default class WizardController extends Component {
       }
     }
 
-    set({
+    return set({
       currentStepIndex: prevStepIndex,
       progressPath,
+    }).then(async (data) => {
+      if (onPrevious) {
+        const args = {
+          from: steps[currentStepIndex],
+          to: steps[prevStepIndex],
+        };
+        await onPrevious(args);
+      }
+      return data;
     });
-    if (onPrevious) {
-      const args = {
-        from: steps[currentStepIndex],
-        to: steps[prevStepIndex],
-      };
-      onPrevious({ ...args });
-    }
   };
 
-  doSubmit = (params = {}) => {
+  doCompleteSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
     const { reset, next, previous } = this;
     params = {
@@ -162,17 +188,21 @@ export default class WizardController extends Component {
     return onComplete(data, params);
   };
 
-  handleSubmit = (params = {}) => {
+  handleStepSubmit = (params = {}) => {
     const {
-      next, previous, doSubmit, isFinalStep,
+      next, previous, reset, doCompleteSubmit, isFinalStep,
     } = this;
     const {
-      onStepChange, data, currentStepIndex, steps,
+      onStepChange, data, currentStepIndex, steps, useLocalStorage,
     } = this.props;
     const currentStep = steps[currentStepIndex];
 
+    if (useLocalStorage) {
+      localStorage.setItem(this.state.localStorageKey, JSON.stringify(data));
+    }
+
     if (isFinalStep()) {
-      return doSubmit(params);
+      return doCompleteSubmit(params);
     }
 
     // if onStepChange returns a promise then wait for it to resolve before
@@ -183,6 +213,7 @@ export default class WizardController extends Component {
       wasGotoCalled = true;
       return this.goto(step);
     };
+
     if (onStepChange) {
       const args = {
         currentStep,
@@ -190,7 +221,8 @@ export default class WizardController extends Component {
         next,
         previous,
         goto,
-        doSubmit,
+        reset,
+        doSubmit: doCompleteSubmit,
       };
       const returnVal = onStepChange(args);
       return Promise.resolve(returnVal)
@@ -204,14 +236,13 @@ export default class WizardController extends Component {
           throw new SubmissionError({ _error: e.message });
         });
     }
-    this.gotoNext();
 
-    return null;
+    return this.gotoNext();
   };
 
   render() {
     const {
-      formOptions, next, previous, goto, handleSubmit, init,
+      formOptions, next, previous, goto, handleStepSubmit, init,
       isFinalStep, reset,
     } = this;
     const {
@@ -220,7 +251,7 @@ export default class WizardController extends Component {
     const currentStep = steps[currentStepIndex];
 
     return children({
-      onSubmit: handleSubmit,
+      onSubmit: handleStepSubmit,
       isFinalStep: isFinalStep(),
       init,
       currentStep,

@@ -76,7 +76,7 @@ const guides = [
 ];
 
 const resources = {
-  to: '/resources',
+  to: '/resource-center',
   alt: 'more senior living resources seniorly',
   title: 'Explore our resource center',
 };

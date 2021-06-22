@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import { sx, layout, space } from 'sly/common/system/sx';
@@ -15,10 +15,13 @@ import Link from 'sly/common/system/Link';
 import Image from 'sly/common/system/Image';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import Footer from 'sly/web/components/organisms/Footer';
-import ArticlesListByTopic from 'sly/web/components/resourceCenter/components/ArticlesListByTopic';
-import ArticlesList from 'sly/web/components/resourceCenter/components/ArticlesList';
-import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import { withHydration } from 'sly/web/services/partialHydration';
+
+const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
+const ArticlesList = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesList" */ 'sly/web/components/resourceCenter/components/ArticlesList'));
+const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/components/resourceCenter/components/SuscribeEmails'));
+
 
 const ExploreTopicInfo = styled(Block)`
   ${sx({ border: 'round' })}

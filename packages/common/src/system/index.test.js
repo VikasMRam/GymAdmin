@@ -1,9 +1,9 @@
 import { system } from './system';
 
 const breakpoint = {
-  mobile: '300px',
-  tablet: '600px',
-  desktop: '900px',
+  mobile: 300,
+  tablet: 600,
+  desktop: 900,
 };
 
 const x = {

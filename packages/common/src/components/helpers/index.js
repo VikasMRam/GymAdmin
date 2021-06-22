@@ -15,6 +15,5 @@ export * from './cursor';
 export * from './shadow';
 export * from './transition';
 export * from './router';
-export RRLink from './router/RRLink';
 export * from './width';
 export * from './height';

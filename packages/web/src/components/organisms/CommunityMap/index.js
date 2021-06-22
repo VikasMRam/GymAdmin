@@ -3,18 +3,20 @@ import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 
+import { assetPath } from 'sly/web/components/themes';
 import { size } from 'sly/common/components/themes';
 import Map from 'sly/web/components/atoms/Map';
 import MapTile from 'sly/web/components/molecules/MapTile';
-import GreenMarker from 'sly/web/../public/icons/greenmarker.png';
-import RedMarker from 'sly/web/../public/icons/redmarker.png';
+
+const RedMarker = assetPath('icons/redmarker.png');
+const GreenMarker = assetPath('icons/greenmarker.png');
 
 const Wrapper = styled.article`
   position: relative;
   width: 100%;
   height: 0;
   padding-top: ${size('picture.ratios', '4:3')};
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.regular')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: unset;

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { getSearchParams } from 'sly/web/components/search/helpers';
-import { DASHBOARD_PATH } from 'sly/web/constants/dashboardAppPaths';
 import { createValidator, required } from 'sly/web/services/validation';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
 import { withAuth } from 'sly/web/services/api';
@@ -48,7 +47,7 @@ export default class PasswordResetPageContainer extends Component {
     clearSubmitErrors();
     return resetPassword(payload)
       .then(() => {
-        redirectTo(DASHBOARD_PATH);
+        redirectTo('/');
       }).catch(({ body }) => {
         // TODO: Need to set a proper way to handle server side errors
         const errorMessage = Object.values(body.errors).join('. ');

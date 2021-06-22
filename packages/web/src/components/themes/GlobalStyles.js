@@ -58,6 +58,11 @@ export default `
     font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
   }
 
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
   pre, code {
     font-family: Consolas, Liberation Mono, Menlo, Courier, monospace;
   }

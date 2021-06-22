@@ -269,11 +269,10 @@ export const getHelmetForSearchPage = ({
 };
 
 
-export const getHelmetForCommunityPage = (community, location) => {
+export const getHelmetForCommunityPage = (community) => {
   const {
     name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
-  const { search } = location;
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
@@ -528,7 +527,8 @@ export const getHelmetForCommunityPage = (community, location) => {
       {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
       <script type="application/ld+json">{`${JSON.stringify(videoObjectLD, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
-      {qaPageLdObjs}
+
+
     </Helmet>
   );
 };

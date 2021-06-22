@@ -7,7 +7,7 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import { size, palette } from 'sly/common/components/themes';
-import { prefetch, withUser, query, invalidateRequests, connectApi } from 'sly/web/services/api';
+import { prefetch, withUser, query } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
 import messagePropType from 'sly/common/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/common/propTypes/conversation/conversation';
@@ -35,7 +35,7 @@ import { isAfter } from 'sly/web/services/helpers/date';
 import {
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { Block, Button, Link } from 'sly/common/components/atoms';
 import ConversationMessages from 'sly/web/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
@@ -46,6 +46,7 @@ import SendMessageFormContainer from 'sly/web/containers/SendMessageFormContaine
 import { getConversationName } from 'sly/web/services/helpers/conversation';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { withRouter } from 'react-router';
+import { withProps } from 'sly/web/services/helpers/hocs';
 
 const categoryName = 'conversation-messages';
 
@@ -127,10 +128,8 @@ const StyledHeadingBoxSection = styled(HeadingBoxSection)`
 @withUser
 @withRouter
 
-@connectApi((state, { conversation, user }) => ({
+@withProps(({ conversation, user }) => ({
   viewingAsParticipant: conversation && user && conversation.conversationParticipants.find(p => p.participantID === user.id),
-}, {
-  invalidateConversationMessages: () => invalidateRequests('getConversationMessages'),
 }))
 
 export default class ConversationMessagesContainer extends Component {
@@ -152,7 +151,6 @@ export default class ConversationMessagesContainer extends Component {
     onBackClick: func,
     createAction: func.isRequired,
     match: matchPropType,
-    invalidateConversationMessages: func.isRequired,
   };
 
   static defaultProps = {
@@ -213,14 +211,14 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   componentWillUnmount() {
-    const { ws, invalidateConversationMessages } = this.props;
+    const { ws, status } = this.props;
 
     ws.pubsub.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }
     // this is required so that users who come back to this page after navigating will see new messages
-    invalidateConversationMessages();
+    status.messages.invalidate();
   }
 
   // FIXME: query should not use redux

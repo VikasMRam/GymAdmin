@@ -13,7 +13,7 @@ import {
   SummaryRow,
   SummarySection, SummarySectionBody,
   SummarySectionHeader,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import userPropType from 'sly/common/propTypes/user';
 
 const DashboardFamilySummary = ({

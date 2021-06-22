@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { googleTagManagerId, googleAppId, version, publicPath, assetsUrl, gMapsApiKey } from 'sly/web/config';
-import {iconToComponent } from 'sly/common/system/Icon';
+import { iconToComponent } from 'sly/common/system/Icon';
 
 const Html = ({
   linkElements, styleElements, scriptElements, iconsContext, state, content,
@@ -16,6 +16,7 @@ const Html = ({
   return (
     <html lang="en" {...htmlAttrs}>
       <head>
+        {helmet.link.toComponent()}
         <meta name="sly-version" content={version} />
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
@@ -31,10 +32,10 @@ const Html = ({
         <link rel="preload" href={`${publicPath}/fonts/TiemposHeadline-Medium.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
         <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-bold-webfont.woff2`} as="font" crossOrigin="anonymous" />
+
         {linkElements}
         {styleElements}
-        {helmet.link.toComponent()}
         {helmet.style.toComponent()}
         {helmet.script.toComponent()}
       </head>
@@ -47,11 +48,13 @@ const Html = ({
 
         {/* Google Tag Manager */}
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','${googleTagManagerId}');
+          setTimeout(function(){
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${googleTagManagerId}');
+          },8000)
         `}}></script>
         <noscript>
           {`<iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" height="0" width="0" />`}
@@ -62,13 +65,13 @@ const Html = ({
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
           (function(s,d,r) {
             var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-            j.async=true;j.src=r;f.parentNode.insertBefore(j,f);
+            j.defer=true;j.src=r;f.parentNode.insertBefore(j,f);
           })('script', document, 'https://apis.google.com/js/platform.js');
         `}}></script>
         {/* End Google Platform Library Code */}
         {/* eslint-enable */}
 
-        {/*<script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} />*/}
+        {/* <script id="google-map-script" src={`https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&libraries=places`} /> */}
       </body>
     </html>
   );

@@ -35,7 +35,7 @@ const typesOf = {
 };
 
 const forFamilies = {
-  'Senior living resources': '/resources',
+  'Senior living resources': '/resource-center',
   'How it works': '/how-it-works',
   'Seniorly Local Advisors': '/agents',
   "Veteran's benefits": '/veterans-benefit-assisted-living',
@@ -265,7 +265,7 @@ const Footer = props => (
               label: 'Sitemap',
             }}
             color="slate.base"
-            to="/sitemap"
+            href="/sitemap"
           >
             Sitemap
           </Link>

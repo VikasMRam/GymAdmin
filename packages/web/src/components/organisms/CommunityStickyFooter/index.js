@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { bool, string } from 'prop-types';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import { size, palette, key } from 'sly/common/components/themes';
-import { ResponsiveImage, Button } from 'sly/web/components/atoms';
+import { key } from 'sly/common/components/themes';
 import CommunityActions from 'sly/web/components/molecules/CommunityActions';
 import AskAgentQuestionButtonContainer from 'sly/web/containers/AskAgentQuestionButtonContainer';
 import CommunityPricing from 'sly/web/components/molecules/CommunityPricing';
 import { assetPath } from 'sly/web/components/themes';
+import { Block, color, space, Image, border, sx$laptop, Button } from 'sly/common/system';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -16,16 +16,14 @@ const Wrapper = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: ${palette('white', 'base')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  background-color: ${color('white.base')};
+  border-top: ${border('s')} ${color('slate.lighter-90')};
   z-index: ${key('zIndexes.stickySections')};
-  padding: ${size('spacing.large')};
-  box-shadow: 0 -${size('border.xxLarge')} ${size('spacing.regular')}
-    ${palette('slate', 'stroke')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
+  padding: ${space('m')};
+  box-shadow: 0 -${space('xxs')} ${space('xs')} ${color('slate.lighter-90')};
+  ${sx$laptop({
+    display: 'none',
+  })}
 `;
 const InnerWrapper = styled.div`
   display: block;
@@ -33,22 +31,23 @@ const InnerWrapper = styled.div`
 `;
 const StyledAskAgentButton = styled(AskAgentQuestionButtonContainer)`
   width: 100%;
-  margin-top: ${size('spacing.small')};
+  margin-top: ${space('xxs')};
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
-  margin-top: ${size('spacing.small')};
+  margin-top: ${space('xxs')};
 `;
 
-const StyledResponsiveImage = styled(ResponsiveImage)`
+const StyledResponsiveImage = styled(Image)`
   vertical-align: middle;
-  margin-left: ${size('spacing.regular')};
-  margin-right: ${size('spacing.regular')};
+  margin-left: ${space('xs')};
+  margin-right: ${space('xs')};
 `;
 
 const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack, isActiveAdult, isZillowAd, ...props }) => {
-  const { id, startingRate, rates } = community;
+  const { id, startingRate, rates, propInfo } = community;
+  const { maxRate } = propInfo;
   if (isActiveAdult) {
     return (
       <Wrapper>
@@ -71,8 +70,8 @@ const CommunityStickyFooter = ({ community, isAlreadyPricingRequested, locTrack,
   }
   return (
     <Wrapper>
-      {startingRate > 0 && <CommunityPricing size="subtitle" id={id} tipId="stickyFooter" estimated={rates !== 'Provided'} price={startingRate} tooltipPos="top" />}
-      <CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} />
+      {startingRate > 0 && <CommunityPricing isFooter font="title-xs-azo" id={id} tipId="stickyFooter" estimated={rates !== 'Provided'} max={maxRate} price={startingRate} tooltipPos="top" />}
+      <Block my="auto" ml="auto"><CommunityActions isAlreadyPricingRequested={isAlreadyPricingRequested} locTrack={locTrack} {...props} /></Block>
     </Wrapper>
   );
 };

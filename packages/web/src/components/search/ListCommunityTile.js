@@ -34,7 +34,6 @@ const ListCommunityTile = memo(({ community, setHoveredCommunity, index }) => {
       block
     >
       <CommunityTile
-        noGallery
         community={community}
         margin="0 l l"
         layout="column"

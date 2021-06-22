@@ -1,40 +1,44 @@
 import React from 'react';
 import { oneOf, node, func, bool } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifProp, switchProp } from 'styled-tools';
+import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
-import { size, palette, key } from 'sly/common/components/themes';
-import IconButton from 'sly/common/components/molecules/IconButton';
+import { key } from 'sly/common/components/themes';
+import { CheckmarkCircle, Warning, Close } from 'sly/common/icons';
+import { sx$laptop, element, color, space } from 'sly/common/system';
 
 const Wrapper = styled.div`
   visibility: ${ifProp('isOpen', 'visible', 'hidden')};
   transform: ${ifProp('isOpen', 'translate(0%)', 'translate(100%)')};
   display: flex;
   align-items: center;
-  justify-content: space-between;
   white-space: nowrap;
-  padding: ${size('spacing.regular')} ${size('spacing.large')};
-  border-radius: ${size('spacing.small')};
-  ${switchProp('type', {
-    default: css`background-color: ${palette('slate', 'base')};`,
-    error: css`background-color: ${palette('danger', 'base')};`,
-  })};
-  color: ${palette('white', 'base')};
+  width:100%;
+  height:${element('l')};
+  padding: ${space('s')} ${space('l')};
+  background:${color('slate.base')};
+  color: ${color('white.base')};
   transition: all ${key('transitions.slow.inOut')};
+
+
+  ${sx$laptop({
+    width: 'col8',
+    bottom: space('l'),
+    mx: 'auto',
+  })}
 `;
 
 const Notification = ({
   type, isOpen, closeable, closeButtonPalette, onClose, children,
 }) => (
   <Wrapper type={type} isOpen={isOpen}>
+    {type === 'error' ?  <Warning color="red" mr="s" /> : <CheckmarkCircle mr="s" color="primary" /> }
     {children}
     {closeable &&
-      <IconButton
-        icon="close"
-        iconsize="body"
-        transparent
+      <Close
+        ml="auto"
         onClick={onClose}
-        palette={closeButtonPalette}
+        color={closeButtonPalette}
       />
     }
   </Wrapper>

@@ -3,8 +3,8 @@ import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { SubmissionError, clearSubmitErrors } from 'redux-form';
 import styled from 'styled-components';
-
 import { withRouter } from 'react-router';
+
 import { size } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
@@ -37,12 +37,12 @@ const mapStateToProps = (state, ownProps) => {
   id: slug,
   include: 'similar-communities,questions,agents',
 }))
-@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
+@prefetch('userSaves', 'getUserSaves', (req, { slug }) => req({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-  'filter[entity_slug]': match.params.communitySlug,
+  'filter[entity_slug]': slug,
 }))
 @query('createAction', 'createUuidAction')
-@query('createOldUserSave')
+@query('createUserSave')
 @query('updateOldUserSave')
 @connect(mapStateToProps, { ensureAuthenticated, clearSubmitErrors })
 
@@ -53,7 +53,7 @@ export default class SaveCommunityContainer extends Component {
     user: object,
     userSave: object,
     status: object.isRequired,
-    createOldUserSave: func,
+    createUserSave: func,
     updateOldUserSave: func,
     createAction: func,
     community: communityPropType,
@@ -80,10 +80,10 @@ export default class SaveCommunityContainer extends Component {
   }
 
   authenticatedCreateUserSave = (data) => {
-    const { ensureAuthenticated, createOldUserSave } = this.props;
+    const { ensureAuthenticated, createUserSave } = this.props;
     return ensureAuthenticated(
       'Sign up to add to your favorites list',
-      () => createOldUserSave(data),
+      () => createUserSave(data),
     );
   };
 
@@ -102,8 +102,10 @@ export default class SaveCommunityContainer extends Component {
     } = this.props;
     const { id } = community;
     const payload = {
-      entityType: COMMUNITY_ENTITY_TYPE,
-      entitySlug: id,
+      attributes: {
+        entityType: COMMUNITY_ENTITY_TYPE,
+        entitySlug: id,
+      },
     };
 
     this.setState({
@@ -175,7 +177,7 @@ export default class SaveCommunityContainer extends Component {
 
   handleSubmitSaveCommunityForm = (data, next) => {
     const {
-      updateOldUserSave, userSave, clearSubmitErrors, status
+      updateOldUserSave, userSave, clearSubmitErrors, status,
     } = this.props;
 
     const { id } = userSave;
@@ -219,7 +221,7 @@ export default class SaveCommunityContainer extends Component {
 
     const PaddedCommunitySaved = () => (
       <PaddedBlock>
-        <CommunitySaved name="Success" similarCommunities={similarProperties} onDoneButtonClicked={onDoneButtonClick}/>
+        <CommunitySaved name="Success" similarCommunities={similarProperties} onDoneButtonClicked={onDoneButtonClick} />
       </PaddedBlock>
     );
 
@@ -228,26 +230,24 @@ export default class SaveCommunityContainer extends Component {
         formName="SaveCommunityForm"
       >
         {({
-          data, next, ...props
-        }) => (
-          <WizardSteps {...props}>
-            <WizardStep
-              component={AddNoteFormContainer}
-              name="Note"
-              onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
-              heading="Community has been saved"
-              placeholder="What are some things about this community that you like..."
-              hasCancel
-              onCancelClick={onCancelClick}
-            />
-            <WizardStep
-              component={PaddedCommunitySaved}
-              name="Success"
-            />
-          </WizardSteps>
+            data, next, ...props
+          }) => (
+            <WizardSteps {...props}>
+              <WizardStep
+                component={AddNoteFormContainer}
+                name="Note"
+                onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
+                heading="Community saved"
+                placeholder="What are some things about this community that you like..."
+                onCancelClick={onCancelClick}
+              />
+              <WizardStep
+                component={PaddedCommunitySaved}
+                name="Success"
+              />
+            </WizardSteps>
         )}
       </WizardController>
     );
   }
 }
-

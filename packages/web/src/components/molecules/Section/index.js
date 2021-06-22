@@ -2,10 +2,10 @@ import React from 'react';
 import { string, node, bool } from 'prop-types';
 
 import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
-import { Heading, Block } from 'sly/web/components/atoms';
+import { Heading, Block } from 'sly/common/system';
 
 const Section = ({
-  title, subtitle, children, centerTitle, titleSize, headingMargin, headingMaxWidth, ...props
+  title, subtitle, children, centerTitle, headingFont, headingMargin, headingMaxWidth, ...props
 }) => (
   <Block {...props}>
     <Block
@@ -16,7 +16,7 @@ const Section = ({
       }}
     >
       {title && (
-        <Heading testID="Heading" size={titleSize} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
+        <Heading testID="Heading" font={headingFont} textAlign={centerTitle ? 'center' : null}>{title}</Heading>
       )}
       {subtitle &&
         <Block>
@@ -33,7 +33,7 @@ Section.propTypes = {
   subtitle: string,
   centerTitle: bool,
   children: node,
-  titleSize: string,
+  headingFont: string,
   headingMargin: spacingPropType,
   headingMaxWidth: string,
 };

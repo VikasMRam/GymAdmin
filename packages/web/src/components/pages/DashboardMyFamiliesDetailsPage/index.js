@@ -14,7 +14,7 @@ import {
   MESSAGES,
   EMAILS,
   TASKS, NEWFAMILIES, PROSPECTING, CONNECTED, CLOSED,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import { PROVIDER_ENTITY_TYPE_ORGANIZATION } from 'sly/web/constants/provider';
 import { NOTE_CTYPE_NOTE } from 'sly/web/constants/notes';
 import { CLIENT_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
@@ -57,7 +57,7 @@ import {
   Loading,
   Right, Section,
   Top,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import Tag from 'sly/web/components/atoms/Tag';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';

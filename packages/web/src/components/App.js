@@ -7,6 +7,9 @@ import loadable from '@loadable/component';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import Modal from 'react-modal';
 
 import { hideChatbox } from 'sly/web/config';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
@@ -20,9 +23,19 @@ import {
   RESOURCE_CENTER_TOPIC_PATH,
   RESOURCE_CENTER_SEARCH_PATH,
   RESOURCE_CENTER_SITEMAP_PATH,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes from 'sly/web/constants/hubTypes';
+import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
+import UserCookiesContainer from 'sly/web/containers/UserCookiesContainer';
+import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
+import { NotificationProvider } from 'sly/web/components/helpers/notification';
+import { IconContext } from 'sly/common/system/Icon';
+import { ApiProvider } from 'sly/web/services/api';
+import theme from 'sly/common/system/theme';
+
+
+Modal.setAppElement('#app');
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/web/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/web/components/pages/OurHistoryPage'));
@@ -47,13 +60,13 @@ const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emai
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
 
 // Dashboard
-const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/components/Dashboard'));
+const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/dashboard/Dashboard'));
 
 // community profile
-const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/containers/CommunityDetailPageContainer'));
+const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
 
 // wizards
-const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/containers/AssessmentWizardPageContainer'));
+const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/assessment/AssessmentWizardPageContainer'));
 
 const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/resourceCenter'));
 const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/components/resourceCenter/Author'));
@@ -199,7 +212,7 @@ const routes = [
     component: EmailSharePageContainer,
   },
   {
-    path: '/wizards/assessment/community/:communityId',
+    path: '/wizards/assessment/community/:communitySlug',
     component: AssessmentWizardPageContainer,
     exact: true,
   },
@@ -276,70 +289,83 @@ export default class App extends Component {
   }
 
   render() {
+    const { apiContext, iconsContext, reduxStore } = this.props;
     return (
-      <>
-        <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters={true}>
-          <title>Find The Best Senior Living Options Near You</title>
-          <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-          <meta content="Seniorly" property="author" />
-          <meta content="English" property="language" />
+      <ApiProvider value={apiContext}>
+        <Provider store={reduxStore}>
+          <ThemeProvider theme={theme}>
+            <IconContext.Provider value={iconsContext}>
+              <BreakpointProvider>
+                <NotificationProvider>
+                  <PageEventsContainer />
+                  <UserCookiesContainer />
+                  <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
+                    <title>Find The Best Senior Living Options Near You</title>
+                    <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                    <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+                    <meta content="Seniorly" property="author" />
+                    <meta content="English" property="language" />
 
-          {/*
-            Open graph
-          */}
-          <meta property="og:site_name" content="Seniorly" />
-          <meta property="og:site_url" content="https://www.seniorly.com" />
-          <meta property="og:type" content="website" />
+                    {/*
+                      Open graph
+                    */}
+                    <meta property="og:site_name" content="Seniorly" />
+                    <meta property="og:site_url" content="https://www.seniorly.com" />
+                    <meta property="og:type" content="website" />
 
-          {/*
-            Twitter
-          */}
-          <meta content="summary" property="twitter:card" />
-          <meta content="https://www.seniorly.com" property="twitter:site" />
-          <meta content="@seniorly" property="twitter:creator" />
+                    {/*
+                      Twitter
+                    */}
+                    <meta content="summary" property="twitter:card" />
+                    <meta content="https://www.seniorly.com" property="twitter:site" />
+                    <meta content="@seniorly" property="twitter:creator" />
 
-          {/*
-            Google Optimize
-          */}
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"
-          />
+                    {/*
+                      Google Optimize
+                    */}
+                    <meta
+                      httpEquiv="Content-Security-Policy"
+                      content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"
+                    />
 
-          <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
-          <style type="text/css">{GlobalStyles}</style>
-        </Helmet>
+                    <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
+                    <style type="text/css">{GlobalStyles}</style>
+                  </Helmet>
 
-        <Switch>
-          <Route
-            path="/ping"
-            render={() => <h1>pong</h1>}
-            exact
-          />
-          <Route
-            path="/ads.txt"
-            render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
-            exact
-          />
-          <Route
-            path={`/:toc(${careTypes})/:state/:city/filters`}
-            render={({ match }) => (
-              <Redirect
-                to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
-              />
-            )}
-          />
-          <Route
-            path="/dashboard/*"
-            component={Dashboard}
-          />
-          {routeComponents}
-          <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-        </Switch>
-        {!hideChatbox && <ChatBoxContainer />}
-      </>
+                  <Switch>
+                    <Route
+                      path="/ping"
+                      render={() => <h1>pong</h1>}
+                      exact
+                    />
+                    <Route
+                      path="/ads.txt"
+                      render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
+                      exact
+                    />
+                    <Route
+                      path={`/:toc(${careTypes})/:state/:city/filters`}
+                      render={({ match }) => (
+                        <Redirect
+                          to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+                        />
+                      )}
+                    />
+                    <Route
+                      path="/dashboard/*"
+                      component={Dashboard}
+                    />
+                    {routeComponents}
+                    <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+                  </Switch>
+                  {!hideChatbox && <ChatBoxContainer />}
+                </NotificationProvider>
+              </BreakpointProvider>
+            </IconContext.Provider>
+          </ThemeProvider>
+        </Provider>
+      </ApiProvider>
     );
   }
 }

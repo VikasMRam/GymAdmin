@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { array, string } from 'prop-types';
 
 import { host } from 'sly/web/config';
-import { RESOURCE_CENTER_PATH } from "sly/web/constants/dashboardAppPaths";
+import { RESOURCE_CENTER_PATH } from "sly/web/dashboard/dashboardAppPaths";
 import Block from 'sly/common/system/Block';
 import Heading from 'sly/common/system/Heading';
 import Link from 'sly/common/system/Link';

@@ -5,7 +5,8 @@ import { ifProp } from 'styled-tools';
 
 import Link from 'sly/common/system/Link';
 import { size, palette } from 'sly/common/components/themes';
-import Block, { withSystem } from 'sly/common/system/Block';
+import Block from 'sly/common/system/Block';
+import { withSystem } from 'sly/common/system';
 import Th from 'sly/web/components/molecules/Th';
 
 export { Th };

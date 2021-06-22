@@ -2,64 +2,41 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
+import loadable from '@loadable/component';
 
+import { sx$laptop, color, sx$tablet } from 'sly/common/system';
 import { size } from 'sly/common/components/themes';
-import { withHydration } from 'sly/web/services/partialHydration';
 import { TemplateHeader } from 'sly/web/components/templates/BasePageTemplate';
-import FooterOrganism from 'sly/web/components/organisms/Footer/communityFooter';
+import FooterOrganism from 'sly/web/components/organisms/Footer';
+import { withHydration } from 'sly/web/services/partialHydration';
 
-const HeaderContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
-const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'), { alwaysHydrate: true });
+
+const HeaderContainer = loadable(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/HeaderContainer'));
+const ModalContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "chunkModalContainer" */ import('sly/web/containers/ModalContainer'));
 
 export const CommunityDetailPageTemplate = styled.main`
   .overlayWrapper {
-    margin: auto;
     width: 100%;
-    padding: 0 ${size('spacing.large')};
+    background:${color('harvest.lighter-90')};
 
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      padding: 0;
-      width: ${size('layout.col9')};
+    ${sx$tablet({
+    margin: 'auto',
+    background: 'white.base',
+    width: 'col8',
+  })}
 
-      > section {
-        width: ${size('tabletLayout.col8')};
-        margin: auto;
-      }
-    }
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      width: ${size('layout.col12')};
-
-      > section {
-        width: auto;
-        margin: auto;
-      }
-    }
-  }
-
-  .overlayGallery {
-    margin: 0 -${size('spacing.large')};
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: ${size('layout.col9')};
-      margin-left: -${size('tabletLayout.gutter')};
-    }
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      width: auto;
-      margin: 0;
-    }
+    ${sx$laptop({
+    width: 'col12',
+    marginBottom: '0px',
+  })}
   }
 
   .overlayHeader {
     grid-row: 1;
   }
 
+
   .overlayTwoColumn {
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: ${size('mobileLayout.col4')};
-    }
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: ${size('tabletLayout.col8')};
-      margin: auto;
-    }
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
       width: auto;
       display: grid;

@@ -6,9 +6,9 @@ import theme from 'sly/common/components/themes/default';
 // const theme = {};
 
 theme.breakpoint = {
-  tablet           : '728px',
-  laptop           : '1080px',
-  desktop          : '1280px',
+  tablet           : 728,
+  laptop           : 1080,
+  desktop          : 1280,
 };
 
 // DO NOT MODIFY the following without asking Jared
@@ -21,6 +21,7 @@ theme.color = {
   yellow     : makeColor('#f1ab31'),
   blue       : makeColor('#186dc5'),
   harvest    : makeColor('#9f8352'),
+  black      : makeColor('#000000'),
   white      : {
     base: '#fff',
   },

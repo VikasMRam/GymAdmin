@@ -15,8 +15,7 @@ describe('ThreeSectionFormTemplate', () => {
       submitButtonText,
       hasCancel: true,
     }, children);
-
-    expect(wrapper.find('Heading').contains(heading)).toBeTruthy();
+    expect(wrapper.find('ForwardRef').contains(heading)).toBeTruthy();
     expect(wrapper.find('Wrapper').contains(children)).toBeTruthy();
     expect(wrapper.find('Bottom').find('Button')).toHaveLength(1);
   });

@@ -14,7 +14,7 @@ function lazilyLoadFacebookSDK(opts = {}) {
 
     const {
       lang = 'en_US',
-      debug = false,
+      debug = true,
       sdkModule = '',
     } = opts;
 
@@ -43,6 +43,6 @@ export default function loadFB() {
     appId: facebookAppId,
     autoLogAppEvents: true,
     xfbml: true,
-    version: 'v3.1',
+    version: 'v10.0',
   });
 }

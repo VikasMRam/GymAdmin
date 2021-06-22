@@ -14,12 +14,15 @@ const OtpLoginForm = ({
     <Heading size="subtitle" pad="xLarge">
       Enter the code sent to {formState && formState.email ? formState.email : ''}
     </Heading>}
-    {!sentCode && <Field
-      name="email"
-      label="Email Address"
-      type="email"
-      component={ReduxField}
-    />}
+    {!sentCode &&
+    <>
+      <Block pad="xLarge">Looks like you have already registered with this email, request a one-time code to login below.</Block><Field
+        name="email"
+        label="Email Address"
+        type="email"
+        component={ReduxField}
+      />
+    </>}
     {sentCode ?
       <>
         <Field

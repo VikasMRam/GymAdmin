@@ -1,17 +1,15 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { oneOf, object } from 'prop-types';
+import { oneOf, object, func } from 'prop-types';
 import { ifProp, prop } from 'styled-tools';
 
 import { getTrustScoreType } from 'sly/web/services/helpers/community';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
-import { Block, Grid } from 'sly/common/components/atoms';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import IconItem from 'sly/web/components/molecules/IconItem';
-import Link from 'sly/common/components/atoms/Link';
 import { assetPath } from 'sly/web/components/themes';
-import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
+import { Block, Grid, Image, Link, IconWithTextWrapper } from 'sly/common/system';
+import { Plus, Minus, Help } from 'sly/common/icons';
 
 
 const Wrapper = styled(Grid)`
@@ -25,15 +23,15 @@ const RotatedBlock = styled(Block)`
 const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
   const { value, valueText, prop1, prop2, prop3, moreInfoText, licensingUrl } = getTrustScoreType(community, 'stateScore');
   let imagePath = 'images/profiles/excellent-score.png';
-  let icon = 'check';
+  let Icon = Plus;
   if (value > 70 && value < 81) {
     imagePath = 'images/profiles/good-score.png';
   } else if (value > 50 && value < 71) {
     imagePath = 'images/profiles/okay-score.png';
-    icon = 'unknown';
+    Icon = Help;
   } else if (value < 51) {
     imagePath = 'images/profiles/poor-score.png';
-    icon = 'close';
+    Icon = Minus;
   }
   return (
     <Block
@@ -42,62 +40,44 @@ const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
     >
       <Wrapper
         flow={layout}
-        borderRadius="small"
-        border="regular"
-        borderPalette="slate.stroke"
-        padding="regular"
-        marginBottom="large"
-        dimensions={[COLUMN_LAYOUT_IMAGE_WIDTH, 'auto']}
-        // no column layout support below tablet
-        upToTablet={{
-          gridTemplateColumns: 'auto!important',
+        gridTemplateColumns="auto"
+        sx$tablet={{
+          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
         }}
       >
-        <RotatedBlock position="relative" alignItems="center" display="flex" direction="column" justifyContent="center" >
-          <ResponsiveImage src={assetPath(imagePath)} />
+        <RotatedBlock position="relative" alignItems="center" display="flex" flexDirection="column" justifyContent="center" >
+          <Image src={assetPath(imagePath)} />
           <Block  position="absolute">
-            <Block textAlign="center" size="superHero" lineHeight="nano">{value}</Block>
+            <Block textAlign="center" font="title-xxl">{value}</Block>
             <Block textAlign="center">{valueText}</Block>
           </Block>
         </RotatedBlock>
 
-        <div>
-          <Block
-            marginTop="large"
-            marginBottom="regular"
-            padding="regular"
-          >
-            <IconItem
-              icon="check"
-              iconSize="body"
-              size="body"
-              pad="large"
-            >
-              {prop1}
-            </IconItem>
-            <IconItem
-              icon={icon}
-              iconSize="body"
-              size="body"
-              pad="large"
-            >
-              {prop2}
-            </IconItem>
-            <IconItem
-              icon={icon}
-              iconSize="body"
-              size="body"
-              pad="large"
-            >
-              {prop3}
-            </IconItem>
-          </Block>
-        </div>
+
+        <Block
+          marginTop="m"
+          marginBottom="m"
+          padding="xs"
+          textAl
+        >
+          <IconWithTextWrapper>
+            <Plus />
+            {prop1}
+          </IconWithTextWrapper>
+          <IconWithTextWrapper >
+            <Icon />
+            {prop2}
+          </IconWithTextWrapper>
+          <IconWithTextWrapper >
+            <Icon />
+            {prop3}
+          </IconWithTextWrapper>
+        </Block>
+
       </Wrapper>
       <Block
-        marginBottom="regular"
-        size="regular"
-        weight="medium"
+        marginBottom="xs"
+        font="title-s"
       >
         What is Seniorly Trust Score?
       </Block>
@@ -106,9 +86,10 @@ const TrustScoreTile = ({ layout, community, externalClickEvt }) => {
         <Link
           href={licensingUrl}
           target="_blank"
+          textDecoration="underline"
           onClick={externalClickEvt}
         >
-          To learn more, visit the state licensing authority for {community.name}.
+          cdss.ca.gov
         </Link>
       </Block>
     </Block>
@@ -119,6 +100,7 @@ TrustScoreTile.propTypes = {
   community: communityPropType.isRequired,
   score: object,
   layout: oneOf(['column', 'row']),
+  externalClickEvt: func,
 };
 
 TrustScoreTile.defaultProps = {

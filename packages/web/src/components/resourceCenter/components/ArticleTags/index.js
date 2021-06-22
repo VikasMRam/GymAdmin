@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
-import { RESOURCE_CENTER_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import { urlize } from 'sly/web/services/helpers/url';
 
 const Tag = ({ children, ...rest }) => (

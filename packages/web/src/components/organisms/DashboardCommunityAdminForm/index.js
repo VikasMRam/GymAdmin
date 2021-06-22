@@ -12,7 +12,7 @@ import {
   SectionActions,
   SectionForm,
   SectionHeader,
-} from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+} from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
 const tagColumn = { typeInfo: { api: `${apiUrl}/platform/tags?filter[category]=Affinity,Activeness,Acuity&filter[name]=` }, value: 'tag.name' };
@@ -80,18 +80,6 @@ export default class DashboardCommunityAdminForm extends Component {
           />
         </SectionForm>
         <SectionForm heading="Community information">
-          <EditField
-            name="propInfo.covidInfoTitle"
-            label="Covid Title"
-            type="text"
-            readOnly={!canEdit}
-          />
-          <EditField
-            name="propInfo.covidInfoDescription"
-            label="Covid Description"
-            type="textarea"
-            readOnly={!canEdit}
-          />
           <EditField
             name="propInfo.promoTitle"
             label="Promotions Title"

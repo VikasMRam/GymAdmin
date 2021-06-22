@@ -2,28 +2,27 @@ import React from 'react';
 import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/common/components/themes';
-import { Block } from 'sly/web/components/atoms';
+import { Block, space, sx$tablet, Link } from 'sly/common/system';
 import Rating from 'sly/web/components/molecules/Rating';
 
 const ReviewHeadingDiv = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${space('m')};
 `;
 
 const RatingsDiv = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  grid-gap: ${size('spacing.large')};
-  margin-bottom: ${size('spacing.large')};
+  grid-gap: ${space('m')};
+  margin-bottom: ${space('m')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: 50% 50%;
-  }
+  ${sx$tablet({
+    gridTemplateColumns: '50% 50%',
+  })}
 `;
 
 const StartNumDiv = styled.div`
   display: flex;
-  margin-right: ${size('spacing.large')};
+  margin-right: ${space('m')};
 `;
 
 export const ReviewDiv = styled.div`
@@ -37,9 +36,6 @@ const ReviewProviderDiv = styled.div`
   }
 `;
 
-const Link = styled.a`
-  color: ${palette('primary', 'base')};
-`;
 
 const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
   /* eslint-disable react/no-array-index-key */
@@ -67,11 +63,11 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
     <>
       {reviewRatings.length > 0 && (
         <>
-          <ReviewHeadingDiv weight="medium">
+          <ReviewHeadingDiv font="title-xs-azo">
             Reviews gathered from across the web
           </ReviewHeadingDiv>
           <RatingsDiv>{ratings}</RatingsDiv>
-          <Block size="caption" palette="grey">
+          <Block font="body-s" color="grey">
             {`Disclaimer: All trademarks and copyrights for names are owned by the respective companies.
             They do not endorse Seniorly and are not
             related to Seniorly's service in any way.`}

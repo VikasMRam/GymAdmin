@@ -3,8 +3,6 @@ import createSagaMiddleware from 'redux-saga';
 import { middleware as sagaThunkMiddleware } from 'redux-saga-thunk';
 import thunkMiddleware from 'redux-thunk';
 
-import { middleware } from '../services/api';
-
 import reducer from './reducer';
 import sagas from './sagas';
 

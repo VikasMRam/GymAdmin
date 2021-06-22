@@ -16,6 +16,8 @@
 // Import commands.js using ES2015 syntax:
 
 import './commands';
+import 'cypress-xpath';
+import 'cypress-real-events/support';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -42,9 +44,10 @@ import './commands';
 //   }
 // });
 
-
 // we remove fetch to force the app to fall back to XHR
 // so cypress can intercept the calls
 Cypress.on('window:before:load', (win) => {
+  global.infoSpy = cy.spy(win.console, 'info');
   delete win.fetch;
 });
+

@@ -13,7 +13,7 @@ import Th from 'sly/web/components/molecules/Th';
 import CommunityEditRowCard
   from 'sly/web/components/organisms/CommunityEditRowCard';
 import communityPropType from 'sly/common/propTypes/community';
-import { Section, SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { Section, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 
 const TABLE_HEADINGS = [
   'Last change submitted',

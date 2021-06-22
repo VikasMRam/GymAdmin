@@ -1,10 +1,9 @@
 {
-  "baseUrl": "http://www.lvh.me",
+  "baseUrl": "http://www.localtest.me",
   "reporter": "cypress-multi-reporters",
-  "ignoreTestFiles": "**/*/!(*v2*|*ProfileSections*|*communityReferral*).js",
+  "ignoreTestFiles": "**/*/!(*v2*|*ProfileSections*|*communityReferral*|*searchPage*).js",
   "video": false,
   "reporterOptions": {
     "configFile": "reporter-config.json"
   }
 }
-

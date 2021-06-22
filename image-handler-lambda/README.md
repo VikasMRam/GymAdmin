@@ -10,11 +10,11 @@ cd .aws-sam/build/Function
 npm run build:zip
 ```
 
-This is relevant to get docker to compile `sharp` in the same target that will be used by the Amazon servers. 
-Alternative methods like calling `npm install --arch=x64 --platform=linux --target=10.16.0 sharp` but that 
+This is relevant to get docker to compile `sharp` in the same target that will be used by the Amazon servers.
+Alternative methods like calling `npm install --arch=x64 --platform=linux --target=10.16.0 sharp` but that
 would make difficult to test the function locally.
 
-Then 
+Then
 - upload that zip to the lambda function
 - publish a new version
 - link and deploy the new version from the correspondent api gateway stage
@@ -22,7 +22,7 @@ Then
 To run the function locally (after `sam build...`) just run
 
 ```sh
-sam local invoke --event [test event file path] 
+sam local invoke --event event.json > result.json
 ```
 
 Where the test event file contents can for example be:

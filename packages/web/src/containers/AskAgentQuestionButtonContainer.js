@@ -4,7 +4,7 @@ import { string, bool, node } from 'prop-types';
 import communityPropType from 'sly/common/propTypes/community';
 import agentPropType from 'sly/common/propTypes/agent';
 import { isBrowser } from 'sly/web/config';
-import { Button } from 'sly/web/components/atoms';
+import { Button } from 'sly/common/system';
 import { isCtaRecorded } from 'sly/web/services/helpers/localStorage';
 import AskAgentQuestionContainer from 'sly/web/containers/AskAgentQuestionContainer';
 

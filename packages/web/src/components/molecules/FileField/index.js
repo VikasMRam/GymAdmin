@@ -3,8 +3,6 @@ import { element, number, string } from 'prop-types';
 import { prop } from 'styled-tools';
 import styled from 'styled-components';
 
-import { palette } from 'sly/common/components/themes';
-
 const Wrapper = styled.div`
   position: relative;
   width: max-content;
@@ -19,8 +17,17 @@ const Wrapper = styled.div`
   }
 
   label {
-    width: max-content;
-    background: linear-gradient(90deg, ${palette('primary', 'filler')} ${prop('percent')}%, #fff  ${prop('percent')}%);
+    display: flex;
+    position: relative;
+    span {
+      display: block;
+      position: absolute;
+      width: ${prop('percent')}%;
+      bottom: 0px;
+      left: 0px;
+      height: 0.5rem;
+      background: #ffffff50;
+    }
   }
 `;
 
@@ -31,6 +38,7 @@ const FileField = React.forwardRef(({ children, name, percent, ...props }, ref) 
       {/* eslint-disable-next-line jsx-a11y/label-has-for */}
       <label htmlFor={id}>
         {children}
+        <span />
       </label>
       <input
         id={id}

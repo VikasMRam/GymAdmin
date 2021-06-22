@@ -5,7 +5,6 @@ import { array, bool, func, object } from 'prop-types';
 
 import { size } from 'sly/common/components/themes';
 import { faqPage, tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import {
@@ -20,8 +19,6 @@ import {
 } from 'sly/web/components/templates/HubPageTemplate';
 import { Heading, Paragraph } from 'sly/web/components/atoms';
 import Footer from 'sly/web/components/organisms/Footer';
-import { getTocSeoLabel } from 'sly/web/components/search/helpers';
-import CommunitySearchList from 'sly/web/components/organisms/CommunitySearchList';
 import { Link } from 'sly/common/components/atoms';
 import ListItem from 'sly/web/components/molecules/ListItem';
 
@@ -40,19 +37,9 @@ const ListWrapper = makeOneColumnListWrapper('div');
 
 const NearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
   onCurrentLocation,
 }) => {
-
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = getTocSeoLabel('skilled-nursing-facility');
 
   const snfRef = React.createRef();
   const costRef = React.createRef();
@@ -163,7 +150,6 @@ const NearMePage = ({
       <>
         <StyledArticle>
           <Heading level="title" size="title" ref={snfRef} >
-            What is a Skilled Nursing Facility?
           </Heading>
           <Paragraph>
             A skilled nursing facility (SNF) is type of “
@@ -582,9 +568,8 @@ const NearMePage = ({
     );
   };
 
-  const title = 'Find the Best Skilled Nursing Facility Near You';
-  const description = 'Search skilled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
-  const heading = state ? `${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${tocLabel} near ${city}`;
+  const title = 'What is a Skilled Nursing Facility?';
+  const description = 'Search skia lled nursing facilities near you. Compare cost, medicare and medicaid options, property highlights and more.';
 
   return (
     <>
@@ -598,7 +583,7 @@ const NearMePage = ({
 
       <HubHeader imagePath="react-assets/hub/memory-care-cover.jpg"
                  toc="skilled nursing facility"
-                 heading="What is Skilled Nursing Facility Near You?"
+                 heading="What is a Skilled Nursing Facility?"
                  label="Use our free search to find skilled nursing facilities nearby"
                  onCurrentLocation={onCurrentLocation}
                  onLocationSearch={onLocationSearch} />
@@ -613,18 +598,6 @@ const NearMePage = ({
             </Column>
             <Body>
             {SEOContentSNF()}
-            <Heading level="title" size="title">
-              {heading}
-            </Heading>
-            {isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}
-            {!isFetchingResults && communityList && communityList.length > 0 &&(
-              <CommunitySearchList
-                communityList={communityList}
-                searchParams={searchParams}
-                requestMeta={requestMeta}
-                location={location}
-              />
-            )}
             </Body>
           </TwoColumn>
         </Wrapper>
@@ -637,12 +610,7 @@ const NearMePage = ({
 
 NearMePage.propTypes = {
   onLocationSearch: func,
-  communityList: array.isRequired,
-  requestMeta: object.isRequired,
-  searchParams: object,
-  isFetchingResults: bool,
   handleAnchor: func,
-  location: object.isRequired,
 };
 
 export default NearMePage;

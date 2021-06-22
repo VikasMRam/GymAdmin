@@ -1,25 +1,20 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { ThemeProvider } from 'styled-components';
 
-import App from 'sly/web/components/App';
-import { ApiProvider } from 'sly/web/services/api';
-import { IconContext } from 'sly/common/system/Icon';
-import themeWithLegacy from 'sly/common/components/themes/themeWithLegacy';
+import AppWrapper from 'sly/web/components/AppWrapper';
 
-export default function ClientApp({ apiContext, iconsContext }) {
+export default function ClientApp({ apiContext, iconsContext, reduxStore }) {
   return (
-    <ThemeProvider theme={themeWithLegacy}>
-      <IconContext.Provider value={iconsContext} >
-        <ApiProvider value={apiContext}>
-          <App />
-        </ApiProvider>
-      </IconContext.Provider>
-    </ThemeProvider>
+    <AppWrapper
+      apiContext={apiContext}
+      iconsContext={iconsContext}
+      reduxStore={reduxStore}
+    />
   );
 }
 
 ClientApp.propTypes = {
   apiContext: object,
   iconsContext: object,
+  reduxStore: object,
 };

@@ -1,19 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import { string } from 'prop-types';
 // import { ifProp } from 'styled-tools';
 
-import { size, getKey } from 'sly/common/components/themes';
 import agentPropType from 'sly/common/propTypes/agent';
-import { Block, Heading, Grid } from 'sly/common/components/atoms';
+import { Block, Heading, Grid } from 'sly/common/system';
 import Avatar from 'sly/web/components/molecules/Avatar';
-import IconItem from 'sly/web/components/molecules/IconItem';
 import { getImagePath } from 'sly/web/services/images';
 
-const Description = styled(Grid)`
-  grid-template-columns: none;
-  grid-gap: ${size('spacing.regular')};
-`;
 
 const CommunityAgentSection = ({
   agent, layout, ...props
@@ -23,7 +16,7 @@ const CommunityAgentSection = ({
     info,
   } = agent;
   const {
-    recentFamiliesHelped, experience, displayName,
+    recentFamiliesHelped, displayName,
   } = info;
 
 
@@ -31,31 +24,24 @@ const CommunityAgentSection = ({
   if (gallery && gallery.images && gallery.images.length > 0) {
     imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
   }
-  let dimensions = ['max-content', 'max-content'];
-  if (layout === 'homeBase') {
-    dimensions = ['min-content', 'min-content'];
-  }
+
 
   return (
     <Block {...props}>
       <Grid
-        dimensions={[getKey('sizes.element.xxxLarge'), '100%']}
-        gap="large"
+        gridTemplateColumns="4.5rem 1fr"
+        gridGap="m"
         align="center"
-        pad="regular"
+        pad="l"
       >
         <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl } }} />
-        <Block textAlign="left">
-          <Block weight="medium" palette="slate">{displayName}</Block>
-          <Block palette="grey">Seniorly Local Advisor</Block>
+        <Block display="flex" flexDirection="column" justifyContent="center" textAlign="left">
+          <Block font="title-m" color="primary">{displayName}</Block>
+          {recentFamiliesHelped > 0 && <Block>{recentFamiliesHelped} families helped</Block>}
         </Block>
       </Grid>
-      <Description pad="xLarge" dimensions={dimensions} gap="xxLarge">
-        <IconItem icon="verified" iconPalette="slate">Trusted Partner</IconItem>
-        <IconItem icon="favourite-light" iconPalette="slate">{recentFamiliesHelped} families helped</IconItem>
-        {experience && <IconItem icon="favourite-light" iconPalette="slate">{experience} years of experience</IconItem>}
-      </Description>
-      <Heading size="body">What is a Seniorly Local Advisor?</Heading>
+
+      <Heading pad="xs" font="title-s">What is a Seniorly Local Advisor?</Heading>
       <Block>
         Our Seniorly Local Advisors specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
       </Block>
@@ -73,3 +59,4 @@ CommunityAgentSection.defaultProps = {
 CommunityAgentSection.typeHydrationId = 'CommunityAgentSection';
 
 export default CommunityAgentSection;
+

@@ -9,7 +9,7 @@ export default async function renderAndPrefetch(element, apiContext) {
   do {
     result = renderToString(element);
     // we don't mind the result, just completion
-    apiPromises = Object.values(apiContext.promises).map(promise => promise.catch(() => {}));
+    apiPromises = Object.values(apiContext.apiClient.store.promises).map(promise => promise.catch(() => {}));
     // eslint-disable-next-line no-await-in-loop
     await Promise.all(apiPromises);
   } while (apiPromises.length);

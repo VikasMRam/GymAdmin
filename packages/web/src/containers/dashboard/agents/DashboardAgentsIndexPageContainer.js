@@ -4,14 +4,14 @@ import { func, object } from 'prop-types';
 import { withRouter, generatePath } from 'react-router';
 
 import DashboardAgentIndexPage from 'sly/web/components/pages/DashboardAgentIndexPage';
-import AddAgentFormContainer from 'sly/web/containers/dashboard/agents/AddAgentFormContainer'
+import AddAgentFormContainer from 'sly/web/containers/dashboard/agents/AddAgentFormContainer';
 import withNotification from 'sly/web/components/helpers/notification';
 import withModal from 'sly/web/controllers/withModal';
 import SlyEvent from 'sly/web/services/helpers/events';
 import {
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   AGENT_DETAILS,
-} from 'sly/web/constants/dashboardAppPaths';
+} from 'sly/web/dashboard/dashboardAppPaths';
 
 @withNotification
 @withModal
@@ -30,7 +30,7 @@ export default class DashboardAgentsIndexPageContainer extends Component {
   onAddAgentSuccess= (resp) => {
     const { history } = this.props;
     const { id } = resp;
-    const path = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id: id, tab: AGENT_DETAILS });
+    const path = generatePath(ADMIN_DASHBOARD_AGENT_DETAILS_PATH, { id, tab: AGENT_DETAILS });
     history.push(path);
   };
 
@@ -66,11 +66,11 @@ export default class DashboardAgentsIndexPageContainer extends Component {
     };
     return (
       <DashboardAgentIndexPage
-        sectionFilter={sectionFilters}
+        sectionFilters={sectionFilters}
         filters={filters}
-        onAddAgent={this.handleAddAgent}>
-      </DashboardAgentIndexPage>
+        onAddAgent={this.handleAddAgent}
+      />
 
     );
   }
-};
+}

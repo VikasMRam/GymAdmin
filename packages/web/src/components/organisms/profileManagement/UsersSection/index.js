@@ -17,7 +17,7 @@ import Modal from 'sly/web/components/molecules/Modal';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import { ENTITY_LABEL_MAP } from 'sly/web/constants/entityTypes';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { SectionHeader } from 'sly/web/components/templates/DashboardWithSummaryTemplate';
+import { SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import UserRowCard from 'sly/web/components/organisms/UserRowCard';
 import AddEditUserContainer from 'sly/web/containers/dashboard/AddEditUserContainer';
 

@@ -1,12 +1,23 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="Cypress" />
+
 import { responsive, select, waitForHydration } from '../../helpers/tests';
 import { toJson } from '../../helpers/request';
-import { PROFILE_TEST_COMMUNITY, ServicesAmenitiesFilters } from '../../constants/community';
+import {
+  PROFILE_TEST_COMMUNITY,
+  BUENA_VISTA_COMMUNITY,
+  ServicesAmenitiesFilters,
+} from '../../constants/community';
+import randomUser from '../../helpers/randomUser';
+import * as communityPage from '../../helpers/comProfPage';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 import { normalizeResponse } from 'sly/web/services/api';
 
-const randHash = () => Math.random().toString(36).substring(7);
-
+const randHash = () =>
+  Math.random()
+    .toString(36)
+    .substring(7);
 
 export const buildEstimatedPriceList = (community) => {
   const {
@@ -18,27 +29,50 @@ export const buildEstimatedPriceList = (community) => {
   } = community.propInfo;
 
   const priceList = [];
-  sharedSuiteRate && sharedSuiteRate !== 'N/A' && priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
-  privateSuiteRate && privateSuiteRate !== 'N/A' && priceList.push({ label: 'Private Suite', value: privateSuiteRate });
-  studioApartmentRate && studioApartmentRate !== 'N/A' && priceList.push({ label: 'Studio Apartment', value: studioApartmentRate });
-  oneBedroomApartmentRate && oneBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'One Bedroom Apartment', value: oneBedroomApartmentRate });
-  twoBedroomApartmentRate && twoBedroomApartmentRate !== 'N/A' && priceList.push({ label: 'Two Bedroom Apartment', value: twoBedroomApartmentRate });
+  sharedSuiteRate &&
+    sharedSuiteRate !== 'N/A' &&
+    priceList.push({ label: 'Shared Suite', value: sharedSuiteRate });
+  privateSuiteRate &&
+    privateSuiteRate !== 'N/A' &&
+    priceList.push({ label: 'Private Suite', value: privateSuiteRate });
+  studioApartmentRate &&
+    studioApartmentRate !== 'N/A' &&
+    priceList.push({ label: 'Studio', value: studioApartmentRate });
+  oneBedroomApartmentRate &&
+    oneBedroomApartmentRate !== 'N/A' &&
+    priceList.push({ label: 'One Bedroom', value: oneBedroomApartmentRate });
+  twoBedroomApartmentRate &&
+    twoBedroomApartmentRate !== 'N/A' &&
+    priceList.push({ label: 'Two Bedroom', value: twoBedroomApartmentRate });
 
   return priceList;
 };
 
-
 describe('Community Profile Sections', () => {
   let community;
+  const retries = 10;
 
   beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
     cy.server();
     cy.route('POST', '**/uuid-actions').as('postUuidActions');
-
-    cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
-      community = response;
-    });
+    cy.route('GET', '**/users/me').as('getUser');
+    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    let attempts = 0;
+    while (!community?.id && attempts < retries) {
+      // eslint-disable-next-line no-loop-func
+      cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+      // eslint-disable-next-line no-loop-func
+      attempts++;
+    }
 
     Cypress.Commands.add('login', () => {
       cy.get('button').then(($a) => {
@@ -48,20 +82,15 @@ describe('Community Profile Sections', () => {
           cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
           waitForHydration(cy.get('form input[name="email"]')).type(`fonz+e2e+${rand}@seniorly.com`).should('have.value', `fonz+e2e+${rand}@seniorly.com`);
           waitForHydration(cy.get('form input[name="password"]')).type('nopassword').should('have.value', 'nopassword');
-          waitForHydration(cy.get('button').contains('Log in')).click();
+          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click();
         }
       });
     });
 
     Cypress.Commands.add('adminLogin', () => {
-      cy.get('button').then(($a) => {
-        if ($a.text().includes('Log In')) {
-          waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
-          waitForHydration(cy.get('form input[name="email"]')).type('slytest+admin@seniorly.com');
-          waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-          waitForHydration(cy.get('button').contains('Log in')).click({ force: true });
-        }
-      });
+      waitForHydration(cy.get('form input[name="email"]', { timeout: 8000 })).type('slytest+admin@seniorly.com');
+      waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
+      waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click({ force: true });
     });
   });
 
@@ -90,7 +119,7 @@ describe('Community Profile Sections', () => {
           line1, city, state, zip,
         } = community.address;
 
-        cy.get('h2').should(($h3) => {
+        cy.get('div').should(($h3) => {
           const address = `${line1}, ${city}, ${state} ${zip}`;
           expect($h3.first().text().replace(/\s+/g, ' ')).to.equal(address);
         });
@@ -103,17 +132,18 @@ describe('Community Profile Sections', () => {
     });
 
     it('should show pricing section', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
-      const pricingContent = cy.get('h3').contains(`Pricing at ${community.name}`).parent();
+      const pricingContent = cy.get('h2').contains(`Pricing at ${community.name}`).parent();
 
       pricingContent.should('contain', formatMoney(community.startingRate));
 
       buildEstimatedPriceList(community).forEach(({ label, value }) => {
         pricingContent.get('tbody td').contains(label).next().should('contain', formatMoney(value));
       });
-      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability')
-        .click();
+      cy.waitForPageViewEvent();
+      cy.get('section[id*="pricing-and-floor-plans"]').contains('Get Pricing and Availability').click();
       cy.url().should('include', `wizards/assessment/community/${community.id}`);
     });
 
@@ -121,12 +151,12 @@ describe('Community Profile Sections', () => {
     it('should show care services section', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
-      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+      waitForHydration(cy.get('h2').contains('Amenities').parent()).within(() => {
         waitForHydration(cy.get('div').contains('Care services').parent())
           .within(() => {
             cy.wrap(community.propInfo.careServices).each((service) => {
               if (ServicesAmenitiesFilters.careServices.includes(service.toLowerCase())) {
-                waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+                waitForHydration(cy.get('div').contains(service, { matchCase: false })).should('exist');
               }
             });
           });
@@ -137,11 +167,11 @@ describe('Community Profile Sections', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
 
-      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+      waitForHydration(cy.get('h2').contains('Amenities').parent()).within(() => {
         waitForHydration(cy.get('div').contains('Non-care services').parent()).within(() => {
           cy.wrap(community.propInfo.nonCareServices).each((service) => {
             if (ServicesAmenitiesFilters.nonCareServices.includes(service.toLowerCase())) {
-              waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+              waitForHydration(cy.get('div').contains(service, { matchCase: false })).should('exist');
             }
           });
         });
@@ -152,11 +182,11 @@ describe('Community Profile Sections', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
 
-      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+      waitForHydration(cy.get('h2').contains('Amenities').parent()).within(() => {
         waitForHydration(cy.get('div').contains('Room amenities').parent()).within(() => {
           cy.wrap(community.propInfo.personalSpace).each((service) => {
             if (ServicesAmenitiesFilters.personalSpace.includes(service.toLowerCase())) {
-              waitForHydration(cy.get('> div > div > div + div').contains(service, { matchCase: false })).should('exist');
+              waitForHydration(cy.get('div').contains(service, { matchCase: false })).should('exist');
             }
           });
         });
@@ -167,7 +197,7 @@ describe('Community Profile Sections', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
 
-      waitForHydration(cy.get('h3').contains('Services and Amenities').parent()).within(() => {
+      waitForHydration(cy.get('h3').contains('Amenities').parent()).within(() => {
         waitForHydration(cy.get('div').contains('Community amenities').parent()).within(() => {
           cy.wrap(community.propInfo.communitySpace).each((service) => {
             if (ServicesAmenitiesFilters.communitySpace.includes(service.toLowerCase())) {
@@ -184,7 +214,7 @@ describe('Community Profile Sections', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
-      select('.ReactModal').contains('Share this community').should('exist');
+      select('.NewModal').contains('Share this community').should('exist');
 
       cy.get('form input[name="to"]').type('inchara@seniorly.com');
       cy.get('form input[name="from"]').type('inchara@botverse.com');
@@ -217,11 +247,11 @@ describe('Community Profile Sections', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       cy.login();
-      waitForHydration(cy.get('button').contains('Favorite')).click({ force: true });
+      waitForHydration(cy.get('button').contains('Save')).click({ force: true });
 
       cy.wait('@postUserSaves').then(async (xhr) => {
         expect(xhr.status).to.equal(200);
-        expect(xhr.requestBody).to.deep.equal({
+        expect(xhr.requestBody.data.attributes).to.deep.equal({
           entitySlug: community.id,
           entityType: 'Community',
         });
@@ -232,7 +262,7 @@ describe('Community Profile Sections', () => {
 
       cy.get('textarea[name="note"]').type('additional notes');
 
-      cy.get('button[type="submit"]').contains('Save Note').click();
+      cy.get('button[type="submit"]').contains('Add Note').click();
 
       cy.wait('@patchUserSaves').then((xhr) => {
         expect(xhr.url).to.contain(userSave.id);
@@ -251,11 +281,32 @@ describe('Community Profile Sections', () => {
 
 
     it('creates prospective lead when question is asked on community profile', () => {
-      cy.route('POST', '**/questions').as('postQuestions');
       cy.route('POST', '**/auth/register').as('postRegister');
+      cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
+      cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      waitForHydration(cy.get('button').contains('Ask a Question')).click({ force: true });
-      select('.ReactModal').contains(`Ask us anything about living at ${community.name}`).should('exist');
+      cy.wait('@postUuidActions').then((xhr) => {
+        expect(xhr.requestBody).to.deep.equal({
+          data: {
+            type: 'UUIDAction',
+            attributes: {
+              actionType: 'profileViewed',
+              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+              actionInfo: {
+                slug: community.id,
+              },
+            },
+          },
+        });
+      });
+      cy.waitForPageViewEvent();
+
+
+      waitForHydration(cy.get('button').contains('about your options'));
+      cy.wait(1000);
+      cy.get('button').contains('about your options').click();
+
+      select('.ReactModal').contains('Get help from an expert').should('exist');
 
       const firstName = `Lead${randHash()}`;
       const lastName = 'Question';
@@ -273,19 +324,28 @@ describe('Community Profile Sections', () => {
 
       cy.get('button').contains('Send').click();
 
-      cy.wait('@postQuestions').then((xhr) => {
+      cy.wait('@postUuidActions').then((xhr) => {
         expect(xhr.status).to.equal(200);
         expect(xhr.requestBody).to.deep.equal({
           data: {
-            communitySlug: community.id,
-            email,
-            name: `${firstName} ${lastName}`,
-            question: message,
+            type: 'UUIDAction',
+            attributes: {
+              actionInfo: {
+                slug: community.id,
+                email,
+                name: `${firstName} ${lastName}`,
+                phone,
+                question: message,
+                entityType: 'Community',
+              },
+              actionType: 'agentAskQuestions',
+              actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+            },
+
           },
         });
       });
 
-      cy.wait('@postUuidActions');
 
       cy.wait('@postRegister').then((xhr) => {
         expect(xhr.status).to.equal(200);
@@ -296,20 +356,23 @@ describe('Community Profile Sections', () => {
         });
       });
 
+      cy.wait('@getUser');
 
-      waitForHydration(cy.contains('Finish').click());
+
+      waitForHydration(cy.contains('Finish').click({ force: true }));
 
       cy.getCookie('sly-session').should('exist');
-      // cy.get('a').contains(firstName);
       cy.clearCookie('sly-session');
-      cy.wait(5000);
+      cy.reload();
       cy.visit('/');
-      waitForHydration(cy.adminLogin());
+
 
       cy.visit('/dashboard/agent/my-families/new');
+      waitForHydration(cy.adminLogin());
+
       waitForHydration(cy.get('tr').contains(`${firstName} ${lastName}`)).click();
 
-      cy.get('h1').contains(`${firstName} ${lastName}`);
+      cy.get('h2').contains(`${firstName} ${lastName}`);
       cy.get('a').contains('See more family details').click();
 
       cy.get('input[name="name"]').should('have.value', `${firstName} ${lastName}`);
@@ -321,3 +384,218 @@ describe('Community Profile Sections', () => {
   });
 });
 
+describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
+  let community;
+  const retries = 10;
+
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+
+    cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
+    cy.server();
+    cy.route('POST', '**/uuid-actions').as('postUuidActions');
+    cy.route('GET', '**/users/me').as('getUser');
+    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    let attempts = 0;
+    while (!community?.id && attempts < retries) {
+      // eslint-disable-next-line no-loop-func
+      cy.getCommunity(PROFILE_TEST_COMMUNITY).then((response) => {
+        community = response;
+      });
+      // eslint-disable-next-line no-loop-func
+      attempts++;
+    }
+  });
+
+  responsive(() => {
+    it('Check wizard pricing footer (ComPrfPage - row 4)', () => {
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      cy.wait('@postUuidActions', { timeout: 10000 });
+      // Second button 'Get pricing' button (footer) - in responsive mode with small resolution will display first
+      communityPage.getPriceBtnFooter();
+      communityPage.getPriceWizardInfoIsPresent();
+      cy.url().should('include', 'cta=pricing&entry=communityFooter');
+    });
+  });
+
+  it('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', () => {
+    // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
+    cy.viewport(1920, 1200);
+    const user = randomUser();
+    const expectedActionType = 'wizardStepCompleted';
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.getPriceBtnRightSectionDesktop();
+    cy.wait('@postUuidActions').then((xhr) => {
+      expect(xhr.requestBody).to.deep.equal({
+        data: {
+          type: 'UUIDAction',
+          attributes: {
+            actionType: expectedActionType,
+            actionPage: `/wizards/assessment/community/${community.id}`,
+            actionInfo: {
+              stepName: 'step-0:communitySidebar',
+              wizardName: 'assessmentWizard',
+              data: {
+                cta: 'pricing',
+                entry: 'communitySidebar',
+              },
+            },
+          },
+        },
+      });
+    });
+    cy.url().should('include', 'cta=pricing&entry=communitySidebar');
+    communityPage.getPriceWizardInfoIsPresent();
+    communityPage.justWantToSeePricing({ ...user });
+    cy.contains('We\'ve sent your request!', { timeout: 15000 }).should('be.visible');
+    cy.contains('Go to my Home Base').click();
+    cy.url().should('include', 'dashboard/family/home');
+
+    // With current user should be Pricing Requested
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.contains('Pricing Requested', { timeout: 12000 }).should('be.visible');
+  });
+
+  it('Check wizard pricing table (ComPrfPage - row 5)', () => {
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.getPriceBtnTable();
+    communityPage.getPriceWizardInfoIsPresent();
+    cy.url().should('include', 'cta=pricing&entry=pricingTable');
+  });
+
+  it.skip('About section CTA (ComPrfPage - row 6)', () => {
+    const user = randomUser();
+    const question = `Auto test ${user.lastName}`;
+    const expectedActionType = 'profileAskQuestion';
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.askQuestBtn();
+    communityPage.sendAskForm({ ...user, question });
+    cy.wait('@postUuidActions').then((xhr) => {
+      expect(xhr.requestBody).to.deep.equal({
+        data: {
+          type: 'UUIDAction',
+          attributes: {
+            actionType: expectedActionType,
+            actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+            actionInfo: {
+              email: user.email,
+              entityType: 'Community',
+              name: `${user.name} ${user.lastName}`,
+              phone: user.phone,
+              question,
+              questionText: question,
+              slug: community.id,
+            },
+          },
+        },
+      });
+    });
+    cy.wait('@getUser');
+    communityPage.successModalIsSeenAndClosed();
+  });
+
+  it('Agent Block CTA (ComPrfPage - row 7)', () => {
+    const user = randomUser();
+    const question = `Auto test ${user.lastName}`;
+    const expectedActionType = 'agentAskQuestions';
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.askExpertBtn();
+    communityPage.sendAskForm({ ...user, question });
+    cy.wait('@postUuidActions').then((xhr) => {
+      expect(xhr.requestBody).to.deep.equal({
+        data: {
+          type: 'UUIDAction',
+          attributes: {
+            actionType: expectedActionType,
+            actionPage: `/assisted-living/california/san-francisco/${community.id}`,
+            actionInfo: {
+              email: user.email,
+              entityType: 'Community',
+              name: `${user.name} ${user.lastName}`,
+              phone: user.phone,
+              question,
+              // questionText: question,
+              slug: community.id,
+            },
+          },
+        },
+      });
+    });
+    cy.wait('@getUser');
+    communityPage.successModalIsSeenAndClosed();
+  });
+
+  it('View Photos - Launch, Exit Gallery - click outside (ComPrfPage - row 8)', () => {
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    // On small resolutions click outside can flaky
+    cy.viewport(1920, 1200);
+    communityPage.viewPhotos();
+    communityPage.galleryIsOpen();
+    cy.get('.ReactModal__Overlay').realTouch({ position: 'bottom' });
+    communityPage.galleryIsClosed();
+  });
+
+  it('View Photos - Launch, Exit Gallery - click close button (ComPrfPage - row 8)', () => {
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.viewPhotos();
+    communityPage.galleryIsOpen();
+    communityPage.closeGalleryBtn();
+    communityPage.galleryIsClosed();
+  });
+
+  it('View Photos - Navigate with buttons (row 9)', () => {
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.viewPhotos();
+    communityPage.leftRightGalleryButtonIsWorks();
+  });
+
+  it('View Photos- Navigate in filmstrip (row 10)', () => {
+    cy.viewport(1920, 1200);
+    cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    cy.wait('@postUuidActions', { timeout: 10000 });
+    communityPage.viewPhotos();
+    // Gallery is slow open  so better wait a few seconds before swipe filmstrip
+    cy.wait(2500);
+    communityPage.scrollFilmStripToLastPicture();
+  });
+
+  it('Navigation Breadcrumbs. Click "Home-City" (row 12-15)', () => {
+    cy.viewport(1920, 1200);
+    communityPage.navigationBreadcrumbs(community.id);
+  });
+
+  it('Care tag navigation: navigate to city page with care type applied (row 16)', () => {
+    cy.viewport(1920, 1200);
+    cy.getCommunity(BUENA_VISTA_COMMUNITY).then((response) => {
+      community = response;
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+    });
+    communityPage.clickTagUnderAddress('Assisted Living');
+    cy.contains('Assisted Living Facilities in San Francisco, CA', {
+      timeout: 5000,
+    }).should('be.visible');
+    cy.url().should('include', '/assisted-living/california/san-francisco');
+  });
+
+  it('Profile Sections - Name and Address (row 17)', () => {
+    cy.viewport(1920, 1200);
+    cy.getCommunity(BUENA_VISTA_COMMUNITY).then((response) => {
+      community = response;
+      cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
+      const { address: { city, line1, state, zip }, name } = community;
+      communityPage.nameIsPresent(name);
+      communityPage.addressIsPresent(city, line1, state, zip);
+    });
+  });
+});

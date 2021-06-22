@@ -164,7 +164,7 @@ describe('FamilyDetailsForm', () => {
   it('handles onFormSubmit', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
-    wrapper.find('Section').simulate('submit');
+    wrapper.find('Box').simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 

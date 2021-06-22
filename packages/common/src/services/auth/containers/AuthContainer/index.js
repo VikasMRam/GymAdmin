@@ -4,20 +4,24 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { withAuth } from 'sly/web/services/api';
+import { withHydration } from 'sly/web/services/partialHydration';
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import { Wrapper } from 'sly/common/services/auth/components/Template';
-import ResetPasswordFormContainer from 'sly/common/services/auth/containers/ResetPasswordFormContainer';
-import LoginFormContainer from 'sly/common/services/auth/containers/LoginFormContainer';
-import SignupFormContainer from 'sly/common/services/auth/containers/SignupFormContainer';
-import ProviderSignupFormContainer from 'sly/common/services/auth/containers/ProviderSignupFormContainer';
-import AgentSignupFormContainer from 'sly/common/services/auth/containers/AgentSignupFormContainer';
-import CustomerSignupConfirmationContainer from 'sly/common/services/auth/containers/CustomerSignupConfirmationContainer';
-import ProviderFindCommunityContainer  from 'sly/common/services/auth/containers/ProviderFindCommunityContainer';
-import ProviderConfirmation from 'sly/common/services/auth/components/ProviderConfirmation';
-import OtpLoginFormContainer from 'sly/common/services/auth/containers/OtpLoginFormContainer';
+
+
+const ResetPasswordFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "resetPasswordContainer" */ import('sly/common/services/auth/containers/ResetPasswordFormContainer'));
+const LoginFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "loginFormContainer" */ import('sly/common/services/auth/containers/LoginFormContainer'));
+const ProviderSignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "providerSignupFormContainer" */ import('sly/common/services/auth/containers/ProviderSignupFormContainer'));
+const SignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "signUpContainer" */ import('sly/common/services/auth/containers/SignupFormContainer'));
+const AgentSignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "agentSignupFormContainer" */ import('sly/common/services/auth/containers/AgentSignupFormContainer'));
+const CustomerSignupConfirmationContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "customerSignupConfirmationContainer" */ import('sly/common/services/auth/containers/CustomerSignupConfirmationContainer'));
+const ProviderFindCommunityContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "providerFindCommunityContainer" */ import('sly/common/services/auth/containers/ProviderFindCommunityContainer'));
+const ProviderConfirmation = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "providerConfirmation" */ import('sly/common/services/auth/components/ProviderConfirmation'));
+const ThirdPartyPromptFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "thirdPartyPromptFormContainer" */ import('sly/common/services/auth/containers/ThirdPartyPromptFormContainer'));
+const OtpLoginFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "otpLoginFormContainer" */ import('sly/common/services/auth/containers/OtpLoginFormContainer'));
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -72,6 +76,7 @@ export default class AuthContainer extends Component {
       location,
     } = this.props;
 
+
     if (!this.state.isOpen && authenticated.loggingIn) {
       this.setState({ isOpen: true, title: 'Login' });
 
@@ -93,7 +98,6 @@ export default class AuthContainer extends Component {
 
   handleAuthenticateSuccess = () => {
     const { onAuthenticateSuccess, authenticateSuccess } = this.props;
-
     // authenticateSuccess is not a promise, hence call success event callback immediately
     authenticateSuccess();
     if (onAuthenticateSuccess) {
@@ -108,8 +112,7 @@ export default class AuthContainer extends Component {
       hasProviderSignup, formName,
     } = this.props;
     let { initialStep } = this.props;
-
-    if (authenticated.options && authenticated.options.register) {
+    if (authenticated.options && authenticated.options.register && initialStep !== 'ThirdPartyPromptForm') {
       initialStep = 'Signup';
     }
     if (authenticated.options && authenticated.options.provider) {
@@ -135,6 +138,7 @@ export default class AuthContainer extends Component {
               name="Login"
               onRegisterClick={() => this.setState({ title: 'Sign Up' }, () => goto('Signup'))}
               onResetPasswordClick={() => this.setState({ title: 'Having trouble logging in?' }, () => goto('ResetPassword'))}
+              onSociaLoginSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
               onSubmit={this.handleAuthenticateSuccess}
             />
             <WizardStep
@@ -149,14 +153,25 @@ export default class AuthContainer extends Component {
               onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
               onProviderClicked={() => this.setState({ title: 'Create a community manager account' }, () => goto('ProviderSignup'))}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
+              onSocialSignupSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
               handleOtpClick={() => {
-                this.setState({ title: 'Get one time passcode' });
+                this.setState({ title: 'Login to your account' });
                 goto('OtpLogin');
               }}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
               hasPassword={signUpHasPassword}
               hasProviderSignup={hasProviderSignup}
+            />
+            <WizardStep
+              component={ThirdPartyPromptFormContainer}
+              name="ThirdPartyPromptForm"
+              onSubmit={() => {
+                if (authenticated.options && authenticated.options.register) { onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation'); } else {
+                  this.handleAuthenticateSuccess();
+                }
+                this.setState({ title: '' });
+              }}
             />
             <WizardStep
               component={CustomerSignupConfirmationContainer}
@@ -222,6 +237,10 @@ export default class AuthContainer extends Component {
           {wizard}
         </Wrapper>
       );
+    }
+
+    if (!isOpen) {
+      return null;
     }
 
     return (

@@ -8,7 +8,7 @@ import { Heading, Block, Button } from 'sly/web/components/atoms';
 import pad from 'sly/web/components/helpers/pad';
 import clientPropType from 'sly/common/propTypes/client';
 import DashboardAdminReferralAgentTile from 'sly/web/components/organisms/DashboardAdminReferralAgentTile';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/web/dashboard/dashboardAppPaths';
 
 const TopWrapper = styled.div`
   display: flex;

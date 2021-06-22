@@ -7,7 +7,7 @@ import conversationPropType from 'sly/common/propTypes/conversation/conversation
 import userPropType from 'sly/common/propTypes/user';
 import { CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/web/constants/conversations';
 import { prefetch, withUser } from 'sly/web/services/api';
-import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, DASHBOARD_ACCOUNT_PATH } from 'sly/web/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH, DASHBOARD_ACCOUNT_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import CommunityPricingWizardLanding from 'sly/web/components/organisms/CommunityPricingWizardLanding';
 
 @withUser
