@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { func, bool, object, arrayOf } from 'prop-types';
 import { sortableContainer } from 'react-sortable-hoc';
 
@@ -50,91 +50,77 @@ const SectionSortable = sortableContainer(({
   </Block>
 ));
 
-export default class DashboardListingPhotosForm extends Component {
-  static propTypes = {
-    invalid: bool,
-    canEdit: bool,
-    submitting: bool,
-    onUpload: func.isRequired,
-    onUploadError: func.isRequired,
-    saveImage: func.isRequired,
-    deleteImage: func.isRequired,
-    onSortEnd: func.isRequired,
-    images: arrayOf(imagePropType),
-    changes: object,
-  };
+const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes }) => {
+  const [editingImage, setEditingImage] = useState(null);
 
-  state = {
-    editingImage: null,
-  };
+  const editImage = image => setEditingImage(image);
 
-  editImage = (image) => {
-    this.setState({
-      editingImage: image,
-    });
-  };
+  const stopEditing = () => setEditingImage(null);
 
-  stopEditing = () => {
-    this.setState({
-      editingImage: null,
-    });
-  }
+  const actions = canEdit && (
+    <S3Uploader
+      onFinish={onUpload}
+      onError={onUploadError}
+    >
+      <IconButton icon="add" hideTextInMobile>
+        Add Image
+      </IconButton>
+    </S3Uploader>
+  );
 
-  render() {
-    const {
-      onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes,
-    } = this.props;
+  const deletedMessage = changes.deleted.length === 0
+    ? undefined
+    : changes.deleted
+      .map(image => <>{image.id}{image.attributes.path}<br /></>);
+
+  const isNew = image => (changes?.newImages || []).includes(image);
 
 
-    const actions = canEdit && (
-      <S3Uploader
-        onFinish={onUpload}
-        onError={onUploadError}
-      >
-        <IconButton icon="add" hideTextInMobile>
-          Add Image
-        </IconButton>
-      </S3Uploader>
-    );
-
-    const deletedMessage = changes.deleted.length === 0
-      ? undefined
-      : changes.deleted
-        .map(image => <>{image.id}{image.attributes.path}<br /></>);
-
-    const isNew = image => (changes?.newImages || []).includes(image);
-
-    return (
-      <>
-        <EditImageModal
-          image={this.state.editingImage}
-          saveImage={saveImage}
-          canEdit={canEdit}
-          onClose={this.stopEditing}
-        />
-        <Section>
-          {deletedMessage && (
-            <HelpBubble
-              trigger="This images were deleted"
-            >
-              {deletedMessage}
-            </HelpBubble>
+  return (
+    <>
+      <EditImageModal
+        image={editingImage}
+        saveImage={saveImage}
+        canEdit={canEdit}
+        onClose={stopEditing}
+      />
+      <Section>
+        {deletedMessage && (
+        <HelpBubble
+          trigger="This images were deleted"
+        >
+          {deletedMessage}
+        </HelpBubble>
           )}
-          <SectionHeader actions={actions}>
-            Images
-          </SectionHeader>
-          <SectionSortable
-            useDragHandle
-            onSortEnd={onSortEnd}
-            images={images}
-            editImage={this.editImage}
-            deleteImage={deleteImage}
-            isNew={isNew}
-            canEdit={canEdit}
-          />
-        </Section>
-      </>
-    );
-  }
-}
+        <SectionHeader actions={actions}>
+          Images
+        </SectionHeader>
+        <SectionSortable
+          useDragHandle
+          onSortEnd={onSortEnd}
+          images={images}
+          editImage={editImage}
+          deleteImage={deleteImage}
+          isNew={isNew}
+          canEdit={canEdit}
+        />
+      </Section>
+    </>
+  );
+};
+
+DashboardListingPhotosForm.propTypes = {
+  invalid: bool,
+  canEdit: bool,
+  submitting: bool,
+  onUpload: func.isRequired,
+  onUploadError: func.isRequired,
+  saveImage: func.isRequired,
+  deleteImage: func.isRequired,
+  onSortEnd: func.isRequired,
+  images: arrayOf(imagePropType),
+  changes: object,
+};
+
+export default DashboardListingPhotosForm;
 

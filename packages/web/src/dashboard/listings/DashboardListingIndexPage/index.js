@@ -47,17 +47,8 @@ const NoResultMessage = styled(textAlign(Block))`
   padding-bottom: ${size('spacing.xxxLarge')};
 `;
 
-export default class DashboardListingIndexPage extends Component {
-  // static propTypes = {
-  //   datatable: object,
-  //   listings: arrayOf(communityPropType),
-  //   pagination: object,
-  //   isPageLoading: bool,
-  //   onAddListing: func,
-  //   meta: object,
-  // };
-
-  handleListingClick = (listing) => {
+const DashboardListingIndexPage = ({ listings, pagination, isPageLoading, onAddListing, meta, datatable }) => {
+  const handleListingClick = (listing) => {
     const event = {
       category: 'AdminDashboardListing',
       action: 'click',
@@ -67,43 +58,18 @@ export default class DashboardListingIndexPage extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  render() {
-    const {
-      listings, pagination, isPageLoading, onAddListing, meta, datatable,
-    } = this.props;
-    const noResultMessage = 'Click Add Listing on the top right corner to add a new listing';
-    const modelConfig = { name: 'Listing', defaultSearchField: 'name' };
+  const noResultMessage = 'Click Add Listing on the top right corner to add a new listing';
+  const modelConfig = { name: 'Listing', defaultSearchField: 'name' };
 
-    const actions = (
-      <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
-        <IconButton icon="plus" onClick={onAddListing} hideTextInMobile>
-          Add Listing
-        </IconButton>
-      </Role>
-    );
+  const actions = (
+    <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
+      <IconButton icon="plus" onClick={onAddListing} hideTextInMobile>
+        Add Listing
+      </IconButton>
+    </Role>
+  );
 
-    if (isPageLoading) {
-      return (
-        <DashboardPageTemplate activeMenuItem="Communities">
-          <Section snap="none">
-            <SectionHeader actions={actions}>
-              Listings
-            </SectionHeader>
-
-            <TableHeaderButtons
-              datatable={datatable}
-              modelConfig={modelConfig}
-              meta={meta}
-            />
-
-            <Block weight="medium" size="body" textAlign="center" padding="30px">
-              Loading...
-            </Block>
-          </Section>
-        </DashboardPageTemplate>
-      );
-    }
-
+  if (isPageLoading) {
     return (
       <DashboardPageTemplate activeMenuItem="Communities">
         <Section snap="none">
@@ -117,43 +83,74 @@ export default class DashboardListingIndexPage extends Component {
             meta={meta}
           />
 
-          <StyledTable>
-            <THead>
-              <Tr>
-                {TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}
-              </Tr>
-            </THead>
-            <TBody>
-              {listings.map(listing => (
-                <ListingRowCard key={listing.id} listing={listing} onLisitngClick={() => this.handleListingClick(listing)} />
-              ))}
-              {listings.length === 0 &&
-                <Tr>
-                  <Td colSpan={TABLE_HEADINGS.length}>
-                    <NoResultMessage>{noResultMessage}</NoResultMessage>
-                  </Td>
-                </Tr>
-              }
-            </TBody>
-          </StyledTable>
-
-          {pagination.show && (
-            <StyledPagination
-              current={pagination.current}
-              total={pagination.total}
-              range={1}
-              basePath={datatable.basePath}
-              pageParam="page-number"
-            />
-          )}
-
-          {listings.length > 0 &&
-            <Box padding="regular" size="caption" snap="top">
-              {pagination.text}
-            </Box>
-          }
+          <Block weight="medium" size="body" textAlign="center" padding="30px">
+            Loading...
+          </Block>
         </Section>
       </DashboardPageTemplate>
     );
   }
-}
+
+  return (
+    <DashboardPageTemplate activeMenuItem="Communities">
+      <Section snap="none">
+        <SectionHeader actions={actions}>
+          Listings
+        </SectionHeader>
+
+        <TableHeaderButtons
+          datatable={datatable}
+          modelConfig={modelConfig}
+          meta={meta}
+        />
+
+        <StyledTable>
+          <THead>
+            <Tr>
+              {TABLE_HEADINGS.map(({ text }) => <Th key={text}>{text}</Th>)}
+            </Tr>
+          </THead>
+          <TBody>
+            {listings.map(listing => (
+              <ListingRowCard key={listing.id} listing={listing} onLisitngClick={() => handleListingClick(listing)} />
+            ))}
+            {listings.length === 0 &&
+              <Tr>
+                <Td colSpan={TABLE_HEADINGS.length}>
+                  <NoResultMessage>{noResultMessage}</NoResultMessage>
+                </Td>
+              </Tr>
+            }
+          </TBody>
+        </StyledTable>
+
+        {pagination.show && (
+          <StyledPagination
+            current={pagination.current}
+            total={pagination.total}
+            range={1}
+            basePath={datatable.basePath}
+            pageParam="page-number"
+          />
+        )}
+
+        {listings.length > 0 &&
+          <Box padding="regular" size="caption" snap="top">
+            {pagination.text}
+          </Box>
+        }
+      </Section>
+    </DashboardPageTemplate>
+  );
+};
+
+DashboardListingIndexPage.propTypes = {
+  datatable: object,
+  // listings: arrayOf(communityPropType),
+  pagination: object,
+  isPageLoading: bool,
+  onAddListing: func,
+  meta: object,
+};
+
+export default DashboardListingIndexPage;

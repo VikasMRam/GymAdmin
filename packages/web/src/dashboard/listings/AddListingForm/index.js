@@ -37,138 +37,134 @@ const FormBottomSection = styled.div`
 
 const FormSectionHeading = pad(Block, 'large');
 
-export default class AddListingForm extends Component {
-  static propTypes = {
-    handleSubmit: func,
-    onCountryChange: func,
-    selectedCountry: string,
-    onCancel: func,
-    invalid: bool,
-    submitting: bool,
-  };
+const AddListingForm = ({ handleSubmit, invalid, submitting, selectedCountry, onCountryChange }) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <FormSection>
+          <FormSectionHeading weight="medium" size="title">Add New Listing</FormSectionHeading>
+          <Field
+            name="name"
+            label="Listing name"
+            type="text"
+            placeholder="Listing Name"
+            required
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="phoneNumber"
+            label="Front desk phone number"
+            type="phone"
+            required
+            placeholder="(925) 555-5555"
+            parens
+            component={ReduxField}
+            wideWidth
+          />
+        </FormSection>
+        <FormSection>
+          <FormSectionHeading weight="medium">Address</FormSectionHeading>
+          <Field
+            name="line1"
+            label="Line 1"
+            type="text"
+            placeholder="Address line 1"
+            required
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="line2"
+            label="Line 2"
+            type="text"
+            placeholder="Address line 2"
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="city"
+            label="City"
+            type="text"
+            placeholder="City"
+            required
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="country"
+            label="Country"
+            type="select"
+            required
+            onChange={onCountryChange}
+            component={ReduxField}
+            wideWidth
+          >
+            <option>Select an option</option>
+            {countryOptions}
+          </Field>
+          <Field
+            name="state"
+            label="State/Region"
+            type="select"
+            required
+            component={ReduxField}
+            wideWidth
+          >
+            <option>Select an option</option>
+            {getStatesOptions(selectedCountry)}
+          </Field>
+          <Field
+            name="zip"
+            label="Zipcode"
+            type="text"
+            placeholder="Zipcode"
+            required
+            component={ReduxField}
+            wideWidth
+          />
+        </FormSection>
+        <FormSection heading="Sly Score">
+          <Field
+            name="slyScore"
+            label="Sly Score"
+            type="number"
+            required
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="id"
+            label="Community Slug"
+            type="autocomplete"
+            component={ReduxField}
+            column={communityColumn}
+          />
+          <Field
+            name="slug"
+            label="Agent Slug"
+            type="autocomplete"
+            component={ReduxField}
+            column={agentsColumn}
+          />
+        </FormSection>
+      </div>
+      <FormBottomSection>
+        <StyledButton type="submit" disabled={invalid || submitting}>
+          Create Listing
+        </StyledButton>
+      </FormBottomSection>
+    </form>
+  );
+};
 
-  render() {
-    const {
-      handleSubmit, invalid, submitting, selectedCountry, onCountryChange,
-    } = this.props;
+AddListingForm.propTypes = {
+  handleSubmit: func,
+  onCountryChange: func,
+  selectedCountry: string,
+  onCancel: func,
+  invalid: bool,
+  submitting: bool,
+};
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <FormSection>
-            <FormSectionHeading weight="medium" size="title">Add New Listing</FormSectionHeading>
-            <Field
-              name="name"
-              label="Listing name"
-              type="text"
-              placeholder="Listing Name"
-              required
-              component={ReduxField}
-              wideWidth
-            />
-            <Field
-              name="phoneNumber"
-              label="Front desk phone number"
-              type="phone"
-              required
-              placeholder="(925) 555-5555"
-              parens
-              component={ReduxField}
-              wideWidth
-            />
-          </FormSection>
-          <FormSection>
-            <FormSectionHeading weight="medium">Address</FormSectionHeading>
-            <Field
-              name="line1"
-              label="Line 1"
-              type="text"
-              placeholder="Address line 1"
-              required
-              component={ReduxField}
-              wideWidth
-            />
-            <Field
-              name="line2"
-              label="Line 2"
-              type="text"
-              placeholder="Address line 2"
-              component={ReduxField}
-              wideWidth
-            />
-            <Field
-              name="city"
-              label="City"
-              type="text"
-              placeholder="City"
-              required
-              component={ReduxField}
-              wideWidth
-            />
-            <Field
-              name="country"
-              label="Country"
-              type="select"
-              required
-              onChange={onCountryChange}
-              component={ReduxField}
-              wideWidth
-            >
-              <option>Select an option</option>
-              {countryOptions}
-            </Field>
-            <Field
-              name="state"
-              label="State/Region"
-              type="select"
-              required
-              component={ReduxField}
-              wideWidth
-            >
-              <option>Select an option</option>
-              {getStatesOptions(selectedCountry)}
-            </Field>
-            <Field
-              name="zip"
-              label="Zipcode"
-              type="text"
-              placeholder="Zipcode"
-              required
-              component={ReduxField}
-              wideWidth
-            />
-          </FormSection>
-          <FormSection heading="Sly Score">
-            <Field
-              name="slyScore"
-              label="Sly Score"
-              type="number"
-              required
-              component={ReduxField}
-              wideWidth
-            />
-            <Field
-              name="id"
-              label="Community Slug"
-              type="autocomplete"
-              component={ReduxField}
-              column={communityColumn}
-            />
-            <Field
-              name="slug"
-              label="Agent Slug"
-              type="autocomplete"
-              component={ReduxField}
-              column={agentsColumn}
-            />
-          </FormSection>
-        </div>
-        <FormBottomSection>
-          <StyledButton type="submit" disabled={invalid || submitting}>
-            Create Listing
-          </StyledButton>
-        </FormBottomSection>
-      </form>
-    );
-  }
-}
+export default AddListingForm;

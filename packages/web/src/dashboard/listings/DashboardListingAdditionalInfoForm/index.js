@@ -15,17 +15,9 @@ import {
 } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import { apiUrl } from 'sly/web/config';
 
-const getOptions = options => options.map(s => <option key={s} value={s}>{s}</option>);
-
-// const getStatesOptions = country => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
-// const getAvailableTags = country => AVAILABLE_TAGS[country];
-// const countryOptions = countries.map(s => <option key={s} value={s}>{s}</option>);
-// const sizeOfCommunityOptions = sizeOfCommunity.map(s => <option key={s} value={s}>{s}</option>);
-// const numberOfBedRoomsOptions = numberOfBedRooms.map(s => <option key={s} value={s}>{s}</option>);
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
 const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[is-plus]=true:true&filter[name]=` }, value: 'community.id' };
-// const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[name]=` }, value: 'community.id' };
 
 const activitiesOptions = [
   { value: 'Art classes', label: 'Art classes' },
@@ -38,74 +30,69 @@ const activitiesOptions = [
   { value: 'Spritual practice', label: 'Spritual practice' },
 ];
 
-export default class DashboardListingAdditionalInfoForm extends Component {
-  static propTypes = {
-    invalid: bool,
-    canEdit: bool,
-    submitting: bool,
-    respiteAllowed: object,
-    handleSubmit: func.isRequired,
-  };
+const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting, canEdit }) => {
+  return (
+    <Section
+      as="form"
+      onSubmit={handleSubmit}
+    >
+      <SectionHeader>
+        Details
+      </SectionHeader>
 
-  render() {
-    const {
-      handleSubmit, invalid, submitting, canEdit,
-    } = this.props;
-
-    return (
-      <Section
-        as="form"
-        onSubmit={handleSubmit}
-      >
-        <SectionHeader>
-          Details
-        </SectionHeader>
-
-        <SectionForm heading="Additional listing information">
-          <EditField
-            name="info.activities"
-            label="Activities"
-            type="checkbox"
-            options={activitiesOptions}
-            readOnly={!canEdit}
-            wideWidth
-          />
-          <EditField
-            name="info.sections[0].content"
-            label="Dining"
-            type="richtextarea"
-            placeholder=""
-            wideWidth
-            widthSpacing="tabletLayout.col5"
-          />
-          <EditField
-            name="info.sections[1].content"
-            label="Neighborhood"
-            type="richtextarea"
-            placeholder=""
-            wideWidth
-            widthSpacing="tabletLayout.col5"
-          />
-        </SectionForm>
+      <SectionForm heading="Additional listing information">
+        <EditField
+          name="info.activities"
+          label="Activities"
+          type="checkbox"
+          options={activitiesOptions}
+          readOnly={!canEdit}
+          wideWidth
+        />
+        <EditField
+          name="info.sections[0].content"
+          label="Dining"
+          type="richtextarea"
+          placeholder=""
+          wideWidth
+          widthSpacing="tabletLayout.col5"
+        />
+        <EditField
+          name="info.sections[1].content"
+          label="Neighborhood"
+          type="richtextarea"
+          placeholder=""
+          wideWidth
+          widthSpacing="tabletLayout.col5"
+        />
+      </SectionForm>
 
 
-        <SectionForm heading="Community details">
-          <EditField
-            name="community"
-            label="Community Slug"
-            type="autocomplete"
-            readOnly={!canEdit}
-            column={communityColumn}
-          />
+      <SectionForm heading="Community details">
+        <EditField
+          name="community"
+          label="Community Slug"
+          type="autocomplete"
+          readOnly={!canEdit}
+          column={communityColumn}
+        />
 
-        </SectionForm>
-        <SectionActions>
-          <Button type="submit" disabled={!canEdit || invalid || submitting}>
-            Save changes
-          </Button>
-        </SectionActions>
-      </Section>
-    );
-  }
-}
+      </SectionForm>
+      <SectionActions>
+        <Button type="submit" disabled={!canEdit || invalid || submitting}>
+          Save changes
+        </Button>
+      </SectionActions>
+    </Section>
+  );
+};
 
+DashboardListingAdditionalInfoForm.propTypes = {
+  invalid: bool,
+  canEdit: bool,
+  submitting: bool,
+  respiteAllowed: object,
+  handleSubmit: func.isRequired,
+};
+
+export default DashboardListingAdditionalInfoForm;
