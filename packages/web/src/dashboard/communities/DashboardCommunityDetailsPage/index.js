@@ -76,8 +76,8 @@ export default class DashboardCommunityDetailsPage extends Component {
     const tabs = {
       Profile: PROFILE,
       Photos: PHOTOS,
-      Pricing: PRICING,
-      'New Pricing': [NEWPRICING, PLATFORM_ADMIN_ROLE],
+      'Old Pricing': [PRICING, PLATFORM_ADMIN_ROLE],
+      Pricing: NEWPRICING,
       'Services And Amenities': SERVICES,
       Admin: [ADMIN, PLATFORM_ADMIN_ROLE],
       Contacts: [CONTACTS, PLATFORM_ADMIN_ROLE],

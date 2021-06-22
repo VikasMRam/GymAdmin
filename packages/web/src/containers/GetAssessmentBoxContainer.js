@@ -141,7 +141,7 @@ const GetAssessmentBoxContainer = ({
               description="Questions? You can contact us by phone or email:"
             >
               <Block pad="regular">
-                <Link href="mailto:sharon@seniorly.com">sharon@seniorly.com</Link>
+                <Link href="mailto:caremanager@seniorly.com">caremanager@seniorly.com</Link>
               </Block>
               <Block pad="regular">
                 <Link href="tel:8558664515">(855) 866-4515</Link>

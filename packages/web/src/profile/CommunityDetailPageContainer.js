@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
 import CommunityDetailPage from './CommunityDetailPage';
 
@@ -12,12 +12,13 @@ import { assetPath } from 'sly/web/components/themes';
 
 const CommunityDetailPageContainer = () => {
   const location = useLocation() || {};
+  const { communitySlug } = useParams();
 
   const {
     community,
     communityStatus,
     communityLocation,
-  } = useCommunity();
+  } = useCommunity({ communitySlug });
 
   if (communityStatus === 301) {
     const newSlug = getLastSegment(communityLocation);

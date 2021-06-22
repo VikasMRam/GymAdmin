@@ -32,6 +32,8 @@ import Intro from 'sly/web/assessment/steps/Intro/IntroFormContainer';
 import { ProgressBarWrapper } from 'sly/web/assessment/Template';
 import ProgressBar from 'sly/web/components/molecules/ProgressBar';
 
+const CONTROLLER_KEY = 'controller_assessmentWizard';
+
 @withWS
 @withRedirectTo
 @query('getAgent', 'getAgent')
@@ -88,6 +90,7 @@ export default class AssessmentWizard extends Component {
     if (!this.skipped) {
       localStorage.setItem(ASSESSMENT_WIZARD_COMPLETED, ASSESSMENT_WIZARD_COMPLETED);
     }
+    localStorage.removeItem(CONTROLLER_KEY);
     const redirectPath = `${FAMILY_DASHBOARD_HOME_PATH}?${objectToURLQueryParams(qp)}`;
     return redirectTo(redirectPath);
   };
@@ -200,7 +203,9 @@ export default class AssessmentWizard extends Component {
     const { intro = {} }  = getWizardContentFromCta(cta);
     return (
       <WizardController
+        useLocalStorage
         formName="assessmentWizard"
+        controllerKey={CONTROLLER_KEY}
         onComplete={this.handleComplete}
         onStepChange={this.handleStepChange}
         onPrevious={this.handlePrevious}
@@ -219,7 +224,7 @@ export default class AssessmentWizard extends Component {
                   <ProgressBar totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
                 </ProgressBarWrapper>
               )}
-              <WizardSteps {...props}>
+              <WizardSteps data={data} {...props}>
                 {!skipIntro && (
                   <WizardStep
                     component={Intro}
@@ -266,7 +271,7 @@ export default class AssessmentWizard extends Component {
                   component={Conversion}
                   name="Auth"
                   signUpHeading={data.whatToDoNext === 'start'
-                    ?  'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
+                    ? 'Almost done! Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'
                     : 'Please provide your contact details so we can connect with you regarding your detailed pricing and personalized senior living and care options.'}
                   onAuthSuccess={next}
                   onSubmit={next}
