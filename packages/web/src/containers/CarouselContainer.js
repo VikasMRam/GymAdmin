@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { number, node } from 'prop-types';
 
-import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
-import { community as communityPropType } from 'sly/common/propTypes/community';
 import useScrollObserver from 'sly/common/components/helpers/useScrollObserver';
 import { Block, Grid, space, sx } from 'sly/common/system';
 import CarrousselButton from 'sly/web/components/homepage/CarrousselButton';
 
-export default function TrackedSimilarCommunitiesContainer({ communities, communityStyle }) {
+export default function CarouselContainer({ itemsQty, children }) {
   const [ref, dimensions] = useScrollObserver();
   const [max, step] = useMemo(() => {
     return [
-      (dimensions.scrollX) ,
+      (dimensions.scrollX),
       Math.floor(dimensions.clientWidth + 24),
     ];
   }, [dimensions]) || 0;
@@ -24,7 +22,7 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
 
   useEffect(() => {
     ref.current.scroll({
-      left: position ,
+      left: position,
       behavior: 'smooth',
     });
   }, [position]);
@@ -35,7 +33,7 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
         ref={ref}
         sx={{
           width: sx`calc(100% + (${space('m')}) * 2)`,
-          gridTemplateColumns: `repeat(${communities?.length}, 18rem) 1px`,
+          gridTemplateColumns: `repeat(${itemsQty}, 18rem) 1px`,
           gridColumnGap: 'm',
           mx: '-m',
           mb: 'l',
@@ -46,25 +44,15 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
           width: sx`calc(100% + ${space('l')})`,
           padding: 's',
           m: '-s -s s',
-          gridTemplateColumns: `repeat(${communities?.length}, 20.5rem)`,
+          gridTemplateColumns: `repeat(${itemsQty}, 20.5rem)`,
           gridTemplateRows: '25.3rem',
           gridColumnGap: 'l',
           overflow: 'hidden',
         }}
       >
-        <SimilarCommunities
-          communities={communities}
-          communityStyle={communityStyle}
-          canFavourite
-          getEvent={(community, index) => ({
-            action: 'click',
-            category: 'similarCommunity',
-            label: index,
-            value: community.id,
-          })}
-        />
+        {children}
       </Grid>
-      {communities.length > 2 && (
+      {itemsQty > 2 && (
         <>
           <CarrousselButton
             onClick={() => move(-1)}
@@ -87,8 +75,8 @@ export default function TrackedSimilarCommunitiesContainer({ communities, commun
 }
 
 // EO: this really shouldn't need hydrating. now it only requires it for the lazy image loading.
-TrackedSimilarCommunitiesContainer.typeHydrationId = 'TrackedSimilarCommunitiesContainer';
-TrackedSimilarCommunitiesContainer.propTypes = {
-  communities: arrayOf(communityPropType).isRequired,
-  communityStyle: object,
+CarouselContainer.typeHydrationId = 'CarouselContainer';
+CarouselContainer.propTypes = {
+  itemsQty: number,
+  children: node,
 };

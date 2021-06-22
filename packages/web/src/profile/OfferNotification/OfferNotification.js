@@ -40,7 +40,7 @@ const OfferNotification = ({
     {...props}
   >
     <div>
-      <Block>
+      <Block lineHeight={sx`${space('l')}`}>
         {title && (
           <Block mb="xxs" font="title-xs-azo">
             {title}
