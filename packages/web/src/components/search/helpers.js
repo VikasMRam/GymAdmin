@@ -310,7 +310,7 @@ export const getLocationLabel = (searchParams) => {
   return 'Your Area';
 };
 
-export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
+export const getSearchParamFromPlacesResponse = ({ address_components, geometry }, toc = tocs[0].value) => {
   const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1 || e.types.indexOf('sublocality') > -1 || e.types.indexOf('administrative_area_level_3') > -1);
   const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
   if (cityFull.length > 0 && stateFull.length > 0) {
@@ -318,19 +318,16 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
     const state = urlize(stateFull[0].long_name);
     const { lat, lng } = geometry.location.toJSON();
     return {
-      toc: 'nursing-homes',
+      toc,
       state,
       city,
       geo: `${lat},${lng},10`,
     };
   } else if (stateFull.length > 0) {
     const state = urlize(stateFull[0].long_name);
-    return {
-      toc: 'nursing-homes',
-      state,
-    };
+    return { toc, state };
   }
-  return { toc: 'nursing-homes' };
+  return { toc };
 };
 
 export const getApiFilters = filters => Object.entries(filters)

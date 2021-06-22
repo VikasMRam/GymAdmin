@@ -167,7 +167,16 @@ const ArticleContent = ({ content: data }) => {
       >
         {content?.map(({ __component, ...rest }, index) => {
           const componentName = __component.split('.')[1];
-          if (componentName === articleDZComponentsNames.search) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} title={rest.title} />;
+          if (componentName === articleDZComponentsNames.search) {
+            return (
+              <Search
+                key={`search${index}`}
+                onCurrentLocation={onCurrentLocation}
+                title={rest.title}
+                toc={rest.toc?.replace(/_/g, '-')}
+              />
+            )
+          }
           if (componentName === articleDZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
           if (componentName === articleDZComponentsNames.subtitle) {
             return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;

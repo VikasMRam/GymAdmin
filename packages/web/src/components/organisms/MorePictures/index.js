@@ -28,7 +28,7 @@ export default function MorePictures({ images = [], onPictureClick }) {
             334,
           ]}
           loading="lazy"
-          border="box"
+          border="round"
         >
           <Block
             sx={{
