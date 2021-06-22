@@ -61,7 +61,6 @@ export default class AskQuestionToAgentFormContainer extends Component {
     category: 'agent',
     actionType: AGENT_ASK_QUESTIONS,
   };
-
   handleSubmit = (data) => {
     const {
       entityId, postSubmit, createAction, createOrUpdateUser, createQuestion, updateUuidAux, match,
@@ -82,14 +81,18 @@ export default class AskQuestionToAgentFormContainer extends Component {
         ({ name } = user);
       }
     }
-    const uuidInfo = rawUuidAux.attributes.uuidInfo || {};
+    const uuidInfo = rawUuidAux ? rawUuidAux.attributes.uuidInfo :  {};
     let updateUuidAuxReq = () => Promise.resolve();
     if (location) {
       const locationInfo = uuidInfo.locationInfo || {};
-      const { city, state, geo } = location;
+      const { city, state, geo } = location.searchParams;
       locationInfo.city = city;
       locationInfo.state = state;
-      locationInfo.geo = geo;
+      if (geo) {
+        locationInfo.geo = {};
+        locationInfo.geo.Latitude = geo.split(',')[0];
+        locationInfo.geo.Longitude = geo.split(',')[1];
+      }
       const uuidAux = immutable.set(rawUuidAux, 'attributes.uuidInfo.locationInfo', locationInfo);
       updateUuidAuxReq = () => updateUuidAux({ id: uuidAux.id }, uuidAux);
     }
@@ -139,7 +142,7 @@ export default class AskQuestionToAgentFormContainer extends Component {
           name,
           email,
           phone,
-        }, { ignoreAlreadyRegistered: true })
+        }, { ignoreAlreadyRegistered: true });
       })
       .then(() => {
         const c = `${category}-${actionType}${type ? `-${type}` : ''}`;
