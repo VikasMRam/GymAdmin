@@ -8,6 +8,7 @@ import { query } from 'sly/web/services/api';
 import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
+  tocs,
 } from 'sly/web/components/search/helpers';
 import { maps } from 'sly/web/components/search/maps';
 import { withRedirectTo } from 'sly/common/services/redirectTo';
@@ -34,6 +35,7 @@ export default class SearchBoxContainer extends Component {
     getSearch: func.isRequired,
     onCurrentLocation: func,
     include: string.isRequired,
+    toc: string,
   };
 
   static defaultProps = {
@@ -54,7 +56,7 @@ export default class SearchBoxContainer extends Component {
   };
 
   handleSelect = (suggestion) => {
-    const { onLocationSearch, redirectTo } = this.props;
+    const { onLocationSearch, redirectTo, toc } = this.props;
     const { textValue } = this.state;
     const { name, resourceType } = suggestion;
 
@@ -76,7 +78,7 @@ export default class SearchBoxContainer extends Component {
         placeId: suggestion.place_id,
       })
         .then((responses = []) => {
-          const searchParams = getSearchParamFromPlacesResponse(responses[0]);
+          const searchParams = getSearchParamFromPlacesResponse(responses[0], toc);
           const { path } = filterLinkPath(searchParams);
           suggestion.url = path;
           suggestion.searchParams = searchParams;
