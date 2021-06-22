@@ -5,7 +5,7 @@ import useScrollObserver from 'sly/common/components/helpers/useScrollObserver';
 import { Block, Grid, space, sx } from 'sly/common/system';
 import CarrousselButton from 'sly/web/components/homepage/CarrousselButton';
 
-export default function SimilarCommunitiesAndSuggestedArticlesContainer({ itemsQty, children }) {
+export default function CarouselContainer({ itemsQty, children }) {
   const [ref, dimensions] = useScrollObserver();
   const [max, step] = useMemo(() => {
     return [
@@ -75,8 +75,8 @@ export default function SimilarCommunitiesAndSuggestedArticlesContainer({ itemsQ
 }
 
 // EO: this really shouldn't need hydrating. now it only requires it for the lazy image loading.
-SimilarCommunitiesAndSuggestedArticlesContainer.typeHydrationId = 'SimilarCommunitiesAndSuggestedArticlesContainer';
-SimilarCommunitiesAndSuggestedArticlesContainer.propTypes = {
+CarouselContainer.typeHydrationId = 'CarouselContainer';
+CarouselContainer.propTypes = {
   itemsQty: number,
   children: node,
 };
