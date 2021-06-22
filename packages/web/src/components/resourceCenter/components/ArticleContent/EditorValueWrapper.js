@@ -53,7 +53,9 @@ const tableStyles = css`
         height: ${key('space.l')};
 
         & > img {
+          width: auto;
           height: 100%;
+          margin-bottom: 0;
         }
       }
     }
@@ -86,6 +88,14 @@ const DynamicItemWrapper = styled(Block)`
 
   & a {
     color: ${key('color.viridian.base')};
+  }
+
+  & figure > img {
+    width: 100%;
+    height: auto;
+    margin-bottom: ${space('l')};
+
+    ${sx$tablet({ mb: 'xl' })}
   }
   
   ${tableStyles}
