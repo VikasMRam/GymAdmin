@@ -6,7 +6,7 @@ import { sx, space } from 'sly/common/system/sx';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import Block from 'sly/common/system/Block';
 
-const Search = forwardRef(({ onCurrentLocation, title, ...props }, ref) => (
+const Search = forwardRef(({ onCurrentLocation, title, toc, ...props }, ref) => (
   <Block
     ref={ref}
     border="round"
@@ -39,6 +39,7 @@ const Search = forwardRef(({ onCurrentLocation, title, ...props }, ref) => (
       visibility="visible"
       include="community"
       placeholder="Search by city, zip, community name"
+      toc={toc}
     />
   </Block>
 ));
@@ -46,6 +47,7 @@ const Search = forwardRef(({ onCurrentLocation, title, ...props }, ref) => (
 Search.propTypes = {
   onCurrentLocation: func,
   title: string,
+  toc: string,
 };
 Search.displayName = 'Search';
 
