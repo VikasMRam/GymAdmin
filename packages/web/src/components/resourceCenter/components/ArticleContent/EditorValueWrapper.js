@@ -53,7 +53,9 @@ const tableStyles = css`
         height: ${key('space.l')};
 
         & > img {
+          width: auto;
           height: 100%;
+          margin-bottom: 0;
         }
       }
     }
