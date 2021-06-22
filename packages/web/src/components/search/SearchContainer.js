@@ -11,6 +11,7 @@ import {
   CLEARABLE_FILTERS,
 } from 'sly/web/components/search/Filters/constants';
 import careTypes from 'sly/web/constants/careTypes';
+import { useChatbox } from 'sly/web/services/chatbox/ChatBoxContext';
 
 export default function SearchContainer() {
   const location = useLocation();
@@ -53,6 +54,13 @@ export default function SearchContainer() {
   }, [currentFilters]);
 
   const pagination = useMemo(() => getPagination(requestInfo.meta, location, currentFilters), [requestInfo]);
+
+  const { triggerChatBot } = useChatbox();
+  useEffect(() => {
+    if (location.pathname.indexOf('nursing-homes') === -1) {
+      triggerChatBot('Bot reintro');
+    }
+  }, []);
 
   return (
     <Search

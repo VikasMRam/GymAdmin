@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useContext } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
@@ -45,8 +45,8 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
+import withChatbox from 'sly/web/services/chatbox/withChatBox';
 import StickyHeader from 'sly/web/profile/StickyHeader';
-import Chatbox from 'sly/web/profile/Chatbox';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
@@ -160,11 +160,23 @@ const getAssessmentBoxModes = {
   communitySidebar: { cta: 'pricing', entry: 'communitySidebar' },
 };
 
+@withChatbox
 export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
     location: object.isRequired,
+    triggerChatboxEvent: func,
   };
+
+  componentDidMount() {
+    const { community } = this.props;
+    const { address } = community;
+    const isInternational = address.country !== 'United States';
+    if (!isInternational) {
+      const { triggerChatboxEvent } = this.props;
+      triggerChatboxEvent('Bot reintro');
+    }
+  }
 
   render() {
     const {
@@ -265,7 +277,6 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {!isInternational && <Chatbox community={community} /> }
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
 
