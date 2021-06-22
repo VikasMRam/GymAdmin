@@ -87,6 +87,14 @@ const DynamicItemWrapper = styled(Block)`
   & a {
     color: ${key('color.viridian.base')};
   }
+
+  & figure > img {
+    width: 100%;
+    height: auto;
+    margin-bottom: ${space('l')};
+
+    ${sx$tablet({ mb: 'xl' })}
+  }
   
   ${tableStyles}
 `;
