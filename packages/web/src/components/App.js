@@ -214,7 +214,7 @@ const routes = [
     component: EmailSharePageContainer,
   },
   {
-    path: '/wizards/assessment/community/:communityId',
+    path: '/wizards/assessment/community/:communitySlug',
     component: AssessmentWizardPageContainer,
     exact: true,
   },

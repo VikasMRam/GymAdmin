@@ -1,41 +1,33 @@
-import React, { Component } from 'react';
-import { object, func } from 'prop-types';
-import { branch } from 'recompose';
+import React, { useEffect } from 'react';
+import { useLocation, useParams } from 'react-router';
 
-import { community as communityPropType } from 'sly/common/propTypes/community';
-import { prefetch, query } from 'sly/web/services/api';
+import useCommunity from 'sly/web/profile/hooks/useCommunity';
+import { useQuery } from 'sly/web/services/api';
 import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 import { WIZARD_STEP_COMPLETED } from 'sly/web/services/api/constants';
 import AssessmentWizardPage from 'sly/web/assessment/AssessmentWizardPage';
 
-@branch(
-  ({ match }) => match.params.communityId,
-  prefetch('community', 'getCommunity', (req, { match }) => req({
-    id: match.params.communityId,
-    include: 'similar-communities',
-  })),
-)
-@query('createAction', 'createUuidAction')
+export default function AssessmentWizardPageContainer() {
+  const { city, state, toc, communitySlug } = useParams();
+  const location = useLocation();
 
-export default class AssessmentWizardPageContainer extends Component {
-  static propTypes = {
-    community: communityPropType,
-    status: object,
-    match: object,
-    location: object.isRequired,
-    createAction: func,
-  };
+  const {
+    community,
+    requestInfo,
+  } = useCommunity({
+    communitySlug: communitySlug || 'none',
+    shouldBail: !communitySlug,
+  });
 
-  componentDidMount() {
-    // Add a uuid action
-    const { location: { search, pathname }, createAction } = this.props;
-    const qp = parseURLQueryParams(search);
+  const createAction = useQuery('createUuidAction');
 
+  const qp = parseURLQueryParams(location.search);
+  useEffect(() => {
     createAction({
       type: 'UUIDAction',
       attributes: {
         actionType: WIZARD_STEP_COMPLETED,
-        actionPage: pathname,
+        actionPage: location.pathname,
         actionInfo: {
           stepName: `step-0:${qp.entry}`,
           wizardName: 'assessmentWizard',
@@ -43,34 +35,27 @@ export default class AssessmentWizardPageContainer extends Component {
         },
       },
     });
+  }, []);
+
+  const skipIntro = qp.skipIntro && qp.skipIntro !== 'false' ? !!qp.skipIntro : false;
+  // wizard can be entered from many places/modes
+  const entry = qp.entry || qp.layout || 'page';
+
+  if (requestInfo && requestInfo.hasStarted && !requestInfo.hasFinished) {
+    return null;
   }
 
-  render() {
-    const { community, location: { search }, status, match: { params: { city, state, toc } } } = this.props;
-    let hasFinished = true;
-    const qp = parseURLQueryParams(search);
-    const skipIntro = qp.skipIntro && qp.skipIntro !== 'false' ? !!qp.skipIntro : false;
-    // wizard can be entered from many places/modes
-    const entry = qp.entry || qp.layout || 'page';
-    if (status) {
-      ({ hasFinished } = status.community);
-    }
-    if (!hasFinished) {
-      return null;
-    }
-
-    return (
-      <AssessmentWizardPage
-        community={community}
-        skipIntro={skipIntro}
-        hasTip={qp.hasTip !== 'false'}
-        city={city}
-        state={state}
-        toc={toc}
-        version={qp.version}
-        entry={entry}
-        cta={qp.cta}
-      />
-    );
-  }
+  return (
+    <AssessmentWizardPage
+      community={community}
+      skipIntro={skipIntro}
+      hasTip={qp.hasTip !== 'false'}
+      city={city}
+      state={state}
+      toc={toc}
+      version={qp.version}
+      entry={entry}
+      cta={qp.cta}
+    />
+  );
 }

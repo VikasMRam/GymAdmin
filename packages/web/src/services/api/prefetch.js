@@ -39,7 +39,7 @@ export function usePrefetch(apiCall, ...args) {
 
   const getRelationship = useCallback((entity, relationship) => selectRelationship(request.entities, entity, relationship), [request]);
 
-  const shouldBail = options.sessionOnly && !hasSession();
+  const shouldBail = options.shouldBail || (options.sessionOnly && !hasSession());
 
   useEffect(() => {
     store.on(apiCall, argsKey, setRequest);
@@ -58,7 +58,7 @@ export function usePrefetch(apiCall, ...args) {
   if (isServer) {
     const { hasStarted, isInvalid } = request;
     const shouldSkip = skipApiCalls || api[apiCall].ssrIgnore;
-    if (isInvalid || (!shouldSkip && !hasStarted)) {
+    if (isInvalid || (!shouldBail && !shouldSkip && !hasStarted)) {
       fetch();
     }
   }

@@ -6,7 +6,6 @@ import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
 import { statuses } from 'sly/web/constants/communities';
 import { PROVIDER_ROLE_PARAM } from 'sly/common/constants/roles';
-
 import {
   Section,
   SectionActions,
@@ -28,6 +27,10 @@ export default class DashboardCommunityAdminForm extends Component {
     currentValues: object,
   };
 
+  contractPercentageValidator = (value) => {
+    return value && (value < 0 || value > 1) ? 'Value must be in between 0.0 - 1.0' : undefined;
+  }
+
   render() {
     const {
       handleSubmit, invalid, submitting, canEdit, currentValues,
@@ -37,6 +40,10 @@ export default class DashboardCommunityAdminForm extends Component {
     const valueLabel = contractInfo.contractType === 'Percentage'
       ? 'Value between 0.0 - 1.0'
       : 'Value in dollars';
+
+    const contractValueValidators = contractInfo.contractType === 'Percentage'
+      ? [this.contractPercentageValidator]
+      : [];
 
     return (
       <Section
@@ -140,7 +147,8 @@ export default class DashboardCommunityAdminForm extends Component {
                 type="number"
                 inputmode="numeric"
                 readOnly={!canEdit}
-                parse={value => !value ? null : Number(value)}
+                parse={value => Number.isNaN(value) ? null : Number(value)}
+                validate={contractValueValidators}
               />
               <EditField
                 label="Contract Url"
@@ -157,7 +165,8 @@ export default class DashboardCommunityAdminForm extends Component {
                 label="Contract Status"
                 name="rgsAux.rgsInfo.contract_info.contractStatus"
                 type="select"
-                readOnly={!canEdit}Only={!canEdit}
+                readOnly={!canEdit}
+                Only={!canEdit}
               >
                 <option value="" disabled>Select an option</option>
                 <option value="No contract">No contract</option>

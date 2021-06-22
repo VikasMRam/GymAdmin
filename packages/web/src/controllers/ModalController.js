@@ -41,7 +41,7 @@ export default class ModalController extends PureComponent {
     const { set } = this.props;
 
     // important: don't make modalContent & modalType empty so that close animation has content
-    set({
+    return set({
       isModalOpen: false,
       modalOnClose: undefined,
     });

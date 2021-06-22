@@ -12,7 +12,7 @@ export default class WizardSteps extends Component {
 
   initSteps() {
     // NOTE: React caches the class objects, so utilizing same components can clash
-    const { children, init } = this.props;
+    const { data, children, init } = this.props;
 
     // filter to remove children that are falsy values and not react elements
     // children that in conditions which evaluate to fasly values
@@ -27,9 +27,9 @@ export default class WizardSteps extends Component {
     this.initSteps();
   }
 
-  componentDidUpdate() {
-    this.initSteps();
-  }
+  // componentDidUpdate() {
+  //   this.initSteps();
+  // }
 
   render() {
     const {
