@@ -325,11 +325,9 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
     };
   } else if (stateFull.length > 0) {
     const state = urlize(stateFull[0].long_name);
-    const { lat, lng } = geometry.location.toJSON();
     return {
       toc: 'nursing-homes',
       state,
-      geo: `${lat},${lng},10`,
     };
   }
   return { toc: 'nursing-homes' };
