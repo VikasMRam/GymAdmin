@@ -27,7 +27,7 @@ import EditorValueWrapper from './EditorValueWrapper';
 import FAQItem from './FAQItem';
 import Search from './Search';
 
-const articleDZComponentsNames = {
+const DZComponentsNames = {
   subtitle: 'subtitle',
   search: 'search',
   listInTwoColumns: 'list-in-2-columns',
@@ -140,9 +140,9 @@ const onCurrentLocation = (addresses) => {
   }
 };
 
-const isSubtitle = ({ __component }) => __component?.includes(articleDZComponentsNames.subtitle);
+const isSubtitle = ({ __component }) => __component?.includes(DZComponentsNames.subtitle);
 
-const ArticleContent = ({ content: data }) => {
+const CMSDynamicZone = ({ content: data }) => {
   const content = useMemo(() => {
     return data.map((item) => {
       if (isSubtitle(item)) {
@@ -167,7 +167,7 @@ const ArticleContent = ({ content: data }) => {
       >
         {content?.map(({ __component, ...rest }, index) => {
           const componentName = __component.split('.')[1];
-          if (componentName === articleDZComponentsNames.search) {
+          if (componentName === DZComponentsNames.search) {
             return (
               <Search
                 key={`search${index}`}
@@ -177,11 +177,11 @@ const ArticleContent = ({ content: data }) => {
               />
             )
           }
-          if (componentName === articleDZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
-          if (componentName === articleDZComponentsNames.subtitle) {
+          if (componentName === DZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
+          if (componentName === DZComponentsNames.subtitle) {
             return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
           }
-          if (componentName === articleDZComponentsNames.listInTwoColumns) return (
+          if (componentName === DZComponentsNames.listInTwoColumns) return (
             <ListInTwoColumnsWrapper
               key={index}
               dangerouslySetInnerHTML={{ __html: rest.listInTwoColumnsValue }}
@@ -190,7 +190,7 @@ const ArticleContent = ({ content: data }) => {
               sx$laptop={{ width: 'col8' }}
             />
           );
-          if (componentName === articleDZComponentsNames.quote) return (
+          if (componentName === DZComponentsNames.quote) return (
            <Fragment key={index}>
              <QuoteDescription
                as="blockquote"
@@ -211,15 +211,15 @@ const ArticleContent = ({ content: data }) => {
              />
            </Fragment>
           );
-          if (componentName === articleDZComponentsNames.faq)
+          if (componentName === DZComponentsNames.faq)
             return <FAQItem
               key={index}
               title={rest.title}
               description={rest.description}
-              withMarginBottom={!content[index + 1]?.__component.includes(articleDZComponentsNames.faq)}
-              withMarginTop={!content[index - 1]?.__component.includes(articleDZComponentsNames.faq)}
+              withMarginBottom={!content[index + 1]?.__component.includes(DZComponentsNames.faq)}
+              withMarginTop={!content[index - 1]?.__component.includes(DZComponentsNames.faq)}
             />;
-          if (componentName === articleDZComponentsNames.link) {
+          if (componentName === DZComponentsNames.link) {
             const isResourceCenterRoute = rest.to.includes(`${host}${RESOURCE_CENTER_PATH}`);
             const splitPath = rest.to.split(host);
             return (
@@ -250,7 +250,7 @@ const ArticleContent = ({ content: data }) => {
               </Flex>
             );
           }
-          if (componentName === articleDZComponentsNames.image) {
+          if (componentName === DZComponentsNames.image) {
             const isFullSizeImage = rest.size === 'large';
             const tabletWidth = (rest.size === 'middle' && 680) || (rest.size === 'small' && 504);
             const laptopWidth = (rest.size === 'middle' && 1032) || (rest.size === 'small' && 680);
@@ -302,7 +302,7 @@ const ArticleContent = ({ content: data }) => {
               </Fragment>
             )
           }
-          if (componentName === articleDZComponentsNames.listWithIcons) {
+          if (componentName === DZComponentsNames.listWithIcons) {
             return (
               <Block
                 key={index}
@@ -330,7 +330,7 @@ const ArticleContent = ({ content: data }) => {
               </Block>
             )
           }
-          if (componentName === articleDZComponentsNames.community) {
+          if (componentName === DZComponentsNames.community) {
             return (
               <CommunityAndAdvisorsWrapper
                 key={index}
@@ -345,7 +345,7 @@ const ArticleContent = ({ content: data }) => {
               </CommunityAndAdvisorsWrapper>
             );
           }
-          if (componentName === articleDZComponentsNames.advisors) {
+          if (componentName === DZComponentsNames.advisors) {
             return (
               <CommunityAndAdvisorsWrapper
                 key={index}
@@ -360,7 +360,7 @@ const ArticleContent = ({ content: data }) => {
               </CommunityAndAdvisorsWrapper>
             );
           }
-          if (componentName === articleDZComponentsNames.linksBlock) {
+          if (componentName === DZComponentsNames.linksBlock) {
             return (
               <Block
                 key={index}
@@ -378,7 +378,7 @@ const ArticleContent = ({ content: data }) => {
               </Block>
             )
           }
-          if (componentName === articleDZComponentsNames.video) {
+          if (componentName === DZComponentsNames.video) {
             return (
               <Block
                 as="video"
@@ -397,7 +397,7 @@ const ArticleContent = ({ content: data }) => {
               />
             );
           }
-          if (componentName === articleDZComponentsNames.youTubeVideoLink) {
+          if (componentName === DZComponentsNames.youTubeVideoLink) {
             return (
               <Block
                 as="iframe"
@@ -424,8 +424,8 @@ const ArticleContent = ({ content: data }) => {
   );
 };
 
-ArticleContent.propTypes = {
+CMSDynamicZone.propTypes = {
   content: array,
 };
 
-export default ArticleContent;
+export default CMSDynamicZone;
