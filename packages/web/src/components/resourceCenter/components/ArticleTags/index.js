@@ -44,12 +44,12 @@ const ArticleTags = ({ topic, tagsList }) => {
   const onClick = useCallback(tag => (evt) => {
     evt.stopPropagation();
     evt.preventDefault();
-    push(`${RESOURCE_CENTER_PATH}/${topic.slug}${tag ? `?tag-name=${tag}` : ''}`);
+    push(`${RESOURCE_CENTER_PATH}/${topic?.slug}${tag ? `?tag-name=${tag}` : ''}`);
   }, [topic]);
 
   return (
     <>
-      {tagsList?.filter(({ value }) => value).length ? (
+      {tagsList?.filter(({ value }) => value).length && (
         <Flex
           sx={{
             flexWrap: 'nowrap',
@@ -71,11 +71,12 @@ const ArticleTags = ({ topic, tagsList }) => {
                 marginTop="xxs"
                 {...(idx !== 0 && { overflow: 'hidden' })}
               >
-                {value.replace(/_/g, ' ')}
+                {value?.replace(/_/g, ' ')}
               </Tag>
             ))}
         </Flex>
-      ) : (
+      )}
+      {topic && (
         <Tag
           width="max-content"
           marginTop="auto"
