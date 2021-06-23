@@ -28,6 +28,10 @@ const ReduxForm = reduxForm({
 
 const formValue = formValueSelector(formName);
 
+const mapStateToProps = (state, { status }) => ({
+  currentValues: state.form[formName]?.values,
+});
+
 @query('updateListing', 'updateListing')
 @withUser
 @withRouter
@@ -35,9 +39,7 @@ const formValue = formValueSelector(formName);
   id: match.params.id,
   include: 'suggested-edits',
 }))
-@connect((state, { status }) => ({
-  respiteAllowed: formValue(state, 'attributes.info.respiteAllowed'),
-}))
+@connect(mapStateToProps)
 @withProps(({ status }) => ({
   address: status.listing.getRelationship(status.listing.result, 'address'),
 }))
@@ -83,7 +85,8 @@ export default class DashboardListingDetailsFormContainer extends Component {
     const { match, updateListing, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
 
-    const { address, ...attributes } = values;
+    const { address, status, ...attributes } = values;
+    attributes.status = parseFloat(status);
     return updateListing({ id }, {
       attributes,
       relationships: {
