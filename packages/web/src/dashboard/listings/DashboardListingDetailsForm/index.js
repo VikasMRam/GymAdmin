@@ -15,7 +15,6 @@ import {
 import { apiUrl } from 'sly/web/config';
 
 const getStatesOptions = country => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
-const getAvailableTags = country => AVAILABLE_TAGS[country];
 const countryOptions = countries.map(s => <option key={s} value={s}>{s}</option>);
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);

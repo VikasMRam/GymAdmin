@@ -4,6 +4,7 @@ import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import userProptype from 'sly/common/propTypes/user';
@@ -82,18 +83,26 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
+    console.log(values);
     const { match, updateListing, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
 
-    const { address, status, ...attributes } = values;
+    const { address, tags, status, ...attributes } = values;
     attributes.status = parseFloat(status);
+
+    const relationships = {
+      address: { data: {
+        attributes: address,
+      } },
+    };
+
+    if (tags) {
+      const jsonapiTags = tags.map(({ label, value }) => ({ type: 'Tag', id: value, attributes: { name: label } }));
+      relationships.tags = { data: jsonapiTags };
+    }
     return updateListing({ id }, {
       attributes,
-      relationships: {
-        address: { data: {
-          attributes: address,
-        } },
-      },
+      relationships,
     })
       .then(() => notifyInfo(`Details for ${attributes.name} saved correctly`))
       .catch(() => notifyError(`Details for ${attributes.name} could not be saved`));
@@ -101,6 +110,8 @@ export default class DashboardListingDetailsFormContainer extends Component {
 
   render() {
     const { listing, status, user, address, currentEdit, ...props } = this.props;
+    const { tags: modelTags } = listing;
+    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
 
     const canEdit = !currentEdit?.isPendingForAdmin
        && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
@@ -119,6 +130,11 @@ export default class DashboardListingDetailsFormContainer extends Component {
       ],
     );
     initialValues.address =  address.attributes;
+
+    // passes by ref
+    defaultsDeep(initialValues, {
+      tags,
+    });
 
     patchFormInitialValues(initialValues, currentEdit);
 
