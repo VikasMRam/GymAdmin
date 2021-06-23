@@ -71,7 +71,7 @@ const ArticleTags = ({ topic, tagsList }) => {
                 marginTop="xxs"
                 {...(idx !== 0 && { overflow: 'hidden' })}
               >
-                {value?.replace(/_/g, ' ')}
+                {value.replace(/_/g, ' ')}
               </Tag>
             ))}
         </Flex>
