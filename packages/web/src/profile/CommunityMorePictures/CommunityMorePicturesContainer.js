@@ -29,7 +29,7 @@ const CommunityMorePicturesContainer = () => {
     SlyEvent.getInstance().sendEvent({
       action: 'show',
       category: 'images',
-      label: this.props.community.id,
+      label: community.id,
       value: picture.id,
     });
 

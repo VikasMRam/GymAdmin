@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useContext } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
@@ -45,8 +45,10 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
+import withChatbox from 'sly/web/services/chatbox/withChatBox';
 import StickyHeader from 'sly/web/profile/StickyHeader';
-import Chatbox from 'sly/web/profile/Chatbox';
+import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
+import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -56,7 +58,7 @@ const GetAssessmentBoxContainerHydrator = loadable(/* #__LOADABLE__ */ () => imp
 
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const OfferNotificationContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkOfferNotification" */ 'sly/web/profile/OfferNotification/OfferNotificationContainer'));
-const TrackedSimilarCommunitiesContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkTrackedSimilarCommunities" */ 'sly/web/containers/TrackedSimilarCommunitiesContainer'));
+const CarouselContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCarouselContainer" */ 'sly/web/containers/CarouselContainer'));
 const HowSlyWorksVideoContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkHowSlyWorksVideo" */ 'sly/web/containers/HowSlyWorksVideoContainer'));
 const CommunityReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/containers/CommunityReviewsContainer'));
 // const CommunityQuestionAnswersContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityQuestionAnswers" */ 'sly/web/containers/CommunityQuestionAnswersContainer'));
@@ -158,11 +160,23 @@ const getAssessmentBoxModes = {
   communitySidebar: { cta: 'pricing', entry: 'communitySidebar' },
 };
 
+@withChatbox
 export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
     location: object.isRequired,
+    triggerChatboxEvent: func,
   };
+
+  componentDidMount() {
+    const { community } = this.props;
+    const { address } = community;
+    const isInternational = address.country !== 'United States';
+    if (!isInternational) {
+      const { triggerChatboxEvent } = this.props;
+      triggerChatboxEvent('Bot reintro');
+    }
+  }
 
   render() {
     const {
@@ -263,7 +277,6 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {!isInternational && <Chatbox community={community} /> }
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
 
@@ -383,7 +396,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <TrustScoreTile community={community} />
                 </StyledHeadingBoxSection>
                 }
-                <StyledHeadingBoxSection id="amenities-section" heading="Amenities">
+                <StyledHeadingBoxSection id="amenities-section" heading={`Amenities at ${community.name}`}>
                   <CommunityDetails community={community} />
                 </StyledHeadingBoxSection>
                 {!isActiveAdult && !isInternational &&
@@ -467,10 +480,19 @@ export default class CommunityDetailPage extends PureComponent {
                     id="sticky-sidebar-boundary"
                     sx$tablet={{ padding: 0 }}
                   >
-                    <TrackedSimilarCommunitiesContainer
-                      communities={similarProperties}
-                      communityStyle={similarCommunityStyle}
-                    />
+                    <CarouselContainer itemsQty={similarProperties.length}>
+                      <SimilarCommunities
+                        communities={similarProperties}
+                        communityStyle={similarCommunityStyle}
+                        canFavourite
+                        getEvent={(community, index) => ({
+                          action: 'click',
+                          category: 'similarCommunity',
+                          label: index,
+                          value: community.id,
+                        })}
+                      />
+                    </CarouselContainer>
                     <BackToSearch>
                       <Button
                         href={getCitySearchUrl({ propInfo, address })}
@@ -482,6 +504,17 @@ export default class CommunityDetailPage extends PureComponent {
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
+
+                {rgsAux.rgsInfo?.resourceLinks?.length && (
+                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Resources`} sx$tablet={{ padding: 0 }}>
+                    <CarouselContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
+                      {rgsAux.rgsInfo.resourceLinks.map(item => (
+                        <ArticlePreview key={item.title} alternativeText={item.title} {...item} customStyles={{ width: '18rem' }} />
+                      ))}
+                    </CarouselContainer>
+                  </StyledHeadingBoxSection>
+                )}
+
                 {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
@@ -523,10 +556,10 @@ export default class CommunityDetailPage extends PureComponent {
             <StyledSection
               headingMargin="l"
               title="Location"
-              headingFont="title-m"
+              headingFont="title-l"
             >
               <LazyCommunityMap id="map" />
-              <Block>{formattedAddress}</Block>
+              <Block font="body-m" >{formattedAddress}</Block>
               <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
             </StyledSection>
             {/* <StyledHeadingBoxSection */}

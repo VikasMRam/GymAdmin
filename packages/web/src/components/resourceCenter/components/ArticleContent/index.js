@@ -40,6 +40,8 @@ const articleDZComponentsNames = {
   listWithIcons: 'list-with-icons',
   advisors: 'advisors',
   linksBlock: 'links-block',
+  video: 'video',
+  youTubeVideoLink: 'you-tube-video-link',
 };
 
 const StyledLink = styled(Link)`
@@ -165,7 +167,16 @@ const ArticleContent = ({ content: data }) => {
       >
         {content?.map(({ __component, ...rest }, index) => {
           const componentName = __component.split('.')[1];
-          if (componentName === articleDZComponentsNames.search) return <Search key={`search${index}`} onCurrentLocation={onCurrentLocation} title={rest.title} />;
+          if (componentName === articleDZComponentsNames.search) {
+            return (
+              <Search
+                key={`search${index}`}
+                onCurrentLocation={onCurrentLocation}
+                title={rest.title}
+                toc={rest.toc?.replace(/_/g, '-')}
+              />
+            )
+          }
           if (componentName === articleDZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
           if (componentName === articleDZComponentsNames.subtitle) {
             return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
@@ -366,6 +377,45 @@ const ArticleContent = ({ content: data }) => {
                 />
               </Block>
             )
+          }
+          if (componentName === articleDZComponentsNames.video) {
+            return (
+              <Block
+                as="video"
+                title={rest.title}
+                sx={{
+                  height: '315px',
+                  width: sx`calc(100% - (${space('m')} * 2))`,
+                  mx: 'auto',
+                  mb: 'l',
+                }}
+                sx$tablet={{ width: 'col6', mb: 'xl' }}
+                sx$laptop={{ width: 'col8' }}
+                controls
+                controlsList="nodownload"
+                src={rest.video.url}
+              />
+            );
+          }
+          if (componentName === articleDZComponentsNames.youTubeVideoLink) {
+            return (
+              <Block
+                as="iframe"
+                title={rest.title}
+                src={`${rest.src}`}
+                frameBorder="0"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                sx={{
+                  width: sx`calc(100% - (${space('m')} * 2))`,
+                  height: '315px',
+                  mx: 'auto',
+                  mb: 'l',
+                }}
+                sx$tablet={{ width: 'col6', mb: 'xl' }}
+                sx$laptop={{ width: 'col8' }}
+              />
+            );
           }
           return '';
         })}

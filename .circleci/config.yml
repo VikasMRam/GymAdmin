@@ -261,6 +261,7 @@ jobs:
       - image: cypress/included:7.4.0
         environment:
           # this enables colors in the output
+          HIDE_CHATBOX: true
           TERM: xterm
       - image: redis:4
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest

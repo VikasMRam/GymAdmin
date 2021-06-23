@@ -37,9 +37,9 @@ const mapStateToProps = (state, ownProps) => {
   id: slug,
   include: 'similar-communities,questions,agents',
 }))
-@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
+@prefetch('userSaves', 'getUserSaves', (req, { slug }) => req({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-  'filter[entity_slug]': match.params.communitySlug,
+  'filter[entity_slug]': slug,
 }))
 @query('createAction', 'createUuidAction')
 @query('createUserSave')

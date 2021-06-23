@@ -28,47 +28,51 @@ describe('ModalController', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.instance().show(content, null);
-    const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    expect(action.payload.data.modalType).toBeFalsy();
-    expect(action.payload.data.modalContent).toBe(content);
-    expect(action.payload.data.isModalOpen).toBeTruthy();
+    wrapper.instance().show(content, null).then(() => {
+      const action = store.getActions().pop();
+      expect(action.type).toBe(SET);
+      expect(action.payload.data.modalType).toBeFalsy();
+      expect(action.payload.data.modalContent).toBe(content);
+      expect(action.payload.data.isModalOpen).toBeTruthy();
+    });
   });
 
   it('show modal', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.instance().show(content, null, type);
-    const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    expect(action.payload.data.modalType).toBe(type);
-    expect(action.payload.data.modalContent).toBe(content);
-    expect(action.payload.data.isModalOpen).toBeTruthy();
-    expect(action.payload.data.isModalCloseable).toBeTruthy();
+    wrapper.instance().show(content, null, type).then(() => {
+      const action = store.getActions().pop();
+      expect(action.type).toBe(SET);
+      expect(action.payload.data.modalType).toBe(type);
+      expect(action.payload.data.modalContent).toBe(content);
+      expect(action.payload.data.isModalOpen).toBeTruthy();
+      expect(action.payload.data.isModalCloseable).toBeTruthy();
+    });
   });
 
   it('show modal not closeable', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.instance().show(content, null, type, false);
-    const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    expect(action.payload.data.modalType).toBe(type);
-    expect(action.payload.data.modalContent).toBe(content);
-    expect(action.payload.data.isModalOpen).toBeTruthy();
-    expect(action.payload.data.isModalCloseable).toBeFalsy();
+    wrapper.instance().show(content, null, type, false).then(() => {
+      const action = store.getActions().pop();
+      expect(action.type).toBe(SET);
+      expect(action.payload.data.modalType).toBe(type);
+      expect(action.payload.data.modalContent).toBe(content);
+      expect(action.payload.data.isModalOpen).toBeTruthy();
+      expect(action.payload.data.isModalCloseable).toBeFalsy();
+    });
   });
 
   it('hide modal', () => {
     const store = initStore({}, { modalType: type, modalContent: content });
     const wrapper = wrap({ store });
 
-    wrapper.instance().hide();
-    const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    expect(action.payload.data.isModalOpen).toBeFalsy();
+    wrapper.instance().hide().then(() => {
+      const action = store.getActions().pop();
+      expect(action.type).toBe(SET);
+      expect(action.payload.data.isModalOpen).toBeFalsy();
+    });
   });
 });

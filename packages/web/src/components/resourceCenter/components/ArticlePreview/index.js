@@ -29,18 +29,18 @@ const ArticlePreview = ({
         textDecoration: 'none !important',
         boxShadow: sx`0 ${space('xxs')} ${space('m')} 0 rgba(0, 0, 0, 0.1)`,
       },
+      flexDirection: 'column',
+      border: 'box',
+      width: smallSizeOnPhone ? '17.5rem' : '20.5rem',
+      height: smallSizeOnPhone ? '29.375rem' : '32.875rem',
+      overflow: 'hidden',
+      marginX: 'auto',
+      '@tablet': {
+        marginX: 0,
+        width: smallSizeOnPhone && '20.5rem',
+        height: smallSizeOnPhone && '32.875rem',
+      },
       ...customStyles,
-    }}
-    flexDirection="column"
-    border="box"
-    width={smallSizeOnPhone ? '17.5rem' : '20.5rem'}
-    height={smallSizeOnPhone ? '29.375rem' : '32.875rem'}
-    overflow="hidden"
-    marginX="auto"
-    sx$tablet={{
-      marginX: 0,
-      width: smallSizeOnPhone && '20.5rem',
-      height: smallSizeOnPhone && '32.875rem',
     }}
   >
     <Block
@@ -76,7 +76,7 @@ const ArticlePreview = ({
         {shortDescription}
       </Block>
 
-      <ArticleTags topic={topic} tagsList={tagsList} />
+      {topic && <ArticleTags topic={topic} tagsList={tagsList} />}
     </Block>
   </Flex>
 );
