@@ -161,7 +161,6 @@ DashboardCommunityDetailsForm.propTypes = {
   invalid: bool,
   canEdit: bool,
   submitting: bool,
-  respiteAllowed: object,
   handleSubmit: func.isRequired,
   onCountryChange: func,
   selectedCountry: string,

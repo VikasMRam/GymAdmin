@@ -8,22 +8,34 @@ import {
 
 import address from './address';
 
-export const webViewInfo = shape({
-  firstLineValue: string.isRequired,
-  secondLineValue: string.isRequired,
+
+export const ratingInfo = shape({
+  numRatings: number.isRequired,
+  ratingValue: number.isRequired,
 });
 
-export const propRatings = shape({
-  numReviews: number.isRequired,
-  reviewsValue: number.isRequired,
+export const section = shape({
+  type: string,
+  title: string,
+  content: string,
 });
 
-export const propInfo = shape({
-  websiteUrl: string,
+export const info = shape({
+  activities: arrayOf(string),
+  agentSlug: string.isRequired,
+  description: string,
+  floorPlan: shape({
+    area: number,
+    bathroomCount: number,
+    bedRoomCount: number,
+  }),
+  phoneNumber: string,
+  ratingInfo,
+  sections: arrayOf(section),
 });
 
 export const adminPropInfo = shape({
-  propInfo,
+  info,
   adminNote: string,
   admin: arrayOf(string),
   hasContract: bool,
@@ -40,13 +52,11 @@ export const adminLisitngPropType = shape({
 
 export const listing = shape({
   id: string,
-  mainImage: string,
   name: string.isRequired,
   url: string.isRequired,
-  floorPlanString: string,
-  propInfo,
-  webViewInfo,
-  propRatings,
+  info,
+  slyScore: number,
+  status: number.isRequired,
 });
 
 export const rgsAuxAttributes = shape({

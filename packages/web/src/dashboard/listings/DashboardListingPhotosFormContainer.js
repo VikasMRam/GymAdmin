@@ -64,7 +64,7 @@ const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.dat
 
 export default class DashboardListingPhotosFormContainer extends Component {
   static propTypes = {
-    // updateCommunity: func.isRequired,
+    updateListing: func.isRequired,
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,

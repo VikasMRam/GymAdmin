@@ -5,7 +5,7 @@ import { arrayOf, object, bool, func } from 'prop-types';
 import { size, palette } from 'sly/common/components/themes';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import SlyEvent from 'sly/web/services/helpers/events';
-import communityPropType from 'sly/common/propTypes/community';
+import listingPropType from 'sly/common/propTypes/listing';
 import { Box, Table, THead, TBody, Tr, Td, Block } from 'sly/web/components/atoms';
 import TableHeaderButtons from 'sly/web/components/molecules/TableHeaderButtons';
 import Pagination from 'sly/web/components/molecules/Pagination';
@@ -146,7 +146,7 @@ const DashboardListingIndexPage = ({ listings, pagination, isPageLoading, onAddL
 
 DashboardListingIndexPage.propTypes = {
   datatable: object,
-  // listings: arrayOf(communityPropType),
+  listings: arrayOf(listingPropType),
   pagination: object,
   isPageLoading: bool,
   onAddListing: func,

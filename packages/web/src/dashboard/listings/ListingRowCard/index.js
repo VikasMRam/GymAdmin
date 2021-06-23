@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/common/components/themes';
-import { community as communityPropType } from 'sly/common/propTypes/community';
+import { listing as listingPropType } from 'sly/common/propTypes/listing';
 import mobileOnly from 'sly/web/components/helpers/mobileOnly';
 import pad from 'sly/web/components/helpers/pad';
 import borderRadius from 'sly/web/components/helpers/borderRadius';
@@ -98,9 +98,9 @@ const ListingRowCard = ({ listing, onLisitngClick }) => {
   );
 };
 
-// ListingRowCard.propTypes = {
-//   listing: listingPropType.isRequired,
-//   onListingClick: func.isRequired,
-// };
+ListingRowCard.propTypes = {
+  listing: listingPropType.isRequired,
+  onListingClick: func.isRequired,
+};
 
 export default ListingRowCard;

@@ -13,7 +13,7 @@ import {
   ADDITIONAL_INFO,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
-import communityPropType from 'sly/common/propTypes/community';
+import listingPropType from 'sly/common/propTypes/listing';
 import userPropType from 'sly/common/propTypes/user';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { userIs } from 'sly/web/services/helpers/role';
@@ -229,7 +229,7 @@ DashboardListingDetailsPage.propTypes = {
   match: shape({
     url: string,
   }),
-  // community: communityPropType,
+  listing: listingPropType,
   currentTab: string,
   showModal: func,
   hideModal: func,

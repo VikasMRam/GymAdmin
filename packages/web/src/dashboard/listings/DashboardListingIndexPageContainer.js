@@ -26,7 +26,7 @@ import DashboardListingIndexPage from 'sly/web/dashboard/listings/DashboardListi
 export default class DashboardListingIndexPageContainer extends Component {
   static propTypes = {
     location: object,
-    // listings: arrayOf(listingPropType), todo
+    listings: arrayOf(listingPropType),
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,

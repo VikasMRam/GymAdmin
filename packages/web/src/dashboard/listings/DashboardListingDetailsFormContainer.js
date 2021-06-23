@@ -14,6 +14,7 @@ import { userIs } from 'sly/web/services/helpers/role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
 import { patchFormInitialValues } from 'sly/web/services/edits';
 import { withProps } from 'sly/web/services/helpers/hocs';
+import listingPropType from 'sly/common/propTypes/listing';
 
 const validate = createValidator({
   name: [required],
@@ -44,19 +45,18 @@ const mapStateToProps = (state, { status }) => ({
   address: status.listing.getRelationship(status.listing.result, 'address'),
 }))
 export default class DashboardListingDetailsFormContainer extends Component {
-  // static propTypes = {
-  //   updateCommunity: func.isRequired,
-  //   notifyInfo: func.isRequired,
-  //   notifyError: func.isRequired,
-  //   user: userProptype,
-  //   community: object.isRequired,
-  //   match: object.isRequired,
-  //   status: object,
-  //   address: object,
-  //   respiteAllowed: object,
-  //   invalidateCommunity: func,
-  //   currentEdit: object,
-  // };
+  static propTypes = {
+    updateListing: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
+    user: userProptype,
+    listing: listingPropType.isRequired,
+    match: object.isRequired,
+    status: object,
+    address: object,
+    invalidateCommunity: func,
+    currentEdit: object,
+  };
 
   state = { selectedCountry: 'United States' };
 
@@ -100,7 +100,7 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   render() {
-    const { listing, status, user, address, respiteAllowed, currentEdit, ...props } = this.props;
+    const { listing, status, user, address, currentEdit, ...props } = this.props;
 
     const canEdit = !currentEdit?.isPendingForAdmin
        && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
@@ -128,7 +128,6 @@ export default class DashboardListingDetailsFormContainer extends Component {
         initialValues={initialValues}
         user={user}
         canEdit={canEdit}
-        respiteAllowed={respiteAllowed}
         onCountryChange={this.onCountryChange}
         selectedCountry={this.state.selectedCountry}
         {...props}

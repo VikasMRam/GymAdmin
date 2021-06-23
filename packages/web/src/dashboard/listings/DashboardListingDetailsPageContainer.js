@@ -8,7 +8,7 @@ import DashboardListingDetailsPage from 'sly/web/dashboard/listings/DashboardLis
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { prefetch, withUser } from 'sly/web/services/api';
 import userPropType from 'sly/common/propTypes/user';
-import communityPropType from 'sly/common/propTypes/community';
+import listingPropType from 'sly/common/propTypes/listing';
 import { blacklist as editConfigBlacklist } from 'sly/web/services/edits/constants/community';
 import { EditContext } from 'sly/web/services/edits';
 import {
@@ -43,8 +43,8 @@ const activityPath = id => generatePath(DASHBOARD_LISTINGS_DETAIL_PATH, {
 export default class DashboardListingDetailsPageContainer extends Component {
   static propTypes = {
     user: userPropType,
-    // community: communityPropType,
-    // communities: arrayOf(communityPropType),
+    listing: listingPropType,
+    listings: arrayOf(listingPropType),
     match: object,
     location: object,
     status: object,
