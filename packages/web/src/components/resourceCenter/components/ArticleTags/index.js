@@ -44,7 +44,7 @@ const ArticleTags = ({ topic, tagsList }) => {
   const onClick = useCallback(tag => (evt) => {
     evt.stopPropagation();
     evt.preventDefault();
-    push(`${RESOURCE_CENTER_PATH}/${topic?.slug}${tag ? `?tag-name=${tag}` : ''}`);
+    push(`${RESOURCE_CENTER_PATH}/${topic.slug}${tag ? `?tag-name=${tag}` : ''}`);
   }, [topic]);
 
   return (
