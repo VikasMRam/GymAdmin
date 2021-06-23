@@ -74,16 +74,16 @@ const ArticleTags = ({ topic, tagsList }) => {
                 {value.replace(/_/g, ' ')}
               </Tag>
             ))}
-          {topic && (
-            <Tag
-              width="max-content"
-              marginTop="auto"
-              onClick={onClick()}
-            >
-              {topic.name}
-            </Tag>
-          )}
         </Flex>
+      )}
+      {!tagsList && topic && (
+        <Tag
+          width="max-content"
+          marginTop="auto"
+          onClick={onClick()}
+        >
+          {topic.name}
+        </Tag>
       )}
     </>
   );
