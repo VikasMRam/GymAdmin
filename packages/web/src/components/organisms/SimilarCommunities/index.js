@@ -3,7 +3,7 @@ import { arrayOf, func, object, bool, string, number } from 'prop-types';
 
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import CommunityTile from 'sly/web/components/organisms/CommunityTile';
-import { Block, Link, space, sx } from 'sly/common/system';
+import { Link, space, sx } from 'sly/common/system';
 import { useAuth, usePrefetch, useQuery } from 'sly/web/services/api';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { getCommunityUserSave, isCommunityAlreadySaved } from 'sly/web/profile/helpers';
@@ -105,6 +105,7 @@ const CommunityTileContainer = ({
           layout={layout}
           event={getEvent(communityInfo, index)}
           sx={{
+            img: { borderRadius: sx`${space('xxs')} ${space('xxs')} 0 0` },
             span: { font: 'body-m' },
             h3: { mb: 's' },
             height: '100%',
@@ -173,7 +174,7 @@ const SimilarCommunities = ({ communities, onCommunityClick, communityStyle, get
             <CommunityTile community={community} layout={layout} event={getEvent(community, index)} />
           </Link>
         ))}
-      {communities?.length > 1 && <Block />}
+      {communities?.length > 1 && <div />}
     </>
   );
 };

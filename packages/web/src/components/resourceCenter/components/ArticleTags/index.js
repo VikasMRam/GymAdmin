@@ -49,7 +49,7 @@ const ArticleTags = ({ topic, tagsList }) => {
 
   return (
     <>
-      {tagsList?.filter(({ value }) => value).length && (
+      {!!tagsList?.filter(({ value }) => value).length && (
         <Flex
           sx={{
             flexWrap: 'nowrap',
@@ -74,16 +74,16 @@ const ArticleTags = ({ topic, tagsList }) => {
                 {value.replace(/_/g, ' ')}
               </Tag>
             ))}
+          {topic && (
+            <Tag
+              width="max-content"
+              marginTop="auto"
+              onClick={onClick()}
+            >
+              {topic.name}
+            </Tag>
+          )}
         </Flex>
-      )}
-      {topic && (
-        <Tag
-          width="max-content"
-          marginTop="auto"
-          onClick={onClick()}
-        >
-          {topic.name}
-        </Tag>
       )}
     </>
   );
