@@ -49,6 +49,7 @@ import withChatbox from 'sly/web/services/chatbox/withChatBox';
 import StickyHeader from 'sly/web/profile/StickyHeader';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -478,7 +479,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <StyledHeadingBoxSection
                     heading="Recommended communities"
                     id="sticky-sidebar-boundary"
-                    sx$tablet={{ padding: 0 }}
+                    sx$tablet={{ padding: '0 !important' }}
                   >
                     <CarouselContainer itemsQty={similarProperties.length}>
                       <SimilarCommunities
@@ -499,19 +500,32 @@ export default class CommunityDetailPage extends PureComponent {
                         event={{ action: 'click', category: 'backToSearch', label: community.id }}
                         width="100%"
                       >
-                        Communities In {address.city}
+                        See more communities
                       </Button>
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
 
                 {rgsAux.rgsInfo?.resourceLinks?.length && (
-                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Resources`} sx$tablet={{ padding: 0 }}>
+                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} articles`} sx$tablet={{ padding: '0 !important' }}>
                     <CarouselContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
                       {rgsAux.rgsInfo.resourceLinks.map(item => (
-                        <ArticlePreview key={item.title} alternativeText={item.title} {...item} customStyles={{ width: '18rem' }} />
+                        <ArticlePreview
+                          key={item.title}
+                          alternativeText={item.title}
+                          {...item}
+                          customStyles={{ width: '100%', lineHeight: 'body-m' }}
+                        />
                       ))}
+                      <div />
                     </CarouselContainer>
+                    <Button
+                      href={RESOURCE_CENTER_PATH}
+                      event={{ action: 'click', category: 'communityResource', label: community.id }}
+                      width="100%"
+                    >
+                      See more articles
+                    </Button>
                   </StyledHeadingBoxSection>
                 )}
 
