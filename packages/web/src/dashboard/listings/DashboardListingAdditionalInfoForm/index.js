@@ -5,8 +5,7 @@ import { Field } from 'redux-form';
 import { Button } from 'sly/web/components/atoms';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
-import { numberOfBedRooms, numberOfBathRooms, statuses } from 'sly/web/constants/listings';
-import { states, countries } from 'sly/web/constants/geo';
+import ReduxField from 'sly/common/components/organisms/ReduxField';
 import {
   SectionForm,
   Section,
@@ -15,8 +14,6 @@ import {
 } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import { apiUrl } from 'sly/web/config';
 
-
-const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
 const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[is-plus]=true:true&filter[name]=` }, value: 'community.id' };
 
 const activitiesOptions = [
@@ -69,6 +66,14 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
 
 
       <SectionForm heading="Community details">
+        <EditField
+          name="info.sections[2].content"
+          label="Community details"
+          type="richtextarea"
+          placeholder=""
+          wideWidth
+          widthSpacing="tabletLayout.col5"
+        />
         <EditField
           name="community"
           label="Community Slug"
