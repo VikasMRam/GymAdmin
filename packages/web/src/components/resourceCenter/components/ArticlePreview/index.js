@@ -76,7 +76,7 @@ const ArticlePreview = ({
         {shortDescription}
       </Block>
 
-      <ArticleTags topic={topic} tagsList={tagsList} />
+      {topic && <ArticleTags topic={topic} tagsList={tagsList} />}
     </Block>
   </Flex>
 );

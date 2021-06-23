@@ -49,7 +49,7 @@ const ArticleTags = ({ topic, tagsList }) => {
 
   return (
     <>
-      {tagsList?.filter(({ value }) => value).length ? (
+      {tagsList?.filter(({ value }) => value).length && (
         <Flex
           sx={{
             flexWrap: 'nowrap',
@@ -75,7 +75,8 @@ const ArticleTags = ({ topic, tagsList }) => {
               </Tag>
             ))}
         </Flex>
-      ) : (
+      )}
+      {topic && (
         <Tag
           width="max-content"
           marginTop="auto"
