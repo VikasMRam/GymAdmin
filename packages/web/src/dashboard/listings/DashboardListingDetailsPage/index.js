@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { string, func, object, arrayOf, bool, shape } from 'prop-types';
+import React from 'react';
+import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
 
 
@@ -29,19 +29,14 @@ import {
 import DashboardListingDetailsFormContainer from 'sly/web/dashboard/listings/DashboardListingDetailsFormContainer';
 import DashboardListingPhotosFormContainer from 'sly/web/dashboard/listings/DashboardListingPhotosFormContainer';
 import DashboardListingAdditionalInfoFormContainer from 'sly/web/dashboard/listings/DashboardListingAdditionalInfoFormContainer';
+import DashboardListingSummary from 'sly/web/dashboard/listings/DashboardListingSummary';
 import { Link } from 'sly/web/components/atoms';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 
-const makeClientsBasePath = ({ id, tab }) => {
-  const path = generatePath(DASHBOARD_LISTINGS_DETAIL_PATH, { id, tab });
-  return `${path}/:clientType`;
-};
 
 const DashboardListingDetailsPage = ({
-  match,
   listing,
   currentEdit,
-  suggestedEdits,
   currentTab,
   listingIsLoading,
   user,
@@ -130,15 +125,6 @@ const DashboardListingDetailsPage = ({
 
   const pendingChangesUrl = currentEdit?.isPending && generatePath(DASHBOARD_LISTINGS_DETAIL_EDIT_PATH, { id: listing.id, editId: currentEdit.id });
 
-  const sectionFilters = {
-    include: 'entities',
-    'filter[listing-id]': listing.id,
-  };
-
-  const clientsSectionFilters = {
-    'filter[listing]': listing.id,
-    client_type: match.params.clientType,
-  };
 
   const notifications =  [];
 
@@ -221,14 +207,15 @@ const DashboardListingDetailsPage = ({
         />
       )}
       </Right>
+      <DashboardListingSummary
+        className={currentTab === SUMMARY ? 'selected' : ''}
+        listing={listing}
+      />
     </DashboardWithSummaryPageTemplate>
   );
 };
 
 DashboardListingDetailsPage.propTypes = {
-  match: shape({
-    url: string,
-  }),
   listing: listingPropType,
   currentTab: string,
   showModal: func,

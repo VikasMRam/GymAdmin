@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, bool, func } from 'prop-types';
 
@@ -12,7 +12,7 @@ import Pagination from 'sly/web/components/molecules/Pagination';
 import Th from 'sly/web/components/molecules/Th';
 import ListingRowCard from 'sly/web/dashboard/listings/ListingRowCard';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { Loading, Section, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
+import { Section, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import Role from 'sly/web/components/common/Role';
 import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';

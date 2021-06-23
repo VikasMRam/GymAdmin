@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { func, string } from 'prop-types';
+import { func } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/common/components/themes';
@@ -34,6 +34,8 @@ const GetStatusStr  = (status) => {
       return 'Awaiting Approval';
     case 2:
       return 'Approved';
+    default:
+      break;
   }
 };
 

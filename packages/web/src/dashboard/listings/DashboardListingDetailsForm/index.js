@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { func, bool, object, string } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
-import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
-import { numberOfBedRooms, numberOfBathRooms, statuses } from 'sly/web/constants/listings';
+import { statuses } from 'sly/web/constants/listings';
 import { states, countries } from 'sly/web/constants/geo';
 import {
   SectionForm,

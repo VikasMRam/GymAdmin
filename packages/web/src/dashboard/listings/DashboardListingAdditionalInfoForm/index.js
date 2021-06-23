@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
-import { Field } from 'redux-form';
 
 import { Button } from 'sly/web/components/atoms';
-import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import EditField from 'sly/web/components/form/EditField';
-import ReduxField from 'sly/common/components/organisms/ReduxField';
 import {
   SectionForm,
   Section,

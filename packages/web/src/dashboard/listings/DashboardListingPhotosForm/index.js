@@ -7,7 +7,6 @@ import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import HelpBubble from 'sly/web/components/form/HelpBubble';
 import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';
-import NewModal from 'sly/web/components/atoms/NewModal';
 import EditImageModal from 'sly/web/services/s3Uploader/components/EditImageModal';
 import Block from 'sly/web/components/atoms/Block';
 import { Section, SectionHeader } from 'sly/web/dashboard/DashboardWithSummaryTemplate';

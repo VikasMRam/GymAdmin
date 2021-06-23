@@ -111,7 +111,10 @@ export default class DashboardListingDetailsFormContainer extends Component {
   render() {
     const { listing, status, user, address, currentEdit, ...props } = this.props;
     const { tags: modelTags } = listing;
-    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
+    let tags = [];
+    if (modelTags) {
+      tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
+    }
 
     const canEdit = !currentEdit?.isPendingForAdmin
        && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
