@@ -14,6 +14,7 @@ import {
   Favorite,
   User,
   Settings,
+  Bed,
 } from 'sly/common/icons';
 import { Span } from 'sly/web/components/atoms';
 import {
@@ -56,7 +57,7 @@ export const menuItems = [
   { label: 'Families', Icon: Family, href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
   { label: 'Agents', Icon: Agents, href: ADMIN_DASHBOARD_AGENTS_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Communities', Icon: CommunitySizeLarge, href: DASHBOARD_COMMUNITIES_PATH, role: PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE },
-  { label: 'Listings', Icon: CommunitySizeLarge, href: DASHBOARD_LISTINGS_PATH, role: PLATFORM_ADMIN_ROLE },
+  { label: 'Listings', Icon: Bed, href: DASHBOARD_LISTINGS_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Tasks', Icon: CheckmarkCircle, href: generatePath(AGENT_DASHBOARD_TASKS_PATH), role: AGENT_ADMIN_ROLE },
   { label: 'Contacts', Icon: Contacts, href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
   { label: 'Messages', Icon: Messages, href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },

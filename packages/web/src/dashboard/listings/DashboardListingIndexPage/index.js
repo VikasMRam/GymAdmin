@@ -62,7 +62,7 @@ const DashboardListingIndexPage = ({ listings, pagination, isPageLoading, onAddL
   const modelConfig = { name: 'Listing', defaultSearchField: 'name' };
 
   const actions = (
-    <Role is={PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE}>
+    <Role is={PLATFORM_ADMIN_ROLE}>
       <IconButton icon="plus" onClick={onAddListing} hideTextInMobile>
         Add Listing
       </IconButton>
@@ -92,7 +92,7 @@ const DashboardListingIndexPage = ({ listings, pagination, isPageLoading, onAddL
   }
 
   return (
-    <DashboardPageTemplate activeMenuItem="Communities">
+    <DashboardPageTemplate activeMenuItem="Listings">
       <Section snap="none">
         <SectionHeader actions={actions}>
           Listings

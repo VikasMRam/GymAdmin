@@ -98,14 +98,14 @@ const DashboardListingDetailsPage = ({
     label: 'Back to listings',
     event: {
       category: 'fdetails',
-      label: 'Back to Communities',
+      label: 'Back to Listings',
       action: 'click',
     },
   };
 
   if (!listing) {
     return (
-      <Loading activeMenuItem="Communities" backLink={backLink}>
+      <Loading activeMenuItem="Listings" backLink={backLink}>
         Listing not found!
       </Loading>
     );
@@ -155,7 +155,7 @@ const DashboardListingDetailsPage = ({
 
   return (
 
-    <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
+    <DashboardWithSummaryPageTemplate activeMenuItem="Listings">
       <Top>
         <BreadCrumb items={breadCrumbItems} />
       </Top>
