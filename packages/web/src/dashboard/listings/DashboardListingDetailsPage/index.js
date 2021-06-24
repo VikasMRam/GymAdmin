@@ -87,7 +87,7 @@ const DashboardListingDetailsPage = ({
 
   if (listingIsLoading) {
     return (
-      <Loading activeMenuItem="Communities">
+      <Loading activeMenuItem="Listings">
         Loading...
       </Loading>
     );

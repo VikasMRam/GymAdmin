@@ -16,7 +16,7 @@ import { patchFormInitialValues } from 'sly/web/services/edits';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { DEFAULT_SECTION_ORDER } from 'sly/web/dashboard/listings/constants';
 
-const formName = 'DashboardCommunityServicesForm';
+const formName = 'DashboardListingAdditionalInfoForm';
 
 const ReduxForm = reduxForm({
   form: formName,

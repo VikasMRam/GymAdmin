@@ -21,7 +21,7 @@ const validate = createValidator({
   name: [required],
 });
 
-const formName = 'DashboardCommunityDetailsForm';
+const formName = 'DashboardListingDetailsForm';
 
 const ReduxForm = reduxForm({
   form: formName,

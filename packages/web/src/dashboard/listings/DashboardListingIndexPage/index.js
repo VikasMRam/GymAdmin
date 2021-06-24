@@ -71,7 +71,7 @@ const DashboardListingIndexPage = ({ listings, pagination, isPageLoading, onAddL
 
   if (isPageLoading) {
     return (
-      <DashboardPageTemplate activeMenuItem="Communities">
+      <DashboardPageTemplate activeMenuItem="Listings">
         <Section snap="none">
           <SectionHeader actions={actions}>
             Listings

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/common/components/themes';
@@ -57,10 +57,10 @@ const StatusCell = ({ status }) => (
   </Td>
 );
 
-// StyledNameCell.propTypes = {
-//   community: communityPropType,
-//   to: string,
-// };
+StyledNameCell.propTypes = {
+  listinge: listingPropType,
+  to: string,
+};
 
 const NameCell = mobileOnly(pad(StyledNameCell, 'regular'), css`
   order: 1;
