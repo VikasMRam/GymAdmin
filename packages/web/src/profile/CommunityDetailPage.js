@@ -421,7 +421,7 @@ export default class CommunityDetailPage extends PureComponent {
                     {rgsAux.rgsInfo.resourceLinks.map((item, i) => (
                       <>
                         <Link
-                          to={item.to}
+                          href={item.to}
                           palette="primary"
                           event={{
                             category: 'community-resource-link',
@@ -507,7 +507,7 @@ export default class CommunityDetailPage extends PureComponent {
                 )}
 
                 {rgsAux.rgsInfo?.resourceLinks?.length && (
-                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} articles`} sx$tablet={{ padding: '0 !important' }}>
+                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Articles`} sx$tablet={{ padding: '0 !important' }}>
                     <CarouselContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
                       {rgsAux.rgsInfo.resourceLinks.map(item => (
                         <ArticlePreview
