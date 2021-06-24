@@ -83,7 +83,7 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
-    console.log(values);
+    console.log('values', values);
     const { match, updateListing, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
 

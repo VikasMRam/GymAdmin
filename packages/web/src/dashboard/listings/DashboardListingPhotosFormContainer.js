@@ -56,9 +56,11 @@ const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.dat
 @withProps(({ status }) => {
   const gallery  = status.listing.getRelationship(status.listing.result, 'gallery');
   const images = status.listing.getRelationship(gallery, 'images');
+  const category = status.listing.getRelationship(status.listing.result, 'category');
   return {
     gallery,
     images,
+    category,
   };
 })
 
@@ -80,6 +82,7 @@ export default class DashboardListingPhotosFormContainer extends Component {
   static defaultProps = {
     images: [],
   };
+
 
   makeImagesFromProps = () => {
     const { currentEdit, images } = this.props;

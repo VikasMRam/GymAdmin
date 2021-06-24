@@ -8,9 +8,10 @@ import { createValidator, required } from 'sly/web/services/validation';
 import { Button } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
-import { imageCategory } from 'sly/web/constants/images';
+import { apiUrl } from 'sly/web/config';
 
-const imageCategoryOptions = imageCategory.map(s => <option key={s} value={s}>{s}</option>);
+const categoryColumn = { typeInfo: { api: `${apiUrl}/platform/image-categories?filter[name]=` }, value: 'category.name' };
+
 
 const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, invalid, submitting, ...props }) => {
   const imgPath = image?.attributes?.path;
@@ -35,15 +36,13 @@ const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, 
           component={ReduxField}
         />
         <Field
+          name="category.data"
           label="Category"
-          placeholder="Image category "
-          type="select"
-          name="relationships.category.data.name"
+          type="autocomplete"
           component={ReduxField}
-        >
-          <option>Select an option</option>
-          {imageCategoryOptions}
-        </Field>
+          column={categoryColumn}
+        />
+
       </ModalBody>
       <ModalActions>
         <Button ghost onClick={onClose}>
@@ -78,36 +77,34 @@ const ReduxForm = reduxForm({
 })(EditImageModalForm);
 
 export default function EditImageModal({ image, saveImage, onClose, ...props }) {
+  console.log(image);
   const handleSubmit = (data) => {
-    const { attributes, relationships } = data;
+    const { attributes, category } = data;
+
+    const relationships = {};
+
+    if (category) {
+      const { data } = category;
+      const { label, value } = data;
+      const jsonapiCategory = {
+        type: 'ImageCategory',
+        id: value,
+        attributes: {
+          name: label,
+        },
+      };
+      relationships.category = { data: jsonapiCategory };
+    }
+
     const newImage = {
       ...image,
       attributes: {
         ...image.attributes,
         description: attributes.description,
       },
+      relationships,
     };
 
-    // const newImage = {
-    //   ...image,
-    //   attributes: {
-    //     ...image.attributes,
-    //     description: attributes.description,
-    //   },
-    //   relationships: {
-    //     ...relationships,
-    //     category: {
-    //       data: {
-    //         id: image.relationships.category.data
-    //         type: 'ImageCategory',
-    //         attributes: {
-    //           id: relationships.category.data.attributes.id,
-    //           name: relationships.category.data.attributes.name,
-    //         },
-    //       },
-    //     },
-    //   },
-    // };
     return saveImage(newImage, image).then(onClose);
   };
   return (

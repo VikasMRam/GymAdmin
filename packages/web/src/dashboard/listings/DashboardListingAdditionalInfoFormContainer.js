@@ -45,7 +45,6 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
   };
 
   handleSubmit = (values) => {
-    console.log('form values', values);
     const { status, updateListing, notifyError, notifyInfo } = this.props;
     const rawListing = status.listing.result;
     const { id, attributes } = rawListing;
