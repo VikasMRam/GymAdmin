@@ -8,6 +8,10 @@ import { createValidator, required } from 'sly/web/services/validation';
 import { Button } from 'sly/web/components/atoms';
 import ResponsiveImage from 'sly/web/components/atoms/ResponsiveImage';
 import { imagePropType } from 'sly/common/propTypes/gallery';
+import { apiUrl } from 'sly/web/config';
+
+const categoryColumn = { typeInfo: { api: `${apiUrl}/platform/image-categories?filter[name]=` }, value: 'category.name' };
+
 
 const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, invalid, submitting, ...props }) => {
   const imgPath = image?.attributes?.path;
@@ -27,9 +31,18 @@ const EditImageModalForm = ({ image, onClose, canEdit, handleSubmit, saveImage, 
           label="Caption"
           placeholder="Write a caption that explains what families are seeing in this photo. "
           type="textarea"
-          name="description"
+          // name="description"
+          name="attributes.description"
           component={ReduxField}
         />
+        <Field
+          name="category.data"
+          label="Category"
+          type="autocomplete"
+          component={ReduxField}
+          column={categoryColumn}
+        />
+
       </ModalBody>
       <ModalActions>
         <Button ghost onClick={onClose}>
@@ -65,13 +78,32 @@ const ReduxForm = reduxForm({
 
 export default function EditImageModal({ image, saveImage, onClose, ...props }) {
   const handleSubmit = (data) => {
+    const { attributes, category } = data;
+
+    const relationships = {};
+
+    if (category) {
+      const { data } = category;
+      const { label, value } = data;
+      const jsonapiCategory = {
+        type: 'ImageCategory',
+        id: value,
+        attributes: {
+          name: label,
+        },
+      };
+      relationships.category = { data: jsonapiCategory };
+    }
+
     const newImage = {
       ...image,
       attributes: {
         ...image.attributes,
-        description: data.description,
+        description: attributes.description,
       },
+      relationships,
     };
+
     return saveImage(newImage, image).then(onClose);
   };
   return (
@@ -79,7 +111,8 @@ export default function EditImageModal({ image, saveImage, onClose, ...props }) 
       as="form"
       onSubmit={handleSubmit}
       image={image}
-      initialValues={image?.attributes}
+      // initialValues={image?.attributes}
+      initialValues={image}
       onClose={onClose}
       {...props}
     />
