@@ -10,6 +10,7 @@ const TableOfContents = ({ subtitlesData }) => (
     border="box"
     padding="l m l l"
     pad="l"
+    mx="auto"
     width={sx`calc(100% - ${space('gutter')} * 2)`}
     sx$tablet={{ padding: 'xl',  width: 'col6', marginBottom: 'xl' }}
     sx$laptop={{ width: 'col8' }}
