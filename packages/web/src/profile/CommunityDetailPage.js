@@ -1,4 +1,4 @@
-import React, { PureComponent, useContext } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -21,7 +21,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
-import { Button, Link } from 'sly/common/components/atoms';
+import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
@@ -414,29 +414,6 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 }
 
-                {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
-                  <StyledHeadingBoxSection
-                    heading={`Helpful ${typeOfCare} Resources`}
-                  >
-                    {rgsAux.rgsInfo.resourceLinks.map((item, i) => (
-                      <>
-                        <Link
-                          to={item.to}
-                          palette="primary"
-                          event={{
-                            category: 'community-resource-link',
-                            action: 'link-click',
-                            label: item.to,
-                          }}
-                        >
-                          {item.title}
-                        </Link>
-                        {i !== rgsAux.rgsInfo.resourceLinks.length - 1 && <Hr />}
-                      </>
-                    ))}
-                  </StyledHeadingBoxSection>
-                )}
-
                 {reviews && reviews.length > 0 &&
                   <StyledHeadingBoxSection
                     heading={`Reviews at ${name}`}
@@ -507,7 +484,7 @@ export default class CommunityDetailPage extends PureComponent {
                 )}
 
                 {rgsAux.rgsInfo?.resourceLinks?.length && (
-                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} articles`} sx$tablet={{ padding: '0 !important' }}>
+                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Articles`} sx$tablet={{ padding: '0 !important' }}>
                     <CarouselContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
                       {rgsAux.rgsInfo.resourceLinks.map(item => (
                         <ArticlePreview
