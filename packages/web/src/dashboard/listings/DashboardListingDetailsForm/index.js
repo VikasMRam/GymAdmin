@@ -37,6 +37,12 @@ const DashboardCommunityDetailsForm = ({ handleSubmit, invalid, submitting, canE
           readOnly={!canEdit}
         />
         <EditField
+          name="info.startingRate"
+          label="Starting rate"
+          type="number"
+          readOnly={!canEdit}
+        />
+        <EditField
           name="info.phoneNumber"
           label="Front desk phone"
           type="phone"

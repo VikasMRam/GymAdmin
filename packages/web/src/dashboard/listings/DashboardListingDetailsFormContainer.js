@@ -125,6 +125,7 @@ export default class DashboardListingDetailsFormContainer extends Component {
         'name',
         'info.phoneNumber',
         'info.ownerName',
+        'info.startingRate',
         'info.floorPlan.bedroomCount',
         'info.floorPlan.bathroomCount',
         'info.floorPlan.area',

@@ -53,6 +53,15 @@ const AddListingForm = ({ handleSubmit, invalid, submitting, selectedCountry, on
             wideWidth
           />
           <Field
+            name="startingRate"
+            label="Starting rate($)"
+            type="number"
+            placeholder="2000"
+            required
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
             name="phoneNumber"
             label="Front desk phone number"
             type="phone"

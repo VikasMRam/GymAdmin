@@ -54,7 +54,7 @@ export default class AddListingFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { createListing, notifyError, notifyInfo, onSuccess, onCancel } = this.props;
-    const { name, phoneNumber, line1, line2, city, state, country, zip, slyScore, id: { value: communitySlug }, slug: { value: agentSlug } } = data;
+    const { name, phoneNumber, line1, line2, city, startingRate, state, country, zip, slyScore, id: { value: communitySlug }, slug: { value: agentSlug } } = data;
 
 
     const payload = {
@@ -67,6 +67,7 @@ export default class AddListingFormContainer extends Component {
           phoneNumber,
           agentSlug,
           sections,
+          startingRate,
         },
       },
       relationships: {

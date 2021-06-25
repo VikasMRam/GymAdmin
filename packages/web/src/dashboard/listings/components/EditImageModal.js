@@ -79,8 +79,7 @@ const ReduxForm = reduxForm({
 export default function EditImageModal({ image, saveImage, onClose, ...props }) {
   const handleSubmit = (data) => {
     const { attributes, category } = data;
-
-    const relationships = {};
+    let { relationships } = data;
 
     if (category) {
       const { data } = category;
@@ -92,7 +91,10 @@ export default function EditImageModal({ image, saveImage, onClose, ...props }) 
           name: label,
         },
       };
-      relationships.category = { data: jsonapiCategory };
+      relationships = {
+        ...relationships,
+        category: { data: jsonapiCategory },
+      };
     }
 
     const newImage = {
