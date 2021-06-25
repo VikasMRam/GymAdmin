@@ -17,8 +17,7 @@ import RespiteCareNearMePage from 'sly/web/components/pages/RespiteCareNearMePag
 import VeteransBenefitAssistedLivingPage from 'sly/web/components/pages/VeteransBenefitAssistedLivingPage';
 import ActiveAdultNearMePage from 'sly/web/components/pages/ActiveAdultNearMePage';
 import { parseURLQueryParams, generateCityPathSearchUrl } from 'sly/web/services/helpers/url';
-import { query, normalizeResponse, usePrefetch } from 'sly/web/services/api';
-import { withProps } from 'sly/web/services/helpers/hocs';
+import { usePrefetch } from 'sly/web/services/api';
 import HubHeader from 'sly/web/components/molecules/HubHeader';
 import CMSDynamicZone from 'sly/web/components/organisms/CMSDynamicZone';
 import Block from 'sly/common/system/Block';
@@ -58,7 +57,7 @@ const getSearchParams = (location, match) => {
 const NewNearMePageContainer = ({ history, location, match }) => {
   const searchParams = useMemo(() => getSearchParams(location, match), [location, match]);
 
-  const { requestInfo: result, hasFinished } = usePrefetch('getHubPage', { slug: match.params.hub });
+  const { requestInfo: { result, hasFinished } } = usePrefetch('getHubPage', { slug: match.params.hub });
 
   const faqs = useMemo(
     () => result?.[0]?.content
@@ -97,6 +96,8 @@ const NewNearMePageContainer = ({ history, location, match }) => {
     return <Redirect to="/" />;
   }
 
+  console.log('result?.[0]?.mainImg?.path', result?.[0]?.mainImg?.path);
+
   return (
     <>
       <Helmet>
@@ -108,7 +109,7 @@ const NewNearMePageContainer = ({ history, location, match }) => {
       </Helmet>
 
       <HubHeader
-        imagePath="react-assets/hub/assisted-living-cover.jpg"
+        imagePath={result?.[0]?.mainImg?.path}
         toc="nursing homes"
         heading="What is a Nursing Home?"
         label="Use our free search to find nursing homes nearby"

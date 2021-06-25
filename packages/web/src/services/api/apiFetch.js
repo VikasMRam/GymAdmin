@@ -10,6 +10,7 @@
 
 export default function apiFetch(baseUrl, path, options) {
   const url = (typeof baseUrl === 'function' ? baseUrl() : baseUrl) + path;
+  console.log('url, options', url, options);
   return fetch(url, options)
     .then((res) => {
       const headers = {};
@@ -30,6 +31,7 @@ export default function apiFetch(baseUrl, path, options) {
       return Promise.resolve(response);
     })
     .then((response) => {
+      console.log('response', response);
       if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response);
       }
