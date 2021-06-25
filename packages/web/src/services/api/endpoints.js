@@ -120,4 +120,6 @@ export default {
   getArticlesCount: { method: get, path: '/articles/count', jsonApi: false, baseUrl: cmsUrl },
   getArticlesForSitemap: { method: get, path: '/articles/sitemap', jsonApi: false, baseUrl: cmsUrl },
   getTopic: { method: get, path: '/topics', jsonApi: false, baseUrl: cmsUrl },
+
+  getHubPage: { method: get, path: '/senior-living-types', jsonApi: false, baseUrl: cmsUrl },
 };
