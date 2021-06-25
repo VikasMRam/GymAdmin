@@ -73,7 +73,6 @@ const getCareTypes = (address, careTypes) => {
       updatedCareTypes.push({ tag, path: tocBc.path });
     }
   });
-
   return updatedCareTypes;
 };
 
@@ -83,11 +82,16 @@ const ListingSummary = ({
   goToReviews, searchParams, formattedAddress, onSaveClick, onShareClick, isFavorited,
 }) => {
   const {
-    address, name, info, twilioNumber, partnerAgents, care,
+    address, name, info, twilioNumber, partnerAgents, tags, community,
   } = listing;
 
+  const { care, propInfo } = community;
+
+  const { typeCare } = propInfo;
+
+
   const {
-    phoneNumber, typeCare, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
+    phoneNumber, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
   } = info;
   const { ratingValue, numReviews } = info.ratingInfo;
 
@@ -99,6 +103,8 @@ const ListingSummary = ({
   if (!conciergeNumber) {
     conciergeNumber = '8558664515';
   }
+
+  const careTypes = care ? getCareTypes(address, care) : getCareTypes(address, typeCare);
 
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
@@ -136,7 +142,7 @@ const ListingSummary = ({
         />
       }
 
-      {/* <Block>
+      <Block>
         {careTypes.map(careType => (
           <Tag
             key={careType.path}
@@ -156,7 +162,7 @@ const ListingSummary = ({
             </Link>
           </Tag>
         ))}
-      </Block> */}
+      </Block>
 
       <Hr mt="l" mb="l" />
       <Grid

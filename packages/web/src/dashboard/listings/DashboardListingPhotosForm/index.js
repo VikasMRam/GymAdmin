@@ -49,7 +49,7 @@ const SectionSortable = sortableContainer(({
   </Block>
 ));
 
-const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes }) => {
+const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes, imageCategories }) => {
   const [editingImage, setEditingImage] = useState(null);
 
   const editImage = image => setEditingImage(image);
@@ -82,6 +82,8 @@ const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveIm
         saveImage={saveImage}
         canEdit={canEdit}
         onClose={stopEditing}
+        imageCategories={imageCategories}
+
       />
       <Section>
         {deletedMessage && (

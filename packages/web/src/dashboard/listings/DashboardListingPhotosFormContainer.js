@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func, arrayOf } from 'prop-types';
+import { object, func, arrayOf, array } from 'prop-types';
 import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
 import { set } from 'object-path-immutable';
@@ -53,6 +53,7 @@ const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.dat
   id: match.params.id,
   include: 'suggested-edits',
 }))
+@prefetch('imageCategories', 'getImageCategories')
 @withProps(({ status }) => {
   const gallery  = status.listing.getRelationship(status.listing.result, 'gallery');
   const images = status.listing.getRelationship(gallery, 'images');
@@ -77,6 +78,7 @@ export default class DashboardListingPhotosFormContainer extends Component {
     match: object.isRequired,
     status: object,
     currentEdit: object,
+    imageCategories: array,
   };
 
   static defaultProps = {
@@ -225,7 +227,7 @@ export default class DashboardListingPhotosFormContainer extends Component {
   };
 
   render() {
-    const { gallery, user, status, currentEdit, ...props } = this.props;
+    const { gallery, user, status, currentEdit, imageCategories, ...props } = this.props;
     const { images, changes } = this.state;
 
     const canEdit = !currentEdit?.isPendingForAdmin
@@ -247,6 +249,7 @@ export default class DashboardListingPhotosFormContainer extends Component {
         saveImage={this.saveImage}
         deleteImage={this.deleteImage}
         initialValues={initialValues}
+        imageCategories={imageCategories}
         user={user}
         canEdit={canEdit}
         images={images}
