@@ -76,7 +76,7 @@ const ArticleTags = ({ topic, tagsList }) => {
             ))}
         </Flex>
       )}
-      {!tagsList && topic && (
+      {!tagsList?.length && topic && (
         <Tag
           width="max-content"
           marginTop="auto"
