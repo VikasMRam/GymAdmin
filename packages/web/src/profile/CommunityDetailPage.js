@@ -194,7 +194,6 @@ export default class CommunityDetailPage extends PureComponent {
       similarProperties,
       gallery = {},
       twilioNumber,
-      guideUrl,
       user: communityUser,
       reviews,
     } = community;
@@ -373,7 +372,6 @@ export default class CommunityDetailPage extends PureComponent {
                       city={address.city}
                       state={address.state}
                       twilioNumber={twilioNumber}
-                      guideUrl={guideUrl}
                       communityUser={community.user}
                       isActiveAdult={isActiveAdult}
                       isInternational={isInternational}
