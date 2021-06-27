@@ -55,8 +55,6 @@ const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunk
 const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/web/containers/PricingWizardPageContainer'));
 const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/web/containers/AgentProfilePageContainer'));
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/web/containers/AgentRegionPageContainer'));
-const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/web/containers/CareTypeGuideContainer'));
-const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/web/containers/CareTypeRegionGuideContainer'));
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/web/containers/EmailViewPageContainer'));
 const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/web/containers/EmailSharePageFormContainer'));
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
@@ -117,16 +115,6 @@ const routes = [
   {
     path: `/:toc(${careTypes.join('|')})/:state`,
     component: SearchContainer,
-    exact: true,
-  },
-  {
-    path: `/:tocg(${careTypeGuides})`,
-    component: CareTypeGuideContainer,
-    exact: true,
-  },
-  {
-    path: `/:tocg(${careTypeGuides})/:region`,
-    component: CareTypeRegionGuideContainer,
     exact: true,
   },
   {

@@ -263,13 +263,6 @@ export const getAgentParams = ({ params }, location) => {
   return filters;
 };
 
-export const getGuideParams = ({ params }) => {
-  const { tocg } = params;
-  params.toc = tocg.substring(0, tocg.indexOf('-guide'));
-  params['own-guide'] = true;
-  return params;
-};
-
 export const getFiltersApplied = (searchParams) => {
   const { size, budget } = searchParams;
   const filtersApplied = [];
