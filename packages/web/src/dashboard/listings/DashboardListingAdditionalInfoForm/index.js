@@ -34,7 +34,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
         Details
       </SectionHeader>
 
-      <SectionForm heading="Additional listing information">
+      <SectionForm heading="Activities Section">
         <EditField
           name="info.activities"
           label="Activities"
@@ -44,6 +44,14 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
           wideWidth
         />
         <EditField
+          name="info.activityCalendarURL"
+          label="Activities calendar URL"
+          type="text"
+          readOnly={!canEdit}
+        />
+      </SectionForm>
+      <SectionForm heading="Dining Section">
+        <EditField
           name="info.sections[0].content"
           label="Dining"
           type="richtextarea"
@@ -51,6 +59,14 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
           wideWidth
           widthSpacing="tabletLayout.col5"
         />
+        <EditField
+          name="info.sections[0].url"
+          label="Sample menu URL"
+          type="text"
+          readOnly={!canEdit}
+        />
+      </SectionForm>
+      <SectionForm heading="Neighborhood Section">
         <EditField
           name="info.sections[1].content"
           label="Neighborhood"

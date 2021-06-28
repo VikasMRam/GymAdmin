@@ -65,17 +65,12 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
       && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
 
     const init = status.listing.result.attributes;
-    // init.info.sections.forEach((section) => {
-    //   if (section.type === 'neighborhood') init.info.sections = section;
-    //   if (section.type === 'dining') init.dining = section;
-    // });
 
-    // const neighborhood = status.listing.result.attributes.info.sections.find(n => n.type === 'neighborhood');
-    // init.neighborhood = neighborhood;
     const initialValues = pick(
       init,
       [
         'info.activities',
+        'info.activityCalendarURL',
         'info.floorPlan.bathroomCount',
         'info.floorPlan.area',
         'info.description',
