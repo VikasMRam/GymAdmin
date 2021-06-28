@@ -3,6 +3,7 @@ import { func, bool, object, string } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
 import EditField from 'sly/web/components/form/EditField';
+import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import { statuses } from 'sly/web/constants/listings';
 import { states, countries } from 'sly/web/constants/geo';
 import {
@@ -14,6 +15,7 @@ import {
 import { apiUrl } from 'sly/web/config';
 
 const getStatesOptions = country => states[country].map(e => <option key={e.abbe} value={e.abbr}>{e.name}</option>);
+const getAvailableTags = country => AVAILABLE_TAGS[country];
 const countryOptions = countries.map(s => <option key={s} value={s}>{s}</option>);
 
 const statusOptions = statuses.map(s => <option key={s.label} value={s.value}>{s.label}</option>);
@@ -150,6 +152,14 @@ const DashboardCommunityDetailsForm = ({ handleSubmit, invalid, submitting, canE
           readOnly={!canEdit}
           column={tagColumn}
           isMulti
+        />
+        <EditField
+          name="info.care"
+          label="Care type"
+          type="choice"
+          readOnly={!canEdit}
+          isMulti
+          options={getAvailableTags(selectedCountry).map(value => ({ label: value, value }))}
         />
       </SectionForm>
       <SectionActions>

@@ -130,6 +130,7 @@ export default class DashboardListingDetailsFormContainer extends Component {
         'info.floorPlan.bathroomCount',
         'info.floorPlan.area',
         'info.description',
+        'info.care',
         'slyScore',
       ],
     );
