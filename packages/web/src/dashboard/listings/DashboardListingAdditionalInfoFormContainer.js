@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 import defaultsDeep from 'lodash/defaultsDeep';
 import { withRouter } from 'react-router';
 
-import clientPropType from 'sly/common/propTypes/client';
+import listingPropType from 'sly/common/propTypes/listing';
 import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
 import DashboardListingAdditionalInfoForm from 'sly/web/dashboard/listings/DashboardListingAdditionalInfoForm';
@@ -35,11 +35,11 @@ const ReduxForm = reduxForm({
 
 export default class DashboardListingAdditionalInfoFormContainer extends Component {
   static propTypes = {
-    // updateCommunity: func.isRequired,
+    updateListing: func.isRequired,
     notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     user: userProptype,
-    // community: clientPropType.isRequired,
+    listing: listingPropType,
     status: object,
     currentEdit: object,
   };
