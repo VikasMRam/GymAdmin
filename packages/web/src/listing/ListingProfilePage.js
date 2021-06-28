@@ -116,7 +116,7 @@ export default class CommunityDetailPage extends PureComponent {
           <Wrapper>
             <TwoColumn>
               <Body>
-                <StyledListingSummary formattedAddress={formattedAddress} />
+                {/* <StyledListingSummary formattedAddress={formattedAddress} /> */}
                 {description && (
                 <StyledArticle>
                   <Block dangerouslySetInnerHTML={{ __html: description }} />
