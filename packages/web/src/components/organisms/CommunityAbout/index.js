@@ -44,7 +44,7 @@ LegacyContent.defaultProps = {
 
 const CommunityAbout = ({
   id, communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription,
-  ownerExperience, city, state, twilioNumber, guideUrl, communityUser, isActiveAdult, isInternational, ...props
+  ownerExperience, city, state, twilioNumber, communityUser, isActiveAdult, isInternational, ...props
 }) => (
   <CollapsibleBlock showChevron={false} collapsedLabel="Read More" notCollapsedLabel="Read Less" {...props} collapsedDefault>
     {communityDescription && (
@@ -89,16 +89,6 @@ const CommunityAbout = ({
         }
       </StyledArticle>
     )}
-    {guideUrl &&
-      <StyledArticle>
-        <Paragraph>
-          {communityName} is located in {city}, {state}. To learn even more about senior living there, click on this link for the&nbsp;
-          <Link href={`${guideUrl}`} >
-            {city}, {state} assisted living guide.
-          </Link>
-        </Paragraph>
-      </StyledArticle>
-    }
     {false && !isActiveAdult && !isInternational &&
       <StyledArticle>
         <StyledHeading font="title-m">
@@ -154,7 +144,6 @@ CommunityAbout.propTypes = {
   contract: PropTypes.bool,
   city: PropTypes.string,
   state: PropTypes.string,
-  guideUrl: PropTypes.string,
   twilioNumber: PropTypes.object,
   communityUser: PropTypes.object,
   isActiveAdult: PropTypes.bool,

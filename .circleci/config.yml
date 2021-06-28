@@ -261,8 +261,13 @@ jobs:
       - image: cypress/included:7.4.0
         environment:
           # this enables colors in the output
-          HIDE_CHATBOX: true
           TERM: xterm
+          HOST: http://www.seniorly.dev
+          CYPRESS_BASE_URL: http://www.seniorly.dev
+          CYPRESS_CHROME_WEB_SECURITY: false
+          API_URL: http://www.seniorly.dev/v0
+          DOMAIN: www.seniorly.dev
+          HIDE_CHATBOX: true
       - image: redis:4
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
         environment:
@@ -309,6 +314,13 @@ jobs:
           POSTGRES_USER: slydev
           POSTGRES_DB: slydev
           SLY_APIRATELIMITENABLED: false
+          SLY_REACT_RESOURCE_CENTER_ROUTE: resource-center
+          SLY_REACT_HOST: http://www.seniorly.dev
+          SLY_HOSTNAME: www.seniorly.dev
+          SLY_APIHOSTNAME: http://www.seniorly.dev
+          SLY_ROOTURL: http://www.seniorly.dev
+          SLY_COOKIEDOMAIN: .seniorly.dev
+          SLY_CORSORIGINS: http://www.seniorly.dev
     parallelism: 3
     resource_class: xlarge
 
@@ -344,6 +356,8 @@ jobs:
           command: haproxy -f haproxy.conf
           working_directory: ~/project/packages/e2e
           background: true
+          environment:
+
 
       - run:
           name: npm run build:web:prod
