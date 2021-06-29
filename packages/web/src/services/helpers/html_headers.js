@@ -271,7 +271,7 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community) => {
   const {
-    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
+    name, mainImage, address, propInfo, propRatings, similarCommunities, startingRate, url, gallery = {}, videoGallery = {}, reviews,
   } = community;
   const {
     line1, city, state, country, zip, latitude, longitude,
@@ -318,7 +318,7 @@ export const getHelmetForCommunityPage = (community) => {
   ldWP.hasPart = 'CollectionPage';
 
   let significantLinks = [];
-  const spUrls = similarProperties.map(p => `${host}${p.url}`);
+  const spUrls = similarCommunities?.similar?.map(p => `${host}${p.url}`);
   significantLinks = significantLinks.concat(spUrls);
   const searchPageUrl = getCitySearchUrl({ propInfo, address });
   significantLinks.push(`${host}${searchPageUrl}`);
@@ -399,31 +399,31 @@ export const getHelmetForCommunityPage = (community) => {
   };
 
   // TODO: Check whether we want to filter out questions without answers
-  const qaPageLdObjs = questions && questions.filter(question => question.contents.length > 0).map((question) => {
-    const answers = question.contents.slice();
-    const firstAnswer = answers.shift();
-    const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
-    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
-    const result = {
-      '@context': 'https://schema.org',
-      '@type': 'QAPage',
-      mainEntity: {
-        '@type': 'Question',
-        name: question.contentData,
-        text: question.contentData,
-        answerCount: question.contents.length,
-        upvoteCount: 1,
-        dateCreated: question.createdAt,
-        author: {
-          '@type': 'Person',
-          name: question.creator,
-        },
-        acceptedAnswer,
-        suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
-      },
-    };
-    return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
-  });
+  // const qaPageLdObjs = questions && questions.filter(question => question.contents.length > 0).map((question) => {
+  //   const answers = question.contents.slice();
+  //   const firstAnswer = answers.shift();
+  //   const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
+  //   const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
+  //   const result = {
+  //     '@context': 'https://schema.org',
+  //     '@type': 'QAPage',
+  //     mainEntity: {
+  //       '@type': 'Question',
+  //       name: question.contentData,
+  //       text: question.contentData,
+  //       answerCount: question.contents.length,
+  //       upvoteCount: 1,
+  //       dateCreated: question.createdAt,
+  //       author: {
+  //         '@type': 'Person',
+  //         name: question.creator,
+  //       },
+  //       acceptedAnswer,
+  //       suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
+  //     },
+  //   };
+  //   return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  // });
 
   const webPageLD = {};
   webPageLD['@context'] = 'http://schema.org';

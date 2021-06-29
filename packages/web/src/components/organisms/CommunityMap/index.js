@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf } from 'prop-types';
+import { string, number, shape, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 
@@ -58,15 +58,7 @@ class CommunityMap extends Component {
         longitude: number.isRequired,
       }).isRequired,
     }),
-    similarProperties: arrayOf(shape({
-      id: string.isRequired,
-      name: string.isRequired,
-      url: string.isRequired,
-      startingRate: number.isRequired,
-      imageUrl: string.isRequired,
-      latitude: number.isRequired,
-      longitude: number.isRequired,
-    })),
+    similarCommunities: object,
     className: string,
   };
 
@@ -89,7 +81,7 @@ class CommunityMap extends Component {
   render() {
     const {
       community,
-      similarProperties,
+      similarCommunities,
       className,
     } = this.props;
     const { latitude, longitude } = community.address;
@@ -103,7 +95,7 @@ class CommunityMap extends Component {
       },
     ];
 
-    similarProperties.forEach((prop) => {
+    similarCommunities?.similar?.forEach((prop) => {
       const {
         id,
         imageUrl,

@@ -52,12 +52,12 @@ export default class SimilarCommunitiesPopupContainer extends PureComponent {
 
     return (
       community &&
-      community.similarProperties && (
+      community.similarCommunities?.similar && (
         <>
           <StyledHeading>We found some Assisted Living communities you might like</StyledHeading>
 
           <SimilarCommunities
-            communities={community.similarProperties}
+            communities={community.similarCommunities?.similar}
             onCommunityClick={() => hideModal()}
             communityStyle={communityStyle}
             getEvent={(community, index) => ({
