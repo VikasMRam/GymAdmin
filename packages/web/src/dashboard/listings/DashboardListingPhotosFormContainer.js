@@ -11,7 +11,7 @@ import { galleryPropType, imagePropType } from 'sly/common/propTypes/gallery';
 import { query, prefetch } from 'sly/web/services/api';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import ConfirmationDialog from 'sly/web/components/molecules/ConfirmationDialog';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
@@ -25,25 +25,6 @@ const arrayMove = (array, from, to) => {
   return array;
 };
 
-const denormalizeImages = images => images.map(({ id, type, ...attributes }) => ({
-  id,
-  type: 'Image',
-  attributes,
-}));
-
-const imageNotIn = list => image => !list.some(l => (
-  l.attributes.sortOrder === image.attributes.sortOrder
-  && l.attributes.path === image.attributes.path
-));
-
-const imageIsNotNew = image => (image.id && image.attributes.path);
-const imageIsNew = image => !imageIsNotNew(image);
-
-const imageHasChanged = list => image => list.find(n => n.id === image.id && (
-  (n.attributes.path || '') !== (image.attributes.path || '')
-  || (n.attributes.description || '') !== (image.attributes.description || '')
-));
-
 const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.data';
 
 @withUser
@@ -51,7 +32,6 @@ const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.dat
 @query('updateListing')
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
-  include: 'suggested-edits',
 }))
 @prefetch('imageCategories', 'getImageCategories')
 @withProps(({ status }) => {
@@ -77,7 +57,6 @@ export default class DashboardListingPhotosFormContainer extends Component {
     user: userPropType,
     match: object.isRequired,
     status: object,
-    currentEdit: object,
     imageCategories: array,
   };
 
@@ -87,12 +66,9 @@ export default class DashboardListingPhotosFormContainer extends Component {
 
 
   makeImagesFromProps = () => {
-    const { currentEdit, images } = this.props;
-    const newImages = currentEdit?.changes['gallery.images']
-      ? denormalizeImages(currentEdit.change.gallery.images)
-      : images;
+    const { images } = this.props;
 
-    return newImages.sort((a, b) => {
+    return images.sort((a, b) => {
       const aSort = a.attributes.sortOrder;
       const bSort = b.attributes.sortOrder;
 
@@ -100,44 +76,21 @@ export default class DashboardListingPhotosFormContainer extends Component {
     });
   }
 
-  getChangesFromImages = (newImages) => {
-    const { currentEdit, images } = this.props;
-
-    const changes = {
-      deleted: [],
-      newImages: [],
-      modified: [],
-    };
-
-    if (!currentEdit?.changes['gallery.images']) {
-      return changes;
-    }
-
-    changes.deleted = images.filter(imageNotIn(newImages));
-    changes.newImages = newImages.filter(imageIsNew);
-    changes.modified = images
-      .filter(imageIsNotNew)
-      .filter(imageHasChanged(newImages));
-
-    return changes;
-  };
 
   makeInitialState = () => {
     const images = this.makeImagesFromProps();
-    const changes = this.getChangesFromImages(images);
+
     return {
       images,
-      changes,
+
     };
   };
 
   state = this.makeInitialState();
 
   reloadImages = (images = this.makeImagesFromProps()) => {
-    const changes = this.getChangesFromImages(images);
     return new Promise(resolve => this.setState({
       images,
-      changes,
     }, resolve));
   };
 
@@ -227,11 +180,10 @@ export default class DashboardListingPhotosFormContainer extends Component {
   };
 
   render() {
-    const { gallery, user, status, currentEdit, imageCategories, ...props } = this.props;
-    const { images, changes } = this.state;
+    const { gallery, user, status, imageCategories, ...props } = this.props;
+    const { images } = this.state;
 
-    const canEdit = !currentEdit?.isPendingForAdmin
-      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
 
     const initialValues = pick(
       status.listing.result.attributes,
@@ -254,7 +206,6 @@ export default class DashboardListingPhotosFormContainer extends Component {
         canEdit={canEdit}
         images={images}
         onSortEnd={this.onSortEnd}
-        changes={changes}
       />
     );
   }

@@ -11,8 +11,7 @@ import { query, prefetch } from 'sly/web/services/api';
 import DashboardListingAdditionalInfoForm from 'sly/web/dashboard/listings/DashboardListingAdditionalInfoForm';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
-import { patchFormInitialValues } from 'sly/web/services/edits';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import { DEFAULT_SECTION_ORDER } from 'sly/web/dashboard/listings/constants';
 
@@ -27,7 +26,6 @@ const ReduxForm = reduxForm({
 @withRouter
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
-  include: 'suggested-edits',
 }))
 @withProps(({ status }) => ({
   community: status.listing.getRelationship(status.listing.result, 'community'),
@@ -41,7 +39,6 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
     user: userProptype,
     listing: listingPropType,
     status: object,
-    currentEdit: object,
   };
 
   handleSubmit = (values) => {
@@ -57,12 +54,9 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
   };
 
   render() {
-    const { listing, status, user, currentEdit, ...props } = this.props;
-    const { info } = listing;
-    const { description } = info;
+    const { listing, status, user, ...props } = this.props;
 
-    const canEdit = !currentEdit?.isPendingForAdmin
-      && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
 
     const init = status.listing.result.attributes;
 
@@ -92,8 +86,6 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
     }
     // end
 
-
-    patchFormInitialValues(initialValues, currentEdit);
 
     // passes by ref
     defaultsDeep(initialValues, {

@@ -9,7 +9,6 @@ import {
   SUMMARY,
   PROFILE,
   PHOTOS,
-  DASHBOARD_LISTINGS_DETAIL_EDIT_PATH,
   ADDITIONAL_INFO,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
@@ -123,29 +122,15 @@ const DashboardListingDetailsPage = ({
   const userOrgId = user.organization?.id;
   const isOfDifferentOrg = !userIsAdmin && (userOrgId !== listingOrgId);
 
-  const pendingChangesUrl = currentEdit?.isPending && generatePath(DASHBOARD_LISTINGS_DETAIL_EDIT_PATH, { id: listing.id, editId: currentEdit.id });
-
-
   const notifications =  [];
 
-  if (pendingChangesUrl) {
-    notifications.push({
-      palette: 'yellow',
-      content: (
-        <>
-          Pending changes<br />
-          <Link to={pendingChangesUrl}>View edit history</Link>
-        </>
-      ),
-    });
-  }
 
   if (isOfDifferentOrg) {
     notifications.push({
       palette: 'primary',
       content: (
         <>
-          This Family belongs to a different organization named <i>{listing.organization?.name || 'Unknown'}</i>
+          This listing to a different organization named <i>{listing.organization?.name || 'Unknown'}</i>
         </>
       ),
     });
@@ -224,7 +209,6 @@ DashboardListingDetailsPage.propTypes = {
   notifyInfo: func,
   listingIsLoading: bool,
   currentEdit: object,
-  suggestedEdits: arrayOf(object),
   user: userPropType,
 };
 

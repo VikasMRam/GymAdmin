@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { func } from 'prop-types';
-import { id } from 'date-fns/locale';
 
 import { required, createValidator } from 'sly/web/services/validation';
 import { LISTING_RESOURCE_TYPE, ADDRESS_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';

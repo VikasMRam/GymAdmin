@@ -2,7 +2,7 @@ import React from 'react';
 import { func, bool, object, string } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
-import EditField from 'sly/web/components/form/EditField';
+import EditField from 'sly/web/dashboard/listings/components/EditField';
 import { AVAILABLE_TAGS } from 'sly/web/constants/tags';
 import { statuses } from 'sly/web/constants/listings';
 import { states, countries } from 'sly/web/constants/geo';

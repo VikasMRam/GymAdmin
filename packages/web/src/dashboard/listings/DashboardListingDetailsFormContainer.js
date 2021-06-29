@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import { reduxForm, formValueSelector } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
+import { required, createValidator } from 'sly/web/services/validation';
 import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
 import DashboardListingDetailsForm from 'sly/web/dashboard/listings/DashboardListingDetailsForm';
 import withUser from 'sly/web/services/api/withUser';
 import { userIs } from 'sly/web/services/helpers/role';
-import { PLATFORM_ADMIN_ROLE, PROVIDER_OD_ROLE } from 'sly/common/constants/roles';
-import { patchFormInitialValues } from 'sly/web/services/edits';
+import { PLATFORM_ADMIN_ROLE } from 'sly/common/constants/roles';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import listingPropType from 'sly/common/propTypes/listing';
 
@@ -28,20 +26,12 @@ const ReduxForm = reduxForm({
   validate,
 })(DashboardListingDetailsForm);
 
-const formValue = formValueSelector(formName);
-
-const mapStateToProps = (state, { status }) => ({
-  currentValues: state.form[formName]?.values,
-});
-
 @query('updateListing', 'updateListing')
 @withUser
 @withRouter
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
-  include: 'suggested-edits',
 }))
-@connect(mapStateToProps)
 @withProps(({ status }) => ({
   address: status.listing.getRelationship(status.listing.result, 'address'),
 }))
@@ -83,7 +73,6 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   handleSubmit = (values) => {
-    console.log('values', values);
     const { match, updateListing, notifyError, notifyInfo } = this.props;
     const { id } = match.params;
 
@@ -109,15 +98,14 @@ export default class DashboardListingDetailsFormContainer extends Component {
   };
 
   render() {
-    const { listing, status, user, address, currentEdit, ...props } = this.props;
+    const { listing, status, user, address, ...props } = this.props;
     const { tags: modelTags } = listing;
     let tags = [];
     if (modelTags) {
       tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
     }
 
-    const canEdit = !currentEdit?.isPendingForAdmin
-       && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);
+    const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
 
     const initialValues = pick(
       status.listing.result.attributes,
@@ -140,8 +128,6 @@ export default class DashboardListingDetailsFormContainer extends Component {
     defaultsDeep(initialValues, {
       tags,
     });
-
-    patchFormInitialValues(initialValues, currentEdit);
 
     return (
       <ReduxForm

@@ -5,7 +5,6 @@ import { sortableContainer } from 'react-sortable-hoc';
 import { imagePropType } from 'sly/common/propTypes/gallery';
 import MediaItem from 'sly/web/services/s3Uploader/components/MediaItem';
 import IconButton from 'sly/common/components/molecules/IconButton';
-import HelpBubble from 'sly/web/components/form/HelpBubble';
 import S3Uploader from 'sly/web/services/s3Uploader/components/S3Uploader';
 import EditImageModal from 'sly/web/dashboard/listings/components/EditImageModal';
 import Block from 'sly/web/components/atoms/Block';
@@ -31,7 +30,6 @@ const SectionSortable = sortableContainer(({
   images,
   editImage,
   deleteImage,
-  isNew,
   canEdit,
 }) => (
   <Block padding="xLarge">
@@ -42,14 +40,13 @@ const SectionSortable = sortableContainer(({
         deleteImage={deleteImage}
         image={image}
         index={i}
-        isNew={isNew(image)}
         disabled={!canEdit}
       />
     ))}
   </Block>
 ));
 
-const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, changes, imageCategories }) => {
+const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveImage, deleteImage, canEdit, images, imageCategories }) => {
   const [editingImage, setEditingImage] = useState(null);
 
   const editImage = image => setEditingImage(image);
@@ -67,13 +64,6 @@ const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveIm
     </S3Uploader>
   );
 
-  const deletedMessage = changes.deleted.length === 0
-    ? undefined
-    : changes.deleted
-      .map(image => <>{image.id}{image.attributes.path}<br /></>);
-
-  const isNew = image => (changes?.newImages || []).includes(image);
-
 
   return (
     <>
@@ -86,13 +76,6 @@ const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveIm
 
       />
       <Section>
-        {deletedMessage && (
-        <HelpBubble
-          trigger="This images were deleted"
-        >
-          {deletedMessage}
-        </HelpBubble>
-          )}
         <SectionHeader actions={actions}>
           Images
         </SectionHeader>
@@ -102,7 +85,6 @@ const DashboardListingPhotosForm = ({ onUpload, onUploadError, onSortEnd, saveIm
           images={images}
           editImage={editImage}
           deleteImage={deleteImage}
-          isNew={isNew}
           canEdit={canEdit}
         />
       </Section>
@@ -120,7 +102,6 @@ DashboardListingPhotosForm.propTypes = {
   deleteImage: func.isRequired,
   onSortEnd: func.isRequired,
   images: arrayOf(imagePropType),
-  changes: object,
 };
 
 export default DashboardListingPhotosForm;

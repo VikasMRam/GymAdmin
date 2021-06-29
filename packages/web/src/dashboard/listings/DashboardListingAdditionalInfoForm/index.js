@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { func, bool, object, string } from 'prop-types';
 
 import { Button } from 'sly/web/components/atoms';
-import EditField from 'sly/web/components/form/EditField';
+import EditField from 'sly/web/dashboard/listings/components/EditField';
 import {
   SectionForm,
   Section,
@@ -108,8 +108,6 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
 DashboardListingAdditionalInfoForm.propTypes = {
   invalid: bool,
   canEdit: bool,
-  submitting: bool,
-  respiteAllowed: object,
   handleSubmit: func.isRequired,
 };
 
