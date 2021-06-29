@@ -179,7 +179,17 @@ const CMSDynamicZone = ({ content: data }) => {
           }
           if (componentName === DZComponentsNames.editor) return <EditorValueWrapper key={index} value={rest.value}/>;
           if (componentName === DZComponentsNames.subtitle) {
-            return <Heading key={index} font="title-l" ref={rest.ref} css={subtitleStyles}>{rest.value}</Heading>;
+            return (
+              <Heading
+                key={index}
+                font="title-l"
+                ref={rest.ref}
+                css={subtitleStyles}
+                id={rest.subtitleId}
+              >
+                {rest.value}
+              </Heading>
+            );
           }
           if (componentName === DZComponentsNames.listInTwoColumns) return (
             <ListInTwoColumnsWrapper

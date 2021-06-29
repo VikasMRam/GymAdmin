@@ -54,6 +54,10 @@ const getSearchParams = (location, match) => {
   };
 };
 
+const generateTocList = content => content
+  .filter(({ __component }) => __component.includes('subtitle'))
+  .map(({ value: title, subtitleId: id }) => ({ title, id }));
+
 const NewNearMePageContainer = ({ history, location, match }) => {
   const searchParams = useMemo(() => getSearchParams(location, match), [location, match]);
 
@@ -96,25 +100,28 @@ const NewNearMePageContainer = ({ history, location, match }) => {
     return <Redirect to="/" />;
   }
 
-  console.log('result?.[0]?.mainImg?.path', result?.[0]?.mainImg?.path);
-
   return (
     <>
       <Helmet>
         <title>{result[0].title}</title>
         <meta name="description" content={result[0].description} />
         {faqs && faqPage(faqs)}
-        {/* {tocSiteNavigationLD("https://www.seniorly.com/in-home-care", tocList)} */}
+        {tocSiteNavigationLD(`https://www.seniorly.com/${match.params.hub}`, generateTocList(result[0].content))}
         {guideLD(result[0].title, result[0].description, `https://www.seniorly.com/${match.params.hub}`)}
       </Helmet>
 
       <HubHeader
         imagePath={result?.[0]?.mainImg?.path}
-        toc="nursing homes"
-        heading="What is a Nursing Home?"
-        label="Use our free search to find nursing homes nearby"
+        toc={result[0].toc || result[0].title.toLowerCase()}
+        heading={result[0].subTitle}
+        showSearch={result[0].showSearch}
         onCurrentLocation={handleCurrentLocation}
         onLocationSearch={handleOnLocationSearch}
+        mobileBGGradientPalette={result[0].headerGradientPalette}
+        mobileBGGradientVariation={result[0].headerGradientVariation}
+        laptopBBGradientPalette={result[0].headerGradientPalette}
+        laptopBBGradientVariation={result[0].headerGradientVariation}
+        {...(result[0].showSearch && result[0].toc && { label: `Use our free search to find ${result[0].toc} nearby` })}
       />
 
       {result[0].content && (
