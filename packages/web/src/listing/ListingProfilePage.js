@@ -20,6 +20,7 @@ import {
 } from 'sly/web/listing/templates/ListingProfilePageTemplate';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import ModalContainer from 'sly/web/containers/ModalContainer';
+import PlusBranding from 'sly/web/listing/components/PlusBranding';
 
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
@@ -116,14 +117,16 @@ export default class CommunityDetailPage extends PureComponent {
           <Wrapper>
             <TwoColumn>
               <Body>
-                {/* <StyledListingSummary formattedAddress={formattedAddress} /> */}
+                <StyledListingSummary formattedAddress={formattedAddress} />
                 {description && (
                 <StyledArticle>
                   <Block dangerouslySetInnerHTML={{ __html: description }} />
                 </StyledArticle>
                 )}
+
               </Body>
             </TwoColumn>
+            <PlusBranding />
           </Wrapper>
         </ListingProfilePageTemplate>
       </>

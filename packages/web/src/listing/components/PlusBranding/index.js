@@ -1,134 +1,176 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
 
 import { size, palette } from 'sly/common/components/themes';
-import { Heading, Icon, Paragraph } from 'sly/common/components/atoms';
-import { ResponsiveImage } from 'sly/web/components/atoms';
-import IconItem from 'sly/web/components/molecules/IconItem';
-import PlusBadge from 'sly/web/components/molecules/PlusBadge';
+import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tablet, space  } from 'sly/common/system';
+import { Icon } from 'sly/common/components/atoms';
+import { Checkmark } from 'sly/common/icons/index';
 
-const TextWrapper = styled.div`
-  color: ${palette('white', 'base')};
-  display: block;
-  transform: rotate(0);
-  margin: 0 ${size('spacing.large')};
+const blockPad = css`
+  margin-bottom: ${space('xxl')}!important;
+  ${sx$tablet({ marginBottom: '64px !important' })}
+  ${sx$laptop({ marginBottom: 'xxxl !important' })}
 `;
 
-const StyledHeading = styled(Heading)`
-  color: ${palette('white', 'base')};
-  font-size: ${size('text.hero')};
-  margin: ${size('spacing.large')};
-  font-weight: ${size('weight.bold')};
-  display: flex;
-  align-items: center;
+const Section = styled(Block)`
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  ${sx$tablet({
+    width: 'col8',
+    paddingX: '0',
+  })} 
+  ${sx$laptop({ width: 'col12' })}) 
 `;
 
-const Italicize = styled.span`
-  font-style: italic;
-`;
-
-const IconItemWrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
-  
-`;
-
-const FullWidthSection = styled.section`
-  margin: ${size('spacing.xLarge')} 0;
-`;
-
-const PlusWrapper = styled.div`
-  position: relative;
-  padding: ${size('spacing.huge')} 0;
-`;
-
-const ImageWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: -${size('plus.left.default')};
-  overflow: hidden;
-  width:100vw;
-  height:100%;
-  z-index: 0;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    left:calc(${size('plus.left.tablet')} - 50vw);
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    left:calc(${size('plus.left.laptop')} - 50vw);
-    background: linear-gradient(to right, #9f8352 25%, #d5f0f000);
-  }
+const GradientOverlay = styled(Block)`
   display:inline-block;
   &:after {
-    content: '';
-    position: absolute;
-    left:0;
-    top: 0;
-    width: 100vw;
-    height: 100%;
-    background: linear-gradient(to top, #9f8352 25%, #d5f0f000);
+    content:'';
+    position:absolute;
+    left:0; top:0;
+    width:100%; 
+    height:100%;
+    display:inline-block;
+    background: linear-gradient(to bottom,rgba(159,130,82,0.1) 0%,rgba(159,130,82,1) 50%);
   }
-
-`;
-const StyledImage = styled(ResponsiveImage)`
-  max-width: 100%;
-  height:100%;
-  object-fit: cover;
-  display: block;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 100%;
-    max-height:100%;
-  }
+  ${sx$tablet({
+    '&:after': {
+      background: 'linear-gradient(to left,rgba(159,130,82,0.1) 0%,rgba(159,130,82,1) 95%)',
+    },
+  })} 
 `;
 
-const SeniorlyIcon = styled(Icon)`
-  margin-bottom: ${size('spacing.small')};
-  display: inline-block;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > svg {
-      margin: 0 auto;
-    }
+const IconItem = styled(Block)`
+display:flex;
+flex-direction:row;
+align-items:baseline;
+color: white;
+& svg {
+    margin-right:${space('s')};
+    margin-top:auto;
+    margin-bottom:auto;
   }
-
-`;
-
-const StyledText = styled.div`
-  color: ${palette('white', 'base')};
-  line-height: 1.5;
-  margin-bottom: 1rem;
 `;
 
 export default class PlusBranding extends Component {
   render() {
     return (
-      <FullWidthSection>
-        <PlusWrapper>
-          <ImageWrapper>
-            <StyledImage path="react-assets/plus/plusbg.jpg" alt="Seniorly Plus Home" height={510} />
-          </ImageWrapper>
-          <TextWrapper>
-            <StyledHeading>
-              <SeniorlyIcon icon="logo" palette="primary" variation="base" size="xxLarge" />
-              <span>
-                &nbsp;seniorly&nbsp;<Italicize>plus</Italicize>
-              </span>
-            </StyledHeading>
-            <StyledText>
-              Seniorly Plus is a curated list of senior homes. Each home is independently verified through an in-person
-              inspection to ensure your next home is a great fit. Just look for the badge.
-            </StyledText>
-            <Paragraph>
-              <IconItemWrapper>
-                <IconItem icon="verified" iconPalette="white" borderPalette="white" borderVariation="base" borderless={false}>Quality verified through in-person inspections</IconItem>
-              </IconItemWrapper>
-              <IconItemWrapper>
-                <IconItem icon="house" iconPalette="white" borderPalette="white" borderVariation="base" borderless={false}>Access to thoughtfully designed suites and apartments</IconItem>
-              </IconItemWrapper>
-              <IconItemWrapper>
-                <IconItem icon="phone" iconPalette="white" borderPalette="white" borderVariation="base" borderless={false}>Premium support during search and after the transition</IconItem>
-              </IconItemWrapper>
-            </Paragraph>
-          </TextWrapper>
-        </PlusWrapper>
-      </FullWidthSection>
+      <Block
+        as="header"
+        position="relative"
+        css={css`
+        width: 100vw;
+        max-width: 100vw;
+        margin-top: 2em;
+        margin-left: calc(50% - 50vw);
+        padding: ${space('xxl')} 0px;
+        ${sx$tablet({ padding: '64px 0px' })}
+        ${sx$laptop({ padding: 'xxxl 0px' })}
+        ${blockPad}
+      `}
+      >
+        <GradientOverlay>
+          <Image
+            path="react-assets/plus/plus-background.jpeg"
+            alt="A Home To Love"
+            css={css`
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+          `}
+            sources={[120, 240, 480]}
+            sizes="(max-width: 1199px) 100vw, 1200px"
+            shouldPreload
+            loading="eager"
+          />
+        </GradientOverlay>
+        <Section
+          display="flex"
+          flexDirection="column"
+          position="relative"
+          sx={{
+            zIndex: 100,
+          }}
+          sx$laptop={{
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+        >
+          <Block
+            marginBottom="xxl"
+            sx$tablet={{
+              marginBottom: '64px',
+            }}
+            sx$laptop={{
+              marginBottom: '0',
+              marginRight: '64px',
+            }}
+          >
+            <Block
+              display="flex"
+              justifyContent="center"
+              paddingBottom="xl"
+              sx$tablet={{
+                justifyContent: 'flex-start',
+                paddingBottom: 's',
+              }}
+            >
+              <Icon palette="white" icon="logo" size="hero" />
+              <Heading
+                font="title-l"
+                pad="0 l"
+                as="span"
+                maxWidth={sx`calc(${layout('col4')} + ${space('l')})`}
+                color="white"
+                alignSelf="center"
+              >
+                Seniorly Plus
+              </Heading>
+            </Block>
+            <Block
+              m="s 0"
+              font="body-m"
+              pad="l"
+              color="white"
+              as="p"
+              maxWidth={sx`calc(${layout('col8')} + ${space('l')})`}
+            >
+              This is a Seniorly Plus room which means it is part of a selection of only the highest quality homes. Each Plus home is verified through in-person quality inspection to ensure your next home is one you will love.
+            </Block>
+            <Block>
+              <Grid flexDirection="row" gridGap="s">
+                <IconItem><Checkmark color="white" />Each space is thoughtfully designed for comfort and care</IconItem>
+                <IconItem><Checkmark color="white" />Seniorly Plus communities come with premium support</IconItem>
+                <IconItem><Checkmark color="white" />Be at ease knowing each community is verified with an in-person inspection</IconItem>
+              </Grid>
+            </Block>
+            <Button
+              palette="white"
+              to="/"
+              width="100%"
+              marginTop="xl"
+              paddingY="m"
+              height="l"
+              color="slate-base"
+              sx$tablet={{
+                width: 'initial',
+                paddingX: 'xxl',
+              }}
+            >
+              Learn more abour Seniorly Plus
+            </Button>
+          </Block>
+
+        </Section>
+      </Block>
     );
   }
 }
