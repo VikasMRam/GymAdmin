@@ -9,7 +9,7 @@ import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-
 const { similarCommunities } = RhodaGoldmanPlaza;
 
 const defaultProps = {
-  similarCommunities: similarCommunities.similar,
+  similarCommunities: similarCommunities,
   buttonTo: 'www.teamseniorly.com',
   buttonText: 'Take me to my dashboard',
   heading: 'Tour Request Sent!',
