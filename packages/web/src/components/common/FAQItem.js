@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { bool, string } from 'prop-types';
 
-import EditorValueWrapper from './EditorValueWrapper';
+import EditorValueWrapper from '../resourceCenter/components/ArticleContent/EditorValueWrapper';
 
 import Hr from 'sly/common/system/Hr';
 import Block from 'sly/common/system/Block';

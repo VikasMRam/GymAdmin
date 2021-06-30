@@ -24,7 +24,7 @@ import AdvisorPreview from 'sly/web/components/resourceCenter/components/Advisor
 import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
 
 import EditorValueWrapper from './EditorValueWrapper';
-import FAQItem from './FAQItem';
+import FAQItem from 'sly/web/components/common/FAQItem';
 import Search from './Search';
 
 const articleDZComponentsNames = {

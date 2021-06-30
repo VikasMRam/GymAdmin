@@ -24,7 +24,8 @@ import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
-import SampleMenu from 'sly/web/components/organisms/SampleMenu';
+import FAQItem from 'sly/web/components/common/FAQItem';
+
 import {
   CommunityDetailPageTemplate,
   makeBody,
@@ -227,7 +228,8 @@ export default class CommunityDetailPage extends PureComponent {
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = getPartnerAgent(community);
-    const { nearbyCities } = rgsAux;
+    const { nearbyCities, rgsInfo } = rgsAux;
+    const { faqs } = rgsInfo;
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
 
@@ -624,6 +626,22 @@ export default class CommunityDetailPage extends PureComponent {
                   </CarouselContainer>
                 </StyledHeadingBoxSection>
               )}
+              {faqs && (
+                <StyledHeadingBoxSection
+                  heading={`Frequently asked questions about ${name}`}
+                  id="sticky-sidebar-boundary"
+                  sx$tablet={{ padding: '0 !important' }}
+                >
+                  {faqs.map(faq => (
+                    <FAQItem
+                      key={faq.question}
+                      title={faq.question}
+                      description={faq.answer}
+                    />
+                  ))}
+
+              </StyledHeadingBoxSection>
+            )}
           </Wrapper>
 
 
