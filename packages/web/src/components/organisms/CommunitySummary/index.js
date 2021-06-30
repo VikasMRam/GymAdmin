@@ -34,7 +34,7 @@ const TooltipContent = styled(ReactTooltip)`
   box-shadow: 0 0 ${space('m')} ${color('slate.lighter-80')}80;
 `;
 
-const OverlayTwoColumnListWrapper = styled.div`
+const OverlayTwoColumnListWrapper = styled(Block)`
   margin-bottom: ${space('m')};
   display: grid;
   grid-template-columns: 100%;
@@ -170,107 +170,107 @@ const CommunitySummary = ({
           <Button sx$tablet={{ paddingX: 's' }} onClick={onSaveClick}  variant="neutral"><Favorite active={isFavorited} color={isFavorited && 'red.lighter-20'} mr="xs" />Save</Button>
           <Button sx$tablet={{ paddingX: 's' }} onClick={onShareClick} variant="neutral" ><Share mr="xs" />Share</Button>
         </Grid>
-        <Hr mt="l" mb="l" sx$tablet={{ display: 'none' }} />
-        <Grid gridTemplateColumns="1fr 1fr" gridGap="m" sx$tablet={{ display: 'flex' }}>
-          {
-            communityPhone &&
-            <div>
-              <Span font="body-s">For Friends & Family</Span>
-              <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
-              {isBrowser &&
-              <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
-                This phone number may connect you to the community front desk.
-              </TooltipContent>
+        {(communityPhone || partnerAgent) && (
+          <>
+            <Hr mt="l" mb="l" sx$tablet={{ display: 'none' }} />
+            <Grid gridTemplateColumns="1fr 1fr" gridGap="m" sx$tablet={{ display: 'flex' }}>
+              {
+                communityPhone &&
+                <div>
+                  <Span font="body-s">For Friends & Family</Span>
+                  <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
+                  {isBrowser &&
+                  <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
+                    This phone number may connect you to the community front desk.
+                  </TooltipContent>
+                  }
+                  <br />
+                  <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
+                    {phoneFormatter(communityPhone, true)}
+                  </Link>
+                </div>
               }
-              <br />
-              <Link href={`tel:${communityPhone}`} onClick={onCommunityNumberClicked}>
-                {phoneFormatter(communityPhone, true)}
-              </Link>
-            </div>
-          }
-          {
-            partnerAgent &&
-              <div>
-                <Span font="body-s">For Pricing & Availability</Span>
-                <StyledHelpIcon size="s" data-tip data-for="conciergePhone" />
-                {isBrowser &&
-                <TooltipContent overridePosition={overridePosition} id="conciergePhone" type="light" effect="solid" multiline>
-                  This phone number will connect you to the concierge team at Seniorly.
-                </TooltipContent>
-                }
-                <br />
-                <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-                  {phoneFormatter(conciergeNumber, true)}
-                </Link>
-              </div>
-          }
-        </Grid>
+              {
+                partnerAgent &&
+                  <div>
+                    <Span font="body-s">For Pricing & Availability</Span>
+                    <StyledHelpIcon size="s" data-tip data-for="conciergePhone" />
+                    {isBrowser &&
+                    <TooltipContent overridePosition={overridePosition} id="conciergePhone" type="light" effect="solid" multiline>
+                      This phone number will connect you to the concierge team at Seniorly.
+                    </TooltipContent>
+                    }
+                    <br />
+                    <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+                      {phoneFormatter(conciergeNumber, true)}
+                    </Link>
+                  </div>
+              }
+            </Grid>
+          </>
+        )}
       </Grid>
 
       <Hr mt="l" display="none" sx$tablet={{ display: 'block' }} />
 
-
       {care && care.includes(ACTIVE_ADULT) &&
-        <>
-          {communityPhone && <Hr mb="l" mt="l" />}
-          <OverlayTwoColumnListWrapper>
-            {priceRange &&
-            <ListItem Icon={<Money color="slate.lighter-40" />}>
-              <div>
-                <strong> Price Range </strong>
-                <br />
-                {priceRange}
-              </div>
+        <OverlayTwoColumnListWrapper mt="l">
+          {priceRange &&
+          <ListItem icon={<Money color="slate.lighter-40" />}>
+            <div>
+              <strong> Price Range </strong>
+              <br />
+              {priceRange}
+            </div>
 
-            </ListItem>
-            }
-            {typeOfHome &&
-            <ListItem Icon={<Community color="slate.lighter-40" />}>
-              <div>
-                <strong> Home Type </strong>
-                <br />
-                {typeOfHome}
-              </div>
-            </ListItem>
-            }
-            {squareFeet &&
-            <ListItem Icon={<SqFt color="slate.lighter-40" />}>
-              <div>
-                <strong> Sq. Ft </strong>
-                <br />
-                {squareFeet}
-              </div>
-            </ListItem>
-            }
-            {numBeds &&
-            <ListItem Icon={numBeds === 1 ? <Bed color="slate.ligher-40" /> : <Beds color="slate.lighter-40" />}>
-              <div>
-                <strong> No. of Beds </strong>
-                <br />
-                {numBeds}
-              </div>
-            </ListItem>
-            }
-            {numBaths &&
-            <ListItem Icon={<Bathroom color="slate.lighter-40" />}>
-              <div>
-                <strong> No. of Baths </strong>
-                <br />
-                {numBaths}
-              </div>
-            </ListItem>
-            }
-            {garage &&
-            <ListItem Icon={<Garage color="slate.lighter-40" />}>
-              <div>
-                <strong> Garage </strong>
-                <br />
-                {garage}
-              </div>
-            </ListItem>
-            }
-          </OverlayTwoColumnListWrapper>
-        </>
+          </ListItem>
+          }
+          {typeOfHome &&
+          <ListItem icon={<Community color="slate.lighter-40" />}>
+            <div>
+              <strong> Home Type </strong>
+              <br />
+              {typeOfHome}
+            </div>
+          </ListItem>
+          }
+          {squareFeet &&
+          <ListItem icon={<SqFt color="slate.lighter-40" />}>
+            <div>
+              <strong> Sq. Ft </strong>
+              <br />
+              {squareFeet}
+            </div>
+          </ListItem>
+          }
+          {numBeds &&
+          <ListItem icon={numBeds === 1 ? <Bed color="slate.ligher-40" /> : <Beds color="slate.lighter-40" />}>
+            <div>
+              <strong> No. of Beds </strong>
+              <br />
+              {numBeds}
+            </div>
+          </ListItem>
+          }
+          {numBaths &&
+          <ListItem icon={<Bathroom color="slate.lighter-40" />}>
+            <div>
+              <strong> No. of Baths </strong>
+              <br />
+              {numBaths}
+            </div>
+          </ListItem>
+          }
+          {garage &&
+          <ListItem icon={<Garage color="slate.lighter-40" />}>
+            <div>
+              <strong> Garage </strong>
+              <br />
+              {garage}
+            </div>
+          </ListItem>
+          }
+        </OverlayTwoColumnListWrapper>
       }
     </Block>
   );

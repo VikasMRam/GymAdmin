@@ -6,11 +6,11 @@ import { Star } from 'sly/common/icons';
 
 
 const ListItem = ({
-  children, Icon,
+  children, icon,
 }) => (
   <Block display="flex" pad="xs">
     <Block pr="xs" >
-      <Icon />
+      {icon}
     </Block>
     {children}
   </Block>
@@ -18,12 +18,12 @@ const ListItem = ({
 
 ListItem.propTypes = {
   children: PropTypes.node,
-  Icon: node.isRequired,
+  icon: node.isRequired,
 
 };
 
 ListItem.defaultProps = {
-  Icon: Star,
+  icon: Star,
 };
 
 export default ListItem;
