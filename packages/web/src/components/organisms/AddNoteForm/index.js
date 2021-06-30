@@ -19,7 +19,7 @@ const AddNoteForm = ({
     topRightIcon="close"
     topRightIconOnClick={onCancelClick}
   >
-    <Block padding="m">
+    <Block>
       <Field
         type="textarea"
         rows={3}
