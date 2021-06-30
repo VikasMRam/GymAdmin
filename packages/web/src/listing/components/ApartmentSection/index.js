@@ -19,11 +19,17 @@ const ApartmentSection = () => {
 
   const { name, address: { city, state }, gallery } = listing;
 
-  const images = useMemo(() => gallery.images.map((img, i) => ({
+  const { images } = gallery;
+
+  // get unique image from each category
+  const filteredImages = [...images.filter(image => image.category).reduce((map, obj) => map.set(obj.category.id, obj), new Map()).values()];
+
+  const memoiedImages = useMemo(() => filteredImages.map((img, i) => ({
     id: img.id,
     path: img.path,
     alt: `${name}, ${city}, ${state}  ${i + 1}`,
-  })), [gallery]);
+    category: img?.category,
+  })), [filteredImages]);
 
   const handlePictureClick = useCallback((picture, pictureIndex) => {
     SlyEvent.getInstance().sendEvent({
@@ -44,13 +50,13 @@ const ApartmentSection = () => {
   return (
     <>
       <ImageByCategory
-        images={images}
+        images={memoiedImages}
         onPictureClick={handlePictureClick}
       />
       <FullscreenMediaGallery
         onClose={handleCloseFullscreen}
         onSlideChange={handlePictureChange}
-        images={images}
+        images={memoiedImages}
         currentSlide={currentIndex}
         isOpen={isFullscreen}
       />

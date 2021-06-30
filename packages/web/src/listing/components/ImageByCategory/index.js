@@ -1,55 +1,74 @@
 import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 
-import { color, Grid, Image, sx } from 'sly/common/system';
+import { color, Grid, Image, sx, Heading } from 'sly/common/system';
 import Block from 'sly/common/system/Block';
 
-export default function MorePictures({ images = [], onPictureClick }) {
+const ImageItem = ({ image, i,  onPictureClick }) => {
+  return (
+    <Image
+      key={image.id}
+      onClick={() => onPictureClick(image, i, onPictureClick)}
+      path={image.path}
+      aspectRatio="3:2"
+      alt={image.alt}
+      sizes="(max-width: 727px) 100vw, (max-width: 1079px) 334px, 250px"
+      suorces={[
+        138,
+        186,
+        250,
+        334,
+      ]}
+      loading="lazy"
+      border="round"
+    >
+      <Block
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          '&:hover': {
+            backgroundColor: sx`${color('black.base')}33`,
+            cursor: 'pointer',
+          },
+        }}
+      />
+    </Image>
+  );
+};
+
+export default function ImageByCategory({ images = [], onPictureClick }) {
   return (
     <Grid
-      gridTemplateColumns="1fr 1fr"
-      gridGap="xs"
-      sx$laptop={{
-        gridTemplateColumns: 'repeat(4, 1fr)',
-      }}
+      gridTemplateColumns="repeat(2, 1fr)"
+      gridGap="l"
     >
-      {images.map((image, i) => (
-        <Image
-          key={image.id}
-          onClick={() => onPictureClick(image, i)}
-          path={image.path}
-          aspectRatio="3:2"
-          alt={image.alt}
-          sizes="(max-width: 727px) 100vw, (max-width: 1079px) 334px, 250px"
-          suorces={[
-            138,
-            186,
-            250,
-            334,
-          ]}
-          loading="lazy"
-          border="round"
-        >
-          <Block
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              '&:hover': {
-                backgroundColor: sx`${color('black.base')}33`,
-                cursor: 'pointer',
-              },
-            }}
-          />
-        </Image>
-      ))}
+      {images.map((image, i) => {
+        if (image.category.id === '1') {
+          return (
+            <Block
+              gridColumn="1 / -1"
+              gridRow="1 / -1"
+            >
+              <ImageItem image={image} i={i} onPictureClick={onPictureClick} />
+              <Heading paddingTop="xs" as="h3" font="title-s">{image.category.name}</Heading>
+            </Block>
+          );
+        }
+        return (
+          <Block>
+            <ImageItem image={image} i={i} onPictureClick={onPictureClick} />
+            <Heading paddingTop="xs" as="h3" font="title-s">{image.category.name}</Heading>
+          </Block>
+        );
+      })}
     </Grid>
   );
 }
 
-MorePictures.propTypes = {
+ImageByCategory.propTypes = {
   images: arrayOf(
     shape({
       id: string.isRequired,

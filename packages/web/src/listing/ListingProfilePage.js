@@ -92,8 +92,6 @@ export default class CommunityDetailPage extends PureComponent {
       location,
     } = this.props;
 
-    console.log('gallery', listing);
-
     const {
       name,
       info = {},
@@ -157,9 +155,11 @@ export default class CommunityDetailPage extends PureComponent {
                   title="The apartment"
                   headingFont="title-l"
                   headingMargin="l"
+                  paddingTop="xxl"
                   sx$tablet={{ px: 0 }}
                 >
-
+                  <ApartmentSection />
+                  <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
                   <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
                 </StyledSection>
             )}
