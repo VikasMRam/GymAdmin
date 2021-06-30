@@ -9,8 +9,8 @@ export default function CarouselContainer({ itemsQty, children }) {
   const [ref, dimensions] = useScrollObserver();
   const [max, step] = useMemo(() => {
     return [
-      (dimensions.scrollX),
-      Math.floor(dimensions.clientWidth + 24),
+      (dimensions.scrollX - 13),
+      Math.floor(dimensions.clientWidth),
     ];
   }, [dimensions]) || 0;
 
@@ -44,8 +44,7 @@ export default function CarouselContainer({ itemsQty, children }) {
           width: sx`calc(100% + ${space('l')})`,
           padding: 's',
           m: '-s -s s',
-          gridTemplateColumns: `repeat(${itemsQty}, 20.5rem)`,
-          gridTemplateRows: '25.3rem',
+          gridTemplateColumns: `repeat(${itemsQty}, 20.5rem) 1px`,
           gridColumnGap: 'l',
           overflow: 'hidden',
         }}

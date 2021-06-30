@@ -10,12 +10,11 @@ import withDatatable from 'sly/web/services/datatable/components/withDatatable';
 import { prefetch, withUser } from 'sly/web/services/api';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
 import communityPropType from 'sly/common/propTypes/community';
-
 import {
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
   PROFILE,
 } from 'sly/web/dashboard/dashboardAppPaths';
-import AddCommunityFormContainer from 'sly/web/dashboard/communities/AddCommunityFormContainer'
+import AddCommunityFormContainer from 'sly/web/dashboard/communities/AddCommunityFormContainer';
 import DashboardCommunityIndexPage from 'sly/web/dashboard/communities/DashboardCommunityIndexPage';
 
 @withNotification
@@ -40,7 +39,7 @@ export default class DashboardCommunityIndexPageContainer extends Component {
   onAddCommunitySuccess= (resp) => {
     const { history } = this.props;
     const { id } = resp;
-    const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id: id, tab: PROFILE });
+    const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab: PROFILE });
     history.push(path);
   };
 
@@ -90,5 +89,5 @@ export default class DashboardCommunityIndexPageContainer extends Component {
       />
     );
   }
-};
+}
 

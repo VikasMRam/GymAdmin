@@ -227,22 +227,24 @@ export const SectionActions = props => (
 );
 
 export const DashboardWithSummaryPageTemplate = styled(DashboardPageTemplate)`
-  display: block;
-  padding: 0 ${space('m')};
+  & > main {
+    display: block;
+    padding: 0 ${space('m')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0 ${space('l')} ${space('l')};
-  }
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      padding: 0 ${space('l')} ${space('l')};
+    }
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: grid;
-    column-gap: ${space('l')};
-    grid-template-columns: ${size('layout.col4')} minmax(0, 1fr);
-    grid-template-rows: max-content max-content auto;
-    grid-template-areas:
-      "top top"
-      "left right"
-      "summary right";
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      display: grid;
+      column-gap: ${space('l')};
+      grid-template-columns: ${size('layout.col4')} minmax(0, 1fr);
+      grid-template-rows: max-content max-content auto;
+      grid-template-areas:
+        "top top"
+        "left right"
+        "summary right";
+    }
   }
 `;
 

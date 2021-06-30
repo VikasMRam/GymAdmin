@@ -1,83 +1,94 @@
-import React, { Component } from 'react';
-import { arrayOf, object, func } from 'prop-types';
+import React, { useMemo } from 'react';
+import { object } from 'prop-types';
 
-import agentPropType from 'sly/common/propTypes/agent';
-import { titleize } from 'sly/web/services/helpers/strings';
-import { getAgentUrl, urlize } from 'sly/web/services/helpers/url';
-import withNotification from 'sly/web/components/helpers/notification';
 import SlyEvent from 'sly/web/services/helpers/events';
-import { getAgentParams } from 'sly/web/components/search/helpers';
-import prefetch from 'sly/web/services/api/prefetch';
 import AgentRegionPage from 'sly/web/components/pages/AgentRegionPage';
+import Flex from 'sly/common/system/Flex';
+import Image from 'sly/common/system/Image';
+import { useNotification } from 'sly/web/components/helpers/notification';
+import { getAgentParams } from 'sly/web/components/search/helpers';
+import { assetPath } from 'sly/web/components/themes';
+import { getAgentUrl, urlize } from 'sly/web/services/helpers/url';
+import { titleize } from 'sly/web/services/helpers/strings';
+import { usePrefetch }  from 'sly/web/services/api/prefetch';
+import { NOTIFY_AGENT_RECEIVED_REQUEST } from 'sly/web/constants/notifications';
 
-@prefetch('agentsList', 'getAgents', (req, { match, location }) => req(getAgentParams(match, location)))
-@withNotification
+const AgentRegionPageContainer = ({
+  history,
+  match,
+}) => {
+  const { notifyInfo } = useNotification();
 
-export default class AgentRegionPageContainer extends Component {
-  static propTypes = {
-    match: object,
-    agentsList: arrayOf(agentPropType),
-    history: object,
-    notifyInfo: func.isRequired,
-  };
+  const { location } = history;
+  const citySlug = match.params.city;
 
-  handleLocationSearch = (result) => {
-    const { history } = this.props;
+  const { requestInfo: {
+    normalized,
+    hasFinished,
+  } } = usePrefetch('getAgents', getAgentParams(match, location));
+
+  const newAgentsList = useMemo(() => (normalized || [])
+    .filter(agent => agent.status > 0)
+    .map((agent) => {
+      const url = getAgentUrl(agent);
+      const newAgent = { ...agent, url };
+      return newAgent;
+    }), [normalized]);
+
+  let locationName;
+
+  if (citySlug) {
+    locationName = titleize(citySlug);
+    const cityParts = citySlug.split('-');
+    if (cityParts.length > 1) {
+      const state = cityParts.pop();
+      const city = cityParts.join('-');
+      locationName = `${titleize(city)} ${state.toUpperCase()}`;
+    }
+  } else {
+    locationName = titleize(match.params.region);
+  }
+
+  const handleLocationSearch = (result) => {
     const event = {
       action: 'submit', category: 'agentsSearch', label: result.displayText,
     };
+
     SlyEvent.getInstance().sendEvent(event);
     const [city, state] = result.name.split(', ');
     history.push(`/agents/region/${urlize(city)}-${state}`);
   };
 
-  handleConsultationRequested = () => {
-    const { notifyInfo } = this.props;
+  const title = `${locationName} Partner Agents`;
 
-    notifyInfo('We have received your request and we will get back to you soon.');
-  };
-
-  render() {
-    const {
-      agentsList, match, history,
-    } = this.props;
-
-    const { location } = history;
-    const citySlug = match.params.city;
-
-    const newAgentsList = (agentsList || [])
-      .filter(agent => agent.status > 0)
-      .map((agent) => {
-        const url = getAgentUrl(agent);
-        const newAgent = { ...agent, url };
-        return newAgent;
-      });
-
-    let locationName = null;
-    if (citySlug) {
-      locationName = titleize(citySlug);
-      const cityParts = citySlug.split('-');
-      if (cityParts.length > 1) {
-        const state = cityParts.pop();
-        const city = cityParts.join('-');
-        locationName = `${titleize(city)} ${state.toUpperCase()}`;
-      }
-    } else {
-      locationName = titleize(match.params.region);
-    }
-
-    const title = `${locationName} Partner Agents`;
+  if (!hasFinished) {
     return (
-      <AgentRegionPage
-        onLocationSearch={this.handleLocationSearch}
-        agentsList={newAgentsList}
-        title={title}
-        locationName={locationName}
-        isRegionPage={!citySlug}
-        location={location}
-        onConsultationRequested={this.handleConsultationRequested}
-      />
+      <Flex
+        height="100vh"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Image src={assetPath('images/homebase/loader.svg')} />
+      </Flex>
     );
   }
-}
 
+  return (
+    <AgentRegionPage
+      onLocationSearch={handleLocationSearch}
+      agentsList={newAgentsList}
+      title={title}
+      locationName={locationName}
+      isRegionPage={!citySlug}
+      location={location}
+      onConsultationRequested={() => notifyInfo(NOTIFY_AGENT_RECEIVED_REQUEST)}
+    />
+  );
+};
+
+AgentRegionPageContainer.propTypes = {
+  match: object,
+  history: object,
+};
+
+export default AgentRegionPageContainer;

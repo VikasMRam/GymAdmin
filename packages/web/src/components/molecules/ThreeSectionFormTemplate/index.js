@@ -66,7 +66,7 @@ const ThreeSectionFormTemplate = ({
         {children}
       </Wrapper>
       <Bottom noFooter={noFooter}>
-        {hasCancel && <Button secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
+        {hasCancel && <Button minWidth="fit-content" secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
         {!hasCancel && <div />}
         <ACWrapperComponent buttonsFullWidth={buttonsFullWidth} noOfColumns={hasSubmit ? extraActionButtonsAfterSubmit.length + 1 : extraActionButtonsAfterSubmit.length}>
           {hasSubmit && <Button width="100%" sx$tablet={{ width: 'initial' }} variant={extraActionButtonsAfterSubmit.length > 0 ? 'neutral' : 'primary'} type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}

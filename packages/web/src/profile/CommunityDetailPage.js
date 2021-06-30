@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
@@ -21,7 +21,7 @@ import {
 import pad from 'sly/web/components/helpers/pad';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
-import { Button, Link } from 'sly/common/components/atoms';
+import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
@@ -45,10 +45,11 @@ import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
+import withChatbox from 'sly/web/services/chatbox/withChatBox';
 import StickyHeader from 'sly/web/profile/StickyHeader';
-import Chatbox from 'sly/web/profile/Chatbox';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -160,11 +161,23 @@ const getAssessmentBoxModes = {
   communitySidebar: { cta: 'pricing', entry: 'communitySidebar' },
 };
 
+@withChatbox
 export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
     location: object.isRequired,
+    triggerChatboxEvent: func,
   };
+
+  componentDidMount() {
+    const { community } = this.props;
+    const { address } = community;
+    const isInternational = address.country !== 'United States';
+    if (!isInternational) {
+      const { triggerChatboxEvent } = this.props;
+      triggerChatboxEvent('Bot reintro');
+    }
+  }
 
   render() {
     const {
@@ -181,7 +194,6 @@ export default class CommunityDetailPage extends PureComponent {
       similarProperties,
       gallery = {},
       twilioNumber,
-      guideUrl,
       user: communityUser,
       reviews,
     } = community;
@@ -265,7 +277,6 @@ export default class CommunityDetailPage extends PureComponent {
 
     return (
       <>
-        {!isInternational && <Chatbox community={community} /> }
         {getHelmetForCommunityPage(community, location)}
         <ModalContainer />
 
@@ -361,7 +372,6 @@ export default class CommunityDetailPage extends PureComponent {
                       city={address.city}
                       state={address.state}
                       twilioNumber={twilioNumber}
-                      guideUrl={guideUrl}
                       communityUser={community.user}
                       isActiveAdult={isActiveAdult}
                       isInternational={isInternational}
@@ -401,29 +411,6 @@ export default class CommunityDetailPage extends PureComponent {
 
                   </StyledHeadingBoxSection>
                 }
-
-                {rgsAux.rgsInfo && rgsAux.rgsInfo.resourceLinks && rgsAux.rgsInfo.resourceLinks.length > 0 && (
-                  <StyledHeadingBoxSection
-                    heading={`Helpful ${typeOfCare} Resources`}
-                  >
-                    {rgsAux.rgsInfo.resourceLinks.map((item, i) => (
-                      <>
-                        <Link
-                          to={item.to}
-                          palette="primary"
-                          event={{
-                            category: 'community-resource-link',
-                            action: 'link-click',
-                            label: item.to,
-                          }}
-                        >
-                          {item.title}
-                        </Link>
-                        {i !== rgsAux.rgsInfo.resourceLinks.length - 1 && <Hr />}
-                      </>
-                    ))}
-                  </StyledHeadingBoxSection>
-                )}
 
                 {reviews && reviews.length > 0 &&
                   <StyledHeadingBoxSection
@@ -467,7 +454,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <StyledHeadingBoxSection
                     heading="Recommended communities"
                     id="sticky-sidebar-boundary"
-                    sx$tablet={{ padding: 0 }}
+                    sx$tablet={{ padding: '0 !important' }}
                   >
                     <CarouselContainer itemsQty={similarProperties.length}>
                       <SimilarCommunities
@@ -488,19 +475,32 @@ export default class CommunityDetailPage extends PureComponent {
                         event={{ action: 'click', category: 'backToSearch', label: community.id }}
                         width="100%"
                       >
-                        Communities In {address.city}
+                        See more communities
                       </Button>
                     </BackToSearch>
                   </StyledHeadingBoxSection>
                 )}
 
                 {rgsAux.rgsInfo?.resourceLinks?.length && (
-                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Resources`} sx$tablet={{ padding: 0 }}>
+                  <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Articles`} sx$tablet={{ padding: '0 !important' }}>
                     <CarouselContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
                       {rgsAux.rgsInfo.resourceLinks.map(item => (
-                        <ArticlePreview key={item.title} alternativeText={item.title} {...item} customStyles={{ width: '18rem' }} />
+                        <ArticlePreview
+                          key={item.title}
+                          alternativeText={item.title}
+                          {...item}
+                          customStyles={{ width: '100%', lineHeight: 'body-m' }}
+                        />
                       ))}
+                      <div />
                     </CarouselContainer>
+                    <Button
+                      href={RESOURCE_CENTER_PATH}
+                      event={{ action: 'click', category: 'communityResource', label: community.id }}
+                      width="100%"
+                    >
+                      See more articles
+                    </Button>
                   </StyledHeadingBoxSection>
                 )}
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
+import { ThemeProvider } from 'styled-components';
 
 import NotificationSubscriptions from 'sly/web/services/notifications/Subscriptions';
 import WSProvider from 'sly/web/services/ws/WSProvider';
 import Router from 'sly/web/dashboard/Router';
-import { ThemeProvider } from 'styled-components';
 
 // Dashboard
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/web/containers/DashboardHomePageContainer'));
@@ -24,9 +24,10 @@ const DashboardAgentContactsPage = loadable(() => import(/* webpackChunkName: "c
 const DashboardAgentsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentsIndex" */ 'sly/web/containers/dashboard/agents/DashboardAgentsIndexPageContainer'));
 const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/dashboard/communities/DashboardCommunityIndexPageContainer'));
 const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/communities/DashboardCommunityDetailsPageContainer'));
+const DashboardListingIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/dashboard/listings/DashboardListingIndexPageContainer'));
+const DashboardLisitingDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/listings/DashboardListingDetailsPageContainer'));
 
 import themeWithLegacy from 'sly/common/components/themes/themeWithLegacy';
-
 import {
   DASHBOARD_PATH,
   DASHBOARD_ACCOUNT_PATH,
@@ -45,6 +46,8 @@ import {
   ADMIN_DASHBOARD_AGENT_DETAILS_PATH,
   DASHBOARD_COMMUNITIES_PATH,
   DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_LISTINGS_PATH,
+  DASHBOARD_LISTINGS_DETAIL_PATH,
 } from 'sly/web/dashboard/dashboardAppPaths';
 
 const routes = [
@@ -128,6 +131,14 @@ const routes = [
   {
     path: DASHBOARD_COMMUNITIES_PATH,
     component: DashboardCommunityIndexPageContainer,
+  },
+  {
+    path: DASHBOARD_LISTINGS_DETAIL_PATH,
+    component: DashboardLisitingDetailPageContainer,
+  },
+  {
+    path: DASHBOARD_LISTINGS_PATH,
+    component: DashboardListingIndexPageContainer,
   },
 ];
 

@@ -19,14 +19,16 @@ const AddNoteForm = ({
     topRightIcon="close"
     topRightIconOnClick={onCancelClick}
   >
-    <Field
-      type="textarea"
-      rows={3}
-      name="note"
-      label={label}
-      placeholder={placeholder}
-      component={ReduxField}
-    />
+    <Block padding="m">
+      <Field
+        type="textarea"
+        rows={3}
+        name="note"
+        label={label}
+        placeholder={placeholder}
+        component={ReduxField}
+      />
+    </Block>
     {error && <Block palette="danger">{error}</Block>}
   </ThreeSectionFormTemplate>
 );
