@@ -175,8 +175,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     });
     const notePromise = () => updateNote({ id }, payload);
 
+    const refetches = () => Promise.all([
+      status.client.refetch(),
+      status.notes.refetch(),
+    ]);
+
     return notePromise()
-      .then(status.client.refetch)
+      .then(refetches)
       .then(() => {
         hideModal();
         notifyInfo('Note successfully edited');

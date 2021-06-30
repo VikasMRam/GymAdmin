@@ -67,7 +67,7 @@ const ModalContext = styled.article`
   overflow: auto;
   width: 100%;
   border-radius: 0;
-  height: 100%;
+  max-height: 90%;
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     width: ${size('layout.col4')};
     height:auto;

@@ -16,13 +16,13 @@ describe('DashboardMenu', () => {
   it('renders DashboardMenu', () => {
     const wrapper = wrap();
     const menuItemComponents = wrapper.find('Link');
-    expect(menuItemComponents).toHaveLength(10);
+    expect(menuItemComponents).toHaveLength(11);
   });
 
   it('correct roles are passed to menu items', () => {
     const wrapper = wrap();
     const roleComponents = wrapper.find(Role);
-    expect(roleComponents).toHaveLength(10);
+    expect(roleComponents).toHaveLength(11);
     roleComponents.forEach((c, i) => {
       expect(c.prop('is')).toBe(menuItems[i].role);
     });

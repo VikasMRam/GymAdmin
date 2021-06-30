@@ -31,8 +31,8 @@ const dashboardCommunityCareSorter = (a, b) => {
   return costSections.indexOf(a.attributes.title) - costSections.indexOf(b.attributes.title);
 };
 
-const dashboardUpdateCommunityCareSorter = (a, b) => {
-  return costSections.indexOf(a.title) - costSections.indexOf(b.title);
+const careTypeSorter = (a, b) => {
+  return costSections.indexOf(a) - costSections.indexOf(b);
 };
 
 
@@ -199,7 +199,9 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     const { hasNewPricing, eligibleForNewPricing, newPricingOnWaitlist, shouldBlockNavigation } = this.state;
 
     // filter care for only pricing types available in constants and add Additonal Costs
-    const validatedCareTypes = community.care.filter(careType => costSections.includes(careType));
+    const sortedCareTypes = community.care.sort(careTypeSorter);
+
+    const validatedCareTypes = sortedCareTypes.filter(careType => costSections.includes(careType));
     validatedCareTypes.push('Additional Costs');
 
     const canEdit = !currentEdit?.isPendingForAdmin
