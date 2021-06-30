@@ -48,6 +48,10 @@ export const DASHBOARD_COMMUNITIES_PATH = `${DASHBOARD_PATH}/communities`;
 export const DASHBOARD_COMMUNITIES_DETAIL_PATH = `${DASHBOARD_PATH}/communities/:id/:tab?/:clientType(${familyTypes.join('|')})?`;
 export const DASHBOARD_COMMUNITIES_DETAIL_EDIT_PATH = `${DASHBOARD_PATH}/communities/:id/edits/:editId`;
 
+export const DASHBOARD_LISTINGS_PATH = `${DASHBOARD_PATH}/listings`;
+export const DASHBOARD_LISTINGS_DETAIL_PATH = `${DASHBOARD_PATH}/listings/:id/:tab?/:clientType(${familyTypes.join('|')})?`;
+export const DASHBOARD_LISTINGS_DETAIL_EDIT_PATH = `${DASHBOARD_PATH}/listings/:id/edits/:editId`;
+
 export const SUMMARY = 'summary';
 export const ACTIVITY = 'activity';
 export const FAMILY_DETAILS = 'family-details';
@@ -68,6 +72,7 @@ export const CONTACTS = 'contacts';
 export const EDITS = 'edits';
 export const USERS = 'users';
 export const ADMIN = 'admin';
+export const ADDITIONAL_INFO = 'additional-info';
 
 export const ADMIN_DASHBOARD_AGENTS_PATH = `${AGENT_DASHBOARD_PATH}/agents`;
 export const ADMIN_DASHBOARD_AGENT_DETAILS_PATH = `${ADMIN_DASHBOARD_AGENTS_PATH}/:id/:tab?`;

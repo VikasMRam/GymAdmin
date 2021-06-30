@@ -9,24 +9,24 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import withDatatable from 'sly/web/services/datatable/components/withDatatable';
 import { prefetch, withUser } from 'sly/web/services/api';
 import { getDetailedPaginationData } from 'sly/web/services/helpers/pagination';
-import communityPropType from 'sly/common/propTypes/community';
+import listingPropType from 'sly/common/propTypes/listing';
 import {
-  DASHBOARD_COMMUNITIES_DETAIL_PATH,
+  DASHBOARD_LISTINGS_DETAIL_PATH,
   PROFILE,
 } from 'sly/web/dashboard/dashboardAppPaths';
-import AddCommunityFormContainer from 'sly/web/dashboard/communities/AddCommunityFormContainer';
-import DashboardCommunityIndexPage from 'sly/web/dashboard/communities/DashboardCommunityIndexPage';
+import AddListingFormContainer from 'sly/web/dashboard/listings/AddListingFormContainer';
+import DashboardListingIndexPage from 'sly/web/dashboard/listings/DashboardListingIndexPage';
 
 @withNotification
 @withModal
 @withUser
-@withDatatable('communities')
-@prefetch('communities', 'getCommunities', (req, { datatable }) => req(datatable.query))
+@withDatatable('listings')
+@prefetch('listings', 'getListings', (req, { datatable }) => req(datatable.query))
 
-export default class DashboardCommunityIndexPageContainer extends Component {
+export default class DashboardListingIndexPageContainer extends Component {
   static propTypes = {
     location: object,
-    communities: arrayOf(communityPropType),
+    listings: arrayOf(listingPropType),
     showModal: func.isRequired,
     hideModal: func.isRequired,
     notifyInfo: func.isRequired,
@@ -36,14 +36,14 @@ export default class DashboardCommunityIndexPageContainer extends Component {
     history: object,
   };
 
-  onAddCommunitySuccess= (resp) => {
+  onAddListingSuccess= (resp) => {
     const { history } = this.props;
     const { id } = resp;
-    const path = generatePath(DASHBOARD_COMMUNITIES_DETAIL_PATH, { id, tab: PROFILE });
+    const path = generatePath(DASHBOARD_LISTINGS_DETAIL_PATH, { id, tab: PROFILE });
     history.push(path);
   };
 
-  handleAddCommunity = () => {
+  handleAddListing = () => {
     const {
       showModal,
       hideModal,
@@ -52,40 +52,39 @@ export default class DashboardCommunityIndexPageContainer extends Component {
     } = this.props;
 
     const event = {
-      category: 'DashboardCommunity',
+      category: 'DashboardLisitng',
       action: 'click',
-      label: 'addCommunity',
+      label: 'addListing',
     };
 
     SlyEvent.getInstance().sendEvent(event);
 
     showModal((
-      <AddCommunityFormContainer
+      <AddListingFormContainer
         notifyInfo={notifyInfo}
         notifyError={notifyError}
         onCancel={hideModal}
-        onSuccess={this.onAddCommunitySuccess}
+        onSuccess={this.onAddListingSuccess}
       />
     ), null, 'noPadding', false);
   };
-
   render() {
     const { status, location, datatable, notifyInfo, notifyError, ...props } = this.props;
-    const { error, meta, hasFinished, normalized: communities } = status.communities;
+    const { error, meta, hasFinished, normalized: listings } = status.listings;
 
     if (error) {
       throw new Error(JSON.stringify(error));
     }
 
     return (
-      <DashboardCommunityIndexPage
+      <DashboardListingIndexPage
         {...props}
         isPageLoading={!hasFinished || !datatable.hasFinished}
         datatable={datatable}
-        communities={communities || []}
-        onAddCommunity={this.handleAddCommunity}
+        listings={listings || []}
+        onAddListing={this.handleAddListing}
         meta={meta || {}}
-        pagination={getDetailedPaginationData(status.communities, 'communities')}
+        pagination={getDetailedPaginationData(status.listings, 'listings')}
       />
     );
   }

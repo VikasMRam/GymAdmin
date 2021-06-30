@@ -65,6 +65,9 @@ const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */
 // community profile
 const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
 
+// listing profile
+const ListingProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/listing/ListingProfilePageContainer'));
+
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/assessment/AssessmentWizardPageContainer'));
 
@@ -102,6 +105,11 @@ const TempHowItWorks = ({ ...props }) => (
 );
 
 const routes = [
+  {
+    path: '/plus/:id',
+    component: ListingProfilePageContainer,
+    exact: true,
+  },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
     component: CommunityDetailPageContainer,

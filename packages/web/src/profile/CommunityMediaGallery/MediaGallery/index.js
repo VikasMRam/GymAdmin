@@ -327,9 +327,8 @@ export default class MediaGallery extends Component {
       be inserted and removed from dom when user switch slides */
     this.setLoadedImages(currentSlide);
     const slideViews = this.allMedia.map((media, i) => (
-      <>
+      <React.Fragment key={media.id || media.alt}>
         <Grid
-          key={media.id || media.alt}
           hasOnSlideClick={!!onSlideClick}
           sx={{
             position: 'relative',
@@ -354,7 +353,7 @@ export default class MediaGallery extends Component {
           {this.generateSlideContent(media, i)}
         </Grid>
         {inModal && this.getImageDescription(media.description)}
-      </>
+      </React.Fragment>
     ));
 
     return (

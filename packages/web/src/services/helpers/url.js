@@ -152,6 +152,21 @@ export const getBreadCrumbsForCommunity = ({ name, propInfo, address }) => {
   ];
 };
 
+export const getBreadCrumbsForListing = ({ name, address }) => {
+  // TODO: use react router generated paths once router wiring is complete
+  return [
+    {
+      path: '/',
+      label: 'Home',
+    },
+    {
+      path: '#',
+      label: name,
+    },
+  ];
+};
+
+
 export const getBreadCrumbsForLocation = ({ toc, state, city }, noHomeAndToc) => {
   const tocBc = tocPaths([titleize(toc)]);
   // TODO: use react router generated paths once router wiring is complete
