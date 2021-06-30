@@ -25,7 +25,7 @@ import {
   RESOURCE_CENTER_SITEMAP_PATH,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
-import hubTypes from 'sly/web/constants/hubTypes';
+import hubTypes, { cmsHubTypes } from 'sly/web/constants/hubTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import UserCookiesContainer from 'sly/web/containers/UserCookiesContainer';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
@@ -45,6 +45,7 @@ const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName
 const SearchContainer = loadable(() => import(/* webpackChunkName: "chunkSearchContainer" */ 'sly/web/components/search/SearchContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/web/containers/HomePageContainer'));
 const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NearMePageContainer'));
+const NewNearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NewNearMePageContainer'));
 const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/web/containers/AgentsPageContainer'));
 const PasswordResetPageContainer = loadable(() => import(/* webpackChunkName: "chunkPasswordReset" */ 'sly/web/containers/PasswordResetPageContainer'));
 const HowItWorksDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkHowItWorks" */ 'sly/web/containers/HowItWorksDetailPageContainer'));
@@ -186,6 +187,11 @@ const routes = [
   {
     path: `/:hub(${hubTypes.join('|')})`,
     component: NearMePageContainer,
+    exact: true,
+  },
+  {
+    path: `/:hub(${cmsHubTypes.join('|')})`,
+    component: NewNearMePageContainer,
     exact: true,
   },
   {
