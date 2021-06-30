@@ -48,11 +48,9 @@ const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
       label: listing.id,
     }), []);
 
-  const conciergeNumberClicked = useCallback(() => sendEvent('click', 'conciergeNumberClicked'), []);
+  const goToReviews = useCallback(() => sendEvent('click', 'viewReviews'), []);
 
   const listingNumberClicked = useCallback(() => sendEvent('click', 'listingNumberClicked'), []);
-
-  const goToReviews = useCallback(() => sendEvent('click', 'viewReviews'), []);
 
 
   const authenticatedUpdateUserSave = (id, data) => {
@@ -101,9 +99,8 @@ const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
       <ListingSummary
         listing={listing}
         isAdmin={isAdmin}
-        onConciergeNumberClicked={conciergeNumberClicked}
-        onListingNumberClicked={listingNumberClicked}
         goToReviews={goToReviews}
+        onListingNumberClicked={listingNumberClicked}
         className={className}
         searchParams={params}
         isFavorited={isListingAlreadySaved(listing, userSaves)}
