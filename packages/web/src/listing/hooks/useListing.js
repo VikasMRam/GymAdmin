@@ -11,7 +11,7 @@ export default function useListing() {
     },
   } = usePrefetch('getListing', {
     id,
-    include: 'similar-listings,agents,community',
+    include: 'similar-listings,agent,community,reviews',
   });
 
   return {
