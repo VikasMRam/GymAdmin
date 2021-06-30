@@ -94,7 +94,7 @@ const getSectionDetails = (sectionType, sections) => {
 };
 
 
-export default class CommunityDetailPage extends PureComponent {
+export default class ListingDetailPage extends PureComponent {
   static propTypes = {
     listing: object.isRequired,
     location: object.isRequired,
@@ -170,7 +170,7 @@ export default class CommunityDetailPage extends PureComponent {
           <Wrapper>
             <TwoColumn>
               <Body>
-                {/* <StyledListingSummary formattedAddress={formattedAddress} /> */}
+                <StyledListingSummary formattedAddress={formattedAddress} />
                 {description && (
                 <Block background="white.base" pb="xxl" px="m" sx$laptop={{ px: '0' }} dangerouslySetInnerHTML={{ __html: description }} />
                 )}

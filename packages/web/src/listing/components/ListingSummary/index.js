@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';
 import ListItem from 'sly/web/components/molecules/ListItem/newSystem';
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
-import { community as communityPropType } from 'sly/common/propTypes/community';
+import { listing as listingPropType } from 'sly/common/propTypes/listing';
 import { Heading, Block, Span, color, Hr, space, Link, sx$laptop, Button, sx$tablet, Grid } from 'sly/common/system';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
@@ -78,7 +78,7 @@ const getCareTypes = (address, careTypes) => {
 
 
 const ListingSummary = ({
-  listing, innerRef, isAdmin, onConciergeNumberClicked, onListingNumberClicked, className,
+  listing, innerRef, isAdmin, className,
   goToReviews, searchParams, formattedAddress, onSaveClick, onShareClick, isFavorited,
 }) => {
   const {
@@ -109,8 +109,6 @@ const ListingSummary = ({
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
-  const showFriendsFamilyNumber = showFafNumber(address);
-  const fafn = getFafNumber(conciergeNumber, '1');
 
   return (
     <Block pb="l" px="m" sx$laptop={{ px: '0' }} ref={innerRef} className={className}>
@@ -121,7 +119,7 @@ const ListingSummary = ({
         {name}
         {isAdmin &&
           <Link
-            to={`/dashboard/communities/${listing.id}`}
+            to={`/dashboard/listings/${listing.id}`}
           >
             &nbsp;(Edit)
           </Link>
@@ -186,10 +184,9 @@ const ListingSummary = ({
 };
 
 ListingSummary.propTypes = {
-  // listing: communityPropType.isRequired,
+  listing: listingPropType.isRequired,
   innerRef: object,
   isAdmin: bool,
-  onConciergeNumberClicked: func,
   onListingNumberClicked: func,
   className: string,
   goToReviews: func,

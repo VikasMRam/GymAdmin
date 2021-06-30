@@ -18,8 +18,8 @@ import Modal, { ModalBody } from 'sly/web/components/atoms/NewModal';
 import { isListingAlreadySaved, getListingUserSave } from 'sly/web/listing/helpers';
 
 
-const ShareCommunityFormContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkShareCommunityFormContainer" */'sly/web/containers/ShareCommunityFormContainer'));
-const SaveCommunityContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkSaveCommunityContainer" */'sly/web/containers/SaveCommunityContainer'));
+const ShareListingFormContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkShareListingFormContainer" */'sly/web/listing/containers/ShareListingFormContainer'));
+const SaveListingContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkSaveListingContainer" */'sly/web/listing/containers/SaveListingContainer'));
 
 
 const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
@@ -32,7 +32,7 @@ const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
 
   const { requestInfo: { normalized: listing } } = usePrefetch('getListing', {
     id: params.id,
-    include: 'similar-listings,agents,community',
+    include: 'similar-listings,agent,community,reviews',
   });
 
   const { requestInfo: { normalized: userSaves }, fetch: refetchUserSaves } = usePrefetch('getUserSaves', {
@@ -114,8 +114,8 @@ const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
       {isModalOpen &&
         <Modal onClose={setModalClosed}>
           <ModalBody>
-            { isModalOpen === 'save' && <SaveCommunityContainer
-              slug={LISTING_RESOURCE_TYPE.id}
+            { isModalOpen === 'save' && <SaveListingContainer
+              slug={listing.id}
               notifyInfo={notifyInfo}
               notifyError={notifyError}
               onCancelClick={setModalClosed}
@@ -123,11 +123,11 @@ const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
             />}
             {
               isModalOpen === 'share' &&
-                <ShareCommunityFormContainer
+                <ShareListingFormContainer
                   notifyInfo={notifyInfo}
                   fromEnabled={!user || !user.email}
                   mainImage={listing.mainImage}
-                  communitySlug={listing.id}
+                  listingSlug={listing.id}
                   onSuccess={setModalClosed}
                   onCancelClick={setModalClosed}
                 />
