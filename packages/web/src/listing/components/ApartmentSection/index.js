@@ -14,7 +14,7 @@ const ApartmentSection = () => {
 
   const { requestInfo: { normalized: listing } } = usePrefetch('getListing', {
     id,
-    include: 'similar-listings,agents,community',
+    include: 'similar-listings,agent,community,reviews',
   });
 
   const { name, address: { city, state }, gallery } = listing;
