@@ -20,11 +20,11 @@ const LazyCommunityMapContainer = () => {
   useEffect(() => {
     if (placeholderRef.current) {
       const intersectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setMounted(true);
           }
-        })
+        });
       }, {
         rootMargin: '0px 0px 500px 0px',
       });
@@ -32,6 +32,8 @@ const LazyCommunityMapContainer = () => {
       return () => intersectionObserver.disconnect();
     }
   }, [placeholderRef]);
+
+  if (!community) return null;
 
   return mounted
     ? <CommunityMap community={community} similarProperties={community.similarProperties} />
