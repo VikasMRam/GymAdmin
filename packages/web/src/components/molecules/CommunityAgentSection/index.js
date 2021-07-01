@@ -3,9 +3,10 @@ import { string } from 'prop-types';
 // import { ifProp } from 'styled-tools';
 
 import agentPropType from 'sly/common/propTypes/agent';
-import { Block, Heading, Grid } from 'sly/common/system';
+import { Block, Heading, Grid, Flex, Span } from 'sly/common/system';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import { getImagePath } from 'sly/web/services/images';
+import Favorite from 'sly/common/icons/Favorite';
 
 
 const CommunityAgentSection = ({
@@ -41,9 +42,12 @@ const CommunityAgentSection = ({
         </Block>
       </Grid>
 
-      <Heading pad="xs" font="title-s">What is a Seniorly Local Advisor?</Heading>
+      <Heading pad="xs" font="title-s">How our FREE service works</Heading>
       <Block>
-        Our Seniorly Local Advisors specialize in guiding families through the entire process of finding the right senior living community for their loved one. They live locally and can share their knowledge of a community’s pricing, availability, amenities, and insights about the staff. They also know about current promotions and can even help negotiate rent. Working with an Expert is a completely free service to you.
+        Our Seniorly Local Advisors will guide you through the entire process of finding the right senior living
+        community. After they assess you or your loved one’s lifestyle, care needs, budget, they will send you
+        information on senior living communities that fit your needs. Since they live locally, they can schedule and
+        accomapany you on tours and even neogotiate rent once you selected the right home.
       </Block>
     </Block>
   );
