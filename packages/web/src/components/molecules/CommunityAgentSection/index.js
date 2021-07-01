@@ -3,10 +3,9 @@ import { string } from 'prop-types';
 // import { ifProp } from 'styled-tools';
 
 import agentPropType from 'sly/common/propTypes/agent';
-import { Block, Heading, Grid, Flex, Span } from 'sly/common/system';
+import { Block, Heading, Grid } from 'sly/common/system';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import { getImagePath } from 'sly/web/services/images';
-import Favorite from 'sly/common/icons/Favorite';
 
 
 const CommunityAgentSection = ({

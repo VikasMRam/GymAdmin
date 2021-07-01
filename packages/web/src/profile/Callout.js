@@ -27,8 +27,8 @@ const Callout = ({ title, description, className }) => (
       sx$tablet={{ ml: '0', mr: 'm' }}
     />
     <Block order="-1" sx$tablet={{ order: 1 }}>
-      <Block font="title-xs-azo" mb="xxs">{title}</Block>
-      <Block font="body-m">{description}</Block>
+      {title && <Block font="title-xs-azo" mb="xxs">{title}</Block>}
+      {description && <Block font="body-m">{description}</Block>}
     </Block>
   </Flex>
 );

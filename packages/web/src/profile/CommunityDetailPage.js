@@ -22,7 +22,7 @@ import pad from 'sly/web/components/helpers/pad';
 import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
-import { color, space, sx$tablet, sx$laptop, Hr, Block, font, Span, Flex, sx } from 'sly/common/system';
+import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import SampleMenu from 'sly/web/components/organisms/SampleMenu';
 import {
@@ -50,7 +50,6 @@ import StickyHeader from 'sly/web/profile/StickyHeader';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
-import Favorite from 'sly/common/icons/Favorite';
 import Callout from 'sly/web/profile/Callout';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
