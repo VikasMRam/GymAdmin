@@ -28,6 +28,7 @@ import ModalContainer from 'sly/web/containers/ModalContainer';
 import PlusBranding from 'sly/web/listing/components/PlusBranding';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { Food } from 'sly/common/icons';
+import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
@@ -37,6 +38,8 @@ const ApartmentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpa
 const ListingCommunityContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListngCommunityContainer'));
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const ListingReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListingReviewsContainer'));
+const ListingAgentButtonConatiner = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListingAgentButtonContainer'));
+const ListingAgentQuestionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListingAgentQuestionContainer'));
 
 const StyledListingSummary = styled(ListingSummaryContainer)`
   
@@ -182,15 +185,15 @@ export default class ListingDetailPage extends PureComponent {
                 {/* Partner Agent */}
                 {partnerAgent && (
                 <>
-                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." pt="l" mb="xs">
+                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mt="xxl">
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
-                    {/* <AskAgentQuestionButtonContainer
-                        agent={partnerAgent}
-                        width="100%"
-                        community={community}
-                        type="expert"
-                        ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
-                      /> */}
+                    <ListingAgentButtonConatiner
+                      agent={partnerAgent}
+                      width="100%"
+                      listing={listing}
+                      type="expert"
+                      ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
+                    />
                   </StyledHeadingBoxSection>
                 </>
                 )}
@@ -244,6 +247,15 @@ export default class ListingDetailPage extends PureComponent {
                 {reviews && reviews.length > 0 &&
                   <ListingReviewsContainer />
                 }
+
+                {/* Todo: Place it in right position */}
+                {/* Agent Question Container */}
+                <ListingAgentQuestionContainer
+                  agent={partnerAgent}
+                  listing={listing}
+                  type="expert"
+                  isStatic
+                />
               </Body>
             </TwoColumn>
           </Wrapper>
