@@ -21,9 +21,9 @@ import Image from 'sly/common/system/Image';
 import Footer from 'sly/web/components/organisms/Footer';
 import Header from 'sly/web/components/resourceCenter/components/Header';
 import { withHydration } from 'sly/web/services/partialHydration';
-import ArticleContent from 'sly/web/components/resourceCenter/components/ArticleContent';
 import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import CMSDynamicZone from 'sly/web/components/organisms/CMSDynamicZone';
 
 const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
 const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
@@ -161,7 +161,7 @@ const ArticlePage = ({ match }) => {
           />
         </Block>
 
-        <ArticleContent content={requestInfo?.result?.[0]?.content} />
+        <CMSDynamicZone content={requestInfo?.result?.[0]?.content} />
 
       </Flex>
 
