@@ -6,7 +6,7 @@ import Thankyou from 'sly/web/components/molecules/Thankyou';
 import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
-// import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
+import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import Modal, { HeaderWithClose, ModalBody } from 'sly/web/components/atoms/NewModal';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
@@ -58,7 +58,7 @@ const CommunityQuestionAnswersContainer = () => {
     const postSubmit = () => {
       handleCloseModal();
       if (community) {
-        // recordEntityCta(type, communityId); // TODO: type is not defined
+        recordEntityCta('Community', communityId);
       }
       setModalProps({
         heading: 'Success!',
