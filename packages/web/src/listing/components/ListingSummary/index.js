@@ -1,6 +1,6 @@
 import React from 'react';
 import { object, bool, func, string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';
@@ -123,7 +123,7 @@ const ListingSummary = ({
         }
       </Heading>
 
-      <Block pad="xs">
+      <Block font="body-s" pad="xs">
         {formattedAddress}
       </Block>
 
@@ -175,18 +175,35 @@ const ListingSummary = ({
           gap: '2rem',
         }}
       >
-        <Block as="span" >
-          <Paragraph
-            palette="stale"
-            pad="small"
-            font="body-s"
-          >Exclusive Seniorly Price
-          </Paragraph>
+        <Block as="span">
+          <Block
+            as="span"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            css={css`
+                gap: 0.2em
+              `}
+          >
+            <Span
+              palette="stale"
+              pad="small"
+              font="body-s"
+            >Exclusive Seniorly Price
+            </Span>
+            <StyledHelpIcon  size="s" data-tip data-for="seniorlyPrice" />
+            {isBrowser &&
+            <TooltipContent overridePosition={overridePosition} id="seniorlyPrice" type="light" effect="solid" multiline>
+              This is special discouted price offered only through Seniorly.
+            </TooltipContent>
+          }
+          </Block>
           <Paragraph
             color="viridian.base"
             pad="small"
           >${startingRate}/month + care fees
           </Paragraph>
+
         </Block>
         {floorPlan.bedroomCount && (
           <Block as="span">
@@ -252,18 +269,27 @@ const ListingSummary = ({
       {
         phoneNumber &&
         <Block
+          display="flex"
+          flexDirection="column"
           sx$tablet={{
             display: 'none',
           }}
         >
-          <Span font="body-s">Contact us about this room</Span>
-          <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
-          {isBrowser &&
-          <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
-            This phone number may connect you to the listing front desk.
-          </TooltipContent>
+          <Span
+            display="flex"
+            alignItems="center"
+            css={css`
+            gap: 0.2em
+            `}
+          >
+            <Span font="body-s">Contact us about this room</Span>
+            <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
+            {isBrowser &&
+            <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
+              This phone number may connect you to the listing front desk.
+            </TooltipContent>
           }
-          <br />
+          </Span>
           <Link href={`tel:${phoneNumber}`} onClick={onListingNumberClicked}>
             {phoneFormatter(phoneNumber, true)}
           </Link>

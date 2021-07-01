@@ -54,7 +54,7 @@ const ListingActivitiesSection = (props) => {
   const { activities, activityCalendarURL } = props;
 
   return (
-    <StyledHeadingBoxSection  heading="Activities" >
+    <StyledHeadingBoxSection mb="xs"  heading="Activities" >
       <Block position="relative">
         <Grid
           gridTemplateColumns="1fr 1fr"

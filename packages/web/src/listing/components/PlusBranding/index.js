@@ -59,8 +59,9 @@ export default class PlusBranding extends Component {
   render() {
     return (
       <Block
-        as="header"
+        as="section"
         position="relative"
+        mb="xs"
         css={css`
         width: 100vw;
         max-width: 100vw;

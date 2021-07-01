@@ -1,7 +1,7 @@
 import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 
-import { color, Grid, Image, sx, Heading } from 'sly/common/system';
+import { color, Grid, Image, sx, Heading, sx$tablet } from 'sly/common/system';
 import Block from 'sly/common/system/Block';
 
 const ImageItem = ({ image, i,  onPictureClick }) => {
@@ -43,7 +43,10 @@ export default function ImageByCategory({ images = [], onPictureClick }) {
   return (
     <Grid
       gridTemplateColumns="repeat(2, 1fr)"
-      gridGap="l"
+      gridGap="m"
+      sx$tablet={{
+        gridGap: 'l',
+      }}
     >
       {images.map((image, i) => {
         if (image.category.id === '1') {

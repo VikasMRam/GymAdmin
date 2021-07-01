@@ -172,30 +172,17 @@ export default class ListingDetailPage extends PureComponent {
               <Body>
                 <StyledListingSummary formattedAddress={formattedAddress} />
                 {description && (
-                <Block background="white.base" pb="xxl" px="m" sx$laptop={{ px: '0' }} dangerouslySetInnerHTML={{ __html: description }} />
+                <Block background="white.base" pb="l" mb="xs" px="m" sx$laptop={{ px: '0' }} font="body-l" dangerouslySetInnerHTML={{ __html: description }} />
                 )}
               </Body>
             </TwoColumn>
             <PlusBranding />
             <TwoColumn>
               <Body>
-                {showMoreImages && (
-                <StyledSection
-                  title="The apartment"
-                  headingFont="title-l"
-                  headingMargin="l"
-                  paddingTop="xxl"
-                  sx$tablet={{ px: 0 }}
-                >
-                  <ApartmentSection />
-                  <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
-                  <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
-                </StyledSection>
-            )}
                 {/* Partner Agent */}
                 {partnerAgent && (
                 <>
-                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mt="xxl">
+                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." pt="l" mb="xs">
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
                     {/* <AskAgentQuestionButtonContainer
                         agent={partnerAgent}
@@ -207,6 +194,12 @@ export default class ListingDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 </>
                 )}
+                {showMoreImages && (
+                <StyledHeadingBoxSection id="apartment-section" heading="The apartment" mb="xs">
+                  <ApartmentSection />
+                  <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
+                </StyledHeadingBoxSection>
+                )}
                 {/* Activities */}
                 {
                  activities && <ListingActivitiesSection activities={activities}  activityCalendarURL={activityCalendarURL} />
@@ -215,8 +208,8 @@ export default class ListingDetailPage extends PureComponent {
                 {
                   diningSection &&
                   <>
-                    <StyledHeadingBoxSection  heading="Dining" >
-                      <Block background="white.base" pb="xxl" px="m" sx$laptop={{ px: '0' }} dangerouslySetInnerHTML={{ __html: diningSection.content }} />
+                    <StyledHeadingBoxSection mb="xs"  heading="Dining" >
+                      <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
                       {
                         diningSection.url &&
                         <Link href={diningSection.url}>
@@ -234,8 +227,8 @@ export default class ListingDetailPage extends PureComponent {
                 {
                   neighborhoodSection &&
                   <>
-                    <StyledHeadingBoxSection  heading="The neighborhood" >
-                      <Block background="white.base" pb="xxl" px="m" sx$laptop={{ px: '0' }} dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
+                    <StyledHeadingBoxSection mb="xs"  heading="The neighborhood" >
+                      <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
                       <LazyListingMapContainer listing={listing} />
                     </StyledHeadingBoxSection>
                   </>
@@ -272,7 +265,7 @@ export default class ListingDetailPage extends PureComponent {
               How can we help?
             </Block>
             <Grid
-              gridTemplateColumns="1fr 1fr"
+              gridTemplateRows="repeat(3, 1fr)"
               gridGap="m"
               sx$laptop={{
                 gridTemplateColumns: 'repeat(3, 1fr)',
