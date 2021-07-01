@@ -253,7 +253,7 @@ export default class CommunityDetailPage extends PureComponent {
     const pricesList = buildPriceList(community);
     const estimatedPriceList = buildEstimatedPriceList(community);
     const pricingTitle =
-      pricesList.length === 0 && floorPlans.length > 0
+      pricesList.length === 0 && floorPlans?.length > 0
         ? 'Pricing and Floor Plans'
         : 'Pricing';
 
