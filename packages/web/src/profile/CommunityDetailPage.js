@@ -467,6 +467,22 @@ export default class CommunityDetailPage extends PureComponent {
                     </Button>
                   </StyledHeadingBoxSection>
                 )}
+                {faqs && (
+                  <StyledHeadingBoxSection
+                    heading={`Frequently asked questions about ${name}`}
+                    id="sticky-sidebar-boundary"
+                    sx$tablet={{ padding: '0 !important' }}
+                  >
+                    {faqs.map(faq => (
+                      <FAQItem
+                        key={faq.question}
+                        title={faq.question}
+                        description={faq.answer}
+                      />
+                    ))}
+
+                  </StyledHeadingBoxSection>
+                )}
 
                 {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
@@ -624,22 +640,6 @@ export default class CommunityDetailPage extends PureComponent {
                   </CarouselContainer>
                 </StyledHeadingBoxSection>
               )}
-              {faqs && (
-                <StyledHeadingBoxSection
-                  heading={`Frequently asked questions about ${name}`}
-                  id="sticky-sidebar-boundary"
-                  sx$tablet={{ padding: '0 !important' }}
-                >
-                  {faqs.map(faq => (
-                    <FAQItem
-                      key={faq.question}
-                      title={faq.question}
-                      description={faq.answer}
-                    />
-                  ))}
-
-              </StyledHeadingBoxSection>
-            )}
           </Wrapper>
 
 

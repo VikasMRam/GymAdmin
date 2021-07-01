@@ -271,13 +271,15 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community) => {
   const {
-    name, mainImage, address, propInfo, propRatings, similarCommunities, startingRate, url, gallery = {}, videoGallery = {}, reviews,
+    name, mainImage, address, propInfo, propRatings, similarCommunities, startingRate, url, gallery = {}, videoGallery = {}, reviews, rgsAux,
   } = community;
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
   const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
+  const { rgsInfo } = rgsAux;
+  const { faqs } = rgsInfo;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
 
@@ -382,6 +384,15 @@ export const getHelmetForCommunityPage = (community) => {
     }
     return (<script key={`helmet_critic-review_${criticReview.author + name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
+
+  const faqLD = {};
+  faqLD['@context'] = 'http://schema.org';
+  faqLD['@type'] = 'FAQPage';
+  const ldFAQs = [];
+  if (faqs && faqs.length > 0) {
+    faqs.map(e => ldFAQs.push(questionLD(e)));
+  }
+  faqLD.mainEntity = ldFAQs;
 
 
   const getQAAnswerLDObj = (answer, question) => {
@@ -526,6 +537,7 @@ export const getHelmetForCommunityPage = (community) => {
       <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
       {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
       <script type="application/ld+json">{`${JSON.stringify(videoObjectLD, stringifyReplacer)}`}</script>
+      {faqs && faqs.length > 0 && <script type="application/ld+json">{`${JSON.stringify(faqLD, stringifyReplacer)}`}</script>}
       {criticReviewsJsonLDs}
 
 
