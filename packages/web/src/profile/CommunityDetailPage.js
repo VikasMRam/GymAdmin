@@ -24,7 +24,7 @@ import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
-import FAQItem from 'sly/web/components/common/FAQItem';
+import FAQItem from 'sly/web/components/organisms/CMSDynamicZone/FAQItem';
 
 import {
   CommunityDetailPageTemplate,
@@ -51,6 +51,7 @@ import StickyHeader from 'sly/web/profile/StickyHeader';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
+import Callout from 'sly/web/profile/Callout';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -144,6 +145,10 @@ const EventsWrapper = styled(CollapsibleBlock)`
 const StickToTop = styled.div`
   position: sticky;
   top: 74px;
+`;
+
+const StyledCallout = styled(Callout)`
+  margin-bottom: ${space('s')};
 `;
 
 const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
@@ -346,6 +351,12 @@ export default class CommunityDetailPage extends PureComponent {
                         type="expert"
                         ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
                       />
+                      <Callout
+                        title="Working with a Seniorly Advisor is a completely FREE service to you!"
+                        description={
+                          `Connect with ${getAgentFirstName(partnerAgent)} to learn more about your senior care options.`
+                        }
+                      />
                     </StyledHeadingBoxSection>
 
                   </>
@@ -420,6 +431,10 @@ export default class CommunityDetailPage extends PureComponent {
                     id="sticky-sidebar-boundary"
                     sx$tablet={{ padding: '0 !important' }}
                   >
+                    <StyledCallout
+                      title="We think you might like these nearby communities"
+                      description={`They are similar in price, care services, and size as ${community.name}`}
+                    />
                     <CarouselContainer itemsQty={similarCommunities.similar.length}>
                       <SimilarCommunities
                         communities={similarCommunities.similar}
@@ -515,6 +530,7 @@ export default class CommunityDetailPage extends PureComponent {
                           title={promoTitle}
                           description={promoDescription}
                           community={community}
+                          orderIconFirstOnTablet={false}
                         />
                       )}
                     </GetAssessmentBoxContainerHydrator>
