@@ -1,14 +1,16 @@
 import React from 'react';
 import { func, node, string, bool, arrayOf, shape } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifNotProp, ifProp, prop } from 'styled-tools';
+import styled from 'styled-components';
+import { ifProp, prop } from 'styled-tools';
 
-import { size, palette } from 'sly/common/components/themes';
+import { size } from 'sly/common/components/themes';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Block, Icon } from 'sly/common/components/atoms';
+import { Icon } from 'sly/common/components/atoms';
 import { Heading, Button, space, sx, Hr } from 'sly/common/system';
 import cursor from 'sly/web/components/helpers/cursor';
+import Block from 'sly/common/system/Block';
+import Flex from 'sly/common/system/Flex';
 
 const Head = styled.div`
   display: flex;
@@ -16,24 +18,10 @@ const Head = styled.div`
   padding-top: ${ifProp('noTopSpacing', 0, size('spacing.xLarge'))};
 `;
 
-const Wrapper = styled.div`
-  padding-bottom: ${space('m')};
-  overflow-y: auto;
-  max-height: 70vh;
-`;
-
-const Bottom = styled.div`
-  padding: ${space('spacing.large')} ${size('spacing.xLarge')};
-  border-top: ${ifNotProp('noFooter', css`${size('border.regular')} solid ${palette('grey.stroke')}`)};
-  display: flex;
-  justify-content: space-between;
-`;
-
 const ActionButtonsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(${prop('noOfColumns')}, auto);
   grid-gap: ${size('spacing.large')};
-  width:100%;
 `;
 
 const FullWidthActionButtonsWrapper = fullWidth(ActionButtonsWrapper);
@@ -47,33 +35,43 @@ const TopRightIconButton = cursor(styled(Icon)`
 const ThreeSectionFormTemplate = ({
   onCancelClick, submitButtonText, cancelButtonText, children, heading, description, hasCancel, hasSubmit,
   onSubmit, pristine, submitting, invalid, extraActionButtonsAfterSubmit, noFooter, buttonsFullWidth,
-  topRightIcon, topRightIconOnClick, topRightIconPalette, noTopSpacing,
+  topRightIcon, topRightIconOnClick, topRightIconPalette, noTopSpacing, className,
 }) => {
   const ACWrapperComponent = buttonsFullWidth ? FullWidthActionButtonsWrapper : ActionButtonsWrapper;
 
   return (
-    <form onSubmit={onSubmit}>
+    <Block onSubmit={onSubmit} overflowX="hidden" as="form" className={className}>
       <Head noTopSpacing={noTopSpacing}>
         <div>
           {!description && <Heading pad="l" font="title-m">{heading}</Heading>}
           {description && <PaddedHeading size="subtitle">{heading}</PaddedHeading>}
-          {description && <Block size="caption">{description}</Block>}
+          {description && <Block fontSize="body-s">{description}</Block>}
         </div>
         {topRightIcon && topRightIconOnClick && <TopRightIconButton onClick={topRightIconOnClick} icon={topRightIcon} palette={topRightIconPalette} />}
       </Head>
       <Hr pad="l" marginX={sx`-${space('l')}`} marginTop="0" />
-      <Wrapper>
+      <Block
+        sx={{
+          overflowY: 'auto',
+          maxHeight: '70vh',
+          p: '0 l l',
+        }}
+      >
         {children}
-      </Wrapper>
-      <Bottom noFooter={noFooter}>
-        {hasCancel && <Button secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
+      </Block>
+      <Flex
+        justifyContent="space-between"
+        p="l"
+        botderTop={!noFooter && 's'}
+      >
+        {hasCancel && <Button minWidth="fit-content" secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
         {!hasCancel && <div />}
         <ACWrapperComponent buttonsFullWidth={buttonsFullWidth} noOfColumns={hasSubmit ? extraActionButtonsAfterSubmit.length + 1 : extraActionButtonsAfterSubmit.length}>
           {hasSubmit && <Button width="100%" sx$tablet={{ width: 'initial' }} variant={extraActionButtonsAfterSubmit.length > 0 ? 'neutral' : 'primary'} type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
           {extraActionButtonsAfterSubmit.map(b => <Button key={b.text} disabled={submitting} onClick={b.onClick}>{b.text}</Button>)}
         </ACWrapperComponent>
-      </Bottom>
-    </form>
+      </Flex>
+    </Block>
   );
 };
 
@@ -100,6 +98,7 @@ ThreeSectionFormTemplate.propTypes = {
   topRightIconOnClick: func,
   topRightIconPalette: string,
   noTopSpacing: bool,
+  className: string,
 };
 
 ThreeSectionFormTemplate.defaultProps = {

@@ -11,6 +11,8 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import Modal from 'react-modal';
 
+import ChatBoxProvider from '../services/chatbox/ChatBoxContext';
+
 import { hideChatbox } from 'sly/web/config';
 import GlobalStyles from 'sly/web/components/themes/GlobalStyles';
 import { assetPath } from 'sly/web/components/themes';
@@ -53,8 +55,6 @@ const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunk
 const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/web/containers/PricingWizardPageContainer'));
 const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/web/containers/AgentProfilePageContainer'));
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/web/containers/AgentRegionPageContainer'));
-const CareTypeGuideContainer = loadable(() => import(/* webpackChunkName: "chunkCTGuide" */ 'sly/web/containers/CareTypeGuideContainer'));
-const CareTypeRegionGuideContainer = loadable(() => import(/* webpackChunkName: "chunkRegionGuide" */ 'sly/web/containers/CareTypeRegionGuideContainer'));
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/web/containers/EmailViewPageContainer'));
 const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/web/containers/EmailSharePageFormContainer'));
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
@@ -64,6 +64,9 @@ const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */
 
 // community profile
 const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/profile/CommunityDetailPageContainer'));
+
+// listing profile
+const ListingProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetailPage" */ 'sly/web/listing/ListingProfilePageContainer'));
 
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/assessment/AssessmentWizardPageContainer'));
@@ -103,6 +106,11 @@ const TempHowItWorks = ({ ...props }) => (
 
 const routes = [
   {
+    path: '/plus/:id',
+    component: ListingProfilePageContainer,
+    exact: true,
+  },
+  {
     path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
     component: CommunityDetailPageContainer,
     exact: true,
@@ -115,16 +123,6 @@ const routes = [
   {
     path: `/:toc(${careTypes.join('|')})/:state`,
     component: SearchContainer,
-    exact: true,
-  },
-  {
-    path: `/:tocg(${careTypeGuides})`,
-    component: CareTypeGuideContainer,
-    exact: true,
-  },
-  {
-    path: `/:tocg(${careTypeGuides})/:region`,
-    component: CareTypeRegionGuideContainer,
     exact: true,
   },
   {
@@ -295,73 +293,74 @@ export default class App extends Component {
         <Provider store={reduxStore}>
           <ThemeProvider theme={theme}>
             <IconContext.Provider value={iconsContext}>
-              <BreakpointProvider>
-                <NotificationProvider>
-                  <PageEventsContainer />
-                  <UserCookiesContainer />
-                  <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
-                    <title>Find The Best Senior Living Options Near You</title>
-                    <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                    <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-                    <meta content="Seniorly" property="author" />
-                    <meta content="English" property="language" />
+              <ChatBoxProvider>
+                <BreakpointProvider>
+                  <NotificationProvider>
+                    <PageEventsContainer />
+                    <UserCookiesContainer />
+                    <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
+                      <title>Find The Best Senior Living Options Near You</title>
+                      <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                      <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+                      <meta content="Seniorly" property="author" />
+                      <meta content="English" property="language" />
 
-                    {/*
+                      {/*
                       Open graph
-                    */}
-                    <meta property="og:site_name" content="Seniorly" />
-                    <meta property="og:site_url" content="https://www.seniorly.com" />
-                    <meta property="og:type" content="website" />
+                      */}
+                      <meta property="og:site_name" content="Seniorly" />
+                      <meta property="og:site_url" content="https://www.seniorly.com" />
+                      <meta property="og:type" content="website" />
 
-                    {/*
+                      {/*
                       Twitter
                     */}
-                    <meta content="summary" property="twitter:card" />
-                    <meta content="https://www.seniorly.com" property="twitter:site" />
-                    <meta content="@seniorly" property="twitter:creator" />
+                      <meta content="summary" property="twitter:card" />
+                      <meta content="https://www.seniorly.com" property="twitter:site" />
+                      <meta content="@seniorly" property="twitter:creator" />
 
-                    {/*
+                      {/*
                       Google Optimize
                     */}
-                    <meta
-                      httpEquiv="Content-Security-Policy"
-                      content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"
-                    />
+                      <meta
+                        httpEquiv="Content-Security-Policy"
+                        content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"
+                      />
 
-                    <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
-                    <style type="text/css">{GlobalStyles}</style>
-                  </Helmet>
+                      <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
+                      <style type="text/css">{GlobalStyles}</style>
+                    </Helmet>
 
-                  <Switch>
-                    <Route
-                      path="/ping"
-                      render={() => <h1>pong</h1>}
-                      exact
-                    />
-                    <Route
-                      path="/ads.txt"
-                      render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
-                      exact
-                    />
-                    <Route
-                      path={`/:toc(${careTypes})/:state/:city/filters`}
-                      render={({ match }) => (
-                        <Redirect
-                          to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
-                        />
+                    <Switch>
+                      <Route
+                        path="/ping"
+                        render={() => <h1>pong</h1>}
+                        exact
+                      />
+                      <Route
+                        path="/ads.txt"
+                        render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
+                        exact
+                      />
+                      <Route
+                        path={`/:toc(${careTypes})/:state/:city/filters`}
+                        render={({ match }) => (
+                          <Redirect
+                            to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+                          />
                       )}
-                    />
-                    <Route
-                      path="/dashboard/*"
-                      component={Dashboard}
-                    />
-                    {routeComponents}
-                    <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-                  </Switch>
-                  {!hideChatbox && <ChatBoxContainer />}
-                </NotificationProvider>
-              </BreakpointProvider>
+                      />
+                      <Route
+                        path="/dashboard/*"
+                        component={Dashboard}
+                      />
+                      {routeComponents}
+                      <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+                    </Switch>
+                  </NotificationProvider>
+                </BreakpointProvider>
+              </ChatBoxProvider>
             </IconContext.Provider>
           </ThemeProvider>
         </Provider>

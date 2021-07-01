@@ -89,10 +89,11 @@ const Reasons = () => {
         gridTemplateColumns="auto!important"
         sx$tablet={{
          gridTemplateColumns: sx`${layout('col3')} 1fr!important`,
-         gridGap: sx`${space('xl')}!important`,
+         gridGap: sx`${space('l')}!important`,
        }}
         sx$laptop={{
          gridTemplateColumns: sx`${layout('col6')} 1fr!important`,
+         gridGap: sx`${space('xxl')}!important`,
          direction: 'rtl',
        }}
       >
@@ -132,10 +133,11 @@ const Reasons = () => {
         gridTemplateColumns="auto!important"
         sx$tablet={{
          gridTemplateColumns: sx`${layout('col3')} 1fr!important`,
-         gridGap: sx`${space('xl')}!important`,
+         gridGap: sx`${space('l')}!important`,
        }}
         sx$laptop={{
          gridTemplateColumns: sx`${layout('col6')} 1fr!important`,
+         gridGap: sx`${space('xxl')}!important`,
        }}
       >
         <ReasonImage

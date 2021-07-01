@@ -40,17 +40,14 @@ const Body = styled.main`
 
   `)}
 
-  ${ifProp('hasStickyFooter', css`
-    // hack to add css specificity instead of using !important
-    &.hasStickyFooter {
-      ${upTo('tablet', css`
-        padding-bottom: calc(78px + ${size('spacing.large')});
-      `)}
-      ${upTo('laptop', css`
-        padding-bottom: calc(78px + ${size('spacing.xLarge')});
-      `)}
-    }
-  `)}
+  &.hasStickyFooter {
+    ${upTo('tablet', css`
+      padding-bottom: calc(78px + ${size('spacing.large')});
+    `)}
+    ${upTo('laptop', css`
+      padding-bottom: calc(78px + ${size('spacing.xLarge')});
+    `)}
+  }
 `;
 
 Body.propTypes = {
@@ -85,17 +82,17 @@ const DashboardPage = styled.div`
     grid-template-rows: max-content auto;
     grid-template-areas:
       "header header"
-      "sidebar body";  
-  `)}
-  
+      "sidebar body";
+  `)};
+
 `;
 
 const DashboardPageTemplate = ({
-  children, activeMenuItem, className, hasStickyFooter,
+  children, activeMenuItem, hasStickyFooter, ...props
 }) => {
-  const cx = `${className}${hasStickyFooter ? ' hasStickyFooter' : ''}`;
+  const cx = hasStickyFooter ? 'hasStickyFooter' : '';
   return (
-    <DashboardPage>
+    <DashboardPage {...props}>
       <Header><HeaderContainer /></Header>
       <Sidebar><DashboardMenu activeMenuItem={activeMenuItem} /></Sidebar>
       <Body hasStickyFooter={hasStickyFooter} className={cx}>{children}</Body>

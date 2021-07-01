@@ -9,7 +9,6 @@ import PhoneCTAFooter from 'sly/web/components/molecules/PhoneCTAFooter';
 import NextSteps from 'sly/web/components/molecules/NextSteps';
 import { tocSiteNavigationLD, guideLD } from 'sly/web/services/helpers/html_headers';
 import HowSlyWorksVideoContainer from 'sly/web/containers/HowSlyWorksVideoContainer'
-import { getStateAbbr } from 'sly/web/services/helpers/url';
 import {
   HubPageTemplate,
   makeBody,
@@ -38,21 +37,8 @@ const StyledTable = makeTable('table');
 
 const ActiveAdultNearMePage = ({
   onLocationSearch,
-  searchParams,
-  requestMeta,
-  communityList,
-  isFetchingResults,
   handleAnchor,
-  location,
-  onCurrentLocation,
 }) => {
-  const listSize = requestMeta['filtered-count'];
-  const { geo } = requestMeta;
-  const city = geo && geo.city;
-  const state = geo && geo.state;
-  const tocLabel = 'Senior Living Communities';
-
-
   const aaRef = React.createRef();
   const costRef = React.createRef();
   const rulesRef = React.createRef();
@@ -697,7 +683,6 @@ const ActiveAdultNearMePage = ({
 
   const title = 'What is an Active Adult Community?';
   const description = 'Learn about how Active Adult Communities, also known as 55+ Retirement Communities, differ from other types of senior living, and see whether a 55+ community is right for you.';
-  const heading = state ? `${listSize} ${tocLabel} near ${city}, ${getStateAbbr(state)}` : `${listSize} ${tocLabel} near ${city}`;
 
   return (
     <>
@@ -711,7 +696,7 @@ const ActiveAdultNearMePage = ({
          toc="active adult"
          heading="Find the Best Active Adult Communities Near You"
          label="Use our free search to find active adult options nearby"
-         onCurrentLocation={onCurrentLocation}
+         showSearch={false}
          onLocationSearch={onLocationSearch} />
       <HubPageTemplate>
         <Wrapper>
@@ -722,19 +707,7 @@ const ActiveAdultNearMePage = ({
               </StickToTop>
             </Column>
             <Body>
-            {SEOContent()}
-            {/*<Heading level="title" size="title">*/}
-              {/*{heading}*/}
-            {/*</Heading>*/}
-            {/*{isFetchingResults && <Heading level="hero" size="title">loading...</Heading>}*/}
-            {/*{!isFetchingResults && (*/}
-              {/*<CommunitySearchList*/}
-                {/*communityList={communityList}*/}
-                {/*searchParams={searchParams}*/}
-                {/*requestMeta={requestMeta}*/}
-                {/*location={location}*/}
-              {/*/>*/}
-            {/*)}*/}
+              {SEOContent()}
             </Body>
           </TwoColumn>
         </Wrapper>

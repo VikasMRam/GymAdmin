@@ -72,11 +72,17 @@ const ArticlePreview = ({
         {title}
       </Heading>
 
-      <Block color="slate.base" sx={getStylesForEllipsisText(4)}>
+      <Block
+        sx={{
+          fontSize: 'title-xs',
+          color: 'slate.base',
+          ...getStylesForEllipsisText(4),
+        }}
+      >
         {shortDescription}
       </Block>
 
-      <ArticleTags topic={topic} tagsList={tagsList} />
+      {topic && <ArticleTags topic={topic} tagsList={tagsList} />}
     </Block>
   </Flex>
 );
