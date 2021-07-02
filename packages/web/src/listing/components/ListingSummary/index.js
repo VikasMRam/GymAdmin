@@ -86,7 +86,7 @@ const ListingSummary = ({
   } = listing;
 
   const { phoneNumber, care, startingRate, floorPlan } = info;
-  const { ratingValue, numReviews } = info.ratingInfo;
+  const { ratingValue, numRatings } = info.ratingInfo;
 
 
   let conciergeNumber = phoneNumber;
@@ -131,7 +131,7 @@ const ListingSummary = ({
       {ratingValue > 0 &&
         <MobileListingRating
           rating={ratingValue}
-          numReviews={numReviews}
+          numReviews={numRatings}
           goToReviews={goToReviews}
           reviewsText
         />
