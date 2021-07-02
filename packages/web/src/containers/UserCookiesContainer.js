@@ -48,7 +48,7 @@ const UserCookiesContainer = () => {
       };
 
       //set cookie with new utm. If utm cookie present append to it
-      const utmCookie = cookie.get('sly_utm_cookie');
+      const utmCookie = cookie.get('sly_utm_cookie') || {};
       const clicks = utmCookie.clicks || [];
       clicks.push(utmParams);
       utmCookie.clicks = clicks;
