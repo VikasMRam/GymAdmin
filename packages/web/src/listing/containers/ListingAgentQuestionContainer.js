@@ -7,7 +7,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 
-const ListingAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */'./ListingAgentFormContainer'));
+const ListingAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */'sly/web/listing/containers/ListingAgentFormContainer'));
 
 
 @withModal

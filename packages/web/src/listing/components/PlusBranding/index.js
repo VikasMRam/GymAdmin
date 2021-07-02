@@ -68,7 +68,7 @@ export default class PlusBranding extends Component {
         margin-left: calc(50% - 50vw);
         padding: ${space('xxl')} 0px;
         ${sx$tablet({ padding: '64px 0px' })}
-        ${sx$laptop({ padding: 'xxxl 0px' })}
+        ${sx$laptop({ padding: 'xxxl 0px', marginLeft: 'calc(76% - 0.5px - 50vw)' })}
       `}
       >
         <GradientOverlay>

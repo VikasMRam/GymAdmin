@@ -37,9 +37,9 @@ const ListingSummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* web
 const ApartmentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkApartmentSection" */ 'sly/web/listing/components/ApartmentSection'));
 const ListingCommunityContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListngCommunityContainer'));
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
-const ListingReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListingReviewsContainer'));
-const ListingAgentButtonConatiner = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListingAgentButtonContainer'));
-const ListingAgentQuestionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListingAgentQuestionContainer'));
+const ListingReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingReviewsContainer'));
+const ListingAgentButtonConatiner = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentButtonContainer'));
+const ListingAgentQuestionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentQuestionContainer'));
 
 const StyledListingSummary = styled(ListingSummaryContainer)`
   
@@ -61,6 +61,19 @@ const StyledSection = styled(Section)`
   margin-right:auto;
   background:${color('white.base')};
   font:${font('body-l')};
+`;
+
+const StickToTop = styled.div`
+  position: sticky;
+  top: 74px;
+  margin-bottom: 50px;
+  background-color: #fff;
+  z-index: 99;
+  border: 0.1px solid #e7e8ea;
+  border-radius: 0.4em;
+  ${sx({
+    padding: 'l l',
+  })}
 `;
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
@@ -181,11 +194,7 @@ export default class ListingDetailPage extends PureComponent {
                 {description && (
                 <Block background="white.base" pb="l" mb="xs" px="m" sx$laptop={{ px: '0' }} font="body-l" dangerouslySetInnerHTML={{ __html: description }} />
                 )}
-              </Body>
-            </TwoColumn>
-            <PlusBranding />
-            <TwoColumn>
-              <Body>
+                <PlusBranding />
                 {/* Partner Agent */}
                 {partnerAgent && (
                 <>
@@ -251,16 +260,19 @@ export default class ListingDetailPage extends PureComponent {
                 {reviews && reviews.length > 0 &&
                   <ListingReviewsContainer />
                 }
-
-                {/* Todo: Place it in right position */}
-                {/* Agent Question Container */}
-                <ListingAgentQuestionContainer
-                  agent={partnerAgent}
-                  listing={listing}
-                  type="expert"
-                  isStatic
-                />
               </Body>
+              <Column>
+
+                <StickToTop>
+                  {/* Agent Question Container */}
+                  <ListingAgentQuestionContainer
+                    agent={partnerAgent}
+                    listing={listing}
+                    type="expert"
+                    isStatic
+                  />
+                </StickToTop>
+              </Column>
             </TwoColumn>
           </Wrapper>
         </ListingProfilePageTemplate>
