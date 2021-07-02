@@ -5,6 +5,7 @@ import { ifProp } from 'styled-tools';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { space, sx$tablet, sx$laptop, Block, font, Button, Grid, Image, Link } from 'sly/common/system';
 import { Calendar } from 'sly/common/icons';
+import { assetPath } from 'sly/web/components/themes';
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
   margin-bottom:  ${space('s')};
@@ -30,21 +31,21 @@ const getActivityDetailByName = (name) => {
   result.name = name;
   // ToDo : Hardcoded as of now, will replace with actual images
   if (name === 'Art classes') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Art classes.jpg');
   } else  if (name === 'Music classes') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Music classes.jpg');
   } else  if (name === 'Field trips') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Field trips.jpg');
   } else  if (name === 'Virtual entertainment') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Virtual entertainment.jpg');
   } else  if (name === 'Yoga and Tai Chi') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Yoga and Tai Chi.jpg');
   } else  if (name === 'Gardening') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Gardening.jpg');
   } else  if (name === 'Spritual practice') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Spiritual practice.jpg');
   }  else  if (name === 'Book clubs') {
-    result.imageUrl = 'react-assets/home/bottom-banner.jpg';
+    result.imageSrc = assetPath('images/listing-activities/Book clubs.jpg');
   }
   return result;
 };
@@ -68,11 +69,11 @@ const ListingActivitiesSection = (props) => {
         >
           {
           activities.map(((activity) => {
-            const { name, imageUrl } = getActivityDetailByName(activity);
+            const { name, imageSrc } = getActivityDetailByName(activity);
             return (
               <Block height="100%" width="100%">
                 <Image
-                  path={imageUrl}
+                  src={imageSrc}
                   alt={name}
                   sx$tablet={{
                }}
