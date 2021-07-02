@@ -150,6 +150,10 @@ export default class ListingDetailPage extends PureComponent {
 
     const bookTourClickHandler = () => {
       console.log('tour');
+      const win = window.open('https://calendly.com/conciergebyseniorly/introductory-call-lake-shore-drive?utm_campaign=ILCalendly&utm_source=optimize&utm_medium=test&month=2021-07', '_blank');
+      if (win != null) {
+        win.focus();
+      }
     };
     const nearByOptionsClickHandler = () => {
       console.log('location');

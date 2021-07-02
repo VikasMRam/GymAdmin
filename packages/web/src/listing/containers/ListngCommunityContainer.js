@@ -36,14 +36,8 @@ const StyledArticle = styled.article`
 
 const getImagesOfCommunity = (community) => {
   const { images } = community.gallery || [];
-  // ToDo : Just Returning 4 images, have to include filter to get images of particular category
-  if (images.length === 0) {
-    return [];
-  }
-  if (images.length > 0 && images.length < 4) {
-    return images;
-  }
-  return images.slice(0, 4);
+  const filteredImages = images.filter(image => image.category === 'OUTSIDE');
+  return filteredImages.slice(0, 3);
 };
 
 

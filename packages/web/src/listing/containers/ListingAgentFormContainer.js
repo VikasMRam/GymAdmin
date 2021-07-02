@@ -7,13 +7,12 @@ import { withRouter } from 'react-router';
 import ListingAgentForm from './ListingAgentForm';
 
 import { prefetch, query, withAuth, withUser } from 'sly/web/services/api';
-import { AA_CONSULTATION_REQUESTED, PROFILE_ASK_QUESTION, AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED } from 'sly/web/services/api/constants';
+import { LISTING_CONSULTATION_REQUEST } from 'sly/web/services/api/constants';
 import { capitalize } from  'sly/web/services/helpers/utils';
 import matchPropType from 'sly/common/propTypes/match';
 import userPropType from 'sly/common/propTypes/user';
 import { createValidator, required, usPhone, email } from 'sly/web/services/validation';
 import SlyEvent from 'sly/web/services/helpers/events';
-import TalkToAgentForm from 'sly/web/components/organisms/TalkToAgentForm';
 
 const form = 'AskQuestionToAgentForm';
 const validate = createValidator({
@@ -54,16 +53,16 @@ export default class ListingAgentFormContainer extends Component {
     createQuestion: func,
     category: string,
     type: string,
-    actionType: oneOf([PROFILE_ASK_QUESTION, AGENT_ASK_QUESTIONS, CONSULTATION_REQUESTED, HOME_CARE_REQUESTED]),
+    actionType: string,
     status: object.isRequired,
     updateUuidAux: func.isRequired,
   };
 
   static defaultProps = {
-    category: 'agent',
-    actionType: AGENT_ASK_QUESTIONS,
+    category: 'listing',
+    actionType: LISTING_CONSULTATION_REQUEST,
   };
-  handleSubmit = (data) => {
+  handleSubmit = (data, showSuccessPopup) => {
     const {
       entityId, postSubmit, createAction, createOrUpdateUser, updateUuidAux, match,
       user, category, type, status, actionType,
@@ -99,14 +98,12 @@ export default class ListingAgentFormContainer extends Component {
       updateUuidAuxReq = () => updateUuidAux({ id: uuidAux.id }, uuidAux);
     }
     const actionInfo = {
-      slug: entityId,
-      entityType: capitalize(category),
+      listingSlug: entityId,
       name,
       email,
       phone,
-      question: message,
+      message,
     };
-
     return Promise.all([
       createAction({
         type: 'UUIDAction',
@@ -120,6 +117,9 @@ export default class ListingAgentFormContainer extends Component {
     ])
       .then(() => {
         if (user) {
+          if (postSubmit) {
+            postSubmit();
+          }
           return true;
         }
         return createOrUpdateUser({
@@ -129,14 +129,12 @@ export default class ListingAgentFormContainer extends Component {
         }, { ignoreAlreadyRegistered: true });
       })
       .then(() => {
-        // ToDO -> Emiting events based on category
-        // const c = `${category}-${actionType}${type ? `-${type}` : ''}`;
-        // const event = {
-        //   action: 'ask_question', category: c, label: entityId || match.url,
-        // };
-        // SlyEvent.getInstance().sendEvent(event);
+        const event = {
+          action: 'consultaion_requested', category: 'Listing', label: entityId || match.url,
+        };
+        SlyEvent.getInstance().sendEvent(event);
         if (postSubmit) {
-          postSubmit();
+          postSubmit(showSuccessPopup);
         }
       });
   };
@@ -144,14 +142,12 @@ export default class ListingAgentFormContainer extends Component {
   sendMessageProgress = false;
   handleSendMessage = (data) => {
     this.sendMessageProgress = true;
-    this.handleSubmit(data);
+    this.handleSubmit(data, true);
   }
 
   handleBookTour = (data) => {
-    const { postSubmit } = this.props;
-    if (postSubmit) {
-      postSubmit();
-    }
+    this.sendMessageProgress = true;
+    this.handleSubmit(data, false);
     // URL hardcode for testing, it requires dashbaord and api changes
     const win = window.open('https://calendly.com/conciergebyseniorly/introductory-call-lake-shore-drive?utm_campaign=ILCalendly&utm_source=optimize&utm_medium=test&month=2021-07', '_blank');
     if (win != null) {
@@ -162,7 +158,6 @@ export default class ListingAgentFormContainer extends Component {
   customProps = {
     handleSendMessage: this.handleSendMessage,
     sendMessageProgress: this.sendMessageProgress,
-    bookTourProgress: this.bookTourProgress,
     handleBookTour: this.handleBookTour,
   };
 

@@ -22,7 +22,6 @@ export default class ListingAgentQuestionContainer extends Component {
     showModal: func.isRequired,
     hideModal: func.isRequired,
     children: func,
-    isStatic: bool.isRequired,
     heading: string,
     description: string,
   };
@@ -53,11 +52,16 @@ export default class ListingAgentQuestionContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  showSuccessModal = () => {
-    const { type, listing, showModal, hideModal } = this.props;
+  recordCtaEntity = () => {
+    const { type, listing } = this.props;
     if (listing) {
       recordEntityCta(type, listing.id);
     }
+  }
+
+  showSuccessModal = () => {
+    const { showModal, hideModal } = this.props;
+    this.recordCtaEntity();
     showModal(<Thankyou
       heading="Success!"
       subheading={'Your request has been sent and we will connect with' +
@@ -68,7 +72,7 @@ export default class ListingAgentQuestionContainer extends Component {
   }
 
   openAskAgentQuestionModal = (subType) => {
-    const { type, listing, agent, showModal, hideModal, isStatic, heading, description } = this.props;
+    const { type, listing, agent, showModal, hideModal, heading, description } = this.props;
 
     const toggleAskAgentQuestionModal = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
@@ -77,11 +81,12 @@ export default class ListingAgentQuestionContainer extends Component {
     const onClose = () => {
       this.handleToggleAskAgentQuestionModal(true, subType);
     };
-    const postSubmit = () => {
-      if (!isStatic) {
-        toggleAskAgentQuestionModal();
+    const postSubmit = (showSuccessPopup) => {
+      this.recordCtaEntity();
+      toggleAskAgentQuestionModal();
+      if (showSuccessPopup) {
+        this.showSuccessModal();
       }
-      this.showSuccessModal();
     };
 
     const modalComponentProps = {
@@ -101,8 +106,11 @@ export default class ListingAgentQuestionContainer extends Component {
   renderForm() {
     const { listing, type, heading, description } = this.props;
 
-    const postSubmit = () => {
-      this.showSuccessModal();
+    const postSubmit = (showSuccessPopup) => {
+      this.recordCtaEntity();
+      if (showSuccessPopup) {
+        this.showSuccessModal();
+      }
     };
 
     const staticComponentProps = {

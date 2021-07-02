@@ -9,10 +9,9 @@ import userPropType from 'sly/common/propTypes/user';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
 import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
-import { Button } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import { textAlign } from 'sly/web/components/helpers/text';
-import { Heading, Hr, space, sx, Block, color, font } from 'sly/common/system';
+import { Heading, Hr, space, sx, Block, color, font, Button } from 'sly/common/system';
 
 
 const StyledDesc = styled.div`
@@ -125,10 +124,11 @@ export default class ListingAgentForm extends Component {
           <StyledButton
             hasMarginBottom={error}
             kind={buttonKind}
-            disabled={invalid || sendMessageProgress}
+            disabled={sendMessageProgress}
             onClick={handleSubmit(values =>
           handleSendMessage({
             ...values,
+
           }))}
           >
             Send Message
@@ -138,8 +138,8 @@ export default class ListingAgentForm extends Component {
           </Block>
           <StyledButton
             hasMarginBottom={error}
-            disabled={invalid || sendMessageProgress}
             variant="secondary"
+            disabled={sendMessageProgress}
             onClick={handleSubmit(values =>
               handleBookTour({
             ...values,
