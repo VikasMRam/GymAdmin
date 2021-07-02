@@ -62,7 +62,7 @@ const AskQuestionToAgentFormContainer = (props) => {
       if (user.name) ({ name } = user);
     }
 
-    const uuidInfo = rawUuidAux.attributes.uuidInfo || {};
+    const uuidInfo = rawUuidAux?.attributes.uuidInfo || {};
     let updateUuidAuxReq = () => Promise.resolve();
 
     if (location) {
@@ -108,8 +108,17 @@ const AskQuestionToAgentFormContainer = (props) => {
           throw new SubmissionError({ _error: errorMessage });
         });
     }
-
-    return null;
+    return Promise.all([
+      createAction({ type: 'UUIDAction', attributes: { actionType, actionPage: url, actionInfo } }),
+      updateUuidAuxReq(),
+    ])
+      .then(() => user ? true : createOrUpdateUser({ name, email, phone }, { ignoreAlreadyRegistered: true }))
+      .then(() => {
+        const c = `${category}-${actionType}${type ? `-${type}` : ''}`;
+        const event = { action: 'ask_question', category: c, label: entityId || url };
+        SlyEvent.getInstance().sendEvent(event);
+          postSubmit?.();
+      });
   }, [entityId, postSubmit, createOrUpdateUser, category, type, actionType, user, rawUuidAux]);
 
   return (
