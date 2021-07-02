@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { reduxForm, reset, SubmissionError } from 'redux-form';
 import { func, string, oneOf } from 'prop-types';
 import * as immutable from 'object-path-immutable';
@@ -43,7 +43,7 @@ const AskQuestionToAgentFormContainer = (props) => {
   const createQuestion = useQuery('createQuestion');
   const updateUuidAux = useQuery('updateUuidAux');
 
-  const { url } = useParams();
+  const { pathname: url } = useLocation();
 
   const { createOrUpdateUser } = useAuth();
 
