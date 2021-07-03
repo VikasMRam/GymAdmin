@@ -6,10 +6,10 @@ import CommunityWizardAcknowledgement from 'sly/web/components/organisms/Communi
 import Modal from 'sly/web/components/molecules/Modal';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { similarProperties } = RhodaGoldmanPlaza;
+const { similarCommunities } = RhodaGoldmanPlaza;
 
 const defaultProps = {
-  similarCommunities: similarProperties,
+  similarCommunities: similarCommunities,
   buttonTo: 'www.teamseniorly.com',
   buttonText: 'Take me to my dashboard',
   heading: 'Tour Request Sent!',

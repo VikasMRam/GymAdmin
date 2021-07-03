@@ -5,9 +5,9 @@ import { action } from '@storybook/addon-actions';
 import CommunitySaved from 'sly/web/components/organisms/CommunitySaved';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { similarProperties } = RhodaGoldmanPlaza;
+const { similarCommunities } = RhodaGoldmanPlaza;
 
 storiesOf('Organisms|CommunitySaved', module)
   .add('default', () => (
-    <CommunitySaved similarCommunities={similarProperties} onDoneButtonClicked={action('done button clicked')} />
+    <CommunitySaved similarCommunities={similarCommunities} onDoneButtonClicked={action('done button clicked')} />
   ));
