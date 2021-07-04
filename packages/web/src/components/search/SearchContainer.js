@@ -58,7 +58,7 @@ export default function SearchContainer() {
   const { triggerChatBot } = useChatbox();
   useEffect(() => {
     if (location.pathname.indexOf('nursing-homes') === -1) {
-      triggerChatBot('Bot reintro');
+      triggerChatBot('search-bot');
     }
   }, []);
 

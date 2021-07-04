@@ -38,7 +38,7 @@ const HomePage = ({
 }) => {
   const { triggerChatBot } = useChatbox();
   useEffect(() => {
-    triggerChatBot('Bot reintro');
+    triggerChatBot('home-bot');
   }, []);
   return (
     <>
