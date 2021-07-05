@@ -1,11 +1,14 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { stringify, parse } from 'query-string';
+import { stringify } from 'query-string';
+import { object } from 'prop-types';
 
 import { withHydration } from 'sly/web/services/partialHydration';
 
 import { useAuth } from 'sly/web/services/api';
-import { generateSearchUrl, isInternationalPath,
+import {
+  generateSearchUrl,
+  isInternationalPath,
   parseURLQueryParams,
   removeQueryParamFromURL,
 } from 'sly/web/services/helpers/url';
@@ -15,7 +18,6 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import Notifications from 'sly/web/components/organisms/Notifications';
 import { menuItems } from 'sly/web/components/molecules/DashboardMenu';
 import Header from 'sly/web/components/organisms/Header';
-
 
 const AuthContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "authContainer" */ import('sly/common/services/auth/containers/AuthContainer'));
 
@@ -105,7 +107,7 @@ const generateMenuItems = ({ user, logIn, signUp, logOut }) => [
   ...loggedInMenuItems({ user, logIn, signUp, logOut }),
 ];
 
-export default function HeaderContainer(props) {
+export default function HeaderContainer({ registerContext = {} }) {
   const location = useLocation();
   const history = useHistory();
   const { user, logoutUser, authenticated, ensureAuthenticated } = useAuth();
@@ -151,7 +153,7 @@ export default function HeaderContainer(props) {
 
   const isInternationalPage = isInternationalPath(pathname);
 
-  const signUp = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({ register: true }); };
+  const signUp = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated({ ...registerContext, register: true }); };
   const logIn = ({ name }) => { sendHeaderItemClickEvent(name); ensureAuthenticated(); };
 
   const hItems = getDefaultHeaderItems();
@@ -180,5 +182,7 @@ export default function HeaderContainer(props) {
   );
 }
 
-HeaderContainer.typeHydrationId = 'HeaderContainer';
+HeaderContainer.propTypes = {
+  registerContext: object,
+};
 
