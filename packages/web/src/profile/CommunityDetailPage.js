@@ -427,7 +427,7 @@ export default class CommunityDetailPage extends PureComponent {
 
                 {!!similarCommunities?.similar?.length && (
                   <StyledHeadingBoxSection
-                    heading="Recommended communities"
+                    heading="Similar communities"
                     id="sticky-sidebar-boundary"
                     sx$tablet={{ padding: '0 !important' }}
                   >
