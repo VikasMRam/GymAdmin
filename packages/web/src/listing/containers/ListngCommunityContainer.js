@@ -36,7 +36,7 @@ const StyledArticle = styled.article`
 
 const getImagesOfCommunity = (community) => {
   const { images } = community.gallery || [];
-  const filteredImages = images.filter(image => image.category === 'OUTSIDE');
+  const filteredImages = images.filter(image => image.category === 'Exterior');
   return filteredImages.slice(0, 3);
 };
 

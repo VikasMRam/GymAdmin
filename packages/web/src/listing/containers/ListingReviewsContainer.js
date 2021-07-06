@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -7,7 +7,7 @@ import EntityReviews from 'sly/web/components/organisms/EntityReviews';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
-import { space, sx$tablet, sx$laptop, font } from 'sly/common/system';
+import { space, sx$tablet, sx$laptop, font, Block, color } from 'sly/common/system';
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
   margin-bottom:  ${space('s')};
@@ -27,12 +27,18 @@ const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true 
   font:${font('body-l')};
 `;
 
-const ListingReviewsContainer = () => {
+
+const StyledButton = styled(Block)`
+    font:${font('body-xs')};
+    color:${color('viridian.base')};
+    text-decoration:underline;
+    cursor: pointer;
+
+  `;
+
+const ListingReviewsContainer = (props) => {
   const { id } = useParams();
-  const { requestInfo: { normalized: listing } } = usePrefetch('getListing', {
-    id,
-    include: 'similar-communities,questions,agents,reviews',
-  });
+  const { listing } = props;
   const { reviews, name } = listing || {};
   const { reviewsValue, ratingsArray, numReviews } = listing?.info?.raratingInfo || {};
   const onReviewLinkClicked = useCallback((name) => {
@@ -44,6 +50,28 @@ const ListingReviewsContainer = () => {
     });
   }, [id]);
 
+  const [showAllReviews, setShowAllReviews] = useState(false);
+  const [reviewsUnderView, setReviewsUnderView] = useState([]);
+
+  const showAllReviewsHandler = () => {
+    if (showAllReviews) {
+      setReviewsUnderView(reviews);
+      setShowAllReviews(false);
+    } else {
+      setReviewsUnderView(reviews.slice(0, 4));
+      setShowAllReviews(true);
+    }
+  };
+
+  useEffect(() => {
+    if (reviews.length > 4) {
+      setShowAllReviews(true);
+      setReviewsUnderView(reviews.slice(0, 4));
+    } else {
+      setReviewsUnderView(reviews);
+    }
+  }, reviews);
+
   return (
     <StyledHeadingBoxSection
       heading={`Reviews at ${name}`}
@@ -52,11 +80,29 @@ const ListingReviewsContainer = () => {
       <EntityReviews
         reviewsValue={reviewsValue}
         numReviews={numReviews}
-        reviews={reviews || []}
+        reviews={reviewsUnderView || []}
         reviewRatings={ratingsArray || []}
         onReviewLinkClicked={onReviewLinkClicked}
       />
+      {
+        (reviews && reviews.length > 4) &&
+        <>
+          {
+          showAllReviews &&
+          <StyledButton onClick={showAllReviewsHandler}>
+            See all reviews
+          </StyledButton>
+          }
+          {
+          !showAllReviews &&
+          <StyledButton onClick={showAllReviewsHandler}>
+            See less reviews
+          </StyledButton>
+          }
+        </>
+      }
     </StyledHeadingBoxSection>
+
   );
 };
 
