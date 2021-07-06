@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import { getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
-import { Button, Hr, Block, Grid, Image, space, sx } from 'sly/common/system';
+import { Button, Hr, Block, Grid, Image, space, sx, sx$laptop } from 'sly/common/system';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import EntityInfo from 'sly/web/components/molecules/EntityInfo';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
+import Tag  from 'sly/web/components/atoms/Tag/newSystem';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -33,13 +34,41 @@ const StyledIcon = styled(Block)`
   }
 `;
 
+const TagBlock = styled(Block)`
+  z-index: 10;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  display: none;
+  ${sx$laptop({
+    display: 'block',
+  })}
+`;
+
+const makeNewTags = (tags) => {
+  const tagsMap = {
+    PLUS: 'harvest.base',
+    VERIFIED: 'green',
+  };
+  const newTags = [];
+  tags.forEach((tag) => {
+    if (tag === 'PLUS' || tag === 'VERIFIED') {
+      newTags.push({
+        name: tag,
+        color: tagsMap[tag],
+      });
+    }
+  });
+  return newTags;
+};
+
 const EntityTile = ({
   entity, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite, onFavouriteClick,
   onUnfavouriteClick, onSlideChange, currentSlide, layout, showFloorPlan, canFavourite, lazyLoadImage, event, type,
   imageAspectRatio, imageMargin, index, ...props
 }) => {
   const {
-    name, gallery, plusCategory,
+    name, gallery, plusCategory, tags,
   } = entity;
   let images = [];
   if (gallery) {
@@ -73,8 +102,26 @@ const EntityTile = ({
     imageMargin = spacing;
   }
   const imageSnap = imageMargin && type !== 'map' ? 'right' : null;
+  const newTags = !!tags && !!tags.length ? makeNewTags(tags) : [];
 
-
+  const tagSection = !!newTags && !!newTags.length && (
+    <TagBlock
+      as="span"
+    >
+      {newTags.map(({ name, color }) => {
+        return (
+          <Tag
+            color={color}
+            background="white"
+            key={name}
+            marginRight="xs"
+          >
+            {name}
+          </Tag>
+        );
+      })}
+    </TagBlock>
+  );
   return (
     <Block
       as="article"
@@ -113,34 +160,37 @@ const EntityTile = ({
           gridGap: 'xs',
         }}
       >
+        <Block
+          position="relative"
+        >
+          {tagSection}
+          <Image
+            flexDirection={layout}
+            path={imagePath}
+            src={imageSrc}
+            placeholder={placeholder}
+            sizes={mediaSizes}
+            aspectRatio={imageAspectRatio}
 
-
-        <Image
-          flexDirection={layout}
-          path={imagePath}
-          src={imageSrc}
-          placeholder={placeholder}
-          sizes={mediaSizes}
-          aspectRatio={imageAspectRatio}
-
-          margin={type === 'map' ? imageMargin : 0}
-          snap={layout === 'row' ? 'bottom' : imageSnap}
-          loading={loading}
-          borderRadius="xxs"
-          borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
-          borderBottomRightRadius={type === 'map' ? null : '0px !important'}
-          sx$tablet={{
+            margin={type === 'map' ? imageMargin : 0}
+            snap={layout === 'row' ? 'bottom' : imageSnap}
+            loading={loading}
+            borderRadius="xxs"
+            borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
+            borderBottomRightRadius={type === 'map' ? null : '0px !important'}
+            sx$tablet={{
             borderBottomLeftRadius: sx`${space('xxs')}!important`,
             borderTopRightRadius: type === 'map' ? null : '0px !important',
             margin: imageMargin,
           }}
-        >
-          {topRightSection &&
+          >
+            {topRightSection &&
             <StyledIcon position="absolute" top="regular" right="regular" zIndex={10}>
               {topRightSection}
             </StyledIcon>
           }
-        </Image>
+          </Image>
+        </Block>
         <Block
           overflow="hidden"
           display="flex"
@@ -162,7 +212,7 @@ const EntityTile = ({
           }}
         >
           <EntityInfo
-            community={entity}
+            entity={entity}
             showFloorPlan={showFloorPlan}
             event={event}
             type={type}

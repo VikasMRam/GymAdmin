@@ -76,6 +76,24 @@ const getCareTypes = (address, careTypes) => {
   return updatedCareTypes;
 };
 
+const makeNewTags = (tags) => {
+  const tagsMap = {
+    Plus: 'harvest.base',
+    Verified: 'green',
+  };
+  const newTags = [];
+  tags.forEach(({ id, name }) => {
+    if (name === 'Plus' || name === 'Verified') {
+      newTags.push({
+        name,
+        id,
+        path: `${name}`,
+        background: tagsMap[name],
+      });
+    }
+  });
+  return newTags;
+};
 
 const ListingSummary = ({
   listing, innerRef, isAdmin, className,
@@ -103,9 +121,11 @@ const ListingSummary = ({
     careTypes = getCareTypes(address, care);
   }
 
+  const newTags = !!tags && !!tags.length ? makeNewTags(tags) : [];
+  console.log('tags', newTags);
+
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
-
 
   return (
     <Block pb="l" px="m" sx$laptop={{ px: '0' }} ref={innerRef} className={className}>
@@ -138,6 +158,31 @@ const ListingSummary = ({
       }
 
       <Block>
+        {!!newTags && !!newTags.length &&
+          newTags.map(({ name, id, path, background }) => {
+            return (
+              <Tag
+                key={id}
+                marginRight="xs"
+                background={background}
+                color="white"
+              >
+                <Link
+                  color="white"
+                  to={path}
+                  target="_blank"
+                  event={{
+                  category: 'new-tags',
+                  action: 'tag-click',
+                  label: name,
+                }}
+                >
+                  {name}
+                </Link>
+              </Tag>
+            );
+          })
+        }
         {careTypes.map(careType => (
           <Tag
             key={careType.path}

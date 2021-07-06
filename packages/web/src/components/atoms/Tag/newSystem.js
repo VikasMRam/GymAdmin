@@ -6,6 +6,9 @@ import { Block } from 'sly/common/system';
 const Tag = ({ ...props }) => {
   if (props.outline) {
     props.border = 's';
+  } else if (props.background && props.color) {
+    props.background = props.background;
+    props.color = props.color;
   } else {
     props.background = props.color;
     props.color = 'white';

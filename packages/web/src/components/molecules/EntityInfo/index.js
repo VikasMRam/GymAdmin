@@ -48,14 +48,14 @@ export default class EntityInfo extends Component {
 
   render() {
     const {
-      community, inverted, color, headerIsLink, event, swapRatingPrice, type, index, ...props
+      entity, inverted, color, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
     const { priceTextSize } = this.props;
-    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate, secondLine, thirdLine  } = community;
+    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate, secondLine, thirdLine  } = entity;
 
-    const { reviewsValue, numReviews } = propRatings || community;
-    const typeCare = community.care || community.typeCare || propInfo.typeCare;
-    const capacity = thirdLine || propInfo.capacity || community.capacity;
+    const { reviewsValue, numReviews } = propRatings || entity;
+    const typeCare = entity.care || entity.typeCare || propInfo.typeCare;
+    const capacity = thirdLine || propInfo.capacity || entity.capacity;
     const placeholder = getPlaceholderIcon(communitySize);
 
     let livingTypeComponent = null;
@@ -124,20 +124,20 @@ export default class EntityInfo extends Component {
       <Heading
         font={type === 'map' ? 'title-xs-azo' : 'title-m'}
         pad={type === 'map' ? 'xxs' : 'xs'}
-        title={community.name}
+        title={entity.name}
         color={inverted ? 'white' : 'slate'}
         whiteSpace="nowrap"
         overflow="hidden"
         textOverflow="ellipsis"
       >
         {index && `${index}. `}
-        {community.name}
+        {entity.name}
       </Heading>
     );
 
     const header = headerIsLink
       ? (
-        <Link href={community.url} event={event}>
+        <Link href={entity.url} event={event}>
           {headerContent}
         </Link>
       ) : headerContent;
@@ -171,7 +171,7 @@ export default class EntityInfo extends Component {
           flexDirection={swapRatingPrice ? 'row-reverse' : undefined}
         >
           <CommunityRating
-            seedId={community.id}
+            seedId={entity.id}
             rating={reviewsValue}
             numReviews={numReviews}
             color={inverted ? 'white' : 'primary'}

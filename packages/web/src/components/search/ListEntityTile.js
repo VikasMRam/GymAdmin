@@ -15,8 +15,6 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const ListEntityTile = memo(({ entity, setHoveredEntity, index }) => {
-  console.log('entity', entity);
-
   const onMouseEnter = useCallback(() => sendEvent('list-hover', entity.name, index) || setHoveredEntity(entity), [entity]);
   const onMouseLeave = useCallback(() => setHoveredEntity(null), []);
   return (
