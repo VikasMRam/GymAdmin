@@ -57,7 +57,7 @@ export default class EntityInfo extends Component {
     const typeCare = entity.care || entity.typeCare || propInfo.typeCare;
     const capacity = thirdLine || propInfo.capacity || entity.capacity;
     const placeholder = getPlaceholderIcon(communitySize);
-
+    console.log('capacity', entity);
     let livingTypeComponent = null;
 
     if (typeCare && typeCare.length) {
@@ -91,7 +91,7 @@ export default class EntityInfo extends Component {
       );
     }
 
-    if (thirdLine) {
+    if (secondLine) {
       livingTypeComponent = (
         <Span
           whiteSpace="nowrap"
@@ -147,7 +147,7 @@ export default class EntityInfo extends Component {
         <div>
           {header}
           {livingTypeComponent}
-          {capacity !== '' &&
+          {(capacity !== '' && capacity !== ' resident capacity') &&
           <Span
             whiteSpace="nowrap"
             overflow="hidden"
