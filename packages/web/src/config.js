@@ -18,6 +18,7 @@ const {
   HIDE_CHATBOX,
   ENABLE_EXPERIMENT_DEBUGGER,
   DISABLE_EXPERIMENTS,
+  SEGMENT_API_KEY,
 } = require('../env');
 
 const { VERSION } = process.env;
@@ -68,6 +69,8 @@ const config = {
       search: '2390417245',
     },
     hideChatbox: HIDE_CHATBOX,
+    additionalAnalyticsPlatform: null,
+    segmentApiKey: SEGMENT_API_KEY,
   },
 
   test: {
