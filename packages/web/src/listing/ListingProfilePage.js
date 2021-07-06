@@ -4,6 +4,7 @@ import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
+
 import ListingActivitiesSection from './containers/ListingActivitiesSection';
 import LazyListingMapContainer from './containers/LazyLististingMapContainer';
 
@@ -13,7 +14,7 @@ import Section from 'sly/web/components/molecules/Section';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import { getBreadCrumbsForListing } from 'sly/web/services/helpers/url';
 import pad from 'sly/web/components/helpers/pad';
-import { color, space, sx$tablet, sx$laptop, Hr, sx, Block, font, Paragraph, layout, Button, Link, Grid } from 'sly/common/system';
+import { color, space, sx$tablet, sx$laptop, Hr, sx, Block, font, Paragraph, layout, Button, Link, Grid, Span } from 'sly/common/system';
 import {
   ListingProfilePageTemplate,
   makeBody,
@@ -29,7 +30,7 @@ import PlusBranding from 'sly/web/listing/components/PlusBranding';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { Food } from 'sly/common/icons';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
-
+import SimilarListings from 'sly/web/listing/components/SimilarListings';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const ListingMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkListingMediaGallery" */ 'sly/web/listing/ListingMediaGallery/ListingMediaGalleryContainer'));
@@ -40,6 +41,7 @@ const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* 
 const ListingReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingReviewsContainer'));
 const ListingAgentButtonConatiner = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentButtonContainer'));
 const ListingAgentQuestionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentQuestionContainer'));
+const CarouselContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCarouselContainer" */ 'sly/web/containers/CarouselContainer'));
 
 const StyledListingSummary = styled(ListingSummaryContainer)`
   
@@ -133,8 +135,8 @@ export default class ListingDetailPage extends PureComponent {
       user: communityUser,
       reviews,
       partnerAgent,
+      similarListings,
     } = listing;
-
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
 
@@ -170,6 +172,12 @@ export default class ListingDetailPage extends PureComponent {
     };
     const nearByOptionsClickHandler = () => {
       console.log('location');
+    };
+
+    const similarListingStyle = {
+      layout: 'row',
+      imageSize: 'regular',
+      showDescription: true,
     };
 
 
@@ -260,6 +268,30 @@ export default class ListingDetailPage extends PureComponent {
                 {reviews && reviews.length > 0 &&
                   <ListingReviewsContainer />
                 }
+
+                {/* Explore Similar Listing */}
+                {!!similarListings?.length && (
+                <StyledHeadingBoxSection
+                  heading="Explore similar listings"
+                  id="sticky-sidebar-boundary"
+                  sx$tablet={{ padding: '0 !important' }}
+                >
+                  <CarouselContainer itemsQty={similarListings.length}>
+                    <SimilarListings
+                      listings={similarListings}
+                      listingStyle={similarListingStyle}
+                      canFavourite
+                      getEvent={(listing, index) => ({
+                          action: 'click',
+                          category: 'similarListing',
+                          label: index,
+                          value: listing.id,
+                        })}
+                    />
+                  </CarouselContainer>
+                </StyledHeadingBoxSection>
+                )}
+
               </Body>
               <Column>
 

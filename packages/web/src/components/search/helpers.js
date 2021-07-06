@@ -8,7 +8,8 @@ import {
   GEO, NH,
   PAGE_NUMBER,
   PAGE_SIZE,
-  STATE, TOC,
+  STATE, TOC, INCLUDE,
+  COMMUNITY, LISTING,
 } from 'sly/web/components/search/Filters';
 
 export const getRadiusFromMapBounds = (bounds) => {
@@ -338,6 +339,7 @@ export const getApiFilters = filters => Object.entries(filters)
   }, {
     [PAGE_SIZE]: filters[PAGE_SIZE],
     [PAGE_NUMBER]: filters[PAGE_NUMBER],
+    [INCLUDE]: `${COMMUNITY},${LISTING}`,
   });
 
 export const getPagination = (requestMeta, location, currentFilters) => {

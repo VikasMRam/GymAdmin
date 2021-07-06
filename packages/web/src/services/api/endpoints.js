@@ -64,6 +64,7 @@ export default {
   updateAgent: { method: put, path: '/marketplace/agents/:id' },
   createAgent: { method: post, path: '/marketplace/agents' },
 
+  getSearchPage: { method: get, path: '/marketplace/search/searchpage' },
   getCommunitySearch: { method: get, path: '/platform/community-search' },
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getSearch: { method: get, path: '/marketplace/search' },

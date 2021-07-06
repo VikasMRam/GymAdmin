@@ -21,7 +21,6 @@ import { isListingAlreadySaved, getListingUserSave } from 'sly/web/listing/helpe
 const ShareListingFormContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkShareListingFormContainer" */'sly/web/listing/containers/ShareListingFormContainer'));
 const SaveListingContainer = withHydration(/* #__LOADABLE__ */() => import(/* webpackChunkName: "chunkSaveListingContainer" */'sly/web/listing/containers/SaveListingContainer'));
 
-
 const ListingSummaryContainer = ({ isAdmin, className, ...props }) => {
   const params = useParams();
   const [isModalOpen, setIsModalOpen] = useState('');

@@ -26,14 +26,14 @@ import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTile
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
   from 'sly/web/assessment/constants';
 import { isBrowser } from 'sly/web/config';
-import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
+import ListEntityTile from 'sly/web/components/search/ListEntityTile';
 import { getStateAbbr, isInternationalPath, isCanadaPath } from 'sly/web/services/helpers/url';
 
 const Search = ({
   currentFilters,
   onFilterChange,
   onClearFilters,
-  communities,
+  entities,
   meta,
   pagination,
   location,
@@ -83,7 +83,7 @@ const Search = ({
   return (
     <>
       {getHelmetForSearchPage({
-        ...currentFilters, url: location, communityList: communities, listSize,
+        ...currentFilters, url: location, communityList: entities, listSize,
       })}
       <TemplateHeader
         ref={headerRef}
@@ -94,7 +94,7 @@ const Search = ({
           width: '100%',
         }}
       >
-      <HeaderContainer />
+        <HeaderContainer />
         {/* <BannerNotificationAdContainer
             type="wizardSearch"
             {...currentFilters}
@@ -109,7 +109,7 @@ const Search = ({
         sx$laptop={{
           display: 'grid',
           gridTemplateRows: 'auto auto',
-          gridTemplateColumns: '708px auto',
+          gridTemplateColumns: 'calc(100% - 40vw) auto',
           gridTemplateAreas: '"filters map" "list  map"',
         }}
       >
@@ -191,15 +191,15 @@ const Search = ({
           }}
 
         >
-          {communities.map((community, i) => (
-            <Fragment key={community.id}>
-              <ListCommunityTile
-                setHoveredCommunity={setHoveredCommunity}
+          {entities.map((entity, i) => (
+            <Fragment key={entity.id}>
+              <ListEntityTile
+                setHoveredEntity={setHoveredCommunity}
                 index={cursor + i}
-                community={community}
+                entity={entity}
                 loading={i <= 2 ? 'eager' : 'lazy'}
               />
-              {!isInternational && !showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!isInternational && !showZillowSearchAd && city && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 l l"
                 >
@@ -211,7 +211,7 @@ const Search = ({
                   />
                 </Block>
               }
-              {!isInternational && showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!isInternational && showZillowSearchAd && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 l l"
                 >
@@ -231,7 +231,7 @@ const Search = ({
         <Map
           gridArea="map"
           currentFilters={currentFilters}
-          communities={communities}
+          communities={entities}
           meta={meta}
           onFilterChange={onFilterChange}
           onMarkerClick={setSelectedCommunity}
@@ -269,7 +269,7 @@ Search.propTypes = {
   onFilterChange: func,
   onClearFilters: func,
   currentFilters: object,
-  communities: arrayOf(coordPropType),
+  entities: arrayOf(coordPropType),
   meta: object,
   pagination: object,
   location: object,
