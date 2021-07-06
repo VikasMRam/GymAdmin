@@ -9,3 +9,14 @@ export const clickEventHandler = (category, label) => {
     });
   };
 };
+
+
+export const actionEventHandler = (category, action, label) => {
+  return (event) => {
+    SlyEvent.getInstance().sendEvent({
+      category,
+      action,
+      label,
+    });
+  };
+};
