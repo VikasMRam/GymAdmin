@@ -50,7 +50,7 @@ const BreadCrumb = ({ items, innerRef, size, ...props }) => (
 
           return (
             <li
-              key={path}
+              key={`${path} ${label}`}
               itemProp="itemListElement"
               itemScope
               itemType="http://schema.org/ListItem"

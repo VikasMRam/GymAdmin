@@ -161,6 +161,10 @@ export const getBreadCrumbsForListing = ({ name, address }) => {
     },
     {
       path: '#',
+      label: 'plus',
+    },
+    {
+      path: '#',
       label: name,
     },
   ];

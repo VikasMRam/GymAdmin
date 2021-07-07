@@ -103,7 +103,7 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
       {
       activityCalendarURL &&
       <Link href={activityCalendarURL}>
-        <Button sx$tablet={{ paddingX: 's' }} variant="neutral" width="100%" mt="m">
+        <Button sx$tablet={{ paddingX: 's' }} variant="neutral" width="100%" mt="l">
           <Calendar mr="xs" />View sample activity calendar
         </Button>
       </Link>

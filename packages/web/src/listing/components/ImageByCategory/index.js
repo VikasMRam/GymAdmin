@@ -54,6 +54,7 @@ export default function ImageByCategory({ images = [], onPictureClick }) {
             <Block
               gridColumn="1 / -1"
               gridRow="1 / -1"
+              key={image.alt}
             >
               <ImageItem image={image} i={i} onPictureClick={onPictureClick} />
               <Heading paddingTop="xs" as="h3" font="title-s">{image.category.name}</Heading>
@@ -61,7 +62,7 @@ export default function ImageByCategory({ images = [], onPictureClick }) {
           );
         }
         return (
-          <Block>
+          <Block key={image.alt}>
             <ImageItem image={image} i={i} onPictureClick={onPictureClick} />
             <Heading paddingTop="xs" as="h3" font="title-s">{image.category.name}</Heading>
           </Block>

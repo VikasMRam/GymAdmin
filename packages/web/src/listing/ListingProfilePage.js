@@ -232,7 +232,7 @@ export default class ListingDetailPage extends PureComponent {
                 {/* Partner Agent */}
                 {shouldShowPartnerAgent && (
                 <>
-                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mt="xxl">
+                  <HeadingBoxSection font="body-l" hasNoHr id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mb="xs" sx$tablet={{ pt: 'xxl' }}>
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
                     <ListingAgentButtonConatiner
                       agent={partnerAgent}
@@ -241,7 +241,7 @@ export default class ListingDetailPage extends PureComponent {
                       type="expert"
                       ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
                     />
-                  </StyledHeadingBoxSection>
+                  </HeadingBoxSection>
                 </>
                 )}
                 {shouldShowApartment && (
@@ -258,12 +258,12 @@ export default class ListingDetailPage extends PureComponent {
                 {
                   shouldShowDining &&
                   <>
-                    <StyledHeadingBoxSection mb="xs" id="dining"  heading="Dining" >
-                      <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
+                    <StyledHeadingBoxSection mb="xs" heading="Dining" id="dining" >
+                      <Block background="white.base" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
                       {
                         diningSection.url &&
                         <Link href={diningSection.url}>
-                          <Button sx$tablet={{ paddingX: 's' }}  variant="neutral" width="100%" mt="m">
+                          <Button sx$tablet={{ paddingX: 's' }}  variant="neutral" width="100%" mt="l">
                             <Food mr="xs" />View sample weekly menu
                           </Button>
                         </Link>
