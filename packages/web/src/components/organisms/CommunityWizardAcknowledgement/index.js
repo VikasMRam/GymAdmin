@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, func, array } from 'prop-types';
+import { string, bool, func, array, object } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size } from 'sly/common/components/themes';
@@ -75,12 +75,12 @@ const CommunityWizardAcknowledgement = ({
     <PaddedHowSlyWorksVideo isPlaying={isVideoPlaying} onPause={onVideoPause} onPlay={onVideoPlay} onThumbnailClick={onVideoThumbnailClick} />
     <Hr pad="xxxLarge" />
     <StyledHeading>You might like these communities.</StyledHeading>
-    <SimilarCommunities communityStyle={{ imageSize: 'little', layout: 'row', showDescription: false }} communities={similarCommunities} />
+    <SimilarCommunities communityStyle={{ imageSize: 'little', layout: 'row', showDescription: false }} communities={similarCommunities?.similar} />
   </TopWrapper>
 );
 
 CommunityWizardAcknowledgement.propTypes = {
-  similarCommunities: array.isRequired,
+  similarCommunities: object,
   buttonTo: string.isRequired,
   buttonText: string,
   heading: string,

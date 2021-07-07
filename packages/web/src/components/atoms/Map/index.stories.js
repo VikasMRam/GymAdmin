@@ -5,7 +5,7 @@ import { Marker } from 'react-google-maps';
 import Map from 'sly/web/components/atoms/Map';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { address, similarProperties } = RhodaGoldmanPlaza;
+const { address, similarCommunities } = RhodaGoldmanPlaza;
 const { latitude, longitude } = address;
 const center = {
   latitude,
@@ -14,7 +14,7 @@ const center = {
 
 const markers = [{ latitude, longitude }];
 
-similarProperties.forEach((property) => {
+similarCommunities.similar.forEach((property) => {
   const { latitude, longitude } = property;
   markers.push({ latitude, longitude });
 });

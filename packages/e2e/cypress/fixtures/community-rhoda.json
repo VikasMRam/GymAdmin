@@ -200,25 +200,9 @@
           "id": "028f3d43fe976da3e7cd8f560f8b4a63"
         }
       },
-      "similarProperties": {
-        "data": [
-          {
-            "type": "SearchResource",
-            "id": "victorian-manor"
-          },
-          {
-            "type": "SearchResource",
-            "id": "eden-villa-san-francisco"
-          },
-          {
-            "type": "SearchResource",
-            "id": "agesong-laguna-grove-care"
-          },
-          {
-            "type": "SearchResource",
-            "id": "agesong-hayes-valley-care"
-          }
-        ]
+      "similarCommunities": {
+        "data": "SimilarCommunities",
+        "id": "rhoda-goldman-plaza"
       },
       "twilioNumber": {
         "data": {
@@ -241,6 +225,32 @@
     }
   },
   "included": [
+    {
+      "type": "SimilarCommunities",
+      "id": "rhoda-goldmnan-plaza",
+      "relationships": {
+        "similar": {
+          "data": [
+            {
+              "type": "SearchResource",
+              "id": "victorian-manor"
+            },
+            {
+              "type": "SearchResource",
+              "id": "eden-villa-san-francisco"
+            },
+            {
+              "type": "SearchResource",
+              "id": "agesong-laguna-grove-care"
+            },
+            {
+              "type": "SearchResource",
+              "id": "agesong-hayes-valley-care"
+            }
+          ]
+        }
+      }
+    },
     {
       "type": "Gallery",
       "id": "b3935dab05699bc4ceeedea650f3078d",

@@ -29,6 +29,7 @@ const OfferNotification = ({
   hasLearnMore,
   className,
   hasAlreadyRequestedPricing,
+  orderIconFirstOnTablet,
   ...props
 }) => (
   <Flex
@@ -39,7 +40,16 @@ const OfferNotification = ({
     borderColor="yellow.lighter-80"
     {...props}
   >
-    <div>
+    <Offer
+      color="yellow"
+      ml="xs"
+      minWidth={sx`${space('l')}`}
+      sx$tablet={orderIconFirstOnTablet && { ml: '0', mr: 'm' }}
+    />
+    <Block
+      order="-1"
+      sx$tablet={{ order: orderIconFirstOnTablet && 1 }}
+    >
       <Block lineHeight={sx`${space('l')}`}>
         {title && (
           <Block mb="xxs" font="title-xs-azo">
@@ -62,8 +72,7 @@ const OfferNotification = ({
           )}
         </GetCustomPricingContainer>
       )}
-    </div>
-    <Offer color="yellow" ml="xs" minWidth={sx`${space('l')}`} />
+    </Block>
   </Flex>
 );
 
@@ -74,10 +83,12 @@ OfferNotification.propTypes = {
   description: string,
   className: string,
   hasAlreadyRequestedPricing: bool,
+  orderIconFirstOnTablet: bool,
 };
 
 OfferNotification.defaultProps = {
   palette: 'primary',
+  orderIconFirstOnTablet: true,
 };
 
 export default OfferNotification;

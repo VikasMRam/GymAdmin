@@ -24,7 +24,8 @@ import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
-import SampleMenu from 'sly/web/components/organisms/SampleMenu';
+import FAQItem from 'sly/web/components/organisms/CMSDynamicZone/FAQItem';
+
 import {
   CommunityDetailPageTemplate,
   makeBody,
@@ -50,6 +51,7 @@ import StickyHeader from 'sly/web/profile/StickyHeader';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
+import Callout from 'sly/web/profile/Callout';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -145,6 +147,10 @@ const StickToTop = styled.div`
   top: 74px;
 `;
 
+const StyledCallout = styled(Callout)`
+  margin-bottom: ${space('s')};
+`;
+
 const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
 
 const Header = makeHeader();
@@ -191,7 +197,7 @@ export default class CommunityDetailPage extends PureComponent {
       address,
       rgsAux,
       floorPlans,
-      similarProperties,
+      similarCommunities,
       gallery = {},
       twilioNumber,
       user: communityUser,
@@ -202,14 +208,6 @@ export default class CommunityDetailPage extends PureComponent {
       promoDescription,
       promoTitle,
       communityInsights,
-      plusCommunity,
-      menuLink,
-      sampleAppetizers,
-      sampleMain,
-      sampleSide,
-      sampleDessert,
-      sampleEvents,
-      eventsLink,
       communityDescription,
       staffDescription,
       residentDescription,
@@ -234,7 +232,8 @@ export default class CommunityDetailPage extends PureComponent {
     const { sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = getPartnerAgent(community);
-    const { nearbyCities } = rgsAux;
+    const { nearbyCities, rgsInfo } = rgsAux;
+    const { faqs } = rgsInfo;
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
 
@@ -253,7 +252,7 @@ export default class CommunityDetailPage extends PureComponent {
     const pricesList = buildPriceList(community);
     const estimatedPriceList = buildEstimatedPriceList(community);
     const pricingTitle =
-      pricesList.length === 0 && floorPlans.length > 0
+      pricesList.length === 0 && floorPlans?.length > 0
         ? 'Pricing and Floor Plans'
         : 'Pricing';
 
@@ -352,12 +351,16 @@ export default class CommunityDetailPage extends PureComponent {
                         type="expert"
                         ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
                       />
+                      <Callout
+                        title="Working with a Seniorly Advisor is a completely FREE service to you!"
+                        description={
+                          `Connect with ${getAgentFirstName(partnerAgent)} to learn more about your senior care options.`
+                        }
+                      />
                     </StyledHeadingBoxSection>
 
                   </>
                 )}
-
-                {plusCommunity && <PlusBranding />}
                 {(communityDescription || rgsAux.communityDescription ||
                   staffDescription || residentDescription || ownerExperience) && (
                   <StyledHeadingBoxSection id="community-about" heading={`About ${name}`}>
@@ -421,49 +424,25 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 }
 
-                {/* <CommunityQuestionAnswersContainer /> */}
 
-                {plusCommunity && eventsLink && sampleEvents &&
-                <StyledHeadingBoxSection heading={`Events at ${name}`}>
-                  <EventsWrapper>
-                    {sampleEvents.map(item => (
-                      <IconItemWrapper key={item}>
-                        <IconItem icon="check" iconPalette="primary" iconVariation="base" borderless={false}>{item}</IconItem>
-                      </IconItemWrapper>))
-                    }
-                  </EventsWrapper>
-                  {/* todo: fix this */}
-                  <StyledButton href={eventsLink} onClick={clickEventHandler('events', name)} target="_blank" ghost>Download Events Calendar</StyledButton>
-                </StyledHeadingBoxSection>
-                }
-
-                {plusCommunity && menuLink &&
-                <StyledHeadingBoxSection heading={`Sample Menu at ${name}`}>
-                  <SampleMenu
-                    sampleAppetizers={sampleAppetizers}
-                    sampleMain={sampleMain}
-                    sampleSide={sampleSide}
-                    sampleDessert={sampleDessert}
-                  />
-                  {/* todo: fix this */}
-                  <StyledButton href={menuLink} onClick={clickEventHandler('menu', name)} target="_blank" ghost>Download Current Menu</StyledButton>
-                </StyledHeadingBoxSection>
-                }
-
-                {!!similarProperties?.length && (
+                {!!similarCommunities?.similar?.length && (
                   <StyledHeadingBoxSection
-                    heading="Recommended communities"
+                    heading="Similar communities"
                     id="sticky-sidebar-boundary"
                     sx$tablet={{ padding: '0 !important' }}
                   >
-                    <CarouselContainer itemsQty={similarProperties.length}>
+                    <StyledCallout
+                      title="We think you might like these nearby communities"
+                      description={`They are similar in price, care services, and size as ${community.name}`}
+                    />
+                    <CarouselContainer itemsQty={similarCommunities.similar.length}>
                       <SimilarCommunities
-                        communities={similarProperties}
+                        communities={similarCommunities.similar}
                         communityStyle={similarCommunityStyle}
                         canFavourite
                         getEvent={(community, index) => ({
                           action: 'click',
-                          category: 'similarCommunity',
+                          category: 'similarCommunityDefault',
                           label: index,
                           value: community.id,
                         })}
@@ -503,6 +482,22 @@ export default class CommunityDetailPage extends PureComponent {
                     </Button>
                   </StyledHeadingBoxSection>
                 )}
+                {faqs && (
+                  <StyledHeadingBoxSection
+                    heading={`Frequently asked questions about ${name}`}
+                    id="sticky-sidebar-boundary"
+                    sx$tablet={{ padding: '0 !important' }}
+                  >
+                    {faqs.map(faq => (
+                      <FAQItem
+                        key={faq.question}
+                        title={faq.question}
+                        description={faq.answer}
+                      />
+                    ))}
+
+                  </StyledHeadingBoxSection>
+                )}
 
                 {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
@@ -535,6 +530,7 @@ export default class CommunityDetailPage extends PureComponent {
                           title={promoTitle}
                           description={promoDescription}
                           community={community}
+                          orderIconFirstOnTablet={false}
                         />
                       )}
                     </GetAssessmentBoxContainerHydrator>
@@ -551,36 +547,6 @@ export default class CommunityDetailPage extends PureComponent {
               <Block font="body-m" >{formattedAddress}</Block>
               <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
             </StyledSection>
-            {/* <StyledHeadingBoxSection */}
-            {/*  heading="Active senior living communities" */}
-            {/*  id="sticky-sidebar-boundary" */}
-            {/*  sx$tablet={{ padding: 0 }} */}
-            {/* > */}
-            {/*  <TrackedSimilarCommunitiesContainer */}
-            {/*    communities={[...similarProperties, ...similarProperties]} */}
-            {/*    communityStyle={similarCommunityStyle} */}
-            {/*  /> */}
-            {/* </StyledHeadingBoxSection> */}
-            {/* <StyledHeadingBoxSection */}
-            {/*  heading="Senior living communities for those on a budget" */}
-            {/*  id="sticky-sidebar-boundary" */}
-            {/*  sx$tablet={{ padding: 0 }} */}
-            {/* > */}
-            {/*  <TrackedSimilarCommunitiesContainer */}
-            {/*    communities={[...similarProperties, ...similarProperties]} */}
-            {/*    communityStyle={similarCommunityStyle} */}
-            {/*  /> */}
-            {/* </StyledHeadingBoxSection> */}
-            {/* <StyledHeadingBoxSection */}
-            {/*  heading="Luxury senior living communities" */}
-            {/*  id="sticky-sidebar-boundary" */}
-            {/*  sx$tablet={{ padding: 0 }} */}
-            {/* > */}
-            {/*  <TrackedSimilarCommunitiesContainer */}
-            {/*    communities={[...similarProperties, ...similarProperties]} */}
-            {/*    communityStyle={similarCommunityStyle} */}
-            {/*  /> */}
-            {/* </StyledHeadingBoxSection> */}
             {showMoreImages && (
               <StyledSection
                 title={`More Photos of ${name}`}
@@ -605,14 +571,98 @@ export default class CommunityDetailPage extends PureComponent {
                 name={name}
                 agent={partnerAgent}
               />
+              <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
             </StyledHeadingBoxSection>
+            {!!similarCommunities?.recommended?.length && (
+              <StyledHeadingBoxSection
+                heading="Recommended communities"
+                id="sticky-sidebar-boundary"
+                sx$tablet={{ padding: '0 !important' }}
+              >
+                <CarouselContainer itemsQty={similarCommunities.recommended.length}>
+                  <SimilarCommunities
+                    communities={similarCommunities.recommended}
+                    communityStyle={similarCommunityStyle}
+                    canFavourite
+                    getEvent={(community, index) => ({
+                      action: 'click',
+                      category: 'similarCommunityRecommended',
+                      label: index,
+                      value: community.id,
+                    })}
+                   />
+                </CarouselContainer>
+              </StyledHeadingBoxSection>
+              )}
+              {!!similarCommunities?.luxury?.length && (
+                <StyledHeadingBoxSection
+                  heading="Luxury senior living communities"
+                  id="sticky-sidebar-boundary"
+                  sx$tablet={{ padding: '0 !important' }}
+                >
+                  <CarouselContainer itemsQty={similarCommunities.luxury.length}>
+                    <SimilarCommunities
+                      communities={similarCommunities.luxury}
+                      communityStyle={similarCommunityStyle}
+                      canFavourite
+                      getEvent={(community, index) => ({
+                        action: 'click',
+                        category: 'similarCommunityLuxury',
+                        label: index,
+                        value: community.id,
+                    })}
+                    />
+                  </CarouselContainer>
+                </StyledHeadingBoxSection>
+              )}
+              {!!similarCommunities?.independent?.length && (
+                <StyledHeadingBoxSection
+                  heading="Active senior living communities"
+                  id="sticky-sidebar-boundary"
+                  sx$tablet={{ padding: '0 !important' }}
+                >
+                  <CarouselContainer itemsQty={similarCommunities.independent.length}>
+                    <SimilarCommunities
+                      communities={similarCommunities.independent}
+                      communityStyle={similarCommunityStyle}
+                      canFavourite
+                      getEvent={(community, index) => ({
+                      action: 'click',
+                        category: 'similarCommunityIndependent',
+                        label: index,
+                        value: community.id,
+                      })}
+                    />
+                  </CarouselContainer>
+                </StyledHeadingBoxSection>
+              )}
+              {!!similarCommunities?.budget?.length && (
+                <StyledHeadingBoxSection
+                  heading="Senior living communities for those on a budget"
+                  id="sticky-sidebar-boundary"
+                  sx$tablet={{ padding: '0 !important' }}
+                >
+                  <CarouselContainer itemsQty={similarCommunities.budget.length}>
+                    <SimilarCommunities
+                      communities={similarCommunities.budget}
+                      communityStyle={similarCommunityStyle}
+                      canFavourite
+                      getEvent={(community, index) => ({
+                        action: 'click',
+                        category: 'similarCommunityBudget',
+                        label: index,
+                        value: community.id,
+                      })}
+                    />
+                  </CarouselContainer>
+                </StyledHeadingBoxSection>
+              )}
           </Wrapper>
 
 
           {nearbyCities &&
             nearbyCities.length > 0 && (
               <Wrapper>
-                <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
                 <SeoLinks
                   title={`Explore top cities near ${name}`}
                   links={nearbyCities}

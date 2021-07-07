@@ -133,7 +133,7 @@ const BookATourPage = ({
         {({ match }) => (
           <Modal isOpen={!!match} onClose={() => redirectTo(community.url)} closeable>
             <CommunityWizardAcknowledgementContainer
-              similarCommunities={community.similarProperties}
+              similarCommunities={community.similarCommunities?.similar}
               buttonTo={DASHBOARD_PATH}
               heading="Tour Request Sent!"
               subheading="Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email."

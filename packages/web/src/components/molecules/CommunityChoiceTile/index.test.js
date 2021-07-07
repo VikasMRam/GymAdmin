@@ -5,7 +5,8 @@ import Checkbox from 'sly/web/components/molecules/Checkbox';
 import CommunityChoiceTile from 'sly/web/components/molecules/CommunityChoiceTile';
 import parentCommunity from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { similarProperties: { 0: community } } = parentCommunity;
+const { similarCommunities } = parentCommunity;
+const { similar: { 0: community } } = similarCommunities;
 
 const wrap = (props = {}) =>
   shallow(<CommunityChoiceTile community={community} {...props} />);

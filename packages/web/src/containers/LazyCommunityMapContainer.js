@@ -34,7 +34,7 @@ const LazyCommunityMapContainer = () => {
   }, [placeholderRef]);
 
   return mounted
-    ? <CommunityMap community={community} similarProperties={community.similarProperties} />
+    ? <CommunityMap community={community} similarCommunities={community.similarCommunities} />
     : <div ref={placeholderRef} />;
 };
 

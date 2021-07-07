@@ -13,12 +13,8 @@ const defaultStyles = {
   '::placeholder': {
     color: 'slate.lighter-40',
   },
-  ':hover': {
-    borderColor: 'slate.lighter-60',
-  },
   ':focus, :active': {
     outline: 'none',
-    borderColor: 'viridian.base',
   },
 };
 
@@ -30,6 +26,13 @@ const getStyles = props => ({
   color: props.disabled
     ? 'slate.lighter-40'
     : null,
+  background: props.error && '#FAE0E0',
+  '&:hover': {
+    borderColor: props.error ? '#DC3133' : 'slate.lighter-60',
+  },
+  '&:focus, &:active': {
+    borderColor: props.error ? '#DC3133' : 'viridian.base',
+  },
 });
 
 

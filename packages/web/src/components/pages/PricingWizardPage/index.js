@@ -406,7 +406,7 @@ export default class PricingWizardPage extends Component {
               <CommunityWizardAcknowledgementContainer
                 heading="Thank you! Our team will be calling you from (855) 855-2629."
                 subheading="We received your request and your Seniorly Partner Agent will work with you to get your exact pricing and availability."
-                similarCommunities={community.similarProperties}
+                similarCommunities={community.similarCommunities}
                 buttonTo={FAMILY_DASHBOARD_FAVORITES_PATH}
                 type="pricingWizard"
               />

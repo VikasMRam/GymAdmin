@@ -212,7 +212,7 @@ export default class SaveCommunityContainer extends Component {
   render() {
     const { handleSubmitSaveCommunityForm } = this;
     const { community, onDoneButtonClick, onCancelClick } = this.props;
-    const { similarProperties } = community;
+    const { similarCommunities } = community;
     const { updatingUserSave } = this.state;
 
     if (updatingUserSave) {
@@ -221,7 +221,7 @@ export default class SaveCommunityContainer extends Component {
 
     const PaddedCommunitySaved = () => (
       <PaddedBlock>
-        <CommunitySaved name="Success" similarCommunities={similarProperties} onDoneButtonClicked={onDoneButtonClick} />
+        <CommunitySaved name="Success" similarCommunities={similarCommunities?.similar} onDoneButtonClicked={onDoneButtonClick} />
       </PaddedBlock>
     );
 

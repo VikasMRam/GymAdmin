@@ -48,12 +48,11 @@ const UserCookiesContainer = () => {
       };
 
       //set cookie with new utm. If utm cookie present append to it
-      const utmCookie = cookie.get('utm');
-      const utmObj = utmCookie ? JSON.parse(utmCookie) : {};
-      const clicks = utmObj.clicks || [];
+      const utmCookie = cookie.get('sly_utm_cookie') || {};
+      const clicks = utmCookie.clicks || [];
       clicks.push(utmParams);
-      utmObj.clicks = clicks;
-      cookie.set('sly_utm_cookie', JSON.stringify(utmObj), {domain, path: '/', maxAge: 27000000});
+      utmCookie.clicks = clicks;
+      cookie.set('sly_utm_cookie', JSON.stringify(utmCookie), {domain, path: '/', maxAge: 27000000});
       //used by api middleware to check and update uuid_aux of user
       cookie.set('sly_utm_updated', true, {domain, path: '/', maxAge: 27000000});
     }
