@@ -57,7 +57,7 @@ TabWithIntersectionObserver.propTypes = {
 };
 
 
-export default function StickyHeader({ sections, type }) {
+export default function StickyHeaderTabs({ sections, type }) {
   const [active, setActive] = useState(null);
   const [shouldShow, setShouldShow] = useState(false);
 
@@ -148,11 +148,11 @@ export default function StickyHeader({ sections, type }) {
   );
 }
 
-StickyHeader.propTypes = {
+StickyHeaderTabs.propTypes = {
   sections: array,
   type: string,
 };
 
-StickyHeader.defaultProps = {
+StickyHeaderTabs.defaultProps = {
   type: 'community',
 };

@@ -30,7 +30,7 @@ import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import PlusBranding from 'sly/web/listing/components/PlusBranding';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
-import StickyHeader from 'sly/web/components/organisms/StickyHeader';
+import StickyHeaderTabs from 'sly/web/components/organisms/StickyHeaderTabs';
 import { Food } from 'sly/common/icons';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import SimilarListings from 'sly/web/listing/components/SimilarListings';
@@ -220,7 +220,7 @@ export default class ListingDetailPage extends PureComponent {
           <ListingMediaGalleryContainer />
         </Block>
         <ListingProfilePageTemplate>
-          <StickyHeader type="listing" sections={stickyHeaderSections} />
+          <StickyHeaderTabs type="listing" sections={stickyHeaderSections} />
           <Wrapper>
             <TwoColumn>
               <Body>
