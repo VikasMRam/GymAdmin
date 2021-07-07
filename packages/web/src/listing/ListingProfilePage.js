@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { object } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
+import { withRouter } from 'react-router';
 
 
 import ListingActivitiesSection from './containers/ListingActivitiesSection';
 import LazyListingMapContainer from './containers/LazyLististingMapContainer';
 
+import { stateNames } from 'sly/web/constants/geo';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
 import Section from 'sly/web/components/molecules/Section';
@@ -111,7 +113,7 @@ const getSectionDetails = (sectionType, sections) => {
   return null;
 };
 
-
+@withRouter
 export default class ListingDetailPage extends PureComponent {
   static propTypes = {
     listing: object.isRequired,
@@ -122,7 +124,10 @@ export default class ListingDetailPage extends PureComponent {
     const {
       listing,
       location,
+      history,
     } = this.props;
+
+    console.log('listing', listing);
 
     const {
       name,
@@ -171,7 +176,7 @@ export default class ListingDetailPage extends PureComponent {
       }
     };
     const nearByOptionsClickHandler = () => {
-      console.log('location');
+      history.push(`/assisted-living/${stateNames[state]}/${city}`);
     };
 
     const similarListingStyle = {
@@ -266,7 +271,7 @@ export default class ListingDetailPage extends PureComponent {
 
                 {/* Reviews */}
                 {reviews && reviews.length > 0 &&
-                  <ListingReviewsContainer />
+                  <ListingReviewsContainer listing={listing} />
                 }
 
                 {/* Explore Similar Listing */}
