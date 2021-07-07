@@ -14,6 +14,7 @@ const envPick = (value, otherwise = undefined) => {
 };
 
 module.exports.STORYBOOK_GIT_BRANCH = envPick(process.env.STORYBOOK_GIT_BRANCH);
+module.exports.VERSION = envPick(process.env.VERSION);
 module.exports.NODE_ENV = envPick(process.env.NODE_ENV, 'development');
 module.exports.SLY_ENV = envPick(process.env.SLY_ENV, 'development');
 module.exports.GA_ENV = envPick(process.env.GA_ENV, 'development');

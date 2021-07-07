@@ -19,9 +19,8 @@ const {
   ENABLE_EXPERIMENT_DEBUGGER,
   DISABLE_EXPERIMENTS,
   SEGMENT_API_KEY,
+  VERSION,
 } = require('../env');
-
-const { VERSION } = process.env;
 
 // TODO: find a more elegant solution to
 // storybook serve it's own assets, so to avoid trouble:
@@ -107,5 +106,9 @@ const config = {
 };
 
 const mergedConfig = merge(config.all, config[config.all.slyEnv]);
+
+if (!mergedConfig.isServer) {
+  console.info('Seniorly', mergedConfig.version);
+}
 
 module.exports = mergedConfig;
