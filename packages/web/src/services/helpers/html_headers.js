@@ -271,13 +271,15 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community) => {
   const {
-    name, mainImage, address, propInfo, propRatings, similarProperties, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
+    name, mainImage, address, propInfo, propRatings, similarCommunities, startingRate, url, gallery = {}, videoGallery = {}, reviews, rgsAux,
   } = community;
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
   const { websiteUrl, websiteTitle, websiteMetaDescription, communityPhone } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
+  const { rgsInfo } = rgsAux;
+  const { faqs } = rgsInfo;
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
 
@@ -318,7 +320,7 @@ export const getHelmetForCommunityPage = (community) => {
   ldWP.hasPart = 'CollectionPage';
 
   let significantLinks = [];
-  const spUrls = similarProperties.map(p => `${host}${p.url}`);
+  const spUrls = similarCommunities?.similar?.map(p => `${host}${p.url}`);
   significantLinks = significantLinks.concat(spUrls);
   const searchPageUrl = getCitySearchUrl({ propInfo, address });
   significantLinks.push(`${host}${searchPageUrl}`);
@@ -383,6 +385,15 @@ export const getHelmetForCommunityPage = (community) => {
     return (<script key={`helmet_critic-review_${criticReview.author + name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
+  const faqLD = {};
+  faqLD['@context'] = 'http://schema.org';
+  faqLD['@type'] = 'FAQPage';
+  const ldFAQs = [];
+  if (faqs && faqs.length > 0) {
+    faqs.map(e => ldFAQs.push(questionLD(e)));
+  }
+  faqLD.mainEntity = ldFAQs;
+
 
   const getQAAnswerLDObj = (answer, question) => {
     return {
@@ -399,31 +410,31 @@ export const getHelmetForCommunityPage = (community) => {
   };
 
   // TODO: Check whether we want to filter out questions without answers
-  const qaPageLdObjs = questions && questions.filter(question => question.contents.length > 0).map((question) => {
-    const answers = question.contents.slice();
-    const firstAnswer = answers.shift();
-    const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
-    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
-    const result = {
-      '@context': 'https://schema.org',
-      '@type': 'QAPage',
-      mainEntity: {
-        '@type': 'Question',
-        name: question.contentData,
-        text: question.contentData,
-        answerCount: question.contents.length,
-        upvoteCount: 1,
-        dateCreated: question.createdAt,
-        author: {
-          '@type': 'Person',
-          name: question.creator,
-        },
-        acceptedAnswer,
-        suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
-      },
-    };
-    return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
-  });
+  // const qaPageLdObjs = questions && questions.filter(question => question.contents.length > 0).map((question) => {
+  //   const answers = question.contents.slice();
+  //   const firstAnswer = answers.shift();
+  //   const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
+  //   const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
+  //   const result = {
+  //     '@context': 'https://schema.org',
+  //     '@type': 'QAPage',
+  //     mainEntity: {
+  //       '@type': 'Question',
+  //       name: question.contentData,
+  //       text: question.contentData,
+  //       answerCount: question.contents.length,
+  //       upvoteCount: 1,
+  //       dateCreated: question.createdAt,
+  //       author: {
+  //         '@type': 'Person',
+  //         name: question.creator,
+  //       },
+  //       acceptedAnswer,
+  //       suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
+  //     },
+  //   };
+  //   return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  // });
 
   const webPageLD = {};
   webPageLD['@context'] = 'http://schema.org';
@@ -526,6 +537,7 @@ export const getHelmetForCommunityPage = (community) => {
       <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
       {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
       <script type="application/ld+json">{`${JSON.stringify(videoObjectLD, stringifyReplacer)}`}</script>
+      {faqs && faqs.length > 0 && <script type="application/ld+json">{`${JSON.stringify(faqLD, stringifyReplacer)}`}</script>}
       {criticReviewsJsonLDs}
 
 

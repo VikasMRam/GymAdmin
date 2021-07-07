@@ -6,6 +6,8 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 
 import { useUser } from './withUser';
+
+import events from 'sly/web/services/events';
 import { isServer } from 'sly/web/config';
 import { useApi, hasSession } from 'sly/web/services/api';
 
@@ -27,6 +29,12 @@ const isLoggedIn = (userInfo) => {
   }
 
   return userInfo.status === 200;
+};
+
+const identify = (response) => {
+  const { id, attributes } = response.body.data;
+  events.identify(id, attributes);
+  return response;
 };
 
 export const useAuth = () => {
@@ -67,7 +75,8 @@ export const useAuth = () => {
         }
         return Promise.reject(e);
       })
-      .then(fetchUser);
+      .then(fetchUser)
+      .then(identify);
   }, []);
 
   const createOrUpdateUser = useCallback((data, { ignoreAlreadyRegistered } = {}) => {
@@ -118,7 +127,9 @@ export const useAuth = () => {
   }, [user, userInfo]);
 
   const loginUser = useCallback((data) => {
-    return userApiMethods.loginUser(data).then(fetchUser);
+    return userApiMethods.loginUser(data)
+      .then(fetchUser)
+      .then(identify);
   }, []);
 
   const logoutUser = useCallback((data) => {
@@ -142,7 +153,9 @@ export const useAuth = () => {
   }, []);
 
   const thirdPartyLogin = useCallback((data) => {
-    return userApiMethods.thirdPartyLogin(data).then(fetchUser);
+    return userApiMethods.thirdPartyLogin(data)
+      .then(fetchUser)
+      .then(identify);
   }, []);
 
   const resendOtpCode = useCallback((data) => {
@@ -150,7 +163,9 @@ export const useAuth = () => {
   }, []);
 
   const otpLoginUser = useCallback((data) => {
-    return userApiMethods.otpLoginUser(data).then(fetchUser);
+    return userApiMethods.otpLoginUser(data)
+      .then(fetchUser)
+      .then(identify);
   }, []);
 
   const sendOtpCode = useCallback((data) => {

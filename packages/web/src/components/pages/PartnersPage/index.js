@@ -89,7 +89,7 @@ const MSPAColumnWrapper = styled(ColumnWrapper)`
 const PartnersPage = () => {
   const headerContent = (
     <>
-      <HeaderContainer />
+      <HeaderContainer registerContext={{ agents: true }} />
       <HeroWrapper>
         <StyledImage path="react-assets/agents-partners-hero.png" alt="A Home To Love" height={480} />
         <HeroTextWrapper><PartnerWithSly /></HeroTextWrapper>

@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { func, object } from 'prop-types';
+import { useParams } from 'react-router';
 
+import useCommunity from 'sly/web/profile/hooks/useCommunity';
 import { size } from 'sly/common/components/themes';
 import { gridColumns, assetPath } from 'sly/web/components/themes';
 import { getHelmetForCommunityPartnersPage } from 'sly/web/services/helpers/html_headers';
@@ -130,9 +132,19 @@ const CommunityPartnersPage = ({
    onRegisterClick,
    user,
   }) => {
+  const { prop: communitySlug } = useParams();
+  const { community } = useCommunity({
+    communitySlug: communitySlug || 'none',
+    shouldBail: !communitySlug,
+  });
+
+  const communityData = community
+    ? { value: community.id, label: `${community.name}: ${community.address.city}, ${community.address.state}` }
+    : null;
+
   const headerContent = (
     <>
-      <HeaderContainer />
+      <HeaderContainer registerContext={{ community: communityData, provider: true }} />
       <HeroWrapper>
         <StyledImage path="react-assets/agents-partners-hero.png" alt="A Home To Love" height={480} />
         <HeroTextWrapper>

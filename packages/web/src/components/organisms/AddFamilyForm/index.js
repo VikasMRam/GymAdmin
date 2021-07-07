@@ -30,6 +30,12 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   }
 `;
 
+const StyledThreeSectionFormTemplate = styled(ThreeSectionFormTemplate)`
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+`;
+
 export default class AddFamilyForm extends Component {
   static propTypes = {
     handleSubmit: func,
@@ -59,7 +65,7 @@ export default class AddFamilyForm extends Component {
     const timeToMoveOptions = TIME_TO_MOVE_OPTIONS.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
-      <ThreeSectionFormTemplate
+      <StyledThreeSectionFormTemplate
         {...props}
         hasCancel
         onCancelClick={onCancel}
@@ -155,7 +161,7 @@ export default class AddFamilyForm extends Component {
             {lookingForOptions}
           </Field>
         </CollapsibleBlock>
-      </ThreeSectionFormTemplate>
+      </StyledThreeSectionFormTemplate>
     );
   }
 }

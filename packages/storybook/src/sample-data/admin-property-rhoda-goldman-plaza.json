@@ -926,62 +926,124 @@
       }
     }
   },
-  "similarProperties": [
-    {
-      "id": "agesong-laguna-grove-care",
-      "imageUrl":
-      "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
-      "name": "AgeSong Laguna Grove Care",
-      "reviewsValue": 4,
-      "numReviews": 9,
-      "latitude": 37.7768864,
-      "longitude": -122.4266889,
-      "description": "AgeSong is the best",
-      "startingRate": 4050,
-      "webViewInfo": {
-        "firstLineValue": "Assisted Living",
-        "secondLineValue": "Suite, Studio"
+  "similarCommunities": {
+    "id":"rhoda-goldman-plaza",
+    "similar": [
+      {
+        "id": "agesong-laguna-grove-care",
+        "addressString": "1661 Pine Street, San Francisco, CA",
+        "imageUrl":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
+        "name": "AgeSong Laguna Grove Care",
+        "reviewsValue": 4,
+        "numReviews": 9,
+        "latitude": 37.7768864,
+        "longitude": -122.4266889,
+        "description": "AgeSong is the best",
+        "startingRate": 4050,
+        "webViewInfo": {
+          "firstLineValue": "Assisted Living",
+          "secondLineValue": "Suite, Studio"
+        },
+        "url":
+        "/assisted-living/california/san-francisco/agesong-laguna-grove-care"
       },
-      "url":
-      "/assisted-living/california/san-francisco/agesong-laguna-grove-care"
-    },
-    {
-      "id": "san-francisco-towers",
-      "addressString": "1661 Pine Street, San Francisco, CA",
-      "description": "Episcopal Senior Communities cultivates and builds healthy communities with a continuum of residential and innovative aging services that actively pro",
-      "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a799dd595c60fc62d36764139d97a91a/SFT_OneBedroom_01_sd.jpg",
-      "latitude": 37.7891395,
-      "longitude": -122.4229189,
-      "name": "San Francisco Towers",
-      "numReviews": 0,
-      "resourceType": "Community",
-      "reviewsValue": 0,
-      "startingRate": 3760,
-      "url": "/independent-living/california/san-francisco/san-francisco-towers-san-francisco",
-      "webViewInfo": {
-        "firstLineValue": "Assisted Living",
-        "secondLineValue": "Suite, Studio"
+      {
+        "id": "san-francisco-towers",
+        "addressString": "1661 Pine Street, San Francisco, CA",
+        "description": "Episcopal Senior Communities cultivates and builds healthy communities with a continuum of residential and innovative aging services that actively pro",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a799dd595c60fc62d36764139d97a91a/SFT_OneBedroom_01_sd.jpg",
+        "latitude": 37.7891395,
+        "longitude": -122.4229189,
+        "name": "San Francisco Towers",
+        "numReviews": 0,
+        "resourceType": "Community",
+        "reviewsValue": 0,
+        "startingRate": 3760,
+        "url": "/independent-living/california/san-francisco/san-francisco-towers-san-francisco",
+        "webViewInfo": {
+          "firstLineValue": "Assisted Living",
+          "secondLineValue": "Suite, Studio"
+        }
+      },
+      {
+        "id": "agesong-hayes-valley",
+        "addressString": "601 Laguna Street, San Francisco, CA",
+        "description": "",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/141602fe313edce1fa5db4d06ebbe835/5D3_1588_sd.jpg",
+        "latitude": 37.7768864,
+        "longitude": -122.4266889,
+        "name": "Village At Hayes Valley",
+        "numReviews": 0,
+        "resourceType": "Community",
+        "reviewsValue": 0,
+        "startingRate": 4050,
+        "url": "/assisted-living/california/san-francisco/agesong-hayes-valley-care",
+        "webViewInfo": {
+          "firstLineValue": "Assisted Living",
+          "secondLineValue": "Suite, Studio"
+        }
       }
-    },
-    {
-      "id": "agesong-hayes-valley",
-      "addressString": "601 Laguna Street, San Francisco, CA",
-      "description": "",
-      "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/141602fe313edce1fa5db4d06ebbe835/5D3_1588_sd.jpg",
-      "latitude": 37.7768864,
-      "longitude": -122.4266889,
-      "name": "Village At Hayes Valley",
-      "numReviews": 0,
-      "resourceType": "Community",
-      "reviewsValue": 0,
-      "startingRate": 4050,
-      "url": "/assisted-living/california/san-francisco/agesong-hayes-valley-care",
-      "webViewInfo": {
-        "firstLineValue": "Assisted Living",
-        "secondLineValue": "Suite, Studio"
+    ],
+    "recommended": [
+
+      {
+        "id": "agesong-laguna-grove-care",
+        "addressString": "1661 Pine Street, San Francisco, CA",
+        "imageUrl":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
+        "name": "AgeSong Laguna Grove Care",
+        "reviewsValue": 4,
+        "numReviews": 9,
+        "latitude": 37.7768864,
+        "longitude": -122.4266889,
+        "description": "AgeSong is the best",
+        "startingRate": 4050,
+        "webViewInfo": {
+          "firstLineValue": "Assisted Living",
+          "secondLineValue": "Suite, Studio"
+        },
+        "url":
+        "/assisted-living/california/san-francisco/agesong-laguna-grove-care"
+      },
+      {
+        "id": "san-francisco-towers",
+        "addressString": "1661 Pine Street, San Francisco, CA",
+        "description": "Episcopal Senior Communities cultivates and builds healthy communities with a continuum of residential and innovative aging services that actively pro",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a799dd595c60fc62d36764139d97a91a/SFT_OneBedroom_01_sd.jpg",
+        "latitude": 37.7891395,
+        "longitude": -122.4229189,
+        "name": "San Francisco Towers",
+        "numReviews": 0,
+        "resourceType": "Community",
+        "reviewsValue": 0,
+        "startingRate": 3760,
+        "url": "/independent-living/california/san-francisco/san-francisco-towers-san-francisco",
+        "webViewInfo": {
+          "firstLineValue": "Assisted Living",
+          "secondLineValue": "Suite, Studio"
+        }
+      },
+      {
+        "id": "agesong-hayes-valley",
+        "addressString": "601 Laguna Street, San Francisco, CA",
+        "description": "",
+        "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/141602fe313edce1fa5db4d06ebbe835/5D3_1588_sd.jpg",
+        "latitude": 37.7768864,
+        "longitude": -122.4266889,
+        "name": "Village At Hayes Valley",
+        "numReviews": 0,
+        "resourceType": "Community",
+        "reviewsValue": 0,
+        "startingRate": 4050,
+        "url": "/assisted-living/california/san-francisco/agesong-hayes-valley-care",
+        "webViewInfo": {
+          "firstLineValue": "Assisted Living",
+          "secondLineValue": "Suite, Studio"
+        }
       }
-    }
-  ],
+    ]
+  },
   "twilioNumber": {
     "areaCode": 415,
     "cityId": 2597,

@@ -1,3 +1,5 @@
+import { uuidActionEvent } from 'sly/web/services/events';
+
 import { get, patch, put, post, destroy } from './httpMethods';
 
 import { cmsUrl } from 'sly/web/config';
@@ -11,7 +13,7 @@ export default {
   getUsers: { method: get, path: '/platform/users' },
 
   getUuidActions: { method: get, path: '/platform/uuid-actions', ssrIgnore: true },
-  createUuidAction: { method: post, path: '/platform/uuid-actions' },
+  createUuidAction: { method: post, path: '/platform/uuid-actions', intercept: uuidActionEvent },
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id', ssrIgnore: true },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
@@ -129,4 +131,6 @@ export default {
   getArticlesCount: { method: get, path: '/articles/count', jsonApi: false, baseUrl: cmsUrl },
   getArticlesForSitemap: { method: get, path: '/articles/sitemap', jsonApi: false, baseUrl: cmsUrl },
   getTopic: { method: get, path: '/topics', jsonApi: false, baseUrl: cmsUrl },
+
+  getHubPage: { method: get, path: '/senior-living-types', jsonApi: false, baseUrl: cmsUrl },
 };

@@ -16,8 +16,8 @@ describe('ThreeSectionFormTemplate', () => {
       hasCancel: true,
     }, children);
     expect(wrapper.find('ForwardRef').contains(heading)).toBeTruthy();
-    expect(wrapper.find('Wrapper').contains(children)).toBeTruthy();
-    expect(wrapper.find('Bottom').find('Button')).toHaveLength(1);
+    expect(wrapper.find('Block').contains(children)).toBeTruthy();
+    expect(wrapper.find('Block').find('Button')).toHaveLength(1);
   });
 
   it('onCancelClick is called', () => {
@@ -27,7 +27,7 @@ describe('ThreeSectionFormTemplate', () => {
       hasCancel: true,
     });
 
-    wrapper.find('Bottom').find('Button').simulate('click');
+    wrapper.find('Block').find('Button').simulate('click');
     expect(onCancelClick).toHaveBeenCalled();
   });
 
@@ -38,7 +38,7 @@ describe('ThreeSectionFormTemplate', () => {
       hasSubmit: true,
     });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Block').at(0).simulate('submit');
     expect(onSubmit).toHaveBeenCalled();
   });
 });

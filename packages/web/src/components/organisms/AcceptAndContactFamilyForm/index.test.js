@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AcceptAndContactFamilyForm from 'sly/web/components/organisms/AcceptAndContactFamilyForm';
+import { Block } from 'sly/common/system';
 
 const defaultProps = {
   contactTypes: ['email', 'phone', 'message'],
@@ -21,7 +22,8 @@ describe('AcceptAndContactFamilyForm', () => {
     const wrapper = wrap({ handleSubmit });
 
     wrapper.find('ThreeSectionFormTemplate').find('[icon="phone"]').simulate('click');
-    wrapper.find('ThreeSectionFormTemplate').dive().find('form').simulate('submit');
+    wrapper.find('ThreeSectionFormTemplate').dive().find('Block').at(0)
+      .simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -30,7 +32,8 @@ describe('AcceptAndContactFamilyForm', () => {
     const wrapper = wrap({ handleSubmit });
 
     wrapper.find('ThreeSectionFormTemplate').find('[icon="email"]').simulate('click');
-    wrapper.find('ThreeSectionFormTemplate').dive().find('form').simulate('submit');
+    wrapper.find('ThreeSectionFormTemplate').dive().find('Block').at(0)
+      .simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -39,7 +42,8 @@ describe('AcceptAndContactFamilyForm', () => {
     const wrapper = wrap({ handleSubmit });
 
     wrapper.find('ThreeSectionFormTemplate').find('[icon="message"]').simulate('click');
-    wrapper.find('ThreeSectionFormTemplate').dive().find('form').simulate('submit');
+    wrapper.find('ThreeSectionFormTemplate').dive().find('Block').at(0)
+      .simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
   });
 });

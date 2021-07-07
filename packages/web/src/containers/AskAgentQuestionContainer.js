@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
 import { AA_CONSULTATION_REQUESTED, AGENT_ASK_QUESTIONS, PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
-import AdvisorPopupTest from 'sly/web/components/molecules/AdvisorPopupTest';
 import SlyEvent from 'sly/web/services/helpers/events';
 import withModal from 'sly/web/controllers/withModal';
 import { prefetch } from 'sly/web/services/api';

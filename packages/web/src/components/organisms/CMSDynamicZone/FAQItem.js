@@ -9,6 +9,8 @@ import Flex from 'sly/common/system/Flex';
 import { sx, space } from 'sly/common/system/sx';
 import Minus from 'sly/common/icons/Minus';
 import Plus from 'sly/common/icons/Plus';
+import { actionEventHandler } from 'sly/web/services/helpers/eventHandlers';
+
 
 const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +34,10 @@ const FAQItem = ({ title, description, withMarginBottom, withMarginTop }) => {
           justifyContent: 'space-between',
           cursor: 'pointer',
         }}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          actionEventHandler('faq-item', isOpen ? 'close' : 'open',  title)();
+          setIsOpen(!isOpen)
+        }}
       >
         <Block
           color="viridian.base"

@@ -41,10 +41,14 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
         Done
       </StyledDoneButton>
     </ButtonsWrapper>
-    <Hr pad="xxLarge" />
-    <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-    <SimilarCommunities communities={similarCommunities} communityStyle={{ layout: 'row', showDescription: false }} />
-  </section>
+    {similarCommunities && (
+      <>
+        <Hr pad="xxLarge" />
+        <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
+        <SimilarCommunities communities={similarCommunities} communityStyle={{ layout: 'row', showDescription: false }} />
+      </>
+    )}
+   </section>
 );
 
 CommunitySaved.propTypes = {

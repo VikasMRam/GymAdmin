@@ -209,7 +209,7 @@ export default class ListingDetailPage extends PureComponent {
                 {/* Partner Agent */}
                 {partnerAgent && (
                 <>
-                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mb="xs" sx$tablet={{ paddingTop: 'xxl' }}>
+                  <HeadingBoxSection font="body-l" hasNoHr id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mb="xs" sx$tablet={{ pt: 'xxl' }}>
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
                     <ListingAgentButtonConatiner
                       agent={partnerAgent}
@@ -218,7 +218,7 @@ export default class ListingDetailPage extends PureComponent {
                       type="expert"
                       ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
                     />
-                  </StyledHeadingBoxSection>
+                  </HeadingBoxSection>
                 </>
                 )}
                 {showMoreImages && (
