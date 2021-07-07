@@ -571,6 +571,7 @@ export default class CommunityDetailPage extends PureComponent {
                 name={name}
                 agent={partnerAgent}
               />
+              <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
             </StyledHeadingBoxSection>
             {!!similarCommunities?.recommended?.length && (
               <StyledHeadingBoxSection
@@ -662,7 +663,6 @@ export default class CommunityDetailPage extends PureComponent {
           {nearbyCities &&
             nearbyCities.length > 0 && (
               <Wrapper>
-                <Hr mt="xxl" mb="xxl" display="none" sx$tablet={{ display: 'block' }} />
                 <SeoLinks
                   title={`Explore top cities near ${name}`}
                   links={nearbyCities}
