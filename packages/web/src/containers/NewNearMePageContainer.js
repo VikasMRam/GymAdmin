@@ -101,7 +101,8 @@ const NewNearMePageContainer = ({ history, location, match }) => {
       <HubHeader
         imagePath={result?.[0]?.mainImg?.path}
         toc={result[0].toc || result[0].title.toLowerCase()}
-        heading={result[0].subTitle}
+        heading={result[0].title}
+        label={result[0].subTitle}
         showSearch={result[0].showSearch}
         onCurrentLocation={handleCurrentLocation}
         onLocationSearch={handleOnLocationSearch}
@@ -109,7 +110,6 @@ const NewNearMePageContainer = ({ history, location, match }) => {
         mobileBGGradientVariation={result[0].headerGradientVariation}
         laptopBBGradientPalette={result[0].headerGradientPalette}
         laptopBBGradientVariation={result[0].headerGradientVariation}
-        {...(result[0].showSearch && result[0].toc && { label: `Use our free search to find ${result[0].toc} nearby` })}
       />
 
       {result[0].content && (
