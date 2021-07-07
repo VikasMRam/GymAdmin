@@ -16,6 +16,10 @@ export const NOTIFY_AGENT_MATCHED_TIMEOUT = 15000;
 
 export const NOTIFY_AGENT_RECEIVED_REQUEST = 'We have received your request and we will get back to you soon.';
 
+export const NOTIFICATIONS_LISTING_ADD_FAVORITE_SUCCESS = 'Community Added to your favorites';
+
+export const NOTIFICATIONS_LISTING_ADD_FAVORITE_FAILED = 'Failed to add community to favorites. Please try again.';
+
 export const NOTIFICATIONS_LISTING_REMOVE_FAVORITE_SUCCESS = 'Listing Removed';
 
 export const NOTIFICATIONS_LISTING_REMOVE_FAVORITE_FAILED = 'Failed to remove listing from favorites. Please try again.';

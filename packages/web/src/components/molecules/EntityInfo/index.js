@@ -57,7 +57,6 @@ export default class EntityInfo extends Component {
     const typeCare = entity.care || entity.typeCare || propInfo.typeCare;
     const capacity = thirdLine || propInfo.capacity || entity.capacity;
     const placeholder = getPlaceholderIcon(communitySize);
-    console.log('capacity', entity);
     let livingTypeComponent = null;
 
     if (typeCare && typeCare.length) {

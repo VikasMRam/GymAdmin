@@ -122,7 +122,6 @@ const ListingSummary = ({
   }
 
   const newTags = !!tags && !!tags.length ? makeNewTags(tags) : [];
-  console.log('tags', newTags);
 
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
