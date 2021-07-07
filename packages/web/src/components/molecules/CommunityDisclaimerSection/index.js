@@ -40,7 +40,7 @@ const CommunityDisclaimerSection = ({
 
           <Heading pad="l" font="title-m">Are you an owner or operator of this community?</Heading>
           <Block  pad="l">Claim this profile to update pricing and community information.</Block>
-          <Button variant="secondary" width="100%" sx$tablet={{ width: 'initial' }} href={`/partners/communities?prop=${id}&sly_category=disclaimer&sly_action=cta_link&sly_label=claim`}>
+          <Button as={Link} variant="secondary" width="100%" sx$tablet={{ width: 'initial' }} to={`/partners/communities?prop=${id}&sly_category=disclaimer&sly_action=cta_link&sly_label=claim`}>
             Claim this profile
           </Button>
         </>

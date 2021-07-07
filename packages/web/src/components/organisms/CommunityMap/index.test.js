@@ -9,11 +9,11 @@ import Map from 'sly/web/components/atoms/Map';
 const wrap = (props = {}) => shallow(<CommunityMap {...props} />);
 
 const {
-  similarProperties,
+  similarCommunities,
 } = RhodaGoldmanPlaza;
 const props = {
   community: RhodaGoldmanPlaza,
-  similarProperties,
+  similarCommunities,
 };
 
 it('renders Map with proper props', () => {

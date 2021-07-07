@@ -4,14 +4,14 @@ import { shallow } from 'enzyme';
 import CommunitySaved from 'sly/web/components/organisms/CommunitySaved';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { similarProperties } = RhodaGoldmanPlaza;
+const { similarCommunities } = RhodaGoldmanPlaza;
 
 const wrap = (props = {}) =>
   shallow(<CommunitySaved {...props} />);
 
 describe('CommunitySaved', () => {
   it('renders', () => {
-    const wrapper = wrap({ similarCommunities: similarProperties });
+    const wrapper = wrap({ similarCommunities: similarCommunities.similar });
 
     expect(wrapper.find('StyledHeading')).toHaveLength(2);
     expect(wrapper.find('StyledBlock')).toHaveLength(1);
@@ -23,7 +23,7 @@ describe('CommunitySaved', () => {
   it('calls callback on done button click', () => {
     const onDoneButtonClickedSpy = jest.fn();
     const wrapper = wrap({
-      similarCommunities: similarProperties,
+      similarCommunities: similarCommunities.similar,
       onDoneButtonClicked: onDoneButtonClickedSpy,
     });
     const button = wrapper.find('StyledDoneButton');

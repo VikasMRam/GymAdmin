@@ -232,8 +232,7 @@ const Footer = props => (
           <Logo size="l" marginTop="-4px" />
         </Link>
         <Span fontSize="body-s">
-          &copy; Seniorly {currentYear}
-          <Span>{config.version}</Span> ·{' '}
+          &copy; Seniorly {currentYear} ·{' '}
           <Link
             event={{
               category: 'footer-link',

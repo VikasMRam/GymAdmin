@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import CommunityWizardAcknowledgement from 'sly/web/components/organisms/CommunityWizardAcknowledgement';
 import RhodaGoldmanPlaza from 'sly/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { similarProperties } = RhodaGoldmanPlaza;
+const { similarCommunities } = RhodaGoldmanPlaza;
 
 const buttonTo = 'www.teamseniorly.com';
 const buttonText = 'Take me to my dashboard';
@@ -16,7 +16,7 @@ const defaultProps = {
   buttonText,
   heading,
   subheading,
-  similarCommunities: similarProperties,
+  similarCommunities: similarCommunities,
 };
 
 const wrap = (props = {}) => shallow(<CommunityWizardAcknowledgement {...defaultProps} {...props} />);
