@@ -209,7 +209,7 @@ export default class ListingDetailPage extends PureComponent {
                 {/* Partner Agent */}
                 {partnerAgent && (
                 <>
-                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mt="xxl">
+                  <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mb="xs" sx$tablet={{ paddingTop: 'xxl' }}>
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
                     <ListingAgentButtonConatiner
                       agent={partnerAgent}
@@ -236,11 +236,11 @@ export default class ListingDetailPage extends PureComponent {
                   diningSection &&
                   <>
                     <StyledHeadingBoxSection mb="xs"  heading="Dining" >
-                      <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
+                      <Block background="white.base" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
                       {
                         diningSection.url &&
                         <Link href={diningSection.url}>
-                          <Button sx$tablet={{ paddingX: 's' }}  variant="neutral" width="100%" mt="m">
+                          <Button sx$tablet={{ paddingX: 's' }}  variant="neutral" width="100%" mt="l">
                             <Food mr="xs" />View sample weekly menu
                           </Button>
                         </Link>

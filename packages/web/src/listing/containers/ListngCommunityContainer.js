@@ -46,7 +46,7 @@ const ListingCommunityContainer = (props) => {
   const Images = getImagesOfCommunity(community);
 
   return (
-    <StyledHeadingBoxSection  heading="The community" >
+    <StyledHeadingBoxSection  heading="The community" mb="xs">
       <StyledArticle>
         <Block dangerouslySetInnerHTML={{ __html: communitySection.content }} />
       </StyledArticle>
