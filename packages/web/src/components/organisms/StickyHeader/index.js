@@ -1,5 +1,5 @@
 import React, {  useEffect, useState } from 'react';
-import { object, func } from 'prop-types';
+import { array, func, string } from 'prop-types';
 import Helmet from 'react-helmet';
 
 import Tabs from 'sly/web/components/molecules/Tabs';
@@ -8,15 +8,16 @@ import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import { Box } from 'sly/common/system';
 import SlyEvent from 'sly/web/services/helpers/events';
 
-
-const allSections = {
-  photos: { label: 'photos', id: 'gallery' },
-  pricing: { label: 'pricing', id: 'pricing-and-floor-plans' },
-  advisor: { label: 'advisor', id: 'agent-section' },
-  about: { label: 'about', id: 'community-about' },
-  amenities: { label: 'amenities', id: 'amenities-section' },
-  reviews: { label: 'reviews', id: 'reviews' },
-};
+// Example format the sections array should be in. The render method filters the array for null/undefined so you can have conditional indecies
+/*
+const allSections = [
+   { label: 'photos', id: 'gallery' },
+   label: 'pricing', id: 'pricing-and-floor-plans' },
+  { label: 'advisor', id: 'agent-section' },
+   { label: 'about', id: 'community-about' },
+  { label: 'amenities', id: 'amenities-section' },
+  { label: 'reviews', id: 'reviews' },
+] */
 
 
 const TabWithIntersectionObserver = ({ setActiveTab, elementId, ...props }) => {
@@ -56,22 +57,18 @@ TabWithIntersectionObserver.propTypes = {
 };
 
 
-export default function StickyHeader({ sections }) {
+export default function StickyHeader({ sections, type }) {
   const [active, setActive] = useState(null);
   const [shouldShow, setShouldShow] = useState(false);
-  const presentSections = [];
-  Object.keys(sections).forEach((key) => {
-    if (sections[key]) {
-      presentSections.push(allSections[key]);
-      presentSections[allSections[key].id] = allSections[key];
-    }
-  });
+
+  // Filter sections for null/undefined indecies
+  const presentSections = sections.filter(el => !!el);
 
 
   const sendViewEvent = (section) => {
     SlyEvent.getInstance().sendEvent({
       action: 'view',
-      category: 'CommunityProfile-SectionView',
+      category: `${type}Profile-SectionView`,
       label: section,
       nonInteraction: true,
     });
@@ -129,7 +126,7 @@ export default function StickyHeader({ sections }) {
                 key={label}
                 elementId={id}
                 href={`#${id}`}
-                onClick={clickEventHandler('community-stick-header', label)}
+                onClick={clickEventHandler(`${type}-stick-header`, label)}
               >
                 {label}
               </TabWithIntersectionObserver>),
@@ -152,5 +149,10 @@ export default function StickyHeader({ sections }) {
 }
 
 StickyHeader.propTypes = {
-  sections: object,
+  sections: array,
+  type: string,
+};
+
+StickyHeader.defaultProps = {
+  type: 'community',
 };

@@ -36,9 +36,8 @@ const StyledButton = styled(Block)`
 
   `;
 
-const ListingReviewsContainer = (props) => {
+const ListingReviewsContainer = ({ listing, ...props }) => {
   const { id } = useParams();
-  const { listing } = props;
   const { reviews, name } = listing || {};
   const { reviewsValue, ratingsArray, numReviews } = listing?.info?.raratingInfo || {};
   const onReviewLinkClicked = useCallback((name) => {
@@ -75,7 +74,7 @@ const ListingReviewsContainer = (props) => {
   return (
     <StyledHeadingBoxSection
       heading={`Reviews at ${name}`}
-      id="reviews"
+      {...props}
     >
       <EntityReviews
         reviewsValue={reviewsValue}

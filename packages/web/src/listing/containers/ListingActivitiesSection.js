@@ -51,11 +51,9 @@ const getActivityDetailByName = (name) => {
 };
 
 
-const ListingActivitiesSection = (props) => {
-  const { activities, activityCalendarURL } = props;
-
+const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props }) => {
   return (
-    <StyledHeadingBoxSection mb="xs"  heading="Activities" >
+    <StyledHeadingBoxSection mb="xs"  heading="Activities" {...props} >
       <Block position="relative">
         <Grid
           gridTemplateColumns="1fr 1fr"

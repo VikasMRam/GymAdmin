@@ -30,6 +30,7 @@ import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import PlusBranding from 'sly/web/listing/components/PlusBranding';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
+import StickyHeader from 'sly/web/components/organisms/StickyHeader';
 import { Food } from 'sly/common/icons';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import SimilarListings from 'sly/web/listing/components/SimilarListings';
@@ -141,8 +142,6 @@ export default class ListingDetailPage extends PureComponent {
       similarListings,
     } = listing;
 
-    const showMoreImages = gallery.images && gallery.images.length > 0;
-
 
     const {
       description,
@@ -184,6 +183,29 @@ export default class ListingDetailPage extends PureComponent {
     };
 
 
+    // Easiest to extract coniditonal to a var for sticky header sections
+    const shouldShowAbout = !!description;
+    const shouldShowPartnerAgent = !!partnerAgent;
+    const shouldShowApartment = gallery.images && gallery.images.length > 0;
+    const shouldShowActivities = !!activities;
+    const shouldShowDining = !!diningSection;
+    const shouldShowNeighborhood = !!neighborhoodSection;
+    const shouldShowCommunity = !!communitySection;
+    const shouldShowReviews = reviews && reviews.length > 0;
+
+    const stickyHeaderSections = [
+      { label: 'photos', id: 'gallery' },
+      shouldShowAbout ? { label: 'about', id: 'about' } : null,
+      shouldShowPartnerAgent ? { label: 'advisor', id: 'agent-section' } : null,
+      shouldShowApartment ? { label: 'apartment', id: 'apartment-section' } : null,
+      shouldShowActivities ? { label: 'activities', id: 'activities' } : null,
+      shouldShowDining ? { label: 'dining', id: 'dining' } : null,
+      shouldShowNeighborhood ? { label: 'neighborhood', id: 'neighborhood' } : null,
+      shouldShowCommunity ? { label: 'community', id: 'community' } : null,
+      shouldShowReviews ? { label: 'reviews', id: 'reviews' } : null,
+    ];
+
+
     return (
       <>
         <ModalContainer />
@@ -198,16 +220,17 @@ export default class ListingDetailPage extends PureComponent {
           <ListingMediaGalleryContainer />
         </Block>
         <ListingProfilePageTemplate>
+          <StickyHeader type="listing" sections={stickyHeaderSections} />
           <Wrapper>
             <TwoColumn>
               <Body>
                 <StyledListingSummary formattedAddress={formattedAddress} />
-                {description && (
-                <Block background="white.base" pb="l" mb="xs" px="m" sx$laptop={{ px: '0' }} font="body-l" dangerouslySetInnerHTML={{ __html: description }} />
+                {shouldShowAbout && (
+                <Block id="about" background="white.base" pb="l" mb="xs" px="m" sx$laptop={{ px: '0' }} font="body-l" dangerouslySetInnerHTML={{ __html: description }} />
                 )}
                 <PlusBranding />
                 {/* Partner Agent */}
-                {partnerAgent && (
+                {shouldShowPartnerAgent && (
                 <>
                   <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mt="xxl">
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
@@ -221,7 +244,7 @@ export default class ListingDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 </>
                 )}
-                {showMoreImages && (
+                {shouldShowApartment && (
                 <StyledHeadingBoxSection id="apartment-section" heading="The apartment" mb="xs">
                   <ApartmentSection />
                   <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
@@ -229,13 +252,13 @@ export default class ListingDetailPage extends PureComponent {
                 )}
                 {/* Activities */}
                 {
-                 activities && <ListingActivitiesSection activities={activities}  activityCalendarURL={activityCalendarURL} />
+                 shouldShowActivities && <ListingActivitiesSection id="activities" activities={activities}  activityCalendarURL={activityCalendarURL} />
                 }
                 {/* Dining */}
                 {
-                  diningSection &&
+                  shouldShowDining &&
                   <>
-                    <StyledHeadingBoxSection mb="xs"  heading="Dining" >
+                    <StyledHeadingBoxSection mb="xs" id="dining"  heading="Dining" >
                       <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
                       {
                         diningSection.url &&
@@ -252,9 +275,9 @@ export default class ListingDetailPage extends PureComponent {
 
                 {/* Neighborhood */}
                 {
-                  neighborhoodSection &&
+                  shouldShowNeighborhood &&
                   <>
-                    <StyledHeadingBoxSection mb="xs"  heading="The neighborhood" >
+                    <StyledHeadingBoxSection mb="xs" id="neighborhood"  heading="The neighborhood" >
                       <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
                       <LazyListingMapContainer listing={listing} />
                     </StyledHeadingBoxSection>
@@ -263,13 +286,13 @@ export default class ListingDetailPage extends PureComponent {
 
                 {/* Community Section */}
                 {
-                  communitySection && <ListingCommunityContainer communitySection={communitySection} community={community} />
+                  shouldShowCommunity && <ListingCommunityContainer communitySection={communitySection} community={community} id="community" />
                 }
 
 
                 {/* Reviews */}
-                {reviews && reviews.length > 0 &&
-                  <ListingReviewsContainer listing={listing} />
+                {shouldShowReviews &&
+                  <ListingReviewsContainer id="reviews" listing={listing} />
                 }
 
                 {/* Explore Similar Listing */}
