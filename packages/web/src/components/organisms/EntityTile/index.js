@@ -40,6 +40,7 @@ const TagBlock = styled(Block)`
   top: 0.5rem;
   left: 0.5rem;
   display: none;
+  display: block;
   ${sx$laptop({
     display: 'block',
   })}
@@ -105,8 +106,15 @@ const EntityTile = ({
   const newTags = !!tags && !!tags.length ? makeNewTags(tags) : [];
 
   const tagSection = !!newTags && !!newTags.length && (
-    <TagBlock
+    <Block
       as="span"
+      sx={{
+        zIndex: '10',
+        position: 'absolute',
+        top: '0.5rem',
+        left: '0.5rem',
+        display: 'block',
+      }}
     >
       {newTags.map(({ name, color }) => {
         return (
@@ -115,12 +123,19 @@ const EntityTile = ({
             background="white"
             key={name}
             marginRight="xs"
+            sx={{
+              zIndex: '10',
+              position: 'absolute',
+              top: '0.25rem',
+              left: '0.25rem',
+              display: 'block',
+            }}
           >
             {name}
           </Tag>
         );
       })}
-    </TagBlock>
+    </Block>
   );
   return (
     <Block

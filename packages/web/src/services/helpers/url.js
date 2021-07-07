@@ -374,6 +374,9 @@ export const isInternationalPath = (path) => {
   if (pathParts.length > 1 && pathParts[1] === 'agents') {
     return false;
   }
+  if (pathParts.length > 1 && pathParts[1] === 'plus') {
+    return false;
+  }
   // check if 1st part is care-home
   if (pathParts.length > 2 && pathParts[1] === 'care-home') {
     return true;

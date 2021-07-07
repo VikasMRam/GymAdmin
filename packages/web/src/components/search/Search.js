@@ -55,6 +55,7 @@ const Search = ({
   const [show, setShow] = useState(LIST);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  const [markerHover, setMarkerHover] = useState(null);
 
   const listSize = meta['filtered-count'];
 
@@ -235,8 +236,9 @@ const Search = ({
           meta={meta}
           onFilterChange={onFilterChange}
           onMarkerClick={setSelectedCommunity}
-          onMarkerHover={setHoveredCommunity}
+          onMarkerHover={setMarkerHover}
           selectedCommunity={hoveredCommunity || selectedCommunity}
+          selectedHover={markerHover}
           cursor={cursor}
           width="100%"
           sx={{

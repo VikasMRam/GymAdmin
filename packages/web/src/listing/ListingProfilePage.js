@@ -127,8 +127,6 @@ export default class ListingDetailPage extends PureComponent {
       history,
     } = this.props;
 
-    console.log('listing', listing);
-
     const {
       name,
       info = {},
