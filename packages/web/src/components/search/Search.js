@@ -116,10 +116,10 @@ const Search = ({
       >
         <Block
           gridArea="filters"
-          paddingY="s"
+          paddingTop={show === LIST ? 's' : '0'}
           paddingX="l"
           sx$tablet={{
-            paddingY: 'l',
+            paddingTop: show === LIST ? 'l' : '0',
           }}
           css={{
             zIndex: '100',
@@ -143,46 +143,48 @@ const Search = ({
               display: 'block',
             }}
           >
-            <Heading pad="l" font="title-xl">{title}</Heading>
+            <Heading pad="xs" font="title-xl">{title}</Heading>
           </Block>
-          <Filters
-            ref={filtersRef}
-            currentFilters={currentFilters}
-            onFilterChange={onFilterChange}
-            onClearFilters={onClearFilters}
-            showTOC={!isInternational || isCanada}
-          >
 
-            <FilterButton
-              display="flex"
-              sx$laptop={{
+        </Block>
+        <Filters
+          ref={filtersRef}
+          currentFilters={currentFilters}
+          onFilterChange={onFilterChange}
+          onClearFilters={onClearFilters}
+          showTOC={!isInternational || isCanada}
+        >
+
+          <FilterButton
+            display="flex"
+            sx$laptop={{
                 display: 'none',
               }}
-              marginLeft="auto"
-              onClick={toggleShow}
-            >
-              <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-            </FilterButton>
-          </Filters>
-          {(hasFinished && !listSize) &&
-            <Block
-              marginTop="xl"
-              sx$tablet={{
-                marginTop: 'xxl',
-              }}
-            >
-              <Heading font="title-s-azo" pad="xs">No results</Heading>
-              <Block marginBottom="m">Try removing some filters or zooming out on the map to find more communities.</Block>
-              <Link onClick={() => onClearFilters()}>
-                Clear all filters
-              </Link>
-            </Block>
-          }
+            marginLeft="auto"
+            onClick={toggleShow}
+          >
+            <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
+          </FilterButton>
+        </Filters>
+        {(hasFinished && !listSize) &&
+        <Block
+          marginTop="m"
+          padding="l"
+          sx={{
+            zIndex: '50',
+          }}
+        >
+          <Heading font="title-s-azo" pad="xs">No results</Heading>
+          <Block marginBottom="m">Try removing some filters or zooming out on the map to find more communities.</Block>
+          <Link onClick={() => onClearFilters()}>
+            Clear all filters
+          </Link>
         </Block>
-
+          }
         <Block
           gridArea="list"
           paddingBottom="xl"
+          paddingTop="l"
           display={show === LIST ? 'block' : 'none'}
           sx$laptop={{
               display: 'block',
