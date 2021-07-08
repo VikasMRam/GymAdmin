@@ -247,7 +247,7 @@ const Search = ({
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
             marginTop: `-${upToLaptopOffset}px`,
-            height: sx`calc(100vh - ${space('l')})`,
+            height: sx`calc(100vh)`,
           }}
 
           sx$laptop={{

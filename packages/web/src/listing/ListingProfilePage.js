@@ -61,14 +61,6 @@ const StyledListingSummary = styled(ListingSummaryContainer)`
   }
 `;
 
-const StyledSection = styled(Section)`
-  padding:${space('l')} ${space('m')} ;
-  margin-left:auto;
-  margin-right:auto;
-  background:${color('white.base')};
-  font:${font('body-l')};
-`;
-
 const StickToTop = styled.div`
   position: sticky;
   top: 74px;
@@ -120,12 +112,12 @@ export default class ListingDetailPage extends PureComponent {
   static propTypes = {
     listing: object.isRequired,
     location: object.isRequired,
+    history: object,
   };
 
   render() {
     const {
       listing,
-      location,
       history,
     } = this.props;
 
@@ -134,10 +126,7 @@ export default class ListingDetailPage extends PureComponent {
       info = {},
       address,
       community,
-      id,
-      user: listingUser,
       gallery = {},
-      user: communityUser,
       reviews,
       partnerAgent,
       similarListings,

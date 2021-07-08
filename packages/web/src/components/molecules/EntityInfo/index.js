@@ -3,10 +3,11 @@ import { bool, string, object, oneOf, number } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { community as communityPropType } from 'sly/common/propTypes/community';
+import { entity as entityPropType } from 'sly/common/propTypes/entity';
 import { Heading, Link, Block, Span } from 'sly/common/system';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { CommunitySizeLarge, CommunitySizeMedium, CommunitySizeSmall, Family } from 'sly/common/icons';
+import { CommunitySizeLarge, CommunitySizeMedium, CommunitySizeSmall } from 'sly/common/icons';
 
 
 const communityDefaultIcon = {
@@ -26,6 +27,7 @@ const getPlaceholderIcon = communitySize => communityDefaultIcon[
 export default class EntityInfo extends Component {
   static propTypes = {
     community: communityPropType,
+    entity: entityPropType,
     inverted: bool,
     color: palettePropType,
     className: string,

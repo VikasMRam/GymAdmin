@@ -33,7 +33,7 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
       sx={{
         zIndex: 1000,
         transform: 'translate(-50%)',
-        bottom: '8px',
+        bottom: '2%',
         left: '50%',
         width: 'calc(100% - 16px)',
         '@tablet': {

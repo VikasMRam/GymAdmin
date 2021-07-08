@@ -3,18 +3,18 @@ import { bool, string } from 'prop-types';
 
 import { Block } from 'sly/common/system';
 
-const Tag = ({ ...props }) => {
+const Tag = ({ background, color, ...props }) => {
   if (props.outline) {
     props.border = 's';
-  } else if (props.background && props.color) {
-    props.background = props.background;
-    props.color = props.color;
+  } else if (background && color) {
+    props.background = background;
+    props.color = color;
   } else {
-    props.background = props.color;
-    props.color = 'white';
+    background = color;
+    color = 'white';
   }
 
-  return <Block {...props} />;
+  return <Block background={background} color={color} {...props} />;
 };
 
 Tag.displayName = 'Tag';
@@ -23,6 +23,7 @@ Tag.propTypes = {
   palette: string,
   outline: bool,
   color: string,
+  background: string,
 };
 
 Tag.defaultProps = {

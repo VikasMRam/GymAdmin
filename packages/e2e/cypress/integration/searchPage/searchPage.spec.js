@@ -64,17 +64,17 @@ const checkForListCount = (count) => {
   cy.get('a article img').should('have.length', count);
 };
 
-const checkForADTile = (currentList) => {
-  if (currentList.length && currentList.length > 2) {
-    cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
-      expect(matchedElements.length).to.eql(2);
-    });
-  } else {
-    cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
-      expect(matchedElements.length).to.eql(1);
-    });
-  }
-};
+// const checkForADTile = (currentList) => {
+//   if (currentList.length && currentList.length > 2) {
+//     cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
+//       expect(matchedElements.length).to.eql(2);
+//     });
+//   } else {
+//     cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
+//       expect(matchedElements.length).to.eql(1);
+//     });
+//   }
+// };
 
 //* Filter Logics
 
@@ -201,19 +201,19 @@ const validateNoResultCheck = () => {
 };
 
 // Accepts count, and check it matches with present result count
-const validateResultSetCount = (currentList, totalCount) => {
-  if (currentList && currentList.length) {
-    cy.get('div')
-      .contains('results')
-      .invoke('text')
-      .then((text) => {
-        const textCount = parseFloat(text);
-        expect(Number(textCount)).to.eql(totalCount);
-      });
-  } else {
-    validateNoResultCheck();
-  }
-};
+// const validateResultSetCount = (currentList, totalCount) => {
+//   if (currentList && currentList.length) {
+//     cy.get('div')
+//       .contains('results')
+//       .invoke('text')
+//       .then((text) => {
+//         const textCount = parseFloat(text);
+//         expect(Number(textCount)).to.eql(totalCount);
+//       });
+//   } else {
+//     validateNoResultCheck();
+//   }
+// };
 
 
 const checkForTitle = (titleText) => {
@@ -374,7 +374,7 @@ const mapCheck = (list, mode) => {
 //* Helper Functions End
 
 const searchText = 'San Francisco, CA';
-const cityName = 'San Francisco';
+// const cityName = 'San Francisco';
 const urlCity = 'san-francisco';
 
 //! First Set
