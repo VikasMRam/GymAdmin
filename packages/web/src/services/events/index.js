@@ -21,7 +21,7 @@ const events = {
     }
   },
 
-  track(event) {
+  track(event, options={}) {
     if (isServer || isTest) {
       return;
     }
@@ -31,7 +31,9 @@ const events = {
     } else {
       segment.track(event);
       legacy.track(event);
-      ga.track(event);
+      if (!options.notForGa) {
+        ga.track(event);
+      }
     }
   },
 
@@ -59,7 +61,7 @@ export const uuidActionEvent = (response) => {
       category: 'action',
       id,
       ...attributes,
-    });
+    }, { notForGa: true });
   }
   return response;
 };
