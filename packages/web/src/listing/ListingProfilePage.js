@@ -10,6 +10,7 @@ import ListingActivitiesSection from './containers/ListingActivitiesSection';
 import LazyListingMapContainer from './containers/LazyLististingMapContainer';
 
 import { stateNames } from 'sly/web/constants/geo';
+import { getHelmetForListingPage } from 'sly/web/services/helpers/html_headers';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
 import Section from 'sly/web/components/molecules/Section';
@@ -166,7 +167,6 @@ export default class ListingDetailPage extends PureComponent {
     const communitySection  = getSectionDetails('community', listing?.info?.sections || []);
 
     const bookTourClickHandler = () => {
-      console.log('tour');
       const win = window.open('https://calendly.com/conciergebyseniorly/introductory-call-lake-shore-drive?utm_campaign=ILCalendly&utm_source=optimize&utm_medium=test&month=2021-07', '_blank');
       if (win != null) {
         win.focus();
@@ -205,9 +205,9 @@ export default class ListingDetailPage extends PureComponent {
       shouldShowReviews ? { label: 'reviews', id: 'reviews' } : null,
     ];
 
-
     return (
       <>
+        {getHelmetForListingPage(listing)}
         <ModalContainer />
         <PageViewActionContainer actionType={PROFILE_VIEWED} actionInfo={{ slug: listing.id }} />
         <Block pad="m">

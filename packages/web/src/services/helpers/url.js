@@ -406,3 +406,8 @@ export const isCanadaPath = (path) => {
 
   return false;
 };
+
+export const getCitySearchUrlForListing = ({ care, address }) => {
+  const tocBc = tocPaths(care);
+  return `${tocBc.path}/${urlize(stateNames[address.state])}/${address.city ? urlize(address.city) : ''}`;
+};

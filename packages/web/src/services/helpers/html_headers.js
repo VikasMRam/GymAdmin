@@ -5,7 +5,7 @@ import { string, arrayOf } from 'prop-types';
 import { host } from 'sly/web/config';
 import { tocs } from 'sly/web/components/search/helpers';
 import { titleize } from 'sly/web/services/helpers/strings';
-import { getStateAbbr, getCitySearchUrl } from 'sly/web/services/helpers/url';
+import { getStateAbbr, getCitySearchUrl, getCitySearchUrlForListing } from 'sly/web/services/helpers/url';
 import { getImagePath } from 'sly/web/services/images';
 import { assetPath } from 'sly/web/components/themes';
 
@@ -322,7 +322,7 @@ export const getHelmetForCommunityPage = (community) => {
   let significantLinks = [];
   const spUrls = similarCommunities?.similar?.map(p => `${host}${p.url}`);
   significantLinks = significantLinks.concat(spUrls);
-  const searchPageUrl = getCitySearchUrl({ propInfo, address });
+  const searchPageUrl = getCitySearchUrlForListing({ propInfo, address });
   significantLinks.push(`${host}${searchPageUrl}`);
   ldWP.significantLink = significantLinks.join(', ');
 
@@ -705,4 +705,275 @@ export const getHelmetForHomePage = ({ canonicalUrl, significantLinks }) => {
 getHelmetForHomePage.propTypes = {
   canonicalUrl: string.isRequired,
   significantLinks: arrayOf(string).isRequired,
+};
+
+
+
+const getSDForListing = ({
+  name, url, address, gallery = {}, info = {},
+}) => {
+  const { ratingInfo, phoneNumber, startingRate, activities } = info;
+  const { ratingValue, numRating } = ratingInfo;
+
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  ld['@type'] = 'LodgingBusiness';
+  ld.name = name;
+  ld.url = `${host}${url}`;
+  ld.telephone = phoneNumber;
+
+  const addressLd = {};
+  addressLd['@type'] = 'PostalAddress';
+  addressLd.streetAddress = address.line1;
+  addressLd.addressLocality = address.city;
+  addressLd.addressRegion = address.state;
+  addressLd.addressCountry = address.country;
+  ld.address = addressLd;
+
+  const geo = {};
+  geo['@type'] = 'GeoCoordinates';
+  geo.latitude = address.latitude;
+  geo.longitude = address.longitude;
+  ld.geo = geo;
+
+  if (numRating && numRating > 0) {
+    const aggregatedRating = {};
+    aggregatedRating['@type'] = 'AggregateRating';
+    (ratingValue < 1) ? aggregatedRating.ratingValue = 1 : aggregatedRating.ratingValue = ratingValue;
+    aggregatedRating.ratingCount = numRating;
+    ld.aggregateRating = aggregatedRating;
+  }
+
+  if (startingRate > 0) {
+    ld.priceRange = `From $${startingRate.toLocaleString()} per month`;
+  }
+
+
+  let imageUrl = null;
+  if (gallery.images && gallery.images.length > 0) {
+    imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
+    const imageObj = {};
+    imageObj['@type'] = 'ImageObject';
+    imageObj.name = `Front Image for ${name}`;
+    imageObj.url = imageUrl;
+    ld.image = imageObj;
+  }
+
+  return ld;
+};
+
+
+export const getHelmetForListingPage = (listing) => {
+  const {
+    name, address, info, similarListings, url, gallery = {}, reviews,
+  } = listing;
+  const {
+    line1, city, state, country, zip, latitude, longitude,
+  } = address;
+  const { phoneNumber, care, floorPlan, ratingInfo, startingRate } = info;
+  const { numReviews, ratingValue } = ratingInfo;
+
+  // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
+
+  let toc = tocs.find(elem => (elem.label === care[0]));
+  if (typeof toc === 'undefined') {
+    toc = {
+      label: 'Nursing Homes',
+      value: 'nursing-homes',
+      segment: 'nursing-homes',
+    };
+  }
+
+  const title = `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
+
+  const article = ((toc.label === 'Assisted Living' || toc.label === 'Independent Living') ? 'an' : 'a');
+
+  const description = `${name} is ${article} ${toc.label} listing located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
+
+  let imageUrl = null;
+  if (gallery.images && gallery.images.length > 0) {
+    imageUrl = gallery.images[0].url;
+  }
+
+  const ldWP = {};
+  ldWP['@context'] = 'http://schema.org';
+  ldWP['@type'] = 'Webpage';
+  ldWP.url = `${host}${url}`;
+  ldWP.inLanguage = 'EN-US';
+  ldWP.author = author();
+  ldWP.audience = audience();
+  ldWP.name = title;
+  ldWP.description = description;
+  ldWP.hasPart = 'CollectionPage';
+
+  let significantLinks = [];
+  const spUrls = similarListings?.map(p => `${host}${p.url}`);
+  significantLinks = significantLinks.concat(spUrls);
+  const searchPageUrl = getCitySearchUrlForListing({ care, address });
+  significantLinks.push(`${host}${searchPageUrl}`);
+  ldWP.significantLink = significantLinks.join(', ');
+
+  const ld = getSDForCommunity({ ...listing });
+
+  const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: criticReview.author,
+      },
+      url: `${host}${url}`,
+      datePublished: criticReview.updatedAt,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Seniorly',
+        sameAs: host,
+      },
+      description: criticReview.comments,
+      inLanguage: 'en',
+      itemReviewed: {
+        '@type': 'LocalBusiness',
+        name,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: line1,
+          addressLocality: city,
+          addressRegion: state,
+          postalCode: zip,
+          addressCountry: country,
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude,
+          longitude,
+        },
+        telephone: phoneNumber,
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: ratingValue,
+          bestRating: 5,
+          ratingCount: numReviews,
+        },
+      },
+      reviewRating: {
+        '@type': 'Rating',
+        worstRating: 1,
+        bestRating: 5,
+        ratingValue: criticReview.value,
+      },
+    };
+      // logic copied from getSDForCommunity
+    if (startingRate > 0) {
+      result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} per month`;
+    }
+    return (<script key={`helmet_critic-review_${criticReview.author + name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
+
+
+  const webPageLD = {};
+  webPageLD['@context'] = 'http://schema.org';
+  webPageLD['@type'] = 'Webpage';
+  webPageLD.url = `${host}${url}`,
+  webPageLD.inLanguage = 'EN-US';
+  webPageLD.author = author();
+  webPageLD.audience = audience();
+  webPageLD.name = title;
+  webPageLD.description = description;
+
+
+  // https://schema.org/ShareAction
+  const shareActionLD = {};
+  shareActionLD['@context'] = 'http://schema.org';
+  shareActionLD['@type'] = 'ShareAction';
+  shareActionLD.object = {
+    '@type': 'LodgingBusiness',
+    name,
+    url: `${host}${url}`,
+    image: ld.image,
+    address: ld.address,
+    priceRange: ld.priceRange,
+    telephone: ld.telephone,
+  };
+
+  // https://schema.org/Map
+  // https://schema.org/docs/hotels.html
+  ld.hasMap = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+
+  // https://schema.org/MediaGallery
+  // https://github.com/schemaorg/schemaorg/issues/1769
+  let imagesLD = null;
+  if (gallery.images && gallery.images.length > 0) {
+    imagesLD = {
+      '@context': 'http://schema.org',
+      '@type': 'CollectionPage',
+      '@id': `${host}${url}`,
+      url: `${host}${url}`,
+      isPartOf: `${host}${url}`,
+      description: `Images for ${name}`,
+      mainEntityOfPage: {
+        '@type': 'ImageGallery',
+        image: gallery.images.map((image) => {
+          return {
+            '@type': 'ImageObject',
+            url: getImagePath(encodeURI(image.path.replace(/\.jpe?g$/i, '.jpg'))),
+          };
+        }),
+      },
+    };
+  }
+
+  // https://schema.org/VideoObject
+  // https://developers.google.com/search/docs/data-types/video
+  // Data from src/components/organisms/HowSlyWorksVideo/index.js
+  const videoObjectLD = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: 'How Seniorly Works',
+    description: 'This Video explains you how Seniorly Works',
+    thumbnailUrl: [
+      'https://d354o3y6yz93dt.cloudfront.net/images/768x512/react-assets/how-sly-works-video-thumbnail.jpg',
+    ],
+    uploadDate: '2020-03-04T08:00:00+08:00', // Date on which the component was created on S3
+    // duration: 'PT1M54S',
+    contentUrl: 'https://d1qiigpe5txw4q.cloudfront.net/appassets/hiw_captions.mp4',
+    // embedUrl: 'https://www.example.com/embed/123',
+    // interactionStatistic: {
+    //   '@type': 'InteractionCounter',
+    //   interactionType: { '@type': 'http://schema.org/WatchAction' },
+    //   userInteractionCount: 5647018
+    // },
+  };
+
+  // TODO Add Image and Video and structured data.
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta content="Seniorly" property="author" />
+      <meta content="English" property="language" />
+      <link rel="canonical" href={url} />
+
+      <meta content={description} property="og:description" />
+      <meta content={`${title} | Seniorly`} property="og:title" />
+      <meta content={url} property="og:url" />
+      {imageUrl && <meta content={imageUrl} property="og:image" /> }
+
+      <meta content={description} property="twitter:description" />
+      <meta content={`${title} | Seniorly`} property="twitter:title" />
+      {imageUrl && <meta content={imageUrl} property="twitter:image:src" /> }
+      <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
+
+      <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+      <script type="application/ld+json">{`${JSON.stringify(ldWP, stringifyReplacer)}`}</script>
+      <script type="application/ld+json">{`${JSON.stringify(shareActionLD, stringifyReplacer)}`}</script>
+      {imagesLD && <script type="application/ld+json">{`${JSON.stringify(imagesLD, stringifyReplacer)}`}</script>}
+      <script type="application/ld+json">{`${JSON.stringify(videoObjectLD, stringifyReplacer)}`}</script>
+      {criticReviewsJsonLDs}
+
+
+    </Helmet>
+  );
 };
