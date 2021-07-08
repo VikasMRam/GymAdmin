@@ -34,12 +34,12 @@ import StickyHeaderTabs from 'sly/web/components/organisms/StickyHeaderTabs';
 import { Food } from 'sly/common/icons';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import SimilarListings from 'sly/web/listing/components/SimilarListings';
+import ListingCommunityContainer from 'sly/web/listing/containers/ListingCommunityContainer';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const ListingMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkListingMediaGallery" */ 'sly/web/listing/ListingMediaGallery/ListingMediaGalleryContainer'));
 const ListingSummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkListingSummary" */ 'sly/web/listing/containers/ListingSummaryContainer'));
 const ApartmentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkApartmentSection" */ 'sly/web/listing/components/ApartmentSection'));
-const ListingCommunityContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ './containers/ListngCommunityContainer'));
 const CommunityAgentSection = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityAgentSection" */ 'sly/web/components/molecules/CommunityAgentSection'));
 const ListingReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingReviewsContainer'));
 const ListingAgentButtonConatiner = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentButtonContainer'));

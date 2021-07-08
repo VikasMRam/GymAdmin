@@ -127,7 +127,7 @@ const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
       .contains(searchText)
       .click();
   });
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
@@ -144,7 +144,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
     applyFilter(selectionValue, viewPort);
   }
   clickFilterButtons(viewPort, 'Clear');
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
@@ -165,7 +165,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
       .contains(searchText)
       .click();
   });
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
 
   clickFilterButtons(viewPort, 'Save');
   cy.log('Save Button Clicked');
@@ -179,7 +179,7 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
     applyFilter(lapHeader, viewPort);
   }
   clickFilterButtons(viewPort, 'Clear');
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
@@ -378,68 +378,68 @@ const cityName = 'San Francisco';
 const urlCity = 'san-francisco';
 
 //! First Set
-describe('Search Page', () => {
-  beforeEach(() => {
-    Cypress.on('uncaught:exception', () => {
-      // returning false here prevents Cypress from
-      // failing the test
-      return false;
-    });
-    cy.intercept('GET', '**/search?**').as('searchRequest');
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
-  });
-  let currentList = [];
-  let totalResultCount = 0;
+// describe('Search Page', () => {
+//   beforeEach(() => {
+//     Cypress.on('uncaught:exception', () => {
+//       // returning false here prevents Cypress from
+//       // failing the test
+//       return false;
+//     });
+//     cy.intercept('GET', '**/search?**').as('searchRequest');
+//     cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
+//   });
+//   let currentList = [];
+//   let totalResultCount = 0;
 
 
-  responsive(() => {
-    it('Check for near by cities links ', () => {
-      cy.intercept('GET', '**/events/new*').as('getEvent');
-      cy.visit('/');
-      cy.waitForPageViewEvent();
-      cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
-        expect(cityCards.length).to.eql(30);
-      });
-    });
+//   responsive(() => {
+//     it('Check for near by cities links ', () => {
+//       cy.intercept('GET', '**/events/new*').as('getEvent');
+//       cy.visit('/');
+//       cy.waitForPageViewEvent();
+//       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
+//         expect(cityCards.length).to.eql(30);
+//       });
+//     });
 
-    it('Navigate to city search page', () => {
-      toSearchPage(searchText);
-      // Url check
-      cy.url().should('have.string', urlCity);
-      cy.wait('@communitySearch').then((res) => {
-        const responseBody = res.response.body;
-        if (responseBody.data && responseBody.data.length) {
-          currentList = responseBody.data;
-          totalResultCount = responseBody.meta['filtered-count'];
-        }
-      });
-    });
+//     it('Navigate to city search page', () => {
+//       toSearchPage(searchText);
+//       // Url check
+//       cy.url().should('have.string', urlCity);
+//       cy.wait('@searchResults').then((res) => {
+//         const responseBody = res.response.body;
+//         if (responseBody.data && responseBody.data.length) {
+//           currentList = responseBody.data;
+//           totalResultCount = responseBody.meta['filtered-count'];
+//         }
+//       });
+//     });
 
-    it('Title check', () => {
-      cy.contains(`Senior Living Communities in ${cityName}`);
-    });
+//     it('Title check', () => {
+//       cy.contains(`Senior Living Communities in ${cityName}`);
+//     });
 
-    it('Filter section check', () => {
-      cy.get('div[class*="FilterButton__"]')
-        .its('length')
-        .should('greaterThan', 4);
-    });
-    it('Results text check', () => {
-      // Results text
-      validateResultSetCount(currentList, totalResultCount);
-    });
+//     it('Filter section check', () => {
+//       cy.get('div[class*="FilterButton__"]')
+//         .its('length')
+//         .should('greaterThan', 4);
+//     });
+//     it('Results text check', () => {
+//       // Results text
+//       validateResultSetCount(currentList, totalResultCount);
+//     });
 
-    it('Verify AD Tile', () => {
-      checkForADTile(currentList);
-    });
-    it('List section check', () => {
-      checkForListCount(20);
-    });
-    it('Map section check', () => {
-      mapCheck(currentList, 'Markers');
-    });
-  });
-});
+//     it('Verify AD Tile', () => {
+//       checkForADTile(currentList);
+//     });
+//     it('List section check', () => {
+//       checkForListCount(20);
+//     });
+//     it('Map section check', () => {
+//       mapCheck(currentList, 'Markers');
+//     });
+//   });
+// });
 
 // ! Second Set
 describe('Search Page Sections', () => {
@@ -451,7 +451,7 @@ describe('Search Page Sections', () => {
       // failing the test
       return false;
     });
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
     cy.intercept('GET', '**/search?**').as('searchRequest');
     cy.intercept('GET', '**platform/geo-guides?**').as('geoGuide');
   });
@@ -464,7 +464,7 @@ describe('Search Page Sections', () => {
       toSearchPage(searchText);
       // Url check
       cy.url().should('have.string', urlCity);
-      cy.wait('@communitySearch').then((res) => {
+      cy.wait('@searchResults').then((res) => {
         const responseBody = res.response.body;
         if (responseBody.data && responseBody.data.length) {
           currentList = responseBody.data;
@@ -538,7 +538,7 @@ describe('Search Page Sections', () => {
 
     it('Navigate to page 2', () => {
       cy.get('div[class*="Pagination"]').find('button').contains('2').click({ force: true });
-      cy.wait('@communitySearch').then((res) => {
+      cy.wait('@searchResults').then((res) => {
         const responseBody = res.response.body;
         if (responseBody.data && responseBody.data.length) {
           currentList = responseBody.data;
@@ -569,7 +569,7 @@ describe('Assisted Search Page Sections', () => {
       // failing the test
       return false;
     });
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
     cy.intercept('GET', '**/uuid-actions').as('postUuidActions');
   });
 
