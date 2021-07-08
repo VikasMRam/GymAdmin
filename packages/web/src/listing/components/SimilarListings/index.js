@@ -32,7 +32,7 @@ const ListingTileContainer = ({
 
   const { notifyError, notifyInfo } = useNotification();
 
-  const { requestInfo: { normalized: listingInfo } } = usePrefetch('getListings', {
+  const { requestInfo: { normalized: listingInfo } } = usePrefetch('getListing', {
     id: listing.id,
     include: 'similar-listings,agent,community,reviews',
   });
@@ -62,8 +62,8 @@ const ListingTileContainer = ({
 
   const handleFavouriteClick = useCallback((evt) => {
     evt.preventDefault();
-    if (isListingAlreadySaved(listing, userSaves)) {
-      const userSaveToUpdate = getListingUserSave(listing, userSaves);
+    if (isListingAlreadySaved(listingInfo, userSaves)) {
+      const userSaveToUpdate = getListingUserSave(listingInfo, userSaves);
       authenticatedUpdateUserSave(userSaveToUpdate.id, {
         status: USER_SAVE_DELETE_STATUS,
       })
@@ -104,25 +104,25 @@ const ListingTileContainer = ({
         <EntityTile
           entity={listing}
           layout={layout}
-          event={getEvent(listing, index)}
+          event={getEvent(listingInfo, index)}
           sx={{
             img: { borderRadius: sx`${space('xxs')} ${space('xxs')} 0 0` },
             span: { font: 'body-m' },
             h3: { mb: 's' },
             height: '100%',
             '& > div > div:last-child': {  p: 'l' },
-            'button svg': { color: isListingAlreadySaved(listing, userSaves) && 'red.lighter-20' },
+            'button svg': { color: isListingAlreadySaved(listingInfo, userSaves) && 'red.lighter-20' },
           }}
           canFavourite={canFavourite}
           onUnfavouriteClick={handleFavouriteClick}
           onFavouriteClick={handleFavouriteClick}
-          isFavourite={isListingAlreadySaved(listing, userSaves)}
+          isFavourite={isListingAlreadySaved(listingInfo, userSaves)}
         />
       </Link>
       <Modal onClose={onModalClose} isOpen={typeof activeListingIndex === 'number'}>
         <ModalBody>
           <SaveListingContainer
-            slug={listing.id}
+            slug={typeof activeListingIndex === 'number' && listingInfo.id}
             notifyInfo={notifyInfo}
             notifyError={notifyError}
             onCancelClick={onModalClose}
