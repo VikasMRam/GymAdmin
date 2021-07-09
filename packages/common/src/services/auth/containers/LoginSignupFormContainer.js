@@ -160,20 +160,16 @@ export default class LoginSignupFormContainer extends Component {
   };
 
   handleOnSubmit = ({ email }) => {
-    const { magicLink, onEmailSubmit, onPhoneSumbit, registerField, clearSubmitErrors, form, onGoToSignUp, change, sendOtpCode, location } = this.props;
+    const { magicLink, onEmailSubmit, onPhoneSumbit, registerField, clearSubmitErrors, form, onGoToSignUp, change, sendOtpCode, location, redirect_to } = this.props;
     const payload = {};
 
     let onSubmit;
     let submitMethod;
     // Conditionally sets payload for login and onSubmit Function
     if (!isEmail(email)) {
-      // Extract login redirect from url to send to backend
-      const { loginRedirect } = parseURLQueryParams(location?.search);
-      const redirect_to = decodeURIComponent(loginRedirect);
-
-
+      // If there's a redirect we want to keep it else we'll just have the magic link go to where the user is currently
       payload.redirect_to = location.pathname;
-      if (redirect_to !== 'undefined') {
+      if (redirect_to && redirect_to !== 'undefined') {
         payload.redirect_to = redirect_to;
       }
 
@@ -199,9 +195,6 @@ export default class LoginSignupFormContainer extends Component {
           registerField(form, 'phone_number');
           change(form, 'email', '');
           change(form, 'phone_number', payload.phone_number);
-        } else {
-          registerField(form, 'redirect_to');
-          change(form, 'redirect_to', payload.redirect_to);
         }
         onSubmit();
       })
