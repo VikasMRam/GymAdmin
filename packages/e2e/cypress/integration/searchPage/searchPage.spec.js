@@ -64,17 +64,17 @@ const checkForListCount = (count) => {
   cy.get('a article img').should('have.length', count);
 };
 
-// const checkForADTile = (currentList) => {
-//   if (currentList.length && currentList.length > 2) {
-//     cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
-//       expect(matchedElements.length).to.eql(2);
-//     });
-//   } else {
-//     cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
-//       expect(matchedElements.length).to.eql(1);
-//     });
-//   }
-// };
+const checkForADTile = (currentList) => {
+  if (currentList.length && currentList.length > 2) {
+    cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
+      expect(matchedElements.length).to.eql(2);
+    });
+  } else {
+    cy.get('div[data-testid = "GetAssessmentBox"]').then((matchedElements) => {
+      expect(matchedElements.length).to.eql(1);
+    });
+  }
+};
 
 //* Filter Logics
 
@@ -125,7 +125,7 @@ const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
     const searchText = communityType.uiText;
     cy.get('div[class*="FilterChoice"]')
       .contains(searchText)
-      .click();
+      .click({ force: true });
   });
   cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
@@ -201,19 +201,19 @@ const validateNoResultCheck = () => {
 };
 
 // Accepts count, and check it matches with present result count
-// const validateResultSetCount = (currentList, totalCount) => {
-//   if (currentList && currentList.length) {
-//     cy.get('div')
-//       .contains('results')
-//       .invoke('text')
-//       .then((text) => {
-//         const textCount = parseFloat(text);
-//         expect(Number(textCount)).to.eql(totalCount);
-//       });
-//   } else {
-//     validateNoResultCheck();
-//   }
-// };
+const validateResultSetCount = (currentList, totalCount) => {
+  if (currentList && currentList.length) {
+    cy.get('div')
+      .contains('results')
+      .invoke('text')
+      .then((text) => {
+        const textCount = parseFloat(text);
+        expect(Number(textCount)).to.eql(totalCount);
+      });
+  } else {
+    validateNoResultCheck();
+  }
+};
 
 
 const checkForTitle = (titleText) => {
@@ -374,72 +374,72 @@ const mapCheck = (list, mode) => {
 //* Helper Functions End
 
 const searchText = 'San Francisco, CA';
-// const cityName = 'San Francisco';
+const cityName = 'San Francisco';
 const urlCity = 'san-francisco';
 
 //! First Set
-// describe('Search Page', () => {
-//   beforeEach(() => {
-//     Cypress.on('uncaught:exception', () => {
-//       // returning false here prevents Cypress from
-//       // failing the test
-//       return false;
-//     });
-//     cy.intercept('GET', '**/search?**').as('searchRequest');
-//     cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
-//   });
-//   let currentList = [];
-//   let totalResultCount = 0;
+describe('Search Page', () => {
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', () => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+    cy.intercept('GET', '**/search?**').as('searchRequest');
+    cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
+  });
+  let currentList = [];
+  let totalResultCount = 0;
 
 
-//   responsive(() => {
-//     it('Check for near by cities links ', () => {
-//       cy.intercept('GET', '**/events/new*').as('getEvent');
-//       cy.visit('/');
-//       cy.waitForPageViewEvent();
-//       cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
-//         expect(cityCards.length).to.eql(30);
-//       });
-//     });
+  responsive(() => {
+    it('Check for near by cities links ', () => {
+      cy.intercept('GET', '**/events/new*').as('getEvent');
+      cy.visit('/');
+      cy.waitForPageViewEvent();
+      cy.get('a[class*="CommunitiesByCity"]').then((cityCards) => {
+        expect(cityCards.length).to.eql(30);
+      });
+    });
 
-//     it('Navigate to city search page', () => {
-//       toSearchPage(searchText);
-//       // Url check
-//       cy.url().should('have.string', urlCity);
-//       cy.wait('@searchResults').then((res) => {
-//         const responseBody = res.response.body;
-//         if (responseBody.data && responseBody.data.length) {
-//           currentList = responseBody.data;
-//           totalResultCount = responseBody.meta['filtered-count'];
-//         }
-//       });
-//     });
+    it('Navigate to city search page', () => {
+      toSearchPage(searchText);
+      // Url check
+      cy.url().should('have.string', urlCity);
+      cy.wait('@searchResults').then((res) => {
+        const responseBody = res.response.body;
+        if (responseBody.data && responseBody.data.length) {
+          currentList = responseBody.data;
+          totalResultCount = responseBody.meta['filtered-count'];
+        }
+      });
+    });
 
-//     it('Title check', () => {
-//       cy.contains(`Senior Living Communities in ${cityName}`);
-//     });
+    it('Title check', () => {
+      cy.contains(`Senior Living Communities in ${cityName}`);
+    });
 
-//     it('Filter section check', () => {
-//       cy.get('div[class*="FilterButton__"]')
-//         .its('length')
-//         .should('greaterThan', 4);
-//     });
-//     it('Results text check', () => {
-//       // Results text
-//       validateResultSetCount(currentList, totalResultCount);
-//     });
+    it('Filter section check', () => {
+      cy.get('div[class*="FilterButton__"]')
+        .its('length')
+        .should('greaterThan', 4);
+    });
+    it('Results text check', () => {
+      // Results text
+      validateResultSetCount(currentList, totalResultCount);
+    });
 
-//     it('Verify AD Tile', () => {
-//       checkForADTile(currentList);
-//     });
-//     it('List section check', () => {
-//       checkForListCount(20);
-//     });
-//     it('Map section check', () => {
-//       mapCheck(currentList, 'Markers');
-//     });
-//   });
-// });
+    it('Verify AD Tile', () => {
+      checkForADTile(currentList);
+    });
+    it('List section check', () => {
+      checkForListCount(20);
+    });
+    it('Map section check', () => {
+      mapCheck(currentList, 'Markers');
+    });
+  });
+});
 
 // ! Second Set
 describe('Search Page Sections', () => {
