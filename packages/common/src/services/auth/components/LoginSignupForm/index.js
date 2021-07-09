@@ -7,34 +7,34 @@ import rolePropType from 'sly/common/propTypes/role';
 import { Block, Button, Form } from 'sly/common/components/atoms';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink';
 import IconButton from 'sly/common/components/molecules/IconButton';
+import HrWithText from 'sly/common/components/molecules/HrWithText';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
+import { phoneFormatterWithEmailOption } from 'sly/web/services/helpers/phone';
 
-const LoginForm = ({
-  handleSubmit, submitting, invalid, error, onResetPasswordClick, onRegisterClick, role,
+
+const LoginSignupForm = ({
+  handleSubmit, submitting, invalid, error, onGoToSignUp, role,
   onFacebookLoginClick,
   onGoogleLoginClick, socialLoginError,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="email"
-      label="Email"
+      label="Email or phone number"
       type="email"
       component={ReduxField}
+      format={phoneFormatterWithEmailOption}
     />
-    <Field
-      name="password"
-      label="Password"
-      type="password"
-      component={ReduxField}
-    />
+
     <Button
       type="submit"
       pad="regular"
       disabled={submitting || invalid}
       width="100%"
     >
-      Log in
+      Continue
     </Button>
+    <HrWithText>or</HrWithText>
     <IconButton
       icon="facebook-f"
       width="100%"
@@ -45,7 +45,7 @@ const LoginForm = ({
       ghost
       noSpaceBetween
     >
-      Log in with Facebook
+      Continue with Facebook
     </IconButton>
     <IconButton
       icon="google"
@@ -57,24 +57,20 @@ const LoginForm = ({
       ghost
       noSpaceBetween
     >
-      Log in with Google
+      Continue with Google
     </IconButton>
     {socialLoginError && <Block pad="large" palette="danger" size="caption">{socialLoginError}</Block>}
     {error && <Block pad="xLarge" palette="danger" size="caption">{error}</Block>}
-    <ButtonLink pad="large" display="flex" align="center" palette="primary" size="caption" onClick={onResetPasswordClick}>
-      Reset password
-    </ButtonLink>
     <Block display="flex" align="center" verticalAlign="middle" direction="row">
-      {role !== AGENT_ND_ROLE &&
-        <Block size="caption" marginRight="small">Don&apos;t have an account?</Block>}
-      <ButtonLink palette="primary" size="caption" onClick={onRegisterClick}>
-        {role === AGENT_ND_ROLE ? 'Register for an account' : 'Sign up'}
-      </ButtonLink>
+      {role === AGENT_ND_ROLE &&
+      <ButtonLink palette="primary" size="caption" onClick={onGoToSignUp}>
+        Register for an account
+      </ButtonLink>}
     </Block>
   </Form>
 );
 
-LoginForm.propTypes = {
+LoginSignupForm.propTypes = {
   handleSubmit: func.isRequired,
   onGoogleLoginClick: func.isRequired,
   onFacebookLoginClick: func.isRequired,
@@ -83,12 +79,12 @@ LoginForm.propTypes = {
   invalid: bool,
   error: string,
   onResetPasswordClick: func,
-  onRegisterClick: func,
+  onGoToSignUp: func,
   role: rolePropType.isRequired,
 };
 
-LoginForm.defaultProps = {
+LoginSignupForm.defaultProps = {
   role: CUSTOMER_ROLE,
 };
 
-export default LoginForm;
+export default LoginSignupForm;

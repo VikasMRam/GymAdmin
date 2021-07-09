@@ -1,0 +1,15 @@
+export const LOGINSINGUP = 'LoginSignup';
+export const RESETPASSWORD = 'ResetPassword';
+export const THIRDPARTYINFOPROMPT = 'ThirdPartyPromptForm';
+export const PROIVDERSIGNUP = 'ProviderSignup';
+export const MAGICLINKEXPIRED = 'MagicLinkExpired';
+export const SIGNUP = 'Signup';
+export const CUSTOMERSIGNUPCONFIRMATION = 'CustomerSignupConfirmation';
+export const MAGICLINKSUCCESS = 'MagicLinkSuccess';
+export const LOGINWITHPASSWORD = 'LoginWithPassword';
+export const AGENTSIGNUP = 'AgentSignup';
+export const PROVIDERFINDCOMMUNITY = 'ProviderFindCommunity';
+export const PROVIDERCLAIMNEEDSAPPROVAL = 'ProviderClaimNeedsApproval';
+export const PROVIDERCOMMUNITYNOTFOUND = 'ProviderCommunityNotFound';
+export const OTPLOGIN = 'OtpLogin';
+export const PROVIDERCONFIRMATION = 'ProviderConfirmation';

@@ -64,7 +64,7 @@ describe('Sending Referral to Community', () => {
 
   responsive(() => {
     it('Add Test community', () => {
-      cy.login();
+      cy.adminLogin();
       cy.intercept('POST', '**/communities').as('createCommunity');
       cy.intercept('GET', '**/communities/*').as('getCommunities');
       cy.visit('/dashboard/communities');

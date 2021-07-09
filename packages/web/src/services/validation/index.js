@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import get from 'lodash/get';
 import set from 'lodash/set';
 
-const isEmpty = value => {
+const isEmpty = (value) => {
   if (Array.isArray(value)) {
     return value.length < 1;
   }
@@ -68,6 +68,10 @@ export const float = value => !isEmpty(value) && !isFloat(value) && 'Must be a n
 
 export const usPhone = value =>
   !isEmpty(value) && !isMobilePhone(value.replace(/-/g, ''), 'en-US') && 'Invalid phone number';
+
+
+export const isEmailOrPhone = value =>
+  !isEmpty(value) && !(isEmail(value.replace(/ /g, '')) || isMobilePhone(value.replace(/-/g, ''), 'en-US')) && 'Please enter a valid email or phone number';
 
 export const mmDdYyyyy = value =>
   !isEmpty(value) && !integer(value.replace(/\//g, '')) && value.replace(/\//g, '').length !== 8 && 'Invalid date';

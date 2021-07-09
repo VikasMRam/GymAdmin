@@ -79,18 +79,12 @@ describe('Community Profile Sections', () => {
         if ($a.text().includes('Log In')) {
           waitForHydration(cy.get('div[class*=Header__HeaderItems]').contains('Log In')).click({ force: true });
           const rand = randHash();
-          cy.registerWithEmail(`fonz+e2e+${rand}@seniorly.com`, 'nopassword');
-          waitForHydration(cy.get('form input[name="email"]')).type(`fonz+e2e+${rand}@seniorly.com`).should('have.value', `fonz+e2e+${rand}@seniorly.com`);
-          waitForHydration(cy.get('form input[name="password"]')).type('nopassword').should('have.value', 'nopassword');
-          waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click();
+          const email = `slytest+admin+${rand}@seniorly.com`;
+          const password = 'nopassword';
+          cy.registerWithEmail(email, password);
+          cy.modalLogin(email, password);
         }
       });
-    });
-
-    Cypress.Commands.add('adminLogin', () => {
-      waitForHydration(cy.get('form input[name="email"]', { timeout: 8000 })).type('slytest+admin@seniorly.com');
-      waitForHydration(cy.get('form input[name="password"]')).type('nopassword');
-      waitForHydration(cy.get('button[type="submit"]').contains('Log in')).click({ force: true });
     });
   });
 
@@ -368,7 +362,7 @@ describe('Community Profile Sections', () => {
 
 
       cy.visit('/dashboard/agent/my-families/new');
-      waitForHydration(cy.adminLogin());
+      cy.modalAdminLogin();
 
       waitForHydration(cy.get('tr').contains(`${firstName} ${lastName}`)).click();
 
