@@ -8,6 +8,7 @@ import SlyEvent from 'sly/web/services/helpers/events';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { space, sx$tablet, sx$laptop, font, Block, color } from 'sly/common/system';
+import { listing as listingPropType } from 'sly/common/propTypes/listing';
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
   margin-bottom:  ${space('s')};
@@ -103,6 +104,10 @@ const ListingReviewsContainer = ({ listing, ...props }) => {
     </StyledHeadingBoxSection>
 
   );
+};
+
+ListingReviewsContainer.propTypes = {
+  listing: listingPropType,
 };
 
 ListingReviewsContainer.typeHydrationId = 'CommunityReviewsContainer';

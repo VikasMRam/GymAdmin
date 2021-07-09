@@ -11,6 +11,7 @@ import EntityInfo from 'sly/web/components/molecules/EntityInfo';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';
+import { entity as entityPropType } from 'sly/common/propTypes/entity';
 
 const communityDefaultImages = {
   'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
@@ -272,6 +273,7 @@ const EntityTile = ({
 };
 
 EntityTile.propTypes = {
+  entity: entityPropType,
   actionButtons: arrayOf(shape({
     text: string.isRequired,
     ghost: bool,

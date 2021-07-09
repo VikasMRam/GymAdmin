@@ -210,7 +210,6 @@ export default class SaveListingContainer extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { handleSubmitSaveListingForm } = this;
     const { listing, onDoneButtonClick, onCancelClick } = this.props;
     const { updatingUserSave } = this.state;

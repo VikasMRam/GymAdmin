@@ -22,7 +22,7 @@ const ApartmentSection = () => {
   const { images } = gallery;
 
   // get unique image from each category
-  const filteredImages = [...images.filter(image => image.category).reduce((map, obj) => map.set(obj.category.id, obj), new Map()).values()];
+  const filteredImages = useMemo(() => [...images.filter(image => image.category).reduce((map, obj) => map.set(obj.category.id, obj), new Map()).values()], [images]);
 
   const memoiedImages = useMemo(() => filteredImages.map((img, i) => ({
     id: img.id,

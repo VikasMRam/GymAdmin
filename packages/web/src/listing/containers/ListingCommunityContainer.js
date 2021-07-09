@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+import { shape, string } from 'prop-types';
 
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { space, sx$tablet, sx$laptop, Block, font, Button, Grid, Image, Link } from 'sly/common/system';
+import { community as communityPropType } from 'sly/common/propTypes/community';
 
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
@@ -47,7 +49,7 @@ const ListingCommunityContainer = ({ communitySection, community, ...props }) =>
   return (
     <StyledHeadingBoxSection  heading="The community" mb="xs" {...props} >
       <StyledArticle>
-        <Block dangerouslySetInnerHTML={{ __html: communitySection.content }} />
+        <Block font="body-l" dangerouslySetInnerHTML={{ __html: communitySection.content }} />
       </StyledArticle>
       <Block position="relative">
         <Grid
@@ -97,6 +99,15 @@ const ListingCommunityContainer = ({ communitySection, community, ...props }) =>
     </StyledHeadingBoxSection>
 
   );
+};
+
+ListingCommunityContainer.propTypes = {
+  communitySection: shape({
+    content: string,
+    title: string,
+    type: string,
+  }),
+  community: communityPropType,
 };
 
 export default ListingCommunityContainer;

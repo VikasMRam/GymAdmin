@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import loadable from '@loadable/component';
 
+import { listing as listingPropType } from 'sly/common/propTypes/listing';
 
 const CommunityMap = loadable(() => import(/* webpackChunkName: "chunkCommunityMap" */ 'sly/web/components/organisms/CommunityMap'));
 
-const LazyListingMapContainer = (props) => {
+const LazyListingMapContainer = ({ listing }) => {
   const [mounted, setMounted] = useState(false);
   const placeholderRef = useRef();
-  const { listing } = props;
-
 
   useEffect(() => {
     if (placeholderRef.current) {
@@ -31,6 +30,9 @@ const LazyListingMapContainer = (props) => {
     : <div ref={placeholderRef} />;
 };
 
+LazyListingMapContainer.propTypes = {
+  listing: listingPropType,
+};
 // LazyCommunityMapContainer.typeHydrationId = 'LazyCommunityMapContainer';
 
 export default LazyListingMapContainer;

@@ -51,7 +51,7 @@ export default class ListingAgentForm extends Component {
     handleSendMessage: func.isRequired,
     sendMessageProgress: bool.isRequired,
     handleBookTour: func.isRequired,
-    bookTourProgress: bool.isRequired,
+    bookTourProgress: bool,
     messageLabel: string,
   };
 

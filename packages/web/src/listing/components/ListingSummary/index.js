@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';
-import ListItem from 'sly/web/components/molecules/ListItem/newSystem';
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
 import { listing as listingPropType } from 'sly/common/propTypes/listing';
 import { Heading, Block, Span, color, Hr, space, Link, sx$laptop, Button, sx$tablet, Grid, Paragraph } from 'sly/common/system';
@@ -12,8 +11,7 @@ import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
-import { showFafNumber, getFafNumber } from 'sly/web/services/helpers/community';
-import { Money, Help, Community, SqFt, Bed, Garage, Bathroom, Beds, Favorite, Share } from 'sly/common/icons';
+import { Help, Favorite, Share } from 'sly/common/icons';
 // import Paragraph from 'sly/common/components/atoms/Paragraph';
 
 
@@ -97,10 +95,10 @@ const makeNewTags = (tags) => {
 
 const ListingSummary = ({
   listing, innerRef, isAdmin, className,
-  goToReviews, searchParams, formattedAddress, onSaveClick, onShareClick, isFavorited, onListingNumberClicked,
+  goToReviews, formattedAddress, onSaveClick, onShareClick, isFavorited, onListingNumberClicked,
 }) => {
   const {
-    address, name, info, twilioNumber, partnerAgents, tags, community,
+    address, name, info, twilioNumber, partnerAgents, tags,
   } = listing;
 
   const { phoneNumber, care, startingRate, floorPlan } = info;
@@ -355,6 +353,7 @@ ListingSummary.propTypes = {
   onSaveClick: func,
   onShareClick: func,
   isFavorited: bool,
+  onListingNumberClicked: func,
 };
 
 export default ListingSummary;

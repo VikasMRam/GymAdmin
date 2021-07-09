@@ -6,18 +6,15 @@ import loadable from '@loadable/component';
 import { withRouter } from 'react-router';
 
 
-import ListingActivitiesSection from './containers/ListingActivitiesSection';
-import LazyListingMapContainer from './containers/LazyLististingMapContainer';
-
+import ListingActivitiesSection from 'sly/web/listing/containers/ListingActivitiesSection';
+import LazyListingMapContainer from 'sly/web/listing/containers/LazyLististingMapContainer';
 import { stateNames } from 'sly/web/constants/geo';
 import { getHelmetForListingPage } from 'sly/web/services/helpers/html_headers';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
-import Section from 'sly/web/components/molecules/Section';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import { getBreadCrumbsForListing } from 'sly/web/services/helpers/url';
-import pad from 'sly/web/components/helpers/pad';
-import { color, space, sx$tablet, sx$laptop, Hr, sx, Block, font, Paragraph, layout, Button, Link, Grid, Span } from 'sly/common/system';
+import { color, space, sx$tablet, sx$laptop, sx, Block, font, Paragraph, Button, Link, Grid } from 'sly/common/system';
 import {
   ListingProfilePageTemplate,
   makeBody,
@@ -248,7 +245,7 @@ export default class ListingDetailPage extends PureComponent {
                   shouldShowDining &&
                   <>
                     <StyledHeadingBoxSection mb="xs" heading="Dining" id="dining" >
-                      <Block background="white.base" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
+                      <Block background="white.base" font="body-l" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
                       {
                         diningSection.url &&
                         <Link href={diningSection.url}>
@@ -267,7 +264,7 @@ export default class ListingDetailPage extends PureComponent {
                   shouldShowNeighborhood &&
                   <>
                     <StyledHeadingBoxSection mb="xs" id="neighborhood"  heading="The neighborhood" >
-                      <Block background="white.base" pb="xxl" dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
+                      <Block background="white.base" pb="xxl" font="body-l" dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
                       <LazyListingMapContainer listing={listing} />
                     </StyledHeadingBoxSection>
                   </>

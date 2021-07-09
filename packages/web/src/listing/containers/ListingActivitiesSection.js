@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+import { string, arrayOf } from 'prop-types';
 
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import { space, sx$tablet, sx$laptop, Block, font, Button, Grid, Image, Link } from 'sly/common/system';
@@ -69,7 +70,7 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
           activities.map(((activity) => {
             const { name, imageSrc } = getActivityDetailByName(activity);
             return (
-              <Block height="100%" width="100%">
+              <Block key={activity} height="100%" width="100%">
                 <Image
                   src={imageSrc}
                   alt={name}
@@ -110,6 +111,11 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
       }
     </StyledHeadingBoxSection>
   );
+};
+
+ListingActivitiesSection.propTypes = {
+  activities: arrayOf(string),
+  activityCalendarURL: string,
 };
 
 export default ListingActivitiesSection;

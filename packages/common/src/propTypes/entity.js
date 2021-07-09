@@ -2,7 +2,7 @@ import {
   string,
   number,
   shape,
-  object,
+  array,
 } from 'prop-types';
 
 import { propInfo, webViewInfo } from 'sly/common/propTypes/community';
@@ -27,7 +27,7 @@ export const entity = shape({
   resourceType: string,
   secondLine: string,
   startingRate: number,
-  tags: object,
+  tags: array,
   thirdLine: string,
   propInfo,
   webViewInfo,
