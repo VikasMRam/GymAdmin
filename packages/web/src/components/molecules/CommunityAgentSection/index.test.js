@@ -21,7 +21,7 @@ describe('CommunityAgentSection', () => {
     expect(wrapper.contains(LindaIwamota.info.displayName)).toBeTruthy();
     expect(wrapper.find('Avatar').prop('user')).toEqual({
       name: LindaIwamota.info.displayName,
-      picture: { src: (`${getImagePath(LindaIwamota.gallery.images[0].path)}`) },
+      picture: { src: (`${getImagePath(LindaIwamota.gallery.images[0].path)}`), path: `${LindaIwamota.gallery.images[0].path}` },
     });
     expect(wrapper.find('Block').at(3).dive().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
   });

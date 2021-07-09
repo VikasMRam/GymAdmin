@@ -15,7 +15,7 @@ const defaultProps = {
 };
 const wrap = (props = {}) => shallow(<LoginForm {...defaultProps} {...props} />);
 
-describe('LoginForm|Web', () => {
+describe('LoginSignupForm|Web', () => {
   it('does not render children when passed in', () => {
     const wrapper = wrap({ childred: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
@@ -25,7 +25,6 @@ describe('LoginForm|Web', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
-    expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
     expect(wrapper.find('Button')).toHaveLength(1);
     expect(wrapper.find('Block[direction="row"]')).toHaveLength(1);
   });
@@ -49,20 +48,23 @@ describe('LoginForm|Web', () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('handles onRegisterClick', () => {
-    const onRegisterClick = jest.fn();
-    const wrapper = wrap({ onRegisterClick });
 
-    wrapper.find('Block').find('ButtonLink').simulate('click');
-    expect(onRegisterClick).toHaveBeenCalled();
-  });
+  // No longer applicable
+  // it('handles onRegisterClick', () => {
+  //   const onRegisterClick = jest.fn();
+  //   const wrapper = wrap({ onRegisterClick });
 
-  it('renders correct footer for CUSTOMER_ROLE', () => {
-    const wrapper = wrap();
+  //   wrapper.find('Block').find('ButtonLink').simulate('click');
+  //   expect(onRegisterClick).toHaveBeenCalled();
+  // });
 
-    expect(wrapper.find('Block').find('Block').contains("Don't have an account?")).toBeTruthy();
-    expect(wrapper.find('Block').find('ButtonLink').contains('Sign up')).toBeTruthy();
-  });
+  // No long applicable
+  // it('renders correct footer for CUSTOMER_ROLE', () => {
+  //   const wrapper = wrap();
+
+  //   expect(wrapper.find('Block').find('Block').contains("Don't have an account?")).toBeTruthy();
+  //   expect(wrapper.find('Block').find('ButtonLink').contains('Sign up')).toBeTruthy();
+  // });
 
   it('handles google signup', () => {
     const onGoogleLoginClick = jest.fn();

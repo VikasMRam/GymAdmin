@@ -50,7 +50,7 @@ export default class ResetPasswordFormContainer extends Component {
       })
       .then(onSubmit)
       .then(() => {
-        notifyInfo(`A link to reset your password has been sent to ${email}.`);
+        notifyInfo('Reset password link sent!');
       });
   };
 

@@ -31,11 +31,12 @@ export default class LoginWithPasswordFormContainer extends Component {
     loginUser: func.isRequired,
     clearSubmitErrors: func,
     onSubmitSuccess: func,
+    emailOrPhone: string.isRequired,
     form: string,
   };
 
-  handleOnSubmit = ({ emailOrPhone, password }) => {
-    const { loginUser, onSubmitSuccess, clearSubmitErrors, form } = this.props;
+  handleOnSubmit = ({  password }) => {
+    const { loginUser, onSubmitSuccess, clearSubmitErrors, form, emailOrPhone } = this.props;
     const payload = { password };
     let username;
     if (!email(emailOrPhone)) {

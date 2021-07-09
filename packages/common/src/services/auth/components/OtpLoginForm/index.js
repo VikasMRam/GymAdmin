@@ -1,70 +1,107 @@
-import React from 'react';
-import { func, bool, string, object } from 'prop-types';
-import { Field } from 'redux-form';
+import React, { useRef, useState } from 'react';
+import { func, bool, string, object, number } from 'prop-types';
+
+import { Flex, Input, Block } from 'sly/common/system';
+import ButtonLink from 'sly/common/components/molecules/ButtonLink/newSystem';
 
 
-import { Heading, Button, Block, Form } from 'sly/common/components/atoms';
-import ReduxField from 'sly/common/components/organisms/ReduxField';
+const InputCode = ({ length, loading, onComplete }) => {
+  const [code, setCode] = useState([...Array(length)].map(() => ''));
+  const inputs = useRef([]);
+
+  const processInput = (e, slot) => {
+    const num = e.target.value;
+    if (/[^0-9]/.test(num)) return;
+    const newCode = [...code];
+    newCode[slot] = num;
+    setCode(newCode);
+    if (slot !== length - 1) {
+      inputs.current[slot + 1].focus();
+    }
+    if (newCode.every(num => num !== '')) {
+      onComplete(newCode.join(''));
+    }
+  };
+
+  const onKeyDown = (e, slot) => {
+    if (e.keyCode === 8 && !code[slot] && slot !== 0 && !(slot === length - 1 && !!code[slot])) {
+      const newCode = [...code];
+      newCode[slot - 1] = '';
+      setCode(newCode);
+      inputs.current[slot - 1].focus();
+    }
+  };
+
+  return (
+    <Flex flexDirection="column" alignItems="start">
+      <Flex justifyContent="start" alignItems="center" >
+        {code.map((num, idx) => {
+          return (
+            <Input
+              name={idx}
+              // eslint-disable-next-line react/no-array-index-key
+              key={idx}
+              type="text"
+              maxLength={1}
+              value={num}
+              autoFocus={!code[0].length && idx === 0}
+              readOnly={loading}
+              onChange={e => processInput(e, idx)}
+              onKeyDown={e => onKeyDown(e, idx)}
+              ref={ref => inputs.current.push(ref)}
+              width="m"
+              height="l"
+              mr="xs"
+              px="m"
+              pad="m"
+            />
+          );
+        })}
+      </Flex>
+    </Flex>
+  );
+};
+
+InputCode.propTypes = {
+  length: number,
+  loading: bool,
+  onComplete: func,
+};
+
+InputCode.defaultProps = {
+  length: 6,
+};
+
 
 const OtpLoginForm = ({
-  handleSubmit, submitting, invalid, error, formState, onResendCodeClick, sentCode, handleOtpClick,
+  onSubmit, onPasswordLoginClick, submitError, formState, onResendCodeClick,  passwordExists, onEditPhoneNumberClick,
 }) => (
-  <Form onSubmit={handleSubmit}>
-    {sentCode &&
-    <Heading size="subtitle" pad="xLarge">
-      Enter the code sent to {formState && formState.email ? formState.email : ''}
-    </Heading>}
-    {!sentCode &&
-    <>
-      <Block pad="xLarge">Looks like you have already registered with this email, request a one-time code to login below.</Block><Field
-        name="email"
-        label="Email Address"
-        type="email"
-        component={ReduxField}
-      />
-    </>}
-    {sentCode ?
-      <>
-        <Field
-          name="code"
-          label="Code"
-          labelRight={<Block cursor="pointer" palette="primary" size="caption" onClick={onResendCodeClick}>Resend code</Block>}
-          type="text"
-          placeholder="6-digit code"
-          component={ReduxField}
-        />
-        <Button
-          type="submit"
-          width="100%"
-          disabled={submitting || invalid}
-          pad={error ? 'large' : 'xLarge'}
-        >
-          Log in
-        </Button>
-      </> :
-      <Button
-        type="button"
-        width="100%"
-        disabled={submitting || invalid}
-        pad={error ? 'large' : 'xLarge'}
-        onClick={handleOtpClick}
-      >
-        Send Code
-      </Button>
-    }
-    {error && <Block palette="danger" size="caption">{error}</Block>}
-  </Form>
+  <Flex alignItems="center" flexDirection="column">
+    <Block pad="l">
+      Enter the 6-digit-code sent to {formState && formState.phone_number ? formState.phone_number : ''}.  <ButtonLink onClick={onEditPhoneNumberClick}>Edit phone number</ButtonLink>
+    </Block>
+    <InputCode onComplete={onSubmit} />
+    <Block pad="l" color="red">{submitError}</Block>
+    <Block> Need a new code?
+      <ButtonLink onClick={onResendCodeClick}> Resend</ButtonLink>
+    </Block>
+    {passwordExists &&
+      <Block> Or you can
+        <ButtonLink onClick={onPasswordLoginClick}> log in with a password</ButtonLink>
+      </Block>}
+  </Flex>
 );
 
 OtpLoginForm.propTypes = {
-  handleSubmit: func.isRequired,
-  submitting: bool,
+  onSubmit: func.isRequired,
   invalid: bool,
-  error: string,
+  submitError: string,
   formState: object.isRequired,
   onResendCodeClick: func,
-  sentCode: bool,
   handleOtpClick: func,
+  passwordExists: bool,
+  onPasswordLoginClick: func.isRequired,
+  onEditPhoneNumberClick: func.isRequired,
 };
 
 export default OtpLoginForm;
