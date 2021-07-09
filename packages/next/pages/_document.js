@@ -1,3 +1,4 @@
+import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components';
 
@@ -7,19 +8,19 @@ import { iconToComponent } from 'sly/common/system/Icon';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const originalRenderPage = ctx.renderPage
+    const originalRenderPage = ctx.renderPage;
     const iconsContext = {};
     const sheet = new ServerStyleSheet();
     ctx.renderPage = () =>
       originalRenderPage({
         // useful for wrapping the whole react tree
-        enhanceApp: (App) => (props) => sheet.collectStyles(<App iconsContext={iconsContext} {...props} />),
+        enhanceApp: App => props => sheet.collectStyles(<App iconsContext={iconsContext} {...props} />),
         // useful for wrapping in a per-page basis
-        enhanceComponent: (Component) => Component,
-      })
+        enhanceComponent: Component => Component,
+      });
 
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`
-    const initialProps = await Document.getInitialProps(ctx)
+    const initialProps = await Document.getInitialProps(ctx);
     const styleElements = sheet.getStyleElement();
 
     return {
@@ -47,8 +48,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

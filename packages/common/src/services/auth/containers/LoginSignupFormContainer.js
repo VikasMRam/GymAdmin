@@ -1,43 +1,58 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string } from 'prop-types';
+import { reduxForm, clearSubmitErrors, SubmissionError, change, registerField } from 'redux-form';
+import { func, string, object } from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter  } from 'react-router';
 
-import { createValidator, required, email } from 'sly/web/services/validation';
+import { parseURLQueryParams } from 'sly/web/services/helpers/url';
+import { createValidator, required, isEmailOrPhone, email as isEmail } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
 import loadFB from 'sly/web/services/helpers/facebookSDK';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/common/constants/loginProviders';
-import LoginForm from 'sly/common/services/auth/components/LoginForm';
+import LoginSignupForm from 'sly/common/services/auth/components/LoginSignupForm';
 import SlyEvent from 'sly/web/services/helpers/events';
 
-const formName = 'LoginForm';
+const formName = 'LoginSignupForm';
 
 const validate = createValidator({
-  email: [email, required],
+  email: [isEmailOrPhone, required],
   password: [required],
 });
 
 const ReduxForm = reduxForm({
   form: formName,
   validate,
-})(LoginForm);
+  destroyOnUnmount: false,
+})(LoginSignupForm);
 
 const mapDispatchToProps = {
   clearSubmitErrors: (name = formName) => clearSubmitErrors(name),
+  change: (form = formName, field, value) => change(form, field, value),
+  registerField: (form = formName, field) => registerField(form, field, 'Field'),
 };
 
+@withRouter
 @withAuth
 @connect(null, mapDispatchToProps)
 
-export default class LoginFormContainer extends Component {
+export default class LoginSignupFormContainer extends Component {
   static propTypes = {
     resendOtpCode: func.isRequired,
     onSociaLoginSuccess: func.isRequired,
     thirdPartyLogin: func.isRequired,
     loginUser: func.isRequired,
     clearSubmitErrors: func,
-    onSubmit: func,
+    change: func,
+    onEmailSubmit: func,
+    onPhoneSumbit: func,
     form: string,
+    magicLink: func.isRequired,
+    onGoToSignUp: func.isRequired,
+    clearAsyncError: func,
+    registerField: func,
+    sendOtpCode: func,
+    location: object,
   };
 
   state = { socialLoginError: '' };
@@ -144,28 +159,77 @@ export default class LoginFormContainer extends Component {
     }
   };
 
-  handleOnSubmit = ({ email, password }) => {
-    const { loginUser, onSubmit, clearSubmitErrors, form } = this.props;
-    const payload = { email, password };
+  handleOnSubmit = ({ email }) => {
+    const { magicLink, onEmailSubmit, onPhoneSumbit, registerField, clearSubmitErrors, form, onGoToSignUp, change, sendOtpCode, location } = this.props;
+    const payload = {};
+
+    let onSubmit;
+    let submitMethod;
+    // Conditionally sets payload for login and onSubmit Function
+    if (!isEmail(email)) {
+      // Extract login redirect from url to send to backend
+      const { loginRedirect } = parseURLQueryParams(location?.search);
+      const redirect_to = decodeURIComponent(loginRedirect);
+
+
+      payload.redirect_to = location.pathname;
+      if (redirect_to !== 'undefined') {
+        payload.redirect_to = redirect_to;
+      }
+
+      payload.email = email;
+      onSubmit = onEmailSubmit;
+      submitMethod = magicLink;
+    } else {
+      payload.phone_number = email;
+      onSubmit = onPhoneSumbit;
+      submitMethod = sendOtpCode;
+    }
 
     clearSubmitErrors(form);
-    return loginUser(payload)
-      .then(onSubmit)
+    return submitMethod(payload)
+      .then(({ body }) => {
+        const { passwordExists } = body;
+        registerField(form, 'passwordExists');
+        change(form, 'passwordExists', passwordExists);
+
+
+        // We need to set the form phone nubmer for signup or otp since the field the user entered in was email
+        if (payload.phone_number) {
+          registerField(form, 'phone_number');
+          change(form, 'email', '');
+          change(form, 'phone_number', payload.phone_number);
+        } else {
+          registerField(form, 'redirect_to');
+          change(form, 'redirect_to', payload.redirect_to);
+        }
+        onSubmit();
+      })
       .catch((error) => {
         // TODO: Need to set a proper way to handle server side errors
         if (error.status === 400) {
-          return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));
-        }
+          onGoToSignUp();
 
-        return Promise.reject(error);
+
+          // We need to set the form phone nubmer for signup or otp since the field the user entered in was email
+          if (payload.phone_number) {
+            registerField(form, 'phone_number');
+            change(form, 'email', '');
+            change(form, 'phone_number', payload.phone_number);
+          }
+          return true;
+        }
+        return Promise.reject(new SubmissionError({ _error: 'Oops! Something went wrong. Please try again' }));
       });
   };
 
   render() {
     const { socialLoginError } = this.state;
+    const { onGoToSignUp } = this.props;
     return (
       <ReduxForm
         {...this.props}
+        onGoToSignUp={onGoToSignUp}
         onGoogleLoginClick={this.handleGoogleLoginClick}
         onFacebookLoginClick={this.handleFacebookLoginClick}
         socialLoginError={socialLoginError}

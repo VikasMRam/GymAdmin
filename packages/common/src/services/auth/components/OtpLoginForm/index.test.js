@@ -1,20 +1,24 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import OtpLoginForm from '.';
 
 const formState = {
-  email: 'test@test.com',
+  phone_number: '555-555-5555',
 };
-const handleSubmit = jest.fn();
+const onSubmit = jest.fn();
+const onEditPhoneNumberClick = jest.fn();
+const onPasswordLoginClick = jest.fn();
 const defaultProps = {
-  handleSubmit,
+  onSubmit,
+  onEditPhoneNumberClick,
+  onPasswordLoginClick,
   formState,
 };
 // const phone = '2345678901';
 // const phoneFormatted = '(234) 567-8901';
 
-const wrap = (props = {}) => shallow(<OtpLoginForm {...defaultProps} {...props} />);
+const wrap = (props = {}) => mount(<OtpLoginForm {...defaultProps} {...props} />);
 
 describe('OtpLoginForm|Web', () => {
   it('does not render children when passed in', () => {
@@ -24,17 +28,18 @@ describe('OtpLoginForm|Web', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-
-    expect(wrapper.find('Field').filter({ name: 'email' })).toHaveLength(1);
-    expect(wrapper.find('Button').contains('Send Code')).toBeTruthy();
+    expect(wrapper.find('InputCode')).toHaveLength(1);
+    expect(wrapper.find('ButtonLink').at(1).contains(' Resend')).toBeTruthy();
   });
 
-  it('on send code click form change to passcode login', () => {
-    const wrapper = wrap({ sentCode: true });
-    expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
-    expect(wrapper.find('Button').contains('Log in')).toBeTruthy();
-    expect(wrapper.find('Heading').contains(formState.email)).toBeTruthy();
-  });
+
+  // Not applicable
+  // it('on send code click form change to passcode login', () => {
+  //   const wrapper = wrap({ sentCode: true });
+  //   expect(wrapper.find('Field').filter({ name: 'code' })).toHaveLength(1);
+  //   expect(wrapper.find('Button').contains('Log in')).toBeTruthy();
+  //   expect(wrapper.find('Heading').contains(formState.email)).toBeTruthy();
+  // });
 
   // Not supporting phone so this test should not be run
   // it('renders with phone', () => {
@@ -48,20 +53,23 @@ describe('OtpLoginForm|Web', () => {
   // });
 
   it('renders error', () => {
-    const error = 'error';
-    const wrapper = wrap({ error });
+    const submitError = 'error';
+    const wrapper = wrap({ submitError });
     const errors = wrapper.find('Block');
-    console.log(wrapper.debug());
-    expect(wrapper.find('Button')).toHaveLength(1);
-    expect(errors).toHaveLength(2);
-    expect(errors.at(1).dive().render().text()).toBe(error);
+    expect(wrapper.find('Button')).toHaveLength(0);
+    expect(errors.contains(submitError)).toBeTruthy();
   });
 
   it('handles submit', () => {
-    const handleSubmit = jest.fn();
-    const wrapper = wrap({ handleSubmit });
+    const onSubmit = jest.fn();
+    const wrapper = wrap({ onSubmit });
+    wrapper.find('Input').at(0).simulate('change', { target: { value: 1 } });
+    wrapper.find('Input').at(1).simulate('change', { target: { value: 1 } });
+    wrapper.find('Input').at(2).simulate('change', { target: { value: 1 } });
+    wrapper.find('Input').at(3).simulate('change', { target: { value: 1 } });
+    wrapper.find('Input').at(4).simulate('change', { target: { value: 1 } });
+    wrapper.find('Input').at(5).simulate('change', { target: { value: 1 } });
 
-    wrapper.find('Form').simulate('submit');
-    expect(handleSubmit).toHaveBeenCalled();
+    expect(onSubmit).toHaveBeenCalled();
   });
 });

@@ -40,6 +40,7 @@ export default {
   otpLoginUser: { method: post, path: '/platform/auth/otp/login' },
   resendOtpCode: { method: post, path: '/platform/auth/otp/retry' },
   sendOtpCode: { method: post, path: '/platform/auth/otp/start' },
+  magicLink: { method: post, path: '/platform/auth/mlink/start' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   claimCommunity: { method: get, path: '/marketplace/communities/:id/claim' },

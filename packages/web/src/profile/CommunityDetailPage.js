@@ -19,7 +19,7 @@ import {
   buildNewPriceList,
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
-import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
+import { getIsActiveAdult, getPartnerAgent, getChatBotEventName } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
@@ -178,8 +178,9 @@ export default class CommunityDetailPage extends PureComponent {
     const { address } = community;
     const isInternational = address.country !== 'United States';
     if (!isInternational) {
+      const eventName = getChatBotEventName(community);
       const { triggerChatboxEvent } = this.props;
-      triggerChatboxEvent('Bot reintro');
+      triggerChatboxEvent(eventName);
     }
   }
 
