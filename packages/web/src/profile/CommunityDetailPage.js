@@ -319,20 +319,21 @@ export default class CommunityDetailPage extends PureComponent {
                     </StyledHeadingBoxSection>
                   )}
 
-                <Button to={communityPagePricingForm(community, location.pathname)}>
-                  Get Pricing And Availability
-                </Button>
 
-                <Block width="350px" height="350px">
+                {/* <Block width="350px" height="350px">
                   <Block className="typeform-widget" data-url="https://form.typeform.com/to/RYBdR1jm?typeform-medium=embed-snippet" width="100%" height="100%" />
-                </Block>
+                </Block> */}
+
+                <Button to={communityPagePricingForm(community, location.pathname)} width="100%">
+                  Get Pricing And Availability (conditional)
+                </Button>
 
                 {!isActiveAdult && !isInternational &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  <GetAssessmentBoxContainerHydrator
+                  {/* <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     layout="pricing-table"
@@ -342,7 +343,10 @@ export default class CommunityDetailPage extends PureComponent {
                       estimatedPriceList,
                       newPricesList,
                     }}
-                  />
+                  /> */}
+                  <Button to="https://sushrama.typeform.com/to/dH3EjYYx" width="100%">
+                    Get Pricing And Availability
+                  </Button>
                   {(promoDescription || promoTitle) && (
                     <OfferNotificationContainer
                       mt="s"
