@@ -7,18 +7,12 @@ import EntityInfo from './EntityInfo';
 import { getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
-import { Button, Hr, Block, Grid, Image, space, sx, sx$laptop } from 'sly/common/system';
-import { community as communityPropType } from 'sly/common/propTypes/community';
+import { Button, Hr, Block, Grid, Image, space, sx } from 'sly/common/system';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';
 import { entity as entityPropType } from 'sly/common/propTypes/entity';
 
-const communityDefaultImages = {
-  'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
-  '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
-  '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
-};
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <Button testID="ActionButton" width="100%" onClick={onClick} ghost={ghost} key={text}>
@@ -34,18 +28,6 @@ const StyledIcon = styled(Block)`
   &:hover {
     transform: scale(1.2);
   }
-`;
-
-const TagBlock = styled(Block)`
-  z-index: 10;
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  display: none;
-  display: block;
-  ${sx$laptop({
-    display: 'block',
-  })}
 `;
 
 const makeNewTags = (tags) => {
