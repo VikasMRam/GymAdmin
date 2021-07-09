@@ -1,19 +1,21 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
 import { NotificationProvider } from 'sly/web/components/helpers/notification';
+import { ApiProvider, createApiClient } from 'sly/web/services/api';
 import { IconContext } from 'sly/common/system/Icon';
-import { ApiProvider } from 'sly/web/services/api';
-
-import { createApiClient } from 'sly/web/services/api';
+// import { createApiClient } from 'sly/web/services/api';
 import configureStore from 'sly/web/store/configure';
 import theme from 'sly/common/system/theme';
-// For Lazy loading images, used in ResponsiveImage
-import 'sly/web/services/yall';
 
-function MyApp({ Component, pageProps, iconsContext={} }) {
+// For Lazy loading images, used in ResponsiveImage
+if (typeof window !== 'undefined') {
+  require('sly/web/services/yall');
+}
+
+function MyApp({ Component, pageProps, iconsContext = {} }) {
   const { initialApiState } = pageProps;
   const apiContext = useMemo(() => ({
     apiClient: createApiClient({ initialState: initialApiState }),
@@ -38,4 +40,4 @@ function MyApp({ Component, pageProps, iconsContext={} }) {
   );
 }
 
-export default MyApp
+export default MyApp;
