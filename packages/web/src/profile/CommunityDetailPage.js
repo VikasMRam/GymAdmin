@@ -19,13 +19,12 @@ import {
   buildNewPriceList,
 } from 'sly/web/services/helpers/pricing';
 import pad from 'sly/web/components/helpers/pad';
-import { getIsActiveAdult, getPartnerAgent } from 'sly/web/services/helpers/community';
+import { getIsActiveAdult, getPartnerAgent, getChatBotEventName } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
 import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import FAQItem from 'sly/web/components/organisms/CMSDynamicZone/FAQItem';
-
 import {
   CommunityDetailPageTemplate,
   makeBody,
@@ -180,8 +179,9 @@ export default class CommunityDetailPage extends PureComponent {
     const { address } = community;
     const isInternational = address.country !== 'United States';
     if (!isInternational) {
+      const eventName = getChatBotEventName(community);
       const { triggerChatboxEvent } = this.props;
-      triggerChatboxEvent('Bot reintro');
+      triggerChatboxEvent(eventName);
     }
   }
 
@@ -590,72 +590,72 @@ export default class CommunityDetailPage extends PureComponent {
                       label: index,
                       value: community.id,
                     })}
-                   />
+                  />
                 </CarouselContainer>
               </StyledHeadingBoxSection>
               )}
-              {!!similarCommunities?.luxury?.length && (
-                <StyledHeadingBoxSection
-                  heading="Luxury senior living communities"
-                  id="sticky-sidebar-boundary"
-                  sx$tablet={{ padding: '0 !important' }}
-                >
-                  <CarouselContainer itemsQty={similarCommunities.luxury.length}>
-                    <SimilarCommunities
-                      communities={similarCommunities.luxury}
-                      communityStyle={similarCommunityStyle}
-                      canFavourite
-                      getEvent={(community, index) => ({
+            {!!similarCommunities?.luxury?.length && (
+            <StyledHeadingBoxSection
+              heading="Luxury senior living communities"
+              id="sticky-sidebar-boundary"
+              sx$tablet={{ padding: '0 !important' }}
+            >
+              <CarouselContainer itemsQty={similarCommunities.luxury.length}>
+                <SimilarCommunities
+                  communities={similarCommunities.luxury}
+                  communityStyle={similarCommunityStyle}
+                  canFavourite
+                  getEvent={(community, index) => ({
                         action: 'click',
                         category: 'similarCommunityLuxury',
                         label: index,
                         value: community.id,
                     })}
-                    />
-                  </CarouselContainer>
-                </StyledHeadingBoxSection>
+                />
+              </CarouselContainer>
+            </StyledHeadingBoxSection>
               )}
-              {!!similarCommunities?.independent?.length && (
-                <StyledHeadingBoxSection
-                  heading="Active senior living communities"
-                  id="sticky-sidebar-boundary"
-                  sx$tablet={{ padding: '0 !important' }}
-                >
-                  <CarouselContainer itemsQty={similarCommunities.independent.length}>
-                    <SimilarCommunities
-                      communities={similarCommunities.independent}
-                      communityStyle={similarCommunityStyle}
-                      canFavourite
-                      getEvent={(community, index) => ({
+            {!!similarCommunities?.independent?.length && (
+            <StyledHeadingBoxSection
+              heading="Active senior living communities"
+              id="sticky-sidebar-boundary"
+              sx$tablet={{ padding: '0 !important' }}
+            >
+              <CarouselContainer itemsQty={similarCommunities.independent.length}>
+                <SimilarCommunities
+                  communities={similarCommunities.independent}
+                  communityStyle={similarCommunityStyle}
+                  canFavourite
+                  getEvent={(community, index) => ({
                       action: 'click',
                         category: 'similarCommunityIndependent',
                         label: index,
                         value: community.id,
                       })}
-                    />
-                  </CarouselContainer>
-                </StyledHeadingBoxSection>
+                />
+              </CarouselContainer>
+            </StyledHeadingBoxSection>
               )}
-              {!!similarCommunities?.budget?.length && (
-                <StyledHeadingBoxSection
-                  heading="Senior living communities for those on a budget"
-                  id="sticky-sidebar-boundary"
-                  sx$tablet={{ padding: '0 !important' }}
-                >
-                  <CarouselContainer itemsQty={similarCommunities.budget.length}>
-                    <SimilarCommunities
-                      communities={similarCommunities.budget}
-                      communityStyle={similarCommunityStyle}
-                      canFavourite
-                      getEvent={(community, index) => ({
+            {!!similarCommunities?.budget?.length && (
+            <StyledHeadingBoxSection
+              heading="Senior living communities for those on a budget"
+              id="sticky-sidebar-boundary"
+              sx$tablet={{ padding: '0 !important' }}
+            >
+              <CarouselContainer itemsQty={similarCommunities.budget.length}>
+                <SimilarCommunities
+                  communities={similarCommunities.budget}
+                  communityStyle={similarCommunityStyle}
+                  canFavourite
+                  getEvent={(community, index) => ({
                         action: 'click',
                         category: 'similarCommunityBudget',
                         label: index,
                         value: community.id,
                       })}
-                    />
-                  </CarouselContainer>
-                </StyledHeadingBoxSection>
+                />
+              </CarouselContainer>
+            </StyledHeadingBoxSection>
               )}
           </Wrapper>
 

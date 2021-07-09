@@ -38,6 +38,18 @@ const loadJsScript = () => {
 const getTimeoutForEvent = (eventName) => {
   if (eventName === 'Bot reintro') {
     return 30000;
+  } else if (eventName === 'ccrc-profile') {
+    return 30000;
+  }  else if (eventName === 'user-intent') {
+    return 30000;
+  }  else if (eventName === 'search-bot') {
+    return 30000;
+  }  else if (eventName === 'home-bot') {
+    return 30000;
+  }  else if (eventName === 'direct-market-2') {
+    return 30000;
+  } else if (eventName === 'direct-market-1') {
+    return 30000;
   }
   return 10000; // default timeout
 };
@@ -60,6 +72,7 @@ export const ChatBoxProvider = (props) => {
 
   const triggerEvent = useCallback(
     (eventName) => {
+      console.log('eventName', eventName);
       if (hideChatbox) {
         return;
       }
