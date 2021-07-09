@@ -20,11 +20,12 @@ const CommunityAgentSection = ({
   } = info;
 
 
+  let path;
   let imageUrl = null;
-  if (gallery && gallery.images && gallery.images.length > 0) {
-    imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
+  if (gallery?.images?.length) {
+    path = gallery.images[0].path;
+    imageUrl = getImagePath(encodeURI(path.replace(/\.jpe?g$/i, '.jpg')));
   }
-
 
   return (
     <Block {...props}>
@@ -34,7 +35,7 @@ const CommunityAgentSection = ({
         align="center"
         pad="l"
       >
-        <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl } }} />
+        <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl, path } }} />
         <Block display="flex" flexDirection="column" justifyContent="center" textAlign="left">
           <Block font="title-m" color="primary">{displayName}</Block>
           {recentFamiliesHelped > 0 && <Block>{recentFamiliesHelped} families helped</Block>}
