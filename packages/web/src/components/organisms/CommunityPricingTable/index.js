@@ -233,7 +233,7 @@ const CommunityPricingTable = ({
               </Table>
             </StyledBlockNp>
           }
-          {pricesList.length === 0 && estimatedPriceList.length > 0 &&
+          {pricesList.length === 0 && !newPricesList[0] && estimatedPriceList.length > 0  &&
             <StyledBlockNp>
               <Table>
                 <THead>
