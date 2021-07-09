@@ -4,8 +4,7 @@ import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
-import { communityPagePricingForm } from '../services/helpers/typeform';
-
+import { communityPagePricingForm } from 'sly/web/services/helpers/typeform';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
@@ -424,12 +423,15 @@ export default class CommunityDetailPage extends PureComponent {
                   <StyledHeadingBoxSection heading="How Seniorly Works" hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
 
-                    <PaddedGetAssessmentBoxContainerHydrator
+                    {/* <PaddedGetAssessmentBoxContainerHydrator
                       startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                       community={community}
                       mode={getAssessmentBoxModes.profileSection}
                       mt="m"
-                    />
+                    /> */}
+                    <Block width="100%" height="350px" mt="m">
+                      <Block className="typeform-widget" data-url="https://form.typeform.com/to/dH3EjYYx?typeform-medium=embed-snippet" width="100%" height="100%" />
+                    </Block>
 
                   </StyledHeadingBoxSection>
                 }
