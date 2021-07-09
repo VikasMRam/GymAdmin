@@ -11,7 +11,7 @@ import { createApiClient } from 'sly/web/services/api';
 
 export default CommunityDetailPageContainer;
 
-export async function getStaticProps ({ params }) {
+export async function getStaticProps({ params }) {
   const { api, store } = createApiClient();
 
   const placeholders = {
@@ -27,7 +27,7 @@ export async function getStaticProps ({ params }) {
   };
 }
 
-export async function getStaticPaths () {
+export async function getStaticPaths() {
   return {
     paths: [],
     fallback: 'blocking',
