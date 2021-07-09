@@ -1,16 +1,12 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { stringify } from 'query-string';
 import { object } from 'prop-types';
 
 import { withHydration } from 'sly/web/services/partialHydration';
-
 import { useAuth } from 'sly/web/services/api';
 import {
   generateSearchUrl,
   isInternationalPath,
-  parseURLQueryParams,
-  removeQueryParamFromURL,
 } from 'sly/web/services/helpers/url';
 import { useNotification } from 'sly/web/components/helpers/notification';
 import { userIs } from 'sly/web/services/helpers/role';
@@ -135,21 +131,8 @@ export default function HeaderContainer({ registerContext = {} }) {
     }
   }, []);
 
-  const { pathname, search, hash } = location;
-  const { loginRedirect } = parseURLQueryParams(search);
+  const { pathname } = location;
 
-  useEffect(() => {
-    if (!authenticated.loggingIn && loginRedirect) {
-      ensureAuthenticated()
-        .then(() => {
-          history.push(decodeURIComponent(loginRedirect));
-        })
-        .catch(() => {
-          const params = removeQueryParamFromURL('loginRedirect', search);
-          history.replace(`${pathname}${stringify(params)}${hash}`);
-        });
-    }
-  }, [authenticated.loggingIn, loginRedirect]);
 
   const isInternationalPage = isInternationalPath(pathname);
 
