@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { arrayOf, func, object, bool, string, number } from 'prop-types';
 
 import { listing as listingPropType } from 'sly/common/propTypes/listing';
-import EntityTile from 'sly/web/components/organisms/EntityTile';
+import EntityTile from 'sly/web/components/common/EntityTile';
 import { Link, space, sx } from 'sly/common/system';
 import { useAuth, usePrefetch, useQuery } from 'sly/web/services/api';
 import { LISTING_ENTITY_TYPE } from 'sly/web/constants/entityTypes';

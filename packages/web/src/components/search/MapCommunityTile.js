@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { number } from 'prop-types';
 
 import communityPropType from 'sly/common/propTypes/community';
-import EntityTile from 'sly/web/components/organisms/EntityTile';
+import EntityTile from 'sly/web/components/common/EntityTile';
 import { Link } from 'sly/common/system';
 
 const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (

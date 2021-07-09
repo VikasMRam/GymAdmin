@@ -28,7 +28,7 @@ import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import PlusBranding from 'sly/web/listing/components/PlusBranding';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
-import StickyHeaderTabs from 'sly/web/components/organisms/StickyHeaderTabs';
+import StickyHeaderTabs from 'sly/web/components/common/StickyHeaderTabs';
 import { Food } from 'sly/common/icons';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import SimilarListings from 'sly/web/listing/components/SimilarListings';

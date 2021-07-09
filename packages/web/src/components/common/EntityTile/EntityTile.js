@@ -2,12 +2,13 @@ import React from 'react';
 import { arrayOf, bool, string, func, number, shape, oneOf, object } from 'prop-types';
 import styled from 'styled-components';
 
+import EntityInfo from './EntityInfo';
+
 import { getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
 import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid, Image, space, sx, sx$laptop } from 'sly/common/system';
 import { community as communityPropType } from 'sly/common/propTypes/community';
-import EntityInfo from 'sly/web/components/molecules/EntityInfo';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';

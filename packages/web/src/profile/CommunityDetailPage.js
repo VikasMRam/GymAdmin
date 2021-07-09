@@ -45,7 +45,7 @@ import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import withChatbox from 'sly/web/services/chatbox/withChatBox';
-import StickyHeaderTabs from 'sly/web/components/organisms/StickyHeaderTabs';
+import StickyHeaderTabs from 'sly/web/components/common/StickyHeaderTabs';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';

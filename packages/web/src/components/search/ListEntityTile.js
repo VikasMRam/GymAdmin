@@ -2,7 +2,7 @@ import React, { useCallback, memo } from 'react';
 import { func, number } from 'prop-types';
 
 import { Link } from 'sly/common/system';
-import EntityTile from 'sly/web/components/organisms/EntityTile';
+import EntityTile from 'sly/web/components/common/EntityTile';
 import coordPropType from 'sly/common/propTypes/coordPropType';
 import SlyEvent from 'sly/web/services/helpers/events';
 
