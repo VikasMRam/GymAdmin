@@ -5,7 +5,6 @@ import { func, string, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter  } from 'react-router';
 
-import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 import { createValidator, required, isEmailOrPhone, email as isEmail } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
 import loadFB from 'sly/web/services/helpers/facebookSDK';
@@ -53,6 +52,7 @@ export default class LoginSignupFormContainer extends Component {
     registerField: func,
     sendOtpCode: func,
     location: object,
+    redirect_to: string,
   };
 
   state = { socialLoginError: '' };

@@ -76,10 +76,12 @@ const AuthContainer = (props) => {
     }
   };
 
+  const { pathname, search, hash } = location;
+  const { loginRedirect, status } = parseURLQueryParams(search);
+
   useEffect(() => {
     shouldAuth();
-    const { pathname, search, hash } = location;
-    const { loginRedirect, status } = parseURLQueryParams(search);
+
     if (loginRedirect) {
       const params = removeQueryParamFromURL('loginRedirect', search);
       const finalParams = removeQueryParamFromURL('status', params);
