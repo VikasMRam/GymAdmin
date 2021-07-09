@@ -8,7 +8,7 @@ import Flex from 'sly/common/system/Flex';
 
 const ErrorText = styled.div`
   font-size: 15px;
-  color: red;
+  color: #DC3133;
 `;
 
 const Label = styled.label`
@@ -32,6 +32,7 @@ const InputFormField = (props) => {
     error: touched && error && true,
     ...input,
   };
+
   return (
     <>
       <Flex

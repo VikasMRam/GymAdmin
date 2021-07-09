@@ -2,6 +2,8 @@ import { API_CALL } from './actions';
 
 import { logWarn } from 'sly/web/services/helpers/logging';
 
+const identity = a => a;
+
 const makeMiddleware = (pendingPromises, next) => (action) => {
   const {
     payload: {
@@ -11,6 +13,7 @@ const makeMiddleware = (pendingPromises, next) => (action) => {
       actionName,
       path,
       isJsonApi,
+      intercept = identity,
     },
   } = action;
 
@@ -50,6 +53,7 @@ const makeMiddleware = (pendingPromises, next) => (action) => {
       });
       return Promise.resolve(result);
     })
+    .then(intercept)
     .catch((result) => {
       next({
         type: `api/${actionName}/error`,

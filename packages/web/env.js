@@ -14,6 +14,7 @@ const envPick = (value, otherwise = undefined) => {
 };
 
 module.exports.STORYBOOK_GIT_BRANCH = envPick(process.env.STORYBOOK_GIT_BRANCH);
+module.exports.VERSION = envPick(process.env.VERSION);
 module.exports.NODE_ENV = envPick(process.env.NODE_ENV, 'development');
 module.exports.SLY_ENV = envPick(process.env.SLY_ENV, 'development');
 module.exports.GA_ENV = envPick(process.env.GA_ENV, 'development');
@@ -38,3 +39,5 @@ module.exports.EXTERNAL_PATH = envPick(process.env.EXTERNAL_PATH, '/external');
 module.exports.EXTERNAL_ASSET_URL = `${process.env.PUBLIC_PATH}/external`;
 module.exports.EXTERNAL_URL = `${process.env.HOST}${process.env.EXTERNAL_PATH}`;
 module.exports.EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
+
+module.exports.SEGMENT_API_KEY = envPick(process.env.SEGMENT_API_KEY, 'fYjvSNdbzzyXTCK61Gou6X0WRVzX7tlj');

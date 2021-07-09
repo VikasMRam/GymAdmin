@@ -45,7 +45,6 @@ const Html = ({
         {state.trim().length > 0 && <script type="text/javascript" dangerouslySetInnerHTML={{ __html: state }} />}
         {scriptElements}
         {/* eslint-disable */}
-
         {/* Google Tag Manager */}
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
           setTimeout(function(){
