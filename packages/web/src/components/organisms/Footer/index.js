@@ -132,6 +132,7 @@ const Links = ({ items }) => (
   >
     {Object.entries(items).map(([name, url]) => (
       <Link
+        key={`${name} ${url}`}
         color="slate.base"
         fontSize="body-s"
         href={url}

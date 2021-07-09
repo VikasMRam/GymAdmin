@@ -23,7 +23,7 @@ const apiContext = {
   skipApiCalls: false,
 };
 if (isDev) {
-  window.apiStore = apiContext.store;
+  window.apiStore = apiContext.apiClient.store;
 }
 const store = configureStore(initialState, { apiStore: apiContext.apiClient.store });
 

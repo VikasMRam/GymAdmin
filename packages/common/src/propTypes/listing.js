@@ -56,7 +56,7 @@ export const listing = shape({
   url: string.isRequired,
   info,
   slyScore: number,
-  status: number.isRequired,
+  status: number,
 });
 
 export const rgsAuxAttributes = shape({
