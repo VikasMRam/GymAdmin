@@ -9,8 +9,8 @@ const defaultProps = {
   handleSubmit,
   emailOrPhone,
 };
-const phone = '2345678901';
-const phoneFormatted = '(234) 567-8901';
+// const phone = '2345678901';
+// const phoneFormatted = '(234) 567-8901';
 
 const wrap = (props = {}) => shallow(<LoginWithPasswordForm {...defaultProps} {...props} />);
 
@@ -22,32 +22,30 @@ describe('LoginWithPasswordForm|Web', () => {
 
   it('renders', () => {
     const wrapper = wrap();
-    const otpBlock = wrapper.find('Block').at(1);
 
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('Button')).toHaveLength(2);
-    expect(otpBlock).toHaveLength(1);
-    expect(otpBlock.contains(emailOrPhone)).toBeTruthy();
+    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('ButtonLink')).toHaveLength(1);
   });
 
-  it('renders with phone', () => {
-    const wrapper = wrap({
-      emailOrPhone: phone,
-    });
-    const otpBlock = wrapper.find('Block').at(1);
+  // No longer applicable
+  // it('renders with phone', () => {
+  //   const wrapper = wrap({
+  //     emailOrPhone: phone,
+  //   });
+  //   const otpBlock = wrapper.find('Block').at(1);
 
-    expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('Button')).toHaveLength(2);
-    expect(otpBlock).toHaveLength(1);
-    expect(otpBlock.contains(phoneFormatted)).toBeTruthy();
-  });
+  //   expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
+  //   expect(wrapper.find('Button')).toHaveLength(2);
+  //   expect(otpBlock).toHaveLength(1);
+  //   expect(otpBlock.contains(phoneFormatted)).toBeTruthy();
+  // });
 
   it('renders error', () => {
     const error = 'error';
     const wrapper = wrap({ error });
     const errors = wrapper.find('Block').first();
-
-    expect(wrapper.find('Button')).toHaveLength(2);
+    expect(wrapper.find('Button')).toHaveLength(1);
     expect(errors.contains(error)).toBeTruthy();
   });
 
@@ -59,11 +57,12 @@ describe('LoginWithPasswordForm|Web', () => {
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  it('handles onLoginWithOtpClick', () => {
-    const onLoginWithOtpClick = jest.fn();
-    const wrapper = wrap({ onLoginWithOtpClick });
+  // No longer applicable
+  // it('handles onLoginWithOtpClick', () => {
+  //   const onLoginWithOtpClick = jest.fn();
+  //   const wrapper = wrap({ onLoginWithOtpClick });
 
-    wrapper.find('Button').at(1).simulate('click');
-    expect(onLoginWithOtpClick).toHaveBeenCalled();
-  });
+  //   wrapper.find('Button').at(1).simulate('click');
+  //   expect(onLoginWithOtpClick).toHaveBeenCalled();
+  // });
 });

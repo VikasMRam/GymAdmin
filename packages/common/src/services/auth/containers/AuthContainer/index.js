@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { object, func, oneOf, string, bool } from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { useHistory, useLocation  } from 'react-router';
+import { stringify } from 'query-string';
 
-import { withAuth } from 'sly/web/services/api';
+import { useAuth } from 'sly/web/services/api';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { authenticateCancel, authenticateSuccess } from 'sly/web/store/authenticated/actions';
 import { WizardController, WizardStep, WizardSteps } from 'sly/web/services/wizard';
 import { Block } from 'sly/common/components/atoms';
 import Modal, { HeaderWithClose } from 'sly/web/components/atoms/NewModal';
 import { Wrapper } from 'sly/common/services/auth/components/Template';
-
+import { parseURLQueryParams, removeQueryParamFromURL } from 'sly/web/services/helpers/url';
+import { AGENTSIGNUP, CUSTOMERSIGNUPCONFIRMATION, LOGINSINGUP, RESETPASSWORD, THIRDPARTYINFOPROMPT, PROIVDERSIGNUP, MAGICLINKEXPIRED, SIGNUP, OTPLOGIN, MAGICLINKSUCCESS, LOGINWITHPASSWORD, PROVIDERFINDCOMMUNITY, PROVIDERCONFIRMATION, PROVIDERCLAIMNEEDSAPPROVAL, PROVIDERCOMMUNITYNOTFOUND } from 'sly/common/services/auth/containers/AuthContainer/constants';
 
 const ResetPasswordFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "resetPasswordContainer" */ import('sly/common/services/auth/containers/ResetPasswordFormContainer'));
-const LoginFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "loginFormContainer" */ import('sly/common/services/auth/containers/LoginFormContainer'));
+const LoginSignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "loginFormContainer" */ import('sly/common/services/auth/containers/LoginSignupFormContainer'));
 const ProviderSignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "providerSignupFormContainer" */ import('sly/common/services/auth/containers/ProviderSignupFormContainer'));
 const SignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "signUpContainer" */ import('sly/common/services/auth/containers/SignupFormContainer'));
 const AgentSignupFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "agentSignupFormContainer" */ import('sly/common/services/auth/containers/AgentSignupFormContainer'));
@@ -22,82 +24,101 @@ const ProviderFindCommunityContainer = withHydration(/* #__LOADABLE__ */ () => /
 const ProviderConfirmation = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "providerConfirmation" */ import('sly/common/services/auth/components/ProviderConfirmation'));
 const ThirdPartyPromptFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "thirdPartyPromptFormContainer" */ import('sly/common/services/auth/containers/ThirdPartyPromptFormContainer'));
 const OtpLoginFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "otpLoginFormContainer" */ import('sly/common/services/auth/containers/OtpLoginFormContainer'));
+const LoginWithPasswordFormContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "loginWithPasswordFormContainer" */ import('sly/common/services/auth/containers/LoginWithPasswordFormContainer'));
+const MagicLinkExpired = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "magicLinkExpired" */ import('sly/common/services/auth/components/MagicLink/MagicLinkExpired'));
+const MagicLinkSuccessContainer = withHydration(/* #__LOADABLE__ */ () => /* webpackChunkName: "magicLinkSuccessContainer" */ import('sly/common/services/auth/containers/MagicLinkSuccessContainer'));
 
-const mapStateToProps = state => ({
-  authenticated: state.authenticated,
-});
 
-@withRouter
-@withAuth
-@connect(mapStateToProps, {
-  authenticateCancel,
-  authenticateSuccess,
-})
+const AuthContainer = (props) => {
+  const [title, setTitle] = useState('');
+  const [noBorder, setNoBorder] = useState(false);
+  const [redirectAfterLogin, setRedirectAfterLogin] = useState(null);
+  const [redirectStatus, setRedirectStatus] = useState(null);
+  const { ensureAuthenticated } = useAuth();
+  const history = useHistory();
+  const location = useLocation();
 
-export default class AuthContainer extends Component {
-  static propTypes = {
-    location: object,
-    authenticated: object,
-    authenticateCancel: func.isRequired,
-    authenticateSuccess: func.isRequired,
-    onAuthenticateSuccess: func,
-    onSignupSuccess: func,
-    sendOtpCode: func.isRequired,
-    type: oneOf(['modal', 'inline']).isRequired,
-    initialStep: string.isRequired,
-    signUpHeading: string,
-    signUpSubmitButtonText: string,
-    signUpHasPassword: bool.isRequired,
-    hasProviderSignup: bool.isRequired,
-    formName: string.isRequired,
+
+  const {
+    authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword, onSignupSuccess,
+    hasProviderSignup, formName,
+  } = props;
+  let { initialStep } = props;
+
+
+  const cancelAuthAndDestroyState = () => {
+    setRedirectStatus(null);
+    setRedirectAfterLogin(null);
+    authenticateCancel();
   };
 
-  static defaultProps = {
-    type: 'modal',
-    initialStep: 'Login',
-    formName: 'AuthForm',
-    signUpHasPassword: true,
-    hasProviderSignup: true,
-  };
 
-  state = { isOpen: false, title: '' };
-
-  componentDidMount() {
-    this.shouldAuth();
-  }
-
-  componentDidUpdate() {
-    this.shouldAuth();
-  }
-
-  shouldAuth = () => {
-    const {
-      authenticated,
-      location,
-    } = this.props;
-
-
-    if (!this.state.isOpen && authenticated.loggingIn) {
-      this.setState({ isOpen: true, title: 'Login' });
+  const shouldAuth = () => {
+    if (authenticated.loggingIn) {
+      setTitle('Log in or sign up');
 
       if (authenticated.options && authenticated.options.register) {
-        this.setState({ title: 'Sign Up' });
+        setTitle('Log in or sign up');
       }
 
       if (location.pathname === '/partners/communities') {
-        this.setState({ title: 'Create a community manager account' });
+        setTitle('Create a community manager account');
       }
       if (location.pathname === '/partners/agents') {
-        this.setState({ title: 'Create a partner agent account' });
+        setTitle('Create a partner agent account');
       }
-    } else if (this.state.isOpen && !authenticated.loggingIn) {
-      this.setState({ isOpen: false });
-      this.setState({ title: '' });
+      if (location.search.includes('expired')) {
+        setTitle('');
+        setNoBorder(true);
+      }
+    } else if (!authenticated.loggingIn) {
+      setTitle('');
     }
   };
 
-  handleAuthenticateSuccess = () => {
-    const { onAuthenticateSuccess, authenticateSuccess } = this.props;
+  const { pathname, search, hash } = location;
+  const { loginRedirect, status } = parseURLQueryParams(search);
+
+  useEffect(() => {
+    shouldAuth();
+
+    if (loginRedirect) {
+      const params = removeQueryParamFromURL('loginRedirect', search);
+      const finalParams = removeQueryParamFromURL('status', params);
+      history.replace(`${pathname}${stringify(finalParams)}${hash}`);
+      setRedirectAfterLogin(loginRedirect);
+      setRedirectStatus(status);
+    }
+
+    if (!authenticated.loggingIn && redirectAfterLogin) {
+      ensureAuthenticated()
+        .then(() => {
+          history.go(0);
+          history.push(redirectAfterLogin);
+        })
+        .catch(() => {
+
+        });
+    }
+  }, [authenticated.loggingIn, redirectAfterLogin]);
+
+
+  if (authenticated.options && authenticated.options.register && initialStep !== THIRDPARTYINFOPROMPT) {
+    initialStep = LOGINSINGUP;
+  }
+  if (authenticated.options && authenticated.options.provider) {
+    initialStep = PROIVDERSIGNUP;
+  }
+  if (authenticated.options && authenticated.options.agent) {
+    initialStep = AGENTSIGNUP;
+  }
+  if (redirectAfterLogin && (redirectStatus === 'expired' || redirectStatus === 'error')) {
+    initialStep = MAGICLINKEXPIRED;
+  }
+
+
+  const handleAuthenticateSuccess = () => {
+    const { onAuthenticateSuccess, authenticateSuccess } = props;
     // authenticateSuccess is not a promise, hence call success event callback immediately
     authenticateSuccess();
     if (onAuthenticateSuccess) {
@@ -105,58 +126,61 @@ export default class AuthContainer extends Component {
     }
   };
 
-  render() {
-    const { isOpen, title } = this.state;
-    const {
-      authenticateCancel, authenticated, type, signUpHeading, signUpSubmitButtonText, signUpHasPassword, onSignupSuccess,
-      hasProviderSignup, formName,
-    } = this.props;
-    let { initialStep } = this.props;
-    if (authenticated.options && authenticated.options.register && initialStep !== 'ThirdPartyPromptForm') {
-      initialStep = 'Signup';
-    }
-    if (authenticated.options && authenticated.options.provider) {
-      initialStep = 'ProviderSignup';
-    }
-    if (authenticated.options && authenticated.options.agent) {
-      initialStep = 'AgentSignup';
-    }
 
-    const wizard = (
-      <WizardController
-        formName={formName}
-        controllerKey={`${formName}ControllerKey`}
-        initialStep={initialStep}
-        onComplete={this.handleAuthenticateSuccess}
-      >
-        {({
-          goto, reset, next, ...props
+  const wizard = (
+    <WizardController
+      formName={formName}
+      controllerKey={`${formName}ControllerKey`}
+      initialStep={initialStep}
+      onComplete={handleAuthenticateSuccess}
+    >
+      {({
+          goto, reset, data, next, ...props
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={LoginFormContainer}
-              name="Login"
-              onRegisterClick={() => this.setState({ title: 'Sign Up' }, () => goto('Signup'))}
-              onResetPasswordClick={() => this.setState({ title: 'Having trouble logging in?' }, () => goto('ResetPassword'))}
-              onSociaLoginSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
-              onSubmit={this.handleAuthenticateSuccess}
+              component={LoginSignupFormContainer}
+              name={LOGINSINGUP}
+              redirect_to={redirectAfterLogin}
+              onGoToSignUp={() => {
+              setTitle('Create an account');
+              goto(SIGNUP);
+              }}
+              onSociaLoginSuccess={() => { setTitle('One more thing...'); goto(THIRDPARTYINFOPROMPT); }}
+              onEmailSubmit={() => {
+                setTitle('');
+                setNoBorder(true);
+                goto(MAGICLINKSUCCESS);
+                }}
+              onPhoneSumbit={() => {
+                  setTitle('Confirm your phone number');
+                  goto(OTPLOGIN);
+                }}
             />
             <WizardStep
               component={ResetPasswordFormContainer}
-              name="ResetPassword"
-              onLoginClick={() => this.setState({ title: 'Login' }, () => goto('Login'))}
-              onSubmit={() => this.setState({ title: 'Login' }, () => goto('Login'))}
+              name={RESETPASSWORD}
+              onLoginClick={() => { setTitle('Log in'); goto(LOGINSINGUP); }}
+              onSubmit={() => { setTitle('Log in'); goto(LOGINWITHPASSWORD); }}
             />
             <WizardStep
               component={SignupFormContainer}
-              name="Signup"
-              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.register : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
-              onProviderClicked={() => this.setState({ title: 'Create a community manager account' }, () => goto('ProviderSignup'))}
-              onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation')}
-              onSocialSignupSuccess={() => this.setState({ title: 'One more thing...' }, () => goto('ThirdPartyPromptForm'))}
+              name={SIGNUP}
+              onLoginClicked={() => {
+                if ((authenticated && authenticated.options ? delete authenticated.options.register : true)) {
+                 setTitle('Log in');
+                  goto(LOGINSINGUP);
+                }
+              }}
+              onProviderClicked={() => {
+              setTitle('Create a community manager account');
+              goto(PROIVDERSIGNUP);
+              }}
+              onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto(CUSTOMERSIGNUPCONFIRMATION)}
+              onSocialSignupSuccess={() => setTitle('One more thing...')}
               handleOtpClick={() => {
-                this.setState({ title: 'Login to your account' });
-                goto('OtpLogin');
+                setTitle('Log in to your account');
+                goto(OTPLOGIN);
               }}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
@@ -165,96 +189,179 @@ export default class AuthContainer extends Component {
             />
             <WizardStep
               component={ThirdPartyPromptFormContainer}
-              name="ThirdPartyPromptForm"
+              name={THIRDPARTYINFOPROMPT}
               onSubmit={() => {
-                if (authenticated.options && authenticated.options.register) { onSignupSuccess ? onSignupSuccess() : goto('CustomerSignupConfirmation'); } else {
-                  this.handleAuthenticateSuccess();
+                if (authenticated.options && authenticated.options.register) { onSignupSuccess ? onSignupSuccess() : goto(CUSTOMERSIGNUPCONFIRMATION); } else {
+                  handleAuthenticateSuccess();
                 }
-                this.setState({ title: '' });
+                setTitle('');
               }}
             />
             <WizardStep
+              component={MagicLinkSuccessContainer}
+              name={MAGICLINKSUCCESS}
+              email={data?.email}
+              redirect_to={redirectAfterLogin}
+              passwordExists={data?.passwordExists}
+              onPasswordLoginClick={() => {
+                setTitle('Log in');
+                setNoBorder(false);
+                goto(LOGINWITHPASSWORD);
+              }}
+            />
+            <WizardStep
+              component={MagicLinkExpired}
+              name="MagicLinkExpired"
+              status={status}
+              onLoginClick={() => {
+                setTitle('Log in or signup');
+                setNoBorder(false);
+                goto(LOGINSINGUP);
+              }}
+            />
+            <WizardStep
+              component={LoginWithPasswordFormContainer}
+              name={LOGINWITHPASSWORD}
+              onResetPasswordClick={() => { setTitle('Having trouble logging in?'); goto(RESETPASSWORD); }}
+              emailOrPhone={data?.email}
+              onSubmitSuccess={handleAuthenticateSuccess}
+            />
+            <WizardStep
               component={CustomerSignupConfirmationContainer}
-              name="CustomerSignupConfirmation"
-              onSubmit={this.handleAuthenticateSuccess}
+              name={CUSTOMERSIGNUPCONFIRMATION}
+              onSubmit={handleAuthenticateSuccess}
             />
             <WizardStep
               component={OtpLoginFormContainer}
-              name="OtpLogin"
+              name={OTPLOGIN}
+              phone_number={data?.phone_number}
+              passwordExists={data?.passwordExists}
+              onPasswordLoginClick={() => {
+                  setTitle('Log in');
+                  goto(LOGINWITHPASSWORD);
+                }}
               setOtpTitle={() =>
-                this.setState({ title: 'Login with passcode' })
-              }
+                setTitle('Log in with passcode')
+                }
               onSubmit={() => {
-                this.handleAuthenticateSuccess();
+                handleAuthenticateSuccess();
                 reset();
+                }}
+              onEditPhoneNumberClick={() => {
+                  setTitle('Log in or signup');
+                  goto(LOGINSINGUP);
                 }}
             />
             <WizardStep
               component={ProviderSignupFormContainer}
-              name="ProviderSignup"
-              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.provider : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
-              onSubmit={() => this.setState({ title: 'What is the name of the community you want to manage?' }, () => goto('ProviderFindCommunity'))}
+              name={PROIVDERSIGNUP}
+              onLoginClicked={() => {
+              if (authenticated && authenticated.options ? delete authenticated.options.provider : true) {
+                setTitle('Log in');
+                goto(LOGINSINGUP);
+                }
+              }}
+              onSubmit={() => { setTitle('What is the name of the community you want to manage?'); goto(PROVIDERFINDCOMMUNITY); }}
             />
             <WizardStep
               component={AgentSignupFormContainer}
               name="AgentSignup"
-              onLoginClicked={() => ((authenticated && authenticated.options ? delete authenticated.options.agent : true) && this.setState({ title: 'Login' }, () => goto('Login')))}
-              onSubmit={this.handleAuthenticateSuccess}
+              onLoginClicked={() => {
+              if (authenticated && authenticated.options ? delete authenticated.options.agent : true) {
+                setTitle('Log in');
+                goto(LOGINSINGUP);
+                }
+              }}
+              onSubmit={handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderFindCommunityContainer}
-              name="ProviderFindCommunity"
-              onClaimApproved={() => this.setState({ title: '' }, () => goto('ProviderConfirmation'))}
-              onApprovalNeeded={() => this.setState({ title: '' }, () => goto('ProviderClaimNeedsApproval'))}
-              onNotFound={() => this.setState({ title: '' }, () => goto('ProviderCommunityNotFound'))}
+              name={PROVIDERFINDCOMMUNITY}
+              onClaimApproved={() => { setTitle(''); goto(PROVIDERCONFIRMATION); }}
+              onApprovalNeeded={() => { setTitle(''); goto(PROVIDERCLAIMNEEDSAPPROVAL); }}
+              onNotFound={() => { setTitle(''); goto(PROVIDERCOMMUNITYNOTFOUND); }}
             />
             <WizardStep
               component={ProviderConfirmation}
-              name="ProviderConfirmation"
+              name={PROVIDERCONFIRMATION}
               mode="Approved"
-              onSubmit={this.handleAuthenticateSuccess}
+              onSubmit={handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderConfirmation}
-              name="ProviderCommunityNotFound"
+              name={PROVIDERCOMMUNITYNOTFOUND}
               mode="NotFound"
-              onSubmit={this.handleAuthenticateSuccess}
+              onSubmit={handleAuthenticateSuccess}
             />
             <WizardStep
               component={ProviderConfirmation}
-              name="ProviderClaimNeedsApproval"
+              name={PROVIDERCLAIMNEEDSAPPROVAL}
               mode="NeedApproval"
-              onSubmit={this.handleAuthenticateSuccess}
+              onSubmit={handleAuthenticateSuccess}
             />
-          </WizardSteps>
-        )}
-      </WizardController>
-    );
+          </WizardSteps>)}
+    </WizardController>
+  );
 
-    if (type === 'inline') {
-      return (
-        <Wrapper>
-          {wizard}
-        </Wrapper>
-      );
-    }
-
-    if (!isOpen) {
-      return null;
-    }
-
+  if (type === 'inline') {
     return (
-      <Modal
-        isOpen={isOpen}
-        onClose={authenticateCancel}
-      >
-        <HeaderWithClose onClose={authenticateCancel}>
-          {title}
-        </HeaderWithClose>
-        <Block padding="xLarge">
-          {wizard}
-        </Block>
-      </Modal>
+      <Wrapper>
+        {wizard}
+      </Wrapper>
     );
   }
-}
+
+  if (!authenticated.loggingIn) {
+    return null;
+  }
+
+  return (
+    <Modal
+      isOpen={authenticated.loggingIn}
+      onClose={cancelAuthAndDestroyState}
+    >
+      <HeaderWithClose noBorder={noBorder} onClose={cancelAuthAndDestroyState}>
+        {title}
+      </HeaderWithClose>
+      <Block padding="xLarge">
+        {wizard}
+      </Block>
+    </Modal>
+  );
+};
+
+
+AuthContainer.propTypes = {
+  location: object,
+  authenticated: object,
+  authenticateCancel: func.isRequired,
+  authenticateSuccess: func.isRequired,
+  onAuthenticateSuccess: func,
+  onSignupSuccess: func,
+  type: oneOf(['modal', 'inline']).isRequired,
+  initialStep: string.isRequired,
+  signUpHeading: string,
+  signUpSubmitButtonText: string,
+  signUpHasPassword: bool.isRequired,
+  hasProviderSignup: bool.isRequired,
+  formName: string.isRequired,
+};
+
+AuthContainer.defaultProps = {
+  type: 'modal',
+  initialStep: LOGINSINGUP,
+  formName: 'AuthForm',
+  signUpHasPassword: true,
+  hasProviderSignup: true,
+};
+
+
+const mapStateToProps = state => ({
+  authenticated: state.authenticated,
+});
+
+
+export default  connect(mapStateToProps, {
+  authenticateCancel,
+  authenticateSuccess,
+})(AuthContainer);

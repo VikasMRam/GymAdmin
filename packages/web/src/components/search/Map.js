@@ -51,6 +51,7 @@ const Map = ({
   onMarkerClick,
   onMarkerHover,
   selectedCommunity,
+  selectedHover,
   cursor,
   currentFilters,
   ...props
@@ -186,6 +187,7 @@ const Map = ({
               key={id}
               community={community}
               active={selectedCommunity?.id === id}
+              markerHover={selectedHover?.id === id}
               lat={latitude}
               lng={longitude}
               number={cursor + i}

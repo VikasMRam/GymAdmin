@@ -40,13 +40,12 @@ import CommunityDetails from 'sly/web/components/organisms/CommunityDetails';
 import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import CommunityDisclaimerSection from 'sly/web/components/molecules/CommunityDisclaimerSection';
 import IconItem from 'sly/web/components/molecules/IconItem';
-import PlusBranding from 'sly/web/components/organisms/PlusBranding';
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import withChatbox from 'sly/web/services/chatbox/withChatBox';
-import StickyHeader from 'sly/web/profile/StickyHeader';
+import StickyHeaderTabs from 'sly/web/components/common/StickyHeaderTabs';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
@@ -263,15 +262,21 @@ export default class CommunityDetailPage extends PureComponent {
     };
 
 
-    const stickyHeaderSections = {
-      photos: true,
-      pricing: !isActiveAdult && !isInternational,
-      advisor: !!partnerAgent,
-      about: !!(communityDescription || rgsAux.communityDescription ||
-        staffDescription || residentDescription || ownerExperience),
-      amenities: true,
-      reviews: reviews && reviews.length > 0,
-    };
+    // Easiest to extract coniditonal to a var for sticky header sections
+    const shouldShowPricing = !isActiveAdult && !isInternational;
+    const shouldShowPartnerAgent = !!partnerAgent;
+    const shouldShowAbout = !!(communityDescription || rgsAux.communityDescription ||
+      staffDescription || residentDescription || ownerExperience);
+    const shouldShowReviews = reviews && reviews.length > 0;
+
+    const stickyHeaderSections = [
+      { label: 'photos', id: 'gallery' },
+      shouldShowPricing ? { label: 'pricing', id: 'pricing-and-floor-plans' } : null,
+      shouldShowPartnerAgent ? { label: 'advisor', id: 'agent-section' } : null,
+      shouldShowAbout ? { label: 'about', id: 'community-about' } : null,
+      { label: 'amenities', id: 'amenities-section' },
+      shouldShowReviews ? { label: 'reviews', id: 'reviews' } : null,
+    ];
 
 
     return (
@@ -290,7 +295,7 @@ export default class CommunityDetailPage extends PureComponent {
           <CommunityMediaGalleryContainer />
         </Block>
         <CommunityDetailPageTemplate>
-          <StickyHeader sections={stickyHeaderSections} />
+          <StickyHeaderTabs sections={stickyHeaderSections} />
           <Wrapper>
             <TwoColumn>
               <Body>
@@ -313,7 +318,7 @@ export default class CommunityDetailPage extends PureComponent {
                     </StyledHeadingBoxSection>
                   )}
 
-                {!isActiveAdult && !isInternational &&
+                {shouldShowPricing &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
@@ -340,7 +345,7 @@ export default class CommunityDetailPage extends PureComponent {
                   )}
                 </StyledHeadingBoxSection>
                 }
-                {partnerAgent && (
+                {shouldShowPartnerAgent && (
                   <>
                     <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you.">
                       <CommunityAgentSection agent={partnerAgent} pad="l" />
@@ -361,8 +366,7 @@ export default class CommunityDetailPage extends PureComponent {
 
                   </>
                 )}
-                {(communityDescription || rgsAux.communityDescription ||
-                  staffDescription || residentDescription || ownerExperience) && (
+                {shouldShowAbout && (
                   <StyledHeadingBoxSection id="community-about" heading={`About ${name}`}>
                     <CommunityAbout
                       id={community.id}
@@ -415,7 +419,7 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 }
 
-                {reviews && reviews.length > 0 &&
+                {shouldShowReviews &&
                   <StyledHeadingBoxSection
                     heading={`Reviews at ${name}`}
                     id="reviews"

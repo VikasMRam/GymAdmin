@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
+import { reduxForm, SubmissionError, clearSubmitErrors, untouch } from 'redux-form';
 import { connect } from 'react-redux';
-import { func, bool, object } from 'prop-types';
+import { func, bool, object, string } from 'prop-types';
 import * as immutable from 'object-path-immutable';
 
 import loadFB from 'sly/web/services/helpers/facebookSDK';
@@ -27,6 +27,7 @@ const ReduxForm = reduxForm({
 
 const mapDispatchToProps = {
   clearSubmitErrors: () => clearSubmitErrors('SignupForm'),
+  untouch: (form = 'SignupForm', field) => untouch(form, field),
 };
 
 @withAuth
@@ -45,6 +46,8 @@ export default class SignupFormContainer extends Component {
     status: object,
     updateUuidAux: func,
     handleOtpClick: func,
+    form: string,
+    untouch: func,
   };
 
   state = { socialSignupError: '' };
@@ -57,6 +60,7 @@ export default class SignupFormContainer extends Component {
   });
 
   componentDidMount() {
+    const { untouch, form } = this.props;
     if (window.gapi) {
       window.gapi.load('auth2', () => {
         if (!window.gapi.auth2.getAuthInstance()) {
@@ -65,6 +69,9 @@ export default class SignupFormContainer extends Component {
       });
     }
     this.getFB();
+
+    // Since this field is touched in the login form we need to untouch so there's no error
+    untouch(form, 'email');
   }
 
   onGoogleConnected = (resp) => {

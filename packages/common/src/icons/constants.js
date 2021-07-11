@@ -21,6 +21,10 @@ export const ICONS = [
     "arrow-drop"
   ],
   [
+    "Awesome",
+    "awesome"
+  ],
+  [
     "Bathroom",
     "bathroom"
   ],
@@ -281,6 +285,10 @@ export const ICONS = [
     "quick-reply"
   ],
   [
+    "QuoteRound",
+    "quote-round"
+  ],
+  [
     "Radio",
     "radio"
   ],
@@ -325,12 +333,12 @@ export const ICONS = [
     "star"
   ],
   [
-    "Time",
-    "time"
-  ],
-  [
     "ThumbsUp",
     "thumbs-up"
+  ],
+  [
+    "Time",
+    "time"
   ],
   [
     "Toggle",

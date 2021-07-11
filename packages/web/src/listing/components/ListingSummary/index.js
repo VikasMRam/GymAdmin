@@ -1,19 +1,18 @@
 import React from 'react';
 import { object, bool, func, string } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
 import Tag  from 'sly/web/components/atoms/Tag/newSystem';
-import ListItem from 'sly/web/components/molecules/ListItem/newSystem';
 import { AVAILABLE_TAGS, PERSONAL_CARE_HOME, ASSISTED_LIVING, PERSONAL_CARE_HOME_STATES, CONTINUING_CARE_RETIREMENT_COMMUNITY, CCRC, ACTIVE_ADULT } from 'sly/web/constants/tags';
-import { community as communityPropType } from 'sly/common/propTypes/community';
-import { Heading, Block, Span, color, Hr, space, Link, sx$laptop, Button, sx$tablet, Grid } from 'sly/common/system';
+import { listing as listingPropType } from 'sly/common/propTypes/listing';
+import { Heading, Block, Span, color, Hr, space, Link, sx$laptop, Button, sx$tablet, Grid, Paragraph } from 'sly/common/system';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
-import { showFafNumber, getFafNumber } from 'sly/web/services/helpers/community';
-import { Money, Help, Community, SqFt, Bed, Garage, Bathroom, Beds, Favorite, Share } from 'sly/common/icons';
+import { Help, Favorite, Share } from 'sly/common/icons';
+// import Paragraph from 'sly/common/components/atoms/Paragraph';
 
 
 const overridePosition = ({ left, top }) => ({
@@ -59,7 +58,6 @@ const getCareTypes = (address, careTypes) => {
 
     const availableTags = AVAILABLE_TAGS[country] || [];
 
-
     if (availableTags.includes(careType)) {
       const isPersonalCareHome = PERSONAL_CARE_HOME_STATES.includes(state) && careType === ASSISTED_LIVING;
       let tag = careType;
@@ -76,24 +74,36 @@ const getCareTypes = (address, careTypes) => {
   return updatedCareTypes;
 };
 
+const makeNewTags = (tags) => {
+  const tagsMap = {
+    Plus: 'harvest.base',
+    Verified: 'green',
+  };
+  const newTags = [];
+  tags.forEach(({ id, name }) => {
+    if (name === 'Plus' || name === 'Verified') {
+      newTags.push({
+        name,
+        id,
+        path: `${name}`,
+        background: tagsMap[name],
+      });
+    }
+  });
+  return newTags;
+};
 
 const ListingSummary = ({
-  listing, innerRef, isAdmin, onConciergeNumberClicked, onListingNumberClicked, className,
-  goToReviews, searchParams, formattedAddress, onSaveClick, onShareClick, isFavorited,
+  listing, innerRef, isAdmin, className,
+  goToReviews, formattedAddress, onSaveClick, onShareClick, isFavorited, onListingNumberClicked,
 }) => {
   const {
-    address, name, info, twilioNumber, partnerAgents, tags, community,
+    address, name, info, twilioNumber, partnerAgents, tags,
   } = listing;
 
-  const { care, propInfo } = community;
+  const { phoneNumber, care, startingRate, floorPlan } = info;
+  const { ratingValue, numRatings } = info.ratingInfo;
 
-  const { typeCare } = propInfo;
-
-
-  const {
-    phoneNumber, typeOfHome, squareFeet, numBeds, numBaths, priceRange, garage,
-  } = info;
-  const { ratingValue, numReviews } = info.ratingInfo;
 
   let conciergeNumber = phoneNumber;
 
@@ -104,13 +114,15 @@ const ListingSummary = ({
     conciergeNumber = '8558664515';
   }
 
-  const careTypes = care ? getCareTypes(address, care) : getCareTypes(address, typeCare);
+  let careTypes = [];
+  if (care) {
+    careTypes = getCareTypes(address, care);
+  }
+
+  const newTags = !!tags && !!tags.length ? makeNewTags(tags) : [];
 
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
-
-  const showFriendsFamilyNumber = showFafNumber(address);
-  const fafn = getFafNumber(conciergeNumber, '1');
 
   return (
     <Block pb="l" px="m" sx$laptop={{ px: '0' }} ref={innerRef} className={className}>
@@ -121,14 +133,14 @@ const ListingSummary = ({
         {name}
         {isAdmin &&
           <Link
-            to={`/dashboard/communities/${listing.id}`}
+            to={`/dashboard/listings/${listing.id}`}
           >
             &nbsp;(Edit)
           </Link>
         }
       </Heading>
 
-      <Block pad="xs">
+      <Block font="body-s" pad="xs">
         {formattedAddress}
       </Block>
 
@@ -136,13 +148,38 @@ const ListingSummary = ({
       {ratingValue > 0 &&
         <MobileListingRating
           rating={ratingValue}
-          numReviews={numReviews}
+          numReviews={numRatings}
           goToReviews={goToReviews}
           reviewsText
         />
       }
 
       <Block>
+        {!!newTags && !!newTags.length &&
+          newTags.map(({ name, id, path, background }) => {
+            return (
+              <Tag
+                key={id}
+                marginRight="xs"
+                background={background}
+                color="white"
+              >
+                <Link
+                  color="white"
+                  to={path}
+                  target="_blank"
+                  event={{
+                  category: 'new-tags',
+                  action: 'tag-click',
+                  label: name,
+                }}
+                >
+                  {name}
+                </Link>
+              </Tag>
+            );
+          })
+        }
         {careTypes.map(careType => (
           <Tag
             key={careType.path}
@@ -150,7 +187,7 @@ const ListingSummary = ({
           >
             <Link
               color="white"
-              to={`${careType.path}/${searchParams.state}/${searchParams.city}`}
+              to={`${careType.path}/${address.state}/${address.city}`}
               target="_blank"
               event={{
                 category: 'care-type-tags',
@@ -163,7 +200,100 @@ const ListingSummary = ({
           </Tag>
         ))}
       </Block>
+      <Block
+        padding="m m"
+        marginTop="m"
+        display="flex"
+        background="#e8f1f1"
+        flexDirection="column"
+        borderRadius="xs"
+        sx={{
+          gap: '1rem',
+        }}
+        sx$tablet={{
+          padding: 'l l',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          gap: '2rem',
+        }}
+      >
+        <Block as="span">
+          <Block
+            as="span"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            css={css`
+                gap: 0.2em
+              `}
+          >
+            <Span
+              palette="stale"
+              pad="small"
+              font="body-s"
+            >Exclusive Seniorly Price
+            </Span>
+            <StyledHelpIcon  size="s" data-tip data-for="seniorlyPrice" />
+            {isBrowser &&
+            <TooltipContent overridePosition={overridePosition} id="seniorlyPrice" type="light" effect="solid" multiline>
+              This is special discouted price offered only through Seniorly.
+            </TooltipContent>
+          }
+          </Block>
+          <Paragraph
+            color="viridian.base"
+            pad="small"
+          >${startingRate}/month + care fees
+          </Paragraph>
 
+        </Block>
+        {floorPlan.bedroomCount && (
+          <Block as="span">
+            <Paragraph
+              palette="stale"
+              pad="small"
+              font="body-s"
+            >Bedrooms
+            </Paragraph>
+            <Paragraph
+              color="viridian.base"
+              pad="small"
+            >{floorPlan.bedroomCount} bd
+            </Paragraph>
+          </Block>
+        )}
+        {floorPlan.bathroomCount && (
+          <Block as="span">
+            <Paragraph
+              palette="stale"
+              pad="small"
+              font="body-s"
+            >Bathroom
+            </Paragraph>
+            <Paragraph
+              color="viridian.base"
+              pad="small"
+            >{floorPlan.bathroomCount} ba
+            </Paragraph>
+          </Block>
+        )}
+        {floorPlan.area && (
+          <Block as="span">
+            <Paragraph
+              palette="stale"
+              pad="small"
+              font="body-s"
+            >Square feet
+            </Paragraph>
+            <Paragraph
+              color="viridian.base"
+              pad="small"
+            >{floorPlan.area}
+            </Paragraph>
+          </Block>
+        )}
+
+      </Block>
       <Hr mt="l" mb="l" />
       <Grid
         gridTemplateColumns="auto"
@@ -176,21 +306,46 @@ const ListingSummary = ({
           <Button sx$tablet={{ paddingX: 's' }} onClick={onShareClick} variant="neutral" ><Share mr="xs" />Share</Button>
         </Grid>
         <Hr mt="l" mb="l" sx$tablet={{ display: 'none' }} />
-
       </Grid>
-
       <Hr mt="l" display="none" sx$tablet={{ display: 'block' }} />
-
+      {
+        phoneNumber &&
+        <Block
+          display="flex"
+          flexDirection="column"
+          sx$tablet={{
+            display: 'none',
+          }}
+        >
+          <Span
+            display="flex"
+            alignItems="center"
+            css={css`
+            gap: 0.2em
+            `}
+          >
+            <Span font="body-s">Contact us about this room</Span>
+            <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
+            {isBrowser &&
+            <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
+              This phone number may connect you to the listing front desk.
+            </TooltipContent>
+          }
+          </Span>
+          <Link href={`tel:${phoneNumber}`} onClick={onListingNumberClicked}>
+            {phoneFormatter(phoneNumber, true)}
+          </Link>
+          <Hr mt="l" display="block" />
+        </Block>
+      }
     </Block>
   );
 };
 
 ListingSummary.propTypes = {
-  // listing: communityPropType.isRequired,
+  listing: listingPropType.isRequired,
   innerRef: object,
   isAdmin: bool,
-  onConciergeNumberClicked: func,
-  onListingNumberClicked: func,
   className: string,
   goToReviews: func,
   searchParams: object,
@@ -198,6 +353,7 @@ ListingSummary.propTypes = {
   onSaveClick: func,
   onShareClick: func,
   isFavorited: bool,
+  onListingNumberClicked: func,
 };
 
 export default ListingSummary;

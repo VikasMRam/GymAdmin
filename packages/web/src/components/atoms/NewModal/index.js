@@ -52,7 +52,7 @@ export const PaddedHeaderWithCloseBody = styled.div`
   padding-top: 0;
 `;
 
-export const HeaderWithClose = forwardRef(({ children, icon, onClose, ...props }, ref) => (
+export const HeaderWithClose = forwardRef(({ children, icon, onClose, noBorder,  ...props }, ref) => (
   <Block
     ref={ref}
     display="flex"
@@ -60,7 +60,7 @@ export const HeaderWithClose = forwardRef(({ children, icon, onClose, ...props }
     flexShrink="0"
     padding="0 xLarge"
     height="76px"
-    borderBottom="regular"
+    borderBottom={noBorder ? 'none' : 'regular'}
     {...props}
   >
     {icon && (
@@ -102,6 +102,7 @@ HeaderWithClose.propTypes = {
   children: element,
   icon: string,
   onClose: func,
+  noBorder: bool,
 };
 
 export const ModalBody = forwardRef((props, ref) => {
