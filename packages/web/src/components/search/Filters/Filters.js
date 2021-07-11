@@ -301,6 +301,7 @@ const Filters = forwardRef(({
       </ModalPopoverSwitch>
       <Block
         ref={ref}
+        gridArea="filters"
         display="flex"
         position="sticky"
         background="white"
