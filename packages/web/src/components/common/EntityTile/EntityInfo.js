@@ -57,7 +57,7 @@ export default class EntityInfo extends Component {
 
     const { reviewsValue, numReviews } = propRatings || entity;
     const typeCare = entity.care || entity.typeCare || propInfo.typeCare;
-    const capacity = thirdLine || propInfo.capacity || entity.capacity;
+    const capacity = propInfo.capacity || entity.capacity;
     const placeholder = getPlaceholderIcon(communitySize);
     let livingTypeComponent = null;
 
@@ -160,7 +160,7 @@ export default class EntityInfo extends Component {
             pad="xxs"
             title={typeCare ? typeCare.join('.') : null}
           >
-            {capacity}
+            {capacity || thirdLine}{capacity && !capacity.includes('resident') ? ' resident capacity' : null}
           </Span>
 
           }

@@ -18,7 +18,7 @@ const StyledConfirmationDialog = styled(ConfirmationDialog)`
   padding: ${size('spacing.xxLarge')};
 `;
 
-@query('updateUserSave', 'updateUserSave')
+@query('updateOldUserSave', 'updateOldUserSave')
 
 @connect(state => ({
   formState: state.form && state.form[formName] ? state.form[formName].values : {},
@@ -40,12 +40,14 @@ export default class AddOrEditNoteForSavedCommunityContainer extends Component {
 
   handleSubmitSaveCommunityForm = (data) => {
     const {
-      updateUserSave, onComplete, userSave, rawUserSave,
+      updateOldUserSave, onComplete, userSave, rawUserSave,
     } = this.props;
     const { id } = userSave;
 
     // todo new clear submit with dispatch clearSubmitErrors();
-    return updateUserSave({ id }, immutable.set(rawUserSave, 'attributes.info.note', data.note))
+    return updateOldUserSave({ id }, {
+      note: data.note,
+    })
       .then(onComplete)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors

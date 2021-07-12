@@ -4,7 +4,7 @@ import * as immutable from 'object-path-immutable';
 
 import RefreshRedirect from 'sly/web/components/common/RefreshRedirect';
 import { prefetch, query } from 'sly/web/services/api';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
+// import { LISTING_ENTITY_TYPE, COMMUNITY_ENTITY_TYPE } from 'sly/web/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/web/constants/userSave';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { generateAskAgentQuestionContents } from 'sly/web/services/helpers/agents';
@@ -18,7 +18,6 @@ import DashboardFavoritesPage from 'sly/web/components/pages/DashboardFavoritesP
 @query('updateUserSave', 'updateUserSave')
 
 @prefetch('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
-  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
 
@@ -87,25 +86,25 @@ export default class DashboardFavoritesPageContainer extends Component {
 
     return updateUserSave({ id }, userSave)
       .then(() => status.userSaves.refetch())
-      .then(() => notifyInfo('Community has been removed from favorites'));
+      .then(() => notifyInfo('Property has been removed from favorites'));
   };
 
   getClickHandler = (userSave, i) => {
     const { status, showModal, hideModal, notifyInfo } = this.props;
     const { result: rawUserSaves = [] } = status.userSaves;
-    const { community } = userSave;
+    const { resource } = userSave;
 
     const openAskAgentQuestionModal = (e) => {
       e.preventDefault();
 
-      const { addressString, name } = community;
+      const { addressString, name } = resource;
       const [, city] = addressString.split(',');
       const { heading, placeholder, question } = generateAskAgentQuestionContents(name, city);
 
       const modalComponentProps = {
         toggleAskAgentQuestionModal: hideModal,
         notifyInfo,
-        community,
+        community: resource,
         heading,
         placeholder,
         question,
@@ -130,7 +129,7 @@ export default class DashboardFavoritesPageContainer extends Component {
         hideModal,
         userSave,
         rawUserSave,
-        community,
+        community: resource,
         onComplete,
         onCancel: hideModal,
         isEditMode: !!userSave.info.note,
