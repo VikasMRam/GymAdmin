@@ -72,15 +72,19 @@ const StickToTop = styled.div`
 `;
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
-  margin-bottom:  ${space('s')};
+  margin-bottom:  ${space('xs')};
   ${ifProp('hasNoBottomHr', sx$tablet({
     marginBottom: 'm',
     paddingBottom: 'm',
     paddingTop: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
   }), sx$tablet({
     marginBottom: '0',
     paddingBottom: '0',
     paddingTop: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
   }))}
 
   ${sx$laptop({
@@ -212,13 +216,13 @@ export default class ListingDetailPage extends PureComponent {
               <Body>
                 <StyledListingSummary formattedAddress={formattedAddress} />
                 {shouldShowAbout && (
-                <Block id="about" background="white.base" pb="l" mb="xs" px="m" sx$laptop={{ px: '0' }} font="body-l" dangerouslySetInnerHTML={{ __html: description }} />
+                <Block id="about" background="white.base" pb="l" mb="xs" px="m" sx$tablet={{ px: '0' }} font="body-l" dangerouslySetInnerHTML={{ __html: description }} />
                 )}
                 <PlusBranding />
                 {/* Partner Agent */}
                 {shouldShowPartnerAgent && (
                 <>
-                  <HeadingBoxSection font="body-l" hasNoHr id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mb="xs" sx$tablet={{ pt: 'xxl' }}>
+                  <HeadingBoxSection font="body-l" hasNoHr id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you." mb="xs" sx$tablet={{ pt: 'xxl', px: '0', pb: '0' }}>
                     <CommunityAgentSection agent={partnerAgent} pad="l" />
                     <ListingAgentButtonConatiner
                       agent={partnerAgent}
@@ -231,7 +235,7 @@ export default class ListingDetailPage extends PureComponent {
                 </>
                 )}
                 {shouldShowApartment && (
-                <StyledHeadingBoxSection id="apartment-section" heading="The apartment" mb="xs">
+                <StyledHeadingBoxSection id="apartment-section" heading="The apartment">
                   <ApartmentSection />
                   <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
                 </StyledHeadingBoxSection>
@@ -244,7 +248,7 @@ export default class ListingDetailPage extends PureComponent {
                 {
                   shouldShowDining &&
                   <>
-                    <StyledHeadingBoxSection mb="xs" heading="Dining" id="dining" >
+                    <StyledHeadingBoxSection heading="Dining" id="dining" >
                       <Block background="white.base" font="body-l" dangerouslySetInnerHTML={{ __html: diningSection.content }} />
                       {
                         diningSection.url &&
@@ -263,8 +267,8 @@ export default class ListingDetailPage extends PureComponent {
                 {
                   shouldShowNeighborhood &&
                   <>
-                    <StyledHeadingBoxSection mb="xs" id="neighborhood"  heading="The neighborhood" >
-                      <Block background="white.base" pb="xxl" font="body-l" dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
+                    <StyledHeadingBoxSection id="neighborhood"  heading="The neighborhood" >
+                      <Block background="white.base" pb="l" font="body-l" dangerouslySetInnerHTML={{ __html: neighborhoodSection.content }} />
                       <LazyListingMapContainer listing={listing} />
                     </StyledHeadingBoxSection>
                   </>

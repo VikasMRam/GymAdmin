@@ -85,7 +85,7 @@ const makeNewTags = (tags) => {
       newTags.push({
         name,
         id,
-        path: `${name}`,
+        path: '#',
         background: tagsMap[name],
       });
     }
@@ -125,7 +125,7 @@ const ListingSummary = ({
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
   return (
-    <Block pb="l" px="m" sx$laptop={{ px: '0' }} ref={innerRef} className={className}>
+    <Block pb="l" px="m" sx$tablet={{ px: '0' }} ref={innerRef} className={className}>
       <Heading
         font="title-xl"
         pad="xs"
@@ -161,13 +161,13 @@ const ListingSummary = ({
               <Tag
                 key={id}
                 marginRight="xs"
+                marginTop="xs"
                 background={background}
                 color="white"
               >
                 <Link
                   color="white"
                   to={path}
-                  target="_blank"
                   event={{
                   category: 'new-tags',
                   action: 'tag-click',
@@ -184,6 +184,7 @@ const ListingSummary = ({
           <Tag
             key={careType.path}
             marginRight="xs"
+            marginTop="xs"
           >
             <Link
               color="white"

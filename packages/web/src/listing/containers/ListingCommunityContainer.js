@@ -9,15 +9,19 @@ import { community as communityPropType } from 'sly/common/propTypes/community';
 
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
-  margin-bottom:  ${space('s')};
+  margin-bottom:  ${space('xs')};
   ${ifProp('hasNoBottomHr', sx$tablet({
     marginBottom: 'm',
     paddingBottom: 'm',
     paddingTop: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
   }), sx$tablet({
     marginBottom: '0',
     paddingBottom: '0',
     paddingTop: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
   }))}
 
   ${sx$laptop({

@@ -9,15 +9,19 @@ import { Calendar } from 'sly/common/icons';
 import { assetPath } from 'sly/web/components/themes';
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true })`
-  margin-bottom:  ${space('s')};
+  margin-bottom:  ${space('xs')};
   ${ifProp('hasNoBottomHr', sx$tablet({
     marginBottom: 'm',
     paddingBottom: 'm',
     paddingTop: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
   }), sx$tablet({
     marginBottom: '0',
     paddingBottom: '0',
     paddingTop: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
   }))}
 
   ${sx$laptop({
@@ -91,7 +95,7 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
                   loading="lazy"
                   border="round"
                 />
-                <Block lineHeight="normal">
+                <Block as="span" pt="xs" lineHeight="normal">
                   {name}
                 </Block>
               </Block>
