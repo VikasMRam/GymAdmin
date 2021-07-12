@@ -109,13 +109,13 @@ const Search = ({
         paddingTop={headerHeight}
         sx$laptop={{
           display: 'grid',
-          gridTemplateRows: 'auto auto',
+          gridTemplateRows: 'auto auto auto auto',
           gridTemplateColumns: 'calc(100% - 40vw) auto',
-          gridTemplateAreas: '"filters map" "list  map"',
+          gridTemplateAreas: '"heading map" "filters map" "noresults map" "list  map"',
         }}
       >
         <Block
-          gridArea="filters"
+          gridArea="heading"
           paddingTop={show === LIST ? 's' : '0'}
           paddingX="l"
           sx$tablet={{
@@ -168,6 +168,7 @@ const Search = ({
         </Filters>
         {(hasFinished && !listSize) &&
         <Block
+          gridArea="noresults"
           marginTop="m"
           padding="l"
           sx={{
