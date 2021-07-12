@@ -3,9 +3,10 @@ import { string } from 'prop-types';
 // import { ifProp } from 'styled-tools';
 
 import agentPropType from 'sly/common/propTypes/agent';
-import { Block, Heading, Grid } from 'sly/common/system';
+import { Block, Heading, Grid, Link } from 'sly/common/system';
 import Avatar from 'sly/web/components/molecules/Avatar';
 import { getImagePath } from 'sly/web/services/images';
+import { stateNames } from 'sly/web/constants/geo';
 
 
 const CommunityAgentSection = ({
@@ -14,10 +15,14 @@ const CommunityAgentSection = ({
   const {
     gallery,
     info,
+    address,
+    id,
   } = agent;
   const {
     recentFamiliesHelped, displayName,
   } = info;
+
+  const { city, state } = address;
 
 
   let path;
@@ -37,7 +42,7 @@ const CommunityAgentSection = ({
       >
         <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl, path } }} />
         <Block display="flex" flexDirection="column" justifyContent="center" textAlign="left">
-          <Block font="title-m" color="primary">{displayName}</Block>
+          <Link to={`/agents/${stateNames[state]}/${city.replace(' ', '-')}/${id}`} > <Block font="title-m" color="primary">{displayName}</Block></Link>
           {recentFamiliesHelped > 0 && <Block>{recentFamiliesHelped} families helped</Block>}
         </Block>
       </Grid>

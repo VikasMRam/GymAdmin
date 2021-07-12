@@ -24,7 +24,7 @@ export default function GetCustomPricingButtonContainer({ hasAlreadyRequestedPri
   return (
     <GetCustomPricingContainer hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} locTrack={locTrack}>
       {getCustomPricing => hasAlreadyRequestedPricing ? (
-        <Button justifyContent="center" display="grid" gridTemplateColumns="min-content min-content" gridGap="s" disabled={hasAlreadyRequestedPricing} onClick={getCustomPricing} {...props}>
+        <Button sx={{ cursor: 'unset' }} justifyContent="center" display="grid" gridTemplateColumns="min-content min-content" gridGap="s" disabled={hasAlreadyRequestedPricing} onClick={getCustomPricing} {...props}>
           <Checkmark />
           <Block>Pricing Requested</Block>
         </Button>

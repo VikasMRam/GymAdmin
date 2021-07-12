@@ -45,6 +45,7 @@ const ArticleTags = ({ topic, tagsList }) => {
     evt.stopPropagation();
     evt.preventDefault();
     push(`${RESOURCE_CENTER_PATH}/${topic.slug}${tag ? `?tag-name=${tag}` : ''}`);
+    window.scrollTo(0, 0);
   }, [topic]);
 
   return (
