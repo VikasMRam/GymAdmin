@@ -120,6 +120,7 @@ const StyledSection = styled(Section)`
   background:${color('white.base')};
   ${sx$tablet({
     paddingY: '0',
+    paddingX: '0',
   })}
   font:${font('body-l')};
 `;
@@ -662,18 +663,24 @@ export default class CommunityDetailPage extends PureComponent {
               </CarouselContainer>
             </StyledHeadingBoxSection>
               )}
+
+            {nearbyCities &&
+            nearbyCities.length > 0 && (
+            <SeoLinks
+              title={`Explore top cities near ${name}`}
+              links={nearbyCities}
+              px="m"
+              pad="l"
+              sx$tablet={{
+                px: '0',
+                pad: 'xxl',
+              }}
+              background="white"
+            />
+            )}
           </Wrapper>
 
 
-          {nearbyCities &&
-            nearbyCities.length > 0 && (
-              <Wrapper>
-                <SeoLinks
-                  title={`Explore top cities near ${name}`}
-                  links={nearbyCities}
-                />
-              </Wrapper>
-            )}
         </CommunityDetailPageTemplate>
         <Footer sx={{ marginBottom: '81px' }} sx$laptop={{ marginBottom: '0px' }} />
       </>
