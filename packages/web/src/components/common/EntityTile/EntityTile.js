@@ -97,7 +97,8 @@ const EntityTile = ({
         position: 'absolute',
         top: '0.5rem',
         left: '0.5rem',
-        display: 'block',
+        display: 'flex',
+        flexDirection: 'row',
       }}
     >
       {newTags.map(({ name, color }) => {
@@ -107,13 +108,6 @@ const EntityTile = ({
             background="white"
             key={name}
             marginRight="xs"
-            sx={{
-              zIndex: '10',
-              position: 'absolute',
-              top: '0.25rem',
-              left: '0.25rem',
-              display: 'block',
-            }}
           >
             {name}
           </Tag>
@@ -155,7 +149,7 @@ const EntityTile = ({
           gridGap: 'm',
           height: '100%',
         } : {
-          gridTemplateColumns: `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto`,
+          gridTemplateColumns: '6.5rem auto',
           gridGap: 'xs',
         }}
       >
@@ -170,7 +164,6 @@ const EntityTile = ({
             placeholder={placeholder}
             sizes={mediaSizes}
             aspectRatio={imageAspectRatio}
-
             margin={type === 'map' ? imageMargin : 0}
             snap={layout === 'row' ? 'bottom' : imageSnap}
             loading={loading}

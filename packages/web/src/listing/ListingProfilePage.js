@@ -180,7 +180,7 @@ export default class ListingDetailPage extends PureComponent {
     const shouldShowActivities = !!activities;
     const shouldShowDining = !!diningSection;
     const shouldShowNeighborhood = !!neighborhoodSection;
-    const shouldShowCommunity = !!communitySection;
+    const shouldShowCommunity = !!communitySection && !!community;
     const shouldShowReviews = reviews && reviews.length > 0;
 
     const stickyHeaderSections = [
