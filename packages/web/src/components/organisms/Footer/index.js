@@ -95,7 +95,7 @@ GroupHeading.propTypes = {
 
 
 GroupHeading.defaultProps = {
-  font: 'body-xs',
+  font: 'label',
   color: 'slate.lighter-40',
   marginBottom: 'l',
   textTransform: 'uppercase',

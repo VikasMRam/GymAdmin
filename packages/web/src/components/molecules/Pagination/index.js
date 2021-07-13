@@ -34,6 +34,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
   width: 32px !important;
   height: 32px !important;
   padding: 0 !important;
+  min-height:unset !important;
   line-height: normal;
   ${ifProp('collapsedInMobile', sx({
     marginRight: '0',
@@ -47,6 +48,7 @@ const PageLink = styled(ToggleButton)`
   margin-right: ${space('m')};
   width: 32px !important;
   height: 32px !important;
+  min-height:unset !important;
   padding: 0 !important;
   &:last-of-type {
     margin-right: 0;

@@ -17,9 +17,10 @@ import Header from 'sly/web/components/resourceCenter/components/Header';
 import Footer from 'sly/web/components/organisms/Footer';
 import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
 import { withHydration } from 'sly/web/services/partialHydration';
+import loadable from '@loadable/component';
 
-const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
-const ArticlesList = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesList" */ 'sly/web/components/resourceCenter/components/ArticlesList'));
+const ArticlesListByTopic = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
+const ArticlesList = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesList" */ 'sly/web/components/resourceCenter/components/ArticlesList'));
 const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/components/resourceCenter/components/SuscribeEmails'));
 
 
