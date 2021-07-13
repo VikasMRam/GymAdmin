@@ -26,6 +26,7 @@ const activityPath = id => generatePath(DASHBOARD_LISTINGS_DETAIL_PATH, {
 @withBreakpoint
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
+  include: 'similar-listings,agent,community,reviews',
 }))
 
 export default class DashboardListingDetailsPageContainer extends Component {

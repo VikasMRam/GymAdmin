@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 
 import { size, palette } from 'sly/common/components/themes';
-import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tablet, space  } from 'sly/common/system';
+import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tablet, space, Span  } from 'sly/common/system';
 import { Icon } from 'sly/common/components/atoms';
 import { Checkmark } from 'sly/common/icons/index';
 
@@ -47,7 +47,11 @@ color: white;
     margin-right:${space('s')};
     margin-top:auto;
     margin-bottom:auto;
+    flex: 1;
   }
+& span {
+    flex: 18;
+}
 `;
 
 const PlusBranding = () => {
@@ -56,6 +60,7 @@ const PlusBranding = () => {
       as="section"
       position="relative"
       mb="xs"
+      sx$tablet={{ marginBottom: 'xxl' }}
       css={css`
         width: 100vw;
         max-width: 100vw;
@@ -98,7 +103,7 @@ const PlusBranding = () => {
           }}
       >
         <Block
-          marginBottom="xxl"
+
           sx$tablet={{
               marginBottom: '64px',
             }}
@@ -140,9 +145,9 @@ const PlusBranding = () => {
           </Block>
           <Block>
             <Grid flexDirection="row" gridGap="s">
-              <IconItem><Checkmark color="white" />Each space is thoughtfully designed for comfort and care</IconItem>
-              <IconItem><Checkmark color="white" />Seniorly Plus communities come with premium support</IconItem>
-              <IconItem><Checkmark color="white" />Be at ease knowing each community is verified with an in-person inspection</IconItem>
+              <IconItem><Checkmark color="white" /><Span>Each space is thoughtfully designed for comfort and care</Span></IconItem>
+              <IconItem><Checkmark color="white" /><Span>Seniorly Plus communities come with premium support</Span></IconItem>
+              <IconItem><Checkmark color="white" /><Span>Be at ease knowing each community is verified with an in-person inspection</Span></IconItem>
             </Grid>
           </Block>
           <Button

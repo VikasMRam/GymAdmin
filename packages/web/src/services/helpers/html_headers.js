@@ -751,7 +751,7 @@ const getSDForListing = ({
 
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
-    imageUrl = getImagePath(encodeURI(gallery.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
+    imageUrl = getImagePath(encodeURI(gallery?.images[0].path.replace(/\.jpe?g$/i, '.jpg')));
     const imageObj = {};
     imageObj['@type'] = 'ImageObject';
     imageObj.name = `Front Image for ${name}`;
@@ -775,20 +775,9 @@ export const getHelmetForListingPage = (listing) => {
 
   // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
 
-  let toc = tocs.find(elem => (elem.label === care[0]));
-  if (typeof toc === 'undefined') {
-    toc = {
-      label: 'Nursing Homes',
-      value: 'nursing-homes',
-      segment: 'nursing-homes',
-    };
-  }
-
   const title = `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
 
-  const article = ((toc.label === 'Assisted Living' || toc.label === 'Independent Living') ? 'an' : 'a');
-
-  const description = `${name} is ${article} ${toc.label} listing located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
+  const description = `${name} is listing located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
 
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
@@ -813,7 +802,7 @@ export const getHelmetForListingPage = (listing) => {
   significantLinks.push(`${host}${searchPageUrl}`);
   ldWP.significantLink = significantLinks.join(', ');
 
-  const ld = getSDForCommunity({ ...listing });
+  const ld = getSDForListing({ ...listing });
 
   const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
     const result = {

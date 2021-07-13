@@ -2,6 +2,8 @@ import React from 'react';
 import { arrayOf, object, func, bool, shape } from 'prop-types';
 import styled from 'styled-components';
 
+import CommunityTile from 'sly/web/components/organisms/CommunityTile';
+import EntityTile from 'sly/web/components/common/EntityTile';
 import { size } from 'sly/common/components/themes';
 import SlyEvent from 'sly/web/services/helpers/events';
 import pad from 'sly/web/components/helpers/pad';
@@ -10,7 +12,6 @@ import { Heading, Hr, Paragraph, Link } from 'sly/common/components/atoms';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/web/components/templates/DashboardPageTemplate';
 import SectionForm from 'sly/web/components/molecules/SectionForm';
-import CommunityTile from 'sly/web/components/organisms/CommunityTile';
 import HowSlyWorksVideo from 'sly/web/components/organisms/HowSlyWorksVideo';
 import { textAlign } from 'sly/web/components/helpers/text';
 import { Grid } from 'sly/common/system';
@@ -49,7 +50,7 @@ const StyledLink = styled(Link)`
 `;
 
 // to prevent community tile's gallery causing overlap which prevents hover from working
-const StyledCommunityTile = shadow(styled(CommunityTile)`
+const StyledEntityTile = shadow(styled(EntityTile)`
   position: relative;
 `);
 
@@ -88,8 +89,8 @@ const DashboardFavoritesPage = ({
   if (!isLoading) {
     communityTiles =
       userSaves.map((userSave, i) => {
-        const { info, id } = userSave;
-        const { url } = info;
+        const { info, id, resource } = userSave;
+        const { url } = resource;
         const onSlideChange = i => onGallerySlideChange(id, i);
         const currentSlide = currentGalleryImage[id];
         const actionButtons = [
@@ -101,14 +102,14 @@ const DashboardFavoritesPage = ({
 
         return (
           <StyledLink to={url} key={id}>
-            <StyledCommunityTile
+            <StyledEntityTile
               addNote
               canFavourite
               isFavourite
               currentSlide={currentSlide}
               onSlideChange={onSlideChange}
               key={userSave.id}
-              community={userSave.community}
+              entity={resource}
               actionButtons={actionButtons}
               note={userSave.info.note}
               onAddNoteClick={clickHandlers[i].openNoteModification}

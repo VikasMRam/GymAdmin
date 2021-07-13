@@ -36,7 +36,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
 
       <SectionForm heading="Activities Section">
         <EditField
-          name="info.activities"
+          name="attributes.info.activities"
           label="Activities"
           type="checkbox"
           options={activitiesOptions}
@@ -44,7 +44,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
           wideWidth
         />
         <EditField
-          name="info.activityCalendarURL"
+          name="attributes.info.activityCalendarURL"
           label="Activities calendar URL"
           type="text"
           readOnly={!canEdit}
@@ -52,7 +52,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
       </SectionForm>
       <SectionForm heading="Dining Section">
         <EditField
-          name="info.sections[0].content"
+          name="attributes.info.sections[0].content"
           label="Dining"
           type="richtextarea"
           placeholder=""
@@ -60,7 +60,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
           widthSpacing="tabletLayout.col5"
         />
         <EditField
-          name="info.sections[0].url"
+          name="attributes.info.sections[0].url"
           label="Sample menu URL"
           type="text"
           readOnly={!canEdit}
@@ -68,7 +68,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
       </SectionForm>
       <SectionForm heading="Neighborhood Section">
         <EditField
-          name="info.sections[1].content"
+          name="attributes.info.sections[1].content"
           label="Neighborhood"
           type="richtextarea"
           placeholder=""
@@ -80,7 +80,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
 
       <SectionForm heading="Community details">
         <EditField
-          name="info.sections[2].content"
+          name="attributes.info.sections[2].content"
           label="Community details"
           type="richtextarea"
           placeholder=""
@@ -88,7 +88,7 @@ const DashboardListingAdditionalInfoForm = ({ handleSubmit, invalid, submitting,
           widthSpacing="tabletLayout.col5"
         />
         <EditField
-          name="community"
+          name="relationships.community.data"
           label="Community Slug"
           type="autocomplete"
           readOnly={!canEdit}

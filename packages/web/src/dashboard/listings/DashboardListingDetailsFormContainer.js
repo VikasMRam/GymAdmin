@@ -31,6 +31,7 @@ const ReduxForm = reduxForm({
 @withRouter
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
+  include: 'similar-listings,agent,community,reviews',
 }))
 @withProps(({ status }) => ({
   address: status.listing.getRelationship(status.listing.result, 'address'),

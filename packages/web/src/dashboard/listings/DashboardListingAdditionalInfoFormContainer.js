@@ -26,6 +26,7 @@ const ReduxForm = reduxForm({
 @withRouter
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
+  include: 'similar-listings,agent,community,reviews',
 }))
 @withProps(({ status }) => ({
   community: status.listing.getRelationship(status.listing.result, 'community'),
@@ -41,13 +42,22 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
     status: object,
   };
 
-  handleSubmit = (values) => {
+  handleSubmit = ({ attributes: attributesData, relationships: relationshipsData }) => {
     const { status, updateListing, notifyError, notifyInfo } = this.props;
     const rawListing = status.listing.result;
     const { id, attributes } = rawListing;
+    const community = (relationshipsData?.community?.data?.value || relationshipsData?.community?.data?.id) && {
+      data: {
+        type: 'Community',
+        id: relationshipsData?.community?.data?.value || relationshipsData?.community?.data?.id,
+      },
+    };
 
     return updateListing({ id }, {
-      attributes: values,
+      attributes: attributesData,
+      relationships: {
+        community,
+      },
     })
       .then(() => notifyInfo(`Details for ${attributes.name} saved correctly`))
       .catch(() => notifyError(`Details for ${attributes.name} could not be saved`));
@@ -57,40 +67,46 @@ export default class DashboardListingAdditionalInfoFormContainer extends Compone
     const { listing, status, user, ...props } = this.props;
 
     const canEdit = userIs(user, PLATFORM_ADMIN_ROLE);
-
-    const init = status.listing.result.attributes;
+    const init = status.listing.result;
 
     const initialValues = pick(
       init,
       [
-        'info.activities',
-        'info.activityCalendarURL',
-        'info.floorPlan.bathroomCount',
-        'info.floorPlan.area',
-        'info.description',
-        'slyScore',
-        'info.sections',
+        'attributes.info.activities',
+        'attributes.info.activityCalendarURL',
+        'attributes.info.floorPlan.bathroomCount',
+        'attributes.info.floorPlan.area',
+        'attributes.info.description',
+        'attributes.slyScore',
+        'attributes.info.sections',
+        'relationships.community.data.id',
       ],
     );
-
     // start - this is redudant logic just to make sure that the order is maintained if someone makes a post request from postman
     const ordered = [];
+    const communityId = initialValues?.relationships?.community?.data?.id;
 
-    if (initialValues.info.sections) {
+    if (initialValues.attributes.info.sections) {
       DEFAULT_SECTION_ORDER.forEach((section) => {
         if (!ordered.includes(section)) {
-          ordered.push(initialValues.info.sections.find(el => el.type === section));
+          ordered.push(initialValues.attributes.info.sections.find(el => el.type === section));
         }
       });
-      initialValues.info.sections = [...ordered];
+      initialValues.attributes.info.sections = [...ordered];
     }
     // end
 
 
     // passes by ref
     defaultsDeep(initialValues, {
-      info: {
-        profileServices: [],
+      relationships: {
+        community: {
+          data: {
+            type: 'Community',
+            label: communityId,
+            value: communityId,
+          },
+        },
       },
     });
 
