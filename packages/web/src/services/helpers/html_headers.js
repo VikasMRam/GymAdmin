@@ -322,7 +322,7 @@ export const getHelmetForCommunityPage = (community) => {
   let significantLinks = [];
   const spUrls = similarCommunities?.similar?.map(p => `${host}${p.url}`);
   significantLinks = significantLinks.concat(spUrls);
-  const searchPageUrl = getCitySearchUrlForListing({ propInfo, address });
+  const searchPageUrl = getCitySearchUrl({ propInfo, address });
   significantLinks.push(`${host}${searchPageUrl}`);
   ldWP.significantLink = significantLinks.join(', ');
 
