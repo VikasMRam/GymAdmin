@@ -55,8 +55,6 @@ const HomePage = () => {
 
   const { requestInfo: { result: topicRes, hasFinished: requestByTopicHasFinished } } = usePrefetch('getTopic');
 
-  console.log(requestInfo);
-
   if (!requestInfo.hasFinished || !requestByTopicHasFinished) {
     return (
       <Flex
