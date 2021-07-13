@@ -171,7 +171,7 @@ export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
     location: object.isRequired,
-    triggerChatboxEvent: func,
+    triggerChatBot: func,
   };
 
   componentDidMount() {
@@ -179,9 +179,10 @@ export default class CommunityDetailPage extends PureComponent {
     const { address } = community;
     const isInternational = address.country !== 'United States';
     if (!isInternational) {
-      const eventName = getChatBotEventName(community);
-      const { triggerChatboxEvent } = this.props;
-      triggerChatboxEvent(eventName);
+      // const eventName = getChatBotEventName(community);
+      const { triggerChatBot } = this.props;
+      // triggerChatBot(eventName);
+      triggerChatBot('Bot reintro');
     }
   }
 
