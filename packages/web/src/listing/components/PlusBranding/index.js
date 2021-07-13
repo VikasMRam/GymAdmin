@@ -60,7 +60,7 @@ const PlusBranding = () => {
       as="section"
       position="relative"
       mb="xs"
-      sx$tablet={{ marginBottom: '0' }}
+      sx$tablet={{ marginBottom: 'xxl' }}
       css={css`
         width: 100vw;
         max-width: 100vw;
@@ -103,7 +103,7 @@ const PlusBranding = () => {
           }}
       >
         <Block
-          marginBottom="xxl"
+
           sx$tablet={{
               marginBottom: '64px',
             }}
