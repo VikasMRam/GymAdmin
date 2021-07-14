@@ -24,7 +24,7 @@ export default function SearchContainer() {
   const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
 
   const apiFilters = getApiFilters(currentFilters);
-  const { requestInfo: requestResult } = usePrefetch('getCommunitySearch', apiFilters);
+  const { requestInfo: requestResult } = usePrefetch('getSearchPage', apiFilters);
 
   // set the state to avoid blank page during fetch
   const [requestInfo, setRequestInfo] = useState(requestResult);
@@ -58,6 +58,7 @@ export default function SearchContainer() {
   const { triggerChatBot } = useChatbox();
   useEffect(() => {
     if (location.pathname.indexOf('nursing-homes') === -1) {
+      // triggerChatBot('search-bot');
       triggerChatBot('Bot reintro');
     }
   }, []);
@@ -67,7 +68,7 @@ export default function SearchContainer() {
       currentFilters={currentFilters}
       onFilterChange={onFilterChange}
       onClearFilters={onClearFilters}
-      communities={requestInfo.normalized || []}
+      entities={requestInfo.normalized || []}
       meta={requestInfo.meta || {}}
       pagination={pagination}
       location={location}

@@ -40,6 +40,7 @@ export default {
   otpLoginUser: { method: post, path: '/platform/auth/otp/login' },
   resendOtpCode: { method: post, path: '/platform/auth/otp/retry' },
   sendOtpCode: { method: post, path: '/platform/auth/otp/start' },
+  magicLink: { method: post, path: '/platform/auth/mlink/start' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   claimCommunity: { method: get, path: '/marketplace/communities/:id/claim' },
@@ -66,6 +67,7 @@ export default {
   updateAgent: { method: put, path: '/marketplace/agents/:id' },
   createAgent: { method: post, path: '/marketplace/agents' },
 
+  getSearchPage: { method: get, path: '/marketplace/search/searchpage' },
   getCommunitySearch: { method: get, path: '/platform/community-search' },
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getSearch: { method: get, path: '/marketplace/search' },

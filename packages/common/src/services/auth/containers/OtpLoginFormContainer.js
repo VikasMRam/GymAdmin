@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string, object } from 'prop-types';
@@ -44,11 +45,12 @@ export default class OtpLoginFormContainer extends Component {
     formState: object,
     sendOtpCode: func,
     setOtpTitle: func,
+    phone_number: string,
   };
 
 
   state={
-    sentCode: false,
+    error: null,
   }
 
 
@@ -58,7 +60,6 @@ export default class OtpLoginFormContainer extends Component {
 
     sendOtpCode({ email }).then(() => {
       notifyInfo(`A one time passcode has been sent to ${email}.`);
-      this.setState({ sentCode: true });
       setOtpTitle();
       clearSubmitErrors();
     }).catch((error) => {
@@ -68,10 +69,9 @@ export default class OtpLoginFormContainer extends Component {
     });
   }
 
-  handleOnSubmit = ({ email, code }) => {
-    const { otpLoginUser, onSubmit, clearSubmitErrors, form } = this.props;
-    const payload = { otp: code, email };
-
+  handleOnSubmit = (code) => {
+    const { otpLoginUser, onSubmit, clearSubmitErrors, form, phone_number } = this.props;
+    const payload = { otp: code, phone_number };
 
     clearSubmitErrors(form);
     return otpLoginUser(payload)
@@ -79,7 +79,9 @@ export default class OtpLoginFormContainer extends Component {
       .catch((error) => {
         // TODO: Need to set a proper way to handle server side errors
         if (error.status === 400) {
-          return Promise.reject(new SubmissionError({ _error: 'Invalid code. Please try again.' }));
+          this.setState({ error: 'That code wasn’t valid. Please try again.' });
+        } else {
+          this.setState({ error: 'There was a problem submitting your code' });
         }
 
         return Promise.reject(error);
@@ -87,14 +89,13 @@ export default class OtpLoginFormContainer extends Component {
   };
 
   resendCode = () => {
-    const { formState, resendOtpCode, notifyError, notifyInfo } = this.props;
-    const { email } = formState;
-    const payload = { email };
+    const { resendOtpCode, notifyError, notifyInfo, phone_number } = this.props;
+    const payload = { phone_number };
 
 
     return resendOtpCode(payload)
       .then(() => {
-        notifyInfo(`Code resent to ${email}`);
+        notifyInfo('New code sent.');
       })
       .catch(() => {
         notifyError('Failed to resend code. Please try again.');
@@ -102,12 +103,14 @@ export default class OtpLoginFormContainer extends Component {
   };
 
   render() {
+    const { error } = this.state;
+
     return (
       <ReduxForm
         {...this.props}
         onSubmit={this.handleOnSubmit}
         onResendCodeClick={this.resendCode}
-        sentCode={this.state.sentCode}
+        submitError={error}
         handleOtpClick={this.handleOtpClick}
       />
     );

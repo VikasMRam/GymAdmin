@@ -125,9 +125,9 @@ const applyGenericFilter = (filterName, selectionTypes, viewPort) => {
     const searchText = communityType.uiText;
     cy.get('div[class*="FilterChoice"]')
       .contains(searchText)
-      .click();
+      .click({ force: true });
   });
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
@@ -144,7 +144,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
     applyFilter(selectionValue, viewPort);
   }
   clickFilterButtons(viewPort, 'Clear');
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
@@ -165,7 +165,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
       .contains(searchText)
       .click();
   });
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
 
   clickFilterButtons(viewPort, 'Save');
   cy.log('Save Button Clicked');
@@ -179,7 +179,7 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
     applyFilter(lapHeader, viewPort);
   }
   clickFilterButtons(viewPort, 'Clear');
-  cy.wait('@communitySearch');
+  cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
@@ -386,7 +386,7 @@ describe('Search Page', () => {
       return false;
     });
     cy.intercept('GET', '**/search?**').as('searchRequest');
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
   });
   let currentList = [];
   let totalResultCount = 0;
@@ -406,7 +406,7 @@ describe('Search Page', () => {
       toSearchPage(searchText);
       // Url check
       cy.url().should('have.string', urlCity);
-      cy.wait('@communitySearch').then((res) => {
+      cy.wait('@searchResults').then((res) => {
         const responseBody = res.response.body;
         if (responseBody.data && responseBody.data.length) {
           currentList = responseBody.data;
@@ -451,7 +451,7 @@ describe('Search Page Sections', () => {
       // failing the test
       return false;
     });
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
     cy.intercept('GET', '**/search?**').as('searchRequest');
     cy.intercept('GET', '**platform/geo-guides?**').as('geoGuide');
   });
@@ -464,7 +464,7 @@ describe('Search Page Sections', () => {
       toSearchPage(searchText);
       // Url check
       cy.url().should('have.string', urlCity);
-      cy.wait('@communitySearch').then((res) => {
+      cy.wait('@searchResults').then((res) => {
         const responseBody = res.response.body;
         if (responseBody.data && responseBody.data.length) {
           currentList = responseBody.data;
@@ -538,7 +538,7 @@ describe('Search Page Sections', () => {
 
     it('Navigate to page 2', () => {
       cy.get('div[class*="Pagination"]').find('button').contains('2').click({ force: true });
-      cy.wait('@communitySearch').then((res) => {
+      cy.wait('@searchResults').then((res) => {
         const responseBody = res.response.body;
         if (responseBody.data && responseBody.data.length) {
           currentList = responseBody.data;
@@ -569,7 +569,7 @@ describe('Assisted Search Page Sections', () => {
       // failing the test
       return false;
     });
-    cy.intercept('GET', '**/platform/community-search?filter**').as('communitySearch');
+    cy.intercept('GET', '**/search/searchpage?filter**').as('searchResults');
     cy.intercept('GET', '**/uuid-actions').as('postUuidActions');
   });
 

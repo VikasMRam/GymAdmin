@@ -26,14 +26,14 @@ import SearchResultsAdTileContainer from 'sly/web/containers/SearchResultsAdTile
 import { ASSESSMENT_WIZARD_MATCHED_AGENT, ASSESSMENT_WIZARD_COMPLETED }
   from 'sly/web/assessment/constants';
 import { isBrowser } from 'sly/web/config';
-import ListCommunityTile from 'sly/web/components/search/ListCommunityTile';
+import ListEntityTile from 'sly/web/components/search/ListEntityTile';
 import { getStateAbbr, isInternationalPath, isCanadaPath } from 'sly/web/services/helpers/url';
 
 const Search = ({
   currentFilters,
   onFilterChange,
   onClearFilters,
-  communities,
+  entities,
   meta,
   pagination,
   location,
@@ -55,6 +55,7 @@ const Search = ({
   const [show, setShow] = useState(LIST);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
+  const [markerHover, setMarkerHover] = useState(null);
 
   const listSize = meta['filtered-count'];
 
@@ -83,7 +84,7 @@ const Search = ({
   return (
     <>
       {getHelmetForSearchPage({
-        ...currentFilters, url: location, communityList: communities, listSize,
+        ...currentFilters, url: location, communityList: entities, listSize,
       })}
       <TemplateHeader
         ref={headerRef}
@@ -94,7 +95,7 @@ const Search = ({
           width: '100%',
         }}
       >
-      <HeaderContainer />
+        <HeaderContainer />
         {/* <BannerNotificationAdContainer
             type="wizardSearch"
             {...currentFilters}
@@ -108,17 +109,17 @@ const Search = ({
         paddingTop={headerHeight}
         sx$laptop={{
           display: 'grid',
-          gridTemplateRows: 'auto auto',
-          gridTemplateColumns: '708px auto',
-          gridTemplateAreas: '"filters map" "list  map"',
+          gridTemplateRows: 'auto auto auto auto',
+          gridTemplateColumns: 'calc(100% - 40vw) auto',
+          gridTemplateAreas: '"heading map" "filters map" "noresults map" "list  map"',
         }}
       >
         <Block
-          gridArea="filters"
-          paddingY="s"
+          gridArea="heading"
+          paddingTop={show === LIST ? 's' : '0'}
           paddingX="l"
           sx$tablet={{
-            paddingY: 'l',
+            paddingTop: show === LIST ? 'l' : '0',
           }}
           css={{
             zIndex: '100',
@@ -142,46 +143,49 @@ const Search = ({
               display: 'block',
             }}
           >
-            <Heading pad="l" font="title-xl">{title}</Heading>
+            <Heading pad="xs" font="title-xl">{title}</Heading>
           </Block>
-          <Filters
-            ref={filtersRef}
-            currentFilters={currentFilters}
-            onFilterChange={onFilterChange}
-            onClearFilters={onClearFilters}
-            showTOC={!isInternational || isCanada}
-          >
 
-            <FilterButton
-              display="flex"
-              sx$laptop={{
+        </Block>
+        <Filters
+          ref={filtersRef}
+          currentFilters={currentFilters}
+          onFilterChange={onFilterChange}
+          onClearFilters={onClearFilters}
+          showTOC={!isInternational || isCanada}
+        >
+
+          <FilterButton
+            display="flex"
+            sx$laptop={{
                 display: 'none',
               }}
-              marginLeft="auto"
-              onClick={toggleShow}
-            >
-              <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
-            </FilterButton>
-          </Filters>
-          {(hasFinished && !listSize) &&
-            <Block
-              marginTop="xl"
-              sx$tablet={{
-                marginTop: 'xxl',
-              }}
-            >
-              <Heading font="title-s-azo" pad="xs">No results</Heading>
-              <Block marginBottom="m">Try removing some filters or zooming out on the map to find more communities.</Block>
-              <Link onClick={() => onClearFilters()}>
-                Clear all filters
-              </Link>
-            </Block>
-          }
+            marginLeft="auto"
+            onClick={toggleShow}
+          >
+            <Icon icon={nextShow} />&nbsp;{SHOW_OPTIONS[nextShow]}
+          </FilterButton>
+        </Filters>
+        {(hasFinished && !listSize) &&
+        <Block
+          gridArea="noresults"
+          marginTop="m"
+          padding="l"
+          sx={{
+            zIndex: '50',
+          }}
+        >
+          <Heading font="title-s-azo" pad="xs">No results</Heading>
+          <Block marginBottom="m">Try removing some filters or zooming out on the map to find more communities.</Block>
+          <Link onClick={() => onClearFilters()}>
+            Clear all filters
+          </Link>
         </Block>
-
+          }
         <Block
           gridArea="list"
           paddingBottom="xl"
+          paddingTop="l"
           display={show === LIST ? 'block' : 'none'}
           sx$laptop={{
               display: 'block',
@@ -191,15 +195,15 @@ const Search = ({
           }}
 
         >
-          {communities.map((community, i) => (
-            <Fragment key={community.id}>
-              <ListCommunityTile
-                setHoveredCommunity={setHoveredCommunity}
+          {entities.map((entity, i) => (
+            <Fragment key={entity.id}>
+              <ListEntityTile
+                setHoveredEntity={setHoveredCommunity}
                 index={cursor + i}
-                community={community}
+                entity={entity}
                 loading={i <= 2 ? 'eager' : 'lazy'}
               />
-              {!isInternational && !showZillowSearchAd && city && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!isInternational && !showZillowSearchAd && city && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 l l"
                 >
@@ -211,7 +215,7 @@ const Search = ({
                   />
                 </Block>
               }
-              {!isInternational && showZillowSearchAd && ((communities.length < 3 && i === communities.length - 1) || (communities.length > 1 && i === 1)) &&
+              {!isInternational && showZillowSearchAd && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
                 <Block
                   margin="0 l l"
                 >
@@ -231,19 +235,20 @@ const Search = ({
         <Map
           gridArea="map"
           currentFilters={currentFilters}
-          communities={communities}
+          communities={entities}
           meta={meta}
           onFilterChange={onFilterChange}
           onMarkerClick={setSelectedCommunity}
-          onMarkerHover={setHoveredCommunity}
+          onMarkerHover={setMarkerHover}
           selectedCommunity={hoveredCommunity || selectedCommunity}
+          selectedHover={markerHover}
           cursor={cursor}
           width="100%"
           sx={{
             display: show === MAP ? 'block' : 'none',
             paddingTop: `${upToLaptopOffset}px`,
             marginTop: `-${upToLaptopOffset}px`,
-            height: sx`calc(100vh - ${space('l')})`,
+            height: sx`calc(100vh)`,
           }}
 
           sx$laptop={{
@@ -269,7 +274,7 @@ Search.propTypes = {
   onFilterChange: func,
   onClearFilters: func,
   currentFilters: object,
-  communities: arrayOf(coordPropType),
+  entities: arrayOf(coordPropType),
   meta: object,
   pagination: object,
   location: object,

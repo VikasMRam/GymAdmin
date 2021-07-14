@@ -95,7 +95,7 @@ GroupHeading.propTypes = {
 
 
 GroupHeading.defaultProps = {
-  font: 'body-xs',
+  font: 'label',
   color: 'slate.lighter-40',
   marginBottom: 'l',
   textTransform: 'uppercase',
@@ -132,6 +132,7 @@ const Links = ({ items }) => (
   >
     {Object.entries(items).map(([name, url]) => (
       <Link
+        key={`${name} ${url}`}
         color="slate.base"
         fontSize="body-s"
         href={url}

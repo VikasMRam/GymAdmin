@@ -122,10 +122,9 @@ Cypress.Commands.add('waitForPageViewEvent', () => {
   });
 });
 
-Cypress.Commands.add('login', () => {
-  cy.intercept('POST', '**/auth/login').as('login');
-  cy.intercept('GET', '**/users/me').as('getUser');
+Cypress.Commands.add('fullLogin', (email, password) => {
   cy.intercept('GET', '**/events/new*').as('getEvent');
+
   cy.clearCookie('sly_sid');
   cy.clearCookie('sly_uuid');
   cy.clearCookie('sly-session');
@@ -134,12 +133,36 @@ Cypress.Commands.add('login', () => {
   cy.waitForPageViewEvent();
 
   cy.get('div[class*=Header__HeaderItems]').contains('Log In').scrollIntoView().click({ force: true });
-  cy.get('form input[name="email"]').type('slytest+admin@seniorly.com');
-  cy.get('form input[name="password"]').type('nopassword');
+  cy.modalLogin(email, password);
+});
+
+
+Cypress.Commands.add('modalLogin', (email, password) => {
+  cy.intercept('POST', '**/auth/login').as('login');
+  cy.intercept('GET', '**/users/me').as('getUser');
+  cy.intercept('POST', '**/mlink/start').as('magicLink');
+
+  cy.get('form input[name="email"]').type(email);
+
+  cy.get('button[type="submit"]').contains('Continue').click();
+  cy.wait('@magicLink');
+  cy.contains('div', 'log in with a password').click();
+  cy.get('form input[name="password"]').type(password);
   cy.get('button[type="submit"]').contains('Log in').click();
   cy.wait('@login');
   cy.wait('@getUser');
 });
+
+
+Cypress.Commands.add('adminLogin', () => {
+  cy.fullLogin('slytest+admin@seniorly.com', 'nopassword');
+});
+
+
+Cypress.Commands.add('modalAdminLogin', () => {
+  cy.modalLogin('slytest+admin@seniorly.com', 'nopassword');
+});
+
 
 Cypress.Commands.add('waitForUser', () => {
   cy.wait('@getUser');

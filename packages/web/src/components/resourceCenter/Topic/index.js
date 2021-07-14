@@ -150,17 +150,18 @@ const Topic = ({ match, location, history }) => {
     );
   }
 
+
   return (
     <>
       <Helmet
-        path={`/${topicRes?.slug}`}
-        title={`Expert resources on ${topicRes?.name}`}
+        path={`/${topicRes?.[0]?.slug}`}
+        title={`Expert resources on ${topicRes?.[0]?.name}`}
         shortDescription={topicRes?.description}
       />
 
       <Header />
 
-      <Block width="100%" position="relative">
+      <Block background="black" width="100%" position="relative">
         <Block
           sx={{
             zIndex: 1,
@@ -174,7 +175,6 @@ const Topic = ({ match, location, history }) => {
           <Link
             to={RESOURCE_CENTER_PATH}
             font="body-m"
-            marginBottom="l"
             color="white.base"
           >
             Resource Center Home
@@ -182,15 +182,16 @@ const Topic = ({ match, location, history }) => {
           <Block
             font="title-xxl"
             marginBottom="l"
+            mt="m"
           >
             {topicRes?.[0].name}
           </Block>
-          <Block font="body-m">
+          <Block font="body-l">
             {topicRes?.[0].description}
           </Block>
         </Block>
         <Image
-          css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+          css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, opacity:'.45' }}
           sources={[320, 425, 728, 1080, 1200]}
           sizes="100vw"
           path={topicRes?.[0].img?.path}

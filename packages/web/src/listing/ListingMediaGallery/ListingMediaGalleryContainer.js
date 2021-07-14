@@ -47,7 +47,7 @@ const ListingMediaGalleryContainer = () => {
 
   const { requestInfo: { normalized: listing, hasFinished: listingRequestHasFinished } } = usePrefetch('getListing', {
     id,
-    include: 'questions,agents',
+    include: 'similar-listings,agent,community,reviews',
   });
 
   const { id: listingId, gallery = {}, videoGallery = {} } = listing || {};

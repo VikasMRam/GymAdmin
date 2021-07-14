@@ -38,7 +38,7 @@ const CommunityRating = ({ rating, numReviews, description, size, color, variati
       }
       {numReviews > 0 &&
         <Block color={textColor}>
-          ({numReviews}{reviewsText && ' reviews'})
+          ({numReviews}{reviewsText && (numReviews === 1 ? ' review' : ' reviews')})
         </Block>
       }
     </Block>

@@ -50,6 +50,7 @@ module.exports = {
     'no-confusing-arrow': 0,
     'no-unused-vars': [2, { ignoreRestSiblings: true }],
     'no-constant-condition': 0,
+    'prefer-destructuring': 0,
     'react/prefer-stateless-function': 0,
     'import/no-dynamic-require': 0,
     'import/no-extraneous-dependencies': 0,

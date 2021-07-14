@@ -6,7 +6,7 @@ import { Heading, Link, Grid, Block } from 'sly/common/system';
 
 const SeoLinks = ({ title, links, ...props }) => (
   <Block as="section" {...props}>
-    <Heading font="title-m" pad="l">{title}</Heading>
+    <Heading font="title-m" pt="l" pad="l" sx$tablet={{ pt: '0' }} >{title}</Heading>
     <Grid
       gridGap="m"
       sx$tablet={{
