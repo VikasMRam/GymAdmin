@@ -38,6 +38,7 @@ export const AGENT_DASHBOARD_TASKS_BASE_PATH = `${AGENT_DASHBOARD_PATH}/tasks`;
 export const AGENT_DASHBOARD_TASKS_PATH = `${AGENT_DASHBOARD_TASKS_BASE_PATH}/:taskType(${taskTypes.join('|')})?`;
 export const AGENT_DASHBOARD_CONTACTS_PATH = `${AGENT_DASHBOARD_PATH}/my-contacts`;
 export const AGENT_DASHBOARD_CONTEXT_TASKS_PATH = `:contextPath/:taskType(${taskTypes.join('|')})?`;
+export const AGENT_DASHBOARD_INVOICE_PATH = `${AGENT_DASHBOARD_PATH}/invoices`;
 
 export const AGENT_DASHBOARD_MESSAGES_PATH = `${AGENT_DASHBOARD_PATH}/messages`;
 export const AGENT_DASHBOARD_MESSAGE_DETAILS_PATH = `${AGENT_DASHBOARD_PATH}/messages/:id`;
