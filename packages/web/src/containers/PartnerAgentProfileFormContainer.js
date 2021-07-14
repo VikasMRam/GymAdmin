@@ -67,7 +67,7 @@ export default class PartnerAgentProfileFormContainer extends Component {
       .set('attributes.info.canReceiveReferrals', canReceiveReferrals)
       .set('attributes.info.cellPhone', phoneParser(values.cellPhone))
       .set('attributes.info.slackChannel', values.slackChannel)
-      .set('attributes.info.invoicedID', values.invoicedID)
+      .set('attributes.info.invoicedID', parseInt(values.invoicedID))
       .set('attributes.info.appointmentLink', values.appointmentLink)
       .set('attributes.info.email', values.email)
       .set('attributes.info.timeZone', values.timeZone)
