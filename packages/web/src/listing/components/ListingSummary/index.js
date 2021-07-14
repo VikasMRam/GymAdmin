@@ -12,7 +12,7 @@ import { isBrowser } from 'sly/web/config';
 import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Help, Favorite, Share } from 'sly/common/icons';
-// import Paragraph from 'sly/common/components/atoms/Paragraph';
+import ListingPricing from 'sly/web/listing/components/ListingPricing';
 
 
 const overridePosition = ({ left, top }) => ({
@@ -218,36 +218,7 @@ const ListingSummary = ({
           gap: '2rem',
         }}
       >
-        <Block as="span">
-          <Block
-            as="span"
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            css={css`
-                gap: 0.2em
-              `}
-          >
-            <Span
-              palette="stale"
-              pad="small"
-              font="body-s"
-            >Exclusive Seniorly Price
-            </Span>
-            <StyledHelpIcon  size="s" data-tip data-for="seniorlyPrice" />
-            {isBrowser &&
-            <TooltipContent overridePosition={overridePosition} id="seniorlyPrice" type="light" effect="solid" multiline>
-              This is special discouted price offered only through Seniorly.
-            </TooltipContent>
-          }
-          </Block>
-          <Paragraph
-            color="viridian.base"
-            pad="small"
-          >${startingRate}/month + care fees
-          </Paragraph>
-
-        </Block>
+        <ListingPricing startingRate={startingRate} />
         {floorPlan.bedroomCount && (
           <Block as="span">
             <Paragraph
