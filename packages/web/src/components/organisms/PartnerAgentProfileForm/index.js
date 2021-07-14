@@ -262,6 +262,14 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             wideWidth
           />
           <Field
+            name="invoicedID"
+            label="invoiced Customer ID"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
             name="appointmentLink"
             label="Calendly Appointment Link"
             type="text"
