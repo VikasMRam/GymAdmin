@@ -34,7 +34,7 @@ const DashboardListingIndexPage = ({ token, error }) => {
 
   return (
     <DashboardPageTemplate activeMenuItem="Invoices">
-      <iframe style={{ flexGrow: 1 }} src={`https://invoice.seniorly.com/login/${token}`} />
+      <iframe style={{ flexGrow: 1, borderWidth: 2, borderColor: '#E9EBED', borderStyle: 'solid'  }} src={`https://invoice.seniorly.com/login/${token}`} />
     </DashboardPageTemplate>
   );
 };
