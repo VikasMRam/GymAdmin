@@ -12,7 +12,7 @@ function DashboardInvoicePageContainer() {
     invoicedMagicLink().then(({ body }) => {
       setToken(body.token);
     }).catch((err) => {
-      console.log(error);
+      console.log(err);
       setError('There was an issue fetching your invoices. Invoices might not be enabled on your account yet');
     });
   }, []);
