@@ -12,8 +12,8 @@ function getDisplayName(WrappedComponent) {
 
 export default function withTypeform(InnerComponent) {
   const Wrapper = (props) => {
-    const { triggerTypeform } = useTypeform();
-    return <InnerComponent {...props} triggerTypeform={triggerTypeform} />;
+    const {  getTypeFormUrlByCommunity, getEmbededFormUrl } = useTypeform();
+    return <InnerComponent {...props}  getTypeFormUrlByCommunity={getTypeFormUrlByCommunity}  getEmbededFormUrl={getEmbededFormUrl} />;
   };
 
   Wrapper.displayName = `withChatbox(${getDisplayName(InnerComponent)})`;

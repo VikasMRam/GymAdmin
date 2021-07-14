@@ -4,7 +4,6 @@ import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
-import { communityPagePricingForm } from 'sly/web/services/helpers/typeform';
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
@@ -53,6 +52,7 @@ import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities'
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Callout from 'sly/web/profile/Callout';
+import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -185,10 +185,6 @@ export default class CommunityDetailPage extends PureComponent {
       const { triggerChatboxEvent } = this.props;
       triggerChatboxEvent('Bot reintro');
     }
-
-    const { triggerTypeform } = this.props;
-    console.log('bbbb', triggerTypeform);
-    triggerTypeform('some event');
   }
 
   render() {
@@ -279,6 +275,15 @@ export default class CommunityDetailPage extends PureComponent {
       reviews: reviews && reviews.length > 0,
     };
 
+    const { getEmbededFormUrl, getTypeFormUrlByCommunity } = this.props;
+
+    let emdededFormUrl = '';
+    if (retrieveLocalStorage('communityProfileSeen')) {
+      emdededFormUrl = getEmbededFormUrl(false, {});
+    } else {
+      emdededFormUrl = getEmbededFormUrl(true, {});
+      addToLocalStorage('communityProfileSeen', true);
+    }
     return (
       <>
         {getHelmetForCommunityPage(community, location)}
@@ -323,7 +328,7 @@ export default class CommunityDetailPage extends PureComponent {
                   <Block className="typeform-widget" data-url="https://form.typeform.com/to/RYBdR1jm?typeform-medium=embed-snippet" width="100%" height="100%" />
                 </Block> */}
 
-                <Button to={communityPagePricingForm(community, location.pathname)} width="100%">
+                <Button to={getTypeFormUrlByCommunity(community, location.pathname)} width="100%">
                   Get Pricing And Availability (conditional)
                 </Button>
 
@@ -429,8 +434,10 @@ export default class CommunityDetailPage extends PureComponent {
                       mode={getAssessmentBoxModes.profileSection}
                       mt="m"
                     /> */}
+
+                    {/* Embeded Typeform */}
                     <Block width="100%" height="350px" mt="m">
-                      <Block className="typeform-widget" data-url="https://form.typeform.com/to/dH3EjYYx?typeform-medium=embed-snippet" width="100%" height="100%" />
+                      <Block className="typeform-widget" data-url={emdededFormUrl} width="100%" height="100%" />
                     </Block>
 
                   </StyledHeadingBoxSection>
