@@ -121,7 +121,7 @@ const AskAgentQuestionContainer = ({ type, children }) => {
     <>
       {children(openAskAgentQuestionModal)}
       <Modal isOpen={!!modalProps} onClose={onCloseModal(beforeCloseModal)}>
-        <HeaderWithClose onClose={onCloseModal()} />
+        <HeaderWithClose onClose={onCloseModal()}>Get Help From an expert</HeaderWithClose>
         <ModalBody>
           {modalName === possibleModals.thankYouModal && (
             <Thankyou
