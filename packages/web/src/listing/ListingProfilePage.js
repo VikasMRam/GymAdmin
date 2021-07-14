@@ -11,10 +11,10 @@ import LazyListingMapContainer from 'sly/web/listing/containers/LazyLististingMa
 import { stateNames } from 'sly/web/constants/geo';
 import { getHelmetForListingPage } from 'sly/web/services/helpers/html_headers';
 import { withHydration } from 'sly/web/services/partialHydration';
-import { size } from 'sly/common/components/themes';
+import { size, key } from 'sly/common/components/themes';
 import { PROFILE_VIEWED } from 'sly/web/services/api/constants';
 import { getBreadCrumbsForListing } from 'sly/web/services/helpers/url';
-import { color, space, sx$tablet, sx$laptop, sx, Block, font, Paragraph, Button, Link, Grid } from 'sly/common/system';
+import { color, space, sx$tablet, sx$laptop, sx, Block, font, Paragraph, Button, Link, Grid, border } from 'sly/common/system';
 import {
   ListingProfilePageTemplate,
   makeBody,
@@ -33,6 +33,7 @@ import { Food } from 'sly/common/icons';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import SimilarListings from 'sly/web/listing/components/SimilarListings';
 import ListingCommunityContainer from 'sly/web/listing/containers/ListingCommunityContainer';
+import ListingPricing from 'sly/web/listing/components/ListingPricing';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const ListingMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkListingMediaGallery" */ 'sly/web/listing/ListingMediaGallery/ListingMediaGalleryContainer'));
@@ -43,6 +44,28 @@ const ListingReviewsContainer = withHydration(/* #__LOADABLE__ */ () => import(/
 const ListingAgentButtonConatiner = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentButtonContainer'));
 const ListingAgentQuestionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityReviews" */ 'sly/web/listing/containers/ListingAgentQuestionContainer'));
 const CarouselContainer = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCarouselContainer" */ 'sly/web/containers/CarouselContainer'));
+
+const StickyFooterWrapper = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: ${color('white.base')};
+  border-top: ${border('s')} ${color('slate.lighter-90')};
+  z-index: ${key('zIndexes.stickySections')};
+  padding: ${space('m')};
+  box-shadow: 0 -${space('xxs')} ${space('xs')} ${color('slate.lighter-90')};
+  ${sx$laptop({
+    display: 'none',
+  })}
+`;
+
+const StyledAskAgentButton = styled(ListingAgentButtonConatiner)`
+  width: 100%;
+  margin-top: ${space('xxs')};
+`;
 
 const StyledListingSummary = styled(ListingSummaryContainer)`
   
@@ -138,6 +161,7 @@ export default class ListingDetailPage extends PureComponent {
       description,
       activities,
       activityCalendarURL,
+      startingRate,
     } = (info || {});
 
 
@@ -322,6 +346,62 @@ export default class ListingDetailPage extends PureComponent {
                 </StickToTop>
               </Column>
             </TwoColumn>
+            <StickyFooterWrapper>
+              <ListingPricing startingRate={startingRate} />
+              <Block
+                as="span"
+                my="auto"
+                ml="auto"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Button
+                  variant="secondary"
+                  paddingY="s"
+                  display="none"
+                  sx$tablet={{
+                  display: 'inline-block',
+                  marginTop: 'auto',
+                  marginRight: '0.7rem',
+                }}
+                  onClick={bookTourClickHandler}
+                >
+                  Book a tour
+                </Button>
+                <Block
+                  as="span"
+                  display="inline-block"
+                >
+                  <StyledAskAgentButton
+                    agent={partnerAgent}
+                    width="100%"
+                    listing={listing}
+                    type="expert"
+                    mt="0"
+                  >
+                    <Block
+                      as="span"
+                      sx$tablet={{
+                      display: 'none',
+                    }}
+                    >
+                      Message
+                    </Block>
+                    <Block
+                      as="span"
+                      display="none"
+                      sx$tablet={{
+                      display: 'inline-block',
+                    }}
+                    >
+                      Send Message
+                    </Block>
+                  </StyledAskAgentButton>
+                </Block>
+
+              </Block>
+            </StickyFooterWrapper>
           </Wrapper>
         </ListingProfilePageTemplate>
 
@@ -363,19 +443,18 @@ export default class ListingDetailPage extends PureComponent {
               >
                 Book a tour
               </Button>
-              <Button
-                width="100%"
-                paddingY="s"
-                height="l"
-                sx$tablet={{
-                width: 'initial',
-                paddingX: 'xxl',
-              }}
-
-              >
-                <Link href="tel:3128473794" color="white"> Call (312) 847-3794</Link>
-
-              </Button>
+              <Link href="tel:3128473794" color="white" width="100%">
+                <Button
+                  paddingY="s"
+                  height="l"
+                  width="100%"
+                  sx$tablet={{
+                    paddingX: 'xxl',
+                   }}
+                >
+                  Call (312) 847-3794
+                </Button>
+              </Link>
               <Button
                 width="100%"
                 paddingY="s"
