@@ -24,7 +24,7 @@ import {
 import FilterButton from './FilterButton';
 import FilterChoice from './FilterChoice';
 
-import Block from 'sly/common/components/atoms/Block';
+import { Block } from 'sly/common/system';
 import Modal, {
   HeaderWithClose,
   ModalActions,
@@ -301,7 +301,18 @@ const Filters = forwardRef(({
       </ModalPopoverSwitch>
       <Block
         ref={ref}
+        gridArea="filters"
         display="flex"
+        position="sticky"
+        background="white"
+        paddingY="m"
+        paddingX="l"
+        borderBottom="s"
+        borderColor="slate.lighter-90"
+        sx={{
+          top: '4.9rem',
+          zIndex: 100,
+        }}
         {...props}
       >
         <FilterButton

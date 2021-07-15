@@ -32,6 +32,7 @@ const JSONAPI_IMAGES_PATH = 'relationships.gallery.data.relationships.images.dat
 @query('updateListing')
 @prefetch('listing', 'getListing', (req, { match }) => req({
   id: match.params.id,
+  include: 'similar-listings,agent,community,reviews',
 }))
 @prefetch('imageCategories', 'getImageCategories')
 @withProps(({ status }) => {

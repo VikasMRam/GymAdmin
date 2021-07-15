@@ -13,7 +13,7 @@ function getDisplayName(WrappedComponent) {
 export default function withChatbox(InnerComponent) {
   const Wrapper = (props) => {
     const { triggerChatBot } = useChatbox();
-    return <InnerComponent {...props} triggerChatboxEvent={triggerChatBot} />;
+    return <InnerComponent {...props} triggerChatBot={triggerChatBot} />;
   };
 
   Wrapper.displayName = `withChatbox(${getDisplayName(InnerComponent)})`;

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
 import path from 'path';
 
@@ -11,10 +12,10 @@ import { StaticRouter } from 'react-router';
 import { renderStylesToString } from 'emotion-server';
 import builder from 'xmlbuilder';
 import ConvertAnsi from 'ansi-to-html';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { stringify } from 'query-string';
 
 import { cleanError } from 'sly/web/services/helpers/logging';
-import { port, host, publicPath, isDev, cmsUrl } from 'sly/web/config';
+import { port, host, publicPath, isDev, cmsUrl, apiUrl } from 'sly/web/config';
 import { configure as configureStore } from 'sly/web/store';
 import Html from 'sly/web/components/Html';
 import ErrorComponent from 'sly/web/components/Error';
@@ -97,12 +98,35 @@ const getResourceCenterSitemapXML = (req, res) => {
     .catch(() => res.status(500).send({ title: 'There are some issues on server, please try again' }));
 };
 
-app.all('/authorize', createProxyMiddleware({
-  target: host,
-  pathRewrite: {
-    '^/': '/v0/',
-  },
-}));
+app.all('/authorize', (req, res) => {
+  fetch(`${apiUrl}${req.url}`)
+    .then((res) => {
+      console.log(res.status);
+      if (res.status !== 200) {
+        let param = 'expired';
+        if (res.status !== 401) {
+          param = 'error';
+        }
+        throw new Error(param);
+      }
+      // eslint-disable-next-line no-underscore-dangle
+      return { cookies: res.headers._headers['set-cookie'] };
+    })
+    .then(({ cookies }) => {
+      console.log('then');
+      let { redirect_to = '/' } = req.query;
+      if (!redirect_to || redirect_to === 'undefined') {
+        redirect_to = '/';
+      }
+      res.setHeader('set-cookie', cookies);
+      res.redirect(301, redirect_to);
+    }).catch((err) => {
+      const { message: status } = err;
+      const { redirect_to } = req.query;
+      res.redirect(301,  `/?${stringify({ loginRedirect: redirect_to, status })}`);
+    });
+});
+
 
 app.get('/sitemap/resource-center.xml', getResourceCenterSitemapXML);
 

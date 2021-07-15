@@ -15,6 +15,7 @@ import {
   User,
   Settings,
   Bed,
+  Money,
 } from 'sly/common/icons';
 import { Span } from 'sly/web/components/atoms';
 import {
@@ -25,6 +26,7 @@ import {
   DASHBOARD_ACCOUNT_PATH, DASHBOARD_COMMUNITIES_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
   FAMILY_DASHBOARD_HOME_PATH,
+  AGENT_DASHBOARD_INVOICE_PATH,
   DASHBOARD_LISTINGS_PATH,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import {
@@ -62,6 +64,7 @@ export const menuItems = [
   { label: 'Contacts', Icon: Contacts, href: AGENT_DASHBOARD_CONTACTS_PATH, role: AGENT_ADMIN_ROLE },
   { label: 'Messages', Icon: Messages, href: AGENT_DASHBOARD_MESSAGES_PATH, role: PLATFORM_ADMIN_ROLE },
   { label: 'Home Base', Icon: CommunitySizeSmall, href: FAMILY_DASHBOARD_HOME_PATH, role: CUSTOMER_ROLE },
+  { label: 'Invoices', Icon: Money, href: AGENT_DASHBOARD_INVOICE_PATH, role: AGENT_ND_ROLE },
   { label: 'Favorites', Icon: FavoriteActive, href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE },
   { label: 'Profile', Icon: User, href: AGENT_DASHBOARD_PROFILE_PATH, role: AGENT_ND_ROLE | AGENT_ADMIN_ROLE },
   { label: 'Account', Icon: Settings, href: DASHBOARD_ACCOUNT_PATH, role: CUSTOMER_ROLE | PROVIDER_OD_ROLE | AGENT_ND_ROLE },

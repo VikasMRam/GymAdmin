@@ -152,6 +152,7 @@ const AddListingForm = ({ handleSubmit, invalid, submitting, selectedCountry, on
           <Field
             name="slug"
             label="Agent Slug"
+            required
             type="autocomplete"
             component={ReduxField}
             column={agentsColumn}

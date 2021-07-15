@@ -17,6 +17,10 @@ export const PAGE_NUMBER = 'page-number';
 export const PAGE_SIZE = 'page-size';
 export const DEFAULT_PAGE_SIZE = 20;
 
+export const INCLUDE = 'include';
+export const COMMUNITY = 'community';
+export const LISTING = 'listing';
+
 export const MORE_FILTERS = [
   CARE_SERVICES,
   NON_CARE_SERVICES,
@@ -94,7 +98,7 @@ export const TOCS = {
     value: SNF,
     description: 'For seniors with more serious medical needs who require skilled care following a hospitalization, illness, or surgery.',
     seoLabel: 'Skilled Nursing Facilities',
-  }
+  },
 };
 
 // SIZE

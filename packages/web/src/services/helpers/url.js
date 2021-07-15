@@ -161,6 +161,10 @@ export const getBreadCrumbsForListing = ({ name, address }) => {
     },
     {
       path: '#',
+      label: 'plus',
+    },
+    {
+      path: '#',
       label: name,
     },
   ];
@@ -374,6 +378,9 @@ export const isInternationalPath = (path) => {
   if (pathParts.length > 1 && pathParts[1] === 'agents') {
     return false;
   }
+  if (pathParts.length > 1 && pathParts[1] === 'plus') {
+    return false;
+  }
   // check if 1st part is care-home
   if (pathParts.length > 2 && pathParts[1] === 'care-home') {
     return true;
@@ -398,4 +405,9 @@ export const isCanadaPath = (path) => {
   }
 
   return false;
+};
+
+export const getCitySearchUrlForListing = ({ care, address }) => {
+  const tocBc = tocPaths(care);
+  return `${tocBc.path}/${urlize(stateNames[address.state])}/${address.city ? urlize(address.city) : ''}`;
 };

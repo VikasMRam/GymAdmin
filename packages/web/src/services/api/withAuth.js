@@ -10,7 +10,6 @@ import { useUser } from './withUser';
 import events from 'sly/web/services/events';
 import { isServer } from 'sly/web/config';
 import { useApi, hasSession } from 'sly/web/services/api';
-
 import { ensureAuthenticated as ensureAuthenticatedAction } from 'sly/web/store/actions';
 
 // returns null on server and when there is no response from the user/me resource yet
@@ -38,7 +37,7 @@ const identify = (response) => {
 };
 
 export const useAuth = () => {
-  const { apiClient: { store, api }} = useApi();
+  const { apiClient: { store, api } } = useApi();
   const {
     user,
     info: { user: userInfo },
@@ -59,6 +58,8 @@ export const useAuth = () => {
     'resendOtpCode',
     'otpLoginUser',
     'sendOtpCode',
+    'magicLink',
+    'invoicedMagicLink',
   ].reduce((acc, method) => {
     acc[method] = (...args) => store.dispatch(api[method].asAction(...args));
     return acc;
@@ -172,6 +173,14 @@ export const useAuth = () => {
     return userApiMethods.sendOtpCode(data);
   }, []);
 
+  const magicLink = useCallback((data) => {
+    return userApiMethods.magicLink(data);
+  }, []);
+
+  const invoicedMagicLink = useCallback((data) => {
+    return userApiMethods.invoicedMagicLink(data);
+  });
+
   const authenticated = useSelector(state => state.authenticated);
   const reduxDispatch = useDispatch();
   const ensureAuthenticated = useCallback((...args) => {
@@ -198,6 +207,8 @@ export const useAuth = () => {
     sendOtpCode,
     authenticated,
     ensureAuthenticated,
+    magicLink,
+    invoicedMagicLink,
   };
 };
 
@@ -218,13 +229,13 @@ export default function withAuth(InnerComponent) {
             ...userInfo,
             refetch: fetchUser,
             invalidate: invalidateUser,
-          }
+          },
         }}
         {...props}
         {...auth}
       />
     );
-  }
+  };
 
   WithAuth.displayName = `withAuth(${getDisplayName(InnerComponent)})`;
   WithAuth.WrappedComponent = InnerComponent;

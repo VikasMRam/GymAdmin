@@ -31,10 +31,10 @@ const GetCommunityPricingAndAvailability = ({
   children,
 }) => {
   return (
-    <Box>
+    <Box p="l !important" >
       {/* <PaddedHeading level="title" size="subtitle">Get Pricing and Availability</PaddedHeading> */}
       {startingRate > 0 && <PaddedCommunityPricing id={id} estimated={rates !== 'Provided'} price={startingRate} max={maxRate} />}
-      <StyledButton disabled={completedAssessment} to={buttonTo} onClick={onClick} event={onClickEvent(id)}>
+      <StyledButton sx={completedAssessment && { cursor: 'unset' }} disabled={completedAssessment} to={buttonTo} onClick={onClick} event={onClickEvent(id)}>
         {completedAssessment && <Checkmark mr="s" />}{completedAssessment ? 'Pricing Requested' : 'Get Pricing and Availability'}
       </StyledButton>
       {children}

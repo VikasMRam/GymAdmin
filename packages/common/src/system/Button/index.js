@@ -162,7 +162,7 @@ export default class Button extends Component {
     const { ButtonComponent, ...props } = this.getProps();
     const sx = getStyles(props);
     return (
-      <ButtonComponent sx={sx} {...props} />
+      <ButtonComponent _sx={sx} {...props} />
     );
   }
 }
