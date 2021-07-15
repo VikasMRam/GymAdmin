@@ -45,7 +45,6 @@ align-items:baseline;
 color: white;
 & svg {
     margin-right:${space('s')};
-    margin-top:auto;
     margin-bottom:auto;
     flex: 1;
   }
