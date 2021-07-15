@@ -26,6 +26,7 @@ const DashboardCommunityIndexPageContainer = loadable(() => import(/* webpackChu
 const DashboardCommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/communities/DashboardCommunityDetailsPageContainer'));
 const DashboardListingIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityIndex" */ 'sly/web/dashboard/listings/DashboardListingIndexPageContainer'));
 const DashboardLisitingDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardCommunityDetail" */ 'sly/web/dashboard/listings/DashboardListingDetailsPageContainer'));
+const DashboardInvoicePageContainer = loadable(() => import(/* webpackChunkName: "DashboardInvoicePageContainer" */ 'sly/web/dashboard/invoices/DashboardInvoicesPageContainer'));
 
 import themeWithLegacy from 'sly/common/components/themes/themeWithLegacy';
 import {
@@ -39,6 +40,7 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
+  AGENT_DASHBOARD_INVOICE_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_CONTACTS_PATH,
@@ -98,6 +100,11 @@ const routes = [
   {
     path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
     component: DashboardMessageDetailsPageContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_INVOICE_PATH,
+    component: DashboardInvoicePageContainer,
     exact: true,
   },
   {

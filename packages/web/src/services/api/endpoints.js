@@ -1,7 +1,6 @@
-import { uuidActionEvent } from 'sly/web/services/events';
-
 import { get, patch, put, post, destroy } from './httpMethods';
 
+import { uuidActionEvent } from 'sly/web/services/events';
 import { cmsUrl } from 'sly/web/config';
 
 // method names should start with `get`, `create`, `update`, `delete`
@@ -41,6 +40,7 @@ export default {
   resendOtpCode: { method: post, path: '/platform/auth/otp/retry' },
   sendOtpCode: { method: post, path: '/platform/auth/otp/start' },
   magicLink: { method: post, path: '/platform/auth/mlink/start' },
+  invoicedMagicLink: { method: get, path: '/platform/invoiced/magic-link' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   claimCommunity: { method: get, path: '/marketplace/communities/:id/claim' },
