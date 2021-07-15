@@ -124,6 +124,31 @@ const ListingSummary = ({
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
+  let phoneNumberSection = null;
+  phoneNumberSection = phoneNumber && (
+    <>
+      <Span
+        display="flex"
+        alignItems="center"
+        css={css`
+            gap: 0.2em
+            `}
+      >
+        <Span font="body-s">Contact us about this room</Span>
+        <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
+        {isBrowser &&
+        <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
+          This phone number may connect you to the listing front desk.
+        </TooltipContent>
+          }
+      </Span>
+      <Link href={`tel:${phoneNumber}`} onClick={onListingNumberClicked}>
+        {phoneFormatter(phoneNumber, true)}
+      </Link>
+    </>
+  );
+
+
   return (
     <Block pb="l" px="m" sx$tablet={{ px: '0' }} ref={innerRef} className={className}>
       <Heading
@@ -273,10 +298,23 @@ const ListingSummary = ({
         gridTemplateColumns: !phoneNumber && !partnerAgent ? 'auto' : '35% 1fr',
         gridGap: !phoneNumber && !partnerAgent ? '0' : 'xl' }}
       >
-        <Grid gridTemplateColumns="1fr 1fr" gridGap="s">
+        <Grid gridTemplateColumns="repeat(2, 1fr)" gridGap="s">
           <Button sx$tablet={{ paddingX: 's' }} onClick={onSaveClick}  variant="neutral"><Favorite active={isFavorited} color={isFavorited && 'red.lighter-20'} mr="xs" />Save</Button>
           <Button sx$tablet={{ paddingX: 's' }} onClick={onShareClick} variant="neutral" ><Share mr="xs" />Share</Button>
         </Grid>
+        <Block
+          as="span"
+          display="none"
+          flexDirection="column"
+          sx$tablet={{
+              display: 'flex',
+          }}
+          sx$laptop={{
+            display: 'none',
+          }}
+        >
+          {phoneNumber && phoneNumberSection}
+        </Block>
         <Hr mt="l" mb="l" sx$tablet={{ display: 'none' }} />
       </Grid>
       <Hr mt="l" display="none" sx$tablet={{ display: 'block' }} />
@@ -289,24 +327,7 @@ const ListingSummary = ({
             display: 'none',
           }}
         >
-          <Span
-            display="flex"
-            alignItems="center"
-            css={css`
-            gap: 0.2em
-            `}
-          >
-            <Span font="body-s">Contact us about this room</Span>
-            <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
-            {isBrowser &&
-            <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
-              This phone number may connect you to the listing front desk.
-            </TooltipContent>
-          }
-          </Span>
-          <Link href={`tel:${phoneNumber}`} onClick={onListingNumberClicked}>
-            {phoneFormatter(phoneNumber, true)}
-          </Link>
+          {phoneNumberSection}
           <Hr mt="l" display="block" />
         </Block>
       }
