@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 
 import { size, palette } from 'sly/common/components/themes';
-import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tablet, space, Span  } from 'sly/common/system';
+import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tablet, space, Span, font  } from 'sly/common/system';
 import { Icon } from 'sly/common/components/atoms';
 import { Checkmark } from 'sly/common/icons/index';
 import { assetPath } from 'sly/web/components/themes';
@@ -37,6 +37,12 @@ const GradientOverlay = styled(Block)`
       background: 'linear-gradient(to left,rgba(159,130,82,0.1) 0%,rgba(159,130,82,1) 95%)',
     },
   })} 
+`;
+
+const CheckBoxText = styled(Span)`
+  ${sx({
+    font: 'body-l',
+  })}
 `;
 
 const imgSrc = assetPath('images/plus/plus-bg.jpg');
@@ -137,7 +143,7 @@ const PlusBranding = () => {
           </Block>
           <Block
             m="s 0"
-            font="body-m"
+            font="body-l"
             pad="l"
             color="white"
             as="p"
@@ -147,9 +153,9 @@ const PlusBranding = () => {
           </Block>
           <Block>
             <Grid flexDirection="row" gridGap="s">
-              <IconItem><Checkmark color="white" /><Span>Each space is thoughtfully designed for comfort and care</Span></IconItem>
-              <IconItem><Checkmark color="white" /><Span>Seniorly Plus communities come with premium support</Span></IconItem>
-              <IconItem><Checkmark color="white" /><Span>Be at ease knowing each community is verified with an in-person inspection</Span></IconItem>
+              <IconItem><Checkmark color="white" /><CheckBoxText>Each space is thoughtfully designed for comfort and care</CheckBoxText></IconItem>
+              <IconItem><Checkmark color="white" /><CheckBoxText>Seniorly Plus communities come with premium support</CheckBoxText></IconItem>
+              <IconItem><Checkmark color="white" /><CheckBoxText>Be at ease knowing each community is verified with an in-person inspection</CheckBoxText></IconItem>
             </Grid>
           </Block>
           <Button
