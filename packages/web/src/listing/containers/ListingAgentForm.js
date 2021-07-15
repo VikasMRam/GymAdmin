@@ -15,7 +15,6 @@ import { Heading, Hr, space, sx, Block, color, font, Button } from 'sly/common/s
 
 
 const StyledDesc = styled.div`
-margin-top: ${size('spacing.regular')};
 margin-bottom: ${size('spacing.xLarge')};
 color:${color('viridian.darker-20')};
 font : ${font('body-m')}
@@ -72,7 +71,7 @@ export default class ListingAgentForm extends Component {
 
     return (
       <section>
-        <Heading pad="l" font="title-m" mb="0px">{heading}</Heading>
+        <Heading pad="l" font="title-s" mb="0">{heading}</Heading>
         {showDesc && <StyledDesc>{description}</StyledDesc>}
         <form>
           {!(user && user.name) &&

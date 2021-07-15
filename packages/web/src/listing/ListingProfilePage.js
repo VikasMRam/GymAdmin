@@ -262,6 +262,20 @@ export default class ListingDetailPage extends PureComponent {
                 <StyledHeadingBoxSection id="apartment-section" heading="The apartment">
                   <ApartmentSection />
                   <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
+                  <Button
+                    variant="secondary"
+                    paddingY="s"
+                    display="inline-block"
+                    width="100%"
+                    mt="l"
+                    font="title-xs-azo"
+                    sx$laptop={{
+                      display: 'none',
+                    }}
+                    onClick={bookTourClickHandler}
+                  >
+                    Book a tour
+                  </Button>
                 </StyledHeadingBoxSection>
                 )}
                 {/* Activities */}
@@ -315,6 +329,8 @@ export default class ListingDetailPage extends PureComponent {
                   heading="Explore similar listings"
                   id="sticky-sidebar-boundary"
                   sx$tablet={{ padding: '0 !important' }}
+                  hasNoBottomHr
+                  mb="xxl"
                 >
                   <CarouselContainer itemsQty={similarListings.length}>
                     <SimilarListings
@@ -329,6 +345,15 @@ export default class ListingDetailPage extends PureComponent {
                         })}
                     />
                   </CarouselContainer>
+                  <Block textAlign="center">
+                    <Button
+                      to={`/assisted-living/${stateNames[state]}/${city}`}
+                      event={{ action: 'click', category: 'backToSearch', label: listing.id }}
+                      width="100%"
+                    >
+                      See more listings
+                    </Button>
+                  </Block>
                 </StyledHeadingBoxSection>
                 )}
 
