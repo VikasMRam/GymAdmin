@@ -19,6 +19,7 @@ const {
   ENABLE_EXPERIMENT_DEBUGGER,
   DISABLE_EXPERIMENTS,
   SEGMENT_API_KEY,
+  RUDDER_API_KEY,
   VERSION,
 } = require('../env');
 
@@ -70,6 +71,7 @@ const config = {
     hideChatbox: HIDE_CHATBOX,
     additionalAnalyticsPlatform: null,
     segmentApiKey: SEGMENT_API_KEY,
+    rudderApiKey: RUDDER_API_KEY,
   },
 
   test: {

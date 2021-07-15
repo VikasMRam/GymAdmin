@@ -41,3 +41,5 @@ module.exports.EXTERNAL_URL = `${process.env.HOST}${process.env.EXTERNAL_PATH}`;
 module.exports.EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
 
 module.exports.SEGMENT_API_KEY = envPick(process.env.SEGMENT_API_KEY, 'fYjvSNdbzzyXTCK61Gou6X0WRVzX7tlj');
+module.exports.RUDDER_API_KEY = envPick(process.env.RUDDER_API_KEY, '1vJmRbCH9EYsFegadvSmams5pMF');
+
