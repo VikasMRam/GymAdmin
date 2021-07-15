@@ -262,6 +262,20 @@ export default class ListingDetailPage extends PureComponent {
                 <StyledHeadingBoxSection id="apartment-section" heading="The apartment">
                   <ApartmentSection />
                   <Paragraph paddingTop="xl">Please note: The layout, furniture, and decor of your space may vary from what's show here.</Paragraph>
+                  <Button
+                    variant="secondary"
+                    paddingY="s"
+                    display="inline-block"
+                    width="100%"
+                    mt="l"
+                    font="title-xs-azo"
+                    sx$laptop={{
+                      display: 'none',
+                    }}
+                    onClick={bookTourClickHandler}
+                  >
+                    Book a tour
+                  </Button>
                 </StyledHeadingBoxSection>
                 )}
                 {/* Activities */}
