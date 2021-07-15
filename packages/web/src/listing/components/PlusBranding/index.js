@@ -63,6 +63,17 @@ color: white;
 }
 `;
 
+const CheckmarkIcon = styled(Checkmark)`
+  ${sx({
+    color: 'white',
+    mt: '0',
+  })}
+  ${sx$tablet({
+    color: 'white',
+    mt: 'auto',
+  })}
+`;
+
 const openPlusResourcePageArticle = () => {
   const win = window.open('https://www.seniorly.com/resource-center/seniorly-news/what-is-seniorly-plus', '_blank');
   if (win != null) {
@@ -161,9 +172,9 @@ const PlusBranding = () => {
           </Block>
           <Block>
             <Grid flexDirection="row" gridGap="s">
-              <IconItem><Checkmark color="white" /><CheckBoxText>Each space is thoughtfully designed for comfort and care</CheckBoxText></IconItem>
-              <IconItem><Checkmark color="white" /><CheckBoxText>Seniorly Plus communities come with premium support</CheckBoxText></IconItem>
-              <IconItem><Checkmark color="white" /><CheckBoxText>Be at ease knowing each community is verified with an in-person inspection</CheckBoxText></IconItem>
+              <IconItem><CheckmarkIcon /><CheckBoxText>Each space is thoughtfully designed for comfort and care</CheckBoxText></IconItem>
+              <IconItem><CheckmarkIcon /><CheckBoxText>Seniorly Plus communities come with premium support</CheckBoxText></IconItem>
+              <IconItem><CheckmarkIcon /><CheckBoxText>Be at ease knowing each community is verified with an in-person inspection</CheckBoxText></IconItem>
             </Grid>
           </Block>
           <Button
