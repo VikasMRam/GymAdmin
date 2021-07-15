@@ -6,6 +6,7 @@ import { size, palette } from 'sly/common/components/themes';
 import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tablet, space, Span  } from 'sly/common/system';
 import { Icon } from 'sly/common/components/atoms';
 import { Checkmark } from 'sly/common/icons/index';
+import { assetPath } from 'sly/web/components/themes';
 
 
 const Section = styled(Block)`
@@ -37,6 +38,8 @@ const GradientOverlay = styled(Block)`
     },
   })} 
 `;
+
+const imgSrc = assetPath('images/plus/plus-bg.jpg');
 
 const IconItem = styled(Block)`
 display:flex;
@@ -71,7 +74,7 @@ const PlusBranding = () => {
     >
       <GradientOverlay>
         <Image
-          path="react-assets/plus/plus-background.jpeg"
+          src={imgSrc}
           alt="A Home To Love"
           css={css`
             object-fit: cover;

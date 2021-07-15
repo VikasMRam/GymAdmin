@@ -95,7 +95,7 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
                   loading="lazy"
                   border="round"
                 />
-                <Block as="span" pt="xs" lineHeight="normal">
+                <Block as="span" pt="xs" font="body-m">
                   {name}
                 </Block>
               </Block>

@@ -140,7 +140,7 @@ const ListingSummary = ({
         }
       </Heading>
 
-      <Block font="body-s" pad="xs">
+      <Block font="body-m" pad="xs">
         {formattedAddress}
       </Block>
 
@@ -203,7 +203,7 @@ const ListingSummary = ({
       </Block>
       <Block
         padding="m m"
-        marginTop="m"
+        my="l"
         display="flex"
         background="#e8f1f1"
         flexDirection="column"
