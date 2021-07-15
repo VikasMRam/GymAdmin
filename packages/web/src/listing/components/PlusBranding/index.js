@@ -7,6 +7,7 @@ import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tabl
 import { Icon } from 'sly/common/components/atoms';
 import { Checkmark } from 'sly/common/icons/index';
 import { assetPath } from 'sly/web/components/themes';
+import { PLUS_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
 
 
 const Section = styled(Block)`
@@ -61,6 +62,13 @@ color: white;
     flex: 18;
 }
 `;
+
+const openPlusResourcePageArticle = () => {
+  const win = window.open('https://www.seniorly.com/resource-center/seniorly-news/what-is-seniorly-plus', '_blank');
+  if (win != null) {
+    win.focus();
+  }
+};
 
 const PlusBranding = () => {
   return (
@@ -160,7 +168,7 @@ const PlusBranding = () => {
           </Block>
           <Button
             palette="white"
-            to="/"
+            onClick={openPlusResourcePageArticle}
             width="100%"
             marginTop="xl"
             paddingY="m"
@@ -169,7 +177,7 @@ const PlusBranding = () => {
             sx$tablet={{
                 width: 'initial',
                 paddingX: 'xxl',
-              }}
+            }}
           >
             Learn more abour Seniorly Plus
           </Button>

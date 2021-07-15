@@ -13,6 +13,7 @@ import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Help, Favorite, Share } from 'sly/common/icons';
 import ListingPricing from 'sly/web/listing/components/ListingPricing';
+import { PLUS_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
 
 
 const overridePosition = ({ left, top }) => ({
@@ -85,8 +86,9 @@ const makeNewTags = (tags) => {
       newTags.push({
         name,
         id,
-        path: '#',
+        path: name === 'Plus' ? PLUS_RESOURCE_CENTER_LINK : '#',
         background: tagsMap[name],
+        target: name === 'Plus' ? '_blank' : '_self',
       });
     }
   });
@@ -181,7 +183,7 @@ const ListingSummary = ({
 
       <Block>
         {!!newTags && !!newTags.length &&
-          newTags.map(({ name, id, path, background }) => {
+          newTags.map(({ name, id, path, background, target }) => {
             return (
               <Tag
                 key={id}
@@ -193,6 +195,7 @@ const ListingSummary = ({
                 <Link
                   color="white"
                   to={path}
+                  target={target}
                   event={{
                   category: 'new-tags',
                   action: 'tag-click',

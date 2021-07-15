@@ -328,9 +328,10 @@ export default class ListingDetailPage extends PureComponent {
                 <StyledHeadingBoxSection
                   heading="Explore similar listings"
                   id="sticky-sidebar-boundary"
-                  sx$tablet={{ padding: '0 !important' }}
+                  sx$tablet={{
+                    padding: '0 !important',
+                  }}
                   hasNoBottomHr
-                  mb="xxl"
                 >
                   <CarouselContainer itemsQty={similarListings.length}>
                     <SimilarListings
@@ -345,7 +346,12 @@ export default class ListingDetailPage extends PureComponent {
                         })}
                     />
                   </CarouselContainer>
-                  <Block textAlign="center">
+                  <Block
+                    textAlign="center"
+                    sx$tablet={{
+                      mb: 'xxl',
+                    }}
+                  >
                     <Button
                       to={`/assisted-living/${stateNames[state]}/${city}`}
                       event={{ action: 'click', category: 'backToSearch', label: listing.id }}
