@@ -43,7 +43,7 @@ const CommunityAgentSection = ({
         <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl, path } }} />
         <Block display="flex" flexDirection="column" justifyContent="center" textAlign="left">
           <Link to={`/agents/${stateNames[state]}/${city.replace(' ', '-')}/${id}`} > <Block font="title-m" color="primary">{displayName}</Block></Link>
-          {recentFamiliesHelped > 0 && <Block>{recentFamiliesHelped} families helped</Block>}
+          {recentFamiliesHelped > 0 && <Block pt="xxs" font="body-m">{recentFamiliesHelped} families helped</Block>}
         </Block>
       </Grid>
 

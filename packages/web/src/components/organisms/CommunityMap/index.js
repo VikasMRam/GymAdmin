@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf, object } from 'prop-types';
+import { string, number, shape, object, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow } from 'react-google-maps';
 
@@ -42,6 +42,24 @@ const MapContainerElement = styled.div`
   }
 `;
 
+const ListingMapContainerElement = styled.div`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    position: unset;
+    height: ${size('map.listingPage.regular.height')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    height: ${size('map.listingPage.large.height')};
+  }
+`;
+
 const iconMap = {
   blue: GreenMarker,
   red: RedMarker,
@@ -60,6 +78,11 @@ class CommunityMap extends Component {
     }),
     similarCommunities: object,
     className: string,
+    isListingPage: bool,
+  };
+
+  static defaultProps = {
+    isListingPage: false,
   };
 
   state = {
@@ -83,6 +106,7 @@ class CommunityMap extends Component {
       community,
       similarCommunities,
       className,
+      isListingPage,
     } = this.props;
     const { latitude, longitude } = community.address;
     const markers = [
@@ -158,7 +182,7 @@ class CommunityMap extends Component {
         <Map
           defaultCenter={{ lat: latitude, lng: longitude }}
           defaultZoom={defaultZoom}
-          containerElement={<MapContainerElement />}
+          containerElement={isListingPage ? <ListingMapContainerElement /> : <MapContainerElement />}
         >
           {markerComponents}
         </Map>

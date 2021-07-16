@@ -101,6 +101,20 @@ theme.sizes = {
         height: '607px',    // 607px
       },
     },
+    listingPage: {
+      small: {
+        width : '20.5rem',
+        height: '13.688rem',
+      },
+      regular: {
+        width : '42.5rem',
+        height: '28.313rem',
+      },
+      large: {
+        width : '42.5rem',
+        height: '28.313rem',
+      },
+    },
     search: {
       tiny: {
         width : '13.375rem',   // 214px
