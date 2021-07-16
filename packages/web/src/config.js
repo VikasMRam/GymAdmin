@@ -20,6 +20,7 @@ const {
   DISABLE_EXPERIMENTS,
   SEGMENT_API_KEY,
   RUDDER_API_KEY,
+  RUDDER_DATA_PLANE_URL,
   VERSION,
 } = require('../env');
 
@@ -72,6 +73,7 @@ const config = {
     additionalAnalyticsPlatform: null,
     segmentApiKey: SEGMENT_API_KEY,
     rudderApiKey: RUDDER_API_KEY,
+    rudderDataPlaneUrl: RUDDER_DATA_PLANE_URL,
   },
 
   test: {

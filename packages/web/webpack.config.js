@@ -53,6 +53,7 @@ const {
   DISABLE_EXPERIMENTS,
   SEGMENT_API_KEY,
   RUDDER_API_KEY,
+  RUDDER_DATA_PLANE_URL,
 } = require('./env');
 
 const { BundleAnalyzerPlugin } = BundleAnalyzerModule;
@@ -139,6 +140,7 @@ const base = group([
     'process.env.ENABLE_EXPERIMENT_DEBUGGER': ENABLE_EXPERIMENT_DEBUGGER,
     'process.env.SEGMENT_API_KEY': SEGMENT_API_KEY,
     'process.env.RUDDER_API_KEY': RUDDER_API_KEY,
+    'process.env.RUDDER_DATA_PLANE_URL': RUDDER_DATA_PLANE_URL,
   }),
 
   match(['*.js', '!*node_modules*'], [babel({

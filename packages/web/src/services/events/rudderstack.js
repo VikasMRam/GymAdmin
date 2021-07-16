@@ -1,4 +1,4 @@
-import { isServer, isTest, rudderApiKey } from 'sly/web/config';
+import { isServer, isTest, rudderApiKey, rudderDataPlaneUrl } from 'sly/web/config';
 
 import { getUUID } from './helpers';
 
@@ -27,7 +27,7 @@ function loadAnalytics(){
     }(method);
   }
 
-  rudderanalytics.load(rudderApiKey, 'https://hosted.rudderlabs.com');
+  rudderanalytics.load(rudderApiKey, rudderDataPlaneUrl);
   //For example,
   //rudderanalytics.load("1Qb1F3jSWv0eKFBPZcrM7ypgjVo", "http://localhost:8080");
   //rudderanalytics.page();
