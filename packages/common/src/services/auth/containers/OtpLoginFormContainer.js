@@ -18,6 +18,7 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: formName,
+  destroyOnUnmount: false,
   validate,
 })(OtpLoginForm);
 

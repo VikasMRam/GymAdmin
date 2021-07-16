@@ -223,7 +223,7 @@ const AuthContainer = (props) => {
               component={LoginWithPasswordFormContainer}
               name={LOGINWITHPASSWORD}
               onResetPasswordClick={() => { setTitle('Having trouble logging in?'); goto(RESETPASSWORD); }}
-              emailOrPhone={data?.email}
+              emailOrPhone={data?.email || data?.phone_number}
               onSubmitSuccess={handleAuthenticateSuccess}
             />
             <WizardStep

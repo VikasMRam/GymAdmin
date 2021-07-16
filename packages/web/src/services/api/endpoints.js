@@ -75,7 +75,7 @@ export default {
 
   createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },
-  createAnswer: { method: post, path: '/platform/answers' },
+  createAnswer: { method: post, path: '/platform/answers', jsonApi: false },
   updateContent: { method: put, path: '/platform/contents/:id' },
   updateRating: { method: put, path: '/platform/ratings/:id' },
 

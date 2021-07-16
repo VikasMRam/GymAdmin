@@ -1,109 +1,123 @@
-import React, { Component } from 'react';
-import { func } from 'prop-types';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-import { withRouter } from 'react-router';
 import Thankyou from 'sly/web/components/molecules/Thankyou';
 import CommunityQuestionAnswers from 'sly/web/components/organisms/CommunityQuestionAnswers';
-import { community as communityPropType } from 'sly/common/propTypes/community';
 import SlyEvent from 'sly/web/services/helpers/events';
-import withModal from 'sly/web/controllers/withModal';
-import { prefetch } from 'sly/web/services/api';
 import { PROFILE_ASK_QUESTION } from 'sly/web/services/api/constants';
 import { recordEntityCta } from 'sly/web/services/helpers/localStorage';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
+import Modal, { HeaderWithClose, ModalBody } from 'sly/web/components/atoms/NewModal';
+import { usePrefetch } from 'sly/web/services/api/prefetch';
 
 const CommunityLeaveAnAnswerFormContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityLeaveAnAnswerFormContainer" */'sly/web/containers/CommunityLeaveAnAnswerFormContainer'));
 const AskQuestionToAgentFormContainer = loadable(() => import(/* webpackChunkName: "chunkAskQuestionToAgentFormContainer" */'sly/web/containers/AskQuestionToAgentFormContainer'));
 
-@withRouter
-@prefetch('community', 'getCommunity', (req, { match }) => req({
-  id: match.params.communitySlug,
-  include: 'similar-communities,questions,agents',
-}))
+const possibleModals = {
+  communityLeaveAnAnswer: 'CommunityLeaveAnAnswerFormContainer',
+  thankYou: 'Thankyou',
+  askQuestionToAgent: 'AskQuestionToAgentFormContainer',
+};
 
-@withModal
-export default class CommunityQuestionAnswersContainer extends Component {
-  static typeHydrationId = 'CommunityQuestionAnswersContainer';
-  static propTypes = {
-    community: communityPropType.isRequired,
-    showModal: func.isRequired,
-    hideModal: func.isRequired,
-  };
+const CommunityQuestionAnswersContainer = () => {
+  const [modalProps, setModalProps] = useState(null);
 
-  sendEvent = (action, category) => {
+  const { communitySlug } = useParams();
+
+  const { requestInfo: { normalized: community }, fetch } = usePrefetch('getCommunity', {
+    id: communitySlug,
+    include: 'similar-communities,questions,agents',
+  });
+
+  const { id: communityId, name: communityName, questions: communityQuestions, communityFaQs } = community;
+
+  const sendEvent = useCallback((action, category) => {
     SlyEvent.getInstance().sendEvent({
       action,
       category,
-      label: this.props.community.id,
+      label: communityId,
     });
-  };
+  }, [communityId]);
 
-  openAnswerQuestionModal = (question) => {
-    const { showModal, hideModal, community } = this.props;
+  const handleCloseModal = useCallback(() => setModalProps(null), []);
 
-    showModal(
-      <CommunityLeaveAnAnswerFormContainer
-        onSuccess={hideModal}
-        communitySlug={community.id}
-        questionText={question.contentData}
-        questionId={question.id}
-      />
-    );
-  };
+  const openAnswerQuestionModal = useCallback(question =>
+    setModalProps({
+      onSuccess: handleCloseModal,
+      communitySlug: communityId,
+      questionText: question.contentData,
+      questionId: question.id,
+      onClose: handleCloseModal,
+      onCloseModal: handleCloseModal,
+      modalName: possibleModals.communityLeaveAnAnswer,
+    })
+  , [communityId]);
 
-  openAskQuestionModal = (question = {}) => {
-    const { showModal, hideModal, community: { id, name } } = this.props;
+  const openAskQuestionModal = useCallback((question = {}) => {
     const postSubmit = () => {
-      // notifyInfo('Request sent successfully');
-      hideModal();
+      handleCloseModal();
       if (community) {
-        recordEntityCta(type,community.id);
+        recordEntityCta('Community', communityId);
       }
-      showModal(<Thankyou heading={"Success!"} subheading={'Your question has been sent and we will connect with' +
-      ' you shortly'} onClose={hideModal} doneText='Finish'/>);
+      setModalProps({
+        heading: 'Success!',
+        subheading: 'Your question has been sent and we will connect with you shortly',
+        onClose: () => { fetch(); handleCloseModal(); },
+        doneText: 'Finish',
+        modalName: possibleModals.thankYou,
+        onCloseModal: handleCloseModal,
+      });
     };
-    this.sendEvent('open-modal', 'AskQuestion');
+    sendEvent('open-modal', 'AskQuestion');
 
-    const onClose = () => this.sendEvent('close-modal', 'AskQuestion');
-    showModal(
-      <AskQuestionToAgentFormContainer
-        showModal={showModal}
-        actionType={PROFILE_ASK_QUESTION}
-        entityId={id}
-        initialValues={{ question: question.contentData }}
-        parentSlug={question.id}
-        communityName={name}
-        type='profile-content-question'
-        category={'community'}
-        postSubmit={postSubmit}
-      />,
-      onClose
-    );
-  };
+    const onClose = () => { sendEvent('close-modal', 'AskQuestion'); handleCloseModal(); };
+    setModalProps({
+      actionType: PROFILE_ASK_QUESTION,
+      entityId: communityId,
+      initialValues: { question: question.contentData },
+      parentSlug: question.id,
+      communityName,
+      type: 'profile-content-question',
+      category: 'community',
+      postSubmit,
+      modalName: possibleModals.askQuestionToAgent,
+      onCloseModal: onClose,
+    });
+  }, [community]);
 
-  render() {
-    const { community: { name, questions, communityFaQs } } = this.props;
+  const { modalName, onCloseModal, ...restModalProps } = modalProps || {};
 
-    const filteredQuestions = questions ? questions.filter((q) => {
-      const { contents = [] } = q;
-      return contents.length > 0;
-    }) : questions;
+  const filteredQuestions = useMemo(() => communityQuestions?.filter(({ contents }) => contents?.length > 0),
+    [communityQuestions]);
 
-    if (!filteredQuestions || !filteredQuestions.length) {
-      return null;
-    }
+  if (!filteredQuestions?.length) { // TODO: We need this check?
+    // return null;
+  }
 
-    return (
-      <HeadingBoxSection hasNoHr heading={`Questions About ${name}`} pad="xLarge">
+  return (
+    <>
+      <HeadingBoxSection hasNoHr heading={`Questions About ${communityName}`} pad="xLarge">
         <CommunityQuestionAnswers
-          communityName={name}
-          questions={questions}
+          communityName={communityName}
+          questions={communityQuestions}
           communityFaQs={communityFaQs}
-          onLeaveAnswerClick={this.openAnswerQuestionModal}
-          onAskQuestionClick={this.openAskQuestionModal}
+          onLeaveAnswerClick={openAnswerQuestionModal}
+          onAskQuestionClick={openAskQuestionModal}
         />
       </HeadingBoxSection>
-    );
-  }
-}
+      <Modal isOpen={!!modalProps} onClose={onCloseModal}>
+        <HeaderWithClose onClose={onCloseModal} />
+        <ModalBody>
+          {modalName === possibleModals.communityLeaveAnAnswer && <CommunityLeaveAnAnswerFormContainer {...restModalProps} />}
+          {modalName === possibleModals.thankYou && <Thankyou {...restModalProps} />}
+          {modalName === possibleModals.askQuestionToAgent && <AskQuestionToAgentFormContainer {...restModalProps} />}
+        </ModalBody>
+      </Modal>
+    </>
+  );
+};
+
+CommunityQuestionAnswersContainer.typeHydrationId = 'CommunityQuestionAnswersContainer';
+
+export default React.memo(CommunityQuestionAnswersContainer);

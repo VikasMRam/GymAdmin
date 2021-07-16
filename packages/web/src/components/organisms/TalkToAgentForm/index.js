@@ -99,9 +99,7 @@ export default class TalkToAgentForm extends Component {
     return (
       <section>
         {image && <ImageWrapper><StyledResponsiveImage src={image} /></ImageWrapper>}
-        <Heading pad="l" font="title-m">{heading}</Heading>
-        <Hr marginX={sx`-${space('xl')}`} pad="l" />
-        {showDesc && <StyledDesc>{description}</StyledDesc>}
+        {(showDesc && description) && <StyledDesc>{description}</StyledDesc>}
         <form onSubmit={handleSubmit}>
           {showMessageFieldFirst && !hideMessage && messageField}
           {hasLocation &&
