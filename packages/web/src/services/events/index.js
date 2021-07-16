@@ -1,6 +1,7 @@
 import { isServer, isTest, isProd } from 'sly/web/config';
 
 import segment from './segment';
+import rudder from './rudderstack';
 import ga from './ga';
 import legacy from './legacy';
 
@@ -18,6 +19,7 @@ const events = {
       console.info('EVENT identify', userId, userData);
     } else {
       segment.identify(userId, userData);
+      rudder.identify(userId, userData);
     }
   },
 
@@ -30,6 +32,7 @@ const events = {
       console.info('EVENT track', event);
     } else {
       segment.track(event);
+      rudder.track(event);
       legacy.track(event);
       if (!options.notForGa) {
         ga.track(event);
@@ -47,6 +50,7 @@ const events = {
       console.info('EVENT page', `${pathname}${search}`);
     } else {
       segment.page();
+      rudder.page();
       legacy.page();
       ga.page();
     }
