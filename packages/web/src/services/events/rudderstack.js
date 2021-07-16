@@ -3,43 +3,27 @@ import { isServer, isTest, rudderApiKey, rudderDataPlaneUrl } from 'sly/web/conf
 import { getUUID } from './helpers';
 
 function loadAnalytics(){
-  var rudderanalytics = global.rudderanalytics = [];
-
-  var  methods = [
-    "load",
-    "page",
-    "track",
-    "identify",
-    "alias",
-    "group",
-    "ready",
-    "reset",
-    "getAnonymousId",
-    "setAnonymousId"
-  ];
-
-  for (var i = 0; i < methods.length; i++) {
-    var method = methods[i];
-    rudderanalytics[method] = function (methodName) {
-      return function () {
-        rudderanalytics.push([methodName].concat(Array.prototype.slice.call(arguments)));
-      };
-    }(method);
+  var e = window.rudderanalytics = window.rudderanalytics || [];
+  e.methods = ["load", "page", "track", "identify", "alias", "group", "ready", "reset", "getAnonymousId", "setAnonymousId"];
+  e.factory = function(t) {
+    return function() {
+      var r = Array.prototype.slice.call(arguments);
+      return r.unshift(t), e.push(r), e
+    }
+  };
+  for (var t = 0; t < e.methods.length; t++) {
+    var r = e.methods[t];
+    e[r] = e.factory(r)
   }
-
-  rudderanalytics.load(rudderApiKey, rudderDataPlaneUrl);
-  //For example,
-  //rudderanalytics.load("1Qb1F3jSWv0eKFBPZcrM7ypgjVo", "http://localhost:8080");
-  //rudderanalytics.page();
-  // Define a method to load Analytics.js from our CDN,
-  // and that will be sure to only ever load it once.
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.async = true;
-  script.src = 'https://cdn.rudderlabs.com/v1/rudder-analytics.min.js';
-  // Insert our script next to the first script element.
-  var first = document.getElementsByTagName('script')[0];
-  first.parentNode.insertBefore(script, first);
+  e.loadJS = function(e, t) {
+    var r = document.createElement("script");
+    r.type = "text/javascript", r.async = !0, r.src = "https://cdn.rudderlabs.com/v1/rudder-analytics.min.js";
+    var a = document.getElementsByTagName("script")[0];
+    a.parentNode.insertBefore(r, a)
+  };
+  e.loadJS();
+  e.load(rudderApiKey, rudderDataPlaneUrl);
+  // e.page()
 }
 
 function getRudder() {
@@ -48,6 +32,7 @@ function getRudder() {
   }
 
   loadAnalytics();
+
   return window.rudderanalytics;
 };
 
@@ -56,18 +41,19 @@ function makeRudder() {
     return;
   }
 
-  const rudder = getRudder();
-
   return {
     identify(userId, userData) {
+      const rudder = getRudder();
       rudder.identify(userId, userData, {
         anonymousId: getUUID(),
       });
     },
     track(event) {
+      const rudder = getRudder();
       rudder.track(`${event.action} ${event.category}`, event);
     },
     page() {
+      const rudder = getRudder();
       rudder.page();
     }
   };
