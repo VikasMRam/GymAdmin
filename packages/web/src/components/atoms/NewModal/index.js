@@ -7,6 +7,7 @@ import ScrollLock from 'react-scrolllock';
 
 import { size, palette, key } from 'sly/common/components/themes';
 import { withSpacing } from 'sly/common/components/helpers';
+import { Heading } from 'sly/common/system';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import Block from 'sly/common/components/atoms/Block';
 import Icon from 'sly/common/components/atoms/Icon';
@@ -75,16 +76,14 @@ export const HeaderWithClose = forwardRef(({ children, icon, onClose, noBorder, 
       />
     )}
 
-    <Block
-      as="h3"
-      size="subtitle"
-      fontWeight="medium"
+    <Heading
+      font="title-m"
       flexGrow="1"
-      marginRight="xLarge"
-      clamped
+      marginRight="l"
+      clamped="true"
     >
       {children}
-    </Block>
+    </Heading>
 
     <IconButton
       icon="close"

@@ -187,6 +187,9 @@ export default class PricingWizardPageContainer extends Component {
     const {
       community, user, userHas, uuidAux, redirectTo, match,
     } = this.props;
+
+    if (!community) return null;
+
     const { agent, hasNoAgent } = this.state;
 
     if (!this.getHasFinished()) {
