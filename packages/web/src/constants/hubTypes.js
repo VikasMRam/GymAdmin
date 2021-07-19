@@ -13,7 +13,7 @@ export default [
   'active-adult',
   'what-is-medicare',
   'what-is-medicaid',
-  'what-is-adl-s'
+  'what-is-adl-s',
 ];
 
 export const cmsHubTypes = [
