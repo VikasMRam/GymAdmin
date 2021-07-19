@@ -21,6 +21,10 @@ export const ICONS = [
     "arrow-drop"
   ],
   [
+    "ArrowForward",
+    "arrow-forward"
+  ],
+  [
     "Awesome",
     "awesome"
   ],

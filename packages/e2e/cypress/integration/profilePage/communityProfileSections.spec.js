@@ -300,7 +300,7 @@ describe('Community Profile Sections', () => {
       cy.wait(1000);
       cy.get('button').contains('about your options').click();
 
-      select('.ReactModal').contains('Get help from an expert').should('exist');
+      select('.NewModal').contains('Get help from an expert').should('exist');
 
       const firstName = `Lead${randHash()}`;
       const lastName = 'Question';

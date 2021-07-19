@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
@@ -8,8 +7,7 @@ import {
   required,
 } from 'sly/web/services/validation';
 import CommunityLeaveAnAnswerForm from 'sly/web/components/organisms/CommunityLeaveAnAnswerForm';
-import { ensureAuthenticated } from 'sly/web/store/authenticated/actions';
-import { prefetch, query } from 'sly/web/services/api';
+import { usePrefetch, useQuery, useUser } from 'sly/web/services/api';
 
 const validate = createValidator({
   answer: [required],
@@ -20,68 +18,63 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityLeaveAnAnswerForm);
 
-const mapDispatchToProps = {
-  ensureAuthenticated,
+const initialValues = {
+  answer: '',
 };
 
-@prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
-  id: communitySlug,
-  include: 'similar-communities,questions,agents',
-}))
+const CommunityLeaveAnAnswerFormContainer = (props) => {
+  const { communitySlug, questionId, onSuccess } = props;
 
-@query('createAnswer')
+  const { info: { user: { status: userStatus } } } = useUser();
 
-@connect(null, mapDispatchToProps)
+  const { fetch: refetchCommunity } = usePrefetch('getCommunity', {
+    id: communitySlug,
+    include: 'similar-communities,questions,agents',
+  });
 
-export default class CommunityLeaveAnAnswerFormContainer extends Component {
-  static propTypes = {
-    status: object,
-    communitySlug: string.isRequired,
-    leaveAnAnswer: func,
-    onSuccess: func,
-    questionId: string,
-  };
+  const createAnswer = useQuery('createAnswer');
 
-  handleOnSubmit = (values) => {
-    const {
-      communitySlug, createAnswer, status, questionId, onSuccess,
-    } = this.props;
+  const handleOnSubmit = useCallback((values) => {
     const payload = {
       communitySlug,
       questionId,
       answer: values.answer,
     };
-    return ensureAuthenticated(
-      'Please Login to Answer this Question',
-      () => createAnswer(payload),
-    )
-      .then(() => {
-        onSuccess();
-        status.community.refetch();
-      }).catch(({ status, body }) => {
-        let errorMessage = 'Error Answering Question';
-        if (body.errors) {
-          errorMessage = body.errors[0].detail;
-        } else if (status === 401) {
-          errorMessage = 'Please Login to Answer this Question';
-        } else {
-          console.error(body);
-        }
-        throw new SubmissionError({ answer: errorMessage });
-      });
-  };
 
-  render() {
-    const { ...props } = this.props;
-    const initialValues = {
-      answer: '',
-    };
-    return (
-      <ReduxForm
-        initialValues={initialValues}
-        onSubmit={this.handleOnSubmit}
-        {...props}
-      />
-    );
-  }
-}
+    let errorMessage = 'Please Login to Answer this Question';
+
+    if (userStatus === 401) {
+      throw new SubmissionError({ answer: errorMessage });
+    } else if (userStatus === 200) {
+      return createAnswer(payload)
+        .then(() => { onSuccess(); refetchCommunity(); })
+        .catch(({ body }) => {
+          if (body?.errors) {
+            errorMessage = body.errors[0].detail;
+          } else {
+            console.error(body);
+          }
+          throw new SubmissionError({ answer: errorMessage });
+        });
+    }
+    return null;
+  }, [communitySlug, questionId, onSuccess]);
+
+  return (
+    <ReduxForm
+      initialValues={initialValues}
+      onSubmit={handleOnSubmit}
+      {...props}
+    />
+  );
+};
+
+CommunityLeaveAnAnswerFormContainer.propTypes = {
+  status: object,
+  communitySlug: string.isRequired,
+  leaveAnAnswer: func,
+  onSuccess: func,
+  questionId: string,
+};
+
+export default CommunityLeaveAnAnswerFormContainer;

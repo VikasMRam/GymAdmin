@@ -5,6 +5,9 @@ const config = {
     property: 'font',
     scale: 'fonts',
   },
+  clamped: {
+    scale: 'clamped',
+  },
   fontFamily: true,
   fontSize: true,
   fontWeight: true,

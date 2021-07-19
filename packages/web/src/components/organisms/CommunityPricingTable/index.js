@@ -149,6 +149,7 @@ const PaddedCommunityPricing = pad(CommunityPricing, 'large');
 const CommunityPricingTable = ({
   pricesList, estimatedPriceList, newPricesList, isAlreadyPricingRequested, community, buttonProps,
 }) => {
+  if (!community) return null;
   const { id, name, startingRate, rates, propInfo } = community;
   const { maxRate } = propInfo;
   const hasCCRC = getIsCCRC(community);
