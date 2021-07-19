@@ -117,11 +117,8 @@ Warning.defaultProps = {
 // ${withBorder({ borderBottom: 0 })};
 export const SummarySectionHeader = Box;
 SummarySectionHeader.defaultProps = {
-  weight: 'medium',
   padding: 'm l',
   snap: 'vertical',
-  size: 'subtitle',
-  lineHeight: '40px',
   background: 'white',
 };
 
