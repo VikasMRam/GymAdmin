@@ -11,6 +11,9 @@ export default [
   'respite-care',
   'veterans-benefit-assisted-living',
   'active-adult',
+  'what-is-medicare',
+  'what-is-medicaid',
+  'what-is-adl-s'
 ];
 
 export const cmsHubTypes = [
