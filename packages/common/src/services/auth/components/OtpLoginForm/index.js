@@ -98,7 +98,6 @@ OtpLoginForm.propTypes = {
   submitError: string,
   formState: object.isRequired,
   onResendCodeClick: func,
-  handleOtpClick: func,
   passwordExists: bool,
   onPasswordLoginClick: func.isRequired,
   onEditPhoneNumberClick: func.isRequired,
