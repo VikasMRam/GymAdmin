@@ -489,7 +489,7 @@ export default class ListingDetailPage extends PureComponent {
             </Grid>
           </Block>
         </Block>
-        <Footer background="#f7f4ef" sx={{ marginBottom: '81px' }} sx$laptop={{ marginBottom: '0px', background: 'harvest.lighter-80' }} />
+        <Footer background="harvest.lighter-90" sx={{ marginBottom: '81px' }} sx$laptop={{ marginBottom: '0px' }} />
       </>
     );
   }
