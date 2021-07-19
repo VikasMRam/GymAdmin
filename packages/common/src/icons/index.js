@@ -3,6 +3,7 @@ export { default as Accessible } from './Accessible';
 export { default as Agents } from './Agents';
 export { default as Archive } from './Archive';
 export { default as ArrowDrop } from './ArrowDrop';
+export { default as ArrowForward } from './ArrowForward';
 export { default as Awesome } from './Awesome';
 export { default as Bathroom } from './Bathroom';
 export { default as Bed } from './Bed';

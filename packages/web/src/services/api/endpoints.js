@@ -134,4 +134,5 @@ export default {
   getTopic: { method: get, path: '/topics', jsonApi: false, baseUrl: cmsUrl },
 
   getHubPage: { method: get, path: '/senior-living-types', jsonApi: false, baseUrl: cmsUrl },
+  getMarketingPage: {method: get, path: '/marketing-pages', jsonApi: false, baseUrl: cmsUrl},
 };
