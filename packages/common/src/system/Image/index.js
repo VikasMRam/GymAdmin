@@ -123,8 +123,8 @@ export default class Image extends React.Component {
     // at least ONE of path (bucket s3 path without /uploads) or src (absolute; e.g. static in public) should be provided
     const isS3Path = !!path;
 
-    const srcProp = loading === 'lazy' ? 'data-src' : 'src';
-    const className = loading === 'lazy' ? 'lazy' : '';
+    const srcProp = 'data-src';
+    const className = 'lazyload';
 
     const actualPlaceholder = placeholder || assetPath('images/img-placeholder.png');
     const imgSrc = src && this.state.failed
@@ -174,13 +174,12 @@ export default class Image extends React.Component {
       const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
 
       const jpegSourceProps = {
-        [srcSetProp]: jpegSrcset,
+        'data-srcset': jpegSrcset,
       };
 
       const webpSourceProps = {
-        [srcSetProp]: webpSrcset,
+        'data-srcset': webpSrcset,
       };
-
 
       if (shouldPreload) {
         preload = (
@@ -192,21 +191,22 @@ export default class Image extends React.Component {
 
       sourceSets = (
         <>
-          <source type="image/webp" {...webpSourceProps} sizes={makeSizes(sizes)} />
-          <source type="image/jpeg" {...jpegSourceProps} sizes={makeSizes(sizes)} />
+          <source type="image/webp" {...webpSourceProps} data-sizes="auto" />
+          <source type="image/jpeg" {...jpegSourceProps} data-sizes="auto" />
         </>
       );
     }
 
     const imgClassName = !aspectRatio
       ? `${className} ${classNameProp}`
-      : className;
+      : `${className}`;
 
     const picture = this.state.failed
       ? (
         <img
           alt={alt || getAlt(imageProps.src)}
           className={classNameProp}
+          data-sizes="auto"
           {...imageProps}
         />
       ) : (
@@ -217,6 +217,7 @@ export default class Image extends React.Component {
             loading={loading}
             alt={alt || getAlt(path)}
             className={imgClassName}
+            data-sizes="auto"
             onError={this.failedLoadImageHandler}
             {...imageProps}
           />
