@@ -2,7 +2,7 @@ import React from 'react';
 import { object } from 'prop-types';
 
 import { getKey, size } from 'sly/common/components/themes';
-import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
+import { getStylesForEllipsisText } from 'sly/web/resourceCenter/helper';
 import Block from 'sly/common/system/Block';
 import Image from 'sly/common/system/Image';
 

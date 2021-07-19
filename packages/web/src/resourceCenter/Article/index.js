@@ -19,16 +19,16 @@ import Hr from 'sly/common/system/Hr';
 import Link from 'sly/common/system/Link';
 import Image from 'sly/common/system/Image';
 import Footer from 'sly/web/components/organisms/Footer';
-import Header from 'sly/web/components/resourceCenter/components/Header';
+import Header from 'sly/web/resourceCenter/components/Header';
 import { withHydration } from 'sly/web/services/partialHydration';
-import AddThis from 'sly/web/components/resourceCenter/components/AddThis';
-import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import AddThis from 'sly/web/resourceCenter/components/AddThis';
+import Helmet from 'sly/web/resourceCenter/components/Helmet';
 import CMSDynamicZone from 'sly/web/components/organisms/CMSDynamicZone';
 
-const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/components/resourceCenter/components/AuthorPreview'));
-const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
-const ArticleTags = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticleTags" */ 'sly/web/components/resourceCenter/components/ArticleTags'));
-const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/components/resourceCenter/components/SuscribeEmails'));
+const AuthorPreview = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkAuthorPreview" */ 'sly/web/resourceCenter/components/AuthorPreview'));
+const ArticlesListByTopic = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/resourceCenter/components/ArticlesListByTopic'));
+const ArticleTags = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticleTags" */ 'sly/web/resourceCenter/components/ArticleTags'));
+const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/resourceCenter/components/SuscribeEmails'));
 
 
 const BlockHr = ({ hideOnMobile }) => (

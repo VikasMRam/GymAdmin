@@ -7,7 +7,7 @@ import Heading from 'sly/common/system/Heading';
 import Grid from 'sly/common/system/Grid';
 import Link from 'sly/common/system/Link';
 import Chevron from 'sly/common/icons/Chevron';
-import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import ArticlePreview from 'sly/web/resourceCenter/components/ArticlePreview';
 
 const hideOnTabletStyles = {
   sx$tablet: { display: 'none' },

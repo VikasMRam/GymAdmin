@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, number, string } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
-import ArticlesList from 'sly/web/components/resourceCenter/components/ArticlesList';
+import ArticlesList from 'sly/web/resourceCenter/components/ArticlesList';
 
 const ArticlesListByTopic = ({ limit: _limit, topic, id, withRedirectToTopicPage, articlesTitle }) => {
   const { requestInfo } = usePrefetch('getArticle', {

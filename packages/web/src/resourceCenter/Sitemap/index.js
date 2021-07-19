@@ -12,7 +12,7 @@ import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
 import Heading from 'sly/common/system/Heading';
-import Header from 'sly/web/components/resourceCenter/components/Header';
+import Header from 'sly/web/resourceCenter/components/Header';
 
 const StyledLink = styled(Link)`
   display: block;

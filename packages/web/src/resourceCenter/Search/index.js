@@ -9,7 +9,7 @@ import {
   ARTICLES_RANGE_FOR_PAGINATION,
   getSearchItem,
   getTextForPagination,
-} from 'sly/web/components/resourceCenter/helper';
+} from 'sly/web/resourceCenter/helper';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { assetPath } from 'sly/web/components/themes';
 import Image from 'sly/common/system/Image';
@@ -18,10 +18,10 @@ import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Pagination from 'sly/web/components/molecules/Pagination';
 import Footer from 'sly/web/components/organisms/Footer';
-import Header from 'sly/web/components/resourceCenter/components/Header';
-import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
-import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
-import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import Header from 'sly/web/resourceCenter/components/Header';
+import ArticlePreview from 'sly/web/resourceCenter/components/ArticlePreview';
+import SubscribeEmail from 'sly/web/resourceCenter/components/SuscribeEmails';
+import Helmet from 'sly/web/resourceCenter/components/Helmet';
 
 const PaginationText = styled(Block)`
   text-align: center;

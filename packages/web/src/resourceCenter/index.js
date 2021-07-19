@@ -13,15 +13,15 @@ import Flex from 'sly/common/system/Flex';
 import Heading from 'sly/common/system/Heading';
 import Link from 'sly/common/system/Link';
 import Image from 'sly/common/system/Image';
-import Header from 'sly/web/components/resourceCenter/components/Header';
+import Header from 'sly/web/resourceCenter/components/Header';
 import Footer from 'sly/web/components/organisms/Footer';
-import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import Helmet from 'sly/web/resourceCenter/components/Helmet';
 import { withHydration } from 'sly/web/services/partialHydration';
 import loadable from '@loadable/component';
 
-const ArticlesListByTopic = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/components/resourceCenter/components/ArticlesListByTopic'));
-const ArticlesList = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesList" */ 'sly/web/components/resourceCenter/components/ArticlesList'));
-const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/components/resourceCenter/components/SuscribeEmails'));
+const ArticlesListByTopic = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesListByTopic" */ 'sly/web/resourceCenter/components/ArticlesListByTopic'));
+const ArticlesList = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkArticlesList" */ 'sly/web/resourceCenter/components/ArticlesList'));
+const SubscribeEmail = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkSubscribeEmail" */ 'sly/web/resourceCenter/components/SuscribeEmails'));
 
 
 const ExploreTopicInfo = styled(Block)`

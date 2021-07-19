@@ -1,14 +1,14 @@
 import React from 'react';
 import { array, bool, object, string } from 'prop-types';
 
-import { getStylesForEllipsisText } from 'sly/web/components/resourceCenter/helper';
+import { getStylesForEllipsisText } from 'sly/web/resourceCenter/helper';
 import { sx, space } from 'sly/common/system/sx';
 import Block from 'sly/common/system/Block';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
 import Heading from 'sly/common/system/Heading';
 import Link from 'sly/common/system/Link';
-import ArticleTags from 'sly/web/components/resourceCenter/components/ArticleTags';
+import ArticleTags from 'sly/web/resourceCenter/components/ArticleTags';
 
 const ArticlePreview = ({
   smallSizeOnPhone,

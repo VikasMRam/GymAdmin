@@ -3,13 +3,13 @@ import { string } from 'prop-types';
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
-import { getTextForPagination, ARTICLES_RANGE_FOR_PAGINATION } from "sly/web/components/resourceCenter/helper";
+import { getTextForPagination, ARTICLES_RANGE_FOR_PAGINATION } from "sly/web/resourceCenter/helper";
 import { sx, layout } from 'sly/common/system/sx';
 import Block from 'sly/common/system/Block';
 import Grid from 'sly/common/system/Grid';
 import Heading from 'sly/common/system/Heading';
 import Pagination from 'sly/web/components/molecules/Pagination';
-import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import ArticlePreview from 'sly/web/resourceCenter/components/ArticlePreview';
 
 const AuthorArticles = ({ slug, firstName, pageNumber }) => {
   const { requestInfo: { result: articlesCount } } = usePrefetch('getArticlesCount', {

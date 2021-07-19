@@ -14,7 +14,7 @@ import {
   getTagsOptionByTopic,
   toUppercaseAndSnakeCase,
   ARTICLES_RANGE_FOR_PAGINATION,
-} from 'sly/web/components/resourceCenter/helper';
+} from 'sly/web/resourceCenter/helper';
 import { assetPath } from 'sly/web/components/themes';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Footer from 'sly/web/components/organisms/Footer';
@@ -28,10 +28,10 @@ import Hr from 'sly/common/system/Hr';
 import Link from 'sly/common/system/Link';
 import Select from 'sly/web/components/atoms/Select';
 import ArrowDrop from 'sly/common/icons/ArrowDrop';
-import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
-import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
-import Header from 'sly/web/components/resourceCenter/components/Header';
-import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import ArticlePreview from 'sly/web/resourceCenter/components/ArticlePreview';
+import SubscribeEmail from 'sly/web/resourceCenter/components/SuscribeEmails';
+import Header from 'sly/web/resourceCenter/components/Header';
+import Helmet from 'sly/web/resourceCenter/components/Helmet';
 
 const DropdownIndicator = props => (
   <components.DropdownIndicator {...props}>
@@ -191,7 +191,7 @@ const Topic = ({ match, location, history }) => {
           </Block>
         </Block>
         <Image
-          css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, opacity:'.45' }}
+          css={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, opacity:'.8' }}
           sources={[320, 425, 728, 1080, 1200]}
           sizes="100vw"
           path={topicRes?.[0].img?.path}

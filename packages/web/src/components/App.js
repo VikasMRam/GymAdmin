@@ -73,12 +73,12 @@ const ListingProfilePageContainer = loadable(() => import(/* webpackChunkName: "
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/assessment/AssessmentWizardPageContainer'));
 
-const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/resourceCenter'));
-const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/components/resourceCenter/Author'));
-const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/components/resourceCenter/Article'));
-const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/components/resourceCenter/Topic'));
-const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/components/resourceCenter/Search'));
-const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/components/resourceCenter/Sitemap'));
+const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/resourceCenter'));
+const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/resourceCenter/Author'));
+const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/resourceCenter/Article'));
+const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/resourceCenter/Topic'));
+const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/resourceCenter/Search'));
+const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/resourceCenter/Sitemap'));
 const MarketingPages = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/pages/MarketingPages'));
 
 // styleguide

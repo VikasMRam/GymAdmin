@@ -14,10 +14,10 @@ import Heading from 'sly/common/system/Heading';
 import Image from 'sly/common/system/Image';
 import Hr from 'sly/common/system/Hr';
 import Footer from 'sly/web/components/organisms/Footer';
-import Header from 'sly/web/components/resourceCenter/components/Header';
-import AuthorArticles from 'sly/web/components/resourceCenter/components/AuthorArticles';
-import SubscribeEmail from 'sly/web/components/resourceCenter/components/SuscribeEmails';
-import Helmet from 'sly/web/components/resourceCenter/components/Helmet';
+import Header from 'sly/web/resourceCenter/components/Header';
+import AuthorArticles from 'sly/web/resourceCenter/components/AuthorArticles';
+import SubscribeEmail from 'sly/web/resourceCenter/components/SuscribeEmails';
+import Helmet from 'sly/web/resourceCenter/components/Helmet';
 
 const Author = ({ match, location }) => {
   const { slug } = match.params;

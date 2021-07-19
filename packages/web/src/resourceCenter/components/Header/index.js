@@ -7,8 +7,8 @@ import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Link from 'sly/common/system/Link';
 import { Logo, Menu, Chevron, ArrowDrop, Close } from 'sly/common/icons/index';
 import Block from 'sly/common/system/Block';
-import SearchContainer from 'sly/web/components/resourceCenter/components/ArticlesSearchContainer';
-import HeaderMenuList from 'sly/web/components/resourceCenter/components/Header/HeaderMenuList';
+import SearchContainer from 'sly/web/resourceCenter/components/ArticlesSearchContainer';
+import HeaderMenuList from 'sly/web/resourceCenter/components/Header/HeaderMenuList';
 import { sx, color, space, sx$laptop } from 'sly/common/system';
 
 const backToSeniorlyItem = {
