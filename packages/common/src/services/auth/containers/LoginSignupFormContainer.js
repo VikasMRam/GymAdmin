@@ -54,6 +54,7 @@ export default class LoginSignupFormContainer extends Component {
     sendOtpCode: func,
     location: object,
     redirect_to: string,
+    authStart: func,
   };
 
   state = { socialLoginError: '' };
@@ -161,7 +162,7 @@ export default class LoginSignupFormContainer extends Component {
   };
 
   handleOnSubmit = ({ email }) => {
-    const { magicLink, onEmailNoPassSubmit, onLoginPassSubmit, onPhoneNoPassSubmit, registerField, clearSubmitErrors, form, onGoToSignUp, change, sendOtpCode, location, redirect_to } = this.props;
+    const { magicLink, onEmailNoPassSubmit, onLoginPassSubmit, onPhoneNoPassSubmit, registerField, clearSubmitErrors, form, onGoToSignUp, change, sendOtpCode, location, redirect_to, authStart } = this.props;
     const payload = {};
 
     let onSubmit;
@@ -184,19 +185,18 @@ export default class LoginSignupFormContainer extends Component {
     }
 
     clearSubmitErrors(form);
-    return magicLink(payload)
+    return authStart(payload)
       .then(({ body }) => {
         const { passwordExists } = body;
         registerField(form, 'passwordExists');
         change(form, 'passwordExists', passwordExists);
-
-
         if (!passwordExists) {
           submitMethod(payload)
             .then(onSubmit)
             .then(() => {
 
             }).catch((err) => {
+              console.log(err);
               return Promise.reject(new SubmissionError({ _error: 'Oops! Something went wrong. Please try again' }));
             });
         } else {
