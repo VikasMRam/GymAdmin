@@ -14,6 +14,7 @@ import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Help, Favorite, Share } from 'sly/common/icons';
 import ListingPricing from 'sly/web/listing/components/ListingPricing';
 import { PLUS_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
+import { stateNames } from 'sly/web/constants/geo';
 
 
 const overridePosition = ({ left, top }) => ({
@@ -216,7 +217,7 @@ const ListingSummary = ({
           >
             <Link
               color="white"
-              to={`${careType.path}/${address.state}/${address.city}`}
+              to={`${careType.path}/${stateNames[address.state].toLowerCase()}/${address.city.split(' ').map(w => w.toLowerCase()).join('-')}`}
               target="_blank"
               event={{
                 category: 'care-type-tags',
