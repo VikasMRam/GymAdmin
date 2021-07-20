@@ -53,7 +53,7 @@ export default class EntityInfo extends Component {
       entity, inverted, color, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
     const { priceTextSize } = this.props;
-    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate, secondLine, thirdLine  } = entity;
+    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate, secondLine, thirdLine, resourceType = ''  } = entity;
 
     const { reviewsValue, numReviews } = propRatings || entity;
     const typeCare = entity.care || entity.typeCare || propInfo.typeCare;
@@ -123,7 +123,7 @@ export default class EntityInfo extends Component {
 
     const headerContent  = (
       <Heading
-        font={type === 'map' ? 'title-xs-azo' : 'title-m'}
+        font={type === 'map' ? 'title-s' : 'title-m'}
         pad={type === 'map' ? 'xxs' : 'xs'}
         title={entity.name}
         color={inverted ? 'white' : 'slate'}
@@ -170,6 +170,13 @@ export default class EntityInfo extends Component {
           alignItems="center"
           justifyContent="space-between"
           flexDirection={swapRatingPrice ? 'row-reverse' : undefined}
+          paddingTop={type === 'map' ? '0' : 'm'}
+          sx$tablet={{
+            paddingTop: type === 'map' && 'm',
+          }}
+          sx$laptop={{
+            paddingTop: type === 'map' && '0',
+          }}
         >
           <CommunityRating
             seedId={entity.id}
@@ -182,7 +189,7 @@ export default class EntityInfo extends Component {
           {startingRate ? (
             <Block
               color={color || (inverted ? 'white' : 'primary')}
-              font="body-s"
+              font={type === 'map' ? 'body-xs' : 'body-s'}
               testID="Rate"
               overflow="hidden"
               whiteSpace="nowrap"
@@ -193,7 +200,7 @@ export default class EntityInfo extends Component {
                 font={priceTextSize}
               >
                 {formatMoney(startingRate)}{maxRate && maxRate !== 0 ? ` - ${formatMoney(maxRate)}` : ''}
-              </Block>&nbsp;/&nbsp;month
+              </Block>&nbsp;/&nbsp;month {resourceType === 'Listing' && '+ care fees'}
             </Block>
           ) : null }
         </Block>

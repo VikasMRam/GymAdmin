@@ -79,7 +79,7 @@ const EntityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'xs' : 'l';
-  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
+  // imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
 
 
   imageMargin = layout === 'column' ? `${imageMargin || 0} ${spacing} ${imageMargin || 0} ${imageMargin || 0}` : null;
@@ -128,7 +128,7 @@ const EntityTile = ({
         border="s"
         borderColor="slate.lighter-90"
         sx$laptop={type === 'list' ? null : {
-          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto !important`,
+
           gridTemplateRows: layout === 'row' && 'auto 1fr',
           gridGap: 'xs',
         }}
@@ -149,7 +149,7 @@ const EntityTile = ({
           gridGap: 'm',
           height: '100%',
         } : {
-          gridTemplateColumns: '6.5rem auto',
+          gridTemplateColumns: '8.5rem auto',
           gridGap: 'xs',
         }}
       >
@@ -164,16 +164,19 @@ const EntityTile = ({
             placeholder={placeholder}
             sizes={mediaSizes}
             aspectRatio={imageAspectRatio}
-            margin={type === 'map' ? imageMargin : 0}
+            margin="0"
             snap={layout === 'row' ? 'bottom' : imageSnap}
             loading={loading}
             borderRadius="xxs"
             borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
             borderBottomRightRadius={type === 'map' ? null : '0px !important'}
+            sx={{
+              height: type === 'map' && '100%!important',
+            }}
             sx$tablet={{
             borderBottomLeftRadius: sx`${space('xxs')}!important`,
             borderTopRightRadius: type === 'map' ? null : '0px !important',
-            margin: imageMargin,
+            margin: type === 'map' ? 0 : imageMargin,
           }}
           >
             {topRightSection &&
@@ -202,6 +205,10 @@ const EntityTile = ({
           sx$tablet={{
             padding: layout === 'row' ? `xs ${spacing} ${spacing} ${spacing}`  : `m ${spacing}`,
           }}
+          sx$laptop={{
+            padding: type === 'map' && 'xs',
+          }}
+
         >
           <EntityInfo
             entity={entity}
