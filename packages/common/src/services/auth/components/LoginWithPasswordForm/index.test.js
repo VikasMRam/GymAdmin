@@ -5,9 +5,11 @@ import LoginWithPasswordForm from '.';
 
 const emailOrPhone = 'test@test.com';
 const handleSubmit = jest.fn();
+const passwordlessClick = jest.fn();
 const defaultProps = {
   handleSubmit,
   emailOrPhone,
+  passwordlessClick,
 };
 // const phone = '2345678901';
 // const phoneFormatted = '(234) 567-8901';
@@ -16,7 +18,7 @@ const wrap = (props = {}) => shallow(<LoginWithPasswordForm {...defaultProps} {.
 
 describe('LoginWithPasswordForm|Web', () => {
   it('does not render children when passed in', () => {
-    const wrapper = wrap({ childred: 'test' });
+    const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBeFalsy();
   });
 
@@ -24,7 +26,7 @@ describe('LoginWithPasswordForm|Web', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('Field').filter({ name: 'password' })).toHaveLength(1);
-    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(2);
     expect(wrapper.find('ButtonLink')).toHaveLength(1);
   });
 
@@ -45,7 +47,7 @@ describe('LoginWithPasswordForm|Web', () => {
     const error = 'error';
     const wrapper = wrap({ error });
     const errors = wrapper.find('Block').first();
-    expect(wrapper.find('Button')).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(2);
     expect(errors.contains(error)).toBeTruthy();
   });
 
