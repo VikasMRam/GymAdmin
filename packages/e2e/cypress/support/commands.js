@@ -146,7 +146,6 @@ Cypress.Commands.add('modalLogin', (email, password) => {
 
   cy.get('button[type="submit"]').contains('Continue').click();
   cy.wait('@magicLink');
-  cy.contains('div', 'log in with a password').click();
   cy.get('form input[name="password"]').type(password);
   cy.get('button[type="submit"]').contains('Log in').click();
   cy.wait('@login');
