@@ -11,6 +11,7 @@ const Marker = ({
   active,
   number,
   markerHover,
+  isCommunityHoveredInList,
   community,
   ...props
 }) => {
@@ -27,12 +28,13 @@ const Marker = ({
         number={number}
         active={active}
         markerHover={markerHover}
+        isCommunityHoveredInList={isCommunityHoveredInList}
         isVerified={isVerified}
         isPlus={isPlus}
         css={{
           transform: 'translate(-50%, -100%)',
           position: 'absolute',
-          zIndex: active || markerHover ? 900 : (800 - number),
+          zIndex: (active || markerHover || isCommunityHoveredInList) ? 900 : (800 - number),
           cursor: 'pointer',
         }}
         {...props}
@@ -48,6 +50,8 @@ Marker.propTypes = {
   onHover: func,
   onLeave: func,
   community: object,
+  markerHover: bool,
+  isCommunityHoveredInList: bool,
 };
 
 export default Marker;
