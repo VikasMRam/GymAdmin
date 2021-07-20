@@ -34,6 +34,8 @@ const MarketingPages = ({ match, history }) => {
   const getImageUrl = useMemo(() => result && _.map(_.flatMap(result, 'mainImage'), 'url')?.pop(), [result]);
   const blockListWithLink = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'block-with-link'), [result]);
   const getTeamContent = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'list-with-img'), [result]);
+  const getResentBlockContent = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'resent-block-post'), result);
+  const getArticlesArr = useMemo(() => getResentBlockContent && _.map(_.flatMap(getResentBlockContent, 'articles')), [getResentBlockContent]);
 
   if (!hasFinished) {
     return (
@@ -104,7 +106,11 @@ const MarketingPages = ({ match, history }) => {
           />
         </Route>
         <Route path="/press-temp">
-          <Press />
+          <Press
+            contentBlock={blockListWithLink}
+            contentResentBlockPost={getResentBlockContent}
+            getArticlesArr={getArticlesArr}
+          />
         </Route>
       </Switch>
       <Footer />
