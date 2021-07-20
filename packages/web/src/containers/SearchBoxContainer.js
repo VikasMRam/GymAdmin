@@ -63,10 +63,6 @@ export default class SearchBoxContainer extends Component {
     SlyEvent.getInstance().sendEvent({
       action: 'select', category: 'searchOption', label: resourceType, value: name,
     });
-    // TODO: Fix events server to store value in DB
-    SlyEvent.getInstance().sendEvent({
-      action: 'searchTyped', category: name, label: textValue,
-    });
 
     this.handleTextboxBlur();
     this.setState({
