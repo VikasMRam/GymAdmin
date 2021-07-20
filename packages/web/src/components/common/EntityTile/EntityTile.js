@@ -149,7 +149,7 @@ const EntityTile = ({
           gridGap: 'm',
           height: '100%',
         } : {
-          gridTemplateColumns: '8.5rem auto',
+          gridTemplateColumns: '6.5rem auto',
           gridGap: 'xs',
         }}
       >
