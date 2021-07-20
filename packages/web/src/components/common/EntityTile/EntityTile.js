@@ -79,7 +79,7 @@ const EntityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'xs' : 'l';
-  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
+  imageAspectRatio = type === 'map' ? '3:2' : imageAspectRatio;
 
 
   imageMargin = layout === 'column' ? `${imageMargin || 0} ${spacing} ${imageMargin || 0} ${imageMargin || 0}` : null;
@@ -99,6 +99,8 @@ const EntityTile = ({
         left: '0.5rem',
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
+
       }}
     >
       {newTags.map(({ name, color }) => {
@@ -108,8 +110,33 @@ const EntityTile = ({
             background="white"
             key={name}
             marginRight="xs"
+            padding="xxs xs"
+            sx={type === 'map' && {
+                padding: 'xxxs xxxs',
+              }}
+            sx$tablet={type === 'map' && {
+                padding: 'xxs xs',
+              }}
+            sx$laptop={type === 'map' && {
+                padding: 'xxxs xxxs',
+              }}
           >
-            {name}
+            <Block
+
+              font="body-xs"
+              fontWeight="bold"
+              sx={type === 'map' && {
+                fontSize: '0.625rem',
+              }}
+              sx$tablet={type === 'map' && {
+                fontSize: '0.75rem',
+              }}
+              sx$laptop={type === 'map' && {
+                fontSize: '0.625rem',
+              }}
+            >
+              {name}
+            </Block>
           </Tag>
         );
       })}
@@ -139,7 +166,7 @@ const EntityTile = ({
           gridGap: '0px',
         }
         : {
-          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto`,
+          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
           gridTemplateRows: layout === 'row' && 'auto 1fr',
           gridGap: 'xs',
         }}
@@ -169,13 +196,14 @@ const EntityTile = ({
             loading={loading}
             borderRadius="xxs"
             borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
-            borderBottomRightRadius={type === 'map' ? null : '0px !important'}
+            borderBottomRightRadius="0px !important"
             sx={{
               height: type === 'map' && '100%!important',
+              borderTopRightRadius: type === 'map' && '0px !important',
             }}
             sx$tablet={{
             borderBottomLeftRadius: sx`${space('xxs')}!important`,
-            borderTopRightRadius: type === 'map' ? null : '0px !important',
+            borderTopRightRadius: '0px !important',
             margin: type === 'map' ? 0 : imageMargin,
           }}
           >

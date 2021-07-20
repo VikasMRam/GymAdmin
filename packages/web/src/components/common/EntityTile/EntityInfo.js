@@ -197,7 +197,16 @@ export default class EntityInfo extends Component {
             >
               <Block
                 display="inline"
-                font={priceTextSize}
+                font={type === 'map' ? 'body-s' : priceTextSize}
+                fontWeight="500"
+                sx$tablet={{
+                  font: type === 'map' ? 'body-m' : priceTextSize,
+                  fontWeight: '500',
+                }}
+                sx$laptop={{
+                  font: type === 'map' ? 'body-s' : priceTextSize,
+                  fontWeight: '500',
+                }}
               >
                 {formatMoney(startingRate)}{maxRate && maxRate !== 0 ? ` - ${formatMoney(maxRate)}` : ''}
               </Block>&nbsp;/&nbsp;month {resourceType === 'Listing' && '+ care fees'}
