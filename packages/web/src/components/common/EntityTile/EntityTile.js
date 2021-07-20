@@ -79,7 +79,7 @@ const EntityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'xs' : 'l';
-  // imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
+  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
 
 
   imageMargin = layout === 'column' ? `${imageMargin || 0} ${spacing} ${imageMargin || 0} ${imageMargin || 0}` : null;
@@ -128,7 +128,7 @@ const EntityTile = ({
         border="s"
         borderColor="slate.lighter-90"
         sx$laptop={type === 'list' ? null : {
-
+          gridTemplateColumns: layout === 'row' ? 'none' : '120px auto !important',
           gridTemplateRows: layout === 'row' && 'auto 1fr',
           gridGap: 'xs',
         }}

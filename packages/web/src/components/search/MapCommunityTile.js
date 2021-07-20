@@ -42,7 +42,7 @@ const MapCommunityTile = forwardRef(({ community, index, ...props }, ref) => (
           maxWidth: '680px',
         },
         '@laptop': {
-          width: '28rem',
+          width: '25rem',
           bottom: 'unset',
         },
       }}
