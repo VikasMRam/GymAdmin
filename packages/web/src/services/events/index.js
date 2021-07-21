@@ -57,16 +57,5 @@ const events = {
   }
 };
 
-export const uuidActionEvent = (response) => {
-  if (response.body.data) {
-    const { id, attributes } = response.body.data;
-    events.track('uuid action', {
-      id,
-      ...attributes,
-    });
-  }
-  return response;
-};
-
 export default events;
 
