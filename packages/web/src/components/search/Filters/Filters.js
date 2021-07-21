@@ -174,6 +174,16 @@ const Filters = forwardRef(({
 
   return (
     <>
+      {isOpen &&
+      <Block
+        sx={{
+          zIndex: '2000 !important',
+          position: 'fixed !important',
+          inset: '0px !important',
+          overflowY: 'auto !important',
+          background: 'transparent !important',
+        }}
+      />}
       <ModalPopoverSwitch
         isOpen={!!isOpen}
         isPopOver={!!popOverCss}
@@ -312,7 +322,7 @@ const Filters = forwardRef(({
         borderColor="slate.lighter-90"
         sx={{
           top: '4.9rem',
-          zIndex: 100,
+          zIndex: 2001,
         }}
         {...props}
       >
