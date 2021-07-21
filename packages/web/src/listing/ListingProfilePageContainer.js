@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
@@ -8,7 +8,7 @@ import useListing from 'sly/web/listing/hooks/useListing';
 import { getLastSegment, replaceLastSegment } from 'sly/web/services/helpers/url';
 import { Image, Flex } from 'sly/common/system';
 import { assetPath } from 'sly/web/components/themes';
-
+import ListingContext from 'sly/web/listing/context/ListingContext';
 
 const ListingProfilePageContainer = () => {
   const location = useLocation() || {};
@@ -16,6 +16,8 @@ const ListingProfilePageContainer = () => {
   const {
     listing,
     listingStatus,
+    // userSaves,
+    // refetchUserSaves,
   } = useListing();
 
 
@@ -39,11 +41,20 @@ const ListingProfilePageContainer = () => {
     return <Redirect to={listing.url} />;
   }
 
+  const listingContextData = {
+    listing,
+    listingStatus,
+    // userSaves,
+    // refetchUserSaves,
+  };
+
   return (
-    <ListingProfilePage
-      listing={listing}
-      location={location}
-    />
+    <ListingContext.Provider value={listingContextData}>
+      <ListingProfilePage
+        listing={listing}
+        location={location}
+      />
+    </ListingContext.Provider>
   );
 };
 

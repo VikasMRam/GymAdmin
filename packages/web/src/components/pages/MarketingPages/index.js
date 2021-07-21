@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import Helmet from 'react-helmet';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { object } from 'prop-types';
+import _ from 'lodash';
+
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import Footer from 'sly/web/components/organisms/Footer';
@@ -18,7 +20,7 @@ import {
   makeHeader,
 } from 'sly/web/components/templates/FullScreenWizard';
 import { assetPath } from 'sly/web/components/themes';
-import _ from 'lodash';
+import { faqPage } from 'sly/web/services/helpers/html_headers';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -33,9 +35,11 @@ const MarketingPages = ({ match, history }) => {
   const normalizeDescription = useMemo(() => generateDataList(result, 'description')?.pop(), [result]);
   const getImageUrl = useMemo(() => result && _.map(_.flatMap(result, 'mainImage'), 'url')?.pop(), [result]);
   const blockListWithLink = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'block-with-link'), [result]);
-  const getTeamContent = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'list-with-img'), [result]);
+  const getListWithImg = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'list-with-img'), [result]);
   const getResentBlockContent = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'resent-block-post'), result);
   const getArticlesArr = useMemo(() => getResentBlockContent && _.map(_.flatMap(getResentBlockContent, 'articles')), [getResentBlockContent]);
+  const getListWithIcons = useMemo(() => _.map(_.flatMap(getComponentData(result?.[0]?.MarketingPageDz, 'list-with-icons'), 'value')), [result]);
+  const getFaqList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'faq-block'), [result]);
 
   if (!hasFinished) {
     return (
@@ -49,9 +53,14 @@ const MarketingPages = ({ match, history }) => {
     );
   }
 
+  if (hasFinished && !result?.length) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <>
       <Helmet>
+      {getFaqList?.length && faqPage(getFaqList)}
       <title>{normalizeTitle}</title>
       <meta name="description" content={result?.[0]?.MarketingPageDz?.[0]?.description} />
       </Helmet>
@@ -97,12 +106,16 @@ const MarketingPages = ({ match, history }) => {
           />
         </Route>
         <Route path="/how-it-works-temp">
-          <HowItWorks />
+          <HowItWorks
+            imgWithItem={getListWithImg}
+            getListWithIcons={getListWithIcons}
+            getFaqList={getFaqList}
+          />
         </Route>
         <Route path="/about-temp">
           <About
             contentBlock={blockListWithLink}
-            getTeamContent={getTeamContent}
+            getTeamContent={getListWithImg}
           />
         </Route>
         <Route path="/press-temp">
