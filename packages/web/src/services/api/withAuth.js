@@ -60,6 +60,7 @@ export const useAuth = () => {
     'sendOtpCode',
     'magicLink',
     'invoicedMagicLink',
+    'authStart',
   ].reduce((acc, method) => {
     acc[method] = (...args) => store.dispatch(api[method].asAction(...args));
     return acc;
@@ -177,9 +178,13 @@ export const useAuth = () => {
     return userApiMethods.magicLink(data);
   }, []);
 
+  const authStart = useCallback((data) => {
+    return userApiMethods.authStart(data);
+  }, []);
+
   const invoicedMagicLink = useCallback((data) => {
     return userApiMethods.invoicedMagicLink(data);
-  });
+  }, []);
 
   const authenticated = useSelector(state => state.authenticated);
   const reduxDispatch = useDispatch();
@@ -209,6 +214,7 @@ export const useAuth = () => {
     ensureAuthenticated,
     magicLink,
     invoicedMagicLink,
+    authStart,
   };
 };
 
