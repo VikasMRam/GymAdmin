@@ -105,6 +105,10 @@ export default class ListingAgentQuestionContainer extends Component {
 
   renderForm() {
     const { listing, type, heading, description } = this.props;
+    const {
+      info,
+    } = listing;
+    const { phoneNumber = '' } = info;
 
     const postSubmit = (showSuccessPopup) => {
       this.recordCtaEntity();
@@ -122,7 +126,7 @@ export default class ListingAgentQuestionContainer extends Component {
       messageLabel: 'Message',
       postSubmit,
     };
-    return (<ListingAgentFormContainer {...staticComponentProps} />);
+    return (<ListingAgentFormContainer phoneNumber={phoneNumber} {...staticComponentProps} />);
   }
 
   render() {

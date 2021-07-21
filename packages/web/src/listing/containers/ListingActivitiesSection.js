@@ -36,21 +36,21 @@ const getActivityDetailByName = (name) => {
   result.name = name;
   // ToDo : Hardcoded as of now, will replace with actual images
   if (name === 'Art classes') {
-    result.imageSrc = 'react-assets/listing-activities/Art classes.jpg';
+    result.imageSrc = 'react-assets/listing-activities/art-classes.jpg';
   } else  if (name === 'Music classes') {
-    result.imageSrc = 'react-assets/listing-activities/Music classes.jpg';
+    result.imageSrc = 'react-assets/listing-activities/music-classes.jpg';
   } else  if (name === 'Field trips') {
-    result.imageSrc = 'react-assets/listing-activities/Field trips.jpg';
+    result.imageSrc = 'react-assets/listing-activities/field-trips.jpg';
   } else  if (name === 'Virtual entertainment') {
-    result.imageSrc = 'react-assets/listing-activities/Virtual entertainment.jpg';
+    result.imageSrc = 'react-assets/listing-activities/virtual-entertainment.jpg';
   } else  if (name === 'Yoga and Tai Chi') {
-    result.imageSrc = 'react-assets/listing-activities/Yoga and Tai Chi.jpg';
+    result.imageSrc = 'react-assets/listing-activities/yoga-and-tai-chi.jpg';
   } else  if (name === 'Gardening') {
-    result.imageSrc = 'react-assets/listing-activities/Gardening.jpg';
+    result.imageSrc = 'react-assets/listing-activities/gardening.jpg';
   } else  if (name === 'Spritual practice') {
-    result.imageSrc = 'react-assets/listing-activities/Spiritual practice.jpg';
+    result.imageSrc = 'react-assets/listing-activities/spiritual-practice.jpg';
   }  else  if (name === 'Book clubs') {
-    result.imageSrc = 'react-assets/listing-activities/Book clubs.jpg';
+    result.imageSrc = 'react-assets/listing-activities/book-clubs.jpg';
   }
   return result;
 };

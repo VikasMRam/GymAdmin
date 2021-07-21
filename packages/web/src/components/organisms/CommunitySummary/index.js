@@ -142,6 +142,7 @@ const CommunitySummary = ({
           <Tag
             key={careType.path}
             marginRight="xs"
+            marginTop="xs"
           >
             <Link
               color="white"
