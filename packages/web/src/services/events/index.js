@@ -1,7 +1,7 @@
 import { isServer, isTest, isProd } from 'sly/web/config';
 
 import segment from './segment';
-import rudder from './rudderstack';
+//import rudder from './rudderstack';
 import ga from './ga';
 import legacy from './legacy';
 
@@ -19,23 +19,23 @@ const events = {
       console.info('EVENT identify', userId, userData);
     } else {
       segment.identify(userId, userData);
-      rudder.identify(userId, userData);
+      //rudder.identify(userId, userData);
     }
   },
 
-  track(event, options={}) {
+  track(...args) {
     if (isServer || isTest) {
       return;
     }
 
     if (!isProd) {
-      console.info('EVENT track', event);
+      console.info('EVENT track', ...args);
     } else {
-      segment.track(event);
-      rudder.track(event);
-      legacy.track(event);
-      if (!options.notForGa) {
-        ga.track(event);
+      segment.track(...args);
+      //rudder.track(...args);
+      if (args.length === 1) {
+        legacy.track(...args);
+        ga.track(...args);
       }
     }
   },
@@ -50,7 +50,7 @@ const events = {
       console.info('EVENT page', `${pathname}${search}`);
     } else {
       segment.page();
-      rudder.page();
+      //rudder.page();
       legacy.page();
       ga.page();
     }
@@ -60,12 +60,10 @@ const events = {
 export const uuidActionEvent = (response) => {
   if (response.body.data) {
     const { id, attributes } = response.body.data;
-    events.track({
-      action: 'uuid',
-      category: 'action',
+    events.track('uuid action', {
       id,
       ...attributes,
-    }, { notForGa: true });
+    });
   }
   return response;
 };

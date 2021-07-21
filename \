@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router';
 
 import CommunityDetailPage from './CommunityDetailPage';
 
-import events from 'sly/web/services/events';
+import segment from 'sly/web/services/events/segment';
 import useCommunity from 'sly/web/profile/hooks/useCommunity';
 import { getLastSegment, replaceLastSegment } from 'sly/web/services/helpers/url';
 import { Image, Flex } from 'sly/common/system';
@@ -29,11 +29,7 @@ const CommunityDetailPageContainer = () => {
 
   useEffect(() => {
     if (communityStatus === 200) {
-      events.track('community viewed', {
-        slug: communitySlug,
-        size: communitySizes[community.propInfo.communitySize],
-        care: toc,
-      });
+      console.log(communitySlug, toc, community);
     }
   }, [communitySlug]);
 
