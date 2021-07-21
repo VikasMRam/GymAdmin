@@ -159,7 +159,7 @@ const Filters = forwardRef(({
   const createOpenFilters = (section = true) => (e) => {
     e.stopPropagation();
     sendEvent('open-filter', section.toString());
-    setIsOpen(section);
+    isOpen !== section ? setIsOpen(section) : setIsOpen(false);
   };
 
   const disableMoreFiltersCollapse = showIf(MORE_FILTERS) && breakpoint?.atLeastTablet();
