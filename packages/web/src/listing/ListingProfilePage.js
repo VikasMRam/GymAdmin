@@ -116,6 +116,12 @@ const StyledHeadingBoxSection = styled(HeadingBoxSection).attrs({ hasNoHr: true 
   font:${font('body-l')};
 `;
 
+const StyledFooterButton = styled(Button)`
+  ${sx({
+    width: '100%',
+  })}
+`;
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -328,9 +334,10 @@ export default class ListingDetailPage extends PureComponent {
                 <StyledHeadingBoxSection
                   heading="Explore similar listings"
                   id="sticky-sidebar-boundary"
-                  sx$tablet={{ padding: '0 !important' }}
+                  sx$tablet={{
+                    padding: '0 !important',
+                  }}
                   hasNoBottomHr
-                  mb="xxl"
                 >
                   <CarouselContainer itemsQty={similarListings.length}>
                     <SimilarListings
@@ -345,7 +352,12 @@ export default class ListingDetailPage extends PureComponent {
                         })}
                     />
                   </CarouselContainer>
-                  <Block textAlign="center">
+                  <Block
+                    textAlign="center"
+                    sx$tablet={{
+                      mb: 'xxl',
+                    }}
+                  >
                     <Button
                       to={`/assisted-living/${stateNames[state]}/${city}`}
                       event={{ action: 'click', category: 'backToSearch', label: listing.id }}
@@ -431,71 +443,53 @@ export default class ListingDetailPage extends PureComponent {
         </ListingProfilePageTemplate>
 
         {/* Footer Section */}
-        <Block as="footer" background="harvest.lighter-90">
+        <Block
+          as="footer"
+          padding="xxl m"
+          borderBottom="1px solid"
+          borderColor="slate.lighter-90"
+          background="harvest.lighter-90"
+          sx$tablet={{
+            padding: 'xxxl l',
+
+          }}
+        >
           <Block
             width="100%"
             margin="0 auto"
-            padding="l"
             sx$laptop={{
-            width: 'col12',
-            paddingX: '0',
-            paddingBottom: '0',
-          }}
+              width: 'col12',
+            }}
           >
-            <Block font="title-l" pb="l" textAlign="center" pt="xxxl">
+            <Block font="title-l" pb="l" textAlign="center">
               How can we help?
             </Block>
             <Grid
-              gridTemplateRows="repeat(3, 1fr)"
-              gridGap="m"
-              sx$laptop={{
-                gridTemplateColumns: 'repeat(3, 1fr)',
-              }}
+              gridGap="s"
               sx$tablet={{
                gridTemplateColumns: 'repeat(3, 1fr)',
-             }}
-              pb="xxxl"
-            >
-              <Button
-                width="100%"
-                paddingY="s"
-                height="s"
-                sx$tablet={{
-                width: 'initial',
-                paddingX: 'xxl',
+               gridGap: 'l',
               }}
+            >
+              <StyledFooterButton
                 onClick={bookTourClickHandler}
               >
                 Book a tour
-              </Button>
+              </StyledFooterButton>
               <Link href="tel:3128473794" color="white" width="100%">
-                <Button
-                  paddingY="s"
-                  height="l"
-                  width="100%"
-                  sx$tablet={{
-                    paddingX: 'xxl',
-                   }}
-                >
+                <StyledFooterButton >
                   Call (312) 847-3794
-                </Button>
+                </StyledFooterButton>
               </Link>
-              <Button
-                width="100%"
-                paddingY="s"
-                height="l"
-                sx$tablet={{
-                width: 'initial',
-                paddingX: 'xxl',
-              }}
+              <StyledFooterButton
                 onClick={nearByOptionsClickHandler}
               >
                 See nearby options
-              </Button>
+              </StyledFooterButton>
             </Grid>
           </Block>
         </Block>
-        <Footer sx={{ marginBottom: '81px' }} sx$laptop={{ marginBottom: '0px' }} />
+        <Footer background="harvest.lighter-90" sx={{ marginBottom: '81px' }} sx$laptop={{ marginBottom: '0px' }} />
       </>
     );
   }
