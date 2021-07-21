@@ -57,14 +57,16 @@ export default function ImageByCategory({ images = [], onPictureClick }) {
               key={image.alt}
             >
               <ImageItem image={image} i={i} onPictureClick={onPictureClick} />
-              <Block as="span" pt="xs" font="title-xs-azo">{image.category.name}</Block>
+              <Block pt="xs" font="title-xs-azo">{image.category.name}</Block>
+              <Block pt="xxs" font="body-m">{image.description}</Block>
             </Block>
           );
         }
         return (
           <Block key={image.alt}>
             <ImageItem image={image} i={i} onPictureClick={onPictureClick} />
-            <Block as="span" pt="xs" font="title-xs-azo">{image.category.name}</Block>
+            <Block pt="xs" font="title-xs-azo">{image.category.name}</Block>
+            <Block pt="xxs" font="body-m">{image.description}</Block>
           </Block>
         );
       })}
