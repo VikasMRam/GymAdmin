@@ -275,9 +275,6 @@ export default class ListingDetailPage extends PureComponent {
                     width="100%"
                     mt="l"
                     font="title-xs-azo"
-                    sx$laptop={{
-                      display: 'none',
-                    }}
                     onClick={bookTourClickHandler}
                   >
                     Book a tour
@@ -378,6 +375,7 @@ export default class ListingDetailPage extends PureComponent {
                     agent={partnerAgent}
                     listing={listing}
                     type="expert"
+                    isSidebar
                     isStatic
                   />
                 </StickToTop>
