@@ -1,6 +1,5 @@
 import React from 'react';
 import { number, object, string } from 'prop-types';
-import styled from 'styled-components';
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
 
@@ -9,7 +8,6 @@ import Image from 'sly/common/system/Image';
 import CommunityInfo from 'sly/web/components/molecules/CommunityInfo';
 
 const CommunityPreview = ({
-  index,
   starting_rate: startingRate,
   background_image: url,
   prop_stats: propRatings,
@@ -39,7 +37,6 @@ const CommunityPreview = ({
       <Block padding="m" sx$tablet={{ flexGrow: 1 }}>
         <CommunityInfo
           color="viridian.base"
-          index={index}
           community={{
             ...rest,
             capacity: capacity || '',
@@ -61,7 +58,6 @@ const CommunityPreview = ({
 };
 
 CommunityPreview.propTypes = {
-  index: number,
   starting_rate: number,
   background_image: string,
   care: string,
