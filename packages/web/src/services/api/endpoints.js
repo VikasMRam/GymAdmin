@@ -40,6 +40,7 @@ export default {
   resendOtpCode: { method: post, path: '/platform/auth/otp/retry' },
   sendOtpCode: { method: post, path: '/platform/auth/otp/start' },
   magicLink: { method: post, path: '/platform/auth/mlink/start' },
+  authStart: { method: post, path: '/platform/auth/start' },
   invoicedMagicLink: { method: get, path: '/platform/invoiced/magic-link' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
@@ -134,5 +135,5 @@ export default {
   getTopic: { method: get, path: '/topics', jsonApi: false, baseUrl: cmsUrl },
 
   getHubPage: { method: get, path: '/senior-living-types', jsonApi: false, baseUrl: cmsUrl },
-  getMarketingPage: {method: get, path: '/marketing-pages', jsonApi: false, baseUrl: cmsUrl},
+  getMarketingPage: { method: get, path: '/marketing-pages', jsonApi: false, baseUrl: cmsUrl },
 };

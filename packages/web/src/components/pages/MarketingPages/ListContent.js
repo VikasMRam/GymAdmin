@@ -1,8 +1,19 @@
 import React from 'react';
 import { array } from 'prop-types';
+import styled from 'styled-components';
 
 import ArrowForward from 'sly/common/icons/ArrowForward';
 import { Flex, Hr, Block, Link } from 'sly/common/system';
+import { color } from 'sly/common/system/sx';
+
+const ElementLink = styled(Block)`
+  p {
+    a {
+      color: ${color('viridian.base')};
+      text-decoration: none;
+    }
+  }
+`
 
 const ListContent = ({
   contentBlock
@@ -44,7 +55,7 @@ const ListContent = ({
               <ArrowForward paddingLeft="xxs" />
             </Link>}
             {item.infoBlock &&
-            <Block
+            <ElementLink
               font="body-l"
               pad={['xxl', 'xxxl']}
               dangerouslySetInnerHTML={{
