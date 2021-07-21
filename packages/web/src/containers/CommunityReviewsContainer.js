@@ -23,6 +23,8 @@ const CommunityReviewsContainer = () => {
     });
   }, [id]);
 
+  if (!community) return null;
+
   return (
     <EntityReviews
       reviewsValue={reviewsValue}

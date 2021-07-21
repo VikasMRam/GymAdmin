@@ -98,18 +98,19 @@ function makeSegment() {
     return;
   }
 
-  const segment = getSegment();
-
   return {
     identify(userId, userData) {
+      const segment = getSegment();
       segment.identify(userId, userData, {
         anonymousId: getUUID(),
       });
     },
     track(event) {
+      const segment = getSegment();
       segment.track(`${event.action} ${event.category}`, event);
     },
     page() {
+      const segment = getSegment();
       segment.page();
     }
   };

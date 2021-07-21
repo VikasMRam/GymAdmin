@@ -50,7 +50,7 @@ const LoginSignupForm = ({
     <IconButton
       icon="google"
       width="100%"
-      pad={error ? 'large' : 'xLarge'}
+      pad={error ? 'large' : '0'}
       borderPalette="grey"
       palette="slate"
       onClick={onGoogleLoginClick}

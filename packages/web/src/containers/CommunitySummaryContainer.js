@@ -37,7 +37,7 @@ const CommunitySummaryContainer = ({ isAdmin, className, ...props }) => {
 
   const { requestInfo: { normalized: userSaves }, fetch: refetchUserSaves } = usePrefetch('getUserSaves', {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-    'filter[entity_slug]': community.id,
+    'filter[entity_slug]': community?.id,
   });
 
 
@@ -95,6 +95,7 @@ const CommunitySummaryContainer = ({ isAdmin, className, ...props }) => {
     setIsModalOpen('');
   };
 
+  if (!community) return null;
 
   return (
     <>
@@ -114,8 +115,8 @@ const CommunitySummaryContainer = ({ isAdmin, className, ...props }) => {
       {isModalOpen &&
         <Modal onClose={setModalClosed}>
           <ModalBody>
-            { isModalOpen === 'save' && <SaveCommunityContainer
-              slug={community.id}
+            {isModalOpen === 'save' && <SaveCommunityContainer
+              slug={community?.id}
               notifyInfo={notifyInfo}
               notifyError={notifyError}
               onCancelClick={setModalClosed}

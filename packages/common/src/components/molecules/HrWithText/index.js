@@ -32,8 +32,6 @@ const HrWithText = ({
           flex={1}
         >
           <Block
-            size="caption"
-            weight="medium"
             background="white"
             padding={[0, 'large']}
           >

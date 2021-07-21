@@ -48,6 +48,16 @@ theme.fonts = {
   quote: makeFont('32px/44px'),
 };
 
+
+theme.clamped = {
+  true:{
+    whiteSpace:'nowrap',
+    overflow:'hidden',
+    textOverflow:'ellipsis',
+  },
+};
+
+
 theme.fontSize = {
   'title-xxl': ['36px', '48px'],
   'title-xl': ['32px', '40px'],

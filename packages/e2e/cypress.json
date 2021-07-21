@@ -1,7 +1,6 @@
 {
   "baseUrl": "http://www.seniorly.dev",
   "reporter": "cypress-multi-reporters",
-  "ignoreTestFiles": "**/*/!(*v2*|*ProfileSections*|*communityReferral*|*searchPage*).js",
   "video": false,
   "reporterOptions": {
     "configFile": "reporter-config.json"

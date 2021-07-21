@@ -140,13 +140,12 @@ Cypress.Commands.add('fullLogin', (email, password) => {
 Cypress.Commands.add('modalLogin', (email, password) => {
   cy.intercept('POST', '**/auth/login').as('login');
   cy.intercept('GET', '**/users/me').as('getUser');
-  cy.intercept('POST', '**/mlink/start').as('magicLink');
+  cy.intercept('POST', '**/auth/start').as('authStart');
 
   cy.get('form input[name="email"]').type(email);
 
   cy.get('button[type="submit"]').contains('Continue').click();
-  cy.wait('@magicLink');
-  cy.contains('div', 'log in with a password').click();
+  cy.wait('@authStart');
   cy.get('form input[name="password"]').type(password);
   cy.get('button[type="submit"]').contains('Log in').click();
   cy.wait('@login');
