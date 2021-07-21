@@ -60,6 +60,7 @@ const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chu
 const EmailViewPageContainer = loadable(() => import(/* webpackChunkName: "emailView" */ 'sly/web/containers/EmailViewPageContainer'));
 const EmailSharePageContainer = loadable(() => import(/* webpackChunkName: "emailShare" */ 'sly/web/containers/EmailSharePageFormContainer'));
 const HousingPartnersPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/components/pages/HousingPartnersPage'));
+const  TypeformLandingPage = loadable(() => import(/* webpackChunkName: "chunkHousingPartners" */ 'sly/web/profile/Typeform/TypeformLandingPage'));
 
 // Dashboard
 const Dashboard = loadable(() => import(/* webpackChunkName: "chunkDashboard" */ 'sly/web/dashboard/Dashboard'));
@@ -270,6 +271,12 @@ const routes = [
     component: ResourceCenterArticlePage,
     exact: true,
   },
+  {
+    path: '/typeform',
+    component: TypeformLandingPage,
+    exact: true,
+  },
+
 ];
 
 const routeComponents = routes.map(({ component: Component, ...route }) => (
@@ -301,76 +308,74 @@ export default class App extends Component {
           <ThemeProvider theme={theme}>
             <IconContext.Provider value={iconsContext}>
               <ChatBoxProvider>
-                <TypeformProvider>
-                  <BreakpointProvider>
-                    <NotificationProvider>
-                      <PageEventsContainer />
-                      <UserCookiesContainer />
-                      <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
-                        <title>Find The Best Senior Living Options Near You</title>
-                        <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                        <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-                        <meta content="Seniorly" property="author" />
-                        <meta content="English" property="language" />
+                <BreakpointProvider>
+                  <NotificationProvider>
+                    <PageEventsContainer />
+                    <UserCookiesContainer />
+                    <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
+                      <title>Find The Best Senior Living Options Near You</title>
+                      <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+                      <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+                      <meta content="Seniorly" property="author" />
+                      <meta content="English" property="language" />
 
-                        {/*
+                      {/*
                       Open graph
                       */}
-                        <meta property="og:site_name" content="Seniorly" />
-                        <meta property="og:site_url" content="https://www.seniorly.com" />
-                        <meta property="og:type" content="website" />
+                      <meta property="og:site_name" content="Seniorly" />
+                      <meta property="og:site_url" content="https://www.seniorly.com" />
+                      <meta property="og:type" content="website" />
 
-                        {/*
+                      {/*
                       Twitter
                     */}
-                        <meta content="summary" property="twitter:card" />
-                        <meta content="https://www.seniorly.com" property="twitter:site" />
-                        <meta content="@seniorly" property="twitter:creator" />
+                      <meta content="summary" property="twitter:card" />
+                      <meta content="https://www.seniorly.com" property="twitter:site" />
+                      <meta content="@seniorly" property="twitter:creator" />
 
-                        {/*
+                      {/*
                       Google Optimize
                     */}
-                        <meta
-                          httpEquiv="Content-Security-Policy"
-                          content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"
-                        />
+                      <meta
+                        httpEquiv="Content-Security-Policy"
+                        content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"
+                      />
 
-                        <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
-                        <style type="text/css">{GlobalStyles}</style>
+                      <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
+                      <style type="text/css">{GlobalStyles}</style>
 
 
-                      </Helmet>
+                    </Helmet>
 
-                      <Switch>
-                        <Route
-                          path="/ping"
-                          render={() => <h1>pong</h1>}
-                          exact
-                        />
-                        <Route
-                          path="/ads.txt"
-                          render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
-                          exact
-                        />
-                        <Route
-                          path={`/:toc(${careTypes})/:state/:city/filters`}
-                          render={({ match }) => (
-                            <Redirect
-                              to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
-                            />
+                    <Switch>
+                      <Route
+                        path="/ping"
+                        render={() => <h1>pong</h1>}
+                        exact
+                      />
+                      <Route
+                        path="/ads.txt"
+                        render={() => 'google.com, pub-7265665320394778, DIRECT, f08c47fec0942fa0'}
+                        exact
+                      />
+                      <Route
+                        path={`/:toc(${careTypes})/:state/:city/filters`}
+                        render={({ match }) => (
+                          <Redirect
+                            to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+                          />
                       )}
-                        />
-                        <Route
-                          path="/dashboard/*"
-                          component={Dashboard}
-                        />
-                        {routeComponents}
-                        <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-                      </Switch>
-                    </NotificationProvider>
-                  </BreakpointProvider>
-                </TypeformProvider>
+                      />
+                      <Route
+                        path="/dashboard/*"
+                        component={Dashboard}
+                      />
+                      {routeComponents}
+                      <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+                    </Switch>
+                  </NotificationProvider>
+                </BreakpointProvider>
               </ChatBoxProvider>
             </IconContext.Provider>
           </ThemeProvider>

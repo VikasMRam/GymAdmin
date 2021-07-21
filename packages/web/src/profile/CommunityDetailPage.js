@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
-import StickyHeader from 'sly/web/profile/StickyHeader';
+
+// import StickyHeader from 'sly/web/profile/StickyHeader';
+import SlyTypeform from './Typeform/Typeform';
 
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
@@ -46,13 +48,13 @@ import { clickEventHandler } from 'sly/web/services/helpers/eventHandlers';
 import HeadingBoxSection from 'sly/web/components/molecules/HeadingBoxSection';
 import ModalContainer from 'sly/web/containers/ModalContainer';
 import withChatbox from 'sly/web/services/chatbox/withChatBox';
-import withTypeform from 'sly/web/services/typeform/WithTypeform';
 import StickyHeaderTabs from 'sly/web/components/common/StickyHeaderTabs';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
 import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Callout from 'sly/web/profile/Callout';
 import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
+import { getTypeformDetailsByCommunity } from 'sly/web/services/helpers/typeform';
 
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
@@ -170,7 +172,6 @@ const getAssessmentBoxModes = {
 };
 
 @withChatbox
-@withTypeform
 export default class CommunityDetailPage extends PureComponent {
   static propTypes = {
     community: object.isRequired,
@@ -283,16 +284,13 @@ export default class CommunityDetailPage extends PureComponent {
       { label: 'amenities', id: 'amenities-section' },
       shouldShowReviews ? { label: 'reviews', id: 'reviews' } : null,
     ];
+    console.log('location', location);
 
-    const { getEmbededFormUrl, getTypeFormUrlByCommunity } = this.props;
+    const typeformId = getTypeformDetailsByCommunity(community, location.pathname);
+    const typeformUrl = `/typeform?formid=${typeformId}`;
 
-    let emdededFormUrl = '';
-    if (retrieveLocalStorage('communityProfileSeen')) {
-      emdededFormUrl = getEmbededFormUrl(false, {});
-    } else {
-      emdededFormUrl = getEmbededFormUrl(true, {});
-      addToLocalStorage('communityProfileSeen', true);
-    }
+    console.log(typeformUrl);
+
     return (
       <>
         {getHelmetForCommunityPage(community, location)}
@@ -333,14 +331,6 @@ export default class CommunityDetailPage extends PureComponent {
                   )}
 
 
-                {/* <Block width="350px" height="350px">
-                  <Block className="typeform-widget" data-url="https://form.typeform.com/to/RYBdR1jm?typeform-medium=embed-snippet" width="100%" height="100%" />
-                </Block> */}
-
-                <Button to={getTypeFormUrlByCommunity(community, location.pathname)} width="100%">
-                  Get Pricing And Availability (conditional)
-                </Button>
-
                 {shouldShowPricing &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
@@ -357,9 +347,7 @@ export default class CommunityDetailPage extends PureComponent {
                       newPricesList,
                     }}
                   /> */}
-                  <Button to="https://sushrama.typeform.com/to/dH3EjYYx" width="100%">
-                    Get Pricing And Availability
-                  </Button>
+                  <SlyTypeform wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" dangerouslySetInnerHTML={{ __html: '' }} />
                   {(promoDescription || promoTitle) && (
                     <OfferNotificationContainer
                       mt="s"
@@ -442,10 +430,14 @@ export default class CommunityDetailPage extends PureComponent {
                       mt="m"
                     /> */}
 
-                    {/* Embeded Typeform */}
-                    <Block width="100%" height="350px" mt="m">
-                      <Block className="typeform-widget" data-url={emdededFormUrl} width="100%" height="100%" />
+                    <Block height="350px">
+                      <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" onReadyHandler={() => { console.log('form ready'); }} onSubmitHandler={() => { console.log('form submit'); }} onQuestionChangedHandler={() => { console.log('form question question change'); }} />
                     </Block>
+
+                    {/* Embeded Typeform */}
+                    {/* <Block width="100%" height="350px" mt="m">
+                      <Block className="typeform-widget" data-url={emdededFormUrl} width="100%" height="100%" />
+                    </Block> */}
 
                   </StyledHeadingBoxSection>
                 }

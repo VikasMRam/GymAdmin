@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 export const TypeformContext = React.createContext({ getTypeFormUrlByCommunity: () => {}, getEmbededFormUrl: () => {} });
 
 const loadJsScript = () => {
+  return;
   return new Promise((resolve, reject) => {
     if (typeof window !== 'undefined') {
       let script = document.getElementById('typef_orm');
