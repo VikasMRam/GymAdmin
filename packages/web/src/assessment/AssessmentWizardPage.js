@@ -32,11 +32,12 @@ const StyledTemplateContent = styled(TemplateContent)`
 const AssessmentWizardPage = (props) => {
   const { dismiss, messages } = useNotification();
 
-  return (<>
-    <TemplateHeader noBottomMargin>
-      <Link
-        to="/"
-        sx={{
+  return (
+    <>
+      <TemplateHeader noBottomMargin>
+        <Link
+          to="/"
+          sx={{
           height: 'xxxl',
           display: 'flex',
           alignItems: 'center',
@@ -44,15 +45,16 @@ const AssessmentWizardPage = (props) => {
           borderBottom: 's',
           borderColor: 'slate.lighter-90',
         }}
-      >
-        <Logo />
-      </Link>
-    </TemplateHeader>
-    <StyledTemplateContent>
-      <AssessmentWizard {...props} />
-    </StyledTemplateContent>
-    <Notifications messages={messages} dismiss={dismiss} />
-  </>);
+        >
+          <Logo />
+        </Link>
+      </TemplateHeader>
+      <StyledTemplateContent>
+        <AssessmentWizard {...props} />
+      </StyledTemplateContent>
+      <Notifications messages={messages} dismiss={dismiss} />
+    </>
+  );
 };
 
 export default AssessmentWizardPage;
