@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@loadable/component": "file:./private/loadable-component",
+    "@typeform/embed-react": "1.0.7",
     "cross-env": "7.0.2",
     "final-form": "4.20.2",
     "hoist-non-react-statics": "3.3.2",
