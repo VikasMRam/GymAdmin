@@ -202,9 +202,9 @@ const AuthContainer = (props) => {
               }}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto(CUSTOMERSIGNUPCONFIRMATION)}
               onSocialSignupSuccess={() => setTitle('One more thing...')}
-              handleOtpClick={() => {
+              handleExistingAccount={() => {
                 setTitle('Log in to your account');
-                goto(OTPLOGIN);
+                goto(LOGINSINGUP);
               }}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}
@@ -366,7 +366,7 @@ AuthContainer.propTypes = {
 
 AuthContainer.defaultProps = {
   type: 'modal',
-  initialStep: LOGINSINGUP,
+  initialStep: OTPLOGIN,
   formName: 'AuthForm',
   signUpHasPassword: true,
   hasProviderSignup: true,
