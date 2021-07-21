@@ -31,7 +31,7 @@ import Modal, {
   ModalBody,
 } from 'sly/web/components/atoms/NewModal';
 import { useBreakpoint } from 'sly/web/components/helpers/breakpoint';
-import useDimensions from 'sly/common/components/helpers/useDimensions';
+import useDimensions from 'sly/common/components/helpers/useLiveDimensions';
 import Button from 'sly/common/components/atoms/Button';
 import Popover from 'sly/web/components/molecules/NewPopover';
 import Collapsible from 'sly/web/components/search/Filters/Collapsible';
@@ -120,8 +120,9 @@ const Filters = forwardRef(({
     type => Boolean(isOpen === type || (breakpoint?.isMobile() && isOpen)),
     [isOpen, breakpoint],
   );
-  const [priceButtonRef, priceButtonCoords] = useDimensions();
-  const [sizeButtonRef, sizeButtonCoords] = useDimensions();
+  const liveMeasure = true;
+  const [priceButtonRef, priceButtonCoords] = useDimensions({ liveMeasure });
+  const [sizeButtonRef, sizeButtonCoords] = useDimensions({ liveMeasure });
   const popOverCss = useMemo(() => {
     if (breakpoint?.atLeastTablet() && [BUDGET, SIZE].includes(isOpen)) {
       const coords = ({
@@ -129,7 +130,7 @@ const Filters = forwardRef(({
         [SIZE]: sizeButtonCoords,
       })[isOpen];
       return {
-        position: 'absolute',
+        position: 'fixed',
         top: coords.top + coords.height + 16,
         left: coords.left,
       };
