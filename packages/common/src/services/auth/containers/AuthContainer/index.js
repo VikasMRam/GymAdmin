@@ -366,7 +366,7 @@ AuthContainer.propTypes = {
 
 AuthContainer.defaultProps = {
   type: 'modal',
-  initialStep: OTPLOGIN,
+  initialStep: LOGINSINGUP,
   formName: 'AuthForm',
   signUpHasPassword: true,
   hasProviderSignup: true,
