@@ -179,6 +179,7 @@ export default class CommunityDetailPage extends PureComponent {
     triggerChatBot: func,
   };
 
+  state  = { rerender: false }
   componentDidMount() {
     const { community } = this.props;
     const { address } = community;
@@ -189,6 +190,9 @@ export default class CommunityDetailPage extends PureComponent {
       // triggerChatBot(eventName);
       triggerChatBot('Bot reintro');
     }
+    // setTimeout(() => {
+    //   this.setState({ rerender: true });
+    // }, 5000);
   }
 
   render() {
@@ -347,7 +351,10 @@ export default class CommunityDetailPage extends PureComponent {
                       newPricesList,
                     }}
                   /> */}
-                  <SlyTypeform wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" dangerouslySetInnerHTML={{ __html: '' }} />
+                  {/* {
+                    this.state.rerender ? 'Re Render' : ' No Rerender'
+                  } */}
+                  <SlyTypeform wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing"  />
                   {(promoDescription || promoTitle) && (
                     <OfferNotificationContainer
                       mt="s"

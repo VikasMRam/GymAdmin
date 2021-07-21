@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Widget, PopupButton, Sidetab } from '@typeform/embed-react';
 import styled from 'styled-components';
 
@@ -108,4 +108,4 @@ const SlyTypeform = (props) => {
   );
 };
 
-export default SlyTypeform;
+export default memo(SlyTypeform, () => false);
