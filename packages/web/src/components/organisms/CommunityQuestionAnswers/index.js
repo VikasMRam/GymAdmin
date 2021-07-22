@@ -1,20 +1,25 @@
 import React, { Fragment } from 'react';
 import { string, arrayOf, func } from 'prop-types';
+import styled from 'styled-components';
 
 import { content as contentPropType } from 'sly/common/propTypes/content';
-import pad from 'sly/web/components/helpers/pad';
-import cursor from 'sly/web/components/helpers/cursor';
-import { Hr, Block } from 'sly/common/components/atoms';
 import CommunityQuestion from 'sly/web/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/web/components/molecules/CommunityAnswer';
+import { Button, Hr, Block, color, space } from 'sly/common/system';
 
-const PaddedCommunityQuestion = pad(CommunityQuestion, 'large');
+const PaddedCommunityQuestion = styled(CommunityQuestion)`
+  margin-bottom: ${space('m')};
+`;
 PaddedCommunityQuestion.displayName = 'PaddedCommunityQuestion';
 
-const CursorBlock = cursor(Block);
+const CursorBlock = styled(Block)`
+  background: ${color('primary.base')};
+  font-weight: 500;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 CursorBlock.displayName = 'CursorBlock';
-
-const PaddedBlock = pad(Block);
 
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
@@ -42,7 +47,7 @@ const CommunityQuestionAnswers = ({
         <Block marginLeft="huge">
           {answersComponents}
         </Block>
-        {/* <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock> */}
+        <CursorBlock onClick={() => onLeaveAnswerClick(question)}>Leave an Answer</CursorBlock>
         {i < questions.length - 1 && <Hr />}
       </Fragment>
     );
@@ -51,7 +56,7 @@ const CommunityQuestionAnswers = ({
   const communityFaQsComponent = communityFaQs.sort(sortByCreatedAt).map((communityFaQ, i) => (
     <Fragment key={communityFaQ.id}>
       <PaddedCommunityQuestion question={communityFaQ} />
-      <CursorBlock palette="primary" weight="medium" onClick={() => onAskQuestionClick(communityFaQ)}>Be the first to ask this question</CursorBlock>
+      <CursorBlock onClick={() => onAskQuestionClick(communityFaQ)}>Be the first to ask this question</CursorBlock>
       {i < communityFaQs.length - 1 && <Hr />}
     </Fragment>
   ));
@@ -63,11 +68,11 @@ const CommunityQuestionAnswers = ({
       {communityFaQsComponent.length > 0 &&
         <>
           <Hr />
-          <PaddedBlock size="subtitle" weight="medium">Other questions to consider</PaddedBlock>
+          <Block mb="l" fontSize="20px" fontWeight="500">Other questions to consider</Block>
           {communityFaQsComponent}
         </>
       }
-      {/* <Button width="100%" marginTop="xLarge" onClick={() => onAskQuestionClick()}>Ask a Question</Button> */}
+      <Button width="100%" mt="l" onClick={() => onAskQuestionClick()}>Ask a Question</Button>
     </>
   );
 };

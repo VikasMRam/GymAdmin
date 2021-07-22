@@ -36,21 +36,21 @@ const getActivityDetailByName = (name) => {
   result.name = name;
   // ToDo : Hardcoded as of now, will replace with actual images
   if (name === 'Art classes') {
-    result.imageSrc = assetPath('images/listing-activities/Art classes.jpg');
+    result.imageSrc = 'react-assets/listing-activities/art-classes.jpg';
   } else  if (name === 'Music classes') {
-    result.imageSrc = assetPath('images/listing-activities/Music classes.jpg');
+    result.imageSrc = 'react-assets/listing-activities/music-classes.jpg';
   } else  if (name === 'Field trips') {
-    result.imageSrc = assetPath('images/listing-activities/Field trips.jpg');
+    result.imageSrc = 'react-assets/listing-activities/field-trips.jpg';
   } else  if (name === 'Virtual entertainment') {
-    result.imageSrc = assetPath('images/listing-activities/Virtual entertainment.jpg');
+    result.imageSrc = 'react-assets/listing-activities/virtual-entertainment.jpg';
   } else  if (name === 'Yoga and Tai Chi') {
-    result.imageSrc = assetPath('images/listing-activities/Yoga and Tai Chi.jpg');
+    result.imageSrc = 'react-assets/listing-activities/yoga-and-tai-chi.jpg';
   } else  if (name === 'Gardening') {
-    result.imageSrc = assetPath('images/listing-activities/Gardening.jpg');
+    result.imageSrc = 'react-assets/listing-activities/gardening.jpg';
   } else  if (name === 'Spritual practice') {
-    result.imageSrc = assetPath('images/listing-activities/Spiritual practice.jpg');
+    result.imageSrc = 'react-assets/listing-activities/spiritual-practice.jpg';
   }  else  if (name === 'Book clubs') {
-    result.imageSrc = assetPath('images/listing-activities/Book clubs.jpg');
+    result.imageSrc = 'react-assets/listing-activities/book-clubs.jpg';
   }
   return result;
 };
@@ -76,7 +76,7 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
             return (
               <Block key={activity} height="100%" width="100%">
                 <Image
-                  src={imageSrc}
+                  path={imageSrc}
                   alt={name}
                   sx$tablet={{
                }}
@@ -95,7 +95,7 @@ const ListingActivitiesSection = ({ activities, activityCalendarURL, ...props })
                   loading="lazy"
                   border="round"
                 />
-                <Block as="span" pt="xs" lineHeight="normal">
+                <Block as="span" pt="xs" font="body-m">
                   {name}
                 </Block>
               </Block>

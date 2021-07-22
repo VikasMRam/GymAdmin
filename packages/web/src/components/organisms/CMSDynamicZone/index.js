@@ -18,10 +18,10 @@ import Offer from 'sly/common/icons/Offer';
 import Link from 'sly/common/system/Link';
 import Icon from 'sly/common/components/atoms/Icon';
 import Image from 'sly/common/system/Image';
-import TableOfContents from 'sly/web/components/resourceCenter/components/ArticleTableOfContents';
-import CommunityPreview from 'sly/web/components/resourceCenter/components/CommunityPreview';
-import AdvisorPreview from 'sly/web/components/resourceCenter/components/AdvisorPreview';
-import LinksBlock from 'sly/web/components/resourceCenter/components/ArticleLinksBlock';
+import TableOfContents from 'sly/web/resourceCenter/components/ArticleTableOfContents';
+import CommunityPreview from 'sly/web/resourceCenter/components/CommunityPreview';
+import AdvisorPreview from 'sly/web/resourceCenter/components/AdvisorPreview';
+import LinksBlock from 'sly/web/resourceCenter/components/ArticleLinksBlock';
 
 import EditorValueWrapper from './EditorValueWrapper';
 import FAQItem from './FAQItem';

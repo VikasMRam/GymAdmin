@@ -41,6 +41,8 @@ const CommunityMorePicturesContainer = () => {
 
   const handleCloseFullscreen = useCallback(() => setIsFullscreen(false), []);
 
+  if (!community) return null;
+
   return (
     <>
       <MorePictures

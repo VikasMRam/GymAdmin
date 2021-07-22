@@ -13,6 +13,8 @@ import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Help, Favorite, Share } from 'sly/common/icons';
 import ListingPricing from 'sly/web/listing/components/ListingPricing';
+import { PLUS_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
+import { stateNames } from 'sly/web/constants/geo';
 
 
 const overridePosition = ({ left, top }) => ({
@@ -85,8 +87,9 @@ const makeNewTags = (tags) => {
       newTags.push({
         name,
         id,
-        path: '#',
+        path: name === 'Plus' ? PLUS_RESOURCE_CENTER_LINK : '#',
         background: tagsMap[name],
+        target: name === 'Plus' ? '_blank' : '_self',
       });
     }
   });
@@ -124,6 +127,31 @@ const ListingSummary = ({
 
   const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
+  let phoneNumberSection = null;
+  phoneNumberSection = phoneNumber && (
+    <>
+      <Span
+        display="flex"
+        alignItems="center"
+        css={css`
+            gap: 0.2em
+            `}
+      >
+        <Span font="body-s">Contact us about this room</Span>
+        <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
+        {isBrowser &&
+        <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
+          This phone number may connect you to the listing front desk.
+        </TooltipContent>
+          }
+      </Span>
+      <Link href={`tel:${phoneNumber}`} onClick={onListingNumberClicked}>
+        {phoneFormatter(phoneNumber, true)}
+      </Link>
+    </>
+  );
+
+
   return (
     <Block pb="l" px="m" sx$tablet={{ px: '0' }} ref={innerRef} className={className}>
       <Heading
@@ -140,7 +168,7 @@ const ListingSummary = ({
         }
       </Heading>
 
-      <Block font="body-s" pad="xs">
+      <Block font="body-m" pad="xs">
         {formattedAddress}
       </Block>
 
@@ -156,7 +184,7 @@ const ListingSummary = ({
 
       <Block>
         {!!newTags && !!newTags.length &&
-          newTags.map(({ name, id, path, background }) => {
+          newTags.map(({ name, id, path, background, target }) => {
             return (
               <Tag
                 key={id}
@@ -168,6 +196,7 @@ const ListingSummary = ({
                 <Link
                   color="white"
                   to={path}
+                  target={target}
                   event={{
                   category: 'new-tags',
                   action: 'tag-click',
@@ -188,7 +217,7 @@ const ListingSummary = ({
           >
             <Link
               color="white"
-              to={`${careType.path}/${address.state}/${address.city}`}
+              to={`${careType.path}/${stateNames[address.state].toLowerCase()}/${address.city.split(' ').map(w => w.toLowerCase()).join('-')}`}
               target="_blank"
               event={{
                 category: 'care-type-tags',
@@ -203,7 +232,7 @@ const ListingSummary = ({
       </Block>
       <Block
         padding="m m"
-        marginTop="m"
+        my="l"
         display="flex"
         background="#e8f1f1"
         flexDirection="column"
@@ -273,10 +302,23 @@ const ListingSummary = ({
         gridTemplateColumns: !phoneNumber && !partnerAgent ? 'auto' : '35% 1fr',
         gridGap: !phoneNumber && !partnerAgent ? '0' : 'xl' }}
       >
-        <Grid gridTemplateColumns="1fr 1fr" gridGap="s">
+        <Grid gridTemplateColumns="repeat(2, 1fr)" gridGap="s">
           <Button sx$tablet={{ paddingX: 's' }} onClick={onSaveClick}  variant="neutral"><Favorite active={isFavorited} color={isFavorited && 'red.lighter-20'} mr="xs" />Save</Button>
           <Button sx$tablet={{ paddingX: 's' }} onClick={onShareClick} variant="neutral" ><Share mr="xs" />Share</Button>
         </Grid>
+        <Block
+          as="span"
+          display="none"
+          flexDirection="column"
+          sx$tablet={{
+              display: 'flex',
+          }}
+          sx$laptop={{
+            display: 'none',
+          }}
+        >
+          {phoneNumber && phoneNumberSection}
+        </Block>
         <Hr mt="l" mb="l" sx$tablet={{ display: 'none' }} />
       </Grid>
       <Hr mt="l" display="none" sx$tablet={{ display: 'block' }} />
@@ -289,24 +331,7 @@ const ListingSummary = ({
             display: 'none',
           }}
         >
-          <Span
-            display="flex"
-            alignItems="center"
-            css={css`
-            gap: 0.2em
-            `}
-          >
-            <Span font="body-s">Contact us about this room</Span>
-            <StyledHelpIcon  size="s" data-tip data-for="fafPhone" />
-            {isBrowser &&
-            <TooltipContent overridePosition={overridePosition} id="fafPhone" type="light" effect="solid" multiline>
-              This phone number may connect you to the listing front desk.
-            </TooltipContent>
-          }
-          </Span>
-          <Link href={`tel:${phoneNumber}`} onClick={onListingNumberClicked}>
-            {phoneFormatter(phoneNumber, true)}
-          </Link>
+          {phoneNumberSection}
           <Hr mt="l" display="block" />
         </Block>
       }

@@ -47,7 +47,7 @@ import ModalContainer from 'sly/web/containers/ModalContainer';
 import withChatbox from 'sly/web/services/chatbox/withChatBox';
 import StickyHeaderTabs from 'sly/web/components/common/StickyHeaderTabs';
 import SimilarCommunities from 'sly/web/components/organisms/SimilarCommunities';
-import ArticlePreview from 'sly/web/components/resourceCenter/components/ArticlePreview';
+import ArticlePreview from 'sly/web/resourceCenter/components/ArticlePreview';
 import { RESOURCE_CENTER_PATH } from 'sly/web/dashboard/dashboardAppPaths';
 import Callout from 'sly/web/profile/Callout';
 
@@ -347,27 +347,6 @@ export default class CommunityDetailPage extends PureComponent {
                   )}
                 </StyledHeadingBoxSection>
                 }
-                {shouldShowPartnerAgent && (
-                  <>
-                    <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you.">
-                      <CommunityAgentSection agent={partnerAgent} pad="l" />
-                      <AskAgentQuestionButtonContainer
-                        agent={partnerAgent}
-                        width="100%"
-                        community={community}
-                        type="expert"
-                        ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
-                      />
-                      <Callout
-                        title="Working with a Seniorly Advisor is a completely FREE service to you!"
-                        description={
-                          `Connect with ${getAgentFirstName(partnerAgent)} to learn more about your senior care options.`
-                        }
-                      />
-                    </StyledHeadingBoxSection>
-
-                  </>
-                )}
                 {shouldShowAbout && (
                   <StyledHeadingBoxSection id="community-about" heading={`About ${name}`}>
                     <CommunityAbout
@@ -398,6 +377,27 @@ export default class CommunityDetailPage extends PureComponent {
                       ctaText="Ask a Question"
                     /> */}
                   </StyledHeadingBoxSection>
+                )}
+                {shouldShowPartnerAgent && (
+                  <>
+                    <StyledHeadingBoxSection id="agent-section" heading="Have questions? Our Seniorly Local Advisors are ready to help you.">
+                      <CommunityAgentSection agent={partnerAgent} pad="l" />
+                      <AskAgentQuestionButtonContainer
+                        agent={partnerAgent}
+                        width="100%"
+                        community={community}
+                        type="expert"
+                        ctaText={`Talk to ${getAgentFirstName(partnerAgent)} about your options`}
+                      />
+                      <Callout
+                        title="Working with a Seniorly Advisor is a completely FREE service to you!"
+                        description={
+                          `Connect with ${getAgentFirstName(partnerAgent)} to learn more about your senior care options.`
+                        }
+                      />
+                    </StyledHeadingBoxSection>
+
+                  </>
                 )}
                 {rgsAux && rgsAux.rgsInfo &&  rgsAux.rgsInfo.trustScore > 0 &&
                 <StyledHeadingBoxSection heading={`Seniorly Trust Score for ${community.name}`}>

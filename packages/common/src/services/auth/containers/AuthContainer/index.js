@@ -146,17 +146,41 @@ const AuthContainer = (props) => {
               setTitle('Create an account');
               goto(SIGNUP);
               }}
-              onSociaLoginSuccess={() => { setTitle('One more thing...'); goto(THIRDPARTYINFOPROMPT); }}
-              onEmailSubmit={() => {
+              onEmailNoPassSubmit={() => {
                 setTitle('');
                 setNoBorder(true);
                 goto(MAGICLINKSUCCESS);
                 }}
-              onPhoneSumbit={() => {
+              onPhoneNoPassSubmit={() => {
                   setTitle('Confirm your phone number');
                   goto(OTPLOGIN);
-                }}
+              }}
+              onSociaLoginSuccess={() => { setTitle('One more thing...'); goto(THIRDPARTYINFOPROMPT); }}
+              onLoginPassSubmit={() => {
+                setTitle('Log in');
+                goto(LOGINWITHPASSWORD);
+              }}
             />
+
+            <WizardStep
+              component={LoginWithPasswordFormContainer}
+              name={LOGINWITHPASSWORD}
+              onResetPasswordClick={() => { setTitle('Having trouble logging in?'); goto(RESETPASSWORD); }}
+              onOtpSubmit={() => {
+                setTitle('Confirm your phone number');
+                goto(OTPLOGIN);
+              }}
+              onMagicLinkSubmit={() => {
+                setTitle('');
+                setNoBorder(true);
+                goto(MAGICLINKSUCCESS);
+              }}
+              emailOrPhone={data?.email || data?.phone_number}
+              isEmail={!!data?.email}
+              onSubmitSuccess={handleAuthenticateSuccess}
+            />
+
+
             <WizardStep
               component={ResetPasswordFormContainer}
               name={RESETPASSWORD}
@@ -218,13 +242,6 @@ const AuthContainer = (props) => {
                 setNoBorder(false);
                 goto(LOGINSINGUP);
               }}
-            />
-            <WizardStep
-              component={LoginWithPasswordFormContainer}
-              name={LOGINWITHPASSWORD}
-              onResetPasswordClick={() => { setTitle('Having trouble logging in?'); goto(RESETPASSWORD); }}
-              emailOrPhone={data?.email}
-              onSubmitSuccess={handleAuthenticateSuccess}
             />
             <WizardStep
               component={CustomerSignupConfirmationContainer}

@@ -26,7 +26,7 @@ const LazyListingMapContainer = ({ listing }) => {
   }, [placeholderRef]);
 
   return mounted
-    ? <CommunityMap community={listing} similarProperties={listing.similarProperties || []} />
+    ? <CommunityMap community={listing} similarProperties={listing.similarProperties || []} isListingPage />
     : <div ref={placeholderRef} />;
 };
 

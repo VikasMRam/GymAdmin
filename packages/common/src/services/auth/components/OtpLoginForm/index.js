@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { func, bool, string, object, number } from 'prop-types';
 
-import { Flex, Input, Block } from 'sly/common/system';
+import { Flex, Input, Block, Hr } from 'sly/common/system';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink/newSystem';
 
 
@@ -85,6 +85,7 @@ const OtpLoginForm = ({
     <Block> Need a new code?
       <ButtonLink onClick={onResendCodeClick}> Resend</ButtonLink>
     </Block>
+    <Hr my="l" width="xxxl" />
     {passwordExists &&
       <Block> Or you can
         <ButtonLink onClick={onPasswordLoginClick}> log in with a password</ButtonLink>
@@ -98,7 +99,6 @@ OtpLoginForm.propTypes = {
   submitError: string,
   formState: object.isRequired,
   onResendCodeClick: func,
-  handleOtpClick: func,
   passwordExists: bool,
   onPasswordLoginClick: func.isRequired,
   onEditPhoneNumberClick: func.isRequired,

@@ -28,6 +28,7 @@ import {
 } from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
 import hubTypes, { cmsHubTypes } from 'sly/web/constants/hubTypes';
+import { cmsMarketingTypes } from 'sly/web/constants/marketingTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import UserCookiesContainer from 'sly/web/containers/UserCookiesContainer';
 import { BreakpointProvider } from 'sly/web/components/helpers/breakpoint';
@@ -72,12 +73,13 @@ const ListingProfilePageContainer = loadable(() => import(/* webpackChunkName: "
 // wizards
 const AssessmentWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkAssessmentWizardPageContainer" */ 'sly/web/assessment/AssessmentWizardPageContainer'));
 
-const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/resourceCenter'));
-const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/components/resourceCenter/Author'));
-const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/components/resourceCenter/Article'));
-const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/components/resourceCenter/Topic'));
-const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/components/resourceCenter/Search'));
-const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/components/resourceCenter/Sitemap'));
+const ResourceCenterHomePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/resourceCenter'));
+const ResourceCenterAuthorPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterAuthorPage" */ 'sly/web/resourceCenter/Author'));
+const ResourceCenterArticlePage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterArticlePage" */ 'sly/web/resourceCenter/Article'));
+const ResourceCenterTopicPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterTopicPage" */ 'sly/web/resourceCenter/Topic'));
+const ResourceCenterSearchResultPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSearchPage" */ 'sly/web/resourceCenter/Search'));
+const ResourceCenterSitemapPage = loadable(() => import(/* webpackChunkName: "chunkResourceCenterSitemap" */ 'sly/web/resourceCenter/Sitemap'));
+const MarketingPages = loadable(() => import(/* webpackChunkName: "chunkResourceCenterHomePage" */ 'sly/web/components/pages/MarketingPages'));
 
 // styleguide
 const StyleGuide = loadable(() => import(/* webpackChunkName: "chunkStyleGuide" */ 'sly/web/styleguide/StyleGuide'));
@@ -267,6 +269,11 @@ const routes = [
   {
     path: RESOURCE_CENTER_ARTICLE_PATH,
     component: ResourceCenterArticlePage,
+    exact: true,
+  },
+  {
+    path: `/:marketingPage(${cmsMarketingTypes.join('|')})`,
+    component: MarketingPages,
     exact: true,
   },
 ];

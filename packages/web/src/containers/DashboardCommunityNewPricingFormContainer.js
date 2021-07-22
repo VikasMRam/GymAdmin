@@ -198,11 +198,39 @@ export default class DashboardCommunityPricingFormContainer extends Component {
     const { community, status, prices, currentEdit, user, currentValues, ...props } = this.props;
     const { hasNewPricing, eligibleForNewPricing, newPricingOnWaitlist, shouldBlockNavigation } = this.state;
 
+
     // filter care for only pricing types available in constants and add Additonal Costs
     const sortedCareTypes = community.care.sort(careTypeSorter);
 
+
     const validatedCareTypes = sortedCareTypes.filter(careType => costSections.includes(careType));
     validatedCareTypes.push('Additional Costs');
+
+
+    const pricesCopy = prices;
+
+
+    // Handles the case where the pricing doesn't have a careType that exits on a community so we need to add it ourselves otherwise the we'll get duplicate pricing types when trying to save
+    validatedCareTypes.map((careType) => {
+      let hasCareTypePricing = false;
+      pricesCopy.map(({ attributes }) => {
+        if (attributes.title === careType) {
+          hasCareTypePricing = true;
+        }
+      });
+
+      if (!hasCareTypePricing) {
+        prices.push({ attributes: {
+          title: careType,
+          info: {
+            prices: {
+
+            },
+          },
+        } });
+      }
+    });
+
 
     const canEdit = !currentEdit?.isPendingForAdmin
       && userIs(user, PLATFORM_ADMIN_ROLE | PROVIDER_OD_ROLE);

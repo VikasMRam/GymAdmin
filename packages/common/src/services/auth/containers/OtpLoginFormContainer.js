@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
+import { reduxForm, clearSubmitErrors } from 'redux-form';
 import { func, string, object } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
-import withNotification from 'sly/web/controllers/withNotification';
+import withNotification from 'sly/web/components/helpers/notification';
 import OtpLoginForm from 'sly/common/services/auth/components/OtpLoginForm';
 
 const formName = 'OtpLoginForm';
@@ -18,6 +18,7 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: formName,
+  destroyOnUnmount: false,
   validate,
 })(OtpLoginForm);
 
@@ -54,21 +55,6 @@ export default class OtpLoginFormContainer extends Component {
   }
 
 
-  handleOtpClick=() => {
-    const { sendOtpCode, notifyInfo, formState, clearSubmitErrors, setOtpTitle } = this.props;
-    const { email } = formState;
-
-    sendOtpCode({ email }).then(() => {
-      notifyInfo(`A one time passcode has been sent to ${email}.`);
-      setOtpTitle();
-      clearSubmitErrors();
-    }).catch((error) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const errorMessage = Object.values(error.body.errors).join('. ');
-      throw new SubmissionError({ _error: errorMessage });
-    });
-  }
-
   handleOnSubmit = (code) => {
     const { otpLoginUser, onSubmit, clearSubmitErrors, form, phone_number } = this.props;
     const payload = { otp: code, phone_number };
@@ -92,18 +78,18 @@ export default class OtpLoginFormContainer extends Component {
     const { resendOtpCode, notifyError, notifyInfo, phone_number } = this.props;
     const payload = { phone_number };
 
-
     return resendOtpCode(payload)
       .then(() => {
         notifyInfo('New code sent.');
       })
-      .catch(() => {
-        notifyError('Failed to resend code. Please try again.');
+      .catch((err) => {
+        notifyError(err.body.errors.toUpperCase() || 'Failed to resend code. Please try again.');
       });
   };
 
   render() {
     const { error } = this.state;
+
 
     return (
       <ReduxForm
@@ -111,7 +97,6 @@ export default class OtpLoginFormContainer extends Component {
         onSubmit={this.handleOnSubmit}
         onResendCodeClick={this.resendCode}
         submitError={error}
-        handleOtpClick={this.handleOtpClick}
       />
     );
   }

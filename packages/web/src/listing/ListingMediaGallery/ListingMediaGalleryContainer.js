@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import ListingMediaGallery from 'sly/web/listing/ListingMediaGallery/ListingMediaGallery';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { usePrefetch } from 'sly/web/services/api';
 import { assetPath } from 'sly/web/components/themes';
+import ListingContext from 'sly/web/listing/context/ListingContext';
 
 // TODO: move this to common helper, used in multiple places
 const listingDefaultImages = {
@@ -43,13 +44,13 @@ const ListingMediaGalleryContainer = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isFullscreenActive, setIsFullscreenActive] = useState(false);
 
-  const { id } = useParams();
+  // const { id } = useParams();
 
-  const { requestInfo: { normalized: listing, hasFinished: listingRequestHasFinished } } = usePrefetch('getListing', {
-    id,
-    include: 'similar-listings,agent,community,reviews',
-  });
-
+  // const { requestInfo: { normalized: listing, hasFinished: listingRequestHasFinished } } = usePrefetch('getListing', {
+  //   id,
+  //   include: 'similar-listings,agent,community,reviews',
+  // });
+  const { listing } = useContext(ListingContext);
   const { id: listingId, gallery = {}, videoGallery = {} } = listing || {};
 
   const handleMediaGallerySlideChange = useCallback(slideIndex => setCurrentSlideIndex(slideIndex), []);
@@ -76,8 +77,8 @@ const ListingMediaGalleryContainer = () => {
     setIsFullscreenActive(prevState => !prevState);
   }, [listingId, gallery, videoGallery]);
 
-  if (!listingRequestHasFinished || !listing) return null;
-
+  // if (!listingRequestHasFinished || !listing) return null;
+  if (!listing) return null;
   return (
     <ListingMediaGallery
       listingName={listing.name}
