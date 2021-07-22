@@ -7,6 +7,7 @@ import * as immutable from 'object-path-immutable';
 import loadFB from 'sly/web/services/helpers/facebookSDK';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/common/constants/loginProviders';
 import { withAuth, query, prefetch } from 'sly/web/services/api';
+import withNotification from 'sly/web/components/helpers/notification';
 import { createValidator, required, email, usPhone, minLength } from 'sly/web/services/validation';
 import SignupForm from 'sly/common/services/auth/components/SignupForm';
 import SlyEvent from 'sly/web/services/helpers/events';
@@ -30,6 +31,7 @@ const mapDispatchToProps = {
   untouch: (form = 'SignupForm', field) => untouch(form, field),
 };
 
+@withNotification
 @withAuth
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @connect(null, mapDispatchToProps)
@@ -45,9 +47,10 @@ export default class SignupFormContainer extends Component {
     onSubmit: func,
     status: object,
     updateUuidAux: func,
-    handleOtpClick: func,
+    handleExistingAccount: func,
     form: string,
     untouch: func,
+    notifyError: func,
   };
 
   state = { socialSignupError: '' };
@@ -169,7 +172,7 @@ export default class SignupFormContainer extends Component {
   };
 
   handleSubmit = ({ phonePreference, ...data }) => {
-    const { registerUser, clearSubmitErrors, onSubmit, handleOtpClick } = this.props;
+    const { registerUser, clearSubmitErrors, onSubmit, handleExistingAccount, notifyError } = this.props;
     data = { ...data, name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
 
     clearSubmitErrors();
@@ -177,7 +180,8 @@ export default class SignupFormContainer extends Component {
       .then(() => onSubmit(data))
       .catch((data) => {
         if (data.status === 409) {
-          handleOtpClick();
+          notifyError('An account already exists, please log in to continue');
+          handleExistingAccount();
         } else {
           const errors = data?.body?.errors;
           if (typeof errors === 'undefined') {
