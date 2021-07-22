@@ -81,10 +81,13 @@ const makeNewTags = (tags) => {
     Plus: {
       color: 'harvest.base',
       path: PLUS_RESOURCE_CENTER_LINK,
+      target: '_blank',
     },
     Verified: {
       color: 'green',
-      path: VERIFIED_RESOURCE_CENTER_LINK,
+      path: '#',
+      target: '_self',
+      // path: VERIFIED_RESOURCE_CENTER_LINK,
     },
   };
   const newTags = [];
@@ -95,7 +98,7 @@ const makeNewTags = (tags) => {
         id,
         path: tagsMap[name].path,
         background: tagsMap[name].color,
-        target: '_blank',
+        target: tagsMap[name].target,
       });
     }
   });
