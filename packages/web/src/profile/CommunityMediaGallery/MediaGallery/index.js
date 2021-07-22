@@ -240,7 +240,8 @@ export default class MediaGallery extends Component {
               aspectRatio={aspectRatio}
               sizes={sizes}
               alt={media.alt}
-              loading={this.shouldLoadMedia(index) ? 'auto' : 'lazy'}
+              // loading={this.shouldLoadMedia(index) ? 'auto' : 'lazy'}
+              loading={index === 0 ? 'eager' : 'lazy'}
               shouldPreload={index === 0}
               ref={(c) => { this.mediaRefs[index] = c; }}
               crop={!inModal}
