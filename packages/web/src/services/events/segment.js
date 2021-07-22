@@ -105,13 +105,18 @@ function makeSegment() {
         anonymousId: getUUID(),
       });
     },
-    track(event) {
+    track(...args) {
       const segment = getSegment();
-      segment.track(`${event.action} ${event.category}`, event);
+      if (args.length === 1) {
+        const [event] = args;
+        segment.track(`${event.action} ${event.category}`, event);
+      } else {
+        segment.track(...args);
+      }
     },
-    page() {
+    page(name, properties) {
       const segment = getSegment();
-      segment.page();
+      segment.page(name, properties);
     }
   };
 }
