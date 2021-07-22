@@ -29,7 +29,7 @@ export default function SearchContainer() {
       return;
     }
     const { city, state, toc: care } = match.params;
-    events.track('search viewed', {
+    events.page('Search', {
       city,
       state,
       care,

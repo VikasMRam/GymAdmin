@@ -117,16 +117,20 @@ const routes = [
     path: `/:toc(${careTypes.join('|')})/:state/:city/:communitySlug`,
     component: CommunityDetailPageContainer,
     exact: true,
+    // we do the call for the page event manually in the profile and in search pages
+    skipPageEvent: true,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state/:city`,
     component: SearchContainer,
     exact: true,
+    skipPageEvent: true,
   },
   {
     path: `/:toc(${careTypes.join('|')})/:state`,
     component: SearchContainer,
     exact: true,
+    skipPageEvent: true,
   },
   {
     path: '/partners/housing',
@@ -278,12 +282,15 @@ const routes = [
   },
 ];
 
-const routeComponents = routes.map(({ component: Component, ...route }) => (
-  <Route
-    key={route.path}
-    {...route}
-    component={Component}
-  />
+const routeComponents = routes.map(({ component: Component, skipPageEvent, ...route }) => (
+  <>
+    <PageEventsContainer skipPageEvent={skipPageEvent} />
+    <Route
+      key={route.path}
+      {...route}
+      component={Component}
+    />
+  </>
 ));
 
 export default class App extends Component {
@@ -309,7 +316,6 @@ export default class App extends Component {
               <ChatBoxProvider>
                 <BreakpointProvider>
                   <NotificationProvider>
-                    <PageEventsContainer />
                     <UserCookiesContainer />
                     <Helmet titleTemplate="%s | Seniorly" encodeSpecialCharacters>
                       <title>Find The Best Senior Living Options Near You</title>
@@ -320,22 +326,22 @@ export default class App extends Component {
                       <meta content="English" property="language" />
 
                       {/*
-                      Open graph
+                        Open graph
                       */}
                       <meta property="og:site_name" content="Seniorly" />
                       <meta property="og:site_url" content="https://www.seniorly.com" />
                       <meta property="og:type" content="website" />
 
                       {/*
-                      Twitter
-                    */}
+                        Twitter
+                      */}
                       <meta content="summary" property="twitter:card" />
                       <meta content="https://www.seniorly.com" property="twitter:site" />
                       <meta content="@seniorly" property="twitter:creator" />
 
                       {/*
-                      Google Optimize
-                    */}
+                        Google Optimize
+                      */}
                       <meta
                         httpEquiv="Content-Security-Policy"
                         content="script-src * https://optimize.google.com 'unsafe-inline' 'unsafe-eval'; style-src * https://optimize.google.com https://fonts.googleapis.com 'unsafe-inline'; img-src * https://optimize.google.com 'self' data:; font-src * https://fonts.gstatic.com; frame-src * https://optimize.google.com https://createaclickablemap.com https://www.youtube.com https://vars.hotjar.com"

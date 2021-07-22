@@ -66,6 +66,4 @@ const UserCookiesContainer = () => {
   return null;
 };
 
-UserCookiesContainer.typeHydrationId = 'UserCookiesContainer';
-
 export default UserCookiesContainer;
