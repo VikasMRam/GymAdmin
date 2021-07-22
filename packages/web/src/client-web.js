@@ -6,9 +6,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
+import 'lazysizes/plugins/attrchange/ls.attrchange';
 import lazySizes from 'lazysizes';
 
-import 'lazysizes/plugins/attrchange/ls.attrchange';
+
 import AppWrapper from 'sly/web/components/AppWrapper';
 import configureStore from 'sly/web/store/configure';
 import { createApiClient } from 'sly/web/services/api';
