@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 import { any, func, bool, element, string } from 'prop-types';
 import ScrollLock from 'react-scrolllock';
+import Helmet from 'react-helmet';
+
 
 import { size, palette, key } from 'sly/common/components/themes';
 import { withSpacing } from 'sly/common/components/helpers';
@@ -198,6 +200,15 @@ export default class NewModal extends Component {
         >
           <ActiveModalContext.Provider value={isOpen}>
             {children}
+            <Helmet>
+              <style>
+                {`
+                  body{
+                    overflow: hidden
+                  }
+                `}
+              </style>
+            </Helmet>
           </ActiveModalContext.Provider>
         </Modal>
       </Overlay>,
