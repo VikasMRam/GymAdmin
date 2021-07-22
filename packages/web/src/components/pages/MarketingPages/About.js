@@ -37,17 +37,18 @@ const About = ({
           {getTeamContent?.[0]?.heading}
         </Block>
         <Flex
-           flexDirection="column"
-           sx$laptop={{  width: 'col6', alignItems: 'baseline'}}
-           alignItems="center"
-           sx$tablet={{ alignItems: 'start' }}
+          width="100%"
+          flexDirection="column"
+          alignItems="center"
+          sx$laptop={{  width: 'col6', alignItems: 'baseline'}}
+          // sx$tablet={{ alignItems: 'start' }}
         >
           <Grid
-            sx$laptop={{ gridTemplateColumns: "col2 col2 col2 col2" }}
-            sx$tablet={{ gridTemplateColumns: "col2 col2 col2 col2" }}
-            gridTemplateColumns="9.75rem 9.75rem"
+            gridTemplateColumns="9rem 9rem"
+            alignItems="stretch"
             gridGap="m"
             flow="row"
+            sx$laptop={{ gridTemplateColumns: "col2 col2 col2 col2" }}
           >
           {getTeamList?.length > 0 && getTeamList?.map (item => {
             const src = item?.srcImg?.url;
@@ -84,7 +85,11 @@ const About = ({
           })}
           </Grid>
           <Paragraph width="auto">{getTeamContent?.[0]?.decription}</Paragraph>
-          <Link paddingTop="l" to={getTeamContent?.[0]?.to}>
+          <Link
+            paddingTop="l"
+            to={getTeamContent?.[0]?.to}
+            alignSelf="start"
+          >
                 {getTeamContent?.[0]?.textLink}
                 <ArrowForward paddingLeft="xxs" />
           </Link>
