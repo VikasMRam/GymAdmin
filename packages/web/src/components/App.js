@@ -283,14 +283,15 @@ const routes = [
 ];
 
 const routeComponents = routes.map(({ component: Component, skipPageEvent, ...route }) => (
-  <>
-    <PageEventsContainer skipPageEvent={skipPageEvent} />
-    <Route
-      key={route.path}
-      {...route}
-      component={Component}
-    />
-  </>
+  <Route
+    key={route.path}
+    component={(props) => <>
+
+        <PageEventsContainer skipPageEvent={skipPageEvent} />
+        <Component {...props} />
+    </>}
+    {...route}
+  />
 ));
 
 export default class App extends Component {
