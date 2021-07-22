@@ -25,7 +25,7 @@ const SlyTypeform = (props) => {
     const { response_id } = e;
     if (response_id) {
       console.log(response_id);
-      const email = 'vikas12qaq@gmail.com';
+      const email = 'vikas12qaqaassdd@gmail.com';
       const phone = '8105702064';
       const name = 'Vikas M R';
       // create account
@@ -108,4 +108,4 @@ const SlyTypeform = (props) => {
   );
 };
 
-export default memo(SlyTypeform, () => false);
+export default memo(SlyTypeform);

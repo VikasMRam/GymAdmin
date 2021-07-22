@@ -190,10 +190,17 @@ export default class CommunityDetailPage extends PureComponent {
       // triggerChatBot(eventName);
       triggerChatBot('Bot reintro');
     }
-    // setTimeout(() => {
-    //   this.setState({ rerender: true });
-    // }, 5000);
   }
+
+  readyHandler1 = () => {
+    console.log('ready');
+  }
+
+  questionHandler1= () => {
+    console.log('question');
+  }
+  readyHandler = this.readyHandler1.bind(this);
+  questionHandler = this.questionHandler1.bind(this);
 
   render() {
     const {
@@ -438,7 +445,9 @@ export default class CommunityDetailPage extends PureComponent {
                     /> */}
 
                     <Block height="350px">
-                      <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" onReadyHandler={() => { console.log('form ready'); }} onSubmitHandler={() => { console.log('form submit'); }} onQuestionChangedHandler={() => { console.log('form question question change'); }} />
+                      {/* <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" onReadyHandler={this.readyHandler} /> */}
+                      <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" />
+
                     </Block>
 
                     {/* Embeded Typeform */}
