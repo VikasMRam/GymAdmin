@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { components } from 'react-select';
 import { array, bool, object, string } from 'prop-types';
+// import { Link, Redirect } from 'react-router-dom';
 
 import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
@@ -82,6 +83,12 @@ const TabNavigation = ({
   const mobileLinksList = linksList?.map(({title, to}) => {
     return {label: capitalize(title), value: to}});
 
+  const handleChange = useCallback(({ label, value }) => {
+    label.toLowerCase() === 'careers' ?
+      window.open(value, '_blank') :
+      history.push(value)
+  }, [history]);
+
 return (
   <>
     <Block
@@ -96,7 +103,7 @@ return (
         components={{DropdownIndicator, Option}}
         options={mobileLinksList}
         defaultValue={mobileLinksList?.find(({ value, label }) => value === currentLink && label)}
-        onChange={e => history.push(e.value)}
+        onChange={e => handleChange(e)}
         />
     </Block>
     <Block

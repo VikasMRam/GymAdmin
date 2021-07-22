@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { object } from 'prop-types';
 import _ from 'lodash';
+import styled, { css } from 'styled-components';
 
 
 import { usePrefetch } from 'sly/web/services/api/prefetch';
@@ -26,6 +27,11 @@ const Header = makeHeader(HeaderContainer);
 
 const generateDataList = (data, value) => data && _.map(_.flatMap(_.flatMap(data, 'MarketingPageDz'), value)).filter(Boolean);
 const getComponentData = (data, value) => data?.filter(({__component}) => __component?.includes(value));
+
+const ImageWrapper = styled(Image)`
+  width: 100%;
+  padding-bottom: 1.5rem;
+`
 
 const MarketingPages = ({ match, history }) => {
   const {requestInfo: { result, hasFinished }} = usePrefetch('getMarketingPage', { slug: match.params.marketingPage });
@@ -86,8 +92,8 @@ const MarketingPages = ({ match, history }) => {
           sx$tablet={{ padding: 'xxxl' }}
         >
           {getImageUrl && (
-            <Image
-              paddingBottom="l"
+            <ImageWrapper
+              // sx={{width: '100%'}}
               src={getImageUrl}
             />)}
           <Paragraph
