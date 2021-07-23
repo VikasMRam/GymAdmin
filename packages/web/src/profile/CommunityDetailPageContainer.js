@@ -1,24 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router';
 
 import CommunityDetailPage from './CommunityDetailPage';
 
+import events from 'sly/web/services/events';
 import useCommunity from 'sly/web/profile/hooks/useCommunity';
 import { getLastSegment, replaceLastSegment } from 'sly/web/services/helpers/url';
 import { Image, Flex } from 'sly/common/system';
 import { assetPath } from 'sly/web/components/themes';
 
 
+const communitySizes = {
+  'up to 20 Beds': 'small',
+  '20 - 51 Beds': 'medium',
+  '51 +': 'large',
+};
+
 const CommunityDetailPageContainer = () => {
   const location = useLocation() || {};
-  const { communitySlug } = useParams();
+  const { communitySlug, toc } = useParams();
 
   const {
     community,
     communityStatus,
     communityLocation,
   } = useCommunity({ communitySlug });
+
+  useEffect(() => {
+    if (communityStatus === 200) {
+      events.page('Community Profile', {
+        slug: communitySlug,
+        size: communitySizes[community.propInfo.communitySize],
+        care: toc,
+      });
+    }
+  }, [communitySlug]);
 
   if (communityStatus === 301) {
     const newSlug = getLastSegment(communityLocation);

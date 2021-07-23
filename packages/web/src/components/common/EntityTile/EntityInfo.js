@@ -148,7 +148,7 @@ export default class EntityInfo extends Component {
         <div>
           {header}
           {livingTypeComponent}
-          {(capacity !== '' && capacity !== ' resident capacity') &&
+          {((capacity || thirdLine) !== '' && (capacity || thirdLine) !== ' resident capacity') &&
           <Span
             whiteSpace="nowrap"
             overflow="hidden"

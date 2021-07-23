@@ -347,9 +347,9 @@ const CMSDynamicZone = ({ content: data }) => {
                 itemCount={rest.communities.length}
                 gridTemplateRows="21.75rem"
               >
-                {rest.communities?.map((item, index) => (
+                {rest.communities?.map((item) => (
                   <StyledLink key={item.slug} to={item.url}>
-                    <CommunityPreview {...{ ...item, index: index + 1 }} />
+                    <CommunityPreview {...{ ...item}} />
                   </StyledLink>
                 ))}
               </CommunityAndAdvisorsWrapper>
