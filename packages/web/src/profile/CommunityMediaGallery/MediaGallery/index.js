@@ -241,8 +241,8 @@ export default class MediaGallery extends Component {
               sizes={sizes}
               alt={media.alt}
               // loading={this.shouldLoadMedia(index) ? 'auto' : 'lazy'}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              shouldPreload={index === 0}
+              loading={!inModal && index === 0 ? 'eager' : 'lazy'}
+              shouldPreload={!inModal && index === 0}
               ref={(c) => { this.mediaRefs[index] = c; }}
               crop={!inModal}
               onClick={(evt) => { inModal && evt.stopPropagation(); }}
