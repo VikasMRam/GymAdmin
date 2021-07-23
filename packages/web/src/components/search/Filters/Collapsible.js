@@ -68,7 +68,7 @@ const Collapsible = forwardRef(({
         paddingBottom={collapsed ? 'l' : 's'}
       >
         <Heading
-          font="title-xs-azo"
+          font="title-m"
           overflow="hidden"
           textOverflow="ellipsis"
           maxWidth="100%"
