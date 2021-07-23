@@ -29,7 +29,7 @@ const CommunityDetailPageContainer = () => {
 
   useEffect(() => {
     if (communityStatus === 200) {
-      events.track('community viewed', {
+      events.page('Community Profile', {
         slug: communitySlug,
         size: communitySizes[community.propInfo.communitySize],
         care: toc,

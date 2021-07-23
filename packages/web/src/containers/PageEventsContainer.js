@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { extractEventFromQuery } from 'sly/web/services/helpers/queryParamEvents';
 
-const PageEventsContainer = () => {
+const PageEventsContainer = ({ skipPageEvent }) => {
   const { replace } = useHistory();
   const location = useLocation();
 
@@ -25,12 +25,12 @@ const PageEventsContainer = () => {
 
     if (sendQueryEvents()) return;
 
-    SlyEvent.getInstance().sendPageView(pathname, search);
+    if (!skipPageEvent) {
+      SlyEvent.getInstance().sendPageView(pathname, search);
+    }
   }, [location]);
 
   return null;
 };
-
-PageEventsContainer.typeHydrationId = 'PageEventsContainer';
 
 export default PageEventsContainer;
