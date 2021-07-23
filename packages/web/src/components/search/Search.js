@@ -77,7 +77,7 @@ const Search = ({
   const tocLabel = getTocSeoLabel(currentFilters.toc);
   const locationStr = city ? `${titleize(city)}, ${stateStr}` : `${stateStr}`;
   const title = `${tocLabel} in ${locationStr}`;
-  const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
+  const showZillowSearchAd = (!!pagination && pagination?.current === 0) && shouldShowZillowSearchAd(currentFilters.toc);
   const isInternational = isInternationalPath(location.pathname);
   const isCanada = isCanadaPath(location.pathname);
 
@@ -215,7 +215,7 @@ const Search = ({
                   />
                 </Block>
               }
-              {!isInternational && showZillowSearchAd && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
+              {!isInternational && showZillowSearchAd && ((entities.length <= 4 && i === entities.length - 1) || (entities.length > 4 && i === 4)) &&
                 <Block
                   margin="0 l l"
                 >
