@@ -322,7 +322,7 @@ const Filters = forwardRef(({
         borderColor="slate.lighter-90"
         sx={{
           top: '4.9rem',
-          zIndex: 2001,
+          zIndex: '999',
         }}
         {...props}
       >
