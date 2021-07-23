@@ -209,7 +209,7 @@ export default class EntityInfo extends Component {
                 }}
               >
                 {formatMoney(startingRate)}{maxRate && maxRate !== 0 ? ` - ${formatMoney(maxRate)}` : ''}
-              </Block>&nbsp;/&nbsp;month {resourceType === 'Listing' && '+ care fees'}
+              </Block>/month {resourceType === 'Listing' && '+ care fees'}
             </Block>
           ) : null }
         </Block>
