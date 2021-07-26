@@ -131,7 +131,7 @@ const Filters = forwardRef(({
       })[isOpen];
       return {
         position: 'fixed',
-        top: coords.top + coords.height + 16,
+        top: coords.top + coords.height + 5,
         left: coords.left,
       };
     }

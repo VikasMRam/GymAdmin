@@ -203,7 +203,7 @@ const Search = ({
                 entity={entity}
                 loading={i <= 2 ? 'eager' : 'lazy'}
               />
-              {!isInternational && !showZillowSearchAd && city && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
+              {!isInternational && !showZillowSearchAd && city && ((entities.length <= 4 && i === entities.length - 1) || (entities.length > 4 && i === 4)) &&
                 <Block
                   margin="0 l l"
                 >
