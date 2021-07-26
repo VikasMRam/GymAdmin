@@ -13,7 +13,6 @@ export const getIsCCRC = (community) => {
 };
 
 export const getHasContract = (community) => {
-  console.log(community);
   const { rgsAux, info = {} } = community;
   const hasRgsContract = !!rgsAux?.rgsInfo?.contract_info?.hasContract;
   // When community is sent has a Provider, contract info is stored in the info elsewhere.
