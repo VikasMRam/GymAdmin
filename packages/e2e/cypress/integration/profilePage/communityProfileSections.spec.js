@@ -274,7 +274,7 @@ describe('Community Profile Sections', () => {
     });
 
 
-    it('creates prospective lead when question is asked on community profile', () => {
+    it.only('creates prospective lead when question is asked on community profile', () => {
       cy.route('POST', '**/auth/register').as('postRegister');
       cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
       cy.intercept('GET', '**/events/new*').as('getEvent');
@@ -298,7 +298,7 @@ describe('Community Profile Sections', () => {
 
       waitForHydration(cy.get('button').contains('about your options'));
       cy.wait(1000);
-      cy.get('button').contains('about your options').click();
+      cy.contains('button', 'about your options').click();
 
       select('.NewModal').contains('Get help from an expert').should('exist');
 
