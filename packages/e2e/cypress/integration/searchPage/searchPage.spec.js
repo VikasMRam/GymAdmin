@@ -550,7 +550,7 @@ describe('Search Page Sections', () => {
 
     it('check contents of page 2', () => {
       // Here wait untill second list populates
-      cy.get('a article h3').contains('21.');
+      cy.contains('a article h3', '21.');
       checkPopulationOfList(currentList);
     });
 
