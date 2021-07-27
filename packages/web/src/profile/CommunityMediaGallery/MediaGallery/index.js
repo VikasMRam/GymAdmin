@@ -211,7 +211,7 @@ export default class MediaGallery extends Component {
         expandTo="top"
         moreLabelOn="left"
         blockClassName="image-caption"
-        textAlign="left"
+        textAlign="center"
         showChevron={false}
         withReadLess={false}
         collapsedLabelStyles={{ div: { color: 'white.base' }, my: '-xxs' }}

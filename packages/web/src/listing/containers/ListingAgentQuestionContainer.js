@@ -104,7 +104,7 @@ export default class ListingAgentQuestionContainer extends Component {
   };
 
   renderForm() {
-    const { listing, type, heading, description } = this.props;
+    const { listing, type, heading, description, ...props } = this.props;
     const {
       info,
     } = listing;
@@ -125,6 +125,7 @@ export default class ListingAgentQuestionContainer extends Component {
       type,
       messageLabel: 'Message',
       postSubmit,
+      ...props,
     };
     return (<ListingAgentFormContainer phoneNumber={phoneNumber} {...staticComponentProps} />);
   }

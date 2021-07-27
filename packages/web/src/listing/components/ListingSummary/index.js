@@ -13,7 +13,7 @@ import { tocPaths } from 'sly/web/services/helpers/url';
 import { phoneFormatter } from 'sly/web/services/helpers/phone';
 import { Help, Favorite, Share } from 'sly/common/icons';
 import ListingPricing from 'sly/web/listing/components/ListingPricing';
-import { PLUS_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
+import { PLUS_RESOURCE_CENTER_LINK, VERIFIED_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
 import { stateNames } from 'sly/web/constants/geo';
 
 
@@ -78,8 +78,17 @@ const getCareTypes = (address, careTypes) => {
 
 const makeNewTags = (tags) => {
   const tagsMap = {
-    Plus: 'harvest.base',
-    Verified: 'green',
+    Plus: {
+      color: 'harvest.base',
+      path: PLUS_RESOURCE_CENTER_LINK,
+      target: '_blank',
+    },
+    Verified: {
+      color: 'green',
+      path: '#',
+      target: '_self',
+      // path: VERIFIED_RESOURCE_CENTER_LINK,
+    },
   };
   const newTags = [];
   tags.forEach(({ id, name }) => {
@@ -87,9 +96,9 @@ const makeNewTags = (tags) => {
       newTags.push({
         name,
         id,
-        path: name === 'Plus' ? PLUS_RESOURCE_CENTER_LINK : '#',
-        background: tagsMap[name],
-        target: name === 'Plus' ? '_blank' : '_self',
+        path: tagsMap[name].path,
+        background: tagsMap[name].color,
+        target: tagsMap[name].target,
       });
     }
   });

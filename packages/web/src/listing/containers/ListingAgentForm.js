@@ -51,6 +51,7 @@ export default class ListingAgentForm extends Component {
     bookTourProgress: bool,
     messageLabel: string,
     phoneNumber: 'string',
+    isSidebar: bool,
   };
 
   static defaultProps = {
@@ -60,12 +61,13 @@ export default class ListingAgentForm extends Component {
     buttonKind: 'jumbo',
     messagePlaceholder: 'Type your question here. ',
     hideMessage: false,
+    isSidebar: false,
   };
 
   render() {
     const {
       invalid, handleSendMessage, sendMessageProgress, handleBookTour, error, heading, description, user, hasEmail, buttonKind,
-      messageLabel, messagePlaceholder, handleSubmit, phoneNumber } = this.props;
+      messageLabel, messagePlaceholder, handleSubmit, phoneNumber, isSidebar } = this.props;
     const showPhoneNumber = phoneNumber !== '';
 
     return (
@@ -131,12 +133,16 @@ export default class ListingAgentForm extends Component {
           >
             Send Message
           </StyledButton>
-          <Block textAlign="center">
+          <Block
+            textAlign="center"
+            display={isSidebar ? 'none' : 'block'}
+          >
             or
           </Block>
           <StyledButton
             hasMarginBottom={error}
             variant="secondary"
+            display={isSidebar ? 'none' : 'inline-block'}
             disabled={sendMessageProgress}
             onClick={handleSubmit(values =>
               handleBookTour({
