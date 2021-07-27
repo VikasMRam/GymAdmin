@@ -523,7 +523,7 @@ describe('Search Page Sections', () => {
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
 
-    it('More Filter Check - No results', () => {
+    it.skip('More Filter Check - No results', () => {
       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.TransportArrangememt, MoreFilters.CareServices.MedicationManagement], viewport);
       validateNoResultCheck();
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
