@@ -153,7 +153,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
   }
 };
 
-const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
+const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelectionNumber = 0) => {
   if (viewPort === 'mobile') {
     applyFilter(filterName, viewPort);
   } else {
@@ -169,7 +169,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort) => {
 
   clickFilterButtons(viewPort, 'Save');
   cy.log('Save Button Clicked');
-  cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length);
+  cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelectionNumber);
 };
 
 const clearMoreFilter = (lapHeader, filterName, viewPort) => {
@@ -442,7 +442,7 @@ describe('Search Page', () => {
 });
 
 // ! Second Set
-describe('Search Page Sections', () => {
+describe.only('Search Page Sections', () => {
   let currentList = [];
   let totalResultCount = 0;
   beforeEach(() => {
@@ -525,6 +525,7 @@ describe('Search Page Sections', () => {
 
     it('More Filter Check - No results', () => {
       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.TransportArrangememt, MoreFilters.CareServices.MedicationManagement], viewport);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 2);
       validateNoResultCheck();
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });

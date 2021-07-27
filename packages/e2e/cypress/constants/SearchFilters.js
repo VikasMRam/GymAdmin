@@ -90,5 +90,9 @@ export const MoreFilters = {
   },
   CommunitySpace: {
     uiText: 'Community space',
+    mobileUiText: 'Community space',
+    BeautySalon: {
+      uiText: 'Beauty salon',
+    },
   },
 };
