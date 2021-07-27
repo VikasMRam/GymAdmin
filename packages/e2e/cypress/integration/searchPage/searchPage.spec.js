@@ -442,7 +442,7 @@ describe('Search Page', () => {
 });
 
 // ! Second Set
-describe.only('Search Page Sections', () => {
+describe('Search Page Sections', () => {
   let currentList = [];
   let totalResultCount = 0;
   beforeEach(() => {
