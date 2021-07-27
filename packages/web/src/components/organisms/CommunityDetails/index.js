@@ -112,6 +112,7 @@ const groupItemOrders = {
     'activities of daily living assistance',
     'assistance with dressing',
     'medication management',
+    'transportation arrangement',
     'transportation arrangement (medical)',
     'coordination with health care providers',
     '24-hour supervision',
