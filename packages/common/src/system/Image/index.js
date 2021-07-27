@@ -45,8 +45,8 @@ const getAlt = (src) => {
   if (!src) {
     return 'Seniorly Image';
   }
-  const srcParts = src.split('/');
-  return decodeURIComponent(srcParts.pop());
+  const srcParts = src.split('/')[1].split('.')[0];
+  return decodeURIComponent(srcParts);
 };
 
 const sizeNames = ['mobile', 'tablet', 'laptop', 'desktop'];
@@ -85,7 +85,7 @@ export default class Image extends React.Component {
     placeholder: string,
     // use height to force a height for all sources like in a hero banner
     height: number,
-    alt: string,
+    alt: string.isRequired,
     sizes: oneOfType([array, string]),
     sources: array,
     children: any,
