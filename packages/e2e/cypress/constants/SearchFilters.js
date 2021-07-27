@@ -84,6 +84,10 @@ export const MoreFilters = {
   },
   NonCareservices: {
     uiText: 'Non-care services',
+    mobileUiText: 'Non-care services',
+    FitnessPrograms: {
+      uiText: 'Fitness programs',
+    },
   },
   Amenities: {
     uiText: 'Amenities',
