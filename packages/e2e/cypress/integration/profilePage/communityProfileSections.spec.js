@@ -274,9 +274,9 @@ describe('Community Profile Sections', () => {
     });
 
 
-    it.only('creates prospective lead when question is asked on community profile', () => {
-      cy.route('POST', '**/auth/register').as('postRegister');
-      cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
+    it('creates prospective lead when question is asked on community profile', () => {
+      cy.intercept('POST', '**/auth/register').as('postRegister');
+      cy.intercept('POST', '**/uuid-actions?filter*').as('getUuidActions');
       cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions').then((xhr) => {
