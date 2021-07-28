@@ -61,9 +61,9 @@ describe('Community Profile Sections', () => {
 
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
     cy.server();
-    cy.route('POST', '**/uuid-actions').as('postUuidActions');
-    cy.route('GET', '**/users/me').as('getUser');
-    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    cy.intercept('POST', '**/uuid-actions').as('postUuidActions');
+    cy.intercept('GET', '**/users/me').as('getUser');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
     let attempts = 0;
     while (!community?.id && attempts < retries) {
       // eslint-disable-next-line no-loop-func
@@ -204,7 +204,7 @@ describe('Community Profile Sections', () => {
 
 
     it('should be able to share', () => {
-      cy.route('POST', '**/user-shares').as('postUserShares');
+      cy.intercept('POST', '**/user-shares').as('postUserShares');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
@@ -236,8 +236,8 @@ describe('Community Profile Sections', () => {
     it('should be able to save and remove community', () => {
       let userSave;
 
-      cy.route('POST', '**/user-saves').as('postUserSaves');
-      cy.route('PATCH', '**/user-saves/*').as('patchUserSaves');
+      cy.intercept('POST', '**/user-saves').as('postUserSaves');
+      cy.intercept('PATCH', '**/user-saves/*').as('patchUserSaves');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       cy.login();
@@ -390,10 +390,9 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     });
 
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
-    cy.server();
-    cy.route('POST', '**/uuid-actions').as('postUuidActions');
-    cy.route('GET', '**/users/me').as('getUser');
-    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    cy.intercept('POST', '**/uuid-actions').as('postUuidActions');
+    cy.intercept('GET', '**/users/me').as('getUser');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
     let attempts = 0;
     while (!community?.id && attempts < retries) {
       // eslint-disable-next-line no-loop-func

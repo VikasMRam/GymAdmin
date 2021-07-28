@@ -44,6 +44,8 @@ const ArticleTags = ({ topic, tagsList }) => {
   const onClick = useCallback(tag => (evt) => {
     evt.stopPropagation();
     evt.preventDefault();
+    console.log(topic.slug, tag);
+    console.log(`${RESOURCE_CENTER_PATH}/${topic.slug}${tag ? `?tag-name=${tag}` : ''}`);
     push(`${RESOURCE_CENTER_PATH}/${topic.slug}${tag ? `?tag-name=${tag}` : ''}`);
     window.scrollTo(0, 0);
   }, [topic]);
