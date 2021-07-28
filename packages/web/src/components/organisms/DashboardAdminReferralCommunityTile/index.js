@@ -10,7 +10,7 @@ import { getHasContract, getIsCCRC, getIsSNF } from 'sly/web/services/helpers/co
 import { buildAddressDisplay, getReferralSentTimeText } from 'sly/web/services/helpers/communityReferral';
 import { Heading, Block, Button, Link } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
-import Role from 'sly/web/components/common/Role'
+import Role from 'sly/web/components/common/Role';
 import Stage from 'sly/web/components/molecules/Stage';
 // import cursor from 'sly/web/components/helpers/cursor';
 import IconBadge from 'sly/web/components/molecules/IconBadge';
@@ -130,12 +130,13 @@ const DashboardAdminReferralCommunityTile = ({
 }) => {
   const isBottomSectionPresent = !!stage;
   const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
-  const hasContract = getHasContract(community);
+  const { hasContract = false, isPending = false } = getHasContract(community);
   const hasCCRC = getIsCCRC(community);
   const hasSNF = getIsSNF(community);
   const { url: communityUrl, propInfo = {} } = community;
   const { communityPhone } = propInfo;
-  const shouldShowHasContract = hasContract && isAdminUser;
+  const shouldShowHasContract = hasContract && !isPending && isAdminUser;
+  const shouldShowPendingContract = hasContract && isPending && isAdminUser;
   const shouldShowNoContract = !hasContract && isAdminUser;
   return (
     <Wrapper className={className} onClick={onClick}>
@@ -144,6 +145,7 @@ const DashboardAdminReferralCommunityTile = ({
         <TopSection isFloatingSectionPresent={isFloatingSectionPresent}>
           <HeaderSection>
             {shouldShowHasContract && <StyledIconBadge badgePalette="green" palette="white" icon="checkmark-circle" text="HAS CONTRACT" />}
+            {shouldShowPendingContract && <StyledIconBadge badgePalette="yellow" palette="white" icon="hourglass" text="CONTRACT PENDING" />}
             {shouldShowNoContract && <StyledIconBadge badgePalette="danger" palette="white" icon="checkmark-circle" text="NO CONTRACT" />}
             {hasCCRC && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="CCRC" />}
             {hasSNF && <StyledIconBadge badgePalette="warning" palette="white" icon="checkmark-circle" text="SNF" />}

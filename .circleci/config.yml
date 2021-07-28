@@ -321,6 +321,7 @@ jobs:
           SLY_ROOTURL: http://www.seniorly.dev
           SLY_COOKIEDOMAIN: .seniorly.dev
           SLY_CORSORIGINS: http://www.seniorly.dev
+          SLY_ELASTICSEARCH_URL: "https://elasticsearch.myseniorly.com"
     parallelism: 3
     resource_class: xlarge
 

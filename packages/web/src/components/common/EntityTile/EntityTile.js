@@ -67,10 +67,12 @@ const EntityTile = ({
   const placeholder = assetPath('vectors/Board_and_Care.svg');
   let imagePath;
   let imageSrc;
+  let imageAlt;
   if (!hasImages) {
     imageSrc = placeholder;
   } else {
     imagePath = galleryImages[0].path;
+    imageAlt = galleryImages[0].alt;
   }
   const topRightSection = canFavourite
     ? <IconButton transparent icon={icon} iconSize="body" palette={iconPalette} onClick={onIconClick} />
@@ -193,6 +195,7 @@ const EntityTile = ({
             aspectRatio={imageAspectRatio}
             margin="0"
             snap={layout === 'row' ? 'bottom' : imageSnap}
+            alt={imageAlt}
             loading={loading}
             borderRadius="xxs"
             borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
