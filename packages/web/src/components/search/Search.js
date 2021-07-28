@@ -110,7 +110,7 @@ const Search = ({
         sx$laptop={{
           display: 'grid',
           gridTemplateRows: 'auto auto auto auto',
-          gridTemplateColumns: 'calc(100% - 40vw) auto',
+          gridTemplateColumns: 'minmax(0,820px) minmax(38vw,1fr)',
           gridTemplateAreas: '"heading map" "filters map" "noresults map" "list  map"',
         }}
       >
