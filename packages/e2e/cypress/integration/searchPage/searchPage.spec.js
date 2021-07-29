@@ -168,13 +168,15 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
       cy.wait(2000);
     });
     // cy.wait('@searchResults');
+    let responseData = [];
     cy.wait('@searchResults').then((res) => {
       const responseBody = res.response.body;
-      clickFilterButtons(viewPort, 'Save');
-      cy.log('Save Button Clicked');
-      cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
-      resolve(responseBody.data ? responseBody.data  : []);
+      responseData = responseBody.data ? responseBody.data  : [];
+      resolve(responseData);
     });
+    clickFilterButtons(viewPort, 'Save');
+    cy.log('Save Button Clicked');
+    cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
   });
 };
 
