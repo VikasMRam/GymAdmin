@@ -16,7 +16,6 @@ import Stage from 'sly/web/components/molecules/Stage';
 
 const TopWrapper = styled.div`
   padding: ${size('spacing.large')};
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
     padding: ${size('spacing.xLarge')};
@@ -26,7 +25,6 @@ const TopWrapper = styled.div`
 const BottomWrapper = styled.div`
   border-top: ${size('border.regular')} solid ${palette('grey', 'stroke')};
   padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.large')};
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.xLarge')};
   }
@@ -40,7 +38,6 @@ const SmallScreenSection = styled.div`
 
 const BigScreenSection = styled.div`
   display: none;
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
   }
@@ -63,7 +60,6 @@ const DetailsTable = styled.div`
 
 const BigScreenSlyScorebadge = styled.div`
   display: none;
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
     height: fit-content;
@@ -77,12 +73,10 @@ const BigScreenSlyScorebadge = styled.div`
 const FloatingSection = styled.div`
   padding: ${size('spacing.large')};
   padding-top: 0;
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: auto;
     padding: ${size('spacing.xLarge')};
   }
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding-top: ${size('spacing.large')};
   }
@@ -95,7 +89,6 @@ BottomActionBlock.displayName = 'BottomActionBlock';
 
 const ReferralSentAtWrapper = styled.div`
   display: none;
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
     margin-left: auto;

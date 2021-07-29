@@ -7,7 +7,6 @@ import { size, palette } from 'sly/common/components/themes';
 import { Block, Hr } from 'sly/common/components/atoms';
 import DashboardCommunityAgentSearchBox from 'sly/web/components/organisms/DashboardCommunityAgentSearchBox';
 import DashboardAdminReferralCommunityTile from 'sly/web/components/organisms/DashboardAdminReferralCommunityTile';
-import DashboardAdminCommunityAgentList from 'sly/web/components/organisms/DashboardAdminCommunityAgentList';
 import { adminCommunityPropType } from 'sly/common/propTypes/community';
 import pad from 'sly/web/components/helpers/pad';
 import cursor from 'sly/web/components/helpers/cursor';
@@ -31,7 +30,7 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 const CursorStyledDashboardAdminReferralCommunityTile = cursor(StyledDashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferralSearch = ({
-  subtitle, communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch, showAgentList,
+  subtitle, communities, isAdminUser, childrenClientCommunityIdsMap, handleCommunitySearch, setSelectedCommunity, onSubmit, handleLocationSearch,
   preferredLocation, communitiesInterestedIdsMap,
 }) => {
   const title = FAMILIES_INTERESTED_COMMUNITY_TITLE;
@@ -51,7 +50,7 @@ const DashboardCommunityReferralSearch = ({
         <Block>No Communities found; Try searching another Name or Zip</Block>
       </>
       }
-      {!showAgentList && (communities && communities.length > 0) && (
+      {(communities && communities.length > 0) && (
         <>
           <Hr size="large" />
           <Block>Showing {communities.length} Communities</Block>
@@ -72,9 +71,6 @@ const DashboardCommunityReferralSearch = ({
           })}
         </>
       )}
-      {showAgentList && (communities && communities.length > 0) && (
-        <DashboardAdminCommunityAgentList communitiesWithAgents={communities} />
-      )}
     </Wrapper>
   );
 };
@@ -91,7 +87,6 @@ DashboardCommunityReferralSearch.propTypes = {
   isAdminUser: bool,
   childrenClientCommunityIdsMap: object,
   communitiesInterestedIdsMap: object,
-  showAgentList: bool,
   preferredLocation: shape({
     city: string,
     state: string,
