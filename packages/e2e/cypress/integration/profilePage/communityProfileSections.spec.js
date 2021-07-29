@@ -2,7 +2,6 @@
 /// <reference types="Cypress" />
 
 import { responsive, select, waitForHydration } from '../../helpers/tests';
-import { toJson } from '../../helpers/request';
 import {
   PROFILE_TEST_COMMUNITY,
   BUENA_VISTA_COMMUNITY,
@@ -12,7 +11,6 @@ import randomUser from '../../helpers/randomUser';
 import * as communityPage from '../../helpers/comProfPage';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { normalizeResponse } from 'sly/web/services/api';
 
 const randHash = () =>
   Math.random()
@@ -60,10 +58,9 @@ describe('Community Profile Sections', () => {
     });
 
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
-    cy.server();
-    cy.route('POST', '**/uuid-actions').as('postUuidActions');
-    cy.route('GET', '**/users/me').as('getUser');
-    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    cy.intercept('POST', '**/uuid-actions').as('postUuidActions');
+    cy.intercept('GET', '**/users/me').as('getUser');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
     let attempts = 0;
     while (!community?.id && attempts < retries) {
       // eslint-disable-next-line no-loop-func
@@ -92,8 +89,8 @@ describe('Community Profile Sections', () => {
   responsive(() => {
     it('Should see community details', () => {
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions').then((xhr) => {
-        expect(xhr.requestBody).to.deep.equal({
+      cy.wait('@postUuidActions').then(({ request }) => {
+        expect(request.body).to.deep.equal({
           data: {
             type: 'UUIDAction',
             attributes: {
@@ -204,7 +201,7 @@ describe('Community Profile Sections', () => {
 
 
     it('should be able to share', () => {
-      cy.route('POST', '**/user-shares').as('postUserShares');
+      cy.intercept('POST', '**/user-shares').as('postUserShares');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       waitForHydration(cy.get('button').contains('Share')).click({ force: true });
@@ -216,9 +213,9 @@ describe('Community Profile Sections', () => {
 
       cy.get('form button').contains('Send').click();
 
-      cy.wait('@postUserShares').then((xhr) => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.requestBody).to.deep.equal({
+      cy.wait('@postUserShares').then(({ request, response }) => {
+        expect(response.statusCode).to.equal(200);
+        expect(request.body).to.deep.equal({
           toEmails: [
             'inchara@seniorly.com',
           ],
@@ -236,32 +233,31 @@ describe('Community Profile Sections', () => {
     it('should be able to save and remove community', () => {
       let userSave;
 
-      cy.route('POST', '**/user-saves').as('postUserSaves');
-      cy.route('PATCH', '**/user-saves/*').as('patchUserSaves');
+      cy.intercept('POST', '**/user-saves').as('postUserSaves');
+      cy.intercept('PATCH', '**/user-saves/*').as('patchUserSaves');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
       cy.wait('@postUuidActions');
       cy.login();
       waitForHydration(cy.get('button').contains('Save')).click({ force: true });
 
-      cy.wait('@postUserSaves').then(async (xhr) => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.requestBody.data.attributes).to.deep.equal({
+      cy.wait('@postUserSaves').then(async ({ request, response }) => {
+        expect(response.statusCode).to.equal(200);
+        expect(request.body.data.attributes).to.deep.equal({
           entitySlug: community.id,
           entityType: 'Community',
         });
-        const response = await toJson(xhr.response);
-        userSave = normalizeResponse(response);
-        expect(userSave.entitySlug).to.equal(community.id);
+        userSave = response.body.data;
+        expect(userSave.attributes.entitySlug).to.equal(community.id);
       });
 
       cy.get('textarea[name="note"]').type('additional notes');
 
       cy.get('button[type="submit"]').contains('Add Note').click();
 
-      cy.wait('@patchUserSaves').then((xhr) => {
-        expect(xhr.url).to.contain(userSave.id);
-        expect(xhr.status).to.equal(200);
-        expect(xhr.requestBody).to.deep.equal({
+      cy.wait('@patchUserSaves').then(({ request, response }) => {
+        expect(request.url).to.contain(userSave.id);
+        expect(response.statusCode).to.equal(200);
+        expect(request.body).to.deep.equal({
           note: 'additional notes',
         });
       });
@@ -275,12 +271,12 @@ describe('Community Profile Sections', () => {
 
 
     it('creates prospective lead when question is asked on community profile', () => {
-      cy.route('POST', '**/auth/register').as('postRegister');
-      cy.route('POST', '**/uuid-actions?filter*').as('getUuidActions');
+      cy.intercept('POST', '**/auth/register').as('postRegister');
+      cy.intercept('POST', '**/uuid-actions?filter*').as('getUuidActions');
       cy.intercept('GET', '**/events/new*').as('getEvent');
       cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
-      cy.wait('@postUuidActions').then((xhr) => {
-        expect(xhr.requestBody).to.deep.equal({
+      cy.wait('@postUuidActions').then(({ request }) => {
+        expect(request.body).to.deep.equal({
           data: {
             type: 'UUIDAction',
             attributes: {
@@ -298,7 +294,7 @@ describe('Community Profile Sections', () => {
 
       waitForHydration(cy.get('button').contains('about your options'));
       cy.wait(1000);
-      cy.get('button').contains('about your options').click();
+      cy.contains('button', 'about your options').click();
 
       select('.NewModal').contains('Get help from an expert').should('exist');
 
@@ -318,9 +314,9 @@ describe('Community Profile Sections', () => {
 
       cy.get('button').contains('Send').click();
 
-      cy.wait('@postUuidActions').then((xhr) => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.requestBody).to.deep.equal({
+      cy.wait('@postUuidActions').then(({ request, response }) => {
+        expect(response.statusCode).to.equal(200);
+        expect(request.body).to.deep.equal({
           data: {
             type: 'UUIDAction',
             attributes: {
@@ -341,9 +337,9 @@ describe('Community Profile Sections', () => {
       });
 
 
-      cy.wait('@postRegister').then((xhr) => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.requestBody).to.deep.equal({
+      cy.wait('@postRegister').then(({ request, response }) => {
+        expect(response.statusCode).to.equal(200);
+        expect(request.body).to.deep.equal({
           email,
           name: `${firstName} ${lastName}`,
           phone_number: phone,
@@ -390,10 +386,9 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     });
 
     cy.clearCookie('sly_sid', 'sly_uuid', 'sly-session');
-    cy.server();
-    cy.route('POST', '**/uuid-actions').as('postUuidActions');
-    cy.route('GET', '**/users/me').as('getUser');
-    cy.route('GET', '**/uuid-auxes/me').as('getUuid');
+    cy.intercept('POST', '**/uuid-actions').as('postUuidActions');
+    cy.intercept('GET', '**/users/me').as('getUser');
+    cy.intercept('GET', '**/uuid-auxes/me').as('getUuid');
     let attempts = 0;
     while (!community?.id && attempts < retries) {
       // eslint-disable-next-line no-loop-func
@@ -416,7 +411,7 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     });
   });
 
-  it('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', () => {
+  it.only('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', () => {
     // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
     cy.viewport(1920, 1200);
     const user = randomUser();
@@ -424,8 +419,8 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.visit(`/assisted-living/california/san-francisco/${community.id}`);
     cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.getPriceBtnRightSectionDesktop();
-    cy.wait('@postUuidActions').then((xhr) => {
-      expect(xhr.requestBody).to.deep.equal({
+    cy.wait('@postUuidActions').then(({ request }) => {
+      expect(request.body).to.deep.equal({
         data: {
           type: 'UUIDAction',
           attributes: {
@@ -471,8 +466,8 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.askQuestBtn();
     communityPage.sendAskForm({ ...user, question });
-    cy.wait('@postUuidActions').then((xhr) => {
-      expect(xhr.requestBody).to.deep.equal({
+    cy.wait('@postUuidActions').then(({ request }) => {
+      expect(request.body).to.deep.equal({
         data: {
           type: 'UUIDAction',
           attributes: {
@@ -503,8 +498,8 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.wait('@postUuidActions', { timeout: 10000 });
     communityPage.askExpertBtn();
     communityPage.sendAskForm({ ...user, question });
-    cy.wait('@postUuidActions').then((xhr) => {
-      expect(xhr.requestBody).to.deep.equal({
+    cy.wait('@postUuidActions').then(({ request }) => {
+      expect(request.body).to.deep.equal({
         data: {
           type: 'UUIDAction',
           attributes: {
