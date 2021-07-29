@@ -129,7 +129,7 @@ export default class Image extends React.Component {
     const actualPlaceholder = placeholder || assetPath('images/img-placeholder.png');
     const imgSrc = src && this.state.failed
       ? actualPlaceholder
-      : src;
+      : src || actualPlaceholder;
 
     const imageProps = {
       src: imgSrc,
