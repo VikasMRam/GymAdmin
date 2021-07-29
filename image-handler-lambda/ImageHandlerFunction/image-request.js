@@ -3,10 +3,11 @@ const JJPG = 'JPG';
 const JPEG = 'jpeg';
 const WEBP = 'webp';
 const PNG = 'png';
+const PPNG = 'PNG';
 const GIF = 'gif';
 const SVG = 'svg';
 
-const extPriority = [JPG, JJPG, JPEG, WEBP, PNG, GIF, SVG];
+const extPriority = [JPG, JJPG, JPEG, WEBP, PNG, PPNG, GIF, SVG];
 
 const getContentType = (ext) => {
   switch (ext) {
@@ -14,6 +15,7 @@ const getContentType = (ext) => {
     case JJPG: return 'image/jpeg';
     case JPEG: return 'image/jpeg';
     case PNG: return 'image/png';
+    case PPNG: return 'image/png';
     case GIF: return 'image/gif';
     case WEBP: return 'image/webp';
     default: return 'image';

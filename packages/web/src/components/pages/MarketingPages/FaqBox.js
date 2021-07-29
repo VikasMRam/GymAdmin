@@ -25,12 +25,10 @@ const FaqBox = ({ faqs }) => {
   const [faq, setFaq] = useState(faqItems);
 
   const toggle = useCallback((index) => {
-    const newFaq = faq?.map((item, i) => {
-      if (i === index) {
-        item.open = !item.open
-      }
-      return item;
-    });
+    const newFaq = faq?.map((item, i) => ({
+      ...item,
+      open: i === index ? item.open = !item.open : item.open,
+    }))
     setFaq(newFaq);
   }, [faqs]);
   return (

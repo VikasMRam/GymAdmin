@@ -32,6 +32,7 @@ const ApartmentSection = () => {
     path: img.path,
     alt: `${name}, ${city}, ${state}  ${i + 1}`,
     category: img?.category,
+    description: img?.description,
   })), [filteredImages]);
 
   const handlePictureClick = useCallback((picture, pictureIndex) => {

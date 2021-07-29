@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router';
 
+import events from 'sly/web/services/events';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
 import Search from 'sly/web/components/search/Search';
 import { getSearchParams, filterLinkPath, getApiFilters, getPagination } from 'sly/web/components/search/helpers';
@@ -22,6 +23,18 @@ export default function SearchContainer() {
   }
 
   const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
+
+  useEffect(() => {
+    if (!match) {
+      return;
+    }
+    const { city, state, toc: care } = match.params;
+    events.page('Search', {
+      city,
+      state,
+      care,
+    });
+  }, [match]);
 
   const apiFilters = getApiFilters(currentFilters);
   const { requestInfo: requestResult } = usePrefetch('getSearchPage', apiFilters);
