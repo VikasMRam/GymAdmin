@@ -165,6 +165,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
       cy.get('div[class*="FilterChoice"]')
         .contains(searchText)
         .click();
+      cy.wait(2000);
     });
     // cy.wait('@searchResults');
     cy.wait('@searchResults').then((res) => {
