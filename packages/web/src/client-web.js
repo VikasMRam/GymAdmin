@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
-import lazySizes from 'lazysizes';
+import lazySizes from 'lazysizes'; // eslint-disable-line no-unused-vars
 
 
 import AppWrapper from 'sly/web/components/AppWrapper';
