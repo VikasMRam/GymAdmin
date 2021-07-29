@@ -139,7 +139,6 @@ export default class ResponsiveImage extends React.Component {
     }
 
     let preload = null;
-    let sourceSets = null;
     if (!this.state.failed && isS3Path) {
       let sourcesAry;
       if (!sources) {
@@ -161,7 +160,7 @@ export default class ResponsiveImage extends React.Component {
       // aspect ratio is a number in getSrcset
       const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
       const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
-      const { jpegSrcset, webpSrcset, src } = getSrcset(encodeURI(path), {
+      const { srcSet, src } = getSrcset(encodeURI(path), {
         aspectRatio: aspectRatioValue,
         sources: sourcesAry,
       });
@@ -170,35 +169,16 @@ export default class ResponsiveImage extends React.Component {
       imageProps[srcProp] = src;
 
       const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
-
-      const sizesProp = makeSizes(sizes);
-
-      const jpegSourceProps = {
-        [srcSetProp]: jpegSrcset,
-        sizes: sizesProp,
-      };
-
-      const webpSourceProps = {
-        [srcSetProp]: webpSrcset,
-        sizes: sizesProp,
-      };
+      imageProps[srcSetProp] = srcSet;
 
       if (shouldPreload) {
         preload = (
           <Helmet>
             {/* <link rel="preload" as="image" imageSrcSet={jpegSrcset} imageSizes={sizesProp} /> */}
-            <link rel="preload" as="image" imageSrcSet={webpSrcset} imageSizes={sizesProp} />
+            <link rel="preload" as="image" imageSrcSet={srcSet} imageSizes={makeSizes(sizes)} />
           </Helmet>
         );
       }
-
-      sourceSets = (
-        <>
-          {preload}
-          <source type="image/webp" {...webpSourceProps} />
-          <source type="image/jpeg" {...jpegSourceProps} />
-        </>
-      );
     }
 
     const imgClassName = !aspectRatio
@@ -213,17 +193,15 @@ export default class ResponsiveImage extends React.Component {
           {...imageProps}
         />
       ) : (
-        <picture>
-          {sourceSets}
-          <img
-            key={`${src}_${path}`}
-            loading={loading}
-            alt={alt || getAlt(path)}
-            className={imgClassName}
-            onError={this.failedLoadImageHandler}
-            {...imageProps}
-          />
-        </picture>
+        <img
+          key={`${src}_${path}`}
+          loading={loading}
+          alt={alt || getAlt(path)}
+          className={imgClassName}
+          onError={this.failedLoadImageHandler}
+          sizes={makeSizes(sizes)}
+          {...imageProps}
+        />
       );
 
     if (!aspectRatio) {
