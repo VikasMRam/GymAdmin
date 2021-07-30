@@ -187,7 +187,6 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
   clickFilterButtons(viewPort, 'Clear');
   cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
-  console.log('clear view port,', viewPort);
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
   } else {
