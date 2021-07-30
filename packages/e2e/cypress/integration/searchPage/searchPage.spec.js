@@ -10,8 +10,6 @@ import {
   FilterNames,
 } from '../../constants/SearchFilters';
 
-const moreFiterData = [];
-
 
 //* Helper Functions Start
 const toSearchPage = (address) => {
@@ -155,7 +153,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
   }
 };
 
-const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections, moreFiterData1) => {
+const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections, apiResponse) => {
   if (viewPort === 'mobile') {
     applyFilter(filterName, viewPort);
   } else {
@@ -173,11 +171,8 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
     const responseBody = res.response.body;
     responseData = responseBody.data ? responseBody.data  : [];
     clickFilterButtons(viewPort, 'Save');
-    cy.log('Save Button Clicked');
     cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
-    moreFiterData1.push(...responseData);
-    cy.log('Filter Name', selectionTypes);
-    cy.log('More Filter Data', moreFiterData);
+    apiResponse.push(...responseData);
   }, (err) => {
     console.log(err);
   });
@@ -543,10 +538,10 @@ describe('Search Page Sections', () => {
     });
 
     it('More Filter Check - Fitness and beauty salon', () => {
-      const moreFiterData1 = [];
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport, 0, moreFiterData1);
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1, moreFiterData1);
-      resultCheck(moreFiterData1);
+      const apiResponse = [];
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport, 0, apiResponse);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1, apiResponse);
+      resultCheck(apiResponse);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, viewport);
     });
     it('check list', () => {
