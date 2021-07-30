@@ -6,6 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
+import 'lazysizes/plugins/attrchange/ls.attrchange';
+import lazySizes from 'lazysizes'; // eslint-disable-line no-unused-vars
+
 
 import AppWrapper from 'sly/web/components/AppWrapper';
 import configureStore from 'sly/web/store/configure';
@@ -14,7 +17,7 @@ import { isDev } from 'sly/web/config';
 
 
 // For Lazy loading images, used in ResponsiveImage
-require('sly/web/services/yall');
+// require('sly/web/services/yall');
 
 const initialState = window.__INITIAL_STATE__;
 const apiState = window.__API_STATE__;

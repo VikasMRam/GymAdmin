@@ -81,6 +81,7 @@ export default class MediaItem extends React.Component {
         <Thumbnail>
           <ResponsiveImage
             aspectRatio="3:2"
+            sources={[96]}
             path={imgPath}
           />
         </Thumbnail>
