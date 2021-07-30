@@ -100,7 +100,9 @@ exports.handler = (event, context, callback) => {
           withoutEnlargement: true,
           fit: boundingBox ? 'inside' : 'cover',
         })
-        .toFormat(format)
+        .toFormat(format, {
+          speed: 8,
+        })
         .toBuffer();
     })
     .then(buffer => {
