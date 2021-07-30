@@ -57,7 +57,7 @@ const Reasons = () => {
         }}
       >
         <ReasonImage
-          path="react-assets/home/laptopA.webp"
+          path="react-assets/home/laptopA.png"
           alt="smarter-way"
         />
         <Block
@@ -98,7 +98,7 @@ const Reasons = () => {
        }}
       >
         <ReasonImage
-          path="react-assets/home/laptopB.webp"
+          path="react-assets/home/laptopB.png"
           alt="local-advisor"
         />
         <Block
@@ -141,7 +141,7 @@ const Reasons = () => {
        }}
       >
         <ReasonImage
-          path="react-assets/home/laptopC.webp"
+          path="react-assets/home/laptopC.png"
           alt="smarter-way"
         />
         <Block margin="auto 0">
