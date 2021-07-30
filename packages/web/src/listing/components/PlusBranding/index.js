@@ -7,6 +7,7 @@ import { Hr, Heading, Block, Button, Grid, layout, Image, sx, sx$laptop, sx$tabl
 import { Icon } from 'sly/common/components/atoms';
 import { Checkmark } from 'sly/common/icons/index';
 import { assetPath } from 'sly/web/components/themes';
+import { PLUS_RESOURCE_CENTER_LINK } from 'sly/web/listing/constants';
 
 
 const Section = styled(Block)`
@@ -61,6 +62,24 @@ color: white;
     flex: 18;
 }
 `;
+
+const CheckmarkIcon = styled(Checkmark)`
+  ${sx({
+    color: 'white',
+    mt: '0',
+  })}
+  ${sx$tablet({
+    color: 'white',
+    mt: 'auto',
+  })}
+`;
+
+const openPlusResourcePageArticle = () => {
+  const win = window.open('https://www.seniorly.com/resource-center/seniorly-news/what-is-seniorly-plus', '_blank');
+  if (win != null) {
+    win.focus();
+  }
+};
 
 const PlusBranding = () => {
   return (
@@ -153,14 +172,14 @@ const PlusBranding = () => {
           </Block>
           <Block>
             <Grid flexDirection="row" gridGap="s">
-              <IconItem><Checkmark color="white" /><CheckBoxText>Each space is thoughtfully designed for comfort and care</CheckBoxText></IconItem>
-              <IconItem><Checkmark color="white" /><CheckBoxText>Seniorly Plus communities come with premium support</CheckBoxText></IconItem>
-              <IconItem><Checkmark color="white" /><CheckBoxText>Be at ease knowing each community is verified with an in-person inspection</CheckBoxText></IconItem>
+              <IconItem><CheckmarkIcon /><CheckBoxText>Each space is thoughtfully designed for comfort and care</CheckBoxText></IconItem>
+              <IconItem><CheckmarkIcon /><CheckBoxText>Seniorly Plus communities come with premium support</CheckBoxText></IconItem>
+              <IconItem><CheckmarkIcon /><CheckBoxText>Be at ease knowing each community is verified with an in-person inspection</CheckBoxText></IconItem>
             </Grid>
           </Block>
           <Button
             palette="white"
-            to="/"
+            onClick={openPlusResourcePageArticle}
             width="100%"
             marginTop="xl"
             paddingY="m"
@@ -169,7 +188,7 @@ const PlusBranding = () => {
             sx$tablet={{
                 width: 'initial',
                 paddingX: 'xxl',
-              }}
+            }}
           >
             Learn more abour Seniorly Plus
           </Button>

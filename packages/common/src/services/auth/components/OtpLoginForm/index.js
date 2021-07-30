@@ -1,13 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { func, bool, string, object, number } from 'prop-types';
 
-import { Flex, Input, Block } from 'sly/common/system';
+import { Flex, Input, Block, Hr } from 'sly/common/system';
 import ButtonLink from 'sly/common/components/molecules/ButtonLink/newSystem';
+import { useNotification } from 'sly/web/components/helpers/notification';
 
 
 const InputCode = ({ length, loading, onComplete }) => {
   const [code, setCode] = useState([...Array(length)].map(() => ''));
   const inputs = useRef([]);
+  const { notifyError } = useNotification();
 
   const processInput = (e, slot) => {
     const num = e.target.value;
@@ -32,6 +34,22 @@ const InputCode = ({ length, loading, onComplete }) => {
     }
   };
 
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const code = e.clipboardData.getData('Text');
+    const parsedCode = code.match(/\d{0,6}/g)?.[0];
+    if (parsedCode) {
+      setCode(parsedCode.split(''));
+      if (parsedCode.length === 6) {
+        onComplete(parsedCode);
+      }
+    } else {
+      notifyError('Please paste your 6 digit number code');
+    }
+  };
+
+
   return (
     <Flex flexDirection="column" alignItems="start">
       <Flex justifyContent="start" alignItems="center" >
@@ -39,6 +57,7 @@ const InputCode = ({ length, loading, onComplete }) => {
           return (
             <Input
               name={idx}
+              onPaste={handlePaste}
               // eslint-disable-next-line react/no-array-index-key
               key={idx}
               type="text"
@@ -85,6 +104,7 @@ const OtpLoginForm = ({
     <Block> Need a new code?
       <ButtonLink onClick={onResendCodeClick}> Resend</ButtonLink>
     </Block>
+    <Hr my="l" width="xxxl" />
     {passwordExists &&
       <Block> Or you can
         <ButtonLink onClick={onPasswordLoginClick}> log in with a password</ButtonLink>

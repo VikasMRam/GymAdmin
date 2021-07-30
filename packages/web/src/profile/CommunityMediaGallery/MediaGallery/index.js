@@ -125,6 +125,7 @@ export default class MediaGallery extends Component {
     textAlign: 'center',
     withoutCtaButtons: false,
     inModal: false,
+    placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8VA8AAkkBY8DEq9wAAAAASUVORK5CYII=',
   };
 
   setLoadedImages(index) {
@@ -211,7 +212,7 @@ export default class MediaGallery extends Component {
         expandTo="top"
         moreLabelOn="left"
         blockClassName="image-caption"
-        textAlign="left"
+        textAlign="center"
         showChevron={false}
         withReadLess={false}
         collapsedLabelStyles={{ div: { color: 'white.base' }, my: '-xxs' }}
@@ -224,7 +225,7 @@ export default class MediaGallery extends Component {
   );
 
   generateSlideContent = (media, index) => {
-    const { currentSlide, sizes, inModal, aspectRatio, bottomCenteredSection } = this.props;
+    const { currentSlide, sizes, inModal, aspectRatio, bottomCenteredSection, placeholder } = this.props;
 
     switch (media.type) {
       case 'image': {
@@ -240,11 +241,13 @@ export default class MediaGallery extends Component {
               aspectRatio={aspectRatio}
               sizes={sizes}
               alt={media.alt}
-              loading={this.shouldLoadMedia(index) ? 'auto' : 'lazy'}
-              shouldPreload={index === 0}
+              // loading={this.shouldLoadMedia(index) ? 'auto' : 'lazy'}
+              loading={!inModal && index === 0 ? 'eager' : 'lazy'}
+              shouldPreload={!inModal && index === 0}
               ref={(c) => { this.mediaRefs[index] = c; }}
               crop={!inModal}
               onClick={(evt) => { inModal && evt.stopPropagation(); }}
+              placeholder={placeholder}
             >
               {bottomCenteredSection &&
                 <Block

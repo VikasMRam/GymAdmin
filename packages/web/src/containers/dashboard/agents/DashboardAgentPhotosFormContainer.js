@@ -90,7 +90,7 @@ export default class DashboardAgentPhotosFormContainer extends Component {
 
   state = { images: [] };
 
-  addImage = ({name, path}) => {
+  addImage = ({ name, path }) => {
     // this adds a image template with the relationship and sortOrder
     // the rest of the attributes of the image are added in MediaItem
     const { status } = this.props;
@@ -101,8 +101,8 @@ export default class DashboardAgentPhotosFormContainer extends Component {
         gallery: status.agent.result.relationships.gallery,
       },
       attributes: {
-        name: name,
-        path: path,
+        name,
+        path,
         sortOrder: images.length,
       },
     };
@@ -116,25 +116,27 @@ export default class DashboardAgentPhotosFormContainer extends Component {
     });
   };
 
-  onUpload = (result, file) => {
+  onUpload = (result) => {
     this.addImage({
-      name: file.name,
-      path: result.path,
+      name: result[0].name,
+      path: result[0].path,
     });
   };
 
   onUploadError = (error) => {
     const { notifyError } = this.props;
-    notifyError(`Photos could not be uploaded to the CDN`);
+    notifyError('Photos could not be uploaded to the CDN');
   };
 
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { images } = this.state;
 
+    const newImages = arrayMove(images, oldIndex, newIndex);
+
     this.setState({
       touched: true,
-      images: arrayMove(images, oldIndex, newIndex),
+      images: newImages,
     }, this.handleSubmitSort);
   };
 
@@ -154,10 +156,13 @@ export default class DashboardAgentPhotosFormContainer extends Component {
     }, []);
 
     return Promise.all(promises)
-      .then(() => this.setState({
-        touched: false,
-      }))
-      .catch(e => {
+      .then(() => {
+        this.setState({
+          ...this.state,
+          touched: false,
+        });
+      })
+      .catch((e) => {
         notifyError(`Could not sort images: ${e.message}`);
       });
   };

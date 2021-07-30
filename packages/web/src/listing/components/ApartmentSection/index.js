@@ -1,21 +1,24 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import ImageByCategory from 'sly/web/listing/components/ImageByCategory';
 import SlyEvent from 'sly/web/services/helpers/events';
 import FullscreenMediaGallery from 'sly/web/profile/CommunityMediaGallery/FullscreenMediaGallery';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
+import ListingContext from 'sly/web/listing/context/ListingContext';
 
 const ApartmentSection = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { id } = useParams();
+  const { listing } = useContext(ListingContext);
 
-  const { requestInfo: { normalized: listing } } = usePrefetch('getListing', {
-    id,
-    include: 'similar-listings,agent,community,reviews',
-  });
+  // const { id } = useParams();
+
+  // const { requestInfo: { normalized: listing } } = usePrefetch('getListing', {
+  //   id,
+  //   include: 'similar-listings,agent,community,reviews',
+  // });
 
   const { name, address: { city, state }, gallery } = listing;
 
@@ -29,6 +32,7 @@ const ApartmentSection = () => {
     path: img.path,
     alt: `${name}, ${city}, ${state}  ${i + 1}`,
     category: img?.category,
+    description: img?.description,
   })), [filteredImages]);
 
   const handlePictureClick = useCallback((picture, pictureIndex) => {

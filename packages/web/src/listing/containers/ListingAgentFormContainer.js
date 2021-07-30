@@ -8,7 +8,6 @@ import ListingAgentForm from './ListingAgentForm';
 
 import { prefetch, query, withAuth, withUser } from 'sly/web/services/api';
 import { LISTING_CONSULTATION_REQUEST } from 'sly/web/services/api/constants';
-import { capitalize } from  'sly/web/services/helpers/utils';
 import matchPropType from 'sly/common/propTypes/match';
 import userPropType from 'sly/common/propTypes/user';
 import { createValidator, required, usPhone, email } from 'sly/web/services/validation';
@@ -56,6 +55,7 @@ export default class ListingAgentFormContainer extends Component {
     actionType: string,
     status: object.isRequired,
     updateUuidAux: func.isRequired,
+    phoneNumber: string,
   };
 
   static defaultProps = {
@@ -163,7 +163,8 @@ export default class ListingAgentFormContainer extends Component {
 
   render() {
     // change user.name to first name and last name
-    const { user } = this.props;
+    const { user, phoneNumber } = this.props;
+
     let firstName; let lastName = '';
     if (user && user.name) {
       [firstName, lastName] = user.name ? user.name.split(' ') : ['', ''];
@@ -173,6 +174,7 @@ export default class ListingAgentFormContainer extends Component {
       <ReduxForm
         firstName
         lastName
+        phoneNumber={phoneNumber}
         {...this.props}
         onSubmit={this.handleSubmit}
         {...this.customProps}

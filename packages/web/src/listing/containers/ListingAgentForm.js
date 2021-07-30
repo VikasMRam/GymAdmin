@@ -7,11 +7,9 @@ import { ifProp } from 'styled-tools';
 import { size } from 'sly/common/components/themes';
 import userPropType from 'sly/common/propTypes/user';
 import { phoneParser, phoneFormatter } from 'sly/web/services/helpers/phone';
-import pad from 'sly/web/components/helpers/pad';
 import fullWidth from 'sly/web/components/helpers/fullWidth';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
-import { textAlign } from 'sly/web/components/helpers/text';
-import { Heading, Hr, space, sx, Block, color, font, Button } from 'sly/common/system';
+import { Heading, Block, color, font, Button } from 'sly/common/system';
 
 
 const StyledDesc = styled.div`
@@ -52,6 +50,8 @@ export default class ListingAgentForm extends Component {
     handleBookTour: func.isRequired,
     bookTourProgress: bool,
     messageLabel: string,
+    phoneNumber: 'string',
+    isSidebar: bool,
   };
 
   static defaultProps = {
@@ -61,18 +61,19 @@ export default class ListingAgentForm extends Component {
     buttonKind: 'jumbo',
     messagePlaceholder: 'Type your question here. ',
     hideMessage: false,
+    isSidebar: false,
   };
 
   render() {
     const {
       invalid, handleSendMessage, sendMessageProgress, handleBookTour, error, heading, description, user, hasEmail, buttonKind,
-      messageLabel, messagePlaceholder, handleSubmit } = this.props;
-    const showDesc = description !== '';
+      messageLabel, messagePlaceholder, handleSubmit, phoneNumber, isSidebar } = this.props;
+    const showPhoneNumber = phoneNumber !== '';
 
     return (
       <section>
         <Heading pad="l" font="title-s" mb="0">{heading}</Heading>
-        {showDesc && <StyledDesc>{description}</StyledDesc>}
+        {showPhoneNumber && <StyledDesc>{phoneNumber}</StyledDesc>}
         <form>
           {!(user && user.name) &&
           <FieldsWrapper>
@@ -132,12 +133,16 @@ export default class ListingAgentForm extends Component {
           >
             Send Message
           </StyledButton>
-          <Block textAlign="center">
+          <Block
+            textAlign="center"
+            display={isSidebar ? 'none' : 'block'}
+          >
             or
           </Block>
           <StyledButton
             hasMarginBottom={error}
             variant="secondary"
+            display={isSidebar ? 'none' : 'inline-block'}
             disabled={sendMessageProgress}
             onClick={handleSubmit(values =>
               handleBookTour({

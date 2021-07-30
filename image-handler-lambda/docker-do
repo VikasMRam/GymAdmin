@@ -1,0 +1,42 @@
+#! /bin/env bash
+
+if [[ $# = 0 ]]; then
+  COMMAND="help"
+else
+  COMMAND=$1
+  shift
+fi
+
+case $COMMAND in
+  build)
+    docker build --tag amazonlinux:nodejs .
+    ;;
+  init-origin-response)
+    docker run --rm --volume ${PWD}/lambda/origin-response-function:/build amazonlinux:nodejs /bin/bash -c "source ~/.bashrc; npm init -f -y; npm install sharp --save"
+    ;;
+  install-origin-response)
+    docker run --rm --volume ${PWD}/lambda/origin-response-function:/build amazonlinux:nodejs /bin/bash -c "source ~/.bashrc; npm ci --only=prod"
+    ;;
+  package)
+    mkdir -p dist && cd lambda/$1-function && zip -FS -q -r ../../dist/$1-function.zip * && cd ../..
+    ;;
+  upload-viewer-request)
+    aws lambda update-function-code --region us-east-1 --function-name arn:aws:lambda:us-east-1:249947021926:function:imageFormatFromAcceptHeader --zip-file fileb://dist/viewer-request-function.zip
+    ;;
+  upload-origin-response)
+    aws lambda update-function-code --region us-west-2 --function-name arn:aws:lambda:us-west-2:249947021926:function:image-handler-origin-response --zip-file fileb://dist/origin-response-function.zip
+    ;;
+  help)
+    echo -e "Usage ./docker-do command [options]\n"
+    echo "Commands:"
+    echo "  h, help                            "
+    echo "     build                                    build amazon linux"
+    echo "     init-origin-response                     inint npm and install packages"
+    echo "     install-origin-response                  ci install npm packages from with the docker image"
+    echo "     package origin-response|viewer-request   package the functions"
+    echo "     upload-origin-response                   upload origin-response function to amazon lambda edge"
+    echo "     upload-viewer-request                    upload viewer-request function to amazon lambda edge"
+    exit 1
+    ;;
+esac
+

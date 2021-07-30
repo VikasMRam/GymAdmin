@@ -37,6 +37,13 @@ export default class Auth extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { user } = this.props;
+    if (user && user.name && user.phoneNumber) {
+      this.handleAuthSuccess();
+    }
+  }
+
   handleAuthSuccess = () => {
     const { createAction, location: { pathname }, community, onAuthSuccess, stepName, status } = this.props;
     const user = status.user.getCurrentUser();
@@ -76,10 +83,9 @@ export default class Auth extends Component {
 
   render() {
     const { user, signUpHeading, submitButtonText } = this.props;
-    // if (user) {
-    //   return <div />;
-    // }
+
     const initialStep = user && (!user.name || !user.phoneNumber) ? 'ThirdPartyPromptForm' : 'Signup';
+
     return (
       <AuthContainer
         type="inline"

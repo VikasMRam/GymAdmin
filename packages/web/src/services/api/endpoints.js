@@ -1,6 +1,5 @@
 import { get, patch, put, post, destroy } from './httpMethods';
 
-import { uuidActionEvent } from 'sly/web/services/events';
 import { cmsUrl } from 'sly/web/config';
 
 // method names should start with `get`, `create`, `update`, `delete`
@@ -12,7 +11,7 @@ export default {
   getUsers: { method: get, path: '/platform/users' },
 
   getUuidActions: { method: get, path: '/platform/uuid-actions', ssrIgnore: true },
-  createUuidAction: { method: post, path: '/platform/uuid-actions', intercept: uuidActionEvent },
+  createUuidAction: { method: post, path: '/platform/uuid-actions' },
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id', ssrIgnore: true },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
@@ -40,6 +39,7 @@ export default {
   resendOtpCode: { method: post, path: '/platform/auth/otp/retry' },
   sendOtpCode: { method: post, path: '/platform/auth/otp/start' },
   magicLink: { method: post, path: '/platform/auth/mlink/start' },
+  authStart: { method: post, path: '/platform/auth/start' },
   invoicedMagicLink: { method: get, path: '/platform/invoiced/magic-link' },
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
@@ -134,5 +134,5 @@ export default {
   getTopic: { method: get, path: '/topics', jsonApi: false, baseUrl: cmsUrl },
 
   getHubPage: { method: get, path: '/senior-living-types', jsonApi: false, baseUrl: cmsUrl },
-  getMarketingPage: {method: get, path: '/marketing-pages', jsonApi: false, baseUrl: cmsUrl},
+  getMarketingPage: { method: get, path: '/marketing-pages', jsonApi: false, baseUrl: cmsUrl },
 };
