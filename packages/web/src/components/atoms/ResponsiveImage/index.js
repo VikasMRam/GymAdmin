@@ -121,7 +121,7 @@ export default class ResponsiveImage extends React.Component {
     const isS3Path = !!path;
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
-    const className = loading === 'lazy' ? 'lazy' : '';
+    const className = loading === 'lazy' ? 'lazyload' : '';
 
     const actualPlaceholder = placeholder || assetPath('images/img-placeholder.png');
     const imgSrc = this.state.failed
@@ -195,7 +195,7 @@ export default class ResponsiveImage extends React.Component {
       ) : (
         <img
           key={`${src}_${path}`}
-          loading={loading}
+          // loading={loading}
           alt={alt || getAlt(path)}
           className={imgClassName}
           onError={this.failedLoadImageHandler}

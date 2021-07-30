@@ -411,7 +411,7 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     });
   });
 
-  it.only('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', () => {
+  it('Get pricing sidebar-first time and repeat user Desktop Only (ComPrfPage - row 2-3)', () => {
     // Get pricing button which present on th right side of community main picture. And displays with good resolution (desktop)
     cy.viewport(1920, 1200);
     const user = randomUser();
