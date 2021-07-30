@@ -58,13 +58,15 @@
     "webpack-merge-and-include-globally": "2.1.24",
     "webpack-node-externals": "1.7.2",
     "webpack-spawn-plugin": "0.3.0",
-    "schedule":"0.5.0"
+    "schedule": "0.5.0"
   },
   "dependencies": {
     "@emotion/core": "10.0.28",
     "@loadable/server": "5.13.1",
     "@tinymce/tinymce-react": "3.5.0",
+    "ansi-to-html": "^0.6.11",
     "copyfiles": "2.3.0",
+    "date-fns": "2.19.0",
     "dayjs": "1.8.23",
     "emotion": "10.0.27",
     "emotion-server": "10.0.27",
@@ -73,6 +75,7 @@
     "ifvisible.js": "1.0.6",
     "intersection-observer": "0.7.0",
     "isomorphic-fetch": "2.2.1",
+    "lazysizes": "^5.3.2",
     "lodash": "4.17.19",
     "memoize-one": "5.1.1",
     "node-fetch": "^2.6.1",
@@ -80,7 +83,6 @@
     "query-string": "6.11.1",
     "react-cookie": "4.0.3",
     "react-datepicker": "2.16.0",
-    "date-fns": "2.19.0",
     "react-ga": "2.7.0",
     "react-google-maps": "9.4.5",
     "react-helmet": "6.1.0",
@@ -101,6 +103,7 @@
     "redux-saga-thunk": "0.7.3",
     "redux-thunk": "2.3.0",
     "rimraf": "3.0.2",
+    "sanitize-html": "2.3.3",
     "serialize-error": "6.0.0",
     "serialize-javascript": "3.1.0",
     "smoothscroll-polyfill": "0.4.4",
@@ -109,8 +112,6 @@
     "uuid": "7.0.2",
     "validator": "13.0.0",
     "xmlbuilder": "^15.1.1",
-    "yall-js": "3.1.7",
-    "sanitize-html": "2.3.3",
-    "ansi-to-html": "^0.6.11"
+    "yall-js": "3.1.7"
   }
 }
