@@ -137,7 +137,7 @@ const HomePage = ({
               gridTemplateColumns="1fr 1fr"
             >
               <Image
-                path="react-assets/home/hero-1.webp"
+                path="react-assets/home/hero-1.png"
                 alt="face1"
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
@@ -146,7 +146,7 @@ const HomePage = ({
                 loading="eager"
               />
               <Image
-                path="react-assets/home/hero-2.webp"
+                path="react-assets/home/hero-2.png"
                 alt="face2"
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
@@ -160,7 +160,7 @@ const HomePage = ({
               gridTemplateColumns="1fr 1fr"
             >
               <Image
-                path="react-assets/home/hero-3.webp"
+                path="react-assets/home/hero-3.png"
                 alt="face3"
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}
@@ -169,7 +169,7 @@ const HomePage = ({
                 loading="eager"
               />
               <Image
-                path="react-assets/home/hero-4.webp"
+                path="react-assets/home/hero-4.png"
                 alt="face4"
                 aspectRatio="1:1"
                 sources={[150, 180, 300, 360]}

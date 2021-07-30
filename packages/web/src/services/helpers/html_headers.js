@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { string, arrayOf } from 'prop-types';
 
-import { host } from 'sly/web/config';
+import { host, assetsUrl } from 'sly/web/config';
 import { tocs } from 'sly/web/components/search/helpers';
 import { titleize } from 'sly/web/services/helpers/strings';
 import { getStateAbbr, getCitySearchUrl, getCitySearchUrlForListing } from 'sly/web/services/helpers/url';
@@ -497,7 +497,7 @@ export const getHelmetForCommunityPage = (community) => {
     name: 'How Seniorly Works',
     description: 'This Video explains you how Seniorly Works',
     thumbnailUrl: [
-      'https://d354o3y6yz93dt.cloudfront.net/images/768x512/react-assets/how-sly-works-video-thumbnail.jpg',
+      `${assetsUrl}/images/768x512/react-assets/how-sly-works-video-thumbnail.jpg`,
     ],
     uploadDate: '2020-03-04T08:00:00+08:00', // Date on which the component was created on S3
     // duration: 'PT1M54S',
@@ -921,7 +921,7 @@ export const getHelmetForListingPage = (listing) => {
     name: 'How Seniorly Works',
     description: 'This Video explains you how Seniorly Works',
     thumbnailUrl: [
-      'https://d354o3y6yz93dt.cloudfront.net/images/768x512/react-assets/how-sly-works-video-thumbnail.jpg',
+      `${assetsUrl}/images/768x512/react-assets/how-sly-works-video-thumbnail.jpg`,
     ],
     uploadDate: '2020-03-04T08:00:00+08:00', // Date on which the component was created on S3
     // duration: 'PT1M54S',
