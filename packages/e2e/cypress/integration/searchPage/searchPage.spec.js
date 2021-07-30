@@ -165,18 +165,19 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
       cy.get('div[class*="FilterChoice"]')
         .contains(searchText)
         .click();
-      cy.wait(2000);
     });
     // cy.wait('@searchResults');
     let responseData = [];
     cy.wait('@searchResults').then((res) => {
       const responseBody = res.response.body;
       responseData = responseBody.data ? responseBody.data  : [];
+      clickFilterButtons(viewPort, 'Save');
+      cy.log('Save Button Clicked');
+      cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
       resolve(responseData);
+    }, (err) => {
+      reject(err);
     });
-    clickFilterButtons(viewPort, 'Save');
-    cy.log('Save Button Clicked');
-    cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
   });
 };
 
@@ -189,6 +190,7 @@ const clearMoreFilter = (lapHeader, filterName, viewPort) => {
   clickFilterButtons(viewPort, 'Clear');
   cy.wait('@searchResults');
   clickFilterButtons(viewPort, 'Save');
+  console.log('clear view port,', viewPort);
   if (viewPort === 'mobile') {
     cy.get('span[class*="FilterButton__Number"]').should('not.exist');
   } else {
@@ -540,6 +542,7 @@ describe('Search Page Sections', () => {
 
     it('More Filter Check - Fitness and beauty salon', () => {
       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport);
+      cy.wait(1000);
       applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1).then((apiData) => {
         resultCheck(apiData);
         clearMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, viewport);
