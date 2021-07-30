@@ -34,17 +34,15 @@ const getSrcsetForPath = (imagePath, { sources, aspectRatio, crop }) => sources.
     width = source;
   }
 
-  const format = { width, height, aspectRatio, ...(crop === false && { crop }) };
+  const format = { width, height, aspectRatio, crop };
   return `${getImagePath(imagePath, format)} ${width}w`;
 }).join(', ');
 
-// only doing 3:2 for now
 export const getSrcset = (imagePath, config) => ({
   src: getImagePath(
-    imagePath.replace(/(\.jpe?g|\.png)$/i, '.jpg'),
-    { width: 768, aspectRatio: config.aspectRatio, ...(config.crop === false && { crop: config.crop }) },
+    imagePath,
+    { width: 768, aspectRatio: config.aspectRatio, crop: config.crop },
   ),
-  jpegSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.webp|\.png)$/i, '.jpg'), config),
-  webpSrcset: getSrcsetForPath(imagePath.replace(/(\.jpe?g|\.png)$/i, '.webp'), config),
+  srcSet: getSrcsetForPath(imagePath, config),
 });
 
