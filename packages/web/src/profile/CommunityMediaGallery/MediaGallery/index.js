@@ -125,6 +125,7 @@ export default class MediaGallery extends Component {
     textAlign: 'center',
     withoutCtaButtons: false,
     inModal: false,
+    placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8VA8AAkkBY8DEq9wAAAAASUVORK5CYII=',
   };
 
   setLoadedImages(index) {
@@ -224,7 +225,7 @@ export default class MediaGallery extends Component {
   );
 
   generateSlideContent = (media, index) => {
-    const { currentSlide, sizes, inModal, aspectRatio, bottomCenteredSection } = this.props;
+    const { currentSlide, sizes, inModal, aspectRatio, bottomCenteredSection, placeholder } = this.props;
 
     switch (media.type) {
       case 'image': {
@@ -246,6 +247,7 @@ export default class MediaGallery extends Component {
               ref={(c) => { this.mediaRefs[index] = c; }}
               crop={!inModal}
               onClick={(evt) => { inModal && evt.stopPropagation(); }}
+              placeholder={placeholder}
             >
               {bottomCenteredSection &&
                 <Block
