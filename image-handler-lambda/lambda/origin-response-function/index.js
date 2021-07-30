@@ -26,8 +26,8 @@ const parseRequestUri = (path) => {
       format,
       edits,
       boundingBox: !!boundingBox,
-      width: parseInt(width, 10),
-      height: parseInt(height, 10),
+      width: width ? parseInt(width, 10) : undefined,
+      height: height ? parseInt(height, 10) : undefined,
       originalKey: `uploads/${decodeURIComponent(originalKey)}`,
       destKey: path.substring(1),
     };
