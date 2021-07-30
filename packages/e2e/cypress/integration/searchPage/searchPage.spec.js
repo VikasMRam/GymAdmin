@@ -10,6 +10,8 @@ import {
   FilterNames,
 } from '../../constants/SearchFilters';
 
+const moreFiterData = [];
+
 
 //* Helper Functions Start
 const toSearchPage = (address) => {
@@ -153,31 +155,31 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
   }
 };
 
-const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections = 0) => {
-  return new Promise((resolve, reject) => {
-    if (viewPort === 'mobile') {
-      applyFilter(filterName, viewPort);
-    } else {
-      applyFilter(lapHeader, viewPort);
-    }
-    selectionTypes.forEach((communityType) => {
-      const searchText = communityType.uiText;
-      cy.get('div[class*="FilterChoice"]')
-        .contains(searchText)
-        .click();
-    });
-    // cy.wait('@searchResults');
-    let responseData = [];
-    cy.wait('@searchResults').then((res) => {
-      const responseBody = res.response.body;
-      responseData = responseBody.data ? responseBody.data  : [];
-      clickFilterButtons(viewPort, 'Save');
-      cy.log('Save Button Clicked');
-      cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
-      resolve(responseData);
-    }, (err) => {
-      reject(err);
-    });
+const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections, moreFiterData1) => {
+  if (viewPort === 'mobile') {
+    applyFilter(filterName, viewPort);
+  } else {
+    applyFilter(lapHeader, viewPort);
+  }
+  selectionTypes.forEach((communityType) => {
+    const searchText = communityType.uiText;
+    cy.get('div[class*="FilterChoice"]')
+      .contains(searchText)
+      .click();
+  });
+  // cy.wait('@searchResults');
+  let responseData = [];
+  cy.wait('@searchResults').then((res) => {
+    const responseBody = res.response.body;
+    responseData = responseBody.data ? responseBody.data  : [];
+    clickFilterButtons(viewPort, 'Save');
+    cy.log('Save Button Clicked');
+    cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
+    moreFiterData1.push(...responseData);
+    cy.log('Filter Name', selectionTypes);
+    cy.log('More Filter Data', moreFiterData);
+  }, (err) => {
+    console.log(err);
   });
 };
 
@@ -535,18 +537,17 @@ describe('Search Page Sections', () => {
     });
 
     it('More Filter Check', () => {
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport, 0, []);
       validateChangeInResultSet(totalResultCount);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
 
     it('More Filter Check - Fitness and beauty salon', () => {
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport);
-      cy.wait(1000);
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1).then((apiData) => {
-        resultCheck(apiData);
-        clearMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, viewport);
-      });
+      const moreFiterData1 = [];
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport, 0, moreFiterData1);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1, moreFiterData1);
+      resultCheck(moreFiterData1);
+      clearMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, viewport);
     });
     it('check list', () => {
       checkPopulationOfList(currentList);
