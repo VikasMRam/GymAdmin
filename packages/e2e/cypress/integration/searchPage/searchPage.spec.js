@@ -153,7 +153,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
   }
 };
 
-const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections = 0) => {
+const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections, apiResponse) => {
   if (viewPort === 'mobile') {
     applyFilter(filterName, viewPort);
   } else {
@@ -165,11 +165,17 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
       .contains(searchText)
       .click();
   });
-  cy.wait('@searchResults');
-
-  clickFilterButtons(viewPort, 'Save');
-  cy.log('Save Button Clicked');
-  cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
+  // cy.wait('@searchResults');
+  let responseData = [];
+  cy.wait('@searchResults').then((res) => {
+    const responseBody = res.response.body;
+    responseData = responseBody.data ? responseBody.data  : [];
+    clickFilterButtons(viewPort, 'Save');
+    cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
+    apiResponse.push(...responseData);
+  }, (err) => {
+    console.log(err);
+  });
 };
 
 const clearMoreFilter = (lapHeader, filterName, viewPort) => {
@@ -370,6 +376,13 @@ const mapCheck = (list, mode) => {
   }
 };
 
+const resultCheck = (currentList) => {
+  if (currentList.length) {
+    checkPopulationOfList(currentList);
+  } else {
+    validateNoResultCheck();
+  }
+};
 
 //* Helper Functions End
 
@@ -518,15 +531,16 @@ describe('Search Page Sections', () => {
     });
 
     it('More Filter Check', () => {
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport, 0, []);
       validateChangeInResultSet(totalResultCount);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
 
-    it('More Filter Check - No results', () => {
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport);
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1);
-      validateNoResultCheck();
+    it('More Filter Check - Fitness and beauty salon', () => {
+      const apiResponse = [];
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport, 0, apiResponse);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1, apiResponse);
+      resultCheck(apiResponse);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, viewport);
     });
     it('check list', () => {
