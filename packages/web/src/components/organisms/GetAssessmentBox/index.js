@@ -7,7 +7,7 @@ import { Block, Box, Grid, Button, space } from 'sly/common/system';
 
 
 const GetAssessmentBox = ({ color, layout, buttonProps: { to, ...buttonProps }, ...props }) => (
-  <Box sx={{ padding: 'l !important' }} {...props}>
+  <Box sx={{ padding: 'xxl !important' }} {...props}>
     <Grid
       gridTemplateColumns="auto"
       sx$tablet={{
