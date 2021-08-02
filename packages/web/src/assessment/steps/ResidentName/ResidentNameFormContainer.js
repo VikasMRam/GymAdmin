@@ -39,7 +39,10 @@ export default class ResidentNameFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit, stepName } = this.props;
-
+    data.resident = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+    };
     return createAction({
       type: 'UUIDAction',
       attributes: {
