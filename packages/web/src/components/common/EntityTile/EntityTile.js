@@ -6,7 +6,7 @@ import EntityInfo from './EntityInfo';
 
 import { getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
+import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid, Image, space, sx } from 'sly/common/system';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
@@ -175,7 +175,7 @@ const EntityTile = ({
         // no column layout support below tablet
         sx={type === 'list' ? {
           gridTemplateColumns: 'auto',
-          gridGap: 'm',
+          gridGap: '0',
           height: '100%',
         } : {
           gridTemplateColumns: '6.5rem auto',
@@ -231,10 +231,10 @@ const EntityTile = ({
             {
             padding: `xs ${spacing} ${spacing} ${spacing}`,
             } :
-            { padding: `m ${spacing}` }
+            { padding: 'm m' }
           }
           sx$tablet={{
-            padding: layout === 'row' ? `xs ${spacing} ${spacing} ${spacing}`  : `m ${spacing}`,
+            padding: layout === 'row' ? `xs ${spacing} ${spacing} ${spacing}`  : 'l l',
           }}
           sx$laptop={{
             padding: type === 'map' && 'xs',

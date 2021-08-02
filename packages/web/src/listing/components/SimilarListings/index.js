@@ -110,7 +110,7 @@ const ListingTileContainer = ({
             span: { font: 'body-m' },
             h3: { mb: 's' },
             height: '100%',
-            '& > div > div:last-child': {  p: 'l' },
+            '& > div > div:last-child': {  p: 'm' },
             'button svg': { color: isListingAlreadySaved(listingInfo, userSaves) && 'red.lighter-20' },
           }}
           canFavourite={canFavourite}

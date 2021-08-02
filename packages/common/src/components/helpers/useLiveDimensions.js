@@ -44,6 +44,7 @@ function useDimensions({ liveMeasure = true }) {
         };
       }
     }
+    return () => {};
   }, [node]);
 
   return [ref, dimensions, node];

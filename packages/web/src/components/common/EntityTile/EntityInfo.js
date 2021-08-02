@@ -1,28 +1,14 @@
 import React, { Component } from 'react';
 import { bool, string, object, oneOf, number } from 'prop-types';
 
+import EntityInfoDescription from './EntityInfoDescription';
+
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { community as communityPropType } from 'sly/common/propTypes/community';
 import { entity as entityPropType } from 'sly/common/propTypes/entity';
-import { Heading, Link, Block, Span } from 'sly/common/system';
+import { Heading, Link, Block } from 'sly/common/system';
 import CommunityRating from 'sly/web/components/molecules/CommunityRating';
 import { formatMoney } from 'sly/web/services/helpers/numbers';
-import { CommunitySizeLarge, CommunitySizeMedium, CommunitySizeSmall } from 'sly/common/icons';
-
-
-const communityDefaultIcon = {
-  'up to 20 Beds': <CommunitySizeSmall mr="s" />,
-  '20 - 51 Beds': <CommunitySizeMedium mr="s" />,
-  '51 +': <CommunitySizeLarge mr="s" />,
-};
-
-const validSizes = Object.keys(communityDefaultIcon);
-
-const getPlaceholderIcon = communitySize => communityDefaultIcon[
-  (communitySize && validSizes.includes(communitySize))
-    ? communitySize
-    : 'up to 20 Beds'
-];
 
 export default class EntityInfo extends Component {
   static propTypes = {
@@ -53,83 +39,47 @@ export default class EntityInfo extends Component {
       entity, inverted, color, headerIsLink, event, swapRatingPrice, type, index, ...props
     } = this.props;
     const { priceTextSize } = this.props;
-    const { propInfo = {}, propRatings, communitySize, startingRate, maxRate, secondLine, thirdLine, resourceType = ''  } = entity;
+    const { propInfo = {}, propRatings, startingRate, maxRate, secondLine, thirdLine, resourceType = ''  } = entity;
 
     const { reviewsValue, numReviews } = propRatings || entity;
     const typeCare = entity.care || entity.typeCare || propInfo.typeCare;
     const capacity = propInfo.capacity || entity.capacity;
-    const placeholder = getPlaceholderIcon(communitySize);
     let livingTypeComponent = null;
 
-    if (typeCare && typeCare.length) {
+    if ((typeCare && typeCare.length) || secondLine) {
       livingTypeComponent = (
-        <Span
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          display="flex"
-          width="100%"
-          sx={type === 'map' ? {
-            '*:first-child': {
-              display: 'none',
-              '@tablet': {
-                display: 'unset',
-              },
-              '@laptop': {
-                display: 'none',
-              },
-            },
-          } : null}
-          font="body-s"
-          color={inverted ? 'white' : 'slate'}
-          pad="xxs"
-          title={typeCare.join('.')}
+        <EntityInfoDescription
+          type={type}
+          inverted={inverted}
         >
-          {placeholder}{typeCare.join(' . ')}
-        </Span>
+          {(!!typeCare && typeCare.join(' . ')) || (!!secondLine && secondLine)}
+        </EntityInfoDescription>
 
 
       );
     }
 
-    if (secondLine) {
-      livingTypeComponent = (
-        <Span
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          display="flex"
-          width="100%"
-          sx={type === 'map' ? {
-            '*:first-child': {
-              display: 'none',
-              '@tablet': {
-                display: 'unset',
-              },
-              '@laptop': {
-                display: 'none',
-              },
-            },
-          } : null}
-          font="body-s"
-          color={inverted ? 'white' : 'slate.lighter-40'}
-          pad="xxs"
-          title={secondLine}
-        >
-          {secondLine}
-        </Span>
-      );
-    }
 
     const headerContent  = (
       <Heading
-        font={type === 'map' ? 'title-s' : 'title-m'}
+        font={type === 'map' ? 'title-s' : 'title-s'}
         pad={type === 'map' ? 'xxs' : 'xs'}
         title={entity.name}
         color={inverted ? 'white' : 'slate'}
         whiteSpace="nowrap"
         overflow="hidden"
         textOverflow="ellipsis"
+        sx={{
+          fontSize: type === 'map' && '0.875rem',
+          lineHeight: type === 'map' && '1.43',
+        }}
+        sx$tablet={{
+          font: type === 'map' && 'title-s',
+        }}
+        sx$laptop={{
+          fontSize: type === 'map' && '0.875rem',
+          lineHeight: type === 'map' && '1.43',
+        }}
       >
         {index && `${index}. `}
         {entity.name}
@@ -149,19 +99,12 @@ export default class EntityInfo extends Component {
           {header}
           {livingTypeComponent}
           {((capacity || thirdLine) !== '' && (capacity || thirdLine) !== ' resident capacity') &&
-          <Span
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            display="flex"
-            maxWidth="100%"
-            font="body-s"
-            color={inverted ? 'white' : 'slate.lighter-40'}
-            pad="xxs"
-            title={typeCare ? typeCare.join('.') : null}
+          <EntityInfoDescription
+            type={type}
+            inverted={inverted}
           >
             {capacity || thirdLine}{capacity && !capacity.includes('resident') ? ' resident capacity' : null}
-          </Span>
+          </EntityInfoDescription>
 
           }
         </div>
@@ -183,13 +126,29 @@ export default class EntityInfo extends Component {
             rating={reviewsValue}
             numReviews={numReviews}
             color={inverted ? 'white' : 'primary'}
-            font={type === 'map' ? 'body-xs' : null}
+            sx={{
+              font: type === 'map' && 'body-s',
+            }}
+            sx$tablet={{
+              font: type === 'map' && 'body-m',
+            }}
+            sx$laptop={{
+              font: type === 'map' && 'body-s',
+            }}
             marginRight="s"
           />
           {startingRate ? (
             <Block
               color={color || (inverted ? 'white' : 'primary')}
-              font={type === 'map' ? 'body-xs' : 'body-s'}
+              sx={{
+                font: type === 'map' ? 'body-xs' : 'body-m',
+              }}
+              sx$tablet={{
+                font: type === 'map' && 'body-m',
+              }}
+              sx$laptop={{
+                font: type === 'map' && 'body-xs',
+              }}
               testID="Rate"
               overflow="hidden"
               whiteSpace="nowrap"
