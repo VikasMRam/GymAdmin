@@ -86,9 +86,9 @@ const DashboardListingDetailsPage = ({
 
   if (listingIsLoading) {
     return (
-      <Loading activeMenuItem="Listings">
+      <DashboardWithSummaryPageTemplate activeMenuItem="Listings">
         Loading...
-      </Loading>
+      </DashboardWithSummaryPageTemplate>
     );
   }
 
