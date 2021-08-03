@@ -9,7 +9,7 @@ import {
 } from '../../constants/community';
 import randomUser from '../../helpers/randomUser';
 import * as communityPage from '../../helpers/comProfPage';
-import { completeResidentNameStep } from '../../helpers/wizardSteps';
+// import { completeResidentNameStep } from '../../helpers/wizardSteps';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
