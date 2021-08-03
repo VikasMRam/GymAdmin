@@ -5,6 +5,8 @@ import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
+import completeResidentNameStep from './../../helpers/wizardSteps';
+
 import { EXPERIMENT_ADL_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/assessment/constants';
 
 Cypress.on('uncaught:exception', () => {
@@ -227,13 +229,7 @@ describe('Community survey', () => {
       waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
       waitForHydration(cy.get('form input[id=fullName]')).type(name);
       waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
-      cy.wait('@postUuidActions').then((xhr) => {
-        const request = xhr.requestBody;
-        const attrs = request.data.attributes;
-        expect(attrs.actionInfo).to.have.property('stepName', 'step-12:ResidentName');
-        expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
-        expect(attrs.actionInfo).to.have.property('wizardPostConversionInfo', true);
-      });
+      completeResidentNameStep(name);
 
       waitForHydration(cy.contains('We\'ve sent your request!', { timeout: 30000 }));
     });

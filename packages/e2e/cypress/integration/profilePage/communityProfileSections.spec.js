@@ -9,6 +9,7 @@ import {
 } from '../../constants/community';
 import randomUser from '../../helpers/randomUser';
 import * as communityPage from '../../helpers/comProfPage';
+import { completeResidentNameStep } from '../../helpers/wizardSteps';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
@@ -441,6 +442,7 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.url().should('include', 'cta=pricing&entry=communitySidebar');
     communityPage.getPriceWizardInfoIsPresent();
     communityPage.justWantToSeePricing({ ...user });
+    completeResidentNameStep(user.name);
     cy.contains('We\'ve sent your request!', { timeout: 15000 }).should('be.visible');
     cy.contains('Go to my Home Base').click();
     cy.url().should('include', 'dashboard/family/home');
