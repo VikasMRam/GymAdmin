@@ -9,7 +9,6 @@ import {
 } from '../../constants/community';
 import randomUser from '../../helpers/randomUser';
 import * as communityPage from '../../helpers/comProfPage';
-// import { completeResidentNameStep } from '../../helpers/wizardSteps';
 
 import { formatMoney } from 'sly/web/services/helpers/numbers';
 
@@ -442,7 +441,6 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.url().should('include', 'cta=pricing&entry=communitySidebar');
     communityPage.getPriceWizardInfoIsPresent();
     communityPage.justWantToSeePricing({ ...user });
-    // completeResidentNameStep(user.name);
     waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
     waitForHydration(cy.get('form input[id=fullName]')).type(user.name);
     waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
