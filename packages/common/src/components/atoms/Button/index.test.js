@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom';
 
 import Button from '.';
 
-import SlyEvent from 'sly/web/services/helpers/events';
+import events from 'sly/web/services/events';
 
 const wrap = (props = {}, context) => shallow(<Button {...props} />, context);
 
-describe('Button|Web', () => {
-  const originalSendEvent = SlyEvent.getInstance().sendEvent;
+describe('Button (Legacy)', () => {
+  const originalSendEvent = events.track;
 
   beforeEach(() => {
-    SlyEvent.getInstance().sendEvent = jest.fn();
+    events.track = jest.fn();
   });
 
   afterEach(() => {
-    SlyEvent.getInstance().sendEvent = originalSendEvent;
+    events.track = originalSendEvent;
   });
 
   it('renders with different combination of props', () => {
@@ -60,7 +60,7 @@ describe('Button|Web', () => {
     const wrapper = wrap({ onClick, event });
     wrapper.dive().find('button').simulate('click');
 
-    expect(SlyEvent.getInstance().sendEvent).toHaveBeenCalledWith(event);
+    expect(events.track).toHaveBeenCalledWith(event);
     expect(onClick).toHaveBeenCalled();
   });
 
@@ -70,7 +70,7 @@ describe('Button|Web', () => {
     const wrapper = wrap({ onClick });
     wrapper.dive().find('button').simulate('click');
 
-    expect(SlyEvent.getInstance().sendEvent).not.toHaveBeenCalled();
+    expect(events.track).not.toHaveBeenCalled();
     expect(onClick).toHaveBeenCalled();
   });
 });

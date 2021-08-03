@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useHistory, useLocation, useRouteMatch } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 
 import events from 'sly/web/services/events';
 import { usePrefetch } from 'sly/web/services/api/prefetch';
@@ -8,33 +8,28 @@ import { getSearchParams, filterLinkPath, getApiFilters, getPagination } from 's
 import {
   TOC,
   NH,
-  GEO,
   CLEARABLE_FILTERS,
 } from 'sly/web/components/search/Filters/constants';
-import careTypes from 'sly/web/constants/careTypes';
 import { useChatbox } from 'sly/web/services/chatbox/ChatBoxContext';
 
 export default function SearchContainer() {
   const location = useLocation();
   const history = useHistory();
-  let match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state/:city`);
-  if (!match) {
-    match = useRouteMatch(`/:toc(${careTypes.join('|')})/:state`);
-  }
 
-  const currentFilters = useMemo(() => getSearchParams(match, location), [location]);
+  const params = useParams();
+  const currentFilters = useMemo(() => getSearchParams({ params }, location), [location]);
 
   useEffect(() => {
-    if (!match) {
+    if (!params) {
       return;
     }
-    const { city, state, toc: care } = match.params;
+    const { city, state, toc: care } = params;
     events.page('Search', {
       city,
       state,
       care,
     });
-  }, [match]);
+  }, [params]);
 
   const apiFilters = getApiFilters(currentFilters);
   const { requestInfo: requestResult } = usePrefetch('getSearchPage', apiFilters);

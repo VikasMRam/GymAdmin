@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { bool, string, oneOf, oneOfType, object, element } from 'prop-types';
+import { func, bool, string, oneOf, oneOfType, object, element } from 'prop-types';
 import { Link as RRLink } from 'react-router-dom';
 
 import Block from 'sly/common/system/Block';
-import { isReactNative } from 'sly/common/constants/utils';
 import { createRRAnchor } from 'sly/common/components/helpers';
+import events from 'sly/web/services/events';
 // todo: most probably should be common in future
-import SlyEvent from 'sly/web/services/helpers/events';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const buttonBaseStyles = {
   minHeight: 'm',
@@ -92,19 +90,6 @@ const getTarget = (href) => {
   };
 };
 
-const withSendEvent = (event, props) => {
-  const clickHandler = isReactNative ? 'onPress' : 'onClick';
-  const clickHandlerFunc = props[clickHandler];
-  const handlerFunc = (e) => {
-    SlyEvent.getInstance().sendEvent(event);
-    return clickHandlerFunc && clickHandlerFunc(e);
-  };
-  const ret = {};
-  ret[clickHandler] = event ? handlerFunc : clickHandlerFunc;
-
-  return ret;
-};
-
 const RRLinkButton = createRRAnchor(Block);
 
 export default class Button extends Component {
@@ -116,6 +101,7 @@ export default class Button extends Component {
     event: object,
     to: string,
     href: string,
+    onClick: func,
   };
 
   static defaultProps = {
@@ -126,8 +112,18 @@ export default class Button extends Component {
 
   getProps() {
     const {
-      to, href: hrefprop, event, ...props
+      to, href: hrefprop, event, onClick: onClickProp, ...props
     } = this.props;
+
+    const onClick = (...args) => {
+      if (event) {
+        events.track(event);
+      }
+      if (onClickProp) {
+        return onClickProp(...args);
+      }
+      return null;
+    };
 
     if (to && !to.match(/\/\//)) {
       return {
@@ -135,7 +131,8 @@ export default class Button extends Component {
         ...props,
         // flip the order on which we present the components
         component: RRLinkButton,
-        to: addEventToUrl(to, event),
+        to,
+        onClick,
       };
     }
 
@@ -146,15 +143,16 @@ export default class Button extends Component {
         ButtonComponent: Block,
         as: 'a',
         ...props,
-        href: addEventToUrl(href, event),
+        href,
         ...getTarget(href),
+        onClick,
       };
     }
 
     return {
       ButtonComponent: Block,
+      onClick,
       ...props,
-      ...withSendEvent(event, props),
     };
   }
 
