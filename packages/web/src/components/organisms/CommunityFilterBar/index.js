@@ -27,7 +27,7 @@ export const ClearAllButton = styled(Button)`
   color: ${palette('primary', 'base')};
 `;
 
-const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
+const CommunityFilterBar = ({ searchParams, searchEvent, generateFilterLinkPath }) => {
   const { toc, size, budget } = searchParams;
   const matchingBudget = budget ? budgets.find(object => object.value === budget) : null;
   const budgetLabel = matchingBudget ? matchingBudget.label : null;
@@ -46,6 +46,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
           palette="slate"
           ghost
           transparent
+          event={searchEvent}
           to={generateFilterLinkPath({ paramsToRemove: ['toc'] })}
         >
           {actualToc.label}
@@ -59,6 +60,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
           palette="slate"
           ghost
           transparent
+          event={searchEvent}
           to={generateFilterLinkPath({ paramsToRemove: ['size'] })}
         >
           {sizeLabel}
@@ -72,6 +74,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
           palette="slate"
           ghost
           transparent
+          event={searchEvent}
           to={generateFilterLinkPath({ paramsToRemove: ['budget'] })}
         >
           {budgetLabel}
@@ -79,6 +82,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
       )}
       {filtersApplied.length > 0 && (
         <ClearAllButton
+          event={searchEvent}
           to={generateFilterLinkPath({ paramsToRemove: filtersApplied })}
           transparent
         >
@@ -91,6 +95,7 @@ const CommunityFilterBar = ({ searchParams, generateFilterLinkPath }) => {
 
 CommunityFilterBar.propTypes = {
   searchParams: object.isRequired,
+  searchEvent: object,
   generateFilterLinkPath: func.isRequired,
 };
 
