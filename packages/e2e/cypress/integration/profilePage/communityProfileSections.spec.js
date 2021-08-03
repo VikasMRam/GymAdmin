@@ -444,9 +444,9 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
     waitForHydration(cy.get('form input[id=fullName]')).type(user.name);
     waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
-    cy.wait('@postUuidActions').then((xhr) => {
-      const request = xhr.requestBody;
-      const attrs = request.data.attributes;
+    cy.wait('@postUuidActions').then(({ request }) => {
+      const requestBody = request.body;
+      const attrs = requestBody.data.attributes;
       expect(attrs.actionInfo).to.have.property('stepName', 'step-12:ResidentName');
       expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
       expect(attrs.actionInfo).to.have.property('wizardPostConversionInfo', true);
