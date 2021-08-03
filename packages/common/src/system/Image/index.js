@@ -124,12 +124,12 @@ export default class Image extends React.Component {
     const isS3Path = !!path;
 
     const srcProp = loading === 'lazy' ? 'data-src' : 'src';
-    const className = loading === 'lazy' ? 'lazy' : '';
+    const className = loading === 'lazy' ? 'lazyload' : '';
 
     const actualPlaceholder = placeholder || assetPath('images/img-placeholder.png');
     const imgSrc = src && this.state.failed
       ? actualPlaceholder
-      : src;
+      : src || actualPlaceholder;
 
     const imageProps = {
       src: imgSrc,
@@ -140,7 +140,6 @@ export default class Image extends React.Component {
     }
 
     let preload = null;
-    let sourceSets = null;
     if (!this.state.failed && isS3Path) {
       let sourcesAry;
       if (!sources) {
@@ -162,40 +161,25 @@ export default class Image extends React.Component {
       // aspect ratio is a number in getSrcset
       const aspectRatioString = getKey(`sizes.picture.ratios.${aspectRatio}`);
       const aspectRatioValue = (parseFloat(aspectRatioString) / 100).toFixed(4);
-      const { jpegSrcset, webpSrcset, src } = getSrcset(encodeURI(path), {
+      const { srcSet, src } = getSrcset(encodeURI(path), {
         aspectRatio: aspectRatioValue,
         sources: sourcesAry,
-        ...(!crop && { crop }),
+        crop,
       });
 
       // override imageProps src, as it's undefined
       imageProps[srcProp] = src;
 
       const srcSetProp = loading === 'lazy' ? 'data-srcset' : 'srcSet';
-
-      const jpegSourceProps = {
-        [srcSetProp]: jpegSrcset,
-      };
-
-      const webpSourceProps = {
-        [srcSetProp]: webpSrcset,
-      };
-
+      imageProps[srcSetProp] = srcSet;
 
       if (shouldPreload) {
         preload = (
           <Helmet>
-            <link rel="preload" as="image" imageSrcSet={webpSrcset} imageSizes={makeSizes(sizes)} />
+            <link rel="preload" as="image" imageSrcSet={srcSet} imageSizes={makeSizes(sizes)} />
           </Helmet>
         );
       }
-
-      sourceSets = (
-        <>
-          <source type="image/webp" {...webpSourceProps} sizes={makeSizes(sizes)} />
-          <source type="image/jpeg" {...jpegSourceProps} sizes={makeSizes(sizes)} />
-        </>
-      );
     }
 
     const imgClassName = !aspectRatio
@@ -210,17 +194,15 @@ export default class Image extends React.Component {
           {...imageProps}
         />
       ) : (
-        <picture>
-          {sourceSets}
-          <img
-            key={`${src}_${path}`}
-            loading={loading}
-            alt={alt || getAlt(path)}
-            className={imgClassName}
-            onError={this.failedLoadImageHandler}
-            {...imageProps}
-          />
-        </picture>
+        <img
+          key={`${src}_${path}`}
+          // loading={loading}
+          alt={alt || getAlt(path)}
+          className={imgClassName}
+          onError={this.failedLoadImageHandler}
+          sizes={makeSizes(sizes)}
+          {...imageProps}
+        />
       );
 
     if (!aspectRatio) {

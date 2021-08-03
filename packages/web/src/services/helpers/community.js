@@ -14,10 +14,14 @@ export const getIsCCRC = (community) => {
 
 export const getHasContract = (community) => {
   const { rgsAux, info = {} } = community;
-  const hasRgsContract = rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.contract_info ? rgsAux.rgsInfo.contract_info.hasContract : false;
+  const hasRgsContract = !!rgsAux?.rgsInfo?.contract_info?.hasContract;
   // When community is sent has a Provider, contract info is stored in the info elsewhere.
   const { hasContract: hasInfoContract } = info;
-  return hasRgsContract || hasInfoContract;
+
+  const isPending = rgsAux?.rgsInfo?.contract_info?.contractStatus === 'Pending';
+
+
+  return (hasRgsContract || hasInfoContract) ? { hasContract: true, isPending } : false;
 };
 
 export const getIsSNF = (community) => {
