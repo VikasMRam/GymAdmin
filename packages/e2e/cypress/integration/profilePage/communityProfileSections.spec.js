@@ -441,6 +441,9 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.url().should('include', 'cta=pricing&entry=communitySidebar');
     communityPage.getPriceWizardInfoIsPresent();
     communityPage.justWantToSeePricing({ ...user });
+    cy.contains("What is the resident's name?", { timeout: 30000 });
+    cy.get('form input[id=fullName]').type(user.name);
+    cy.get('form button[type=submit]').contains('Continue').click({ force: true });
     cy.contains('We\'ve sent your request!', { timeout: 15000 }).should('be.visible');
     cy.contains('Go to my Home Base').click();
     cy.url().should('include', 'dashboard/family/home');
