@@ -16,15 +16,14 @@ const picturePath = {
 
 describe('Avatar', () => {
   it('renders image when one passed', () => {
-    const wrapper = wrap({ user: { name, picture } });
+    const wrapper = wrap({ name, path: picture.src });
     const img = wrapper.find('StyledImg');
 
     expect(img).toHaveLength(1);
-    expect(img.props()).toHaveProperty('src', picture.src);
   });
 
   it('renders image when path passed', () => {
-    const wrapper = wrap({ user: { name, picture: picturePath } });
+    const wrapper = wrap({ name, path: picturePath.path });
     const img = wrapper.find('StyledImg');
 
     expect(img).toHaveLength(1);
@@ -32,7 +31,7 @@ describe('Avatar', () => {
   });
 
   it('renders first letter in the absence of picture', () => {
-    const wrapper = wrap({ user: { name } });
+    const wrapper = wrap({ name });
     const div = wrapper.dive().find('div');
 
     expect(div).toHaveLength(1);
@@ -41,7 +40,7 @@ describe('Avatar', () => {
   });
 
   it('renders first letter of first and last name in the absence of picture', () => {
-    const wrapper = wrap({ user: { name: fullname } });
+    const wrapper = wrap({ name: fullname });
     const div = wrapper.dive().find('div');
 
     expect(div).toHaveLength(1);

@@ -247,6 +247,7 @@ Field.propTypes = {
     'select',
     'choice', // react-select
     'autocomplete',
+    'create',
     'community',
     'user',
     'communitychoice',
