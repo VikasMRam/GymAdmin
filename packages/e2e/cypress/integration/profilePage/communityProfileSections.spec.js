@@ -441,9 +441,9 @@ describe('Get Pricing, Gallery, Questions, Navigation, Tags', () => {
     cy.url().should('include', 'cta=pricing&entry=communitySidebar');
     communityPage.getPriceWizardInfoIsPresent();
     communityPage.justWantToSeePricing({ ...user });
-    waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
-    waitForHydration(cy.get('form input[id=fullName]')).type(user.name);
-    waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
+    cy.contains("What is the resident's name?", { timeout: 30000 });
+    cy.get('form input[id=fullName]').type(user.name);
+    cy.get('form button[type=submit]').contains('Continue').click({ force: true });
     cy.wait('@postUuidActions').then(({ request }) => {
       const requestBody = request.body;
       const attrs = requestBody.data.attributes;

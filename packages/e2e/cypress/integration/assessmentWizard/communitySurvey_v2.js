@@ -225,9 +225,9 @@ describe('Community survey', () => {
       });
       // Post Conversion Checks
       // Check for resident name step
-      waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
-      waitForHydration(cy.get('form input[id=fullName]')).type(name);
-      waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
+      cy.contains("What is the resident's name?", { timeout: 30000 });
+      cy.get('form input[id=fullName]').type(name);
+      cy.get('form button[type=submit]').contains('Continue').click({ force: true });
       cy.wait('@postUuidActions').then((xhr) => {
         const request = xhr.requestBody;
         const attrs = request.data.attributes;
