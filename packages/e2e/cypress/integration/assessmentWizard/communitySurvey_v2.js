@@ -5,7 +5,7 @@ import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
-import completeResidentNameStep from './../../helpers/wizardSteps';
+// import completeResidentNameStep from './../../helpers/wizardSteps';
 
 import { EXPERIMENT_ADL_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/assessment/constants';
 
@@ -229,7 +229,10 @@ describe('Community survey', () => {
       waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
       waitForHydration(cy.get('form input[id=fullName]')).type(name);
       waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
-      completeResidentNameStep(name);
+      // completeResidentNameStep(name);
+      waitForHydration(cy.contains("What is the resident's name?", { timeout: 30000 }));
+      waitForHydration(cy.get('form input[id=fullName]')).type(name);
+      waitForHydration(cy.get('form button[type=submit]').contains('Continue')).click({ force: true });
 
       waitForHydration(cy.contains('We\'ve sent your request!', { timeout: 30000 }));
     });
