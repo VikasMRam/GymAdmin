@@ -132,9 +132,9 @@ export default class DashboardCommunityDetailsPage extends Component {
 
     if (communityIsLoading) {
       return (
-        <Loading activeMenuItem="Communities">
+        <DashboardWithSummaryPageTemplate activeMenuItem="Communities">
           Loading...
-        </Loading>
+        </DashboardWithSummaryPageTemplate>
       );
     }
 

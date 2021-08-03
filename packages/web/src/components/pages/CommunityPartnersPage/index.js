@@ -177,7 +177,7 @@ const CommunityPartnersPage = ({
       <TemplateContent>
         <StyledSection title="How does it work?">
           <ColumnWrapper>
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="primary" iconVariation="base" icon="house" heading="Claim your community listing" content="Seniorly has over 35,000 listings in the US. Senior living operators can claim these profiles and update their content any time. We’ve made it easier than building and managing a Facebook page." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="primary" iconVariation="base" icon="house" heading="Claim your community listing" content="Seniorly has over 60,000 listings in the US. Senior living operators can claim these profiles and update their content any time. We’ve made it easier than building and managing a Facebook page." />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="primary" iconVariation="base" icon="star" heading="Setup your team" content="Whether you are an owner-operator or part of a larger team, we can customize your team to fit your needs. We find that text messaging is the best way to communicate, and can set up multiple team members per account." />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="primary" iconVariation="base" icon="loyalty" heading="Get tours and move-ins" content="Seniorly provides all community information without forcing prospects to sign up first. We also partner with local placement agents to further qualify families. They spend the time managing the families so you can simply focus on closing tours." />
           </ColumnWrapper>
@@ -188,9 +188,9 @@ const CommunityPartnersPage = ({
         <StyledSection title="A Better Online Partner Matched With Local Handholding">
           <Paragraph>Our modern real estate style online search is augmented through our partnerships with local placement agents. Seniorly unlocks the online searcher and brings it to the high converting local placement agent channel.</Paragraph>
           <StyledColumnWrapper>
-            <FactBox title="3M+" description="Visits to our website per year" />
-            <FactBox title="50K+" description="Families helped per year" />
-            <FactBox title="35K+" description="Communities listed on Seniorly" />
+            <FactBox title="4.5M+" description="Visits to our website per year" />
+            <FactBox title="90K+" description="Families helped per year" />
+            <FactBox title="60K+" description="Communities listed on Seniorly" />
           </StyledColumnWrapper>
         </StyledSection>
       </TemplateContent>

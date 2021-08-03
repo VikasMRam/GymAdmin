@@ -9,26 +9,8 @@ import {
   MoreFilters,
   FilterNames,
 } from '../../constants/SearchFilters';
+import { toSearchPage, toSearchPageFromCity } from '../../helpers/searchPage';
 
-
-//* Helper Functions Start
-const toSearchPage = (address) => {
-  // Get Search Box Input
-  cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').click().type(address);
-  cy.wait('@searchRequest');
-  // Wait untill suggestions appear
-  cy.get('div[class*=__SuggestionsWrapper]').contains(address);
-  // Click Search Icon
-  cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').parent().find('button')
-    .click();
-};
-
-const toSearchPageFromCity = (cityName) => {
-  cy.get('a h4')
-    .contains(cityName)
-    .click();
-  cy.url().should('have.string', 'assisted-living');
-};
 
 //* List Logics
 
@@ -163,7 +145,7 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
     const searchText = communityType.uiText;
     cy.get('div[class*="FilterChoice"]')
       .contains(searchText)
-      .click();
+      .click({ force: true });
   });
   // cy.wait('@searchResults');
   let responseData = [];
@@ -235,7 +217,7 @@ const closeMapView = () => {
       .invoke('text')
       .then((text) => {
         if (text.includes('List')) {
-          cy.wrap(filterButton).click();
+          cy.wrap(filterButton).click({ force: true });
         }
       });
   });
@@ -318,7 +300,7 @@ const openMapView = () => {
       .invoke('text')
       .then((text) => {
         if (text.includes('Map') && filterButton.is(':visible')) {
-          cy.wrap(filterButton).click();
+          cy.wrap(filterButton).click({ force: true });
         }
       });
   });
