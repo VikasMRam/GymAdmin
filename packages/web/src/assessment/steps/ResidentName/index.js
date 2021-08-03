@@ -23,19 +23,13 @@ const ResidentName = ({
           {Array(numberOfPeople).fill().map((_, i) => (
             <Grid gap="regular" key={Symbol(i).toString()}>
               <Field
-                name={`firstName${numberOfPeople > 1 ? i + 1 : ''}`}
+                name={`fullName${numberOfPeople > 1 ? i + 1 : ''}`}
                 type="text"
-                label="First Name"
+                label="Full Name"
                 component={ReduxField}
                 pad="xLarge"
               />
-              <Field
-                name={`lastName${numberOfPeople > 1 ? i + 1 : ''}`}
-                type="text"
-                label="Last Name"
-                component={ReduxField}
-                pad="xLarge"
-              />
+
             </Grid>
         ))}
           <Footer onSkipClick={onSkipClick} invalid={invalid} submitting={submitting} />
