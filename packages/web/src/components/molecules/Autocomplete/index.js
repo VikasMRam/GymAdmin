@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { object } from 'prop-types';
+import React from 'react';
+import { object, bool } from 'prop-types';
 import loadable from '@loadable/component';
 
 import { getAutocompleteValues } from 'sly/web/services/datatable/helpers';
@@ -7,13 +7,8 @@ import { normalizeResponse } from 'sly/web/services/api';
 
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
 
-export default class Autocomplete extends Component {
-  static propTypes = {
-    column: object.isRequired,
-  };
-
-  loadOptions = (inputValue) => {
-    const { column } = this.props;
+const Autocomplete = ({ column, createable, ...props })  => {
+  const loadOptions = (inputValue) => {
     return fetch(`${column.typeInfo.api}${inputValue}`, {
       credentials: 'include',
     })
@@ -25,17 +20,29 @@ export default class Autocomplete extends Component {
       .catch(console.error);
   };
 
-  render() {
-    const { column, ...props } = this.props;
-    return (
+
+  return (
+    <>
       <Select
         async
         isSearchable
         isClearable
+        createable={createable}
         pageSize={10}
-        loadOptions={this.loadOptions}
+        loadOptions={loadOptions}
         {...props}
       />
-    );
-  }
-}
+    </>
+  );
+};
+
+Autocomplete.propTypes = {
+  column: object.isRequired,
+  createable: bool,
+};
+
+Autocomplete.defaultProps = {
+  createable: false,
+};
+
+export default Autocomplete;
