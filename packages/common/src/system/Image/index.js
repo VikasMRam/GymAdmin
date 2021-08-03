@@ -200,7 +200,7 @@ export default class Image extends React.Component {
           alt={alt || getAlt(path)}
           className={imgClassName}
           onError={this.failedLoadImageHandler}
-          sizes={makeSizes(sizes)}
+          data-sizes="auto"
           {...imageProps}
         />
       );
