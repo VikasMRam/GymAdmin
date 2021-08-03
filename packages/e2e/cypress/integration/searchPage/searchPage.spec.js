@@ -9,26 +9,8 @@ import {
   MoreFilters,
   FilterNames,
 } from '../../constants/SearchFilters';
+import { toSearchPage, toSearchPageFromCity } from '../../helpers/searchPage';
 
-
-//* Helper Functions Start
-const toSearchPage = (address) => {
-  // Get Search Box Input
-  cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').click().type(address);
-  cy.wait('@searchRequest');
-  // Wait untill suggestions appear
-  cy.get('div[class*=__SuggestionsWrapper]').contains(address);
-  // Click Search Icon
-  cy.get('nav').find('input[placeholder="Search by city, zip, community name"]').parent().find('button')
-    .click();
-};
-
-const toSearchPageFromCity = (cityName) => {
-  cy.get('a h4')
-    .contains(cityName)
-    .click();
-  cy.url().should('have.string', 'assisted-living');
-};
 
 //* List Logics
 
@@ -153,7 +135,7 @@ const clearGenericTypeFilter = (filterName, selectionValue, viewPort) => {
   }
 };
 
-const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections = 0) => {
+const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previousSelections, apiResponse) => {
   if (viewPort === 'mobile') {
     applyFilter(filterName, viewPort);
   } else {
@@ -163,13 +145,19 @@ const applyMoreFilter = (lapHeader, filterName, selectionTypes, viewPort, previo
     const searchText = communityType.uiText;
     cy.get('div[class*="FilterChoice"]')
       .contains(searchText)
-      .click();
+      .click({ force: true });
   });
-  cy.wait('@searchResults');
-
-  clickFilterButtons(viewPort, 'Save');
-  cy.log('Save Button Clicked');
-  cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
+  // cy.wait('@searchResults');
+  let responseData = [];
+  cy.wait('@searchResults').then((res) => {
+    const responseBody = res.response.body;
+    responseData = responseBody.data ? responseBody.data  : [];
+    clickFilterButtons(viewPort, 'Save');
+    cy.get('span[class*="FilterButton__Number"]').contains(selectionTypes.length + previousSelections);
+    apiResponse.push(...responseData);
+  }, (err) => {
+    console.log(err);
+  });
 };
 
 const clearMoreFilter = (lapHeader, filterName, viewPort) => {
@@ -229,7 +217,7 @@ const closeMapView = () => {
       .invoke('text')
       .then((text) => {
         if (text.includes('List')) {
-          cy.wrap(filterButton).click();
+          cy.wrap(filterButton).click({ force: true });
         }
       });
   });
@@ -312,7 +300,7 @@ const openMapView = () => {
       .invoke('text')
       .then((text) => {
         if (text.includes('Map') && filterButton.is(':visible')) {
-          cy.wrap(filterButton).click();
+          cy.wrap(filterButton).click({ force: true });
         }
       });
   });
@@ -370,6 +358,13 @@ const mapCheck = (list, mode) => {
   }
 };
 
+const resultCheck = (currentList) => {
+  if (currentList.length) {
+    checkPopulationOfList(currentList);
+  } else {
+    validateNoResultCheck();
+  }
+};
 
 //* Helper Functions End
 
@@ -518,15 +513,16 @@ describe('Search Page Sections', () => {
     });
 
     it('More Filter Check', () => {
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, [MoreFilters.CareServices.MedicationManagement], viewport, 0, []);
       validateChangeInResultSet(totalResultCount);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.CareServices, viewport);
     });
 
-    it('More Filter Check - No results', () => {
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport);
-      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1);
-      validateNoResultCheck();
+    it('More Filter Check - Fitness and beauty salon', () => {
+      const apiResponse = [];
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, [MoreFilters.NonCareservices.FitnessPrograms], viewport, 0, apiResponse);
+      applyMoreFilter(FilterNames.MoreFilters, MoreFilters.CommunitySpace, [MoreFilters.CommunitySpace.BeautySalon], viewport, 1, apiResponse);
+      resultCheck(apiResponse);
       clearMoreFilter(FilterNames.MoreFilters, MoreFilters.NonCareservices, viewport);
     });
     it('check list', () => {

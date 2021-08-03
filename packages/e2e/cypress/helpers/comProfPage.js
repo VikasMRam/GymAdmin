@@ -30,9 +30,9 @@ const mediaGalleryBtnRight =
 "(//div[contains(@class, 'CarrousselButton')])[2]";
 
 const currentDisplayingImage =
-  "(//div[@aria-hidden='false'])[last()]//picture/img";
+  "(//div[@aria-hidden='false'])[last()]//img";
 
-const filmstripPictures = "//div[contains(@class, 'Modal__Body')]//picture";
+const filmstripPictures = "//div[contains(@class, 'Modal__Body')]//img";
 
 const map = 'div[aria-label="Map"]';
 
@@ -150,14 +150,14 @@ export const leftRightGalleryButtonIsWorks = () => {
   let pic2 = null;
   let pic3 = null;
   domElement(currentDisplayingImage)
-    .invoke('attr', 'src')
+    .invoke('attr', 'data-src')
     .then((src) => {
       pic1 = src;
       isVisibleXpath(imageByScr(pic1));
     });
   clickGalleryRight();
   domElement(currentDisplayingImage)
-    .invoke('attr', 'src')
+    .invoke('attr', 'data-src')
     .then((src) => {
       pic2 = src;
       isVisibleXpath(imageByScr(pic2));
@@ -165,7 +165,7 @@ export const leftRightGalleryButtonIsWorks = () => {
     });
   clickGalleryRight();
   domElement(currentDisplayingImage)
-    .invoke('attr', 'src')
+    .invoke('attr', 'data-src')
     .then((src) => {
       pic3 = src;
       isVisibleXpath(imageByScr(pic3));
@@ -174,7 +174,7 @@ export const leftRightGalleryButtonIsWorks = () => {
     });
   clickGalleryLeft();
   domElement(currentDisplayingImage)
-    .invoke('attr', 'src')
+    .invoke('attr', 'data-src')
     .then((backToPicture2) => {
       isVisibleXpath(imageByScr(backToPicture2));
       expect(pic2).equal(backToPicture2);
