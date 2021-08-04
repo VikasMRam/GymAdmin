@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { string, object } from 'prop-types';
+import { string, object, func } from 'prop-types';
 import { Link as RRLink } from 'react-router-dom';
 
 import Root from './Root';
 
+import events from 'sly/web/services/events';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor } from 'sly/common/components/helpers';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const RRLinkAnchor = createRRAnchor(Root);
 
@@ -15,6 +15,7 @@ export default class Link extends Component {
   static propTypes = {
     to: string,
     href: string,
+    onClick: func,
     palette: palettePropType,
     variation: variationPropType,
     event: object,
@@ -30,7 +31,17 @@ export default class Link extends Component {
   static displayName = 'Link';
 
   checkPropsForLinks() {
-    const { to, href, event, ...props } = this.props;
+    const { to, href, event, onClick: onClickProp, ...props } = this.props;
+
+    const onClick = (...args) => {
+      if (event) {
+        events.track(event);
+      }
+      if (onClickProp) {
+        return onClickProp(...args);
+      }
+      return null;
+    };
 
     if (to && !to.match(/^https?:\/\//)) {
       return {
@@ -38,7 +49,8 @@ export default class Link extends Component {
         // flip the order on which we present the components
         LinkComponent: RRLink,
         component: RRLinkAnchor,
-        to: addEventToUrl(to, event),
+        onClick,
+        to,
       };
     }
 
@@ -49,7 +61,8 @@ export default class Link extends Component {
       LinkComponent: Root,
       ...props,
       ...target,
-      href: addEventToUrl(href, event),
+      onClick,
+      href,
     };
   }
 

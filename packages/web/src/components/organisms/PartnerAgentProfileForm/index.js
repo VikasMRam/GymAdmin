@@ -232,7 +232,7 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           />
           <Field
             name="canReceiveReferrals"
-            label="Auto-Referrals Enabled"
+            label="Referrals Enabled"
             type="checkbox"
             placeholder=""
             component={ReduxField}

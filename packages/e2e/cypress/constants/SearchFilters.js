@@ -84,11 +84,19 @@ export const MoreFilters = {
   },
   NonCareservices: {
     uiText: 'Non-care services',
+    mobileUiText: 'Non-care services',
+    FitnessPrograms: {
+      uiText: 'Fitness programs',
+    },
   },
   Amenities: {
     uiText: 'Amenities',
   },
   CommunitySpace: {
     uiText: 'Community space',
+    mobileUiText: 'Community space',
+    BeautySalon: {
+      uiText: 'Beauty salon',
+    },
   },
 };

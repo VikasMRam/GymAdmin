@@ -1,12 +1,12 @@
 import React from 'react';
-import { string, shape } from 'prop-types';
+import { string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { element as elementPropType } from 'sly/common/propTypes/element';
 import { size, palette } from 'sly/common/components/themes';
-import { ResponsiveImage } from 'sly/web/components/atoms';
+import { Image } from 'sly/common/system';
 
 const dimensionToTextSizeMap = {
   small: 'tiny',
@@ -30,7 +30,7 @@ const styles = css`
   height: ${dimensions};
 `;
 
-const StyledImg = styled(ResponsiveImage)`
+const StyledImg = styled(Image)`
   ${styles};
 `;
 
@@ -47,12 +47,12 @@ const StyledDiv = styled.div`
   font-weight: ${size('weight.medium')};
 `;
 
-const Avatar = ({ user, ...props }) =>
-  user.picture ? (
-    <StyledImg src={user.picture.src} aspectRatio="1:1" path={user.picture.path} title={user.name} {...props} />
+const Avatar = ({  path, name, ...props }) =>
+  path ? (
+    <StyledImg aspectRatio="1:1" path={path} title={name} {...props} />
   ) : (
-    <StyledDiv data-title={user.name} {...props}>
-      {user.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+    <StyledDiv data-title={name} {...props}>
+      {name.split(' ').map(n => n[0]).join('').slice(0, 2)}
     </StyledDiv>
   );
 
@@ -60,13 +60,8 @@ Avatar.propTypes = {
   palette: palettePropType,
   textPalette: palettePropType,
   size: elementPropType,
-  user: shape({
-    name: string.isRequired,
-    picture: shape({
-      src: string,
-      path: string,
-    }),
-  }),
+  path: string,
+  name: string.isRequired,
 };
 
 Avatar.defaultProps = {

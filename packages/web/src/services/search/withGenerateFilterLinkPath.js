@@ -5,7 +5,6 @@ import { object } from 'prop-types';
 
 import { withRouter } from 'react-router';
 import { filterLinkPath } from 'sly/web/components/search/helpers';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -18,22 +17,25 @@ const generateFilterLinkPath = searchParams => ({ changedParams = {}, paramsToRe
   }, changedParams);
 
   const { path } = filterLinkPath(searchParams, changedAndRemovedParams);
-  const event = {
-    action: 'search',
-    category: searchParams.toc,
-    label: queryString.stringify(searchParams),
-  };
-
-  return addEventToUrl(path, event);
+  return path;
 };
 
 export default function withGenerateFilterLinkPath(ChildComponent) {
-  const WithGenerateFilterLinkPath = props => (
-    <ChildComponent
-      generateFilterLinkPath={generateFilterLinkPath(props.searchParams)}
-      {...props}
-    />
-  );
+  const WithGenerateFilterLinkPath = props => {
+    const event = {
+      action: 'search',
+      category: props.searchParams.toc,
+      label: queryString.stringify(props.searchParams),
+    };
+
+    return (
+      <ChildComponent
+        generateFilterLinkPath={generateFilterLinkPath(props.searchParams)}
+        searchEvent={event}
+        {...props}
+      />
+    );
+  };
 
   WithGenerateFilterLinkPath.displayName = `WithGenerateFilterLinkPath(${getDisplayName(ChildComponent)})`;
   WithGenerateFilterLinkPath.WrappedComponent = ChildComponent;

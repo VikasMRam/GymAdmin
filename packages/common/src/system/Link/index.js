@@ -1,43 +1,34 @@
-import React, { Component } from 'react';
-import { string, object } from 'prop-types';
+import React, { useCallback, useMemo } from 'react';
+import { string, object, func } from 'prop-types';
 import { Link as RRLink } from 'react-router-dom';
 
+import events from 'sly/web/services/events';
 import Block from 'sly/common/system/Block';
-import { palette as palettePropType } from 'sly/common/propTypes/palette';
-import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor } from 'sly/common/components/helpers';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const RRLinkAnchor = createRRAnchor(Block);
 
-export default class Link extends Component {
-  static propTypes = {
-    to: string,
-    href: string,
-    palette: palettePropType,
-    variation: variationPropType,
-    event: object,
-  };
+const Link = ({ to, href: hrefprop, event: rawEvent, onClick: onClickProp, ...props }) => {
+  const jsonEvent = rawEvent && JSON.stringify(rawEvent);
+  const event = useMemo(() => jsonEvent && JSON.parse(jsonEvent), [jsonEvent]);
 
-  static defaultProps = {
-    palette: 'primary',
-    variation: 'base',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  };
+  const onClick = useCallback((...args) => {
+    if (event) {
+      events.track(event);
+    }
+    if (onClickProp) {
+      return onClickProp(...args);
+    }
+    return null;
+  }, [onClickProp, event]);
 
-  static displayName = 'Link';
-
-  checkPropsForLinks() {
-    const { to, href: hrefprop, event, ...props } = this.props;
-
+  const { LinkComponent, ...linkprops } = useMemo(() => {
     if (to && !to.match(/\/\//)) {
       return {
-        ...props,
         // flip the order on which we present the components
         LinkComponent: RRLink,
         component: RRLinkAnchor,
-        to: addEventToUrl(to, event),
+        to,
       };
     }
 
@@ -45,27 +36,44 @@ export default class Link extends Component {
     const target = href && href.match(/\/\//)
       ? { target: '_blank', rel: 'noopener' }
       : {};
+
     return {
       LinkComponent: Block,
-      ...props,
       ...target,
-      href: addEventToUrl(href, event),
+      href,
     };
-  }
+  }, [to, hrefprop]);
 
-  render() {
-    const { LinkComponent, ...props } = this.checkPropsForLinks();
-    const { sx: { '&:hover': hover = {}, ...restSx } = {}, ...restProps } = props;
-    return (
-      <LinkComponent
-        as="a"
-        color="viridian.base"
-        sx={{
-          '&:hover': { textDecoration: 'underline', cursor: 'pointer', ...hover },
-          ...restSx,
-        }}
-        {...restProps}
-      />
-    );
-  }
-}
+  return (
+    <LinkComponent
+      as="a"
+      color="viridian.base"
+      _sx={{
+        '&:hover': {
+          textDecoration: 'underline',
+          cursor: 'pointer',
+        },
+      }}
+      onClick={onClick}
+      {...linkprops}
+      {...props}
+    />
+  );
+};
+
+Link.propTypes = {
+  to: string,
+  href: string,
+  onClick: func,
+  event: object,
+};
+
+Link.defaultProps = {
+  textDecoration: 'none',
+  cursor: 'pointer',
+};
+
+Link.displayName = 'Link';
+
+export default Link;
+
