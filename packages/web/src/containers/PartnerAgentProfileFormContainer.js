@@ -91,7 +91,6 @@ export default class PartnerAgentProfileFormContainer extends Component {
 
     const agentPromise = () => updateAgent({ id }, agent);
 
-
     return agentPromise().then(notifyInfo('Details Updated Successfully'))
       .catch((error) => {
         console.error(error);
