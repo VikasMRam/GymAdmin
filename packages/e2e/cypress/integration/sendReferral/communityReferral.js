@@ -127,7 +127,7 @@ describe('Sending Referral to Community', () => {
       cy.get('form[name="CommunityAgentSearchForm"]').within(() => {
         cy.get('div input[placeholder=\'Search by city, state, zip\']').clear();
         cy.get('div input[placeholder="Search by name"]').type(community.name,  { delay: 50 });
-        cy.get('[data-cy="search"]').eq(1).click({ force: true });
+        cy.get('[data-cy="search"]').eq(0).click({ force: true });
       });
       cy.wait('@searchCommunities');
       cy.get('div[class*="DashboardCommunityReferralSearch__StyledDashboardAdminReferralCommunityTile"]').first().click('right');
