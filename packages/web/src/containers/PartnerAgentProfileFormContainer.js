@@ -88,7 +88,6 @@ export default class PartnerAgentProfileFormContainer extends Component {
       });
     }
     agent = agent.value();
-    console.log('agentData', agent);
 
     const agentPromise = () => updateAgent({ id }, agent);
 
