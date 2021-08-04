@@ -29,7 +29,7 @@ const parseRequestUri = (path) => {
       width: width ? parseInt(width, 10) : undefined,
       height: height ? parseInt(height, 10) : undefined,
       originalKey: `uploads/${decodeURIComponent(originalKey)}`,
-      destKey: path.substring(1),
+      destKey: decodeURIComponent(path.substring(1)),
     };
   }
 
