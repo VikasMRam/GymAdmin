@@ -149,6 +149,8 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           placeholder=""
           component={ReduxField}
           wideWidth
+          endDateInfo="The date from which agent starts recieving leads"
+          startDateInfo="The date from which agent stops recieving leads"
         />
       </FormSection>
       {isSlyAdmin && (
