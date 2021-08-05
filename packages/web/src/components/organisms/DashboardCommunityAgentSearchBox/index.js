@@ -28,7 +28,7 @@ const StyledField = styled(Field)`
 const CommunityAgentSearchForm = ({ label, address, handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunityAgentSearchForm" >
-      <StyledField name="geo" label="Search By City, State" type="locationSearch" placeholder="Search By City, State" address={address} component={ReduxField} />
+      <StyledField name="geo" label="Search By City, State" type="locationSearch" showSearchIcon={false} placeholder="Search By City, State" address={address} component={ReduxField} />
       <StyledField name="name" label={label} type="text" placeholder="Search by name" component={ReduxField} />
       <IconButton type="submit" icon="search" />
     </Form>

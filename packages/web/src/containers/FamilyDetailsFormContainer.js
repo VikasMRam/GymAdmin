@@ -6,16 +6,19 @@ import * as immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
+import DashboardSelectTagCategoryContainer from 'sly/web/containers/dashboard/DashboardSelectTagCategoryContainer';
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import clientPropType from 'sly/common/propTypes/client';
 import userPropType from 'sly/common/propTypes/user';
 import { USER_RESOURCE_TYPE } from 'sly/web/constants/resourceTypes';
-import { query, getRelationship, prefetch } from 'sly/web/services/api';
+import { query, prefetch } from 'sly/web/services/api';
 import { withProps } from 'sly/web/services/helpers/hocs';
 import SlyEvent from 'sly/web/services/helpers/events';
 import { validateAM } from 'sly/web/services/helpers/client';
 import { selectFormData, trimFormData } from 'sly/common/services/helpers/forms';
 import FamilyDetailsForm from 'sly/web/components/organisms/FamilyDetailsForm';
+import Modal, { ModalBody } from 'sly/web/components/atoms/NewModal';
+
 
 const validate = createValidator({
   name: [required],
@@ -25,9 +28,12 @@ const validate = createValidator({
 
 const formName = 'FamilyDetailsForm';
 
+
 const ReduxForm = reduxForm({
   form: formName,
   validate,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
 })(FamilyDetailsForm);
 
 @withRouter
@@ -56,6 +62,18 @@ export default class FamilyDetailsFormContainer extends Component {
     formData: object,
     status: object,
   };
+
+  state = {
+    isModalOpen: '',
+    input: {},
+    options: this.props.client.tags.map(({ id, name }) => ({ label: name, value: id })),
+  }
+
+  setOptions = (options) => {
+    this.setState({
+      options,
+    });
+  }
 
   handleSubmit = (data) => {
     const {
@@ -195,10 +213,29 @@ export default class FamilyDetailsFormContainer extends Component {
       });
   };
 
+  handleCreate = (inputValue) => {
+    this.setState({
+      input: inputValue,
+      isModalOpen: 'category',
+    });
+  };
+
+  handleChange = (value) => {
+    this.setState({
+      options: value,
+    });
+  };
+
+
+  handleModalClose = () => {
+    this.setState({
+      isModalOpen: '',
+    });
+  };
+
   render() {
     const { client, formData, ...props } = this.props;
-    const { clientInfo, uuidAux, tags: modelTags } = client;
-    const tags = modelTags.map(({ id, name }) => ({ label: name, value: id }));
+    const { clientInfo, uuidAux } = client;
     const {
       name, email, slyMessage, phoneNumber = '', additionalMetadata, slyAgentMessage,
       slyCommunityMessage, referralSource,
@@ -235,10 +272,10 @@ export default class FamilyDetailsFormContainer extends Component {
       lookingFor,
       gender,
       age,
-      tags,
+      tags: this.state.options,
       roomPreference,
       mobilityLevel: mobility,
-      adls: adls,
+      adls,
       communityCareType: typeCare,
       budget: maxMonthlyBudget,
       referralSource,
@@ -252,15 +289,30 @@ export default class FamilyDetailsFormContainer extends Component {
       slyCommunityMessage,
       contactPreferences: ['sms', 'email'],
     };
-
     return (
-      <ReduxForm
-        onSubmit={this.handleSubmit}
-        initialValues={initialValues}
-        preferredLocation={preferredLocation}
-        client={client}
-        {...props}
-      />
+      <>
+        <ReduxForm
+          onSubmit={this.handleSubmit}
+          initialValues={initialValues}
+          preferredLocation={preferredLocation}
+          client={client}
+          handleCreate={this.handleCreate}
+          handleChange={this.handleChange}
+          {...props}
+        />
+        {this.state.isModalOpen &&
+        <Modal onClose={this.handleModalClose}>
+          <ModalBody>
+            <DashboardSelectTagCategoryContainer
+              value={this.state.input}
+              initialOptions={this.state.options}
+              setOptions={this.setOptions}
+              handleModalClose={this.handleModalClose}
+            />
+          </ModalBody>
+        </Modal>
+        }
+      </>
     );
   }
 }

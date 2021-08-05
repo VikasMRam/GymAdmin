@@ -27,6 +27,7 @@ import {
   Conversion,
   End,
   Medicaid,
+  ResidentName,
 } from 'sly/web/assessment/steps';
 import Intro from 'sly/web/assessment/steps/Intro/IntroFormContainer';
 import { ProgressBarWrapper } from 'sly/web/assessment/Template';
@@ -221,10 +222,11 @@ export default class AssessmentWizard extends Component {
             <section className={className}>
               {currentStep && !ASSESSMENT_WIZARD_NO_PROGRESS_BAR_STEPS.includes(currentStep) && (
                 <ProgressBarWrapper>
-                  <ProgressBar totalSteps={hadNoLocation ? 8 : 7} currentStep={props.currentStepIndex} />
+                  <ProgressBar totalSteps={hadNoLocation ? 5 : 4} currentStep={props.currentStepIndex} />
                 </ProgressBarWrapper>
               )}
               <WizardSteps data={data} {...props}>
+
                 {!skipIntro && (
                   <WizardStep
                     component={Intro}
@@ -283,6 +285,14 @@ export default class AssessmentWizard extends Component {
                   entry={entry}
                   conversionInfo={conversionInfo}
                 />
+                <WizardStep
+                  component={ResidentName}
+                  name="ResidentName"
+                  onComplete={next}
+                  whoNeedsHelp={data.lookingFor}
+                  hasTip={hasTip}
+                />
+
                 <WizardStep
                   component={End}
                   name="End"

@@ -5,7 +5,6 @@ import queryString from 'query-string';
 
 import withGenerateFilterLinkPath from 'sly/web/services/search/withGenerateFilterLinkPath';
 import careTypes from 'sly/web/constants/careTypes';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 import { getSearchParams } from 'sly/web/components/search/helpers';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
@@ -35,18 +34,7 @@ describe('Given the withGenerateFilterListPath higher-order component', () => {
 
       const generatedPath = wrapper.find(Component).prop('generateFilterLinkPath')({ paramsToRemove: ['size'] });
 
-      const expectedEvent = {
-        action: 'search',
-        category: 'assisted-living',
-        label: queryString.stringify({
-          toc: 'assisted-living',
-          state: 'texas',
-          city: 'dallas',
-          size: 'small',
-          budget: '10',
-        }),
-      };
-      expect(generatedPath).toBe(addEventToUrl('/assisted-living/texas/dallas?budget=10', expectedEvent));
+      expect(generatedPath).toBe('/assisted-living/texas/dallas?budget=10');
     });
     it('should provide function that can generate a path with changed parameters', () => {
       const { wrapper } = mountComponent('/assisted-living/texas/dallas?size=small&budget=10');
@@ -55,20 +43,7 @@ describe('Given the withGenerateFilterListPath higher-order component', () => {
         changedParams: { city: 'houston', budget: '10000', sort: 'price' },
       });
 
-      const expectedEvent = {
-        action: 'search',
-        category: 'assisted-living',
-        label: queryString.stringify({
-          toc: 'assisted-living',
-          state: 'texas',
-          city: 'dallas',
-          size: 'small',
-          budget: '10',
-        }),
-      };
-      expect(generatedPath).toBe(
-        addEventToUrl('/assisted-living/texas/houston?budget=10000&size=small&sort=price', expectedEvent),
-      );
+      expect(generatedPath).toBe('/assisted-living/texas/houston?budget=10000&size=small&sort=price');
     });
     it('should set toc to retirement community if removed', () => {
       const { wrapper } = mountComponent('/assisted-living/texas/dallas');
@@ -77,16 +52,7 @@ describe('Given the withGenerateFilterListPath higher-order component', () => {
         paramsToRemove: ['toc'],
       });
 
-      const expectedEvent = {
-        action: 'search',
-        category: 'assisted-living',
-        label: queryString.stringify({
-          toc: 'assisted-living',
-          state: 'texas',
-          city: 'dallas',
-        }),
-      };
-      expect(generatedPath).toBe(addEventToUrl('/nursing-homes/texas/dallas', expectedEvent));
+      expect(generatedPath).toBe('/nursing-homes/texas/dallas');
     });
   });
 });

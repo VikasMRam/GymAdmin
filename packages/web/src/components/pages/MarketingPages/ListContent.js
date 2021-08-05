@@ -37,13 +37,13 @@ const ListContent = ({
             <Block
                font="title-m"
                paddingTop="xxl"
+               paddingRight="xl"
             >
               {item.subTitle}
             </Block>
           </Block>
           <Flex
             flexDirection="column"
-
             body="body-l"
             paddingBottom="l"
             sx$laptop={{  width: 'col6' }}

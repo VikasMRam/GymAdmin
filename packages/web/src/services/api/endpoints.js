@@ -1,6 +1,5 @@
 import { get, patch, put, post, destroy } from './httpMethods';
 
-import { uuidActionEvent } from 'sly/web/services/events';
 import { cmsUrl } from 'sly/web/config';
 
 // method names should start with `get`, `create`, `update`, `delete`
@@ -12,7 +11,7 @@ export default {
   getUsers: { method: get, path: '/platform/users' },
 
   getUuidActions: { method: get, path: '/platform/uuid-actions', ssrIgnore: true },
-  createUuidAction: { method: post, path: '/platform/uuid-actions', intercept: uuidActionEvent },
+  createUuidAction: { method: post, path: '/platform/uuid-actions' },
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id', ssrIgnore: true },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
@@ -56,6 +55,9 @@ export default {
   getListings: { method: get, path: '/marketplace/listings' },
   updateListing: { method: patch, path: '/marketplace/listings/:id' },
   createListing: { method: post, path: '/marketplace/listings' },
+
+  createTag: { method: post, path: '/platform/tags' },
+  getTagCategories: { method: get, path: '/platform/tag-categories' },
 
   getImageCategories: { method: get, path: '/platform/image-categories' },
 

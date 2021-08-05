@@ -202,9 +202,9 @@ const AuthContainer = (props) => {
               }}
               onSubmit={() => onSignupSuccess ? onSignupSuccess() : goto(CUSTOMERSIGNUPCONFIRMATION)}
               onSocialSignupSuccess={() => setTitle('One more thing...')}
-              handleOtpClick={() => {
+              handleExistingAccount={() => {
                 setTitle('Log in to your account');
-                goto(OTPLOGIN);
+                goto(LOGINSINGUP);
               }}
               heading={signUpHeading}
               submitButtonText={signUpSubmitButtonText}

@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import CommunityAgentSection from '.';
 
-import { getImagePath } from 'sly/web/services/images';
 import LindaIwamota from 'sly/storybook/sample-data/agent-linda-iwamota.json';
 
 const wrap = (props = {}) =>
@@ -19,10 +18,8 @@ describe('CommunityAgentSection', () => {
     const wrapper = wrap();
 
     expect(wrapper.contains(LindaIwamota.info.displayName)).toBeTruthy();
-    expect(wrapper.find('Avatar').prop('user')).toEqual({
-      name: LindaIwamota.info.displayName,
-      picture: { src: (`${getImagePath(LindaIwamota.gallery.images[0].path)}`), path: `${LindaIwamota.gallery.images[0].path}` },
-    });
+    expect(wrapper.find('Avatar').prop('name')).toEqual(LindaIwamota.info.displayName);
+    expect(wrapper.find('Avatar').prop('path')).toEqual(LindaIwamota.gallery.images[0].path);
     expect(wrapper.find('Block').at(3).dive().text()).toEqual(`${LindaIwamota.info.recentFamiliesHelped} families helped`);
   });
 });
