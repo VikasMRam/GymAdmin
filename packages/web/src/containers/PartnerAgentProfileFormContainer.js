@@ -147,6 +147,8 @@ export default class PartnerAgentProfileFormContainer extends Component {
         cellPhone,
         email,
         slackChannel,
+        slackReferralsChannel,
+        slackSupportChannel,
         invoicedID,
         appointmentLink,
         timeZone,
