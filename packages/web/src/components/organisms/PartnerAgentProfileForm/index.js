@@ -264,6 +264,22 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
             wideWidth
           />
           <Field
+            name="slackReferralsChannel"
+            label="Slack Referrals Channel"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="slackSupportChannel"
+            label="Slack Support Channel"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
             name="invoicedID"
             label="invoiced Customer ID"
             type="text"
