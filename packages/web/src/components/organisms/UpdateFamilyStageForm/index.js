@@ -26,6 +26,7 @@ import { Block, Label } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
+import { apiUrl } from 'sly/web/config';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
@@ -58,6 +59,7 @@ const ClosedReasonField = styled(Field)`
   }
 `;
 
+const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[name]=` }, value: 'community.name' };
 export default class UpdateFamilyStageForm extends Component {
   static propTypes = {
     handleSubmit: func,
@@ -221,7 +223,8 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="communityName"
             label="Community name"
-            type="text"
+            type="autocomplete"
+            column={communityColumn}
             required
             component={ReduxField}
           />

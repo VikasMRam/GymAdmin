@@ -170,7 +170,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       newClient.set('attributes.clientInfo.moveInDate', moveInDateFormatted);
     }
     if (communityName) {
-      newClient.set('attributes.clientInfo.communityName', communityName);
+      newClient.set('attributes.clientInfo.communityName', communityName?.label);
     }
     if (monthlyFees) {
       newClient.set('attributes.clientInfo.monthlyFees', parseFloat(monthlyFees));
@@ -355,7 +355,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
       stage,
       chosenDetails: chosenDetails || WAITLISTED,
       moveInDate: existingMoveInDateFormatted,
-      communityName: existingCommunityName,
+      communityName: {
+        label: existingCommunityName,
+        value: existingCommunityName,
+      },
       roomType: existingMoveRoomType,
       referralAgreement: existingReferralAgreement ? existingReferralAgreement.toString() : null,
       referralAgreementType: existingReferralAgreementType,
