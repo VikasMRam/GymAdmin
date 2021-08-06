@@ -3,7 +3,8 @@ import { Widget, PopupButton, Sidetab } from '@typeform/embed-react';
 import styled from 'styled-components';
 
 import { Block, Button } from 'sly/common/system';
-import { useAuth } from 'sly/web/services/api';
+import { useAuth, withAuth, normalizeResponse, useQuery } from 'sly/web/services/api';
+import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
 
 
 const wizardTypeWarpper = (props, onSubmit) => {
@@ -17,29 +18,33 @@ const wizardTypeWarpper = (props, onSubmit) => {
   }
 };
 
+
 const SlyTypeform = (props) => {
   const { formId, onReadyHandler, onQuestionChangedHandler, onSubmitHandler } = props;
   const { createOrUpdateUser, user } = useAuth();
   const isClientside = (typeof window !== 'undefined');
-  const onSubmit = (e) => {
+  const getTypeformDetails = useQuery('getTypeformResponseDetails');
+  const onSubmit = async (e) => {
     const { response_id } = e;
     if (response_id) {
-      console.log(response_id);
-      const email = 'vikas12qaqaassdd@gmail.com';
-      const phone = '8105702064';
-      const name = 'Vikas M R';
-      // create account
-      createOrUpdateUser({
-        name,
-        phone,
-        email,
-      }).then((res) => {
-        console.log('success', res);
-      }, (err) => {
-        console.log('failed', err);
-      });
+      console.log('response_id', response_id);
+      console.log('formId', formId);
+      try {
+        const res = await getTypeformDetails({ 'filter[form]': formId, 'filter[response]': response_id });
+        const re = normJsonApi(res);
+        const email = re.email;
+        const name = re.name;
+        const phone = re.phoneNumber;
+        const userCreationRes = await createOrUpdateUser({
+          name,
+          phone,
+          email,
+        });
+        console.log(userCreationRes);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    console.log('here');
     if (onSubmitHandler) {
       onSubmitHandler();
     }

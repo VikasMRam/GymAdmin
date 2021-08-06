@@ -138,4 +138,6 @@ export default {
 
   getHubPage: { method: get, path: '/senior-living-types', jsonApi: false, baseUrl: cmsUrl },
   getMarketingPage: { method: get, path: '/marketing-pages', jsonApi: false, baseUrl: cmsUrl },
+
+  getTypeformResponseDetails: { method: get, path: '/external/typeform/response' },
 };
