@@ -18,6 +18,7 @@ import {
   FAMILY_STAGE_LOST,
   FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
+  FAMILY_STAGE_FAMILY_CHOSEN,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/web/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/web/constants/notes';
@@ -262,7 +263,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       })
       .then(() => {
         const isQuestionnaireAlreadyFilled =  !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
-        if (!isQuestionnaireAlreadyFilled && (this.currentStage.group === 'Connected' || this.currentStage.group === 'Closed')) {
+        if (!isQuestionnaireAlreadyFilled && (this.currentStage.group === 'Connected' && this.nextStage.stage
+         !== FAMILY_STAGE_FAMILY_CHOSEN)) {
           handleAskQuestionnaire();
         } else if (onSuccess) {
           onSuccess();

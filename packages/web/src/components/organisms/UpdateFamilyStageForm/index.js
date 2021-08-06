@@ -34,6 +34,13 @@ const Warning = pad(styled(Block)`
 `, 'xLarge');
 Warning.displayName = 'Warning';
 
+const Message = pad(styled(Block)`
+  background-color: ${palette('blue.lighter-90')};
+  border-radius: ${size('spacing.small')};
+  padding: ${size('spacing.large')};
+`, 'xLarge');
+Warning.displayName = 'Warning';
+
 const PaddedField = pad(Field, 'xLarge');
 PaddedField.displayName = 'PaddedField';
 
@@ -128,8 +135,7 @@ export default class UpdateFamilyStageForm extends Component {
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const shouldShowQuestionnaire =
       !isQuestionnaireAlreadyFilled &&
-      ((currentStageGroup === 'New' || currentStageGroup === 'Prospects') &&
-      (nextStageGroup === 'Connected' || nextStageGroup === 'Closed'));
+      ((currentStageGroup === 'New' || currentStageGroup === 'Prospects') && (nextStageGroup === 'Connected' && nextStage !== FAMILY_STAGE_FAMILY_CHOSEN));
     const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
 
@@ -164,10 +170,15 @@ export default class UpdateFamilyStageForm extends Component {
           options={options}
           disabled={!canUpdateStage}
         />
-        {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
+        {(stageGroupChanged && !shouldShowQuestionnaire) && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
+        }
+        {(stageGroupChanged && shouldShowQuestionnaire) && (!isPaused || (isPaused && stageChanged)) &&
+          <Message size="caption">
+            We’re glad you were able to connect with this family! After updating this family’s stage we’ll direct you to a quick questionnaire.
+          </Message>
         }
         {stageChanged && !stageGroupChanged && isPaused &&
           <Warning size="caption">
