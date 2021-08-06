@@ -20,11 +20,13 @@ export default class BoxChoice extends Component {
     ]).isRequired,
     onChange: func.isRequired,
     lastChildProps: object.isRequired,
+    hasRadio: bool,
   };
 
   static defaultProps = {
     value: [],
     lastChildProps: {},
+    hasRadio: false,
   };
 
   onClick(option) {
@@ -45,7 +47,7 @@ export default class BoxChoice extends Component {
 
   render() {
     const {
-      value, options, multiChoice, lastChildProps, ...props
+      value, options, multiChoice, hasRadio, lastChildProps, ...props
     } = this.props;
 
     return (
@@ -57,6 +59,7 @@ export default class BoxChoice extends Component {
             <BoxChoiceTile
               /* allow hiding checkbox using props, hence put this before expanding props */
               hasCheckbox={multiChoice}
+              hasRadio={hasRadio}
               {...props}
               {...extraProps}
               key={option.value}

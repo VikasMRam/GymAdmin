@@ -58,7 +58,7 @@ const ReduxForm = reduxForm({
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
 }))
-@connect((state) => ({
+@connect(state => ({
   formState: selectFormData(state, 'UpdateFamilyStageForm'),
 }))
 
@@ -89,7 +89,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
   handleUpdateStage = (data) => {
     const {
       updateClient, client, status: { client: { invalidate: invalidateClient, getRelationship } }, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, refetchClient, refetchNotes } = this.props;
+      updateUuidAux, refetchClient, refetchNotes, handleAskQuestionnaire } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
@@ -127,7 +127,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;
         if (rejectNote) {
-          reason = `${lossReason}, ${rejectNote}`
+          reason = `${lossReason}, ${rejectNote}`;
         }
         if (lostDescription) {
           reason = lostDescription;
@@ -228,9 +228,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
       }
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
     }
+
     if (shouldUpdateUuidAux) {
       const { id: uuidID } = uuidAux;
       newUuidAux = newUuidAux.value();
+
       uuidAuxPromise = () => updateUuidAux({ id: uuidID }, newUuidAux);
     }
     newClient = newClient.value();
@@ -257,7 +259,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
           msg = 'Family successfully rejected';
         }
         notifyInfo(msg);
-        if (onSuccess) {
+      })
+      .then(() => {
+        const isQuestionnaireAlreadyFilled =  !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
+        if (!isQuestionnaireAlreadyFilled && (this.currentStage.group === 'Connected' || this.currentStage.group === 'Closed')) {
+          handleAskQuestionnaire();
+        } else if (onSuccess) {
           onSuccess();
         }
       })
@@ -284,8 +291,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (!client) {
       return null;
     }
-
-    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } }, provider, } = client;
+    const isQuestionnaireAlreadyFilled = !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
+    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } }, provider } = client;
     const { entityType, id: providerOrg } = provider;
     const { organization } = user;
     const { id: userOrg } = organization;
@@ -383,7 +390,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentRejectReason={currentRejectReason}
         canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE) || userIsOwner}
         userIsOwner={userIsOwner}
-        isCommunityUser={entityType === PROVIDER_ENTITY_TYPE_COMMUNITY }
+        isCommunityUser={entityType === PROVIDER_ENTITY_TYPE_COMMUNITY}
+        isQuestionnaireAlreadyFilled={isQuestionnaireAlreadyFilled}
       />
     );
   }

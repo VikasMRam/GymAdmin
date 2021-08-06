@@ -8,6 +8,7 @@ import { spacing as spacingPropType } from 'sly/common/propTypes/spacing';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Box from 'sly/common/components/atoms/Box';
 import Icon from 'sly/common/components/atoms/Icon';
+import Radio from 'sly/common/icons/Radio';
 
 const getHoverBorderColour = ({ highlightedPalette }) => palette(highlightedPalette, 'base');
 
@@ -27,8 +28,13 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
+const StyledRadio = styled(Radio)`
+  margin-right: ${size('spacing.regular')};
+  min-width: 24px;
+`;
+
 const BoxChoiceTile = ({
-  label, children, selected, onClick, hasCheckbox, padding, palette, ...props
+  label, children, selected, onClick, hasCheckbox, padding, palette, hasRadio, ...props
 }) => (
   <StyledBox
     {...props}
@@ -48,6 +54,8 @@ const BoxChoiceTile = ({
   >
     {!selected && hasCheckbox && <StyledIcon icon="checkbox-empty" palette="grey" variation="filler" />}
     {selected && hasCheckbox && <StyledIcon icon="checkbox" palette={palette} variation="base" />}
+    {!selected && (!hasCheckbox && hasRadio) && <StyledRadio size="m" hoverColor="viridian.lighter-90" color="viridian.base" />}
+    {selected && (!hasCheckbox && hasRadio) && <StyledRadio size="m" hoverColor="viridian.lighter-90" color="viridian.base" active />}
     {children || label}
   </StyledBox>
 );
@@ -61,6 +69,7 @@ BoxChoiceTile.propTypes = {
   padding: spacingPropType.isRequired,
   palette: palettePropType.isRequired,
   align: oneOf(['center', 'left']).isRequired,
+  hasRadio: bool,
 };
 
 BoxChoiceTile.defaultProps = {
@@ -70,6 +79,7 @@ BoxChoiceTile.defaultProps = {
   palette: 'primary',
   cursor: 'pointer',
   direction: 'row',
+  hasRadio: false,
 };
 
 export default BoxChoiceTile;

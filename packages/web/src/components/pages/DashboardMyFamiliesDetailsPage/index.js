@@ -62,6 +62,7 @@ import BreadCrumb from 'sly/web/components/molecules/BreadCrumb';
 import Tag from 'sly/web/components/atoms/Tag';
 import BannerNotification from 'sly/web/components/molecules/BannerNotification';
 import Pagination from 'sly/web/components/molecules/Pagination';
+import UpdateStageQuestionnaireContainer from 'sly/web/dashboard/families/updateStageQuestionnaireWizard/UpdateStageQuestionnaireContainer';
 
 const StyledPagination = styled(Pagination)`
   margin: 1rem;
@@ -272,6 +273,20 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     this.handleUpdateClick(e, true);
   };
 
+  handleAskQuestionnaire = () => {
+    const {
+      showModal, client, hideModal, refetchClient,
+    } = this.props;
+
+    showModal((
+      <UpdateStageQuestionnaireContainer
+        hideModal={hideModal}
+        refetchClient={refetchClient}
+        client={client}
+      />
+    ), null, 'askquestionnaire', false);
+  }
+
   handleUpdateClick = (e, isReject) => {
     const {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient, refetchNotes,
@@ -296,6 +311,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         refetchNotes={refetchNotes}
         onSuccess={onSuccess}
         lossReasons={lossReasons}
+        handleAskQuestionnaire={this.handleAskQuestionnaire}
         notifyError={notifyError}
         notifyInfo={notifyInfo}
         client={client}

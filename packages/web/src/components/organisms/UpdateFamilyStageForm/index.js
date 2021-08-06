@@ -76,6 +76,7 @@ export default class UpdateFamilyStageForm extends Component {
     canUpdateStage: bool,
     isCommunityUser: bool,
     initialValues: object,
+    isQuestionnaireAlreadyFilled: bool,
   };
 
   static defaultProps = {
@@ -88,7 +89,7 @@ export default class UpdateFamilyStageForm extends Component {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
-      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, ...props
+      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, ...props
     } = this.props;
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
@@ -125,6 +126,10 @@ export default class UpdateFamilyStageForm extends Component {
     const roomTypeOptions = roomTypes.map(t => ({ value: t, label: t }));
     const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
+    const shouldShowQuestionnaire =
+      !isQuestionnaireAlreadyFilled &&
+      ((currentStageGroup === 'New' || currentStageGroup === 'Prospects') &&
+      (nextStageGroup === 'Connected' || nextStageGroup === 'Closed'));
     const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
 
@@ -139,6 +144,7 @@ export default class UpdateFamilyStageForm extends Component {
       moveInDateErrorMessage = 'Looks like you are choosing a move-in date that has not occurred yet. Try updating to the stage "Family Chose My Referral"';
       moveInDateValidator = isBeforeNow;
     }
+    const buttonText = (stageGroupChanged && shouldShowQuestionnaire) ? 'Update and continue to questionnaire' :  'Update';
 
     return (
       <ThreeSectionFormTemplate
@@ -148,7 +154,7 @@ export default class UpdateFamilyStageForm extends Component {
         hasSubmit
         onSubmit={handleSubmit}
         heading={isNext(FAMILY_STAGE_REJECTED) ? 'Reject lead' : `Updating ${name}'s Stage`}
-        submitButtonText={isNext(FAMILY_STAGE_REJECTED) ? 'Confirm' : 'Update'}
+        submitButtonText={isNext(FAMILY_STAGE_REJECTED) ? 'Confirm' : buttonText}
       >
         <StageField
           name="stage"
