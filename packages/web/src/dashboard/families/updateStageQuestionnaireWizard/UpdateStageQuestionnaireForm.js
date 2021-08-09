@@ -7,13 +7,13 @@ import { Block } from 'sly/common/system';
 import { Wizard, WizardPage, Header, Error, Condition } from 'sly/web/components/common/FinalForm/Wizard';
 import {
   MEDIUM_OPTIONS,
-  LOOKING_FOR_OPTIONS,
+  LOOKING_FOR_OPTIONS_SHORT,
   MOVE_TIMELINE_OPTIONS,
   TYPE_CARE_OPTIONS,
   LEAD_EXPECTATION_OPTIONS,
   LEAD_STAGE_OPTIONS,
   LEAD_QUALITY_OPTIONS,
-} from 'sly/web/dashboard/families/updateStageQuestionnaireWizard/constants';
+} from 'sly/web/constants/familyDetails';
 
 
 const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }) => {
@@ -77,7 +77,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
                   type="boxChoice"
                   hasRadio
                   align="left"
-                  options={LOOKING_FOR_OPTIONS}
+                  options={LOOKING_FOR_OPTIONS_SHORT}
                   component={FieldAdapter}
                 />
                 <Condition

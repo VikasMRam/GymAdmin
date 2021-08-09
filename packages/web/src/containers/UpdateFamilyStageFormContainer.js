@@ -95,7 +95,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       stage, note, moveInDate, waitlistedDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
-      rejectDescription, rejectReason, chosenDetails, waitlisted,
+      rejectDescription, rejectReason, chosenDetails, waitlisted, typeCare,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
@@ -226,7 +226,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     } else if (referralAgreementType === 'flat-fee') {
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));
     }
-    const shouldUpdateUuidAux = !!preferredLocation;
+    const shouldUpdateUuidAux = !!preferredLocation || !!typeCare;
     if (preferredLocation) {
       let locationInfo = {
         city: preferredLocation.city,
@@ -242,6 +242,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
         };
       }
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+    }
+
+    if (typeCare) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', typeCare);
     }
 
     if (shouldUpdateUuidAux) {
@@ -308,7 +312,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       return null;
     }
     const isQuestionnaireAlreadyFilled = !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
-    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } }, provider } = client;
+    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo, housingInfo } }, provider } = client;
+    const typeCare = !!housingInfo && housingInfo?.typeCare ? housingInfo?.typeCare : [];
     const { entityType, id: providerOrg } = provider;
     const { organization } = user;
     const { id: userOrg } = organization;
@@ -393,6 +398,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       invoiceNumber: existingInvoiceNumber,
       invoicePaid: existingInvoicePaid,
       lossReason: existingLossReason,
+      typeCare,
       preferredLocation,
       lostDescription,
       rejectDescription,
@@ -418,7 +424,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
         referralAgreementType={referralAgreementType}
         referralAgreement={referralAgreement}
         monthlyFees={monthlyFees}
-        roomTypes={ROOM_TYPES}
         currentRejectReason={currentRejectReason}
         canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE) || userIsOwner}
         userIsOwner={userIsOwner}

@@ -14,8 +14,7 @@ import {
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
   FAMILY_STAGE_FAMILY_CHOSEN,
-  WAITLISTED,
-  ESTIMATED_MOVE_IN,
+  TYPE_CARE_OPTIONS,
 } from 'sly/web/constants/familyDetails';
 import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
@@ -72,7 +71,6 @@ export default class UpdateFamilyStageForm extends Component {
     nextAllowedStages: arrayOf(string).isRequired,
     chosenDetails: string,
     lossReasons: arrayOf(string).isRequired,
-    roomTypes: arrayOf(string).isRequired,
     rejectReasons: arrayOf(string),
     currentLossReason: string,
     change: func.isRequired,
@@ -98,7 +96,7 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
-      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
+      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, rejectReasons, currentRejectReason,
       canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, waitlisted, ...props
     } = this.props;
 
@@ -133,8 +131,7 @@ export default class UpdateFamilyStageForm extends Component {
       prev.push(option);
       return prev;
     }, []);
-    const roomTypeOptions = roomTypes.map(t => ({ value: t, label: t }));
-    const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
+
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const shouldShowQuestionnaire =
       !isQuestionnaireAlreadyFilled &&
@@ -256,11 +253,13 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {isNext(FAMILY_STAGE_WON) &&
           <Field
-            name="roomType"
-            label="Room type"
+            name="typeCare"
+            label="Resident’s care level"
+            placeholder="Select an option"
             type="choice"
+            isMulti
             component={ReduxField}
-            options={roomTypeOptions}
+            options={TYPE_CARE_OPTIONS}
           />
         }
         {isNext(FAMILY_STAGE_WON) &&
