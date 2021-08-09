@@ -69,7 +69,6 @@ export default class UpdateFamilyStageForm extends Component {
     currentStage: string,
     nextStage: string,
     nextAllowedStages: arrayOf(string).isRequired,
-    chosenDetails: string,
     lossReasons: arrayOf(string).isRequired,
     rejectReasons: arrayOf(string),
     currentLossReason: string,
@@ -95,7 +94,7 @@ export default class UpdateFamilyStageForm extends Component {
 
   render() {
     const {
-      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
+      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, rejectReasons, currentRejectReason,
       canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, waitlisted, ...props
     } = this.props;
@@ -241,16 +240,6 @@ export default class UpdateFamilyStageForm extends Component {
 
           </>
         }
-        {!isNext(FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST) &&
-          <Field
-            type="textarea"
-            rows={3}
-            name="note"
-            label="Add a note"
-            placeholder="Add a note on why you are updating this family's stage..."
-            component={ReduxField}
-          />
-        }
         {isNext(FAMILY_STAGE_WON) &&
           <Field
             name="typeCare"
@@ -334,6 +323,22 @@ export default class UpdateFamilyStageForm extends Component {
             </Role>
           </>
         }
+        {isNext(FAMILY_STAGE_WON) &&
+        <>
+          <Field
+            name="firstName"
+            label="Resident first name"
+            type="text"
+            component={ReduxField}
+          />
+          <Field
+            name="lastName"
+            label="Resident last name"
+            type="text"
+            component={ReduxField}
+          />
+        </>
+        }
         {isNext(FAMILY_STAGE_LOST) &&
           <ClosedReasonField
             name="lossReason"
@@ -392,6 +397,16 @@ export default class UpdateFamilyStageForm extends Component {
             address={preferredLocation}
             component={ReduxField}
             required
+          />
+        }
+        {!isNext(FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST) &&
+          <Field
+            type="textarea"
+            rows={3}
+            name="note"
+            label="Add a note"
+            placeholder="Add a note on why you are updating this family's stage..."
+            component={ReduxField}
           />
         }
       </ThreeSectionFormTemplate>

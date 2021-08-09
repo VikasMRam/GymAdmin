@@ -95,7 +95,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       stage, note, moveInDate, waitlistedDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
-      rejectDescription, rejectReason, chosenDetails, waitlisted, typeCare,
+      rejectDescription, rejectReason, waitlisted, typeCare, firstName, lastName,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
@@ -213,9 +213,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (rejectReason) {
       newClient.set('attributes.clientInfo.rejectReason', rejectReason);
     }
-    if (chosenDetails) {
-      newClient.set('attributes.clientInfo.chosenDetails', chosenDetails);
-    }
     if (waitlisted !== undefined || null) {
       newClient.set('attributes.clientInfo.waitlisted', waitlisted);
     }
@@ -226,7 +223,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     } else if (referralAgreementType === 'flat-fee') {
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));
     }
-    const shouldUpdateUuidAux = !!preferredLocation || !!typeCare;
+    const shouldUpdateUuidAux = !!preferredLocation || !!typeCare || !!firstName || !!lastName;
     if (preferredLocation) {
       let locationInfo = {
         city: preferredLocation.city,
@@ -246,6 +243,14 @@ export default class UpdateFamilyStageFormContainer extends Component {
 
     if (typeCare) {
       newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', typeCare);
+    }
+
+    if (firstName) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.firstName', firstName);
+    }
+
+    if (lastName) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.lastName', lastName);
     }
 
     if (shouldUpdateUuidAux) {
@@ -312,8 +317,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
       return null;
     }
     const isQuestionnaireAlreadyFilled = !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
-    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo, housingInfo } }, provider } = client;
+    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo, housingInfo, residentInfo } }, provider } = client;
     const typeCare = !!housingInfo && housingInfo?.typeCare ? housingInfo?.typeCare : [];
+    const firstName = !!residentInfo && residentInfo?.firstName ? residentInfo.firstName : '';
+    const lastName = !!residentInfo && residentInfo?.lastName ? residentInfo.lastName : '';
     const { entityType, id: providerOrg } = provider;
     const { organization } = user;
     const { id: userOrg } = organization;
@@ -333,11 +340,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
       lossReason: existingLossReason,
       otherText,
       rejectReason,
-      chosenDetails,
+      // chosenDetails,
     } = clientInfo;
 
-    let { waitlisted } = clientInfo;
-    waitlisted = !!(!!chosenDetails && chosenDetails === 'waitlisted');
+    let { waitlisted = false } = clientInfo;
+    // waitlisted = !!(!!chosenDetails && chosenDetails === 'waitlisted');
     let { invoicePaid: existingInvoicePaid } = clientInfo;
     if (isBoolean(existingInvoicePaid)) {
       existingInvoicePaid = existingInvoicePaid ? 'yes' : 'no';
@@ -382,7 +389,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     const newInitialValues = {
       stage,
-      chosenDetails: chosenDetails || WAITLISTED,
       waitlisted,
       moveInDate: existingMoveInDateFormatted,
       waitlistedDate: existingWaitlistedDateFormatted,
@@ -403,6 +409,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       lostDescription,
       rejectDescription,
       rejectReason,
+      firstName,
+      lastName,
       ...initialValues,
     };
 
@@ -412,7 +420,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentStageGroup={group}
         currentStage={stage}
         nextStageGroup={nextGroup}
-        chosenDetails={chosenDetails}
         waitlisted={waitlisted}
         nextStage={nextStage}
         name={name}
