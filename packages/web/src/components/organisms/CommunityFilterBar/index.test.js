@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-// import { Marker, InfoWindow } from 'react-google-maps';
 
 import CommunityFilterBar, { FilterButton, ClearAllButton } from '.';
 

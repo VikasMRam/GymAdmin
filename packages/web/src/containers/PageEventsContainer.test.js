@@ -63,26 +63,4 @@ describe('Given the PageEventsContainer', () => {
       expect(history.replace).not.toHaveBeenCalled();
     });
   });
-
-  describe('when mounted with a sly event in the query params', () => {
-    it('should publish the event and remove it from the query parameter before publishing a page view event', () => {
-      const { history } = mountComponent('/home?query=true&sly_action=clicky&sly_category=McClick');
-
-      expect(mockEvents.sendEvent).toHaveBeenCalledWith({ action: 'clicky', category: 'McClick' });
-      expect(history.replace).toHaveBeenCalledWith('/home?query=true');
-      expect(mockEvents.sendPageView).toHaveBeenCalledWith('/home', '?query=true');
-    });
-  });
-
-  describe('when updated to a new url which contains a sly event', () => {
-    it('should publish the event and remove it from the query parameter before publishing a page view event', () => {
-      const { history } = mountComponent('/');
-
-      act(() => history.push('/search?query=foo_bar_jones&sly_action=searched&sly_category=quickly&page=1'));
-
-      expect(mockEvents.sendEvent).toHaveBeenCalledWith({ action: 'searched', category: 'quickly' });
-      expect(history.replace).toHaveBeenCalledWith('/search?query=foo_bar_jones&page=1');
-      expect(mockEvents.sendPageView).toHaveBeenCalledWith('/search', '?query=foo_bar_jones&page=1');
-    });
-  });
 });

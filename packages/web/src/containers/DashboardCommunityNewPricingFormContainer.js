@@ -264,7 +264,7 @@ export default class DashboardCommunityPricingFormContainer extends Component {
         };
         costSectionOptions[careType].costTypes.forEach((roomType) => {
           entityPrice.attributes.info.prices[roomType.value] = {};
-          if (defaultInitialValues[careType]) {
+          if (defaultInitialValues[careType] && community.propInfo?.capacity) {
             const capacities = Object.keys(defaultInitialValues[careType]);
             const key = capacities.find(capacity => capacity <= community.propInfo?.capacity);
             if (defaultInitialValues?.[careType]?.[key].includes(roomType.value)) {

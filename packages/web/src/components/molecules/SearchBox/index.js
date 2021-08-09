@@ -79,6 +79,7 @@ const SearchBox = ({
   placeholder,
   readOnly,
   suggestions,
+  showSearchIcon,
   ...props
 }) => {
   const gps = groupSuggestions(suggestions);
@@ -104,7 +105,10 @@ const SearchBox = ({
           snap="right"
           {...inputProps}
         />
-        <IconButton icon="search" snap="left" border="0" onClick={onSearchButtonClick} />
+        {
+          showSearchIcon && <IconButton icon="search" snap="left" border="0" onClick={onSearchButtonClick} />
+        }
+
       </Block>
       {(isTextboxInFocus && (onCurrentLocationClick || suggestions.length > 0)) && (
         <SuggestionsWrapper
@@ -187,6 +191,7 @@ SearchBox.propTypes = {
   placeholder: string,
   readOnly: bool,
   suggestions: arrayOf(object).isRequired,
+  showSearchIcon: bool,
 };
 
 SearchBox.defaultProps = {
@@ -195,6 +200,7 @@ SearchBox.defaultProps = {
   value: '',
   defaultValue: '',
   suggestions: [],
+  showSearchIcon: true,
 };
 
 export default SearchBox;
