@@ -5,7 +5,6 @@ import { Link as RRLink, Router, BrowserRouter } from 'react-router-dom';
 import Link from '.';
 
 import { routes as routesPropType } from 'sly/common/propTypes/routes';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const { history } = new BrowserRouter();
 const context = { routes: [{ path: '/test', component: () => null }] };
@@ -38,18 +37,5 @@ describe('Link|Web', () => {
   it('renders Link when to is passed in', () => {
     const wrapper = wrap({ to: '/test' });
     expect(wrapper.find(RRLink)).toHaveLength(1);
-  });
-
-  it('renders a Link and adds sly_event params when an event is included', () => {
-    const event = { action: 'clicky-clicky', category: 'mousey-mousey' };
-    const wrapper = wrap({ to: '/test', event });
-    expect(wrapper.find(RRLink).prop('to')).toEqual(addEventToUrl('/test', event));
-  });
-
-  it('renders an Anchor and adds sly_event params when an event is included', () => {
-    const event = { action: 'clicky-clicky', category: 'mousey-mousey' };
-    const wrapper = wrap({ href: 'http://google.com', event });
-
-    expect(wrapper.find('a').prop('href')).toEqual(addEventToUrl('http://google.com', event));
   });
 });

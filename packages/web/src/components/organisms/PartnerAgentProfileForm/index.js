@@ -149,6 +149,8 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           placeholder=""
           component={ReduxField}
           wideWidth
+          endDateInfo="The date from which agent starts recieving leads"
+          startDateInfo="The date from which agent stops recieving leads"
         />
       </FormSection>
       {isSlyAdmin && (
@@ -230,7 +232,7 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           />
           <Field
             name="canReceiveReferrals"
-            label="Auto-Referrals Enabled"
+            label="Referrals Enabled"
             type="checkbox"
             placeholder=""
             component={ReduxField}
@@ -256,6 +258,22 @@ const PartnerAgentProfileForm = ({ buttonText, error, handleSubmit, pristine, su
           <Field
             name="slackChannel"
             label="Slack Channel"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="slackReferralsChannel"
+            label="Slack Referrals Channel"
+            type="text"
+            placeholder=""
+            component={ReduxField}
+            wideWidth
+          />
+          <Field
+            name="slackSupportChannel"
+            label="Slack Support Channel"
             type="text"
             placeholder=""
             component={ReduxField}

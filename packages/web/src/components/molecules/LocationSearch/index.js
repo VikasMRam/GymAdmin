@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string, any } from 'prop-types';
+import { func, string, any, bool } from 'prop-types';
 
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 
@@ -8,6 +8,7 @@ export default class LocationSearch extends Component {
     onChange: func,
     address: string,
     flex: any,
+    showSearchIcon: bool,
   }
 
   handleLocationChange = (value) => {
@@ -25,7 +26,7 @@ export default class LocationSearch extends Component {
   }
 
   render() {
-    const { address, flex } = this.props;
+    const { address, flex, showSearchIcon } = this.props;
     // todo: this will need cleanup in future
     return (
       <SearchBoxContainer
@@ -33,6 +34,7 @@ export default class LocationSearch extends Component {
         onLocationSearch={this.handleLocationChange}
         onTextChange={this.handleLocationTextChange}
         address={address}
+        showSearchIcon={showSearchIcon}
       />
     );
   }
