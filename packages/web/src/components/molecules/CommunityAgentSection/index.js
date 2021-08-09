@@ -5,7 +5,6 @@ import { string } from 'prop-types';
 import agentPropType from 'sly/common/propTypes/agent';
 import { Block, Heading, Grid, Link } from 'sly/common/system';
 import Avatar from 'sly/web/components/molecules/Avatar';
-import { getImagePath } from 'sly/web/services/images';
 import { stateNames } from 'sly/web/constants/geo';
 
 
@@ -26,10 +25,8 @@ const CommunityAgentSection = ({
 
 
   let path;
-  let imageUrl = null;
   if (gallery?.images?.length) {
     path = gallery.images[0].path;
-    imageUrl = getImagePath(encodeURI(path.replace(/\.jpe?g$/i, '.jpg')));
   }
 
   return (
@@ -40,7 +37,7 @@ const CommunityAgentSection = ({
         align="center"
         pad="l"
       >
-        <Avatar size="xxxLarge" user={{ name: displayName, picture: { src: imageUrl, path } }} />
+        <Avatar size="xxxLarge" path={path} name={displayName} />
         <Block display="flex" flexDirection="column" justifyContent="center" textAlign="left">
           <Link to={`/agents/${stateNames[state]}/${city.replace(' ', '-')}/${id}`} > <Block font="title-m" color="primary">{displayName}</Block></Link>
           {recentFamiliesHelped > 0 && <Block pt="xxs" font="body-m">{recentFamiliesHelped} families helped</Block>}

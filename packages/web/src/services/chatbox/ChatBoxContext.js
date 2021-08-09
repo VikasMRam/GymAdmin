@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 
-import { /* isBrowser, olarkSiteId, */ rokoApiKey, hideChatbox } from 'sly/web/config';
+import { /* isBrowser, olarkSiteId, */ rokoApiKey, hideChatbox, isProd } from 'sly/web/config';
 
 
 export const ChatBoxContext = React.createContext({ triggerChatBot: () => {} });
@@ -50,6 +50,8 @@ const getTimeoutForEvent = (eventName) => {
     return 30000;
   } else if (eventName === 'direct-market-1') {
     return 30000;
+  } else if (eventName === 'e2e-chat-bot') {
+    return 10000;
   }
   return 10000; // default timeout
 };
@@ -73,6 +75,11 @@ export const ChatBoxProvider = (props) => {
   const triggerEvent = useCallback(
     (eventName) => {
       console.log('eventName', eventName);
+
+      if (!isProd) {
+        eventName = 'e2e-chat-bot';
+      }
+
       if (hideChatbox) {
         return;
       }
@@ -83,6 +90,7 @@ export const ChatBoxProvider = (props) => {
         }
         loadJsScript()
           .then((instance) => {
+            console.log('Triggering Chat event name : ', eventName);
             instance.trigger(eventName);
             clearCurrentTimeOut();
             if (!isChatboxLoaded) {
