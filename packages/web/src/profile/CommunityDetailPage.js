@@ -444,15 +444,8 @@ export default class CommunityDetailPage extends PureComponent {
                       mt="m"
                     /> */}
 
-                    <Block height="350px">
-                      {/* <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" onReadyHandler={this.readyHandler} /> */}
+                    {/* <Block height="350px">
                       <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" />
-
-                    </Block>
-
-                    {/* Embeded Typeform */}
-                    {/* <Block width="100%" height="350px" mt="m">
-                      <Block className="typeform-widget" data-url={emdededFormUrl} width="100%" height="100%" />
                     </Block> */}
 
                   </StyledHeadingBoxSection>

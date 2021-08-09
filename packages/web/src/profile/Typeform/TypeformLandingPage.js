@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useHistory  } from 'react-router';
 
 import SlyTypeform from './Typeform';
 
@@ -9,12 +9,28 @@ import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 
 const TypeformLandingPage = (props) => {
   const { search } = useLocation();
-  const { formid } = parseURLQueryParams(search);
+  const history = useHistory();
+
+  const allQueryParams = parseURLQueryParams(search);
+  const { formid } = allQueryParams;
+
+  const goToHome = () => {
+    history.push('/');
+  };
+
+  const onSubmitHandler = () => {
+    goToHome();
+  };
+
+  if (!formid) {
+    goToHome();
+  }
+
 
   return (
     <>
       <Block height="100vh">
-        <SlyTypeform formId={formid} wizardType="WIDGET" />
+        <SlyTypeform formId={formid} wizardType="WIDGET" onSubmitHandler={onSubmitHandler} {...allQueryParams} />
       </Block>
     </>
   );

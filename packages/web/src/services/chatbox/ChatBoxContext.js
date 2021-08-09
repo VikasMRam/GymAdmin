@@ -7,7 +7,7 @@ import ChatBoxGlobalStyle from './ChatBoxGlobalStyle';
 import { /* isBrowser, olarkSiteId, */ rokoApiKey, hideChatbox, isProd } from 'sly/web/config';
 
 
-export const ChatBoxContext = React.createContext({ triggerChatBot: () => {} });
+export const ChatBoxContext = React.createContext({ triggerChatBot: () => {}, setDisableChatBot: (e) => {} });
 
 const loadJsScript = () => {
   return new Promise((resolve, reject) => {
@@ -72,6 +72,12 @@ export const ChatBoxProvider = (props) => {
     [currentTimer.current],
   );
 
+  let disableChatBot = false;
+  const setDisableChatBot = (value) => {
+    disableChatBot = value;
+    console.log('disabled', disableChatBot);
+  };
+
   const triggerEvent = useCallback(
     (eventName) => {
       console.log('eventName', eventName);
@@ -80,7 +86,7 @@ export const ChatBoxProvider = (props) => {
         eventName = 'e2e-chat-bot';
       }
 
-      if (hideChatbox) {
+      if (hideChatbox || disableChatBot) {
         return;
       }
       clearCurrentTimeOut();
@@ -90,6 +96,9 @@ export const ChatBoxProvider = (props) => {
         }
         loadJsScript()
           .then((instance) => {
+            if (hideChatbox || disableChatBot) {
+              return;
+            }
             console.log('Triggering Chat event name : ', eventName);
             instance.trigger(eventName);
             clearCurrentTimeOut();
@@ -102,12 +111,13 @@ export const ChatBoxProvider = (props) => {
           });
       }, getTimeoutForEvent(eventName));
     },
-    [currentTimer.current, location.pathname],
+    [currentTimer.current, location.pathname, disableChatBot],
   );
 
 
   const contextValue = {
     triggerChatBot: triggerEvent,
+    setDisableChatBot,
   };
 
   return (

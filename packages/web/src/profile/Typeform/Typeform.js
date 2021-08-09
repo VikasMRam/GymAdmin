@@ -1,46 +1,106 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Widget, PopupButton, Sidetab } from '@typeform/embed-react';
-import styled from 'styled-components';
 
-import { Block, Button } from 'sly/common/system';
-import { useAuth, withAuth, normalizeResponse, useQuery } from 'sly/web/services/api';
+import SlyTypeformPopupButton from './SlyTypeformPopupButton/SlyTypeformPopupButton';
+
+import { Block } from 'sly/common/system';
+import { useAuth, useQuery } from 'sly/web/services/api';
 import { normJsonApi } from 'sly/web/services/helpers/jsonApi';
+import { useChatbox } from 'sly/web/services/chatbox/ChatBoxContext';
 
 
-const wizardTypeWarpper = (props, onSubmit) => {
-  const { wizardType, formId, onReadyHandler, onQuestionChangedHandler, onSubmitHandler, popupButtonName } = props;
-  if (wizardType === 'WIDGET') {
-    return <Widget id={formId} onReady={onReadyHandler} onSubmit={onSubmit} onQuestionChanged={onQuestionChangedHandler} style={{ width: '100%', height: '100%' }} />;
-  } else if (wizardType === 'POPUP_BUTTON') {
-    return <PopupButton id={formId} onReady={onReadyHandler} onSubmit={onSubmit} onQuestionChanged={onQuestionChangedHandler} style={{ width: '100%', height: '100%', padding: '0', border: 'none' }}><Button width="100%">{popupButtonName}</Button></PopupButton>;
+const WizardTypeWrapper = (props) => {
+  const { wizardType, formId, onSubmit, popupButtonName, onReadyHandler, onQuestionChangedHandler } = props;
+
+  const { setDisableChatBot } = useChatbox();
+
+  const customOnReadyHandler = () => {
+    setDisableChatBot(true);
+    if (onReadyHandler) {
+      onReadyHandler();
+    }
+  };
+
+  const popupButtonCloseHandler = () => {
+    setDisableChatBot(false);
+  };
+
+
+  if (wizardType === 'POPUP_BUTTON') {
+    return (
+      <SlyTypeformPopupButton
+        id={formId}
+        onSubmit={onSubmit}
+        style={{ width: '100%', height: '100%', padding: '0', border: 'none' }}
+        popupButtonName={popupButtonName}
+        popupButtonCloseHandler={popupButtonCloseHandler}
+        onReady={customOnReadyHandler}
+      />
+    );
+  } else if (wizardType === 'WIDGET') {
+    return <Widget id={formId} onReady={customOnReadyHandler} hidden={{ ...props }} onSubmit={onSubmit} onQuestionChanged={onQuestionChangedHandler} style={{ width: '100%', height: '100%' }} />;
   } else if (wizardType === 'SIDE_TAB') {
-    return <Sidetab id={formId} onReady={onReadyHandler} onSubmit={onSubmit} onQuestionChanged={onQuestionChangedHandler} />;
+    return <Sidetab id={formId} onReady={customOnReadyHandler} onSubmit={onSubmit} onQuestionChanged={onQuestionChangedHandler} />;
   }
+  return null;
 };
+
+const delay = time => new Promise(resolve => setTimeout(resolve, time));
 
 
 const SlyTypeform = (props) => {
-  const { formId, onReadyHandler, onQuestionChangedHandler, onSubmitHandler } = props;
+  const { onSubmitHandler, formId } = props;
+
+
   const { createOrUpdateUser, user } = useAuth();
   const isClientside = (typeof window !== 'undefined');
   const getTypeformDetails = useQuery('getTypeformResponseDetails');
-  const onSubmit = async (e) => {
+
+  const getTypeformDetailsCall = (formId, response_id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const typeformDetails = await getTypeformDetails({ 'filter[form]': formId, 'filter[response]': response_id });
+        resolve(typeformDetails);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
+
+  const getTypeformDetailsWithRetry = async (retryLimit, formId, response_id, retriesCount = 0) => {
+    return new Promise((resolve, reject) => {
+      getTypeformDetailsCall(formId, response_id).then((res) => {
+        resolve(res);
+      }, (err) => {
+        console.log('err', err);
+        if (retriesCount < retryLimit) {
+          delay(1000).then(() => {
+            getTypeformDetailsWithRetry(retryLimit, formId, response_id, retriesCount + 1);
+          });
+        } else {
+          reject(err);
+        }
+      });
+    });
+  };
+
+
+  const onSubmit = useCallback(async (e) => {
     const { response_id } = e;
     if (response_id) {
-      console.log('response_id', response_id);
-      console.log('formId', formId);
       try {
-        const res = await getTypeformDetails({ 'filter[form]': formId, 'filter[response]': response_id });
+        // const res = await getTypeformDetailsWithRetry({ 'filter[form]': formId, 'filter[response]': response_id });
+        const res = await getTypeformDetailsWithRetry(5, formId, response_id);
         const re = normJsonApi(res);
         const email = re.email;
         const name = re.name;
         const phone = re.phoneNumber;
-        const userCreationRes = await createOrUpdateUser({
+        await createOrUpdateUser({
           name,
           phone,
           email,
         });
-        console.log(userCreationRes);
       } catch (err) {
         console.log(err);
       }
@@ -48,67 +108,21 @@ const SlyTypeform = (props) => {
     if (onSubmitHandler) {
       onSubmitHandler();
     }
-  };
-
-  const widgetComponent  = wizardTypeWarpper(props, onSubmit);
-
+  }, [createOrUpdateUser]);
 
   return (
-
     <>
       {
-        isClientside &&  <Block height="100%"> {widgetComponent} </Block>
+        isClientside &&
+        <Block height="100%">
+          <WizardTypeWrapper
+            onSubmit={onSubmit}
+            {
+              ...props
+            }
+          />
+        </Block>
       }
-      {
-        // isClientside &&  <Block height="100%"><Widget
-        //   id="dH3EjYYx"
-        //   style={{ width: '100%', height: '100%' }}
-        //   onReady={() => {
-        //   console.log('form ready');
-        // }}
-        //   onQuestionChanged={(e) => {
-        //   console.log('question change', e);
-        // }}
-        //   onSubmit={(e) => {
-        //   console.log('submit', e);
-        // }}
-        // />
-        // </Block>
-
-        // isClientside &&  <Block height="100%"><PopupButton
-        //   id="dH3EjYYx"
-        //   style={{ width: '100%', height: '100%' }}
-        //   onReady={() => {
-        //   console.log('form ready');
-        // }}
-        //   onQuestionChanged={(e) => {
-        //   console.log('question change', e);
-        // }}
-        //   onSubmit={(e) => {
-        //   console.log('submit', e);
-        // }}
-        // >
-        //   click to open form in popup
-        // </PopupButton>
-        // </Block>
-
-        // isClientside &&  <Block height="100%"><Sidetab
-        //   id="dH3EjYYx"
-        //   style={{ width: '100%', height: '100%' }}
-        //   onReady={() => {
-        //   console.log('form ready');
-        // }}
-        //   onQuestionChanged={(e) => {
-        //   console.log('question change', e);
-        // }}
-        //   onSubmit={(e) => {
-        //   console.log('submit', e);
-        // }}
-        //   buttonText="click to open"
-        // />
-        // </Block>
-      }
-
     </>
   );
 };
