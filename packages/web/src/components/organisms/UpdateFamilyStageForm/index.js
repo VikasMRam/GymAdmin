@@ -21,11 +21,12 @@ import Role from 'sly/web/components/common/Role';
 import pad from 'sly/web/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/web/services/helpers/pricing';
 import { isBeforeNow, isAfterNow  } from 'sly/web/services/validation';
-import { Block, Label } from 'sly/common/components/atoms';
+import { Label } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
 import { apiUrl } from 'sly/web/config';
+import { Block } from 'sly/common/system';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
@@ -324,20 +325,35 @@ export default class UpdateFamilyStageForm extends Component {
           </>
         }
         {isNext(FAMILY_STAGE_WON) &&
-        <>
+        <Block
+          display="flex"
+          sx={{
+            flexDirection: 'column',
+          }}
+          sx$tablet={{
+            flexDirection: 'row',
+            '& > div': {
+              flex: '1',
+            },
+            '& > div + div': {
+              marginLeft: 's',
+            },
+
+          }}
+        >
           <Field
             name="firstName"
-            label="Resident first name"
+            label="Resident's first name"
             type="text"
             component={ReduxField}
           />
           <Field
             name="lastName"
-            label="Resident last name"
+            label="Resident's last name"
             type="text"
             component={ReduxField}
           />
-        </>
+        </Block>
         }
         {isNext(FAMILY_STAGE_LOST) &&
           <ClosedReasonField
