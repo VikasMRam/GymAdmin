@@ -213,6 +213,7 @@ export default class UpdateFamilyStageForm extends Component {
             placeholder="MM/DD/YYYY"
             component={ReduxField}
             required
+            autoComplete="off"
             dateFormat="MM/dd/yyyy"
             validate={moveInDateValidator}
             message={moveInDateErrorMessage}
@@ -226,6 +227,7 @@ export default class UpdateFamilyStageForm extends Component {
             placeholder="MM/DD/YYYY"
             component={ReduxField}
             required
+            autoComplete="off"
             dateFormat="MM/dd/yyyy"
             validate={waitlistedDateValidator}
             message={waitlistedDateErrorMessage}
