@@ -17,15 +17,19 @@ import { toSearchPage, toSearchPageFromCity } from '../../helpers/searchPage';
 // Accepts list data (Array of json) and validates,
 // if a card with each json object is rendered in Ui or not
 const checkPopulationOfList = (data) => {
-  cy.get('a article h4')
+  cy.wait(1000);
+  cy.get('div[id*="searchTilesContainer"] a article h4')
     .each((item) => {
       cy.wrap(item)
         .invoke('text')
         .then((text) => {
           let textFound = false;
 
+
+          text = text.replace(/ +(?= )/g, '').trim();
           data.forEach((dataObj) => {
-            if (text.includes(dataObj.attributes.name)) {
+            const communityName =  dataObj.attributes.name.replace(/ +(?= )/g, '').trim();
+            if (text.includes(communityName)) {
               textFound = true;
             }
           });

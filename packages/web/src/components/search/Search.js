@@ -193,6 +193,7 @@ const Search = ({
           sx$tablet={{
             paddingBottom: 'unset',
           }}
+          id="searchTilesContainer"
 
         >
           {entities.map((entity, i) => (
