@@ -85,7 +85,7 @@ export default class Image extends React.Component {
     placeholder: string,
     // use height to force a height for all sources like in a hero banner
     height: number,
-    alt: string.isRequired,
+    alt: string,
     sizes: oneOfType([array, string]),
     sources: array,
     children: any,
