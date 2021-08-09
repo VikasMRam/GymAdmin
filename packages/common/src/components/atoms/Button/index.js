@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { bool, string, oneOf, object } from 'prop-types';
+import { bool, string, oneOf, object, func } from 'prop-types';
 import { Link as RRLink } from 'react-router-dom';
 
 import Root from './Root';
 
 import { getKey } from 'sly/common/components/themes';
-import { isReactNative } from 'sly/common/constants/utils';
 import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import { variation as variationPropType } from 'sly/common/propTypes/variation';
 import { createRRAnchor } from 'sly/common/components/helpers';
 // todo: most probably should be common in future
-import SlyEvent from 'sly/web/services/helpers/events';
+import events from 'sly/web/services/events';
 import { isString } from 'sly/common/services/helpers/utils';
-import { addEventToUrl } from 'sly/web/services/helpers/queryParamEvents';
 
 const getTarget = (href) => {
   if (!href.match(/https?:\/\//)) {
@@ -23,19 +21,6 @@ const getTarget = (href) => {
     target: '_blank',
     rel: 'noopener',
   };
-};
-
-const withSendEvent = (event, props) => {
-  const clickHandler = isReactNative ? 'onPress' : 'onClick';
-  const clickHandlerFunc = props[clickHandler];
-  const handlerFunc = (e) => {
-    SlyEvent.getInstance().sendEvent(event);
-    return clickHandlerFunc && clickHandlerFunc(e);
-  };
-  const ret = {};
-  ret[clickHandler] = event ? handlerFunc : clickHandlerFunc;
-
-  return ret;
 };
 
 const RRLinkButton = createRRAnchor(Root);
@@ -56,6 +41,7 @@ export default class Button extends Component {
     to: string,
     event: object,
     href: string,
+    onClick: func,
   };
 
   static defaultProps = {
@@ -163,42 +149,52 @@ export default class Button extends Component {
 
   getProps() {
     const {
-      to, href: hrefprop, event, ...props
+      to, href: hrefprop, event, onClick: onClickProp, ...props
     } = this.props;
     const styleProps = this.getStyleProps();
     styleProps.isTextChildren = isString(props.children);
 
+    const onClick = (...args) => {
+      if (event) {
+        events.track(event);
+      }
+      if (onClickProp) {
+        return onClickProp(...args);
+      }
+      return null;
+    };
+
     if (to && !to.match(/^https?:\/\//)) {
       return {
         ButtonComponent: RRLink,
+        onClick,
         ...props,
         ...styleProps,
         // flip the order on which we present the components
         component: RRLinkButton,
-        to: addEventToUrl(to, event),
+        to,
       };
     }
 
     const href = to || hrefprop;
 
     if (href) {
-      if (!isReactNative) {
-        props.as = 'a';
-      }
       return {
         ButtonComponent: Root,
+        onClick,
         ...props,
         ...styleProps,
-        href: addEventToUrl(href, event),
+        href,
+        as: 'a',
         ...getTarget(href),
       };
     }
 
     return {
       ButtonComponent: Root,
+      onClick,
       ...props,
       ...styleProps,
-      ...withSendEvent(event, props),
     };
   }
 

@@ -5,6 +5,7 @@ import { TEST_COMMUNITY } from '../../constants/community';
 import { responsive, waitForHydration } from '../../helpers/tests';
 import randomUser from '../../helpers/randomUser';
 
+
 import { EXPERIMENT_ADL_OPTIONS, BUDGET_OPTIONS, MEDICAID_OPTIONS } from 'sly/web/assessment/constants';
 
 Cypress.on('uncaught:exception', () => {
@@ -222,6 +223,19 @@ describe('Community survey', () => {
         expect(attrs).to.have.property('actionPage', `/wizards/assessment/community/${community.id}`);
         expect(attrs).to.have.property('actionType', 'wizardStepCompleted');
       });
+      // Post Conversion Checks
+      // Check for resident name step
+      cy.contains("What is the resident's name?", { timeout: 30000 });
+      cy.get('form input[id=fullName]').type(name);
+      cy.get('form button[type=submit]').contains('Continue').click({ force: true });
+      cy.wait('@postUuidActions').then((xhr) => {
+        const request = xhr.requestBody;
+        const attrs = request.data.attributes;
+        expect(attrs.actionInfo).to.have.property('stepName', 'step-12:ResidentName');
+        expect(attrs.actionInfo).to.have.property('wizardName', 'assessmentWizard');
+        expect(attrs.actionInfo).to.have.property('wizardPostConversionInfo', true);
+      });
+
       waitForHydration(cy.contains('We\'ve sent your request!', { timeout: 30000 }));
     });
   });
