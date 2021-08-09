@@ -11,7 +11,7 @@ import {
 } from 'sly/web/dashboard/DashboardWithSummaryTemplate';
 import { apiUrl } from 'sly/web/config';
 
-const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[is-plus]=true:true&filter[name]=` }, value: 'community.id' };
+const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[is-plus]=true:true&filter[name]=` }, value: 'community.name' };
 
 const activitiesOptions = [
   { value: 'Art classes', label: 'Art classes' },

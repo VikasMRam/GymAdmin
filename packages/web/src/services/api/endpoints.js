@@ -56,6 +56,9 @@ export default {
   updateListing: { method: patch, path: '/marketplace/listings/:id' },
   createListing: { method: post, path: '/marketplace/listings' },
 
+  createTag: { method: post, path: '/platform/tags' },
+  getTagCategories: { method: get, path: '/platform/tag-categories' },
+
   getImageCategories: { method: get, path: '/platform/image-categories' },
 
   createImage: { method: post, path: '/platform/images' },

@@ -466,7 +466,7 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 )}
 
-                {rgsAux.rgsInfo?.resourceLinks?.length && (
+                {!!rgsAux.rgsInfo?.resourceLinks?.length && (
                   <StyledHeadingBoxSection heading={`Helpful ${typeOfCare} Articles`} sx$tablet={{ padding: '0 !important' }}>
                     <CarouselContainer itemsQty={rgsAux.rgsInfo.resourceLinks.length}>
                       {rgsAux.rgsInfo.resourceLinks.map(item => (

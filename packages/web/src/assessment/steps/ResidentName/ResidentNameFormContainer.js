@@ -39,13 +39,22 @@ export default class ResidentNameFormContainer extends Component {
 
   handleSubmit = (data) => {
     const { createAction, location: { pathname }, onSubmit, stepName } = this.props;
+    const fullName = data.fullName.replace(/\s\s+/g, ' ').trim();
+    const nameComponents = fullName.split(' ');
+    const firstName = nameComponents[0];
+    const lastName = nameComponents.length > 1 ? nameComponents.slice(1).join(' ') : '';
 
+    data.resident = {
+      firstName,
+      lastName,
+    };
     return createAction({
       type: 'UUIDAction',
       attributes: {
         actionType: WIZARD_STEP_COMPLETED,
         actionPage: pathname,
         actionInfo: {
+          wizardPostConversionInfo: true,
           stepName,
           wizardName: 'assessmentWizard',
           data,

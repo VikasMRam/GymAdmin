@@ -464,9 +464,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     if (isLoading) {
       return (
-        <Loading activeMenuItem="Families">
+        <DashboardWithSummaryPageTemplate hasStickyFooter={!isModalOpen} activeMenuItem="Families">
           Loading...
-        </Loading>
+        </DashboardWithSummaryPageTemplate>
       );
     }
 

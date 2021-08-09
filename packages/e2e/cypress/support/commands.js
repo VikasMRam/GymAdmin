@@ -167,3 +167,13 @@ Cypress.Commands.add('waitForUser', () => {
   cy.wait('@getUser');
 });
 
+Cypress.Commands.add('getIframeDocument', (iframe) => {
+  cy.get(iframe).its('0.contentDocument').its('body').should('not.be.undefined')
+    .then(cy.wrap);
+});
+
+Cypress.Commands.add('waitForIframe', (iframe, timeout) => {
+  cy.get(iframe, { timeout }).its('0.contentDocument').its('body').should('not.be.undefined')
+    .then(cy.wrap);
+});
+

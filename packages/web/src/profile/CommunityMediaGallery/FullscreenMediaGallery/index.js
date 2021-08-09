@@ -110,6 +110,7 @@ const FullscreenMediaGallery = ({
         onClick={onClose}
         transparent
         inModal
+        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
       />
     </StyledModal>
   );

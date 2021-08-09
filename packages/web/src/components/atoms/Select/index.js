@@ -1,6 +1,7 @@
 import React from 'react';
 import SyncSelect, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import { func, string, arrayOf, object, bool, node, oneOf, oneOfType, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -213,15 +214,24 @@ const Select = ({
   components,
   options,
   async,
+  createable,
   loadOptions,
   disabled,
   className,
   wrapperCustomStyles,
   ...props
 }) => {
-  const SelectComponent = async
-    ? AsyncSelect
-    : SyncSelect;
+  let SelectComponent;
+
+  if (async) {
+    SelectComponent = AsyncSelect;
+    if (createable) {
+      SelectComponent = AsyncCreatableSelect;
+    }
+  } else {
+    SelectComponent = SyncSelect;
+  }
+
 
   const flattenedOptions = options.reduce((acc, opt) => {
     if (opt.options) {
@@ -273,6 +283,7 @@ Select.propTypes = {
   lineHeight: string,
   className: string,
   async: bool,
+  createable: bool,
   value: oneOfType([string, arrayOf(string)]),
   options: arrayOf(object).isRequired,
   components: object,
@@ -286,6 +297,7 @@ Select.propTypes = {
 Select.defaultProps = {
   size: 'button',
   async: false,
+  createable: false,
   options: [],
   components: {},
   isSearchable: false,

@@ -267,7 +267,7 @@ jobs:
           CYPRESS_CHROME_WEB_SECURITY: false
           API_URL: http://www.seniorly.dev/v0
           DOMAIN: www.seniorly.dev
-          HIDE_CHATBOX: true
+          HIDE_CHATBOX: false
       - image: redis:4
       - image: 249947021926.dkr.ecr.us-west-2.amazonaws.com/slyapi-db:latest
         environment:
@@ -321,6 +321,7 @@ jobs:
           SLY_ROOTURL: http://www.seniorly.dev
           SLY_COOKIEDOMAIN: .seniorly.dev
           SLY_CORSORIGINS: http://www.seniorly.dev
+          SLY_ELASTICSEARCH_URL: "https://elasticsearch.myseniorly.com"
     parallelism: 3
     resource_class: xlarge
 
