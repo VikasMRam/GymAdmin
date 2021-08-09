@@ -197,6 +197,7 @@ export default class UpdateFamilyStageForm extends Component {
             label="What community is the resident moving into?"
             placeholder="Search by community name"
             type="autocomplete"
+            createable
             column={communityColumn}
             required
             component={ReduxField}
