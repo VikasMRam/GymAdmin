@@ -226,7 +226,7 @@ describe('Community survey', () => {
       // Post Conversion Checks
       // Check for resident name step
       cy.contains("What is the resident's name?", { timeout: 30000 });
-      cy.get('form input[id=fullName]').type(name);
+      cy.get('form input[id=fullName]', { timeout: 30000 }).type(name);
       cy.get('form button[type=submit]').contains('Continue').click({ force: true });
       cy.wait('@postUuidActions').then((xhr) => {
         const request = xhr.requestBody;
