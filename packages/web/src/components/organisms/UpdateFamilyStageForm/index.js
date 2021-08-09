@@ -86,6 +86,7 @@ export default class UpdateFamilyStageForm extends Component {
     isCommunityUser: bool,
     initialValues: object,
     isQuestionnaireAlreadyFilled: bool,
+    waitlisted: bool,
   };
 
   static defaultProps = {
@@ -98,7 +99,7 @@ export default class UpdateFamilyStageForm extends Component {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
-      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, ...props
+      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, waitlisted, ...props
     } = this.props;
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
@@ -144,9 +145,15 @@ export default class UpdateFamilyStageForm extends Component {
     const isNext = (...stages) => stages.includes(nextStage);
     let moveInDateErrorMessage;
     let moveInDateValidator;
-    if (chosenDetails === ESTIMATED_MOVE_IN) {
+    if (!waitlisted) {
       moveInDateErrorMessage = 'Looks like you are choosing an expected move-in date that has already passed. Try updating to the stage "Won" and completing the move-in details';
       moveInDateValidator = isAfterNow;
+    }
+    let waitlistedDateErrorMessage;
+    let waitlistedDateValidator;
+    if (waitlisted) {
+      waitlistedDateErrorMessage = 'Looks like you are choosing an estimated date that has already passed. Try updating to the stage "Won" and completing the move-in details';
+      waitlistedDateValidator = isAfterNow;
     }
     if (isNext(FAMILY_STAGE_WON)) {
       moveInDateErrorMessage = 'Looks like you are choosing a move-in date that has not occurred yet. Try updating to the stage "Family Chose My Referral"';
@@ -187,31 +194,23 @@ export default class UpdateFamilyStageForm extends Component {
             Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
         }
-        {isNext(FAMILY_STAGE_FAMILY_CHOSEN) &&
-          <>
-            <Label>Details<Span palette="danger">*</Span></Label>
-            <Field
-              name="chosenDetails"
-              label="Waitlisted"
-              type="radio"
-              value={WAITLISTED}
-              component={ReduxField}
-            />
-            <Field
-              name="chosenDetails"
-              label="Estimated Move-in Date"
-              type="radio"
-              value={ESTIMATED_MOVE_IN}
-              component={ReduxField}
-            />
-          </>
+        {isNext(FAMILY_STAGE_WON, FAMILY_STAGE_FAMILY_CHOSEN) &&
+          <Field
+            name="communityName"
+            label="What community is the resident moving into?"
+            placeholder="Search by community name"
+            type="autocomplete"
+            column={communityColumn}
+            required
+            component={ReduxField}
+          />
         }
-        {(isNext(FAMILY_STAGE_WON) || (isNext(FAMILY_STAGE_FAMILY_CHOSEN) && chosenDetails === ESTIMATED_MOVE_IN)) &&
+        {(isNext(FAMILY_STAGE_WON) || (isNext(FAMILY_STAGE_FAMILY_CHOSEN) && !waitlisted)) &&
           <Field
             name="moveInDate"
             label="Move-In date"
             type="date"
-            placeholder="mm/dd/yyyy"
+            placeholder="MM/DD/YYYY"
             component={ReduxField}
             required
             dateFormat="MM/dd/yyyy"
@@ -219,15 +218,29 @@ export default class UpdateFamilyStageForm extends Component {
             message={moveInDateErrorMessage}
           />
         }
-        {isNext(FAMILY_STAGE_WON, FAMILY_STAGE_FAMILY_CHOSEN) &&
+        {((isNext(FAMILY_STAGE_FAMILY_CHOSEN) && waitlisted)) &&
           <Field
-            name="communityName"
-            label="Community name"
-            type="autocomplete"
-            column={communityColumn}
-            required
+            name="waitlistedDate"
+            label="Estimated month and year"
+            type="date"
+            placeholder="MM/DD/YYYY"
             component={ReduxField}
+            required
+            dateFormat="MM/dd/yyyy"
+            validate={waitlistedDateValidator}
+            message={waitlistedDateErrorMessage}
           />
+        }
+        {isNext(FAMILY_STAGE_FAMILY_CHOSEN) &&
+          <>
+            <Field
+              name="waitlisted"
+              label="Resident is waitlisted"
+              type="boolean"
+              component={ReduxField}
+            />
+
+          </>
         }
         {!isNext(FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST) &&
           <Field

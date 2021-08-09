@@ -93,9 +93,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
       updateUuidAux, refetchClient, refetchNotes, handleAskQuestionnaire } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
-      stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
+      stage, note, moveInDate, waitlistedDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
-      rejectDescription, rejectReason, chosenDetails,
+      rejectDescription, rejectReason, chosenDetails, waitlisted,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
@@ -169,6 +169,17 @@ export default class UpdateFamilyStageFormContainer extends Component {
       }
       newClient.set('attributes.clientInfo.moveInDate', moveInDateFormatted);
     }
+    if (waitlistedDate) {
+      let waitlistedDateFormatted;
+      const parsedDate = dayjs(waitlistedDate);
+      if (parsedDate.isValid()) {
+        waitlistedDateFormatted = parsedDate.utc().format();
+      } else {
+        notifyError('Estimated waitlist date is invalid');
+        return false;
+      }
+      newClient.set('attributes.clientInfo.waitlistedDate', waitlistedDateFormatted);
+    }
     if (communityName) {
       newClient.set('attributes.clientInfo.communityName', communityName?.label);
     }
@@ -204,6 +215,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     if (chosenDetails) {
       newClient.set('attributes.clientInfo.chosenDetails', chosenDetails);
+    }
+    if (waitlisted !== undefined || null) {
+      newClient.set('attributes.clientInfo.waitlisted', waitlisted);
     }
     newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
     if (referralAgreementType === 'percentage') {
@@ -303,6 +317,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       name,
       moveInDate: existingMoveInDate,
+      waitlistedDate: existingWaitlistedDate,
       communityName: existingCommunityName,
       moveRoomType: existingMoveRoomType,
       referralAgreement: existingReferralAgreement,
@@ -313,8 +328,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
       lossReason: existingLossReason,
       otherText,
       rejectReason,
+      chosenDetails,
     } = clientInfo;
-    let { chosenDetails } = clientInfo;
+
+    let { waitlisted } = clientInfo;
+    waitlisted = !!(!!chosenDetails && chosenDetails === 'waitlisted');
     let { invoicePaid: existingInvoicePaid } = clientInfo;
     if (isBoolean(existingInvoicePaid)) {
       existingInvoicePaid = existingInvoicePaid ? 'yes' : 'no';
@@ -332,7 +350,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.currentStage = getStageDetails(stage);
       ({ group } = this.currentStage);
       ({
-        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees, chosenDetails,
+        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees, waitlisted,
       } = formState);
       this.nextStage = getStageDetails(nextStage);
       ({ group: nextGroup } = this.nextStage);
@@ -351,10 +369,18 @@ export default class UpdateFamilyStageFormContainer extends Component {
       existingMoveInDateFormatted = Date.UTC(existingMoveInDateFormatted.getUTCFullYear(), existingMoveInDateFormatted.getUTCMonth(), existingMoveInDateFormatted.getUTCDate(),
         existingMoveInDateFormatted.getUTCHours(), existingMoveInDateFormatted.getUTCMinutes(), existingMoveInDateFormatted.getUTCSeconds());
     }
+    let existingWaitlistedDateFormatted;
+    if (existingWaitlistedDate) {
+      existingWaitlistedDateFormatted = new Date(existingWaitlistedDate);
+      existingWaitlistedDateFormatted = Date.UTC(existingWaitlistedDateFormatted.getUTCFullYear(), existingWaitlistedDateFormatted.getUTCMonth(), existingWaitlistedDateFormatted.getUTCDate(),
+        existingWaitlistedDateFormatted.getUTCHours(), existingWaitlistedDateFormatted.getUTCMinutes(), existingWaitlistedDateFormatted.getUTCSeconds());
+    }
     const newInitialValues = {
       stage,
       chosenDetails: chosenDetails || WAITLISTED,
+      waitlisted,
       moveInDate: existingMoveInDateFormatted,
+      waitlistedDate: existingWaitlistedDateFormatted,
       communityName: {
         label: existingCommunityName,
         value: existingCommunityName,
@@ -381,6 +407,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentStage={stage}
         nextStageGroup={nextGroup}
         chosenDetails={chosenDetails}
+        waitlisted={waitlisted}
         nextStage={nextStage}
         name={name}
         onSubmit={this.handleUpdateStage}
