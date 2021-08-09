@@ -158,7 +158,7 @@ const EntityTile = ({
         borderColor="slate.lighter-90"
         sx$laptop={type === 'list' ? null : {
           gridTemplateColumns: layout === 'row' ? 'none' : '120px auto !important',
-          gridTemplateRows: layout === 'row' && 'auto 1fr',
+          gridTemplateRows: layout === 'row' ? 'auto 1fr' : type === 'map' && '6.5rem!important',
           gridGap: 'xs',
         }}
         sx$tablet={type === 'list' ?
@@ -169,7 +169,7 @@ const EntityTile = ({
         }
         : {
           gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
-          gridTemplateRows: layout === 'row' && 'auto 1fr',
+          gridTemplateRows: layout === 'row' ? 'auto 1fr' : type === 'map' && 'auto',
           gridGap: 'xs',
         }}
         // no column layout support below tablet
@@ -179,6 +179,7 @@ const EntityTile = ({
           height: '100%',
         } : {
           gridTemplateColumns: '6.5rem auto',
+          gridTemplateRows: type === 'map' && '6.5rem',
           gridGap: 'xs',
         }}
       >
