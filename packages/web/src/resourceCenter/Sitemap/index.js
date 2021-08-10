@@ -16,7 +16,6 @@ import Header from 'sly/web/resourceCenter/components/Header';
 
 const StyledLink = styled(Link)`
   display: block;
-  word-break: break-word;
   margin-bottom: ${space('xs')};
 
   &:hover {
