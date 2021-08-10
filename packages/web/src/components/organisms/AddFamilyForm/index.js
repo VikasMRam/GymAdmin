@@ -14,6 +14,7 @@ import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionF
 import CollapsibleBlock from 'sly/web/components/molecules/CollapsibleBlock';
 import SearchBoxContainer from 'sly/web/containers/SearchBoxContainer';
 import { textAlign } from 'sly/web/components/helpers/text';
+import { Block } from 'sly/common/system';
 
 const PaddedTwoColumnWrapper = pad(styled.div``, 'large');
 
@@ -81,12 +82,37 @@ export default class AddFamilyForm extends Component {
           required
           component={ReduxField}
         />
-        <Field
-          name="residentName"
-          label="Resident name"
-          type="text"
-          component={ReduxField}
-        />
+        <Block
+          display="flex"
+          sx={{
+            flexDirection: 'column',
+          }}
+          sx$tablet={{
+            flexDirection: 'row',
+            '& > div': {
+              flex: '1',
+            },
+            '& > div + div': {
+              marginLeft: 's',
+            },
+
+          }}
+        >
+          <Field
+            name="firstName"
+            label="Resident's first name"
+            type="text"
+            required
+            component={ReduxField}
+          />
+          <Field
+            name="lastName"
+            label="Resident's last name"
+            type="text"
+            required
+            component={ReduxField}
+          />
+        </Block>
         <Field
           name="phone"
           label="Phone number"
@@ -119,10 +145,10 @@ export default class AddFamilyForm extends Component {
           type="select"
           required
           component={ReduxField}
-          >
-            <option>Select an option</option>
+        >
+          <option>Select an option</option>
             {sourceOptions}
-          </Field>
+        </Field>
         }
         { isNonSlyCreator && <Field
           name="source"

@@ -12,20 +12,44 @@ const CloseIcon = cursor(styled(Icon)`
   margin-left: auto;
 `);
 
-const Header = ({ description, heading, onClose }) => {
+const Header = ({ description, heading, onClose, headerTitle }) => {
   return (
     <>
       <Block
         display="flex"
         sx={{
-          p: description ? 'l 0' : 'l 0 0',
+          p: 'l 0',
         }}
       >
-        <div>
-          {<Heading pad="l" font="title-m">{heading}</Heading>}
-
-          {description && <Block fontSize="body-s">{description}</Block>}
-        </div>
+        <Block>
+          {!!headerTitle && 
+            <Block 
+              as="span"
+              font="body-xs"
+              color="slate.lighter-40"
+              sx={{
+                fontWeight: '500',
+                textTransform: 'uppercase',
+              }}
+            >
+              {headerTitle}
+            </Block>
+          }   
+          <Heading 
+            pad="l"
+            font="title-m" 
+            sx={{ marginBottom: description ? 'xs' : '0', marginTop: 's' }}
+          >
+            {heading}
+          </Heading>
+          {description && 
+            <Block 
+              fontSize="body-s"
+            >
+              {description}
+            </Block>
+          }
+        </Block>
         <CloseIcon onClick={onClose} icon="close" palette="base" />
       </Block>
       <Hr pad="l" marginX={sx`-${space('l')}`} marginTop="0" />

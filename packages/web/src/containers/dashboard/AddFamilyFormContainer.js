@@ -17,6 +17,8 @@ import AddFamilyForm from 'sly/web/components/organisms/AddFamilyForm';
 
 const agentFields = createValidator({
   name: [required],
+  firstName: [required],
+  lastName: [required],
   preferredLocation: [required],
   source: [required],
   phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
@@ -86,13 +88,13 @@ export default class AddFamilyFormContainer extends Component {
       createClient, onCancel, notifyInfo, onSuccess,
     } = this.props;
     const {
-      name, phone, email, source, notes, residentName, preferredLocation, timeToMove, lookingFor,
+      name, phone, email, source, notes, firstName, lastName, preferredLocation, timeToMove, lookingFor,
     } = data;
-    const am =[];
+    const am = [];
     if (source === 'Direct Call') {
-      am.push('PhoneConnect')
+      am.push('PhoneConnect');
     }
-
+    const fullName = `${firstName} ${lastName}`;
     const payload = {
       type: CLIENT_RESOURCE_TYPE,
       attributes: {
@@ -114,7 +116,9 @@ export default class AddFamilyFormContainer extends Component {
             attributes: {
               uuidInfo: {
                 residentInfo: {
-                  fullName: residentName,
+                  firstName,
+                  lastName,
+                  fullName,
                 },
                 housingInfo: {},
               },
@@ -149,7 +153,7 @@ export default class AddFamilyFormContainer extends Component {
 
   render() {
     const { duplicates, currentClient } = this.state;
-    const { initialValues, onCancel, user, } = this.props;
+    const { initialValues, onCancel, user } = this.props;
     const { roleID } = user;
     /* eslint-disable-next-line no-bitwise */
     const isNonSlyCreator = !(roleID & PLATFORM_ADMIN_ROLE);

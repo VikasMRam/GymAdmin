@@ -16,7 +16,8 @@ import {
 } from 'sly/web/constants/familyDetails';
 
 
-const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }) => {
+const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal, name }) => {
+  const headerTitle = `${name}'s connected questionnaire`;
   return (
     <>
       <Block padding="xLarge">
@@ -38,6 +39,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="On which medium did you connect with the family?"
                   description="Choose all that apply."
                   onClose={hideModal}
@@ -69,6 +71,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="Who is the contact looking for?"
                   onClose={hideModal}
                 />
@@ -113,6 +116,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="What is your best estimate of this families timeline?"
                   onClose={hideModal}
                 />
@@ -141,6 +145,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="What is the potential resident’s care level?"
                   description="Please give best estimate."
                   onClose={hideModal}
@@ -170,6 +175,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="What stage of the the search process is the family in?"
                   description="Please give best estimate."
                   onClose={hideModal}
@@ -199,6 +205,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="What stage of the the search process is the family in?"
                   description="Please give best estimate."
                   onClose={hideModal}
@@ -227,6 +234,7 @@ const UpdateStageQuestionnaireForm = ({ handleSubmit, initialValues, hideModal }
             >
               <>
                 <Header
+                  headerTitle={headerTitle}
                   heading="Rate the quality of this lead from the information you know now"
                   onClose={hideModal}
                 />

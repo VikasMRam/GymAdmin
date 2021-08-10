@@ -9,7 +9,7 @@ import UpdateStageQuestionnaireForm from 'sly/web/dashboard/families/updateStage
 
 const UpdateStageQuestionnaireContainer = ({ client, refetchClient, hideModal, withInitialValues = false }) => {
   const updateUuidAux = useQuery('updateUuidAux');
-  const { uuidAux: { uuidInfo: rawUuidAux, id }, uuid } =  client;
+  const { uuidAux: { uuidInfo: rawUuidAux, id }, uuid, clientInfo: { name } } =  client;
 
   // TODO:  make it reuseable
   const assignConditionalField = (result) => {
@@ -56,6 +56,7 @@ const UpdateStageQuestionnaireContainer = ({ client, refetchClient, hideModal, w
       initialValues={withInitialValues ? initialValues : {}}
       handleSubmit={handleSubmit}
       hideModal={hideModal}
+      name={name}
     />
   );
 };
