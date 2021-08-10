@@ -66,7 +66,7 @@ const DynamicItemWrapper = styled(Block)`
   & * {
     font-size: 1.125rem;
     line-height: ${key('space.xl')};
-    word-break: break-word;
+    overflow-x: auto;
   }
   & > p {
     letter-spacing: 0;
