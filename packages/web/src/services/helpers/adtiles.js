@@ -10,6 +10,8 @@ export const shouldShowZillowSearchAd = (toc) => {
 };
 
 export const  shouldShowZillowProfileAd = (community) => {
+  //disable zillow adtile.
+  return false
   // return true;
   // S1303 : Zillow Ad Tiles on CCRC Do Not Send List
   // https://airtable.com/tblt2MRAZThT31Ee9/viwlPQXuHxbH2unIj/recfsTZBjUSGl0TUe?blocks=hide
@@ -43,6 +45,7 @@ export const  shouldShowZillowProfileAd = (community) => {
 };
 
 export const shouldShowZillowPostConversionAd = (community) => {
+  return false;
   if (!community || !community.care) {
     return false;
   }
