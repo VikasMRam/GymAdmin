@@ -27,7 +27,7 @@ import {
   RESOURCE_CENTER_SITEMAP_PATH,
 } from 'sly/web/dashboard/dashboardAppPaths';
 import careTypes from 'sly/web/constants/careTypes';
-import hubTypes, { cmsHubTypes } from 'sly/web/constants/hubTypes';
+import { cmsHubTypes } from 'sly/web/constants/hubTypes';
 import { cmsMarketingTypes } from 'sly/web/constants/marketingTypes';
 import PageEventsContainer from 'sly/web/containers/PageEventsContainer';
 import UserCookiesContainer from 'sly/web/containers/UserCookiesContainer';
@@ -47,7 +47,6 @@ const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" 
 const CommunityPartnersPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityPartners" */ 'sly/web/containers/CommunityPartnersPageContainer'));
 const SearchContainer = loadable(() => import(/* webpackChunkName: "chunkSearchContainer" */ 'sly/web/components/search/SearchContainer'));
 const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/web/containers/HomePageContainer'));
-const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NearMePageContainer'));
 const NewNearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/web/containers/NewNearMePageContainer'));
 const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/web/containers/AgentsPageContainer'));
 const PasswordResetPageContainer = loadable(() => import(/* webpackChunkName: "chunkPasswordReset" */ 'sly/web/containers/PasswordResetPageContainer'));
@@ -186,11 +185,6 @@ const routes = [
   {
     path: '/about/:member?',
     component: OurHistoryPage,
-    exact: true,
-  },
-  {
-    path: `/:hub(${hubTypes.join('|')})`,
-    component: NearMePageContainer,
     exact: true,
   },
   {

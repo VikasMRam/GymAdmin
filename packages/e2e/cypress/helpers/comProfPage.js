@@ -197,11 +197,10 @@ const BREADCRUMBS_OPTIONS = {
     url: `${baseUrl}/`,
     expectUI: 'Find a senior living community you’ll love.',
   },
-  'Assisted Living': {
-    url: `${baseUrl}/assisted-living`,
-    expectUI: 'What is Assisted Living?',
-  },
-
+  // 'Assisted Living': {
+  //   url: `${baseUrl}/assisted-living`,
+  //   expectUI: 'What is Assisted Living?',
+  // },
   California: {
     url: `${baseUrl}/assisted-living/california`,
     expectUI: 'Assisted Living Facilities in CA',
