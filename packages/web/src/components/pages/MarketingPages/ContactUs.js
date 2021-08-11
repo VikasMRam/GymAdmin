@@ -7,36 +7,54 @@ import { Flex, Heading, Block, Hr } from 'sly/common/system';
 
 const ContactUs = ({
   blockList,
+  infoBlockList,
 }) => (
   <>
     <Flex
-      margin="l m"
+      margin="xxl m"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
+      sx$tablet={{
+        margin: 'xxxl l',
+      }}
       sx$laptop={{
         flexDirection: 'row',
-        margin: 'xxxl m',
+        margin: '5.5rem 0 7rem',
         alignItems: 'baseline',
       }}
     >
       <Heading
         sx$laptop={{  width: 'col4' }}
-        font="title-m"
-        paddingBottom="l"
+        font="title-l"
+        mb="l"
       >
         Send us a message
       </Heading>
       <Block
         border="box"
-        padding="m"
-        sx$laptop={{ width: 'col6'}}
+        padding="l"
+        sx$tablet={{
+          width: 'col6',
+        }}
+        sx$laptop={{
+          ml: 'l',
+        }}
       >
         <ContactUsFormContainer />
       </Block>
+      <Block
+        display='none'
+        sx$laptop={{
+          width: 'col2',
+          display: 'block'
+        }}/>
     </Flex>
     <Hr />
-    <ListContent contentBlock={blockList} />
+    <ListContent
+      contentBlock={blockList}
+      infoBlockList={infoBlockList}
+    />
   </>
 );
 

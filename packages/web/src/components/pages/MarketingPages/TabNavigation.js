@@ -92,10 +92,9 @@ const TabNavigation = ({
 return (
   <>
     <Block
-      margin="l m"
-      sx={{ marginX: 'auto', width: 'col3' }}
-      sx$laptop={{ display: 'none' }}
+      margin="s m"
       sx$tablet={{ display: 'none' }}
+      sx$laptop={{ display: 'none' }}
     >
       <Select
         size="large"
@@ -150,6 +149,6 @@ TabNavigation.propTypes = {
   linksList: array,
   currentLink: string,
   history: object,
-}
+};
 
 export default TabNavigation;

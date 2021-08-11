@@ -15,7 +15,7 @@ import About from 'sly/web/components/pages/MarketingPages/About';
 import Press from 'sly/web/components/pages/MarketingPages/Press';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
-import Paragraph from 'sly/common/system/Paragraph';
+import Heading from 'sly/common/system/Heading';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import {
   makeHeader,
@@ -46,6 +46,7 @@ const MarketingPages = ({ match, history }) => {
   const getArticlesArr = useMemo(() => getResentBlockContent && _.map(_.flatMap(getResentBlockContent, 'articles')), [getResentBlockContent]);
   const getListWithIcons = useMemo(() => _.map(_.flatMap(getComponentData(result?.[0]?.MarketingPageDz, 'list-with-icons'), 'value')), [result]);
   const getFaqList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'faq-block'), [result]);
+  const infoBlockList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'info-block'), [result]);
 
   if (!hasFinished) {
     return (
@@ -79,35 +80,30 @@ const MarketingPages = ({ match, history }) => {
         />
       )}
        <Flex
-          minHeight="13.75rem"
-          height="auto"
           background="viridian.lighter-90"
-          border="round"
           justifyContent="center"
           alignItems="center"
           flexDirection="column"
           textAlign="center"
           sx={{ padding: 'xxl l' }}
-          sx$laptop={{ padding: 'xxxl' }}
-          sx$tablet={{ padding: 'xxxl' }}
+          sx$laptop={{ padding: 'xxxl l' }}
+          sx$tablet={{ padding: 'xxxl 0' }}
         >
           {getImageUrl && (
             <ImageWrapper
               // sx={{width: '100%'}}
               src={getImageUrl}
             />)}
-          <Paragraph
-            width="auto"
-            font="title-xl"
-            sx$tablet={{ width: 'col8' }}
-            sx$laptop={{ width: 'col12' }}
+          <Heading
+            font="title-xxl"
           >
             {getImageUrl ? normalizeDescription : normalizeTitle}
-          </Paragraph>
+          </Heading>
         </Flex>
       <Switch>
         <Route path="/contact-us-temp">
           <ContactUs
+            infoBlockList={infoBlockList}
             blockList={blockListWithLink}
           />
         </Route>

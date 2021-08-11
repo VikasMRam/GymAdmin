@@ -41,14 +41,13 @@ const About = ({
           flexDirection="column"
           alignItems="center"
           sx$laptop={{  width: 'col6', alignItems: 'baseline'}}
-          // sx$tablet={{ alignItems: 'start' }}
         >
           <Grid
             gridTemplateColumns="9rem 9rem"
             alignItems="stretch"
             gridGap="m"
             flow="row"
-            sx$laptop={{ gridTemplateColumns: "col2 col2 col2 col2" }}
+            sx$tablet={{ gridTemplateColumns: "col2 col2 col2 col2" }}
           >
           {getTeamList?.length > 0 && getTeamList?.map (item => {
             const src = item?.srcImg?.url;
