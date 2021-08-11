@@ -57,12 +57,12 @@ const WizardForm = ({ initialValues = {}, children, onSubmit }) => {
           }}
           >
             {page > 0 && (
-              <Block 
+              <Block
                 sx={{
                   display: 'flex',
                   flexDirection: 'row',
                   cursor: 'pointer',
-                }} 
+                }}
                 onClick={onBack}
               >
                 <Chevron rotation={270} />

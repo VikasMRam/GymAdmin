@@ -22,8 +22,8 @@ const Header = ({ description, heading, onClose, headerTitle }) => {
         }}
       >
         <Block>
-          {!!headerTitle && 
-            <Block 
+          {!!headerTitle &&
+            <Block
               as="span"
               font="body-xs"
               color="slate.lighter-40"
@@ -34,16 +34,16 @@ const Header = ({ description, heading, onClose, headerTitle }) => {
             >
               {headerTitle}
             </Block>
-          }   
-          <Heading 
+          }
+          <Heading
             pad="l"
-            font="title-m" 
+            font="title-m"
             sx={{ marginBottom: description ? 'xs' : '0', marginTop: 's' }}
           >
             {heading}
           </Heading>
-          {description && 
-            <Block 
+          {description &&
+            <Block
               fontSize="body-s"
             >
               {description}
@@ -61,6 +61,7 @@ Header.propTypes = {
   onClose: func,
   heading: string,
   description: string,
+  headerTitle: string,
 };
 
 Header.defaultProps = {

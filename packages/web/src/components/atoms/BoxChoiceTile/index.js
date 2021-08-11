@@ -82,6 +82,7 @@ BoxChoiceTile.propTypes = {
   palette: palettePropType.isRequired,
   align: oneOf(['center', 'left']).isRequired,
   hasRadio: bool,
+  description: string,
 };
 
 BoxChoiceTile.defaultProps = {

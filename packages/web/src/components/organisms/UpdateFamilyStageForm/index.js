@@ -266,23 +266,17 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {isNext(FAMILY_STAGE_WON) &&
           <>
-            <Label>Your community referral agreement %<Span palette="danger">*</Span></Label>
+            <Label>Your community referral fee<Span palette="danger">*</Span></Label>
+
             <Field
               name="referralAgreementType"
-              label="Percentage"
-              type="radio"
+              type="toggleOptions"
+              options={[{ label: 'Percentage', value: 'percentage' }, { label: 'Dollar', value: 'dollar' }]}
               value="percentage"
               component={ReduxField}
             />
-            <Field
-              name="referralAgreementType"
-              label="Flat-fee"
-              type="radio"
-              value="flat-fee"
-              component={ReduxField}
-            />
-            {referralAgreementType &&
-              <ReferralAgreementWrapper>
+              {referralAgreementType &&
+              <Block>
                 <Field
                   name="referralAgreement"
                   type="iconInput"
@@ -293,9 +287,11 @@ export default class UpdateFamilyStageForm extends Component {
                 />
                 {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
                 {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
-                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01 * monthlyFees)}</Block>}
-              </ReferralAgreementWrapper>
-            }
+                  <Block sx={{ marginTop: '-1rem', marginBottom: 'm' }} weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01 * monthlyFees)}</Block>}
+              </Block>
+              }
+
+
             <Role is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
               <Field
                 name="invoiceNumber"
