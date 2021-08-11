@@ -85,9 +85,9 @@ const MarketingPages = ({ match, history }) => {
           alignItems="center"
           flexDirection="column"
           textAlign="center"
-          sx={{ padding: 'xxl l' }}
-          sx$laptop={{ padding: 'xxxl l' }}
-          sx$tablet={{ padding: 'xxxl 0' }}
+          padding="xxl m"
+          sx$tablet={{ padding: 'xxxl l' }}
+          sx$laptop={{ padding: 'xxxl 0' }}
         >
           {getImageUrl && (
             <ImageWrapper
