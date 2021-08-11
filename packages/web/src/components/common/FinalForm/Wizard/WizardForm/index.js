@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { func, node, object } from 'prop-types';
 import { Form } from 'react-final-form';
 
-import { Block, Button, IconWithTextWrapper } from 'sly/common/system';
+import { Block, Button } from 'sly/common/system';
 import Chevron from 'sly/common/icons/Chevron';
 
 const WizardForm = ({ initialValues = {}, children, onSubmit }) => {
@@ -57,10 +57,22 @@ const WizardForm = ({ initialValues = {}, children, onSubmit }) => {
           }}
           >
             {page > 0 && (
-              <IconWithTextWrapper onClick={onBack}>
+              <Block 
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  cursor: 'pointer',
+                }} 
+                onClick={onBack}
+              >
                 <Chevron rotation={270} />
-                <span>Previous</span>
-              </IconWithTextWrapper>
+                <Block
+                  as="span"
+                  pl="xxs"
+                >
+                  Back
+                </Block>
+              </Block>
             )}
             {!isLastPage && <Button type="submit">Continue</Button>}
             {isLastPage && (
