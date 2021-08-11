@@ -96,7 +96,7 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const {
       handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
-      currentLossReason, isPaused, referralAgreementType = 'dollar', referralAgreement, monthlyFees, rejectReasons, currentRejectReason,
+      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, rejectReasons, currentRejectReason,
       canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, waitlisted, ...props
     } = this.props;
 
@@ -271,8 +271,8 @@ export default class UpdateFamilyStageForm extends Component {
             <Field
               name="referralAgreementType"
               type="toggleOptions"
-              options={[{ label: 'Percentage', value: 'percentage' }, { label: 'Dollar', value: 'dollar' }]}
-
+              options={[{ label: 'Percentage', value: 'percentage' }, { label: 'Dollar', value: 'flat-fee' }]}
+              initialValue={referralAgreementType || 'percentage'}
               component={ReduxField}
             />
               {referralAgreementType &&

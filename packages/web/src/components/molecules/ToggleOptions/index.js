@@ -30,9 +30,10 @@ const Switch = styled.label`
 
 const Label = styled.div`
   display: block;
-  padding: ${space('m')};
+  padding: ${space('xxs')};
   border-radius: ${space('m')};
   text-align: center;
+  margin: 6px;
 `;
 
 const StyledInput = styled.input`
@@ -41,23 +42,14 @@ const StyledInput = styled.input`
   width: 100%;
   height: 100%;
   z-index: 1000;
-`;
 
-const Slider = styled.div`
-  position: absolute;
-  width: 50%;
-  background: ${color('white.base')};
-  height: 80%;
-  margin: 5.5px;
-  border-radius: 20px;
-  margin-left: ${props => !props.isOn && '-5.5px'};
-  transform: ${props => props.isOn ? 'translate(0)' : 'translate(100%)'};
-  transition: 0.2s;
+  &:checked + ${Label} {
+    background-color: white;
+    transition: 0.2s;
+  }
 `;
-
 
 const isSelected = (value, option) => value.includes(option);
-
 
 const ToggleOptions = ({
   onChange,
@@ -65,10 +57,10 @@ const ToggleOptions = ({
   value,
   onBlur,
   invalid,
+  initialValue,
   ...props
 }) => {
-  const [toggle, setToggle] = React.useState(() => value === options[0].value);
-  const [toggleValue, setToggleValue] = React.useState(() => value);
+  const [toggleValue, setToggleValue] = React.useState(() => initialValue);
 
   const onBlurOption = () => {
     onBlur(value);
@@ -82,24 +74,19 @@ const ToggleOptions = ({
     }
   };
 
-  const handleChecked = () => {
-    setToggle(!toggle);
-  };
-
   React.useEffect(() => {
     onChange(toggleValue);
   }, [toggleValue]);
 
   return (
     <Wrapper onBlur={onBlurOption} {...props}>
-      <Slider isOn={toggle} />
       {options &&
         options.map(({
           value: option, label,
         }) => {
           return (
             <React.Fragment key={option}>
-              <Switch onClick={handleChecked}>
+              <Switch>
                 <StyledInput
                   type="checkbox"
                   name="toggle"
@@ -130,6 +117,7 @@ ToggleOptions.propTypes = {
   ]).isRequired,
   onBlur: func,
   onChange: func,
+  initialValue: string,
 };
 
 export default ToggleOptions;
