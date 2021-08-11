@@ -66,6 +66,7 @@ export default class BoxChoice extends Component {
               selected={isSelected(multiChoice, value, option.value)}
               onClick={() => this.onClick(option.value)}
               label={option.label}
+              description={option?.description}
             />
           );
         })}

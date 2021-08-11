@@ -175,10 +175,10 @@ export const LEAD_STAGE_OPTIONS = [
 ];
 
 export const LEAD_QUALITY_OPTIONS = [
-  { label: 'Low quality', value: 1 },
-  { label: 'Below average quality', value: 2 },
-  { label: 'Average quality', value: 3 },
-  { label: 'Above-average quality', value: 4 },
-  { label: 'High quality', value: 5 },
+  { label: 'Low quality', value: 1, description: 'Very unlikely to move-in through our services' },
+  { label: 'Below average quality', value: 2, description: 'Unlikely to move-in through our services' },
+  { label: 'Average quality', value: 3, description: 'Moderate chance to move-in through our services' },
+  { label: 'Above-average quality', value: 4, description: 'Likely to move-in through our services' },
+  { label: 'High quality', value: 5, description: 'Very likely to move-in through our services' },
 ];
 

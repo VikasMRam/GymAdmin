@@ -9,6 +9,7 @@ import { palette as palettePropType } from 'sly/common/propTypes/palette';
 import Box from 'sly/common/components/atoms/Box';
 import Icon from 'sly/common/components/atoms/Icon';
 import Radio from 'sly/common/icons/Radio';
+import { Block } from 'sly/common/system';
 
 const getHoverBorderColour = ({ highlightedPalette }) => palette(highlightedPalette, 'base');
 
@@ -34,7 +35,7 @@ const StyledRadio = styled(Radio)`
 `;
 
 const BoxChoiceTile = ({
-  label, children, selected, onClick, hasCheckbox, padding, palette, hasRadio, ...props
+  label, children, selected, onClick, hasCheckbox, padding, palette, hasRadio, description, ...props
 }) => (
   <StyledBox
     {...props}
@@ -56,7 +57,18 @@ const BoxChoiceTile = ({
     {selected && hasCheckbox && <StyledIcon icon="checkbox" palette={palette} variation="base" />}
     {!selected && (!hasCheckbox && hasRadio) && <StyledRadio size="m" hoverColor="viridian.lighter-90" color="viridian.base" />}
     {selected && (!hasCheckbox && hasRadio) && <StyledRadio size="m" hoverColor="viridian.lighter-90" color="viridian.base" active />}
-    {children || label}
+    <Block>
+      {children || label}
+      {
+      !!description &&
+        <Block
+          font="body-s"
+          color="slate.lighter-40"
+        >
+          {description}
+        </Block>
+    }
+    </Block>
   </StyledBox>
 );
 
