@@ -153,11 +153,11 @@ export const MOVE_TIMELINE_OPTIONS = [
 ];
 
 export const TYPE_CARE_OPTIONS = [
-  { label: 'Independent', value: 'Independent living' },
+  { label: 'Independent', value: 'Independent Living' },
   { label: 'Assisted living traditional/lite (light supervision, medication management, apartment living)', value: 'Assisted living traditional/lite (light supervision, medication management, apartment living)' },
   { label: 'Assisted living high acuity', value: 'Assisted living high acuity' },
-  { label: 'Memory care', value: 'Memory care' },
-  { label: 'Not sure', value: 'Not sure' },
+  { label: 'Memory care', value: 'Memory Care' },
+  { label: 'Not sure', value: 'Not Sure' },
 ];
 
 export const LEAD_EXPECTATION_OPTIONS = [

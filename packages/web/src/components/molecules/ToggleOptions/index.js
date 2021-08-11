@@ -50,8 +50,8 @@ const Slider = styled.div`
   height: 80%;
   margin: 5.5px;
   border-radius: 20px;
-  margin-left: ${props => !props.on && '-5.5px'};
-  transform: ${props => props.on ? 'translate(0)' : 'translate(100%)'};
+  margin-left: ${props => !props.isOn && '-5.5px'};
+  transform: ${props => props.isOn ? 'translate(0)' : 'translate(100%)'};
   transition: 0.2s;
 `;
 
@@ -92,7 +92,7 @@ const ToggleOptions = ({
 
   return (
     <Wrapper onBlur={onBlurOption} {...props}>
-      <Slider on={toggle} />
+      <Slider isOn={toggle} />
       {options &&
         options.map(({
           value: option, label,
@@ -105,6 +105,7 @@ const ToggleOptions = ({
                   name="toggle"
                   checked={isSelected(value, option)}
                   onClick={e => onClick(option, e)}
+                  readOnly
                 />
                 <Label>{label}</Label>
               </Switch>
