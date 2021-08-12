@@ -40,14 +40,13 @@ const MarketingPages = ({ match, history }) => {
   const normalizeTitle = useMemo(() => generateDataList(result, 'title'), [result]);
   const normalizeDescription = useMemo(() => generateDataList(result, 'description')?.pop(), [result]);
   const getImageUrl = useMemo(() => result && _.map(_.flatMap(result, 'mainImage'), 'url')?.pop(), [result]);
-  const blockListWithLink = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'block-with-link'), [result]);
   const getListWithImg = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'list-with-img'), [result]);
   const getResentBlockContent = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'resent-block-post'), result);
   const getArticlesArr = useMemo(() => getResentBlockContent && _.map(_.flatMap(getResentBlockContent, 'articles')), [getResentBlockContent]);
   const getListWithIcons = useMemo(() => _.map(_.flatMap(getComponentData(result?.[0]?.MarketingPageDz, 'list-with-icons'), 'value')), [result]);
   const getFaqList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'faq-block'), [result]);
   const infoBlockList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'info-block'), [result]);
-
+  console.log(infoBlockList);
   if (!hasFinished) {
     return (
       <Flex
@@ -104,7 +103,6 @@ const MarketingPages = ({ match, history }) => {
         <Route path="/contact-us-temp">
           <ContactUs
             infoBlockList={infoBlockList}
-            blockList={blockListWithLink}
           />
         </Route>
         <Route path="/how-it-works-temp">
@@ -116,13 +114,14 @@ const MarketingPages = ({ match, history }) => {
         </Route>
         <Route path="/about-temp">
           <About
-            contentBlock={blockListWithLink}
+            infoBlockList={infoBlockList}
             getTeamContent={getListWithImg}
           />
         </Route>
         <Route path="/press-temp">
           <Press
-            contentBlock={blockListWithLink}
+            infoBlockList={infoBlockList}
+            getListWithImg={getListWithImg}
             contentResentBlockPost={getResentBlockContent}
             getArticlesArr={getArticlesArr}
           />

@@ -3,7 +3,8 @@ import { array } from 'prop-types';
 
 import ContactUsFormContainer from 'sly/web/components/common/ContactUsForm/ContactUsFormContainer.js';
 import ListContent from './ListContent';
-import { Flex, Heading, Block, Hr } from 'sly/common/system';
+import MarketingPageTitle from './MarketingPageTitle';
+import { Flex, Block, Hr } from 'sly/common/system';
 
 const ContactUs = ({
   blockList,
@@ -24,21 +25,12 @@ const ContactUs = ({
         alignItems: 'baseline',
       }}
     >
-      <Heading
-        sx$laptop={{  width: 'col4' }}
-        font="title-l"
-        mb="l"
-      >
-        Send us a message
-      </Heading>
+      <MarketingPageTitle title="Send us a message" />
       <Block
         border="box"
         padding="l"
         sx$tablet={{
           width: 'col6',
-        }}
-        sx$laptop={{
-          ml: 'l',
         }}
       >
         <ContactUsFormContainer />
