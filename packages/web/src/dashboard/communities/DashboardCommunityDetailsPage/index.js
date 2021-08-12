@@ -66,6 +66,7 @@ export default class DashboardCommunityDetailsPage extends Component {
     currentEdit: object,
     suggestedEdits: arrayOf(object),
     user: userPropType,
+    refetchCommunity: func,
   };
 
   getTabsForUser = () => {
@@ -128,6 +129,7 @@ export default class DashboardCommunityDetailsPage extends Component {
       notifyError,
       showModal,
       hideModal,
+      refetchCommunity,
     } = this.props;
 
     if (communityIsLoading) {
@@ -239,6 +241,7 @@ export default class DashboardCommunityDetailsPage extends Component {
               notifyError={notifyError}
               community={community}
               currentEdit={currentEdit}
+              refetchCommunity={refetchCommunity}
             />
           )}
           {currentTab === SERVICES && (
