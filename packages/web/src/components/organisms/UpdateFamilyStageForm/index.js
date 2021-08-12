@@ -14,21 +14,29 @@ import {
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
   FAMILY_STAGE_FAMILY_CHOSEN,
-  WAITLISTED,
-  ESTIMATED_MOVE_IN,
+  TYPE_CARE_OPTIONS,
 } from 'sly/web/constants/familyDetails';
 import { PLATFORM_ADMIN_ROLE, AGENT_ADMIN_ROLE } from 'sly/common/constants/roles';
 import Role from 'sly/web/components/common/Role';
 import pad from 'sly/web/components/helpers/pad';
 import { priceFormatter, priceParser } from 'sly/web/services/helpers/pricing';
 import { isBeforeNow, isAfterNow  } from 'sly/web/services/validation';
-import { Block, Label } from 'sly/common/components/atoms';
+import { Label } from 'sly/common/components/atoms';
 import { Span } from 'sly/web/components/atoms';
 import ReduxField from 'sly/common/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/web/components/molecules/ThreeSectionFormTemplate';
+import { apiUrl } from 'sly/web/config';
+import { Block } from 'sly/common/system';
 
 const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
+  border-radius: ${size('spacing.small')};
+  padding: ${size('spacing.large')};
+`, 'xLarge');
+Warning.displayName = 'Warning';
+
+const Message = pad(styled(Block)`
+  background-color: ${palette('blue.lighter-90')};
   border-radius: ${size('spacing.small')};
   padding: ${size('spacing.large')};
 `, 'xLarge');
@@ -51,6 +59,7 @@ const ClosedReasonField = styled(Field)`
   }
 `;
 
+const communityColumn = { typeInfo: { api: `${apiUrl}/marketplace/search/community?filter[name]=` }, value: 'community.name' };
 export default class UpdateFamilyStageForm extends Component {
   static propTypes = {
     handleSubmit: func,
@@ -61,9 +70,7 @@ export default class UpdateFamilyStageForm extends Component {
     currentStage: string,
     nextStage: string,
     nextAllowedStages: arrayOf(string).isRequired,
-    chosenDetails: string,
     lossReasons: arrayOf(string).isRequired,
-    roomTypes: arrayOf(string).isRequired,
     rejectReasons: arrayOf(string),
     currentLossReason: string,
     change: func.isRequired,
@@ -76,6 +83,8 @@ export default class UpdateFamilyStageForm extends Component {
     canUpdateStage: bool,
     isCommunityUser: bool,
     initialValues: object,
+    isQuestionnaireAlreadyFilled: bool,
+    waitlisted: bool,
   };
 
   static defaultProps = {
@@ -86,9 +95,9 @@ export default class UpdateFamilyStageForm extends Component {
 
   render() {
     const {
-      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, chosenDetails, nextAllowedStages, lossReasons,
-      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, roomTypes, rejectReasons, currentRejectReason,
-      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, ...props
+      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
+      currentLossReason, isPaused, referralAgreementType, referralAgreement, monthlyFees, rejectReasons, currentRejectReason,
+      canUpdateStage, isCommunityUser, initialValues: { preferredLocation }, isQuestionnaireAlreadyFilled, waitlisted, ...props
     } = this.props;
 
     const reasonsOptions = rejectReasons.map(r => ({ value: r, label: r }));
@@ -122,23 +131,32 @@ export default class UpdateFamilyStageForm extends Component {
       prev.push(option);
       return prev;
     }, []);
-    const roomTypeOptions = roomTypes.map(t => ({ value: t, label: t }));
-    const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
+
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
+    const shouldShowQuestionnaire =
+      !isQuestionnaireAlreadyFilled &&
+      ((currentStageGroup === 'New' || currentStageGroup === 'Prospects') && (nextStageGroup === 'Connected' && nextStage !== FAMILY_STAGE_FAMILY_CHOSEN));
     const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
 
     const isNext = (...stages) => stages.includes(nextStage);
     let moveInDateErrorMessage;
     let moveInDateValidator;
-    if (chosenDetails === ESTIMATED_MOVE_IN) {
+    if (!waitlisted) {
       moveInDateErrorMessage = 'Looks like you are choosing an expected move-in date that has already passed. Try updating to the stage "Won" and completing the move-in details';
       moveInDateValidator = isAfterNow;
+    }
+    let waitlistedDateErrorMessage;
+    let waitlistedDateValidator;
+    if (waitlisted) {
+      waitlistedDateErrorMessage = 'Looks like you are choosing an estimated date that has already passed. Try updating to the stage "Won" and completing the move-in details';
+      waitlistedDateValidator = isAfterNow;
     }
     if (isNext(FAMILY_STAGE_WON)) {
       moveInDateErrorMessage = 'Looks like you are choosing a move-in date that has not occurred yet. Try updating to the stage "Family Chose My Referral"';
       moveInDateValidator = isBeforeNow;
     }
+    const buttonText = (stageGroupChanged && shouldShowQuestionnaire) ? 'Update and continue to questionnaire' :  'Update';
 
     return (
       <ThreeSectionFormTemplate
@@ -148,7 +166,7 @@ export default class UpdateFamilyStageForm extends Component {
         hasSubmit
         onSubmit={handleSubmit}
         heading={isNext(FAMILY_STAGE_REJECTED) ? 'Reject lead' : `Updating ${name}'s Stage`}
-        submitButtonText={isNext(FAMILY_STAGE_REJECTED) ? 'Confirm' : 'Update'}
+        submitButtonText={isNext(FAMILY_STAGE_REJECTED) ? 'Confirm' : buttonText}
       >
         <StageField
           name="stage"
@@ -158,74 +176,81 @@ export default class UpdateFamilyStageForm extends Component {
           options={options}
           disabled={!canUpdateStage}
         />
-        {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
+        {(stageGroupChanged && !shouldShowQuestionnaire) && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
+        }
+        {(stageGroupChanged && shouldShowQuestionnaire) && (!isPaused || (isPaused && stageChanged)) &&
+          <Message size="caption">
+            We’re glad you were able to connect with this family! After updating this family’s stage we’ll direct you to a quick questionnaire.
+          </Message>
         }
         {stageChanged && !stageGroupChanged && isPaused &&
           <Warning size="caption">
             Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
         }
-        {isNext(FAMILY_STAGE_FAMILY_CHOSEN) &&
-          <>
-            <Label>Details<Span palette="danger">*</Span></Label>
-            <Field
-              name="chosenDetails"
-              label="Waitlisted"
-              type="radio"
-              value={WAITLISTED}
-              component={ReduxField}
-            />
-            <Field
-              name="chosenDetails"
-              label="Estimated Move-in Date"
-              type="radio"
-              value={ESTIMATED_MOVE_IN}
-              component={ReduxField}
-            />
-          </>
+        {isNext(FAMILY_STAGE_WON, FAMILY_STAGE_FAMILY_CHOSEN) &&
+          <Field
+            name="communityName"
+            label="What community is the resident moving into?"
+            placeholder="Search by community name"
+            type="autocomplete"
+            createable
+            column={communityColumn}
+            required
+            component={ReduxField}
+          />
         }
-        {(isNext(FAMILY_STAGE_WON) || (isNext(FAMILY_STAGE_FAMILY_CHOSEN) && chosenDetails === ESTIMATED_MOVE_IN)) &&
+        {(isNext(FAMILY_STAGE_WON) || (isNext(FAMILY_STAGE_FAMILY_CHOSEN) && !waitlisted)) &&
           <Field
             name="moveInDate"
             label="Move-In date"
             type="date"
-            placeholder="mm/dd/yyyy"
+            placeholder="MM/DD/YYYY"
             component={ReduxField}
             required
+            autoComplete="off"
             dateFormat="MM/dd/yyyy"
             validate={moveInDateValidator}
             message={moveInDateErrorMessage}
           />
         }
-        {isNext(FAMILY_STAGE_WON, FAMILY_STAGE_FAMILY_CHOSEN) &&
+        {((isNext(FAMILY_STAGE_FAMILY_CHOSEN) && waitlisted)) &&
           <Field
-            name="communityName"
-            label="Community name"
-            type="text"
-            required
+            name="waitlistedDate"
+            label="Estimated month and year"
+            type="date"
+            placeholder="MM/DD/YYYY"
             component={ReduxField}
+            required
+            autoComplete="off"
+            dateFormat="MM/dd/yyyy"
+            validate={waitlistedDateValidator}
+            message={waitlistedDateErrorMessage}
           />
         }
-        {!isNext(FAMILY_STAGE_WON, FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST) &&
-          <Field
-            type="textarea"
-            rows={3}
-            name="note"
-            label="Add a note"
-            placeholder="Add a note on why you are updating this family's stage..."
-            component={ReduxField}
-          />
+        {isNext(FAMILY_STAGE_FAMILY_CHOSEN) &&
+          <>
+            <Field
+              name="waitlisted"
+              label="Resident is waitlisted"
+              type="boolean"
+              component={ReduxField}
+            />
+
+          </>
         }
         {isNext(FAMILY_STAGE_WON) &&
           <Field
-            name="roomType"
-            label="Room type"
+            name="typeCare"
+            label="Resident’s care level"
+            placeholder="Select an option"
             type="choice"
+            isMulti
             component={ReduxField}
-            options={roomTypeOptions}
+            options={TYPE_CARE_OPTIONS}
           />
         }
         {isNext(FAMILY_STAGE_WON) &&
@@ -241,36 +266,46 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {isNext(FAMILY_STAGE_WON) &&
           <>
-            <Label>Your community referral agreement %<Span palette="danger">*</Span></Label>
-            <Field
-              name="referralAgreementType"
-              label="Percentage"
-              type="radio"
-              value="percentage"
-              component={ReduxField}
-            />
-            <Field
-              name="referralAgreementType"
-              label="Flat-fee"
-              type="radio"
-              value="flat-fee"
-              component={ReduxField}
-            />
-            {referralAgreementType &&
-              <ReferralAgreementWrapper>
-                <Field
-                  name="referralAgreement"
-                  type="iconInput"
-                  icon={referralAgreementType === 'percentage' ? 'percentage' : 'dollar'}
-                  component={ReduxField}
-                  parse={priceParser}
-                  format={priceFormatter}
-                />
-                {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
-                {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
-                  <Block weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01 * monthlyFees)}</Block>}
-              </ReferralAgreementWrapper>
-            }
+            <Label>Your community referral fee<Span palette="danger">*</Span></Label>
+            <Block
+              display="flex"
+              sx={{
+                flexDirection: 'column-reverse',
+              }}
+              sx$tablet={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                'div + div': {
+                  flex: 1,
+                  marginLeft: 's',
+                },
+              }}
+            >
+              {referralAgreementType &&
+
+              <Field
+                name="referralAgreement"
+                type="iconInput"
+                icon={referralAgreementType === 'percentage' ? 'percentage' : 'dollar'}
+                component={ReduxField}
+                parse={priceParser}
+                format={priceFormatter}
+              />
+
+}
+              <Field
+                name="referralAgreementType"
+                type="toggleOptions"
+                options={[{ label: 'Percentage', value: 'percentage' }, { label: 'Flat-fee', value: 'flat-fee' }]}
+                initialValue={referralAgreementType || 'percentage'}
+                component={ReduxField}
+              />
+
+            </Block>
+              {/* important to keep in mind that referralAgreement and monthlyFees will be available as string */}
+              {referralAgreementType === 'percentage' && referralAgreement && referralAgreement.length > 0 && monthlyFees && monthlyFees.length > 0 &&
+              <Block sx={{ marginTop: '-1rem', marginBottom: 'm' }} weight="medium" size="caption" palette="green">Your referral total is ${priceFormatter(referralAgreement * 0.01 * monthlyFees)}</Block>}
+
             <Role is={PLATFORM_ADMIN_ROLE | AGENT_ADMIN_ROLE}>
               <Field
                 name="invoiceNumber"
@@ -299,6 +334,37 @@ export default class UpdateFamilyStageForm extends Component {
               />
             </Role>
           </>
+        }
+        {isNext(FAMILY_STAGE_WON) &&
+        <Block
+          display="flex"
+          sx={{
+            flexDirection: 'column',
+          }}
+          sx$tablet={{
+            flexDirection: 'row',
+            '& > div': {
+              flex: '1',
+            },
+            '& > div + div': {
+              marginLeft: 's',
+            },
+
+          }}
+        >
+          <Field
+            name="firstName"
+            label="Resident's first name"
+            type="text"
+            component={ReduxField}
+          />
+          <Field
+            name="lastName"
+            label="Resident's last name"
+            type="text"
+            component={ReduxField}
+          />
+        </Block>
         }
         {isNext(FAMILY_STAGE_LOST) &&
           <ClosedReasonField
@@ -358,6 +424,16 @@ export default class UpdateFamilyStageForm extends Component {
             address={preferredLocation}
             component={ReduxField}
             required
+          />
+        }
+        {!isNext(FAMILY_STAGE_REJECTED, FAMILY_STAGE_LOST) &&
+          <Field
+            type="textarea"
+            rows={3}
+            name="note"
+            label="Add a note"
+            placeholder="Add a note on why you are updating this family's stage..."
+            component={ReduxField}
           />
         }
       </ThreeSectionFormTemplate>
