@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string, bool } from 'prop-types';
+import { func, string, bool, object } from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter  } from 'react-router';
 
 import { createValidator, required, minLength } from 'sly/web/services/validation';
 import { withAuth } from 'sly/web/services/api';
@@ -23,7 +25,7 @@ const ReduxForm = reduxForm({
 const mapDispatchToProps = {
   clearSubmitErrors: (name = formName) => clearSubmitErrors(name),
 };
-
+@withRouter
 @withAuth
 @withNotification
 @connect(null, mapDispatchToProps)
@@ -41,6 +43,8 @@ export default class LoginWithPasswordFormContainer extends Component {
     onMagicLinkSubmit: func,
     onOtpSubmit: func,
     notifyError: func,
+    redirect_to: string,
+    location: object,
   };
 
   handleOnSubmit = ({  password }) => {
@@ -70,13 +74,19 @@ export default class LoginWithPasswordFormContainer extends Component {
 
 
   handlePasswordLessOption=() => {
-    const { magicLink, sendOtpCode, emailOrPhone, isEmail, onMagicLinkSubmit, onOtpSubmit, notifyError } = this.props;
+    const { magicLink, sendOtpCode, emailOrPhone, isEmail, onMagicLinkSubmit, onOtpSubmit, notifyError, redirect_to, location } = this.props;
 
     const payload = {};
     let submitMethod;
     let submitSuccess;
 
     if (isEmail) {
+      // If there's a redirect we want to keep it else we'll just have the magic link go to where the user is currently
+      payload.redirect_to = location.pathname;
+      if (redirect_to && redirect_to !== 'undefined') {
+        payload.redirect_to = redirect_to;
+      }
+
       payload.email = emailOrPhone;
       submitMethod = magicLink;
       submitSuccess = onMagicLinkSubmit;
