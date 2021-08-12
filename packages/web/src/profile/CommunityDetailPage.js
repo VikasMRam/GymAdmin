@@ -6,6 +6,7 @@ import loadable from '@loadable/component';
 
 // import StickyHeader from 'sly/web/profile/StickyHeader';
 import SlyTypeform from './Typeform/Typeform';
+import SlyTypeformAssessmentContainer from './Typeform/SlyTypeformAssesmentContainer';
 
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
@@ -25,7 +26,7 @@ import pad from 'sly/web/components/helpers/pad';
 import { getIsActiveAdult, getPartnerAgent, getChatBotEventName } from 'sly/web/services/helpers/community';
 import { getAgentFirstName } from 'sly/web/services/helpers/agents';
 import { Button } from 'sly/common/components/atoms';
-import { color, space, sx$tablet, sx$laptop, Hr, Block, font } from 'sly/common/system';
+import { color, space, sx$tablet, sx$laptop, Hr, Block, font, Box } from 'sly/common/system';
 import SeoLinks from 'sly/web/components/organisms/SeoLinks';
 import FAQItem from 'sly/web/components/organisms/CMSDynamicZone/FAQItem';
 import {
@@ -56,6 +57,7 @@ import Callout from 'sly/web/profile/Callout';
 import { addToLocalStorage, retrieveLocalStorage } from 'sly/web/services/helpers/localStorage';
 import { getTypeformDetailsByCommunity } from 'sly/web/services/helpers/typeform';
 
+
 const PageViewActionContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkPageView" */ 'sly/web/containers/PageViewActionContainer'));
 const CommunityMediaGalleryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunityMediaGallery" */ 'sly/web/profile/CommunityMediaGallery/CommunityMediaGalleryContainer'));
 const CommunitySummaryContainer = loadable(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkCommunitySummary" */ 'sly/web/containers/CommunitySummaryContainer'));
@@ -75,7 +77,6 @@ const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpack
 
 
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
-
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -155,6 +156,7 @@ const StyledCallout = styled(Callout)`
   margin-bottom: ${space('s')};
 `;
 
+
 const PaddedGetAssessmentBoxContainerHydrator = pad(GetAssessmentBoxContainerHydrator);
 
 const Header = makeHeader();
@@ -219,6 +221,8 @@ export default class CommunityDetailPage extends PureComponent {
       twilioNumber,
       user: communityUser,
       reviews,
+      startingRate,
+      rates,
     } = community;
 
     const {
@@ -230,6 +234,7 @@ export default class CommunityDetailPage extends PureComponent {
       residentDescription,
       ownerExperience,
       typeCare: typeCares,
+      maxRate,
     } = (propInfo || {});
 
     const typeOfCare = typeCares?.[0];
@@ -340,8 +345,6 @@ export default class CommunityDetailPage extends PureComponent {
                       ))}
                     </StyledHeadingBoxSection>
                   )}
-
-
                 {shouldShowPricing &&
                 <StyledHeadingBoxSection
                   heading={`${pricingTitle} at ${name}`}
@@ -535,19 +538,19 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 )}
 
-                {!isInternational &&
+                {/* {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     mode={getAssessmentBoxModes.communityFooter}
                     layout="footer"
                   />
-                }
+                } */}
 
               </Body>
               <Column>
                 <StickToTop>
-                  {!isInternational &&
+                  {/* {!isInternational &&
                     <GetAssessmentBoxContainerHydrator
                       startLink={`/wizards/assessment/community/${community.id}`}
                       community={community}
@@ -570,7 +573,24 @@ export default class CommunityDetailPage extends PureComponent {
                         />
                       )}
                     </GetAssessmentBoxContainerHydrator>
-                  }
+                  } */}
+                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" layout="sidebar" >
+                    {(promoDescription || promoTitle) && (
+                    <OfferNotificationContainer
+                      sx={{
+                            m: 'l -l -l',
+                            p: 'l',
+                            borderTopLeftRadius: 'unset',
+                            borderTopRightRadius: 'unset',
+                          }}
+                      sx$laptop={{ display: 'flex' }}
+                      title={promoTitle}
+                      description={promoDescription}
+                      community={community}
+                      orderIconFirstOnTablet={false}
+                    />
+                      )}
+                  </SlyTypeformAssessmentContainer>
                 </StickToTop>
               </Column>
             </TwoColumn>
