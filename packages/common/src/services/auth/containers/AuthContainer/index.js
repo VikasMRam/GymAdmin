@@ -165,6 +165,7 @@ const AuthContainer = (props) => {
             <WizardStep
               component={LoginWithPasswordFormContainer}
               name={LOGINWITHPASSWORD}
+              redirect_to={redirectAfterLogin}
               onResetPasswordClick={() => { setTitle('Having trouble logging in?'); goto(RESETPASSWORD); }}
               onOtpSubmit={() => {
                 setTitle('Confirm your phone number');
