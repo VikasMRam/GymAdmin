@@ -15,10 +15,6 @@ import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/components/search/helpers';
 import ResourceLinks from './ResourceLinks'
 
-const citiesToShowGeoGuide = ['new-york', 'miami', 'las-vegas', 'san-francisco', 'madison', 'scottsdale', 'skokie', 'columbus', 'orlando', 'atlanta', 'san-jose', 'kendall'];
-
-const statesToShowGeoGuide = ['arizona',  'wisconsin', 'minnesota', 'missouri', 'colorado', 'alabama', 'kentucky', 'oregon', 'utah','north-carolina', 'new-jersey', 'florida', 'california', 'new-york', 'georgia', 'massachusetts', 'illinois', 'texas', 'michigan', 'virginia'];
-
 function ExploreContainer({ filters }) {
   const { requestInfo } = usePrefetch('getGeoGuides', filters, { encode: false });
 
@@ -34,10 +30,7 @@ function ExploreContainer({ filters }) {
   const seoLinks = geoGuide && geoGuide.guideContent && geoGuide.guideContent.seoLinks;
 
   let guide;
-  if (filters?.city && citiesToShowGeoGuide.includes(filters.city) && geoGuide?.guideContent?.guide) {
-    guide = sanitizeHtml(geoGuide.guideContent.guide);
-  }
-  if (!filters?.city && filters?.state && statesToShowGeoGuide.includes(filters.state) && geoGuide?.guideContent?.guide) {
+  if (geoGuide?.guideContent?.guide) {
     guide = sanitizeHtml(geoGuide.guideContent.guide);
   }
 
