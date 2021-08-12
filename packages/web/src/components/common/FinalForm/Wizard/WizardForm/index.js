@@ -81,7 +81,6 @@ const WizardForm = ({ initialValues = {}, children, onSubmit }) => {
               </Button>
             )}
           </Block>
-          {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
         </form>
       )}
     </Form>
