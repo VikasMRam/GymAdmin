@@ -4,12 +4,15 @@ import { tocPaths, urlize } from 'sly/web/services/helpers/url';
 export const ccrcAdTileStates = ['AZ', 'CT', 'DC', 'DE', 'HI', 'ID', 'IN', 'KS', 'KY', 'LA', 'MN', 'NE', 'NH', 'OH', 'OK', 'RI', 'TX', 'UT', 'WA', 'WI', 'MO', 'NY', 'NC'];
 
 export const shouldShowZillowSearchAd = (toc) => {
+  return false;
   const validTocs = tocs.filter(e =>
     e.value.match(/active-adult|independent-living|continuing-care-retirement-community/)).map(e => e.value);
   return validTocs.indexOf(toc) > -1;
 };
 
 export const  shouldShowZillowProfileAd = (community) => {
+  //disable zillow adtile.
+  return false;
   // return true;
   // S1303 : Zillow Ad Tiles on CCRC Do Not Send List
   // https://airtable.com/tblt2MRAZThT31Ee9/viwlPQXuHxbH2unIj/recfsTZBjUSGl0TUe?blocks=hide
@@ -43,6 +46,7 @@ export const  shouldShowZillowProfileAd = (community) => {
 };
 
 export const shouldShowZillowPostConversionAd = (community) => {
+  return false;
   if (!community || !community.care) {
     return false;
   }

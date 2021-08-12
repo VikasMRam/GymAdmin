@@ -1,4 +1,4 @@
-export default [
+export const cmsHubTypes = [
   'nursing-homes',
   'assisted-living',
   'independent-living',
@@ -11,22 +11,7 @@ export default [
   'respite-care',
   'veterans-benefit-assisted-living',
   'active-adult',
-];
-
-export const cmsHubTypes = [
-  'nursing-homes-temp',
-  'assisted-living-temp',
-  'independent-living-temp',
-  'board-and-care-home-temp',
-  'memory-care-temp',
-  'continuing-care-retirement-community-temp',
-  'skilled-nursing-facility-temp',
-  'senior-living-temp',
-  'in-home-care-temp',
-  'respite-care-temp',
-  'veterans-benefit-assisted-living-temp',
-  'active-adult-temp',
   'what-is-medicare',
   'what-is-medicaid',
-  'what-is-adl-s',
+  'what-are-activities-of-daily-living-adls',
 ];
