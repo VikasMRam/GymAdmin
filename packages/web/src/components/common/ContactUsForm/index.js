@@ -10,16 +10,20 @@ const ContactUsForm = ({
   handleSubmit, submitting, invalid, error, submitButtonText,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Grid gridGap="m" flow="row" gridTemplateColumns="auto auto">
+    <Grid
+      gridGap="s"
+      flow="row"
+      gridTemplateColumns="auto auto"
+    >
       <Field
         name="firstName"
-        label="First Name"
+        label="First name"
         type="text"
         component={ReduxField}
       />
       <Field
         name="lastName"
-        label="Last Name"
+        label="Last name"
         type="text"
         component={ReduxField}
       />
@@ -33,7 +37,7 @@ const ContactUsForm = ({
     />
     <Field
       name="email"
-      label="Email Address"
+      label="Email"
       type="email"
       component={ReduxField}
     />
@@ -43,7 +47,6 @@ const ContactUsForm = ({
       name="message"
       label="Message"
       component={ReduxField}
-      required
     />
     <Button type="submit" width="100%" pad="regular" disabled={submitting || invalid}>
       {submitButtonText}

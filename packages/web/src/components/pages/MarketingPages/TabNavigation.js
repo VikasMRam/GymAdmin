@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { components } from 'react-select';
 import { array, bool, object, string } from 'prop-types';
-// import { Link, Redirect } from 'react-router-dom';
 
 import Block from 'sly/common/system/Block';
 import Link from 'sly/common/system/Link';
@@ -34,6 +33,11 @@ const TabsItem = styled(Link)`
 
 // @ts-ignore
 const wrapperCustomStyles = css`
+  .react-select__value-container {
+    overflow: visible;
+    padding: ${space('s')} 0 ${space('s')} ${space('s')};
+  }
+
   .react-select__control {
     border-bottom-left-radius: ${border('l')};
     border-bottom-right-radius: ${border('l')};
@@ -48,7 +52,7 @@ const wrapperCustomStyles = css`
     }
   }
   .react-select__option {
-    padding: ${space('m')} 0 ${space('m')} ${space('l')};
+    padding: ${space('s')} 0 ${space('s')} ${space('s')};
 
     &:hover {
       background: ${color('viridian.lighter-90')};
@@ -65,7 +69,6 @@ const wrapperCustomStyles = css`
     ${sx({ font: 'body-m' })}
   }
   .react-select__option--is-selected {
-    font-weight: 400;
     background: ${color('viridian.base')};
     color: ${color('white.base')};
 
@@ -92,10 +95,9 @@ const TabNavigation = ({
 return (
   <>
     <Block
-      margin="l m"
-      sx={{ marginX: 'auto', width: 'col3' }}
-      sx$laptop={{ display: 'none' }}
+      margin="s m"
       sx$tablet={{ display: 'none' }}
+      sx$laptop={{ display: 'none' }}
     >
       <Select
         size="large"
@@ -150,6 +152,6 @@ TabNavigation.propTypes = {
   linksList: array,
   currentLink: string,
   history: object,
-}
+};
 
 export default TabNavigation;
