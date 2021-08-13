@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, any } from 'prop-types';
+import { number, any, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { space } from 'sly/common/system';
@@ -36,12 +36,12 @@ export const PinDefs = () => (
   </Svg>
 );
 
-const Pin = ({ number, active, markerHover, isVerified, isPlus, ...props }) => {
-  const primaryColor = active || markerHover ? '#E9EBED' : 'white';
-  const secondaryColor = active || markerHover ? 'white' : '#E9EBED';
-  const activeColor = active ? '#1A7473' : primaryColor;
+const Pin = ({ number, active, markerHover, isVerified, isPlus, isCommunityHoveredInList, ...props }) => {
+  const primaryColor = (active || isCommunityHoveredInList) || markerHover ? '#E9EBED' : 'white';
+  const secondaryColor = (active || isCommunityHoveredInList) || markerHover ? 'white' : '#E9EBED';
+  const activeColor = (active || isCommunityHoveredInList) ? '#1A7473' : primaryColor;
   const verifiedColor = '#9f8352';
-  const textColor = active ? 'white' : '#253348';
+  const textColor = (active || isCommunityHoveredInList) ? 'white' : '#253348';
   const plusColor = isPlus ? '#9f8352' : activeColor;
   const plusText = isPlus ? 'white' : textColor;
   return (
@@ -52,7 +52,7 @@ const Pin = ({ number, active, markerHover, isVerified, isPlus, ...props }) => {
       css={{
         transform: 'translate(-50%, -100%)',
         position: 'absolute',
-        zIndex: markerHover || active ? 900 : (800 - number),
+        zIndex: markerHover || (active || isCommunityHoveredInList) ? 900 : (800 - number),
       }}
       {...props}
     >
@@ -95,6 +95,10 @@ const Pin = ({ number, active, markerHover, isVerified, isPlus, ...props }) => {
 Pin.propTypes = {
   number,
   active: any,
+  markerHover: bool,
+  isVerified: bool,
+  isPlus: bool,
+  isCommunityHoveredInList: bool,
 };
 
 export default Pin;

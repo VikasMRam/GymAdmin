@@ -52,7 +52,12 @@ const CheckboxRow = ({ checked, label, ...props }) => (
     height="2.5rem"
     {...props}
   >
-    <Label font="body-s">
+    <Label
+      sx$laptop={{
+        cursor: 'pointer',
+      }}
+      font="body-m"
+    >
       {label}
     </Label>
     <Checkbox
@@ -70,14 +75,22 @@ const RadioRow = ({ label, description, checked, ...props }) => (
     marginBottom="l"
     {...props}
   >
-    <Label color="slate.lighter-30" font="body-s">
+    <Label
+      sx$laptop={{
+        cursor: 'pointer',
+      }}
+      color="slate.lighter-30"
+      font="body-m"
+    >
       <Block
         color="slate.base"
         marginBottom={!description ? 'none' : 'xxs'}
       >
         {label}
       </Block>
-      {description}
+      <Block as="span" color="slate.lighter-40">
+        {description}
+      </Block>
     </Label>
     <Radio
       minWidth="24px"

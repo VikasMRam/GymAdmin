@@ -52,6 +52,7 @@ const Map = ({
   onMarkerHover,
   selectedCommunity,
   selectedHover,
+  hoveredCommunity,
   cursor,
   currentFilters,
   ...props
@@ -188,6 +189,7 @@ const Map = ({
               community={community}
               active={selectedCommunity?.id === id}
               markerHover={selectedHover?.id === id}
+              isCommunityHoveredInList={hoveredCommunity?.id === id}
               lat={latitude}
               lng={longitude}
               number={cursor + i}
@@ -215,6 +217,8 @@ Map.propTypes = {
   onMarkerHover: func,
   selectedCommunity: object,
   currentFilters: object,
+  selectedHover: object,
+  hoveredCommunity: object,
 };
 
 export default Map;

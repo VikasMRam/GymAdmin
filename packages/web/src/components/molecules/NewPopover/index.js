@@ -10,7 +10,7 @@ const PopoverBlock = styled.div(
   css`
     background: white;
     width: 360px;
-    z-index: 100;
+    z-index: 2001;
     border-radius: 4px;
   `,
 );

@@ -6,7 +6,7 @@ import EntityInfo from './EntityInfo';
 
 import { getKey } from 'sly/common/components/themes';
 import { assetPath } from 'sly/web/components/themes';
-import { COLUMN_LAYOUT_IMAGE_WIDTH, COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM, COLUMN_LAYOUT_IMAGE_WIDTH_SMALL } from 'sly/web/constants/communityTile';
+import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/web/constants/communityTile';
 import { Button, Hr, Block, Grid, Image, space, sx } from 'sly/common/system';
 import IconButton from 'sly/common/components/molecules/IconButton';
 import PlusBadge from 'sly/web/components/molecules/PlusBadge';
@@ -81,7 +81,7 @@ const EntityTile = ({
   const mediaSizes = getKey('imageFormats.searchResults').sizes;
   const loading = lazyLoadImage ? 'lazy' : 'auto';
   const spacing = type === 'map' ? 'xs' : 'l';
-  imageAspectRatio = type === 'map' ? '1:1' : imageAspectRatio;
+  imageAspectRatio = type === 'map' ? '3:2' : imageAspectRatio;
 
 
   imageMargin = layout === 'column' ? `${imageMargin || 0} ${spacing} ${imageMargin || 0} ${imageMargin || 0}` : null;
@@ -101,6 +101,8 @@ const EntityTile = ({
         left: '0.5rem',
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
+
       }}
     >
       {newTags.map(({ name, color }) => {
@@ -110,8 +112,33 @@ const EntityTile = ({
             background="white"
             key={name}
             marginRight="xs"
+            padding="xxs xs"
+            sx={type === 'map' && {
+                padding: 'xxxs xxxs',
+              }}
+            sx$tablet={type === 'map' && {
+                padding: 'xxs xs',
+              }}
+            sx$laptop={type === 'map' && {
+                padding: 'xxxs xxxs',
+              }}
           >
-            {name}
+            <Block
+
+              font="body-xs"
+              fontWeight="bold"
+              sx={type === 'map' && {
+                fontSize: '0.625rem',
+              }}
+              sx$tablet={type === 'map' && {
+                fontSize: '0.75rem',
+              }}
+              sx$laptop={type === 'map' && {
+                fontSize: '0.625rem',
+              }}
+            >
+              {name}
+            </Block>
           </Tag>
         );
       })}
@@ -130,8 +157,8 @@ const EntityTile = ({
         border="s"
         borderColor="slate.lighter-90"
         sx$laptop={type === 'list' ? null : {
-          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH_SMALL} auto !important`,
-          gridTemplateRows: layout === 'row' && 'auto 1fr',
+          gridTemplateColumns: layout === 'row' ? 'none' : '120px auto !important',
+          gridTemplateRows: layout === 'row' ? 'auto 1fr' : type === 'map' && '6.5rem!important',
           gridGap: 'xs',
         }}
         sx$tablet={type === 'list' ?
@@ -141,17 +168,18 @@ const EntityTile = ({
           gridGap: '0px',
         }
         : {
-          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH_MEDIUM} auto`,
-          gridTemplateRows: layout === 'row' && 'auto 1fr',
+          gridTemplateColumns: layout === 'row' ? 'none' : `${COLUMN_LAYOUT_IMAGE_WIDTH} auto`,
+          gridTemplateRows: layout === 'row' ? 'auto 1fr' : type === 'map' && 'auto',
           gridGap: 'xs',
         }}
         // no column layout support below tablet
         sx={type === 'list' ? {
           gridTemplateColumns: 'auto',
-          gridGap: 'm',
+          gridGap: '0',
           height: '100%',
         } : {
           gridTemplateColumns: '6.5rem auto',
+          gridTemplateRows: type === 'map' && '6.5rem',
           gridGap: 'xs',
         }}
       >
@@ -166,17 +194,21 @@ const EntityTile = ({
             placeholder={placeholder}
             sizes={mediaSizes}
             aspectRatio={imageAspectRatio}
-            margin={type === 'map' ? imageMargin : 0}
+            margin="0"
             snap={layout === 'row' ? 'bottom' : imageSnap}
             alt={imageAlt}
             loading={loading}
             borderRadius="xxs"
             borderBottomLeftRadius={type === 'map' ? null : '0px !important'}
-            borderBottomRightRadius={type === 'map' ? null : '0px !important'}
+            borderBottomRightRadius="0px !important"
+            sx={{
+              height: type === 'map' && '100%!important',
+              borderTopRightRadius: type === 'map' && '0px !important',
+            }}
             sx$tablet={{
             borderBottomLeftRadius: sx`${space('xxs')}!important`,
-            borderTopRightRadius: type === 'map' ? null : '0px !important',
-            margin: imageMargin,
+            borderTopRightRadius: '0px !important',
+            margin: type === 'map' ? 0 : imageMargin,
           }}
           >
             {topRightSection &&
@@ -200,11 +232,15 @@ const EntityTile = ({
             {
             padding: `xs ${spacing} ${spacing} ${spacing}`,
             } :
-            { padding: `m ${spacing}` }
+            { padding: 'm m' }
           }
           sx$tablet={{
-            padding: layout === 'row' ? `xs ${spacing} ${spacing} ${spacing}`  : `m ${spacing}`,
+            padding: layout === 'row' ? `xs ${spacing} ${spacing} ${spacing}`  : 'l l',
           }}
+          sx$laptop={{
+            padding: type === 'map' && 'xs',
+          }}
+
         >
           <EntityInfo
             entity={entity}
