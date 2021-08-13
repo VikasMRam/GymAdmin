@@ -591,7 +591,7 @@ export default class CommunityDetailPage extends PureComponent {
                       )}
                     </GetAssessmentBoxContainerHydrator>
                   } */}
-                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" layout="sidebar" slug={id}>
+                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing and Availability" layout="sidebar" slug={id}>
                     {(promoDescription || promoTitle) && (
                     <OfferNotificationContainer
                       sx={{

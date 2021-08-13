@@ -75,26 +75,27 @@ const SlyTypeform = (props) => {
   const { createOrUpdateUser, user } = useAuth();
   const isClientside = (typeof window !== 'undefined');
   const getTypeformDetails = useQuery('getTypeformResponseDetails');
-  const getTypeformDetailsCall = (formId, response_id) => {
+  const getTypeformDetailsCall = (formId, responseId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const typeformDetails = await getTypeformDetails({ 'filter[form]': formId, 'filter[response]': response_id });
+        const typeformDetails = await getTypeformDetails({ 'filter[form]': formId, 'filter[response]': responseId });
         resolve(typeformDetails);
       } catch (err) {
         reject(err);
       }
     });
   };
-  let originalResponseId = '';
-  const getTypeformDetailsWithRetry = async (retryLimit, formId, response_id, retriesCount = 0) => {
+
+  const getTypeformDetailsWithRetry = async (retryLimit, formId, responseId, retriesCount = 0) => {
     return new Promise((resolve, reject) => {
-      getTypeformDetailsCall(formId, response_id).then((res) => {
+      getTypeformDetailsCall(formId, responseId).then((res) => {
         resolve(res);
       }, (err) => {
         console.log('err', err);
         if (retriesCount < retryLimit) {
-          delay(1000).then(() => {
-            return getTypeformDetailsWithRetry(retryLimit, formId, originalResponseId, retriesCount + 1);
+          delay(500).then(async () => {
+            const res = await getTypeformDetailsWithRetry(retryLimit, formId, responseId, retriesCount + 1);
+            resolve(res);
           });
         } else {
           reject(err);
@@ -105,11 +106,10 @@ const SlyTypeform = (props) => {
 
 
   const onSubmit = useCallback(async (e) => {
-    const { response_id } = e;
-    if (response_id) {
+    const { response_id: responseId } = e;
+    if (responseId) {
       try {
-        originalResponseId = response_id;
-        const res = await getTypeformDetailsWithRetry(5, formId, `${response_id}asas`);
+        const res = await getTypeformDetailsWithRetry(5, formId, responseId);
         const re = normJsonApi(res);
         const email = re.email;
         const name = re.name;
