@@ -15,8 +15,6 @@ import { titleize } from 'sly/web/services/helpers/strings';
 import { getTocSeoLabel } from 'sly/web/components/search/helpers';
 import ResourceLinks from './ResourceLinks'
 
-const citiesToShowGeoGuide = ['new-york', 'miami', 'las-vegas', 'san-francisco', 'madison', 'scottsdale', 'skokie', 'columbus', 'orlando', 'atlanta', 'san-jose', 'kendall'];
-
 function ExploreContainer({ filters }) {
   const { requestInfo } = usePrefetch('getGeoGuides', filters, { encode: false });
 
@@ -32,7 +30,7 @@ function ExploreContainer({ filters }) {
   const seoLinks = geoGuide && geoGuide.guideContent && geoGuide.guideContent.seoLinks;
 
   let guide;
-  if (filters?.city && citiesToShowGeoGuide.includes(filters.city) && geoGuide?.guideContent?.guide) {
+  if (geoGuide?.guideContent?.guide) {
     guide = sanitizeHtml(geoGuide.guideContent.guide);
   }
 
