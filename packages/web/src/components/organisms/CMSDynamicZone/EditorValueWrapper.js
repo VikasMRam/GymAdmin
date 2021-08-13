@@ -83,6 +83,7 @@ const DynamicItemWrapper = styled(Block)`
     
     li {
       margin-bottom: ${key('space.s')};
+      overflow-x: visible;
     }
   }
 

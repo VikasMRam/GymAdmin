@@ -18,6 +18,7 @@ import {
   FAMILY_STAGE_LOST,
   FAMILY_STAGE_REJECTED,
   ROOM_TYPES, WAITLISTED,
+  FAMILY_STAGE_FAMILY_CHOSEN,
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/web/constants/familyDetails';
 import { NOTE_COMMENTABLE_TYPE_CLIENT, NOTE_CTYPE_ACTIVITY } from 'sly/web/constants/notes';
@@ -58,7 +59,7 @@ const ReduxForm = reduxForm({
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
 }))
-@connect((state) => ({
+@connect(state => ({
   formState: selectFormData(state, 'UpdateFamilyStageForm'),
 }))
 
@@ -89,12 +90,12 @@ export default class UpdateFamilyStageFormContainer extends Component {
   handleUpdateStage = (data) => {
     const {
       updateClient, client, status: { client: { invalidate: invalidateClient, getRelationship } }, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, refetchClient, refetchNotes } = this.props;
+      updateUuidAux, refetchClient, refetchNotes, handleAskQuestionnaire } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
-      stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
+      stage, note, moveInDate, waitlistedDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription, rejectNote,
       preferredLocation, referralAgreementType, invoiceAmount, invoiceNumber, invoicePaid, roomType,
-      rejectDescription, rejectReason, chosenDetails,
+      rejectDescription, rejectReason, waitlisted, typeCare, firstName, lastName,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
@@ -127,7 +128,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;
         if (rejectNote) {
-          reason = `${lossReason}, ${rejectNote}`
+          reason = `${lossReason}, ${rejectNote}`;
         }
         if (lostDescription) {
           reason = lostDescription;
@@ -168,8 +169,19 @@ export default class UpdateFamilyStageFormContainer extends Component {
       }
       newClient.set('attributes.clientInfo.moveInDate', moveInDateFormatted);
     }
+    if (waitlistedDate) {
+      let waitlistedDateFormatted;
+      const parsedDate = dayjs(waitlistedDate);
+      if (parsedDate.isValid()) {
+        waitlistedDateFormatted = parsedDate.utc().format();
+      } else {
+        notifyError('Estimated waitlist date is invalid');
+        return false;
+      }
+      newClient.set('attributes.clientInfo.waitlistedDate', waitlistedDateFormatted);
+    }
     if (communityName) {
-      newClient.set('attributes.clientInfo.communityName', communityName);
+      newClient.set('attributes.clientInfo.communityName', communityName?.label);
     }
     if (monthlyFees) {
       newClient.set('attributes.clientInfo.monthlyFees', parseFloat(monthlyFees));
@@ -201,8 +213,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (rejectReason) {
       newClient.set('attributes.clientInfo.rejectReason', rejectReason);
     }
-    if (chosenDetails) {
-      newClient.set('attributes.clientInfo.chosenDetails', chosenDetails);
+    if (waitlisted !== undefined || null) {
+      newClient.set('attributes.clientInfo.waitlisted', waitlisted);
     }
     newClient.set('attributes.clientInfo.referralAgreementType', referralAgreementType);
     if (referralAgreementType === 'percentage') {
@@ -211,7 +223,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     } else if (referralAgreementType === 'flat-fee') {
       newClient.set('attributes.clientInfo.moveInFee', parseFloat(referralAgreement));
     }
-    const shouldUpdateUuidAux = !!preferredLocation;
+    const shouldUpdateUuidAux = !!preferredLocation || !!typeCare || !!firstName || !!lastName;
     if (preferredLocation) {
       let locationInfo = {
         city: preferredLocation.city,
@@ -228,9 +240,23 @@ export default class UpdateFamilyStageFormContainer extends Component {
       }
       newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
     }
+
+    if (typeCare) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.typeCare', typeCare);
+    }
+
+    if (firstName) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.firstName', firstName);
+    }
+
+    if (lastName) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.lastName', lastName);
+    }
+
     if (shouldUpdateUuidAux) {
       const { id: uuidID } = uuidAux;
       newUuidAux = newUuidAux.value();
+
       uuidAuxPromise = () => updateUuidAux({ id: uuidID }, newUuidAux);
     }
     newClient = newClient.value();
@@ -257,7 +283,13 @@ export default class UpdateFamilyStageFormContainer extends Component {
           msg = 'Family successfully rejected';
         }
         notifyInfo(msg);
-        if (onSuccess) {
+      })
+      .then(() => {
+        const isQuestionnaireAlreadyFilled =  !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
+        if (!isQuestionnaireAlreadyFilled && (this.currentStage.group === 'Connected' && this.nextStage.stage
+         !== FAMILY_STAGE_FAMILY_CHOSEN)) {
+          handleAskQuestionnaire();
+        } else if (onSuccess) {
           onSuccess();
         }
       })
@@ -284,8 +316,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
     if (!client) {
       return null;
     }
-
-    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo } }, provider, } = client;
+    const isQuestionnaireAlreadyFilled = !!client.uuidAux.uuidInfo?.referralInfo?.leadQuality;
+    const { clientInfo, stage, status, uuidAux: { uuidInfo: { locationInfo, housingInfo, residentInfo } }, provider } = client;
+    const typeCare = !!housingInfo && housingInfo?.typeCare ? housingInfo?.typeCare : [];
+    const firstName = !!residentInfo && residentInfo?.firstName ? residentInfo.firstName : '';
+    const lastName = !!residentInfo && residentInfo?.lastName ? residentInfo.lastName : '';
     const { entityType, id: providerOrg } = provider;
     const { organization } = user;
     const { id: userOrg } = organization;
@@ -294,6 +329,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const {
       name,
       moveInDate: existingMoveInDate,
+      waitlistedDate: existingWaitlistedDate,
       communityName: existingCommunityName,
       moveRoomType: existingMoveRoomType,
       referralAgreement: existingReferralAgreement,
@@ -304,8 +340,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
       lossReason: existingLossReason,
       otherText,
       rejectReason,
+      // chosenDetails,
     } = clientInfo;
-    let { chosenDetails } = clientInfo;
+
+    let { waitlisted = false } = clientInfo;
+    // waitlisted = !!(!!chosenDetails && chosenDetails === 'waitlisted');
     let { invoicePaid: existingInvoicePaid } = clientInfo;
     if (isBoolean(existingInvoicePaid)) {
       existingInvoicePaid = existingInvoicePaid ? 'yes' : 'no';
@@ -323,7 +362,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.currentStage = getStageDetails(stage);
       ({ group } = this.currentStage);
       ({
-        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees, chosenDetails,
+        stage: nextStage, lossReason: currentLossReason, referralAgreementType, referralAgreement, monthlyFees, waitlisted,
       } = formState);
       this.nextStage = getStageDetails(nextStage);
       ({ group: nextGroup } = this.nextStage);
@@ -342,11 +381,21 @@ export default class UpdateFamilyStageFormContainer extends Component {
       existingMoveInDateFormatted = Date.UTC(existingMoveInDateFormatted.getUTCFullYear(), existingMoveInDateFormatted.getUTCMonth(), existingMoveInDateFormatted.getUTCDate(),
         existingMoveInDateFormatted.getUTCHours(), existingMoveInDateFormatted.getUTCMinutes(), existingMoveInDateFormatted.getUTCSeconds());
     }
+    let existingWaitlistedDateFormatted;
+    if (existingWaitlistedDate) {
+      existingWaitlistedDateFormatted = new Date(existingWaitlistedDate);
+      existingWaitlistedDateFormatted = Date.UTC(existingWaitlistedDateFormatted.getUTCFullYear(), existingWaitlistedDateFormatted.getUTCMonth(), existingWaitlistedDateFormatted.getUTCDate(),
+        existingWaitlistedDateFormatted.getUTCHours(), existingWaitlistedDateFormatted.getUTCMinutes(), existingWaitlistedDateFormatted.getUTCSeconds());
+    }
     const newInitialValues = {
       stage,
-      chosenDetails: chosenDetails || WAITLISTED,
+      waitlisted,
       moveInDate: existingMoveInDateFormatted,
-      communityName: existingCommunityName,
+      waitlistedDate: existingWaitlistedDateFormatted,
+      communityName: {
+        label: existingCommunityName,
+        value: existingCommunityName,
+      },
       roomType: existingMoveRoomType,
       referralAgreement: existingReferralAgreement ? existingReferralAgreement.toString() : null,
       referralAgreementType: existingReferralAgreementType,
@@ -355,10 +404,13 @@ export default class UpdateFamilyStageFormContainer extends Component {
       invoiceNumber: existingInvoiceNumber,
       invoicePaid: existingInvoicePaid,
       lossReason: existingLossReason,
+      typeCare,
       preferredLocation,
       lostDescription,
       rejectDescription,
       rejectReason,
+      firstName,
+      lastName,
       ...initialValues,
     };
 
@@ -368,7 +420,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         currentStageGroup={group}
         currentStage={stage}
         nextStageGroup={nextGroup}
-        chosenDetails={chosenDetails}
+        waitlisted={waitlisted}
         nextStage={nextStage}
         name={name}
         onSubmit={this.handleUpdateStage}
@@ -379,11 +431,11 @@ export default class UpdateFamilyStageFormContainer extends Component {
         referralAgreementType={referralAgreementType}
         referralAgreement={referralAgreement}
         monthlyFees={monthlyFees}
-        roomTypes={ROOM_TYPES}
         currentRejectReason={currentRejectReason}
         canUpdateStage={nextStage !== FAMILY_STAGE_REJECTED || userIs(user, PLATFORM_ADMIN_ROLE) || userIsOwner}
         userIsOwner={userIsOwner}
-        isCommunityUser={entityType === PROVIDER_ENTITY_TYPE_COMMUNITY }
+        isCommunityUser={entityType === PROVIDER_ENTITY_TYPE_COMMUNITY}
+        isQuestionnaireAlreadyFilled={isQuestionnaireAlreadyFilled}
       />
     );
   }

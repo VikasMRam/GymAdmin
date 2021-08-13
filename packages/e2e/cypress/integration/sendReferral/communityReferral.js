@@ -38,8 +38,10 @@ function addtestCommunity() {
 }
 
 function addfamilyContact() {
-  const { name, phone, email } = randomUser();
+  const { name, phone, email, firstName, lastName } = randomUser();
   cy.get('form input[label*=\'Contact name\']').type(name, { force: true });
+  cy.get('form input[id*=firstName]').last().type(firstName, { force: true });
+  cy.get('form input[id*=lastName]').last().type(lastName, { force: true });
   cy.get('form input[id*=email]').last().type(email, { force: true });
   cy.get('form input[id*=phone]').type(phone, { force: true });
   cy.get('form input[placeholder*="Search by city, state, zip"]').type(community.zip, { force: true, delay: 50 });

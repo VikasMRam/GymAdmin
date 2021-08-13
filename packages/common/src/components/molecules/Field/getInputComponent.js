@@ -22,6 +22,7 @@ import CheckboxInput from 'sly/web/components/molecules/CheckboxInput';
 import CommunityAutoComplete from 'sly/web/components/molecules/CommunityAutoComplete';
 import LocationSearch from 'sly/web/components/molecules/LocationSearch';
 import RichTextArea from 'sly/web/components/atoms/RichTextArea';
+import ToggleOptions from 'sly/web/components/molecules/ToggleOptions';
 
 const DatePicker = loadable(() => import(/* webpackChunkName: "chunkDatePicker" */'sly/web/components/molecules/DatePicker'));
 const Select = loadable(() => import(/* webpackChunkName: "chunkAtomSelect" */'sly/web/components/atoms/Select'));
@@ -75,6 +76,8 @@ const getInputComponent = (type) => {
       return NumberInput;
     case 'toggle':
       return Toggle;
+    case 'toggleOptions':
+      return ToggleOptions;
     default:
       return Input;
   }
