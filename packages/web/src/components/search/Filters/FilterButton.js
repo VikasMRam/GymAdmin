@@ -40,6 +40,11 @@ const FilterButton = forwardRef(({
       ref={ref}
       display="flex"
       background={(number || selected) ? 'primary.lighter-90' : 'transparent'}
+      sx={{
+        '&:hover': {
+          background: 'primary.lighter-90',
+        },
+      }}
       font="body-s"
       alignItems="center"
       border="s"

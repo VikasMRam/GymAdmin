@@ -150,7 +150,7 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
 
     const currentEdit = this.selectEdit();
 
-    const { hasFinished: communityHasFinished } = status.community;
+    const { hasFinished: communityHasFinished, refetch } = status.community;
     // since it's using conditional prefetch, in initial stage communities key won't be there
     return (
       <EditContext.Provider value={currentEdit}>
@@ -164,6 +164,7 @@ export default class DashboardCommunityDetailsPageContainer extends Component {
           currentTab={match.params.tab || SUMMARY}
           showModal={showModal}
           hideModal={hideModal}
+          refetchCommunity={refetch}
           onRejectSuccess={() => onRejectSuccess(hideModal)}
           onAddNote={onAddNote}
           onEditNote={onEditNote}

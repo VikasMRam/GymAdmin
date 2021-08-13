@@ -15,7 +15,7 @@ import About from 'sly/web/components/pages/MarketingPages/About';
 import Press from 'sly/web/components/pages/MarketingPages/Press';
 import Flex from 'sly/common/system/Flex';
 import Image from 'sly/common/system/Image';
-import Paragraph from 'sly/common/system/Paragraph';
+import Heading from 'sly/common/system/Heading';
 import HeaderContainer from 'sly/web/containers/HeaderContainer';
 import {
   makeHeader,
@@ -40,13 +40,13 @@ const MarketingPages = ({ match, history }) => {
   const normalizeTitle = useMemo(() => generateDataList(result, 'title'), [result]);
   const normalizeDescription = useMemo(() => generateDataList(result, 'description')?.pop(), [result]);
   const getImageUrl = useMemo(() => result && _.map(_.flatMap(result, 'mainImage'), 'url')?.pop(), [result]);
-  const blockListWithLink = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'block-with-link'), [result]);
   const getListWithImg = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'list-with-img'), [result]);
   const getResentBlockContent = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'resent-block-post'), result);
   const getArticlesArr = useMemo(() => getResentBlockContent && _.map(_.flatMap(getResentBlockContent, 'articles')), [getResentBlockContent]);
   const getListWithIcons = useMemo(() => _.map(_.flatMap(getComponentData(result?.[0]?.MarketingPageDz, 'list-with-icons'), 'value')), [result]);
   const getFaqList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'faq-block'), [result]);
-
+  const infoBlockList = useMemo(() => getComponentData(result?.[0]?.MarketingPageDz, 'info-block'), [result]);
+  console.log(infoBlockList);
   if (!hasFinished) {
     return (
       <Flex
@@ -79,36 +79,30 @@ const MarketingPages = ({ match, history }) => {
         />
       )}
        <Flex
-          minHeight="13.75rem"
-          height="auto"
           background="viridian.lighter-90"
-          border="round"
           justifyContent="center"
           alignItems="center"
           flexDirection="column"
           textAlign="center"
-          sx={{ padding: 'xxl l' }}
-          sx$laptop={{ padding: 'xxxl' }}
-          sx$tablet={{ padding: 'xxxl' }}
+          padding="xxl m"
+          sx$tablet={{ padding: 'xxxl l' }}
+          sx$laptop={{ padding: 'xxxl 0' }}
         >
           {getImageUrl && (
             <ImageWrapper
               // sx={{width: '100%'}}
               src={getImageUrl}
             />)}
-          <Paragraph
-            width="auto"
-            font="title-xl"
-            sx$tablet={{ width: 'col8' }}
-            sx$laptop={{ width: 'col12' }}
+          <Heading
+            font="title-xxl"
           >
             {getImageUrl ? normalizeDescription : normalizeTitle}
-          </Paragraph>
+          </Heading>
         </Flex>
       <Switch>
         <Route path="/contact-us-temp">
           <ContactUs
-            blockList={blockListWithLink}
+            infoBlockList={infoBlockList}
           />
         </Route>
         <Route path="/how-it-works-temp">
@@ -120,13 +114,14 @@ const MarketingPages = ({ match, history }) => {
         </Route>
         <Route path="/about-temp">
           <About
-            contentBlock={blockListWithLink}
+            infoBlockList={infoBlockList}
             getTeamContent={getListWithImg}
           />
         </Route>
         <Route path="/press-temp">
           <Press
-            contentBlock={blockListWithLink}
+            infoBlockList={infoBlockList}
+            getListWithImg={getListWithImg}
             contentResentBlockPost={getResentBlockContent}
             getArticlesArr={getArticlesArr}
           />

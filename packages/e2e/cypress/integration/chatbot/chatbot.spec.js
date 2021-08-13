@@ -58,7 +58,7 @@ describe('Chat Bot', () => {
     cy.visit('/');
     cy.waitForPageViewEvent();
     toSearchPageFromCity('San Francisco');
-    cy.get('a article h3').parents('a').then((res) => {
+    cy.get('a article h4').parents('a').then((res) => {
       if (res.length) {
         cy.visit(res[0].href);
         cy.waitForPageViewEvent();

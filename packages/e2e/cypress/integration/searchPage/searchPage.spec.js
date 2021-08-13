@@ -17,15 +17,19 @@ import { toSearchPage, toSearchPageFromCity } from '../../helpers/searchPage';
 // Accepts list data (Array of json) and validates,
 // if a card with each json object is rendered in Ui or not
 const checkPopulationOfList = (data) => {
-  cy.get('a article h3')
+  cy.wait(1000);
+  cy.get('div[id*="searchTilesContainer"] a article h4')
     .each((item) => {
       cy.wrap(item)
         .invoke('text')
         .then((text) => {
           let textFound = false;
 
+
+          text = text.replace(/ +(?= )/g, '').trim();
           data.forEach((dataObj) => {
-            if (text.includes(dataObj.attributes.name)) {
+            const communityName =  dataObj.attributes.name.replace(/ +(?= )/g, '').trim();
+            if (text.includes(communityName)) {
               textFound = true;
             }
           });
@@ -36,7 +40,7 @@ const checkPopulationOfList = (data) => {
 
 
 const genericCheckPopulationOfList = () => {
-  cy.get('a article h3').then((matchedCards) => {
+  cy.get('a article h4').then((matchedCards) => {
     expect(matchedCards.length).to.greaterThan(0);
   });
 };
@@ -279,7 +283,7 @@ const mapAssertions = (list) => {
       .invoke('text')
       .then(() => {
         let textFound = false;
-        cy.get('h5').invoke('text').then((title) => {
+        cy.get('h4').invoke('text').then((title) => {
           title = title.replace(/ +(?= )/g, '').trim();
           list.forEach((dataObj) => {
             if (title.includes(dataObj.attributes.name.replace(/ +(?= )/g, '').trim())) {
@@ -546,7 +550,7 @@ describe('Search Page Sections', () => {
 
     it('check contents of page 2', () => {
       // Here wait untill second list populates
-      cy.contains('a article h3', '21.');
+      cy.contains('a article h4', '21.');
       checkPopulationOfList(currentList);
     });
 

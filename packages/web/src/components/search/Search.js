@@ -77,7 +77,7 @@ const Search = ({
   const tocLabel = getTocSeoLabel(currentFilters.toc);
   const locationStr = city ? `${titleize(city)}, ${stateStr}` : `${stateStr}`;
   const title = `${tocLabel} in ${locationStr}`;
-  const showZillowSearchAd = shouldShowZillowSearchAd(currentFilters.toc);
+  const showZillowSearchAd = (!!pagination && pagination?.current === 0) && shouldShowZillowSearchAd(currentFilters.toc);
   const isInternational = isInternationalPath(location.pathname);
   const isCanada = isCanadaPath(location.pathname);
 
@@ -110,7 +110,7 @@ const Search = ({
         sx$laptop={{
           display: 'grid',
           gridTemplateRows: 'auto auto auto auto',
-          gridTemplateColumns: 'calc(100% - 40vw) auto',
+          gridTemplateColumns: 'minmax(0,820px) minmax(38vw,1fr)',
           gridTemplateAreas: '"heading map" "filters map" "noresults map" "list  map"',
         }}
       >
@@ -193,6 +193,7 @@ const Search = ({
           sx$tablet={{
             paddingBottom: 'unset',
           }}
+          id="searchTilesContainer"
 
         >
           {entities.map((entity, i) => (
@@ -203,7 +204,7 @@ const Search = ({
                 entity={entity}
                 loading={i <= 2 ? 'eager' : 'lazy'}
               />
-              {!isInternational && !showZillowSearchAd && city && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
+              {!isInternational && !showZillowSearchAd && city && ((entities.length <= 4 && i === entities.length - 1) || (entities.length > 4 && i === 4)) &&
                 <Block
                   margin="0 l l"
                 >
@@ -215,7 +216,7 @@ const Search = ({
                   />
                 </Block>
               }
-              {!isInternational && showZillowSearchAd && ((entities.length < 3 && i === entities.length - 1) || (entities.length > 1 && i === 1)) &&
+              {!isInternational && showZillowSearchAd && ((entities.length <= 4 && i === entities.length - 1) || (entities.length > 4 && i === 4)) &&
                 <Block
                   margin="0 l l"
                 >
@@ -240,8 +241,9 @@ const Search = ({
           onFilterChange={onFilterChange}
           onMarkerClick={setSelectedCommunity}
           onMarkerHover={setMarkerHover}
-          selectedCommunity={hoveredCommunity || selectedCommunity}
+          selectedCommunity={selectedCommunity}
           selectedHover={markerHover}
+          hoveredCommunity={hoveredCommunity}
           cursor={cursor}
           width="100%"
           sx={{

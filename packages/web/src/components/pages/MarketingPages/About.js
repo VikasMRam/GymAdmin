@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 import { Flex, Block, Link, Grid, Image, Paragraph } from 'sly/common/system';
 import ListContent from './ListContent';
+import MarketingPageWrapper from './MarketingPageWrapper';
+import MarketingPageTitle from './MarketingPageTitle';
 import ArrowForward from 'sly/common/icons/ArrowForward';
 
 const ImageWrapper = styled(Image)`
@@ -16,39 +18,33 @@ const ImageWrapper = styled(Image)`
 const About = ({
   contentBlock,
   getTeamContent,
+  infoBlockList,
 }) => {
   const getTeamList = _.map(_.flatMap(getTeamContent, 'imgWithTitle'));
 
   return (
     <>
-      <ListContent contentBlock={contentBlock} />
-      <Flex
-        margin="l m"
-        justifyContent="center"
-        alignItems="start"
-        flexDirection="column"
-        sx$laptop={{ flexDirection: 'row',  margin: 'xxxl m' }}
+      <ListContent infoBlockList={infoBlockList} />
+      <MarketingPageWrapper
+        // margin="l m"
+        // justifyContent="center"
+        // alignItems="start"
+        // flexDirection="column"
+        // sx$laptop={{ flexDirection: 'row',  margin: 'xxxl m' }}
       >
-        <Block
-          sx$laptop={{  width: 'col4' }}
-          font="title-l"
-          paddingBottom="l"
-        >
-          {getTeamContent?.[0]?.heading}
-        </Block>
+        <MarketingPageTitle title={getTeamContent?.[0]?.heading} />
         <Flex
           width="100%"
           flexDirection="column"
           alignItems="center"
-          sx$laptop={{  width: 'col6', alignItems: 'baseline'}}
-          // sx$tablet={{ alignItems: 'start' }}
+          sx$laptop={{  width: 'col8', alignItems: 'baseline'}}
         >
           <Grid
             gridTemplateColumns="9rem 9rem"
             alignItems="stretch"
             gridGap="m"
             flow="row"
-            sx$laptop={{ gridTemplateColumns: "col2 col2 col2 col2" }}
+            sx$tablet={{ gridTemplateColumns: "col2 col2 col2 col2" }}
           >
           {getTeamList?.length > 0 && getTeamList?.map (item => {
             const src = item?.srcImg?.url;
@@ -78,7 +74,9 @@ const About = ({
                   <Paragraph
                     font="body-xs"
                     color="slate.lighter-40"
-                  >{item.subTitle}</Paragraph>
+                  >
+                    {item.subTitle}
+                  </Paragraph>
                 </Flex>
               </>
             )
@@ -90,11 +88,11 @@ const About = ({
             to={getTeamContent?.[0]?.to}
             alignSelf="start"
           >
-                {getTeamContent?.[0]?.textLink}
-                <ArrowForward paddingLeft="xxs" />
+            {getTeamContent?.[0]?.textLink}
+            <ArrowForward paddingLeft="xxs" />
           </Link>
         </Flex>
-      </Flex>
+      </MarketingPageWrapper>
     </>
   )
 };

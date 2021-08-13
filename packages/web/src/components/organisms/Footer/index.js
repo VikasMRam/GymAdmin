@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
 
 const aboutUs = {
   'Our story': '/about',
-  'Contact us': '/contact',
+  // 'Contact us': '/contact',
   'Press and media': '/about#/#press',
   Careers: 'https://angel.co/company/seniorly/jobs',
 };

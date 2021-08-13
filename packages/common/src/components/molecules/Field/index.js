@@ -275,6 +275,7 @@ Field.propTypes = {
     'richtextarea',
     'button',
     'toggle',
+    'toggleOptions',
   ]),
   placeholder: string,
   labelRight: node,

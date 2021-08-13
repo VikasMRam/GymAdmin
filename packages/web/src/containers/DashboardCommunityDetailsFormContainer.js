@@ -3,8 +3,8 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import { object, func } from 'prop-types';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
-
 import { withRouter } from 'react-router';
+
 import { required, createValidator, email, usPhone, dependentRequired } from 'sly/web/services/validation';
 import userProptype from 'sly/common/propTypes/user';
 import { query, prefetch } from 'sly/web/services/api';
@@ -16,7 +16,7 @@ import { patchFormInitialValues } from 'sly/web/services/edits';
 import { withProps } from 'sly/web/services/helpers/hocs';
 
 const validate = createValidator({
-  name: [required]
+  name: [required],
 });
 
 const formName = 'DashboardCommunityDetailsForm';
@@ -54,6 +54,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     respiteAllowed: object,
     invalidateCommunity: func,
     currentEdit: object,
+    refetchCommunity: func,
   };
 
   state = { selectedCountry: 'United States' };
@@ -70,20 +71,18 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
     const {
       address,
     } = this.props;
-    if (address && this.state.selectedCountry !== address.attributes.country ) {
+    if (address && this.state.selectedCountry !== address.attributes.country) {
       this.setState({ selectedCountry: address.attributes.country });
     }
-
   };
 
-  onCountryChange = ( event ) => {
+  onCountryChange = (event) => {
     this.setState({ selectedCountry: event.target.value });
   };
 
   handleSubmit = (values) => {
-    const { match, updateCommunity, notifyError, notifyInfo } = this.props;
+    const { match, updateCommunity, notifyError, notifyInfo, refetchCommunity } = this.props;
     const { id } = match.params;
-
     const { address, ...attributes } = values;
 
     return updateCommunity({ id }, {
@@ -94,7 +93,7 @@ export default class DashboardCommunityDetailsFormContainer extends Component {
         } },
       },
     })
-      .then(() => notifyInfo(`Details for ${attributes.name} saved correctly`))
+      .then(() => { notifyInfo(`Details for ${attributes.name} saved correctly`); refetchCommunity(); })
       .catch(() => notifyError(`Details for ${attributes.name} could not be saved`));
   };
 

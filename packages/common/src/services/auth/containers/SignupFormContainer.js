@@ -171,9 +171,9 @@ export default class SignupFormContainer extends Component {
     return Promise.resolve();
   };
 
-  handleSubmit = ({ phonePreference, ...data }) => {
+  handleSubmit = ({ phonePreference, email, ...data }) => {
     const { registerUser, clearSubmitErrors, onSubmit, handleExistingAccount, notifyError } = this.props;
-    data = { ...data, name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
+    data = { ...data, email: email.trim(), name: `${data.firstName}${data.lastName ? ` ${data.lastName}` : ''}` };
 
     clearSubmitErrors();
     return Promise.all([registerUser(data), this.updatePhoneContactPreference(phonePreference)])
