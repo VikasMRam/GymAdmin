@@ -360,17 +360,30 @@ export default class CommunityDetailPage extends PureComponent {
                 >
                   {
                     !enableTypeform &&
-                    <GetAssessmentBoxContainerHydrator
-                      startLink={`/wizards/assessment/community/${community.id}`}
-                      community={community}
-                      layout="pricing-table"
-                      mode={getAssessmentBoxModes.pricingTable}
-                      extraProps={{
+                    <>
+                      <GetAssessmentBoxContainerHydrator
+                        startLink={`/wizards/assessment/community/${community.id}`}
+                        community={community}
+                        layout="pricing-table"
+                        mode={getAssessmentBoxModes.pricingTable}
+                        extraProps={{
                       pricesList,
                       estimatedPriceList,
                       newPricesList,
                     }}
-                    />
+                      />
+                      <>
+                        {(promoDescription || promoTitle) && (
+                        <OfferNotificationContainer
+                          mt="s"
+                          sx$laptop={{ display: 'none' }}
+                          title={promoTitle}
+                          description={promoDescription}
+                          community={community}
+                        />
+                    )}
+                      </>
+                    </>
                   }
                   {
                     enableTypeform &&
@@ -386,6 +399,15 @@ export default class CommunityDetailPage extends PureComponent {
                         estimatedPriceList={estimatedPriceList}
                         newPricesList={newPricesList}
                       />
+                      {(promoDescription || promoTitle) && (
+                        <OfferNotificationContainer
+                          mt="s"
+                          sx$laptop={{ display: 'none' }}
+                          title={promoTitle}
+                          description={promoDescription}
+                          community={community}
+                        />
+                    )}
                     </>
                   }
                 </StyledHeadingBoxSection>
@@ -552,14 +574,14 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 )}
 
-                {/* {!isInternational &&
+                {!isInternational &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     mode={getAssessmentBoxModes.communityFooter}
                     layout="footer"
                   />
-                } */}
+                }
 
               </Body>
               <Column>
