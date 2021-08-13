@@ -567,7 +567,7 @@ export default class CommunityDetailPage extends PureComponent {
               </Body>
               <Column>
                 <StickToTop>
-                  {/* {!isInternational &&
+                  {!isInternational && !enableTypeform &&
                     <GetAssessmentBoxContainerHydrator
                       startLink={`/wizards/assessment/community/${community.id}`}
                       community={community}
@@ -590,24 +590,28 @@ export default class CommunityDetailPage extends PureComponent {
                         />
                       )}
                     </GetAssessmentBoxContainerHydrator>
-                  } */}
-                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing and Availability" layout="sidebar" slug={id}>
-                    {(promoDescription || promoTitle) && (
-                    <OfferNotificationContainer
-                      sx={{
+                  }
+                  {
+                    enableTypeform && !isInternational &&
+                    <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing and Availability" layout="sidebar" slug={id}>
+                      {(promoDescription || promoTitle) && (
+                      <OfferNotificationContainer
+                        sx={{
                             m: 'l -l -l',
                             p: 'l',
                             borderTopLeftRadius: 'unset',
                             borderTopRightRadius: 'unset',
                           }}
-                      sx$laptop={{ display: 'flex' }}
-                      title={promoTitle}
-                      description={promoDescription}
-                      community={community}
-                      orderIconFirstOnTablet={false}
-                    />
+                        sx$laptop={{ display: 'flex' }}
+                        title={promoTitle}
+                        description={promoDescription}
+                        community={community}
+                        orderIconFirstOnTablet={false}
+                      />
                       )}
-                  </SlyTypeformAssessmentContainer>
+                    </SlyTypeformAssessmentContainer>
+                  }
+
                 </StickToTop>
               </Column>
             </TwoColumn>
