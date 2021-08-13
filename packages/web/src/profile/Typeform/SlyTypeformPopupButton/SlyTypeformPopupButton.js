@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import { createPopup } from '@typeform/embed';
 import Helmet from 'react-helmet';
+import { func, object, string } from 'prop-types';
 
 import PopupStyles from './SlyTypeformPopupButtonStyle';
+
 
 import { Button } from 'sly/common/system';
 
@@ -44,6 +46,18 @@ const SlyTypeformPopupButton = ({ id, className, style, popupButtonName, popupBu
       </Button>
     </>
   );
+};
+
+SlyTypeformPopupButton.propTypes = {
+  id: string.isRequired,
+  className: string,
+  style: object,
+  popupButtonName: string.isRequired,
+  popupButtonClickHandler: func,
+  popupButtonCloseHandler: func,
+  onsubmit: func,
+  onSubmit: func,
+
 };
 
 export default SlyTypeformPopupButton;

@@ -5,6 +5,8 @@ import { ifProp } from 'styled-tools';
 import loadable from '@loadable/component';
 
 // import StickyHeader from 'sly/web/profile/StickyHeader';
+import { truncate } from 'lodash';
+
 import SlyTypeform from './Typeform/Typeform';
 import SlyTypeformAssessmentContainer from './Typeform/SlyTypeformAssesmentContainer';
 
@@ -182,6 +184,7 @@ export default class CommunityDetailPage extends PureComponent {
   };
 
   state  = { rerender: false }
+
   componentDidMount() {
     const { community } = this.props;
     const { address } = community;
@@ -204,6 +207,7 @@ export default class CommunityDetailPage extends PureComponent {
   readyHandler = this.readyHandler1.bind(this);
   questionHandler = this.questionHandler1.bind(this);
 
+
   render() {
     const {
       community,
@@ -211,6 +215,7 @@ export default class CommunityDetailPage extends PureComponent {
     } = this.props;
 
     const {
+      id,
       name,
       propInfo = {},
       address,
@@ -221,8 +226,6 @@ export default class CommunityDetailPage extends PureComponent {
       twilioNumber,
       user: communityUser,
       reviews,
-      startingRate,
-      rates,
     } = community;
 
     const {
@@ -234,7 +237,6 @@ export default class CommunityDetailPage extends PureComponent {
       residentDescription,
       ownerExperience,
       typeCare: typeCares,
-      maxRate,
     } = (propInfo || {});
 
     const typeOfCare = typeCares?.[0];
@@ -258,6 +260,15 @@ export default class CommunityDetailPage extends PureComponent {
     const { faqs } = rgsInfo;
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
+    const isTypeformEnabled = (address) => {
+      if (address.state === 'CA') {
+        return true;
+      }
+      return false;
+    };
+    const enableTypeform = isTypeformEnabled(address);
+
+    console.log('community', community);
 
 
     const {
@@ -350,30 +361,36 @@ export default class CommunityDetailPage extends PureComponent {
                   heading={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  {/* <GetAssessmentBoxContainerHydrator
-                    startLink={`/wizards/assessment/community/${community.id}`}
-                    community={community}
-                    layout="pricing-table"
-                    mode={getAssessmentBoxModes.pricingTable}
-                    extraProps={{
+                  {
+                    !enableTypeform &&
+                    <GetAssessmentBoxContainerHydrator
+                      startLink={`/wizards/assessment/community/${community.id}`}
+                      community={community}
+                      layout="pricing-table"
+                      mode={getAssessmentBoxModes.pricingTable}
+                      extraProps={{
                       pricesList,
                       estimatedPriceList,
                       newPricesList,
                     }}
-                  /> */}
-                  {/* {
-                    this.state.rerender ? 'Re Render' : ' No Rerender'
-                  } */}
-                  <SlyTypeform wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing"  />
-                  {(promoDescription || promoTitle) && (
-                    <OfferNotificationContainer
-                      mt="s"
-                      sx$laptop={{ display: 'none' }}
-                      title={promoTitle}
-                      description={promoDescription}
-                      community={community}
                     />
-                  )}
+                  }
+                  {
+                    enableTypeform &&
+                    <>
+                      <SlyTypeformAssessmentContainer
+                        community={community}
+                        wizardType="POPUP_BUTTON"
+                        formId={typeformId}
+                        popupButtonName="Get Pricing"
+                        slug={id}
+                        layout="pricing-table"
+                        pricesList={pricesList}
+                        estimatedPriceList={estimatedPriceList}
+                        newPricesList={newPricesList}
+                      />
+                    </>
+                  }
                 </StyledHeadingBoxSection>
                 }
                 {shouldShowAbout && (
@@ -574,7 +591,7 @@ export default class CommunityDetailPage extends PureComponent {
                       )}
                     </GetAssessmentBoxContainerHydrator>
                   } */}
-                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" layout="sidebar" >
+                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" layout="sidebar" slug={id}>
                     {(promoDescription || promoTitle) && (
                     <OfferNotificationContainer
                       sx={{

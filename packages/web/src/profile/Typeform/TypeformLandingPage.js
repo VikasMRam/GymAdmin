@@ -7,7 +7,7 @@ import { Block } from 'sly/common/system';
 import { parseURLQueryParams } from 'sly/web/services/helpers/url';
 
 
-const TypeformLandingPage = (props) => {
+const TypeformLandingPage = () => {
   const { search } = useLocation();
   const history = useHistory();
 
