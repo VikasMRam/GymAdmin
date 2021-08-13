@@ -261,15 +261,12 @@ export default class CommunityDetailPage extends PureComponent {
 
     const showMoreImages = gallery.images && gallery.images.length > 0;
     const isTypeformEnabled = (address) => {
-      if (address.state === 'CA') {
+      if (address.state === 'FL') {
         return true;
       }
       return false;
     };
     const enableTypeform = isTypeformEnabled(address);
-
-    console.log('community', community);
-
 
     const {
       line1, line2, city, state, zip,
