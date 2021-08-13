@@ -9,6 +9,7 @@ import { truncate } from 'lodash';
 
 import SlyTypeform from './Typeform/Typeform';
 import SlyTypeformAssessmentContainer from './Typeform/SlyTypeformAssesmentContainer';
+import SlyTypeformStickyFooter from './Typeform/SlyTypeformStickyFooter';
 
 import { withHydration } from 'sly/web/services/partialHydration';
 import { size } from 'sly/common/components/themes';
@@ -79,6 +80,8 @@ const TrustScoreTile = withHydration(/* #__LOADABLE__ */ () => import(/* webpack
 
 
 const LazyCommunityMap = withHydration(/* #__LOADABLE__ */ () => import(/* webpackChunkName: "chunkLazyCommunityMap" */ 'sly/web/containers/LazyCommunityMapContainer'));
+
+import SlyTypeformGetAssessmentBox from 'sly/web/profile/Typeform/SlyTypeformAssesmentBox';
 
 const BackToSearch = styled.div`
   text-align: center;
@@ -398,6 +401,7 @@ export default class CommunityDetailPage extends PureComponent {
                         pricesList={pricesList}
                         estimatedPriceList={estimatedPriceList}
                         newPricesList={newPricesList}
+                        popupButtonStyle={{ width: '100%', height: '100%', padding: '0', border: 'none' }}
                       />
                       {(promoDescription || promoTitle) && (
                         <OfferNotificationContainer
@@ -476,12 +480,20 @@ export default class CommunityDetailPage extends PureComponent {
                   <StyledHeadingBoxSection heading="How Seniorly Works" hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
 
-                    <PaddedGetAssessmentBoxContainerHydrator
-                      startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
-                      community={community}
-                      mode={getAssessmentBoxModes.profileSection}
-                      mt="m"
-                    />
+                    {
+                     enableTypeform &&
+                     <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Take Quiz" layout="box" slug={id} />
+                    }
+                    {
+                      !enableTypeform &&
+                      <PaddedGetAssessmentBoxContainerHydrator
+                        startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
+                        community={community}
+                        mode={getAssessmentBoxModes.profileSection}
+                        mt="m"
+                      />
+                    }
+
 
                   </StyledHeadingBoxSection>
                 }
@@ -570,13 +582,17 @@ export default class CommunityDetailPage extends PureComponent {
                   </StyledHeadingBoxSection>
                 )}
 
-                {!isInternational &&
+                {!isInternational && !enableTypeform &&
                   <GetAssessmentBoxContainerHydrator
                     startLink={`/wizards/assessment/community/${community.id}`}
                     community={community}
                     mode={getAssessmentBoxModes.communityFooter}
                     layout="footer"
                   />
+                }
+                {
+                  !isInternational && enableTypeform &&
+                  <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing" layout="footer" slug={id} />
                 }
 
               </Body>
@@ -608,7 +624,7 @@ export default class CommunityDetailPage extends PureComponent {
                   }
                   {
                     enableTypeform && !isInternational &&
-                    <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing and Availability" layout="sidebar" slug={id}>
+                    <SlyTypeformAssessmentContainer community={community} wizardType="POPUP_BUTTON" formId={typeformId} popupButtonName="Get Pricing and Availability" layout="sidebar" slug={id} popupButtonStyle={{ width: '100%', height: '100%', padding: '0', border: 'none' }}>
                       {(promoDescription || promoTitle) && (
                       <OfferNotificationContainer
                         sx={{

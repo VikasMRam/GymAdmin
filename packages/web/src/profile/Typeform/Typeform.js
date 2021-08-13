@@ -14,7 +14,7 @@ import { getUUID } from 'sly/web/services/events/helpers';
 
 const WizardTypeWrapper = (props) => {
   const { user } = useUser();
-  const { wizardType, formId, onSubmit, popupButtonName, onReadyHandler, onQuestionChangedHandler } = props;
+  const { wizardType, formId, onSubmit, popupButtonName, onReadyHandler, onQuestionChangedHandler, popupButtonStyle } = props;
   const { setDisableChatBot } = useChatbox();
   const { location } = useHistory();
 
@@ -42,7 +42,7 @@ const WizardTypeWrapper = (props) => {
       <SlyTypeformPopupButton
         id={formId}
         onSubmit={onSubmit}
-        style={{ width: '100%', height: '100%', padding: '0', border: 'none' }}
+        style={popupButtonStyle}
         popupButtonName={popupButtonName}
         popupButtonCloseHandler={popupButtonCloseHandler}
         onReady={customOnReadyHandler}

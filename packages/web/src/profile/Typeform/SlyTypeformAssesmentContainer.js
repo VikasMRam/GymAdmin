@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { object, string } from 'prop-types';
 
+import SlyTypeformGetAssessmentBox from './SlyTypeformAssesmentBox';
+import SlyTypeformStickyFooter from './SlyTypeformStickyFooter';
+
 import SlyTypeformCommunityPricingTable from 'sly/web/profile/Typeform/SlyTypeformPricingTable';
 import communityPropType from 'sly/common/propTypes/community';
 import SlyTypeform from 'sly/web/profile/Typeform/Typeform';
@@ -116,6 +119,38 @@ const SlyTypeformAssessmentContainer = (props) => {
       {
         layout === 'pricing-table' &&
         <SlyTypeformCommunityPricingTable {...props} hasAlreadyRequestedPricing={hasAlreadyRequestedPricing} {...extraProps} />
+      }
+      {
+        layout === 'box' && !hasAlreadyRequestedPricing &&
+        <SlyTypeformGetAssessmentBox
+          community={community}
+          slug={community.id}
+          popupButtonStyle={{
+            width: '100%',
+            height: 'max-content%',
+            color: 'black',
+            pallete: 'none !important',
+            variant: 'neutral !important',
+            textAlign: 'center',
+            padding: 0,
+            borderColor: 'white !important',
+            border: '1px solid !important',
+            background: 'white',
+            }}
+          hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
+          {...extraProps}
+          {...props}
+        />
+      }
+      {
+        layout === 'footer' &&
+        <SlyTypeformStickyFooter
+          community={community}
+          slug={community.id}
+          hasAlreadyRequestedPricing={hasAlreadyRequestedPricing}
+          {...extraProps}
+          {...props}
+        />
       }
       {
         !layout &&

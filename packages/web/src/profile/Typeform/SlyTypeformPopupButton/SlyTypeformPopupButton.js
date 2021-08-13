@@ -36,6 +36,8 @@ const SlyTypeformPopupButton = ({ id, className, style, popupButtonName, popupBu
     }
   };
 
+  console.log(style);
+
   return (
     <>
       <Helmet>
