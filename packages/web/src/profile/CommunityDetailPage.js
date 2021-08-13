@@ -476,16 +476,12 @@ export default class CommunityDetailPage extends PureComponent {
                   <StyledHeadingBoxSection heading="How Seniorly Works" hasNoBodyPadding>
                     <HowSlyWorksVideoContainer eventLabel={community.id} />
 
-                    {/* <PaddedGetAssessmentBoxContainerHydrator
+                    <PaddedGetAssessmentBoxContainerHydrator
                       startLink={`/wizards/assessment/community/${community.id}?skipIntro=true`}
                       community={community}
                       mode={getAssessmentBoxModes.profileSection}
                       mt="m"
-                    /> */}
-
-                    {/* <Block height="350px">
-                      <SlyTypeform wizardType="WIDGET" formId="dH3EjYYx" />
-                    </Block> */}
+                    />
 
                   </StyledHeadingBoxSection>
                 }
